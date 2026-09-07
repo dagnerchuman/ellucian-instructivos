@@ -429,8 +429,9 @@ function initApp() {
       <span class="breadcrumb-current">${displayName}</span>
     `;
 
-    // Download button link
-    const fileUrl = '/' + encodeURI(pres.path);
+    // Ensure path is NFC normalized for standard Linux/Netlify web servers
+    const normalizedPath = (pres.path || '').normalize('NFC');
+    const fileUrl = '/' + encodeURI(normalizedPath);
     elements.btnDownloadPptx.href = fileUrl;
     elements.btnDownloadPptx.download = pres.name;
 
@@ -447,8 +448,23 @@ function initApp() {
         state.renderer = null;
       }
 
-      // Fetch the PPTX file
-      const res = await fetch(fileUrl);
+      // Fetch the PPTX file with automatic fallback handling
+      let res = await fetch(fileUrl);
+      if (!res.ok) {
+        // Fallback 1: relative to parent (if running inside /visor_instructivos/)
+        const fallbackRelative = '../' + encodeURI(normalizedPath);
+        const resFb1 = await fetch(fallbackRelative);
+        if (resFb1.ok) {
+          res = resFb1;
+        } else {
+          // Fallback 2: try NFD normalized
+          const fallbackNfd = '/' + encodeURI((pres.path || '').normalize('NFD'));
+          const resFb2 = await fetch(fallbackNfd);
+          if (resFb2.ok) {
+            res = resFb2;
+          }
+        }
+      }
       if (!res.ok) {
         throw new Error(`HTTP ${res.status}: No se encontró el archivo PPTX.`);
       }

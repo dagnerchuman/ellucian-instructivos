@@ -963,3 +963,222 @@ body {
   max-width: 360px;
   line-height: 1.5;
 }
+
+/* ==========================================================================
+   MOBILE RESPONSIVE SYSTEM (Drawer, Overlay & Touch Optimization)
+   ========================================================================== */
+
+.sidebar-overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 86vw;
+    --header-height: 50px;
+  }
+
+  .app-container {
+    width: 100vw;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Sidebar as Mobile Off-Canvas Drawer */
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 86vw !important;
+    max-width: 360px !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    z-index: 1000 !important;
+    box-shadow: 10px 0 35px rgba(15, 23, 42, 0.25);
+    transform: translateX(0);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100%) !important;
+    pointer-events: none;
+  }
+
+  .mobile-close-btn {
+    display: flex !important;
+  }
+
+  #btn-toggle-sidebar {
+    display: none !important;
+  }
+
+  /* Backdrop Overlay */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 990;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Main Stage occupies full screen */
+  .main-stage {
+    width: 100vw;
+    height: 100%;
+  }
+
+  /* Top Navigation */
+  .top-nav {
+    padding: 0 12px;
+    height: 50px;
+    gap: 8px;
+  }
+
+  .sidebar-toggle-btn {
+    display: flex !important;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .breadcrumbs {
+    font-size: 12px;
+    max-width: calc(100vw - 110px);
+  }
+
+  .breadcrumb-item,
+  .breadcrumb-sep {
+    display: none !important;
+  }
+
+  .breadcrumb-current {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .present-btn {
+    padding: 7px;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .present-btn span {
+    display: none;
+  }
+
+  /* Canvas Viewport */
+  .slide-viewport {
+    height: calc(100% - 52px);
+  }
+
+  .slide-canvas-wrapper {
+    padding: 8px 6px !important;
+  }
+
+  .nav-arrow {
+    width: 38px;
+    height: 38px;
+    opacity: 0.65;
+  }
+
+  .prev-arrow {
+    left: 6px;
+  }
+
+  .next-arrow {
+    right: 6px;
+  }
+
+  /* Footer Controls on Mobile */
+  .footer-controls {
+    height: 52px;
+    padding: 0 8px;
+    gap: 6px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .footer-capsule {
+    padding: 3px 5px;
+    gap: 2px;
+  }
+
+  .footer-icon-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .footer-pill-btn {
+    height: 30px;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+
+  .btn-label,
+  #thumbs-label {
+    display: none !important;
+  }
+
+  .slide-counter {
+    padding: 0 6px;
+    font-size: 12px;
+  }
+
+  .slide-cur, .slide-tot {
+    font-size: 12px;
+  }
+
+  .footer-divider {
+    height: 14px;
+    margin: 0 2px;
+  }
+
+  /* Thumbnail Strip on Mobile */
+  .thumbnail-strip {
+    height: 84px;
+    padding: 6px 8px;
+    gap: 8px;
+  }
+
+  .thumb-card {
+    width: 92px;
+    height: 64px;
+  }
+}
+
+@media (max-width: 480px) {
+  #btn-first-slide,
+  #btn-last-slide {
+    display: none !important;
+  }
+
+  .slide-nav-capsule {
+    padding: 3px 4px;
+  }
+
+  .zoom-percent-btn {
+    padding: 0 6px !important;
+  }
+}

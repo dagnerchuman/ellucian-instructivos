@@ -151,8 +151,10 @@ function initApp() {
   const elements = {
     appContainer: document.getElementById('app-container'),
     sidebar: document.getElementById('sidebar'),
+    sidebarOverlay: document.getElementById('sidebar-overlay'),
     btnToggleSidebar: document.getElementById('btn-toggle-sidebar'),
     btnExpandSidebar: document.getElementById('btn-expand-sidebar'),
+    btnCloseSidebarMobile: document.getElementById('btn-close-sidebar-mobile'),
     btnCollapseAll: document.getElementById('btn-collapse-all'),
     btnResetDefault: document.getElementById('btn-reset-default'),
     searchInput: document.getElementById('search-input'),
@@ -388,6 +390,9 @@ function initApp() {
         e.stopPropagation();
         updateActiveTreeItem(node.id);
         loadPresentation(node.id, 0);
+        if (window.innerWidth <= 768) {
+          closeMobileSidebar();
+        }
       });
     }
 
@@ -670,8 +675,8 @@ function initApp() {
     const clamped = Math.max(0.5, Math.min(3.5, Math.round(newZoom * 100) / 100));
     if (Math.abs(state.zoom - clamped) < 0.001) return;
 
-    // Al abrir o usar zoom (> 100%), cerrar automáticamente las miniaturas para máximo espacio
-    if (clamped > 1.0 && state.thumbnailsVisible) {
+    // En desktop al usar zoom (> 100%), cerrar automáticamente las miniaturas para máximo espacio
+    if (clamped > 1.0 && state.thumbnailsVisible && window.innerWidth > 768) {
       state.thumbnailsVisible = false;
       elements.thumbnailStrip.classList.add('collapsed');
       elements.thumbsLabel.textContent = 'Miniaturas';
@@ -1002,15 +1007,36 @@ function initApp() {
     }
   }, true);
 
-  // Sidebar Toggles
-  function toggleSidebar() {
-    elements.sidebar.classList.toggle('collapsed');
-    const isCollapsed = elements.sidebar.classList.contains('collapsed');
-    elements.btnExpandSidebar.style.display = isCollapsed ? 'flex' : 'none';
+  // Sidebar Toggles & Mobile Drawer
+  function openMobileSidebar() {
+    elements.sidebar.classList.remove('collapsed');
+    if (elements.sidebarOverlay) elements.sidebarOverlay.classList.add('active');
   }
 
-  elements.btnToggleSidebar.addEventListener('click', toggleSidebar);
-  elements.btnExpandSidebar.addEventListener('click', toggleSidebar);
+  function closeMobileSidebar() {
+    elements.sidebar.classList.add('collapsed');
+    if (elements.sidebarOverlay) elements.sidebarOverlay.classList.remove('active');
+  }
+
+  function toggleSidebar() {
+    if (window.innerWidth <= 768) {
+      if (elements.sidebar.classList.contains('collapsed')) {
+        openMobileSidebar();
+      } else {
+        closeMobileSidebar();
+      }
+    } else {
+      elements.sidebar.classList.toggle('collapsed');
+      const isCollapsed = elements.sidebar.classList.contains('collapsed');
+      elements.btnExpandSidebar.style.display = isCollapsed ? 'flex' : 'none';
+      if (elements.sidebarOverlay) elements.sidebarOverlay.classList.remove('active');
+    }
+  }
+
+  elements.btnToggleSidebar?.addEventListener('click', toggleSidebar);
+  elements.btnExpandSidebar?.addEventListener('click', toggleSidebar);
+  elements.btnCloseSidebarMobile?.addEventListener('click', closeMobileSidebar);
+  elements.sidebarOverlay?.addEventListener('click', closeMobileSidebar);
 
   elements.btnCollapseAll.addEventListener('click', () => {
     if (state.expandedFolders.size > 0) {
@@ -1052,7 +1078,11 @@ function initApp() {
   renderTree();
   elements.viewSlides.classList.add('active');
 
-  // Miniaturas cerradas por defecto para máxima visualización
+  // En mobile: miniaturas abiertas por defecto a petición del usuario
+  if (window.innerWidth <= 768) {
+    state.thumbnailsVisible = true;
+  }
+
   if (!state.thumbnailsVisible) {
     elements.thumbnailStrip.classList.add('collapsed');
     elements.thumbsLabel.textContent = 'Miniaturas';
@@ -1062,6 +1092,51 @@ function initApp() {
     elements.thumbsLabel.textContent = 'Ocultar Miniaturas';
     elements.btnToggleThumbs?.classList.add('active');
   }
+
+  // Mobile Touch Gestures (Swipe Left/Right to advance or return slide)
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchStartTime = 0;
+
+  elements.slideViewport?.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+    }
+  }, { passive: true });
+
+  elements.slideViewport?.addEventListener('touchend', (e) => {
+    if (state.zoom > 1.05) return; // Allow natural panning when zoomed
+    if (!e.changedTouches || e.changedTouches.length === 0) return;
+    const diffX = e.changedTouches[0].clientX - touchStartX;
+    const diffY = e.changedTouches[0].clientY - touchStartY;
+    const time = Date.now() - touchStartTime;
+
+    if (time < 500 && Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY) * 1.3) {
+      if (diffX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+  }, { passive: true });
+
+  // On Mobile: Collapse sidebar by default so presentation is immediately visible
+  if (window.innerWidth <= 768) {
+    elements.sidebar.classList.add('collapsed');
+    elements.btnExpandSidebar.style.display = 'flex';
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      if (elements.sidebarOverlay) elements.sidebarOverlay.classList.remove('active');
+      const isCollapsed = elements.sidebar.classList.contains('collapsed');
+      elements.btnExpandSidebar.style.display = isCollapsed ? 'flex' : 'none';
+    } else {
+      elements.btnExpandSidebar.style.display = 'flex';
+    }
+  });
 
   loadPresentation(state.currentId, state.currentSlide);
 }

@@ -1,0 +1,19 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/visor_instructivos/"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/*.pptx"
+  [headers.values]
+    Content-Type = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    Access-Control-Allow-Origin = "*"

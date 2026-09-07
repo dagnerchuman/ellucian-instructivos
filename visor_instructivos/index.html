@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ellucian Instructivos — Visor de Presentaciones PPTX</title>
+  <meta name="description" content="Visor interactivo en alta definición de instructivos y procesos de Ellucian Banner.">
+  <link rel="stylesheet" href="styles.css?v=15">
+</head>
+<body>
+  <div class="app-container" id="app-container">
+    
+    <!-- SIDEBAR (VS Code Style Explorer Tree) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title-badge">
+          <div class="logo-dot"></div>
+          <span class="sidebar-title">Explorador</span>
+        </div>
+        <div class="sidebar-actions">
+          <button class="icon-btn" id="btn-reset-default" title="Restablecer a Capacidad 1 (Cmd+Shift+R / Limpiar)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+          </button>
+          <button class="icon-btn" id="btn-collapse-all" title="Colapsar todo">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 14h6m-6-4h6m10 0h-6m6 4h-6M12 3v18"/>
+            </svg>
+          </button>
+          <button class="icon-btn" id="btn-toggle-sidebar" title="Ocultar barra lateral">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <line x1="9" y1="3" x2="9" y2="21"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="search-wrapper">
+        <div class="search-input-container">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="search-input" class="search-input" placeholder="Buscar instructivo, forma Banner..." autocomplete="off">
+          <button id="search-clear" class="search-clear" title="Limpiar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Root Folder Label & Explorer Tree -->
+      <div class="tree-container" id="tree-container">
+        <div class="root-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>ellucian - instructivos</span>
+        </div>
+        <div id="explorer-tree"></div>
+      </div>
+    </aside>
+
+    <!-- MAIN STAGE -->
+    <main class="main-stage" id="main-stage">
+      
+      <!-- Top Navigation Bar -->
+      <header class="top-nav">
+        <div class="top-left">
+          <button class="sidebar-toggle-btn" id="btn-expand-sidebar" style="display: none;" title="Mostrar barra lateral">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+
+          <!-- Breadcrumbs -->
+          <nav class="breadcrumbs" id="breadcrumbs">
+            <span class="breadcrumb-item">Capacidad</span>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-current" id="current-title">Cargando presentación...</span>
+          </nav>
+        </div>
+
+        <!-- Right Quick Action -->
+        <div class="top-controls">
+          <button class="present-btn" id="btn-top-fullscreen" title="Pantalla completa (F)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+            Pantalla Completa
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEWPORT 1: NATIVE HD PPTX VIEWER -->
+      <section class="view-container active" id="view-slides">
+        <div class="presentation-stage" id="presentation-stage">
+          
+          <!-- Main Slide Viewport -->
+          <div class="slide-viewport" id="slide-viewport">
+            <button class="nav-arrow prev-arrow" id="btn-prev-slide" title="Anterior (← / ↑)">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+            </button>
+
+            <div class="slide-canvas-wrapper" id="slide-canvas-wrapper">
+              <canvas id="slide-canvas" class="slide-canvas"></canvas>
+            </div>
+
+            <button class="nav-arrow next-arrow" id="btn-next-slide" title="Siguiente (→ / Espacio / ↓)">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </button>
+
+            <!-- Loading Spinner Overlay -->
+            <div class="loading-overlay" id="loading-overlay">
+              <div class="spinner"></div>
+              <span id="loading-msg">Cargando presentación PPTX en alta definición...</span>
+            </div>
+          </div>
+
+          <!-- Bottom Control Bar & Slide Filmstrip -->
+          <div class="presentation-footer" id="presentation-footer">
+            <div class="footer-controls">
+              
+              <!-- LEFT: Unified Slide Stepper Capsule -->
+              <div class="footer-capsule slide-nav-capsule">
+                <button class="footer-icon-btn" id="btn-first-slide" title="Primera diapositiva (Inicio)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 19 2 12 11 5 11 19"/>
+                    <polygon points="22 19 13 12 22 5 22 19"/>
+                  </svg>
+                </button>
+                <button class="footer-icon-btn" id="btn-prev" title="Diapositiva anterior (←)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="15 18 9 12 15 6"/>
+                  </svg>
+                </button>
+                
+                <div class="slide-counter-badge" id="slide-counter" title="Diapositiva actual / Total">
+                  <span class="slide-cur">1</span><span class="slide-sep">/</span><span class="slide-tot">--</span>
+                </div>
+                
+                <button class="footer-icon-btn" id="btn-next" title="Diapositiva siguiente (→)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
+                </button>
+                <button class="footer-icon-btn" id="btn-last-slide" title="Última diapositiva (Fin)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 19 22 12 13 5 13 19"/>
+                    <polygon points="2 19 11 12 2 5 2 19"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- CENTER: Unified Zoom & Pan Dock Capsule -->
+              <div class="footer-capsule zoom-nav-capsule" id="slide-zoom-toolbar">
+                <button class="footer-pill-btn" id="btn-tool-hand" title="Herramienta Mano (H): Mover la diapositiva con el ratón">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 11V6a2 2 0 0 0-4 0v4"/>
+                    <path d="M14 10V4a2 2 0 0 0-4 0v7"/>
+                    <path d="M10 10.5V6a2 2 0 0 0-4 0v8"/>
+                    <path d="M10 14a2 2 0 1 0 4 0"/>
+                    <path d="M6 14v1a7 7 0 0 0 14 0v-4a2 2 0 0 0-2-2h-2"/>
+                  </svg>
+                  <span class="btn-label">Mano</span>
+                </button>
+
+                <div class="footer-divider"></div>
+
+                <button class="footer-icon-btn" id="btn-zoom-out" title="Alejar zoom (-)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <line x1="8" y1="11" x2="14" y2="11"/>
+                  </svg>
+                </button>
+
+                <button class="footer-pill-btn zoom-percent-btn" id="btn-zoom-reset" title="Restablecer zoom al 100% (0)">
+                  <span id="zoom-level-text">100%</span>
+                </button>
+
+                <button class="footer-icon-btn" id="btn-zoom-in" title="Acercar zoom (+)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <line x1="11" y1="8" x2="11" y2="14"/>
+                    <line x1="8" y1="11" x2="14" y2="11"/>
+                  </svg>
+                </button>
+
+                <div class="footer-divider"></div>
+
+                <button class="footer-pill-btn" id="btn-zoom-fit" title="Ajustar diapositiva al tamaño óptimo">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                  </svg>
+                  <span class="btn-label">Ajustar</span>
+                </button>
+              </div>
+
+              <!-- RIGHT: Unified View & Export Actions -->
+              <div class="footer-capsule actions-capsule">
+                <button class="footer-pill-btn" id="btn-toggle-thumbs" title="Ver / Ocultar miniaturas de diapositivas">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                  <span id="thumbs-label">Miniaturas</span>
+                </button>
+
+                <a href="#" class="footer-pill-btn" id="btn-download-pptx" download title="Descargar archivo PPTX original">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <span class="btn-label">Descargar</span>
+                </a>
+
+                <button class="footer-pill-btn primary" id="btn-footer-fullscreen" title="Pantalla Completa (F)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                  </svg>
+                  <span class="btn-label">Pantalla Completa</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Slide Thumbnails Strip (Closed / Collapsed by default) -->
+            <div class="thumbnail-strip collapsed" id="thumbnail-strip"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- PPTX HD Canvas Renderer (pptx-browser, patched) -->
+  <script src="pptx-browser.bundle.js?v=15"></script>
+  <!-- Static Data & Application Logic -->
+  <script src="data.js?v=15"></script>
+  <script src="app.js?v=15"></script>
+</body>
+</html>

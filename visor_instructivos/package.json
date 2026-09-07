@@ -1,0 +1,20 @@
+{
+  "name": "visor_instructivos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "pptx-browser": "^4.1.5",
+    "pptx-viewer": "^0.2.2"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1"
+  }
+}

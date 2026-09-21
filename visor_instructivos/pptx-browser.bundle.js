@@ -729,6 +729,19 @@ var PptxBrowser = (() => {
   }
   function colorToCss(c, alphaOverride) {
     if (!c) return "transparent";
+    if (typeof c === "string") {
+      if (alphaOverride !== void 0 && alphaOverride < 1) {
+        const m = c.match(/rgba?\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+        if (m) return `rgba(${m[1]},${m[2]},${m[3]},${alphaOverride.toFixed(3)})`;
+        if (c.startsWith("#") && c.length === 7) {
+          const r = parseInt(c.slice(1, 3), 16);
+          const g = parseInt(c.slice(3, 5), 16);
+          const b = parseInt(c.slice(5, 7), 16);
+          return `rgba(${r},${g},${b},${alphaOverride.toFixed(3)})`;
+        }
+      }
+      return c;
+    }
     const a = alphaOverride !== void 0 ? alphaOverride : c.a ?? 1;
     return a < 1 ? `rgba(${c.r},${c.g},${c.b},${a.toFixed(3)})` : `rgb(${c.r},${c.g},${c.b})`;
   }
@@ -749,10 +762,12 @@ var PptxBrowser = (() => {
     const c = resolveColorElement(colorChild, themeColors);
     return c ? colorToCss(c) : null;
   }
-  function getRunColorInherited(rPr, paraDefRPr, themeColors) {
+  function getRunColorInherited(rPr, paraDefRPr, themeColors, lstDefRPr = null) {
     const c1 = getRunColor(rPr, themeColors);
     if (c1) return c1;
-    return getRunColor(paraDefRPr, themeColors);
+    const c2 = getRunColor(paraDefRPr, themeColors);
+    if (c2) return c2;
+    return getRunColor(lstDefRPr, themeColors);
   }
   var PRESET_COLORS;
   var init_colors = __esm({
@@ -3545,7 +3560,7 @@ var PptxBrowser = (() => {
   }
   function drawBullet(ctx, bullet, x, baseline, autoNumCounters) {
     if (!bullet) return;
-    const fontMatch = ctx.font.match(/(d+(?:.d+)?)px/);
+    const fontMatch = ctx.font.match(/(\d+(?:\.\d+)?)px/);
     const baseSzPx = fontMatch ? parseFloat(fontMatch[1]) : 16;
     const szPx = bullet.sizePts != null ? bullet.sizePts * (baseSzPx / 12) : baseSzPx * bullet.sizePct;
     ctx.save();
@@ -3569,9 +3584,10 @@ var PptxBrowser = (() => {
   async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeColors, themeData, defaultFontSz = 1800, phTxBody = null) {
     if (!txBody) return;
     const bodyPr = g1(txBody, "bodyPr");
-    const anchor = attr(bodyPr, "anchor", "t");
-    const wrap = attr(bodyPr, "wrap", "square");
-    const vert = attr(bodyPr, "vert", "horz");
+    const phBodyPr = phTxBody ? g1(phTxBody, "bodyPr") : null;
+    const anchor = attr(bodyPr, "anchor") || attr(phBodyPr, "anchor", "t");
+    const wrap = attr(bodyPr, "wrap") || attr(phBodyPr, "wrap", "square");
+    const vert = attr(bodyPr, "vert") || attr(phBodyPr, "vert", "horz");
     const lIns = attrInt(bodyPr, "lIns", 91440) * scale;
     const tIns = attrInt(bodyPr, "tIns", 45720) * scale;
     const rIns = attrInt(bodyPr, "rIns", 91440) * scale;
@@ -3680,7 +3696,7 @@ var PptxBrowser = (() => {
         ctx.font = fontInfo.fontStr;
         const szPx = fontInfo.szPx;
         if (szPx > maxSzPx) maxSzPx = szPx;
-        const color = getRunColorInherited(rPr, effectiveDefRPr, themeColors);
+        const color = getRunColorInherited(rPr, effectiveDefRPr, themeColors, lstDefRPr);
         const underline = resolveRPrAttr(rPr, effectiveDefRPr, "u", "none") !== "none";
         const strikethrough = resolveRPrAttr(rPr, effectiveDefRPr, "strike", "noStrike") !== "noStrike";
         const baseline = parseInt(resolveRPrAttr(rPr, effectiveDefRPr, "baseline", "0"), 10);
@@ -3947,6 +3963,9 @@ var PptxBrowser = (() => {
       y = phData.y * scale;
       w = phData.w * scale;
       h = phData.h * scale;
+      if (phData.rot) rot = phData.rot;
+      if (phData.flipH) flipH = phData.flipH;
+      if (phData.flipV) flipV = phData.flipV;
     } else {
       return;
     }
@@ -4633,8 +4652,8 @@ var PptxBrowser = (() => {
       const cSld = g1(doc, "cSld");
       const spTree = cSld ? g1(cSld, "spTree") : null;
       if (!spTree) continue;
-      for (const sp of gtn(spTree, "sp")) {
-        const nvSpPr = g1(sp, "nvSpPr");
+      for (const sp of [...gtn(spTree, "sp"), ...gtn(spTree, "pic")]) {
+        const nvSpPr = g1(sp, "nvSpPr") || g1(sp, "nvPicPr");
         const nvPr = nvSpPr ? g1(nvSpPr, "nvPr") : null;
         const ph = nvPr ? g1(nvPr, "ph") : null;
         if (!ph) continue;
@@ -4653,6 +4672,9 @@ var PptxBrowser = (() => {
           y: attrInt(off, "y", 0),
           w: attrInt(ext, "cx", 0),
           h: attrInt(ext, "cy", 0),
+          rot: attrInt(xfrm, "rot", 0) / 6e4,
+          flipH: attr(xfrm, "flipH", "0") === "1",
+          flipV: attr(xfrm, "flipV", "0") === "1",
           txBody: g1(sp, "txBody")
         };
       }

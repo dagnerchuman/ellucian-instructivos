@@ -3592,21 +3592,24 @@ var PptxBrowser = (() => {
     const tIns = attrInt(bodyPr, "tIns", 45720) * scale;
     const rIns = attrInt(bodyPr, "rIns", 91440) * scale;
     const bIns = attrInt(bodyPr, "bIns", 45720) * scale;
-    const tx = bx + lIns;
-    const ty = by + tIns;
-    const tw = bw - lIns - rIns;
-    const th = bh - tIns - bIns;
+    let tx = bx + lIns;
+    let ty = by + tIns;
+    let tw = bw - lIns - rIns;
+    let th = bh - tIns - bIns;
     const doWrap = wrap !== "none";
-    const isVert = vert === "vert" || vert === "vert270" || vert === "eaVert";
+    const isVert = vert !== "horz";
     if (isVert) {
       ctx.save();
       if (vert === "vert270") {
-        ctx.translate(bx + bw, by);
-        ctx.rotate(Math.PI / 2);
-      } else {
-        ctx.translate(bx, by + bh);
+        ctx.translate(tx, ty + th);
         ctx.rotate(-Math.PI / 2);
+      } else {
+        ctx.translate(tx + tw, ty);
+        ctx.rotate(Math.PI / 2);
       }
+      [tw, th] = [th, tw];
+      tx = 0;
+      ty = 0;
     }
     const normAutoFit = g1(bodyPr, "normAutoFit") || g1(txBody, "normAutoFit");
     const spAutoFit = g1(bodyPr, "spAutoFit") || g1(txBody, "spAutoFit");
@@ -3629,14 +3632,15 @@ var PptxBrowser = (() => {
     for (const para of paragraphs) {
       const pPr = g1(para, "pPr");
       const defRPr = pPr ? g1(pPr, "defRPr") : null;
-      const algn = attr(pPr, "algn", "l");
       const lvl = attrInt(pPr, "lvl", 0);
       let phDefRPr = null;
+      let phLvl = null;
       if (phTxBody) {
         const phLvlTag = `lvl${lvl + 1}pPr`;
-        const phLvl = g1(g1(phTxBody, "lstStyle"), phLvlTag) || g1(phTxBody, phLvlTag);
+        phLvl = g1(g1(phTxBody, "lstStyle"), phLvlTag) || g1(phTxBody, phLvlTag);
         phDefRPr = phLvl ? g1(phLvl, "defRPr") : (g1(g1(phTxBody, "lstStyle"), "defRPr") || g1(phTxBody, "defRPr"));
       }
+      const algn = attr(pPr, "algn") || attr(phLvl, "algn", "l");
       const effectiveDefRPr = defRPr || phDefRPr;
       const marL = attrInt(pPr, "marL", 0) * scale;
       const indent = attrInt(pPr, "indent", 0) * scale;
@@ -3692,6 +3696,7 @@ var PptxBrowser = (() => {
         const rPr = g1(runEl, "rPr");
         const tEl = g1(runEl, "t");
         let text = tEl ? tEl.textContent : "";
+        if (runEl.localName === "fld" && attr(runEl, "type") === "slidenum" && ctx._slideNum) text = String(ctx._slideNum);
         const fontInfo = buildFontInherited(rPr, effectiveDefRPr, scale * fontScaleAttr, themeData, paraDefSz, lstDefRPr);
         ctx.font = fontInfo.fontStr;
         const szPx = fontInfo.szPx;
@@ -3737,6 +3742,30 @@ var PptxBrowser = (() => {
       paraLayouts.push({ lines: paraLines, algn, marL, indent, spaceBefore, spaceAfter, lnSpcPx, emptyPara: false, bullet });
       for (const line of paraLines) {
         totalHeight += spaceBefore + (lnSpcPx || line.maxSzPx * 1.2) + spaceAfter;
+      }
+    }
+    let squeezeX = 1;
+    const onlyPara = paraLayouts.length === 1 ? paraLayouts[0] : null;
+    if (doWrap && onlyPara && !onlyPara.emptyPara && onlyPara.lines.length > 1 && gtn(paragraphs[0], "br").length === 0) {
+      const maxSz = Math.max(...onlyPara.lines.map((l) => l.maxSzPx));
+      const oneLineH = onlyPara.lnSpcPx || maxSz * 1.2;
+      if (th < oneLineH * 1.5) {
+        const runs = [];
+        for (const line of onlyPara.lines) {
+          if (runs.length) runs.push({ ...line.runs[0], text: " ", underline: false, strikethrough: false });
+          runs.push(...line.runs);
+        }
+        let lineW = 0;
+        for (const run of runs) {
+          ctx.font = run.fontInfo.fontStr;
+          lineW += ctx.measureText(run.text).width;
+        }
+        const availW = tw - onlyPara.marL;
+        if (availW > 0 && lineW <= availW * 1.25) {
+          onlyPara.lines = [{ runs, maxSzPx: maxSz }];
+          squeezeX = Math.min(1, availW / lineW);
+          totalHeight = onlyPara.spaceBefore + oneLineH + onlyPara.spaceAfter;
+        }
       }
     }
     if (normAutoFit && !explicitFontScale && totalHeight > th && th > 0) {
@@ -3820,6 +3849,13 @@ var PptxBrowser = (() => {
           const bulletX = tx + marL + indent;
           drawBullet(ctx, bullet, bulletX, baseline, autoNumCounters);
         }
+        if (squeezeX < 1) {
+          runX = tx + marL;
+          ctx.save();
+          ctx.translate(runX, 0);
+          ctx.scale(squeezeX, 1);
+          ctx.translate(-runX, 0);
+        }
         let justWordGap = 0;
         if (algn === "just") {
           const isLastLine = lineObj === lines[lines.length - 1];
@@ -3892,6 +3928,7 @@ var PptxBrowser = (() => {
             runX += rw;
           }
         }
+        if (squeezeX < 1) ctx.restore();
         curY += lineH;
       }
       curY += spaceAfter;
@@ -8793,6 +8830,7 @@ ${xrefOffset}
       canvas.width = width;
       canvas.height = height;
       const ctx = canvas.getContext("2d");
+      ctx._slideNum = slideIndex + 1;
       ctx.clearRect(0, 0, width, height);
       await renderBackground(
         ctx,

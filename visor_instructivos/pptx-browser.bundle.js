@@ -3558,6 +3558,15 @@ var PptxBrowser = (() => {
     }
     return result;
   }
+  const SYMBOL_FONT_BULLETS = {
+    "\xA7": "\u25AA",
+    "\xD8": "\u27A2",
+    "\xFC": "\u2713",
+    "n": "\u25A0",
+    "l": "\u25CF",
+    "q": "\u2751",
+    "v": "\u2756"
+  };
   function drawBullet(ctx, bullet, x, baseline, autoNumCounters) {
     if (!bullet) return;
     const fontMatch = ctx.font.match(/(\d+(?:\.\d+)?)px/);
@@ -3568,10 +3577,21 @@ var PptxBrowser = (() => {
       ctx.fillStyle = colorToCss(bullet.color);
       ctx.strokeStyle = ctx.fillStyle;
     }
-    const family = bullet.fontFamily ? '"' + bullet.fontFamily + '", sans-serif' : ctx.font.split(/\d+px\s+/)[1] || "sans-serif";
+    let bulletChar = bullet.char;
+    let bulletFont = bullet.fontFamily;
+    if (bulletChar && bulletFont && /^(wingdings|symbol)/i.test(bulletFont)) {
+      const code = bulletChar.charCodeAt(0);
+      const ch = code >= 61440 && code <= 61695 ? String.fromCharCode(code - 61440) : bulletChar;
+      const mapped = /^symbol/i.test(bulletFont) ? { "\xB7": "\u2022" }[ch] : SYMBOL_FONT_BULLETS[ch];
+      if (mapped) {
+        bulletChar = mapped;
+        bulletFont = null;
+      }
+    }
+    const family = bulletFont ? '"' + bulletFont + '", sans-serif' : ctx.font.split(/\d+px\s+/)[1] || "sans-serif";
     ctx.font = szPx + "px " + family;
     if (bullet.type === "char") {
-      ctx.fillText(bullet.char, x, baseline);
+      ctx.fillText(bulletChar, x, baseline);
     } else if (bullet.type === "autoNum") {
       const key = bullet.numType + ":" + bullet.startAt;
       if (autoNumCounters[key] === void 0) autoNumCounters[key] = bullet.startAt;
@@ -3581,13 +3601,59 @@ var PptxBrowser = (() => {
     }
     ctx.restore();
   }
-  async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeColors, themeData, defaultFontSz = 1800, phTxBody = null, styleFontColor = null) {
+  const STYLE_CHILD_GROUPS = {
+    buNone: "buType",
+    buAutoNum: "buType",
+    buChar: "buType",
+    buBlip: "buType",
+    buFont: "buFont",
+    buFontTx: "buFont",
+    buClr: "buClr",
+    buClrTx: "buClr",
+    buSzPct: "buSz",
+    buSzPts: "buSz",
+    buSzTx: "buSz",
+    noFill: "fill",
+    solidFill: "fill",
+    gradFill: "fill",
+    pattFill: "fill",
+    blipFill: "fill",
+    grpFill: "fill",
+    noAutofit: "autofit",
+    normAutofit: "autofit",
+    spAutoFit: "autofit"
+  };
+  function mergeStyleEls(els) {
+    const list = els.filter(Boolean);
+    if (list.length <= 1) return list[0] || null;
+    const out = list[0].cloneNode(false);
+    const seen = new Set(Array.from(list[0].children, (c) => STYLE_CHILD_GROUPS[c.localName] || c.localName));
+    for (const c of list[0].children) out.appendChild(c.cloneNode(true));
+    for (const el of list.slice(1)) {
+      for (const a of Array.from(el.attributes)) {
+        if (!out.hasAttribute(a.name)) out.setAttribute(a.name, a.value);
+      }
+      for (const c of el.children) {
+        const key = STYLE_CHILD_GROUPS[c.localName] || c.localName;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.appendChild(c.cloneNode(true));
+      }
+    }
+    return out;
+  }
+  function lstLevel(txBody, levelTag) {
+    const lstStyle = txBody ? getDirectChild(txBody, "lstStyle") : null;
+    return lstStyle ? getDirectChild(lstStyle, levelTag) : null;
+  }
+  async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeColors, themeData, defaultFontSz = 1800, phTxBody = null, styleFontColor = null, inherit = null) {
     if (!txBody) return;
-    const bodyPr = g1(txBody, "bodyPr");
-    const phBodyPr = phTxBody ? g1(phTxBody, "bodyPr") : null;
-    const anchor = attr(bodyPr, "anchor") || attr(phBodyPr, "anchor", "t");
-    const wrap = attr(bodyPr, "wrap") || attr(phBodyPr, "wrap", "square");
-    const vert = attr(bodyPr, "vert") || attr(phBodyPr, "vert", "horz");
+    const masterPhTxBody = inherit && inherit.masterPhTxBody !== phTxBody ? inherit.masterPhTxBody : null;
+    const masterStyle = inherit ? inherit.masterStyle : null;
+    const bodyPr = mergeStyleEls([getDirectChild(txBody, "bodyPr"), phTxBody && getDirectChild(phTxBody, "bodyPr"), masterPhTxBody && getDirectChild(masterPhTxBody, "bodyPr")]);
+    const anchor = attr(bodyPr, "anchor", "t");
+    const wrap = attr(bodyPr, "wrap", "square");
+    const vert = attr(bodyPr, "vert", "horz");
     const lIns = attrInt(bodyPr, "lIns", 91440) * scale;
     const tIns = attrInt(bodyPr, "tIns", 45720) * scale;
     const rIns = attrInt(bodyPr, "rIns", 91440) * scale;
@@ -3611,10 +3677,17 @@ var PptxBrowser = (() => {
       tx = 0;
       ty = 0;
     }
-    const normAutoFit = g1(bodyPr, "normAutoFit") || g1(txBody, "normAutoFit");
-    const spAutoFit = g1(bodyPr, "spAutoFit") || g1(txBody, "spAutoFit");
+    const normAutoFit = getDirectChild(bodyPr, "normAutofit");
+    const spAutoFit = getDirectChild(bodyPr, "spAutoFit");
     const explicitFontScale = normAutoFit ? normAutoFit.getAttribute("fontScale") : null;
     let fontScaleAttr = explicitFontScale ? parseInt(explicitFontScale, 10) / 1e5 : 1;
+    const lnSpcScale = 1 - (normAutoFit ? attrInt(normAutoFit, "lnSpcReduction", 0) / 1e5 : 0);
+    const lineHeightFor = (lnSpc, szPx) => {
+      const pct = lnSpc ? g1(lnSpc, "spcPct") : null;
+      const pts = lnSpc ? g1(lnSpc, "spcPts") : null;
+      if (pts && !pct) return attrInt(pts, "val", 0) / 100 * EMU_PER_PT * scale;
+      return szPx * 1.2 * (pct ? attrInt(pct, "val", 1e5) / 1e5 : 1) * lnSpcScale;
+    };
     const lstStyle = g1(txBody, "lstStyle");
     const lstDefRPr = (lstStyle ? g1(lstStyle, "defRPr") : null) || (phTxBody ? g1(g1(phTxBody, "lstStyle") || phTxBody, "defRPr") : null);
     function resolveRPrAttr(rPr, paraDefRPr, attrName, fallback) {
@@ -3630,18 +3703,21 @@ var PptxBrowser = (() => {
     const paraLayouts = [];
     let totalHeight = 0;
     for (const para of paragraphs) {
-      const pPr = g1(para, "pPr");
-      const defRPr = pPr ? g1(pPr, "defRPr") : null;
-      const lvl = attrInt(pPr, "lvl", 0);
+      const ownPPr = g1(para, "pPr");
+      const lvl = attrInt(ownPPr, "lvl", 0);
+      const levelTag = `lvl${lvl + 1}pPr`;
+      const pPrChain = [
+        ownPPr,
+        lstLevel(txBody, levelTag),
+        lstLevel(phTxBody, levelTag),
+        lstLevel(masterPhTxBody, levelTag),
+        masterStyle ? getDirectChild(masterStyle, levelTag) : null
+      ];
       let phDefRPr = null;
-      let phLvl = null;
-      if (phTxBody) {
-        const phLvlTag = `lvl${lvl + 1}pPr`;
-        phLvl = g1(g1(phTxBody, "lstStyle"), phLvlTag) || g1(phTxBody, phLvlTag);
-        phDefRPr = phLvl ? g1(phLvl, "defRPr") : (g1(g1(phTxBody, "lstStyle"), "defRPr") || g1(phTxBody, "defRPr"));
-      }
-      const algn = attr(pPr, "algn") || attr(phLvl, "algn", "l");
-      const effectiveDefRPr = defRPr || phDefRPr;
+      if (phTxBody && !pPrChain[2]) phDefRPr = g1(g1(phTxBody, "lstStyle"), "defRPr") || g1(phTxBody, "defRPr");
+      const pPr = mergeStyleEls(pPrChain);
+      const effectiveDefRPr = mergeStyleEls([...pPrChain.map((el) => el && getDirectChild(el, "defRPr")), phDefRPr]);
+      const algn = attr(pPr, "algn", "l");
       const marL = attrInt(pPr, "marL", 0) * scale;
       const indent = attrInt(pPr, "indent", 0) * scale;
       const bullet = pPr ? parseBullet(pPr, effectiveDefRPr, themeColors, themeData) : null;
@@ -3680,15 +3756,16 @@ var PptxBrowser = (() => {
         const sz = attrInt(endParaRPr || effectiveDefRPr, "sz", paraDefSz);
         const szPx = sz * 127 * scale * fontScaleAttr;
         paraLayouts.push({ lines: [""], algn, marL, spaceBefore, spaceAfter, szPx, lnSpc, runs: [], emptyPara: true, bullet });
-        totalHeight += spaceBefore + szPx * 1.2 + spaceAfter;
+        totalHeight += spaceBefore + lineHeightFor(lnSpc, szPx) + spaceAfter;
         continue;
       }
       let paraLines = [];
       let currentLine = [];
       let maxSzPx = 0;
+      let prevRunEndsWithSpace = false;
       for (const runEl of runEls) {
         if (runEl.localName === "br") {
-          paraLines.push({ runs: currentLine, maxSzPx: Math.max(maxSzPx, paraDefSz * 127 * scale) });
+          paraLines.push({ runs: currentLine, maxSzPx: maxSzPx || paraDefSz * 127 * scale * fontScaleAttr });
           currentLine = [];
           maxSzPx = 0;
           continue;
@@ -3698,7 +3775,8 @@ var PptxBrowser = (() => {
         let text = tEl ? tEl.textContent : "";
         if (runEl.localName === "fld" && attr(runEl, "type") === "slidenum" && ctx._slideNum) text = String(ctx._slideNum);
         const fontInfo = buildFontInherited(rPr, effectiveDefRPr, scale * fontScaleAttr, themeData, paraDefSz, lstDefRPr);
-        ctx.font = fontInfo.fontStr;
+        fontInfo.spcPx = parseInt(resolveRPrAttr(rPr, effectiveDefRPr, "spc", "0"), 10) / 100 * EMU_PER_PT * scale * fontScaleAttr;
+        setTextFont(ctx, fontInfo);
         const szPx = fontInfo.szPx;
         if (szPx > maxSzPx) maxSzPx = szPx;
         const color = getRunColorInherited(rPr, effectiveDefRPr, themeColors, lstDefRPr) || styleFontColor;
@@ -3710,45 +3788,46 @@ var PptxBrowser = (() => {
           for (let wi = 0; wi < words.length; wi++) {
             const word = words[wi];
             const testRun = { text: word, rPr, fontInfo, color, underline, strikethrough, baseline };
-            let lineW = indent + marL;
+            let lineW = marL;
             for (const run of currentLine) {
-              ctx.font = run.fontInfo.fontStr;
+              setTextFont(ctx, run.fontInfo);
               lineW += ctx.measureText(run.text).width;
             }
-            ctx.font = fontInfo.fontStr;
+            setTextFont(ctx, fontInfo);
             const wordW = ctx.measureText(word).width;
-            const sep = currentLine.length ? ctx.measureText(" ").width : 0;
-            if (lineW + sep + wordW > tw && currentLine.length > 0) {
+            const sep = currentLine.length && wi > 0 ? ctx.measureText(" ").width : 0;
+            if ((wi > 0 || prevRunEndsWithSpace) && lineW + sep + wordW > tw && currentLine.length > 0) {
               paraLines.push({ runs: currentLine, maxSzPx: Math.max(maxSzPx, szPx) });
               currentLine = [{ text: word, rPr, fontInfo, color, underline, strikethrough, baseline }];
               maxSzPx = szPx;
             } else {
-              if (currentLine.length > 0) {
+              if (currentLine.length > 0 && wi > 0) {
                 const spaceRun = { text: " ", rPr, fontInfo, color, underline: false, strikethrough: false, baseline };
                 currentLine.push(spaceRun);
               }
               currentLine.push({ text: word, rPr, fontInfo, color, underline, strikethrough, baseline });
             }
           }
+          prevRunEndsWithSpace = text.endsWith(" ");
         } else {
           currentLine.push({ text, rPr, fontInfo, color, underline, strikethrough, baseline });
           if (szPx > maxSzPx) maxSzPx = szPx;
         }
       }
       if (currentLine.length > 0) {
-        paraLines.push({ runs: currentLine, maxSzPx: Math.max(maxSzPx, paraDefSz * 127 * scale) });
+        paraLines.push({ runs: currentLine, maxSzPx: maxSzPx || paraDefSz * 127 * scale * fontScaleAttr });
       }
-      const lnSpcPx = lnSpc ? computeLineHeight(lnSpc, paraDefSz * 127 * scale * fontScaleAttr, scale) : null;
-      paraLayouts.push({ lines: paraLines, algn, marL, indent, spaceBefore, spaceAfter, lnSpcPx, emptyPara: false, bullet });
+      paraLayouts.push({ lines: paraLines, algn, marL, indent, spaceBefore, spaceAfter, lnSpc, emptyPara: false, bullet });
+      totalHeight += spaceBefore + spaceAfter;
       for (const line of paraLines) {
-        totalHeight += spaceBefore + (lnSpcPx || line.maxSzPx * 1.2) + spaceAfter;
+        totalHeight += lineHeightFor(lnSpc, line.maxSzPx);
       }
     }
     let squeezeX = 1;
     const onlyPara = paraLayouts.length === 1 ? paraLayouts[0] : null;
     if (doWrap && onlyPara && !onlyPara.emptyPara && onlyPara.lines.length > 1 && gtn(paragraphs[0], "br").length === 0) {
       const maxSz = Math.max(...onlyPara.lines.map((l) => l.maxSzPx));
-      const oneLineH = onlyPara.lnSpcPx || maxSz * 1.2;
+      const oneLineH = lineHeightFor(onlyPara.lnSpc, maxSz);
       if (th < oneLineH * 1.5) {
         const runs = [];
         for (const line of onlyPara.lines) {
@@ -3757,7 +3836,7 @@ var PptxBrowser = (() => {
         }
         let lineW = 0;
         for (const run of runs) {
-          ctx.font = run.fontInfo.fontStr;
+          setTextFont(ctx, run.fontInfo);
           lineW += ctx.measureText(run.text).width;
         }
         const availW = tw - onlyPara.marL;
@@ -3812,30 +3891,28 @@ var PptxBrowser = (() => {
       fontScaleAttr = (lo + hi) / 2;
     }
     let startY = ty;
-    const lineCount = paraLayouts.reduce((n, pl) => n + pl.lines.length, 0);
-    const keepAnchorOnOverflow = totalHeight <= th || lineCount === 1;
     if (anchor === "ctr") {
-      startY = keepAnchorOnOverflow ? ty + (th - totalHeight) / 2 : ty;
+      startY = ty + (th - totalHeight) / 2;
     } else if (anchor === "b") {
-      startY = keepAnchorOnOverflow ? ty + th - totalHeight : ty;
+      startY = ty + th - totalHeight;
     }
     let curY = startY;
     const autoNumCounters = {};
     for (const paraLayout of paraLayouts) {
-      const { lines, algn, marL, indent, spaceBefore, spaceAfter, lnSpcPx, emptyPara, bullet } = paraLayout;
+      const { lines, algn, marL, indent, spaceBefore, spaceAfter, lnSpc, emptyPara, bullet } = paraLayout;
       curY += spaceBefore;
       if (emptyPara) {
-        curY += lines[0] ? lnSpcPx || paraLayout.szPx * 1.2 : 12 * scale;
+        curY += lineHeightFor(lnSpc, paraLayout.szPx);
         curY += spaceAfter;
         continue;
       }
       for (const lineObj of lines) {
         const { runs, maxSzPx } = lineObj;
-        const lineH = lnSpcPx || maxSzPx * 1.2;
+        const lineH = lineHeightFor(lnSpc, maxSzPx);
         const baseline = curY + maxSzPx * 0.85;
         let lineW = 0;
         for (const run of runs) {
-          ctx.font = run.fontInfo.fontStr;
+          setTextFont(ctx, run.fontInfo);
           lineW += ctx.measureText(run.text).width;
         }
         let runX = tx + marL;
@@ -3847,6 +3924,7 @@ var PptxBrowser = (() => {
         const isFirstLineOfPara = lineObj === lines[0];
         if (bullet && isFirstLineOfPara) {
           const bulletX = tx + marL + indent;
+          ctx.fillStyle = runs[0] && runs[0].color ? colorToCss(runs[0].color) : "#000000";
           drawBullet(ctx, bullet, bulletX, baseline, autoNumCounters);
         }
         if (squeezeX < 1) {
@@ -3862,7 +3940,7 @@ var PptxBrowser = (() => {
           if (!isLastLine) {
             let spaceCount = 0;
             for (const run of runs) {
-              ctx.font = run.fontInfo.fontStr;
+              setTextFont(ctx, run.fontInfo);
               spaceCount += (run.text.match(/ /g) || []).length;
             }
             const slack = tw - marL - lineW;
@@ -3872,7 +3950,7 @@ var PptxBrowser = (() => {
           }
         }
         const drawRunSegment = (text, rx, drawY, fi, underline, strike) => {
-          ctx.font = fi.fontStr;
+          setTextFont(ctx, fi);
           const sw = ctx.measureText(text).width;
           ctx.fillText(text, rx, drawY);
           const lw = Math.max(0.5, fi.szPx * 0.07);
@@ -3911,18 +3989,18 @@ var PptxBrowser = (() => {
             else drawY = baseline + run.fontInfo.szPx * 0.12;
           }
           if (justWordGap > 0 && run.text.includes(" ")) {
-            ctx.font = fi.fontStr;
+            setTextFont(ctx, fi);
             const parts = run.text.split(" ");
             for (let pi = 0; pi < parts.length; pi++) {
               const pw = drawRunSegment(parts[pi], runX, drawY, fi, run.underline, run.strikethrough);
               runX += pw;
               if (pi < parts.length - 1) {
-                ctx.font = fi.fontStr;
+                setTextFont(ctx, fi);
                 runX += ctx.measureText(" ").width + justWordGap;
               }
             }
           } else {
-            ctx.font = fi.fontStr;
+            setTextFont(ctx, fi);
             const rw = ctx.measureText(run.text).width;
             drawRunSegment(run.text, runX, drawY, fi, run.underline, run.strikethrough);
             runX += rw;
@@ -3933,7 +4011,12 @@ var PptxBrowser = (() => {
       }
       curY += spaceAfter;
     }
+    ctx.letterSpacing = "0px";
     if (isVert) ctx.restore();
+  }
+  function setTextFont(ctx, fontInfo) {
+    ctx.font = fontInfo.fontStr;
+    ctx.letterSpacing = (fontInfo.spcPx || 0) + "px";
   }
   function applyEffects(ctx, spPr, themeColors, scale) {
     const effectLst = g1(spPr, "effectLst");
@@ -3983,6 +4066,7 @@ var PptxBrowser = (() => {
     let rot = 0;
     let flipH = false, flipV = false;
     const phData = resolvePlaceholderXfrm(spEl, placeholderMap);
+    const textInherit = getMasterTextInherit(spEl, placeholderMap);
     if (xfrm) {
       const off = g1(xfrm, "off");
       const ext = g1(xfrm, "ext");
@@ -4009,15 +4093,7 @@ var PptxBrowser = (() => {
       return;
     }
     if (w <= 0 || h <= 0) return;
-    if (parentGroup) {
-      const { grpOff, grpExt, chOff, chExt } = parentGroup;
-      const scaleX = grpExt.cx / chExt.cx;
-      const scaleY = grpExt.cy / chExt.cy;
-      x = grpOff.x + (x / scale - chOff.x) * scaleX * scale;
-      y = grpOff.y + (y / scale - chOff.y) * scaleY * scale;
-      w = w * scaleX;
-      h = h * scaleY;
-    }
+    if (parentGroup) ({ x, y, w, h } = mapGroupBox(parentGroup, x, y, w, h));
     const cx = x + w / 2, cy = y + h / 2;
     ctx.save();
     if (rot !== 0 || flipH || flipV) {
@@ -4179,7 +4255,7 @@ var PptxBrowser = (() => {
         }
         const defSz = getDefaultFontSize(spEl, themeData);
         const phTxBody = phData ? phData.txBody : null;
-        await renderTextBody(ctx, txBody2, x, y, w, h, scale, themeColors, themeData, defSz, phTxBody, getStyleFontColor());
+        await renderTextBody(ctx, txBody2, x, y, w, h, scale, themeColors, themeData, defSz, phTxBody, getStyleFontColor(), textInherit);
         ctx.restore();
       }
       return;
@@ -4232,9 +4308,13 @@ var PptxBrowser = (() => {
       }
       const defSz = getDefaultFontSize(spEl, themeData);
       const phTxBody = phData ? phData.txBody : null;
-      await renderTextBody(ctx, txBody, x, y, w, h, scale, themeColors, themeData, defSz, phTxBody, getStyleFontColor());
+      await renderTextBody(ctx, txBody, x, y, w, h, scale, themeColors, themeData, defSz, phTxBody, getStyleFontColor(), textInherit);
       ctx.restore();
     }
+  }
+  function mapGroupBox(g, x, y, w, h) {
+    if (!g) return { x, y, w, h };
+    return { x: g.ox + g.sx * x, y: g.oy + g.sy * y, w: w * g.sx, h: h * g.sy };
   }
   function getDefaultFontSize(spEl, themeData) {
     const nvSpPr = g1(spEl, "nvSpPr");
@@ -4293,7 +4373,7 @@ var PptxBrowser = (() => {
     ctx.stroke();
     ctx.setLineDash([]);
   }
-  async function renderPicture(ctx, picEl, rels, imageCache, themeColors, scale, placeholderMap = null) {
+  async function renderPicture(ctx, picEl, rels, imageCache, themeColors, scale, placeholderMap = null, parentGroup = null) {
     const spPr = g1(picEl, "spPr");
     let xfrm = spPr ? g1(spPr, "xfrm") : null;
     let phData = null;
@@ -4310,10 +4390,13 @@ var PptxBrowser = (() => {
     if (!xfrm && !phData) return;
     const off = xfrm ? g1(xfrm, "off") : null;
     const ext = xfrm ? g1(xfrm, "ext") : null;
-    const x = (off ? attrInt(off, "x", 0) : (phData ? phData.x : 0)) * scale;
-    const y = (off ? attrInt(off, "y", 0) : (phData ? phData.y : 0)) * scale;
-    const w = (ext ? attrInt(ext, "cx", 0) : (phData ? phData.w : 0)) * scale;
-    const h = (ext ? attrInt(ext, "cy", 0) : (phData ? phData.h : 0)) * scale;
+    const { x, y, w, h } = mapGroupBox(
+      parentGroup,
+      (off ? attrInt(off, "x", 0) : (phData ? phData.x : 0)) * scale,
+      (off ? attrInt(off, "y", 0) : (phData ? phData.y : 0)) * scale,
+      (ext ? attrInt(ext, "cx", 0) : (phData ? phData.w : 0)) * scale,
+      (ext ? attrInt(ext, "cy", 0) : (phData ? phData.h : 0)) * scale
+    );
     const rot = xfrm ? attrInt(xfrm, "rot", 0) / 6e4 : 0;
     const flipH = xfrm ? attr(xfrm, "flipH", "0") === "1" : false;
     const flipV = xfrm ? attr(xfrm, "flipV", "0") === "1" : false;
@@ -4483,7 +4566,7 @@ var PptxBrowser = (() => {
       curY += rowH;
     }
   }
-  async function renderGroupShape(ctx, grpSpEl, rels, imageCache, themeColors, themeData, scale) {
+  async function renderGroupShape(ctx, grpSpEl, rels, imageCache, themeColors, themeData, scale, outerGroup = null, files2 = null) {
     const grpSpPr = g1(grpSpEl, "grpSpPr");
     const xfrm = g1(grpSpPr, "xfrm");
     if (!xfrm) return;
@@ -4495,14 +4578,23 @@ var PptxBrowser = (() => {
     const rot = attrInt(xfrm, "rot", 0) / 6e4;
     const flipH = attr(xfrm, "flipH", "0") === "1";
     const flipV = attr(xfrm, "flipV", "0") === "1";
+    const box = mapGroupBox(
+      outerGroup,
+      attrInt(off, "x", 0) * scale,
+      attrInt(off, "y", 0) * scale,
+      attrInt(ext, "cx", 0) * scale,
+      attrInt(ext, "cy", 0) * scale
+    );
+    const sx = box.w / ((attrInt(chExt, "cx", 0) || 1) * scale);
+    const sy = box.h / ((attrInt(chExt, "cy", 0) || 1) * scale);
     const parentGroup = {
-      grpOff: { x: attrInt(off, "x", 0) * scale, y: attrInt(off, "y", 0) * scale },
-      grpExt: { cx: attrInt(ext, "cx", 0) * scale, cy: attrInt(ext, "cy", 0) * scale },
-      chOff: { x: attrInt(chOff, "x", 0), y: attrInt(chOff, "y", 0) },
-      chExt: { cx: attrInt(chExt, "cx", 1), cy: attrInt(chExt, "cy", 1) }
+      ox: box.x - attrInt(chOff, "x", 0) * scale * sx,
+      oy: box.y - attrInt(chOff, "y", 0) * scale * sy,
+      sx,
+      sy
     };
-    const grpCx = parentGroup.grpOff.x + parentGroup.grpExt.cx / 2;
-    const grpCy = parentGroup.grpOff.y + parentGroup.grpExt.cy / 2;
+    const grpCx = box.x + box.w / 2;
+    const grpCy = box.y + box.h / 2;
     ctx.save();
     if (rot !== 0 || flipH || flipV) {
       ctx.translate(grpCx, grpCy);
@@ -4514,10 +4606,10 @@ var PptxBrowser = (() => {
     for (const child of grpSpEl.children) {
       const ln = child.localName;
       if (ln === "sp") await renderShape(ctx, child, rels, imageCache, themeColors, themeData, scale, parentGroup);
-      else if (ln === "pic") await renderPicture(ctx, child, rels, imageCache, themeColors, scale);
-      else if (ln === "grpSp") await renderGroupShape(ctx, child, rels, imageCache, themeColors, themeData, scale);
-      else if (ln === "graphicFrame") await renderGraphicFrame(ctx, child, themeColors, themeData, scale, files, rels);
-      else if (ln === "cxnSp") await renderConnector(ctx, child, themeColors, scale);
+      else if (ln === "pic") await renderPicture(ctx, child, rels, imageCache, themeColors, scale, null, parentGroup);
+      else if (ln === "grpSp") await renderGroupShape(ctx, child, rels, imageCache, themeColors, themeData, scale, parentGroup, files2);
+      else if (ln === "graphicFrame") await renderGraphicFrame(ctx, child, themeColors, themeData, scale, files2, rels, parentGroup);
+      else if (ln === "cxnSp") await renderConnector(ctx, child, themeColors, scale, parentGroup);
     }
     ctx.restore();
   }
@@ -4589,17 +4681,20 @@ var PptxBrowser = (() => {
     }
     ctx.restore();
   }
-  async function renderConnector(ctx, cxnSpEl, themeColors, scale) {
+  async function renderConnector(ctx, cxnSpEl, themeColors, scale, parentGroup = null) {
     const spPr = g1(cxnSpEl, "spPr");
     const xfrm = g1(spPr, "xfrm");
     if (!xfrm) return;
     const off = g1(xfrm, "off");
     const ext = g1(xfrm, "ext");
     if (!off || !ext) return;
-    const x = attrInt(off, "x", 0) * scale;
-    const y = attrInt(off, "y", 0) * scale;
-    const w = attrInt(ext, "cx", 0) * scale;
-    const h = attrInt(ext, "cy", 0) * scale;
+    const { x, y, w, h } = mapGroupBox(
+      parentGroup,
+      attrInt(off, "x", 0) * scale,
+      attrInt(off, "y", 0) * scale,
+      attrInt(ext, "cx", 0) * scale,
+      attrInt(ext, "cy", 0) * scale
+    );
     const rot = attrInt(xfrm, "rot", 0) / 6e4;
     const flipH = attr(xfrm, "flipH", "0") === "1";
     const flipV = attr(xfrm, "flipV", "0") === "1";
@@ -4726,6 +4821,21 @@ var PptxBrowser = (() => {
     }
     return map;
   }
+  function getMasterTextInherit(spEl, placeholderMap) {
+    if (!placeholderMap || !placeholderMap.txStyles) return null;
+    const nvSpPr = g1(spEl, "nvSpPr");
+    const nvPr = nvSpPr ? g1(nvSpPr, "nvPr") : null;
+    const ph = nvPr ? g1(nvPr, "ph") : null;
+    if (!ph) return null;
+    const phType = attr(ph, "type", "body");
+    if (["dt", "ftr", "sldNum", "hdr"].includes(phType)) return null;
+    const styleName = phType === "title" || phType === "ctrTitle" ? "titleStyle" : "bodyStyle";
+    const masterPh = resolvePlaceholderXfrm(spEl, placeholderMap.masterMap);
+    return {
+      masterStyle: getDirectChild(placeholderMap.txStyles, styleName),
+      masterPhTxBody: masterPh ? masterPh.txBody : null
+    };
+  }
   function resolvePlaceholderXfrm(spEl, placeholderMap) {
     if (!placeholderMap) return null;
     const nvSpPr = g1(spEl, "nvSpPr");
@@ -4736,7 +4846,7 @@ var PptxBrowser = (() => {
     const phIdx = attr(ph, "idx", "0");
     return placeholderMap[`${phType}:${phIdx}`] || placeholderMap[`${phType}:0`] || placeholderMap[`body:${phIdx}`] || null;
   }
-  async function renderGraphicFrame(ctx, graphicFrame, themeColors, themeData, scale, files2, slideRels) {
+  async function renderGraphicFrame(ctx, graphicFrame, themeColors, themeData, scale, files2, slideRels, parentGroup = null) {
     const graphic = g1(graphicFrame, "graphic");
     const graphicData = graphic ? g1(graphic, "graphicData") : null;
     const uri = graphicData ? attr(graphicData, "uri", "") : "";
@@ -4747,10 +4857,13 @@ var PptxBrowser = (() => {
     if (!xfrm) return;
     const off = g1(xfrm, "off"), ext = g1(xfrm, "ext");
     if (!off || !ext) return;
-    const fx = attrInt(off, "x", 0) * scale;
-    const fy = attrInt(off, "y", 0) * scale;
-    const fw = attrInt(ext, "cx", 0) * scale;
-    const fh = attrInt(ext, "cy", 0) * scale;
+    const { x: fx, y: fy, w: fw, h: fh } = mapGroupBox(
+      parentGroup,
+      attrInt(off, "x", 0) * scale,
+      attrInt(off, "y", 0) * scale,
+      attrInt(ext, "cx", 0) * scale,
+      attrInt(ext, "cy", 0) * scale
+    );
     if (fw <= 0 || fh <= 0) return;
     const isChart = uri.includes("chart");
     const isDiagram = uri.includes("diagram");
@@ -4803,7 +4916,7 @@ var PptxBrowser = (() => {
       try {
         if (ln === "sp") await renderShape(ctx, child, rels, imageCache, themeColors, themeData, scale, null, placeholderMap);
         else if (ln === "pic") await renderPicture(ctx, child, rels, imageCache, themeColors, scale, placeholderMap);
-        else if (ln === "grpSp") await renderGroupShape(ctx, child, rels, imageCache, themeColors, themeData, scale);
+        else if (ln === "grpSp") await renderGroupShape(ctx, child, rels, imageCache, themeColors, themeData, scale, null, files2);
         else if (ln === "graphicFrame") await renderGraphicFrame(ctx, child, themeColors, themeData, scale, files2, rels);
         else if (ln === "cxnSp") await renderConnector(ctx, child, themeColors, scale);
       } catch (e) {
@@ -8821,10 +8934,20 @@ ${xrefOffset}
           this._trackBlobs(layoutImages);
         }
       }
-      const allImages = { ...this.masterImages, ...layoutImages, ...slideImages };
-      const placeholderMap = buildPlaceholderMap([layoutDoc, this.masterDoc]);
-      const usedFonts = collectUsedFonts([slideDoc, layoutDoc, this.masterDoc]);
-      await loadGoogleFontsFor(usedFonts, this.themeData);
+      const masterRel = Object.values(layoutRels).find((r) => r.type?.includes("slideMaster"));
+      const master = masterRel && await this._loadMaster(masterRel.fullPath) || {
+        doc: this.masterDoc,
+        rels: this.masterRels,
+        images: this.masterImages,
+        themeData: this.themeData,
+        themeColors: this.themeColors
+      };
+      const allImages = { ...master.images, ...layoutImages, ...slideImages };
+      const placeholderMap = buildPlaceholderMap([layoutDoc, master.doc]);
+      placeholderMap.masterMap = buildPlaceholderMap([master.doc]);
+      placeholderMap.txStyles = master.doc ? g1(master.doc, "txStyles") : null;
+      const usedFonts = collectUsedFonts([slideDoc, layoutDoc, master.doc]);
+      await loadGoogleFontsFor(usedFonts, master.themeData);
       const scale = width / this.slideSize.cx;
       const height = Math.round(this.slideSize.cy * scale);
       canvas.width = width;
@@ -8835,18 +8958,23 @@ ${xrefOffset}
       await renderBackground(
         ctx,
         slideDoc,
-        this.masterDoc,
+        master.doc,
         layoutDoc,
         slideRels,
-        this.masterRels,
+        master.rels,
         allImages,
-        this.themeColors,
+        master.themeColors,
         scale,
         this.slideSize.cx,
         this.slideSize.cy
       );
-      await this._renderNonPlaceholders(ctx, this.masterDoc, this.masterRels, this.masterImages, scale);
-      await this._renderNonPlaceholders(ctx, layoutDoc, layoutRels, layoutImages, scale);
+      const showSlideMasterSp = attr(slideDoc.documentElement, "showMasterSp") !== "0";
+      if (showSlideMasterSp && attr(layoutDoc && layoutDoc.documentElement, "showMasterSp") !== "0") {
+        await this._renderNonPlaceholders(ctx, master.doc, master.rels, master.images, scale, master.themeColors, master.themeData);
+      }
+      if (showSlideMasterSp) {
+        await this._renderNonPlaceholders(ctx, layoutDoc, layoutRels, layoutImages, scale, master.themeColors, master.themeData);
+      }
       const cSld = g1(slideDoc, "cSld");
       const spTree = cSld ? g1(cSld, "spTree") : null;
       if (spTree) {
@@ -8855,13 +8983,33 @@ ${xrefOffset}
           spTree,
           slideRels,
           allImages,
-          this.themeColors,
-          this.themeData,
+          master.themeColors,
+          master.themeData,
           scale,
           placeholderMap,
           this._files
         );
       }
+    }
+    _loadMaster(path) {
+      if (!this._masterCache) this._masterCache = {};
+      if (!this._masterCache[path]) {
+        this._masterCache[path] = (async () => {
+          const xml = this._readText(path);
+          if (!xml) return null;
+          const doc = parseXml(xml);
+          const rels = await getRels(this._files, path);
+          const images = await loadImages(this._files, rels);
+          this._trackBlobs(images);
+          let themeData = this.themeData;
+          const themePath = Object.values(rels).find((r) => r.type?.includes("theme"))?.fullPath;
+          const themeXml = themePath ? this._readText(themePath) : null;
+          if (themeXml) themeData = parseTheme(parseXml(themeXml));
+          const themeColors = buildThemeColors(themeData, parseClrMap(doc));
+          return { doc, rels, images, themeData, themeColors };
+        })();
+      }
+      return this._masterCache[path];
     }
     /**
      * Render all slides and return an array of canvas elements.
@@ -8944,7 +9092,7 @@ ${xrefOffset}
         if (img?.src?.startsWith("blob:")) this._blobUrls.push(img.src);
       }
     }
-    async _renderNonPlaceholders(ctx, doc, rels, images, scale) {
+    async _renderNonPlaceholders(ctx, doc, rels, images, scale, themeColors = this.themeColors, themeData = this.themeData) {
       if (!doc) return;
       const cSld = g1(doc, "cSld");
       const spTree = cSld ? g1(cSld, "spTree") : null;
@@ -8956,11 +9104,11 @@ ${xrefOffset}
         const nvPr = nvSpPr ? g1(nvSpPr, "nvPr") : null;
         if (nvPr && g1(nvPr, "ph")) continue;
         try {
-          if (ln === "sp") await renderShape(ctx, child, rels, images, this.themeColors, this.themeData, scale);
-          else if (ln === "pic") await renderPicture(ctx, child, rels, images, this.themeColors, scale);
-          else if (ln === "grpSp") await renderGroupShape(ctx, child, rels, images, this.themeColors, this.themeData, scale);
-          else if (ln === "graphicFrame") await renderGraphicFrame(ctx, child, this.themeColors, this.themeData, scale);
-          else if (ln === "cxnSp") await renderConnector(ctx, child, this.themeColors, scale);
+          if (ln === "sp") await renderShape(ctx, child, rels, images, themeColors, themeData, scale);
+          else if (ln === "pic") await renderPicture(ctx, child, rels, images, themeColors, scale);
+          else if (ln === "grpSp") await renderGroupShape(ctx, child, rels, images, themeColors, themeData, scale);
+          else if (ln === "graphicFrame") await renderGraphicFrame(ctx, child, themeColors, themeData, scale);
+          else if (ln === "cxnSp") await renderConnector(ctx, child, themeColors, scale);
         } catch (e) {
           console.warn(`[PptxRenderer] master/layout shape error (${ln}):`, e);
         }
@@ -9288,6 +9436,7 @@ ${xrefOffset}
       this._files = {};
       this.masterDoc = null;
       this.masterImages = {};
+      this._masterCache = {};
     }
   };
   return __toCommonJS(index_exports);

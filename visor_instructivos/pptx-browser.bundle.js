@@ -3581,7 +3581,7 @@ var PptxBrowser = (() => {
     }
     ctx.restore();
   }
-  async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeColors, themeData, defaultFontSz = 1800, phTxBody = null) {
+  async function renderTextBody(ctx, txBody, bx, by, bw, bh, scale, themeColors, themeData, defaultFontSz = 1800, phTxBody = null, styleFontColor = null) {
     if (!txBody) return;
     const bodyPr = g1(txBody, "bodyPr");
     const phBodyPr = phTxBody ? g1(phTxBody, "bodyPr") : null;
@@ -3696,7 +3696,7 @@ var PptxBrowser = (() => {
         ctx.font = fontInfo.fontStr;
         const szPx = fontInfo.szPx;
         if (szPx > maxSzPx) maxSzPx = szPx;
-        const color = getRunColorInherited(rPr, effectiveDefRPr, themeColors, lstDefRPr);
+        const color = getRunColorInherited(rPr, effectiveDefRPr, themeColors, lstDefRPr) || styleFontColor;
         const underline = resolveRPrAttr(rPr, effectiveDefRPr, "u", "none") !== "none";
         const strikethrough = resolveRPrAttr(rPr, effectiveDefRPr, "strike", "noStrike") !== "noStrike";
         const baseline = parseInt(resolveRPrAttr(rPr, effectiveDefRPr, "baseline", "0"), 10);
@@ -3783,10 +3783,12 @@ var PptxBrowser = (() => {
       fontScaleAttr = (lo + hi) / 2;
     }
     let startY = ty;
+    const lineCount = paraLayouts.reduce((n, pl) => n + pl.lines.length, 0);
+    const keepAnchorOnOverflow = totalHeight <= th || lineCount === 1;
     if (anchor === "ctr") {
-      startY = totalHeight > th ? ty : ty + (th - totalHeight) / 2;
+      startY = keepAnchorOnOverflow ? ty + (th - totalHeight) / 2 : ty;
     } else if (anchor === "b") {
-      startY = totalHeight > th ? ty : ty + th - totalHeight;
+      startY = keepAnchorOnOverflow ? ty + th - totalHeight : ty;
     }
     let curY = startY;
     const autoNumCounters = {};
@@ -4027,6 +4029,12 @@ var PptxBrowser = (() => {
       }
       return null;
     };
+    const getStyleFontColor = () => {
+      const styleEl = getDirectChild(spEl, "style");
+      const fontRef = styleEl ? getDirectChild(styleEl, "fontRef") : null;
+      const c = fontRef ? resolveColorElement(findFirstColorChild(fontRef), themeColors) : null;
+      return c ? colorToCss(c) : null;
+    };
     const getOutline = () => {
       const ln = getDirectChild(spPr, "ln") || g1(spPr, "ln");
       if (ln) return ln;
@@ -4134,7 +4142,7 @@ var PptxBrowser = (() => {
         }
         const defSz = getDefaultFontSize(spEl, themeData);
         const phTxBody = phData ? phData.txBody : null;
-        await renderTextBody(ctx, txBody2, x, y, w, h, scale, themeColors, themeData, defSz, phTxBody);
+        await renderTextBody(ctx, txBody2, x, y, w, h, scale, themeColors, themeData, defSz, phTxBody, getStyleFontColor());
         ctx.restore();
       }
       return;
@@ -4187,7 +4195,7 @@ var PptxBrowser = (() => {
       }
       const defSz = getDefaultFontSize(spEl, themeData);
       const phTxBody = phData ? phData.txBody : null;
-      await renderTextBody(ctx, txBody, x, y, w, h, scale, themeColors, themeData, defSz, phTxBody);
+      await renderTextBody(ctx, txBody, x, y, w, h, scale, themeColors, themeData, defSz, phTxBody, getStyleFontColor());
       ctx.restore();
     }
   }

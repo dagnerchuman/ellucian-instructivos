@@ -2,3 +2,4 @@ node_modules/
 .DS_Store
 .tempmediaStorage/
 *.log
+__pycache__/

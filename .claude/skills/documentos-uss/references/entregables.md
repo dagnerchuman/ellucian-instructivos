@@ -16,8 +16,8 @@ Se entregaron por chat. Los archivos no están en el repositorio: si hace falta 
 | CAPP EXPLICADO | PDF (3 pág.) + PPTX (10 diap.) | Qué es, cómo se ejecuta y cómo se valida | Malla en CAPP (E05) |
 | MIGRACIÓN R2 - LO QUE ENTIENDO | PDF (2 pág.) + PPTX (8 diap.) | Resumen para ponerse al día y preguntas | Pregunta «periodos de 3 meses» (S01) |
 | DIAGRAMA DE INICIO A FIN | PDF A3 (2 pág.) + PNG + PPTX (6 diap.) | 7 carriles, 7 fases, 17 pasos; ciclo 17 → 8 | Tutoría, jefatura, certificado (U07, U08, E10) |
-| NOTAS DE LA REUNIÓN - RESPUESTAS | PDF (4 pág.) | Transcripción de las notas del Zoom, respuestas con cita y casos de prueba | Hablaba de 40–45 min (S02) |
-| INGLÉS, INFORMÁTICA Y EMPRENDIMIENTO EN ELLUCIAN - EJEMPLOS | PDF (7 pág.) | Reglas comunes, 18 ejemplos (I-1…I-6, X-1…X-7, E-1…E-5), qué probar y dudas al final. **Es el estilo de referencia** (`scripts/pdf/ejemplo_centros.py`) | Nombres de cursos y pesos de ejemplo (U05); nombres de las horas (U09) |
+| NOTAS DE LA REUNIÓN - RESPUESTAS | PDF (4 pág.) | Transcripción de las notas del Zoom, respuestas con cita y casos de prueba | Hablaba de 40–45 min (S02) y de «¿pasa automático?» en BASIC I (S03): lo reemplaza el PDF de ejemplos |
+| INGLÉS, INFORMÁTICA Y EMPRENDIMIENTO EN ELLUCIAN - EJEMPLOS | PDF (10 pág.) | Reglas comunes, 18 ejemplos (I-1…I-6, X-1…X-7, E-1…E-5), qué probar, glosario y dudas al final. I-4 corregido el 26/09 (BASIC I desaprobado: SEUSS no lo deja pasar; Banner igual con prerrequisito Fatal o examen). **Es el estilo de referencia** (`scripts/pdf/ejemplo_centros.py`) | Nombres de cursos y pesos de ejemplo (U05); nombres de las horas (U09) |
 
 ## Temas pendientes (numeración del usuario)
 - 5 Inscripción al NRC (SFAREGS, proyección, sobrepasos).

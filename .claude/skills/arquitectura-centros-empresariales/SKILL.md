@@ -65,6 +65,7 @@ El flujo completo de 7 fases y 17 pasos está en [references/flujo-de-inicio-a-f
 | Qué dice Ellucian sobre horas, docentes, prerrequisitos, notas, asistencia, aula virtual y egreso (con cita) | [references/reglas-ellucian.md](references/reglas-ellucian.md) |
 | Páginas de Banner por proceso y en qué instructivo están | [references/paginas-banner.md](references/paginas-banner.md) |
 | Migración R2: validación, umbrales, muestra y cronograma | [references/migracion-r2.md](references/migracion-r2.md) |
+| Glosario: qué significa cada sigla y página (va entre paréntesis en todo entregable) | [references/glosario.md](references/glosario.md) |
 | Carpetas e instructivos del repositorio | [references/mapa-instructivos.md](references/mapa-instructivos.md) |
 
 ## Buscar evidencia en los instructivos
@@ -82,6 +83,7 @@ Cita siempre así: «instructivo 5.2 Carga de trabajo docente, diap. 12». El n�
 - **Nombres de cursos:**
   - De Inglés sí se conocen: BASIC I, II y III; INTERMEDIATE I, II y III.
   - De Computación y Emprendimiento no: el cronograma solo dice «TODOS».
+- **Inglés:** en SEUSS, quien desaprueba BASIC I no pasa a BASIC II, salvo con examen de suficiencia. Banner lo reproduce con el prerrequisito en Fatal (ver R09 del registro).
 - **No uses «periodo de 3 meses» para SEUSS.** El usuario dijo que no lo sabe. Lo confirmado es que SEUSS tiene 3 periodos al año (0, I y II).
 - **Horas:**
   - Según el usuario, la hora de clase dura 45 min de día y 50 min de noche, y cada una cuenta como 1 hora. En Ellucian se llama «hora académica»: es el factor de duración de SIATERM, **un solo valor por periodo**.

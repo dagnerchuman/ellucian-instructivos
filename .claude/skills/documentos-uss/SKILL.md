@@ -18,6 +18,11 @@ description: Cómo producir los entregables del proyecto Centros Empresariales U
   - «**En Ellucian**»: lo que dicen los instructivos, con cita.
   - Ejemplos y un «Resultado».
 - **Todas las dudas al final**, separadas en «Para Ellucian» y «Para la USS».
+- **Siglas y códigos siempre con su significado entre paréntesis.** Ejemplo: «NRC (Número de Referencia de Curso)», «SSASECT (Programar NRC)». Lo pidió el 26/09/2026.
+  - `explicar(html)` de `common.py` lo hace solo en cada tarjeta, la primera vez que aparece el término; SEUSS, solo una vez en todo el documento.
+  - `glosario_html()` arma el glosario, que va antes de las dudas.
+  - Si usas un término nuevo, agrégalo a `SIGLAS` o `PAGINAS`.
+- **«Hoy en SEUSS» es lo que el usuario dice que se hace hoy; no lo interpretes.** Ejemplo del 26/09: en SEUSS, quien desaprueba BASIC I **no** pasa a BASIC II (salvo con examen de suficiencia). Se había escrito «¿pasa automático?», y el usuario lo corrigió.
 - **Autor:** «Elaborado por: Dagner Anibal Chuman Lluen», en la portada y en el pie. También en los metadatos del PDF.
 - **Formato USS:**
   - morado **#7030A0** (oscuro #5C2193); verdes **#4EA72E** y **#92D050**;
@@ -35,7 +40,7 @@ Todo está en `scripts/pdf/`:
 
 | Archivo | Qué hace |
 |---|---|
-| `common.py` | `header()` (portada), `section()`, `table()`, `fmt()`, `chips()`, `render()` (HTML → PDF + metadatos), `check_pdf()` (control de calidad) |
+| `common.py` | `header()` (portada), `section()`, `table()`, `fmt()`, `chips()`, `explicar()` y `glosario_html()` (significado de siglas y páginas), `render()` (HTML → PDF + metadatos), `check_pdf()` (control de calidad) |
 | `base.css` | Estilos base (variables de color, portada, secciones, tablas) |
 | `render.js` | Playwright/Chromium; A4 (o `A3-horizontal` para diagramas); pie con título, autor y página |
 | `fonts/` | InterStatic (Inter estático 400/500/600/700) y Montserrat (400/700), licencia OFL. Se cargan con @font-face y no hace falta instalarlas |
@@ -64,7 +69,9 @@ Requisitos: `node` con `playwright` (Chromium en /opt/pw-browsers) y `pymupdf` (
    - Usa texto, «›», el SVG `ARROW` del ejemplo o formas CSS.
    - Sí funcionan: « » – — · × ÷ ›.
 4. **En grids de CSS,** envuelve el texto mixto en `<div>`. Si no, cada `<b>` se vuelve una celda aparte.
-5. **Nombres de clase CSS:** no reutilices los de `base.css` con otro significado. Por ejemplo, `.st` ya existe; una vez chocó y hubo que renombrarla a `.stp`.
+5. **Nombres de clase CSS:** no reutilices los de `base.css` con otro significado. Ya pasó dos veces:
+   - `.st` chocó y se renombró a `.stp`;
+   - `.sub` volvió oscuro el subtítulo de la portada y se renombró a `.subn`.
 
 ## Presentaciones PPTX
 En `scripts/pptx/`:

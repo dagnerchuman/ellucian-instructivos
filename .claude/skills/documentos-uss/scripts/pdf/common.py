@@ -118,3 +118,142 @@ def check_pdf(path, png_dir=None, dpi=80):
     for pg, font, txt in problems:
         print(f'  Página {pg}: «{txt}» usa {font} (cámbialo: Inter no tiene ese glifo)')
     return d.page_count, problems
+
+
+# ------------------------------------------------------------------ siglas y páginas: significado entre paréntesis
+# Regla del usuario (26/09/2026): toda sigla o código lleva su significado entre paréntesis. explicar() lo agrega
+# solo la primera vez que aparece en cada tarjeta y glosario_html() arma el glosario final con lo que se usó.
+# Nombres de páginas tomados de los instructivos (ver arquitectura-centros-empresariales/references/glosario.md).
+SIGLAS = {
+    'NRC': ('Número de Referencia de Curso', 'Número de Referencia de Curso: identifica un grupo o sección de un curso en un '
+            'periodo, con su horario y sus docentes.'),
+    'SEUSS': ('sistema académico actual de la USS', 'Sistema académico que la USS usa hoy y que se reemplaza por Banner.'),
+    'CAPP': ('evaluación del avance en la malla', 'Curriculum, Advising and Program Planning: compara la historia académica con la '
+             'malla y muestra qué cursos cumplió el estudiante y cuáles le faltan.'),
+    'FTE': ('equivalente a tiempo completo', 'Full-Time Equivalent: cuántas horas equivalen a un docente a tiempo completo.'),
+    'LMS': ('plataforma del aula virtual', 'Learning Management System: plataforma del aula virtual.'),
+    'ATTRGRD': ('componente de asistencia', 'Nombre obligatorio del componente de asistencia en el plan de evaluación del NRC.'),
+    'INH': ('nota de desaprobado por asistencia', 'Código de nota de desaprobado por asistencia en el ejemplo del instructivo 7.1.0.'),
+    'EG': ('Egresado', 'Estado de Egresado del estudiante de pregrado.'),
+    'backoffice': ('páginas internas de Banner que usa el personal', 'Páginas internas de Banner que usa el personal administrativo.'),
+    'autoservicio': ('portal web de Banner para docentes y estudiantes', 'Portal web de Banner para docentes y estudiantes.'),
+    'pitch': ('presentación corta del proyecto', 'Presentación corta del proyecto o plan de negocio.'),
+}
+PAGINAS = {
+    'STVTERM': 'códigos de periodo', 'STVPTRM': 'códigos de parte de periodo', 'SOATERM': 'Control de periodo',
+    'SSAEXCL': 'feriados y excepciones de clases', 'SIATERM': 'Control de periodo de carga docente',
+    'SIAINST': 'datos del docente', 'SIAASGN': 'Asignación de docente, su carga', 'SIAFAVL': 'disponibilidad del docente',
+    'SIAFLRT': 'reglas de carga docente', 'SCACRSE': 'catálogo de cursos', 'SCAPREQ': 'prerrequisitos y puntajes de examen del catálogo',
+    'SCADETL': 'detalle del curso: correquisitos y equivalentes', 'SCARRES': 'restricciones de inscripción del curso',
+    'SSASECT': 'Programar NRC', 'SSADETL': 'detalle del NRC', 'SSAPREQ': 'prerrequisitos del NRC',
+    'SSARRES': 'restricciones de inscripción del NRC', 'SSAWSEC': 'consulta web de notas por NRC', 'SLQMEET': 'salones disponibles',
+    'SMAPROG': 'requerimientos del programa: la malla', 'SMAAREA': 'requerimientos de área de la malla',
+    'SMARQCM': 'CAPP de un estudiante', 'SMRBCMP': 'CAPP masivo', 'SMICRLT': 'resultado del CAPP',
+    'SFPPROJ': 'proceso de proyección académica', 'SFAPROJ': 'proyección del estudiante', 'SFAREGS': 'Inscripción de curso del alumno',
+    'SFAROVR': 'permisos de sobrepaso de inscripción', 'STVROVR': 'códigos de sobrepaso', 'SFARGFE': 'reglas de cobro de la inscripción',
+    'TSAAREV': 'cuenta corriente del estudiante', 'TVACAJA': 'caja', 'SOAHOLD': 'retenciones', 'SOATEST': 'puntajes de examen del estudiante',
+    'STVTESC': 'códigos de examen', 'GOAMTCH': 'búsqueda de personas para evitar duplicados', 'SPAIDEN': 'datos de la persona',
+    'SAAQUIK': 'admisión rápida', 'SAAADMS': 'solicitud de admisión', 'SGASTDN': 'registro del estudiante',
+    'SGAADVR': 'tutor o asesor del estudiante', 'SHAGRDE': 'códigos de calificación', 'SHAGSCH': 'escalas de calificación',
+    'SHAGCOM': 'plan de evaluación del NRC', 'SFASLST': 'notas por backoffice', 'SHATCKN': 'notas ya en la historia académica',
+    'SHRCINC': 'notas incompletas', 'SHAEGBC': 'fechas de corrección extemporánea de notas',
+    'SHRROLL': 'paso de notas a la historia académica', 'SHACRSE': 'historia académica por curso', 'SHADEGR': 'grado del estudiante',
+    'GTVINTP': 'códigos de socio de integración', 'GORINTG': 'reglas de socio de integración',
+}
+# Clases donde no se agrega significado: etiquetas, títulos de tarjetas, píldoras y encabezados.
+_NO_EXPLICAR = ('lab', 'tg', 'exh', 'rh', 'tt', 'dh', 'gh', 'ap', 'sec', 'flow', 'twh', 'cite', 'src', 'pcode', 'ps', 'pl', 'k', 'num', 'gls')
+# Términos que el lector ya conoce: se explican una sola vez en todo el documento.
+UNA_VEZ = {'SEUSS'}
+_VISTOS_DOC = set()
+_VACIOS = ('br', 'img', 'col', 'path', 'input', 'hr', 'meta', 'line', 'rect', 'circle')
+_TERM_RE = re.compile(r'\b(' + '|'.join(sorted(list(PAGINAS) + [k for k in SIGLAS if k.isupper()], key=len, reverse=True))
+                      + r')\b|\b(backoffice|autoservicio|pitch)\b', re.I)
+USADOS = set()
+
+
+def _meaning(term):
+    key = term if term in PAGINAS or term in SIGLAS else term.lower()
+    if key in PAGINAS:
+        return key, PAGINAS[key]
+    return key, SIGLAS[key][0]
+
+
+def explicar(html_str, seen=None):
+    """Agrega «(significado)» a la primera aparición de cada sigla o página de Banner en el fragmento HTML.
+
+    Si el término ya está dentro de un paréntesis, usa «término: significado» para no anidar paréntesis.
+    """
+    seen = set() if seen is None else seen
+    out, stack, pending, depth = [], [], [], 0
+    for tok in re.split(r'(<[^>]+>)', html_str):
+        if tok.startswith('<'):
+            name = re.match(r'</?\s*([a-zA-Z0-9]+)', tok)
+            name = name.group(1).lower() if name else ''
+            if tok.startswith('</'):
+                out.append(tok)
+                if stack:
+                    stack.pop()
+                if pending and len(stack) < pending[-1][0]:
+                    out.append(pending.pop()[1])
+            elif tok.endswith('/>') or name in _VACIOS:
+                out.append(tok)
+            else:
+                cls = re.search(r'class="([^"]*)"', tok)
+                excl = (stack[-1] if stack else False) or bool(cls and set(cls.group(1).split()) & set(_NO_EXPLICAR))
+                stack.append(excl)
+                out.append(tok)
+            continue
+        if stack and stack[-1]:
+            out.append(tok)
+            continue
+
+        def rep(m):
+            nonlocal depth
+            term = m.group(0)
+            if term.isupper() is False and m.group(2) is None:
+                return term
+            key, mean = _meaning(term)
+            if key in seen or key in _VISTOS_DOC:
+                return term
+            seen.add(key)
+            if key in UNA_VEZ:
+                _VISTOS_DOC.add(key)
+            USADOS.add(key)
+            d = depth + tok[:m.start()].count('(') - tok[:m.start()].count(')')
+            txt = f': {mean}' if d > 0 else f' ({mean})'
+            span = f'<span class="gls">{html.escape(txt)}</span>'
+            if tok.strip() == term and stack:        # el término es todo el contenido de su etiqueta (p. ej. <span class="code">)
+                pending.append((len(stack), span))
+                return term
+            return term + span
+        new = _TERM_RE.sub(rep, tok)
+        depth += tok.count('(') - tok.count(')')
+        out.append(new)
+    return ''.join(out)
+
+
+def glosario_html(extra=()):
+    """Glosario con los términos usados en el documento (y los extra que se pidan)."""
+    keys = USADOS | set(extra)
+    sig = sorted((k for k in keys if k in SIGLAS), key=str.lower)
+    pag = sorted(k for k in keys if k in PAGINAS)
+    def item(t, d):
+        return f'<div class="gi"><b>{html.escape(t)}</b><span>{html.escape(d)}</span></div>'
+    s = ('<div class="glos keep"><div class="gh">Siglas y palabras</div><div class="gg">'
+         + ''.join(item(k.capitalize() if k.islower() else k, SIGLAS[k][1]) for k in sig) + '</div></div>')
+    if pag:
+        s += ('<div class="glos keep"><div class="gh">Páginas de Banner</div><div class="gg">'
+              + ''.join(item(k, PAGINAS[k][0].upper() + PAGINAS[k][1:] + '.') for k in pag) + '</div></div>')
+    return s
+
+
+GLOS_CSS = '''
+.gls { color: var(--mut); font-weight: 400; }
+.code + .gls, b > .gls { font-weight: 400; }
+.glos { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin: 0 0 9px; background: #fff; }
+.gh { background: var(--pl); color: var(--pd); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 9pt; padding: 5px 12px; }
+.gg { display: grid; grid-template-columns: 1fr 1fr; }
+.gi { display: grid; grid-template-columns: 78px 1fr; gap: 6px; padding: 4px 12px; border-top: 1px solid var(--line); font-size: 8.2pt;
+      line-height: 1.4; }
+.gi b { color: var(--pd); }
+'''

@@ -22,15 +22,26 @@ Todas las citas se verificaron con `scripts/buscar_instructivos.py`. Formato: in
 - SLQMEET consulta salones disponibles y SIAFAVL la disponibilidad del docente. *(6.2.1 Espacios físicos y Docentes)*
 
 ## Prerrequisitos, exámenes y sobrepasos
+- «La inscripción de un curso puede estar condicionada por una o más asignaturas que deben haber sido cursadas y/o **aprobadas** antes de inscribirlos». *(1.1.5, diap. 5)*
 - «**Examen de curso**: elemento que no es un curso pero que se constituye como prerequisito de una asignatura. Por ejemplo: **suficiencia en idioma**». *(1.1.5, diap. 8)*
-- **SCAPREQ** (catálogo) combina código de examen con puntaje, curso con calificación mínima, «Y/O» y paréntesis. *(1.1.5, diap. 18 y 19)*
-  - En el NRC se ve y se ajusta en **SSAPREQ** (5.3).
-- **SOATEST:** registra el código, el puntaje y la fecha del examen. *(3.2.2, diap. 14)* Los códigos de examen están en STVTESC.
-- **SFAROVR:** permisos de sobrepaso por periodo (códigos en STVROVR). Pueden saltarse restricciones de nivel, prerrequisitos, horas, programa, correquisitos, ligas, duplicados, entre otras. *(5.4 Sobrepasos, diap. 19 a 22)*
-- **Consecuencia para Inglés (desaprueba BASIC I):**
-  - A) Repite BASIC I.
-  - B) Rinde un examen de suficiencia: el puntaje se registra en SOATEST y se configura «BASIC I **o** examen» en SCAPREQ. Banner lo soporta.
-  - C) Pase automático: no está en los instructivos; solo con sobrepaso o quitando el prerrequisito. **Dudas U01 y E04.**
+- **SCAPREQ** (prerrequisitos y puntajes de examen del catálogo) combina:
+  - código de examen con puntaje;
+  - curso con **calificación mínima**;
+  - «Y/O» y paréntesis. *(1.1.5, diap. 18 y 19)*
+- **SSAPREQ** (prerrequisitos del NRC): el NRC hereda lo de SCAPREQ y puede ajustarse. Ejemplo del instructivo: «el estudiante debe haber aprobado ACCT 0110 o ACC0 0400». *(5.3, diap. 41 y 42)*
+- **SOATERM** (Control de periodo), pestaña «Verificación de errores de inscripción»: «Prerrequisitos: en la inscripción se valida que el estudiante no inscriba cursos o NRC sin haber cumplido los prerrequisitos». Las opciones son **Fatal** o No verificar. *(5.4 Inscripción por backoffice, diap. 14 y 15)*
+  - Fatal = no puede inscribir; Alerta = inscribe con advertencia; No verificar. *(5.4 Sobrepasos, diap. 10)*
+  - SFAREGS muestra el error en el campo «Mensaje» del NRC. *(5.4 Sobrepasos, diap. 37)*
+- **SOATERM, casilla «En progreso»:** si se marca, el curso que se está llevando cuenta como completo para el prerrequisito. «Una vez que un curso es calificado, ya no es considerado en progreso, y luego es verificado contra las reglas en SSAPREQ». *(1.1.2, diap. 18 y 19)* Importa en los grupos seguidos de Inglés (duda E13).
+- **Proyección:** SFPPROJ tiene el parámetro «¿Verif de prerrequisito? Y/N». *(5.4 Proyección, diap. 34)*
+- **SOATEST** (puntajes de examen del estudiante): código, puntaje y fecha del examen. *(3.2.2, diap. 14)* Los códigos de examen están en STVTESC.
+- **SFAROVR** (permisos de sobrepaso de inscripción): permite inscribir a pesar de un error Fatal (prerrequisito, horas, nivel, programa…). Se da por NRC o por materia-curso. *(5.4 Sobrepasos, diap. 19 a 21 y 42)*
+- **Límite de repetición:** SOATERM puede controlar cuántas veces se repite un curso, según el catálogo. *(5.4 Inscripción por backoffice, diap. 17)*
+- **Inglés, desaprueba BASIC I** (SEUSS: no pasa, salvo con examen de suficiencia; ver C11):
+  - Banner hace **lo mismo** con el prerrequisito «BASIC I aprobado **o** examen» y la verificación en Fatal.
+  - Sin examen: error y no se inscribe. Con puntaje en SOATEST: se inscribe.
+  - El único camino distinto es un sobrepaso (SFAROVR): definir quién lo da (U10).
+  - Dudas: E04 (cómo queda BASIC I en CAPP) y E13 («En progreso»).
 
 ## Notas
 1. **Escalas** en SHAGRDE y SHAGSCH (7.1.3).

@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
-"""EJEMPLO DE REFERENCIA: «Inglés, Informática y Emprendimiento en Ellucian» (7 páginas, entregado el 26/09/2026).
+"""EJEMPLO DE REFERENCIA: «Inglés, Informática y Emprendimiento en Ellucian» (10 páginas, versión del 26/09/2026).
 
 Muestra el estilo que prefiere el usuario: «Hoy en SEUSS» frente a «En Ellucian», ejemplos por centro en tarjetas,
-pocas tablas y todas las dudas al final. Copia este archivo para un documento nuevo y cambia los datos.
+pocas tablas, el significado de cada sigla entre paréntesis (explicar) con glosario y todas las dudas al final.
+Copia este archivo para un documento nuevo y cambia los datos.
 
 Uso: python3 ejemplo_centros.py [salida.pdf]
 """
 import html
 import sys
 
-from common import AUTHOR, check_pdf, fmt, header, render, section
+from common import AUTHOR, GLOS_CSS, check_pdf, explicar, fmt, glosario_html, header, render, section
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else 'INGLÉS, INFORMÁTICA Y EMPRENDIMIENTO EN ELLUCIAN - EJEMPLOS - CENTROS EMPRESARIALES.pdf'
 
@@ -84,7 +85,8 @@ PRUEBAS = [
                          'Un docente en tres NRC, y el aviso de cruce de horario.',
                          'Dos grupos de Emprendimiento que se cruzan (P02 y P03) con el mismo docente.',
                          'Un NRC vinculado al aula virtual.']),
-    ('Matrículas', ['Backoffice: inscribir con el prerrequisito cumplido y sin él.',
+    ('Matrículas', ['Backoffice: inscribir en BASIC II con BASIC I aprobado (debe dejar) y desaprobado (debe salir error).',
+                    'Con examen de suficiencia registrado, debe dejar inscribir en BASIC II.',
                     'Autoservicio: el participante se inscribe en las fechas web.',
                     'La inscripción genera el cobro en su cuenta.']),
     ('Notas', ['Plan de evaluación cargado en un NRC.',
@@ -98,11 +100,15 @@ DUDAS_ELLUCIAN = [
     'factor de duración? (ver ejemplos I-2 y X-3)',
     'Aula virtual: ¿las notas **regresan** a Banner? ¿Qué datos salen hacia el aula virtual: NRC, docente, participantes, plan de evaluación?',
     'Hora pedagógica de **60 minutos**: si se necesita (por ejemplo, para la carga o el pago del docente), ¿dónde se registra?',
-    'Si un participante pasa a BASIC II **sin examen**, ¿cómo queda BASIC I en su historia académica y en CAPP?',
+    'Si un participante pasa a BASIC II con **examen de suficiencia**, ¿cómo queda BASIC I en su historia académica y en CAPP: '
+    'pendiente o reconocido?',
+    'Casilla **«En progreso»** de SOATERM: con grupos seguidos (I04 termina el 31/5 e I06 empieza el 1/6), ¿se marca? Si se marca y '
+    'luego desaprueba BASIC I, ¿Banner lo retira de BASIC II o se hace a mano? (ver ejemplo I-4)',
     '¿Los programas de los tres centros tendrán su malla en CAPP (SMAPROG, SMAAREA) para ver el avance del participante?',
 ]
 DUDAS_USS = [
-    'Inglés: si desaprueba BASIC I, ¿rinde **examen de suficiencia** o pasa **automático**? Si hay examen, ¿cuál es el puntaje mínimo?',
+    'Examen de suficiencia de Inglés: ¿qué **puntaje mínimo** se exige y quién lo registra en Banner?',
+    '¿Quién podrá dar **sobrepasos** de prerrequisito en SFAROVR? En SEUSS ese camino no existe.',
     'Informática y Emprendimiento: ¿los cursos tienen orden (uno pide aprobar otro) o todos son independientes?',
     '¿Qué **asistencia mínima** se exige para aprobar en los centros? (el instructivo usa 70% como ejemplo)',
     '¿Quién carga el **plan de evaluación** de cada NRC: Registros Académicos (como dice el instructivo) o el centro?',
@@ -116,20 +122,20 @@ def bullets(items):
 
 
 def regla(i, t, seuss, ell, src):
-    return (f'<div class="rule"><div class="rh"><span class="k">{i}</span>{html.escape(t)}</div><div class="rc">'
+    return explicar(f'<div class="rule"><div class="rh"><span class="k">{i}</span>{html.escape(t)}</div><div class="rc">'
             f'<div class="blk seuss"><span class="lab">Hoy en SEUSS</span>{bullets(seuss)}</div>'
             f'<div class="blk ell"><span class="lab">En Ellucian</span>{bullets(ell)}<div class="src">{html.escape(src)}</div></div>'
             f'</div></div>')
 
 
 def row(kind, text):
-    lab = {'seuss': 'Hoy en SEUSS', 'ell': 'En Ellucian', 'res': 'Resultado', 'ojo': 'Ojo'}[kind]
+    lab = {'seuss': 'Hoy en SEUSS', 'conf': 'Qué confirmar', 'ell': 'En Ellucian', 'res': 'Resultado', 'ojo': 'Ojo'}[kind]
     return f'<div class="r {kind}"><span class="lab">{lab}</span><div>{text}</div></div>'
 
 
 def ex(code, ctr, title, case, rows, extra=''):
     name = {'ing': 'Inglés', 'inf': 'Informática', 'emp': 'Emprendimiento'}[ctr]
-    return (f'<div class="ex {ctr}"><div class="exh"><span class="exn">{code}</span><b>{html.escape(title)}</b>'
+    return explicar(f'<div class="ex {ctr}"><div class="exh"><span class="exn">{code}</span><b>{html.escape(title)}</b>'
             f'<span class="ctr">{name}</span></div><div class="case"><span class="lab">Caso</span><div>{fmt(case)}</div></div>'
             + ''.join(row(k, fmt(t) if isinstance(t, str) and not t.startswith('<') else t) for k, t in rows)
             + extra + '</div>')
@@ -173,16 +179,26 @@ def factores():
 
 
 def caminos():
-    items = [('A', 'Repite BASIC I', 'Se inscribe en BASIC I del siguiente grupo.', 'ok', 'Camino normal'),
-             ('B', 'Examen de suficiencia', 'Registros Académicos registra el puntaje en SOATEST. Si llega al mínimo, Banner lo deja '
-                                            'inscribirse en BASIC II. Se configura en SCAPREQ: «BASIC I aprobado **o** examen con puntaje mínimo».',
-              'ok', 'Banner lo permite'),
-             ('C', 'Pasa sin examen', 'No hay una regla así en los instructivos. Solo con un **sobrepaso de prerrequisito** (SFAROVR) '
-                                      'dado caso por caso, o quitando el prerrequisito. En CAPP, BASIC I seguiría pendiente.',
-              'tbc', 'Solo con sobrepaso')]
+    items = [('A', 'Sin examen', 'Al inscribirlo en BASIC II, SFAREGS muestra el error de prerrequisito y **no lo inscribe**. '
+                                 'Debe repetir BASIC I en el siguiente grupo.', 'ok', 'Igual que SEUSS'),
+             ('B', 'Con examen de suficiencia', 'Registros Académicos registra su puntaje en SOATEST. Si llega al mínimo, Banner '
+                                                '**sí** lo deja inscribirse en BASIC II.', 'ok', 'Igual que SEUSS'),
+             ('C', 'Con sobrepaso', 'Un usuario con permiso puede dar un sobrepaso de prerrequisito en SFAROVR y saltar la regla. '
+                                    'En SEUSS este camino no existe: debe darlo solo quien esté autorizado.', 'tbc', 'Controlar')]
     return '<div class="paths">' + ''.join(
         f'<div class="path {c}"><div class="pt"><span class="pk">{k}</span>{t}</div><p>{fmt(d)}</p>'
         f'<span class="ap {c}">{s}</span></div>' for k, t, d, c, s in items) + '</div>'
+
+
+def config_prerreq():
+    pasos = [('En SCAPREQ, BASIC II lleva el prerrequisito «BASIC I aprobado **o** examen de suficiencia con puntaje mínimo». '
+              'Cada NRC de BASIC II lo hereda en SSAPREQ.', '1.1.5, diap. 18; 5.3, diap. 41 y 42'),
+             ('En SOATERM, la verificación de «Prerrequisitos» se pone en **Fatal**: Banner no deja inscribir a quien no lo cumple.',
+              '5.4 Inscripción por backoffice, diap. 14 y 15'),
+             ('El puntaje del examen de suficiencia se registra en SOATEST.', '3.2.2, diap. 14'),
+             ('La proyección (SFPPROJ) con verificación de prerrequisitos no le ofrece BASIC II.', '5.4 Proyección, diap. 34')]
+    return ('<div><b>Sí, las dos cosas.</b> Se configura así:<ol class="steps1">'
+            + ''.join(f'<li>{fmt(t)} <span class="cite">Instructivo {c}</span></li>' for t, c in pasos) + '</ol></div>')
 
 
 def notas_calc():
@@ -227,7 +243,7 @@ def emprendimiento():
     b.append(ex('E-3', 'emp', 'Horas de un curso de 10 semanas', 'NRC de noche, martes y jueves de 19:00 a 20:40, durante las 10 semanas del grupo.', [
         ('seuss', '2 horas por día, 4 por semana: **40 horas** en total.'),
         ('ell', 'Con el factor de duración en 50, SSASECT muestra **4 horas por semana**. Las 10 semanas vienen de las fechas de la parte de '
-                'periodo (SOATERM): 4 × 10 = **40 horas**.'),
+                'periodo en SOATERM: 4 × 10 = **40 horas**.'),
         ('res', '<span class="ap ok">Coincide</span> En el turno noche cuadra igual que en SEUSS.'),
     ]))
     b.append(ex('E-4', 'emp', 'Notas con un componente que debe aprobarse', 'Plan de evaluación con el pitch final marcado «debe aprobar». '
@@ -237,7 +253,7 @@ def emprendimiento():
                                 '<b>desaprueba</b>. Con 14 o más en el pitch, aprueba.')))
     b.append(ex('E-5', 'emp', 'Requisito para egresar', 'Carla, de pregrado, aprobó todos los cursos de su carrera, Inglés y Computación, '
                 'pero le falta Emprendimiento.', [
-        ('ell', 'Para pasar al estado **EG (Egresado)** debe cumplir su malla, idiomas, emprendimiento y computación. '
+        ('ell', 'Para pasar al estado **EG** debe cumplir su malla, idiomas, emprendimiento y computación. '
                 'El cambio de estado es masivo (instructivo 8, otorgamiento de grado).'),
         ('res', 'Carla todavía no pasa a egresada. Cuando apruebe Emprendimiento, entra en el siguiente cambio masivo a EG.'),
     ]))
@@ -250,9 +266,9 @@ def build():
                 [('Elaborado por', AUTHOR), ('Fecha', '26 de septiembre de 2026'),
                  ('Fuentes', 'Notas del Zoom (SEUSS) · Instructivos de Ellucian · Tema 1'), ('Estado', 'Para confirmar')])]
 
-    b.append('<div class="lead">Cada tema tiene el mismo orden: <span class="tg seuss">Hoy en SEUSS</span> es lo que se hace ahora, '
+    b.append(explicar('<div class="lead">Cada tema tiene el mismo orden: <span class="tg seuss">Hoy en SEUSS</span> es lo que se hace ahora en SEUSS, '
              'según las notas del Zoom; <span class="tg ell">En Ellucian</span> es lo que dicen los instructivos; los '
-             '<b>ejemplos</b> muestran cómo quedaría en cada centro. <b>Todas las dudas están al final</b> (sección 6).</div>')
+             '<b>ejemplos</b> muestran cómo quedaría en cada centro. <b>Todas las dudas están al final</b> (sección 7).</div>'))
 
     # 1. Reglas comunes
     b.append(section(1, 'Lo que vale para los tres centros'))
@@ -263,8 +279,8 @@ def build():
 
     # 2. Inglés
     b.append(section(2, 'Inglés: ejemplos'))
-    b.append('<div class="intro2">Cursos del cronograma 2026. Cada mes empieza un grupo (I01 a I12). Para egresar, los estudiantes '
-             'de pregrado deben cumplir el requisito de idiomas (instructivo 8, requisitos de graduación).</div>' + cursos_ing())
+    b.append(explicar('<div class="intro2">Cursos del cronograma 2026. Cada mes empieza un grupo (I01 a I12). Para egresar, los estudiantes '
+             'de pregrado deben cumplir el requisito de idiomas (instructivo 8, requisitos de graduación).</div>') + cursos_ing())
 
     b.append(ex('I-1', 'ing', 'En qué periodo cae un grupo', 'Ana empieza **BASIC I** el lunes 6 de abril de 2026.', [
         ('seuss', 'Periodo **2026-I**.'),
@@ -282,34 +298,42 @@ def build():
                       ('Prerrequisito: **cumple**', 'g')])),
         ('res', 'Queda inscrita. En CAPP se ve BASIC I **cumplido** y BASIC II **en curso**.'),
     ]))
-    b.append(ex('I-4', 'ing', 'Desaprueba BASIC I', 'Luis, de pregrado, lleva **BASIC I** en su ciclo II y lo desaprueba. Pasa al ciclo III de su carrera.', [
-        ('seuss', 'Se quiere confirmar si rinde **examen de suficiencia** o pasa a **BASIC II automático** sin examen.'),
-        ('ell', 'Pasar de ciclo en la carrera **no aprueba** BASIC I: para inscribirse en BASIC II, Banner revisa el requisito del curso. '
-                'Hay tres caminos:'),
-    ], caminos()))
+    b.append(ex('I-4', 'ing', 'Desaprueba BASIC I: ¿puede pasar a BASIC II?', 'Luis desaprueba **BASIC I** en el grupo I04 (termina el '
+                '31/5) y quiere inscribirse en **BASIC II** del grupo I06 (empieza el 1/6).', [
+        ('seuss', 'Sale **desaprobado** y **no puede pasar** a BASIC II. La única forma de pasar sin aprobar BASIC I es rendir un '
+                  '**examen de suficiencia**.'),
+        ('conf', '¿Ellucian tiene un requisito que revise la nota de BASIC I y no lo deje pasar a BASIC II si está desaprobado? '
+                 '¿Y permite pasar con examen de suficiencia?'),
+        ('ell', config_prerreq()),
+    ], caminos() + row('ojo', fmt('Casilla «En progreso» de SOATERM: si se marca, BASIC I en curso cuenta como cumplido y Luis podría '
+                                  'inscribirse en BASIC II antes de tener su nota; cuando se califica, Banner vuelve a revisar el '
+                                  'prerrequisito (instructivo 1.1.2, diap. 19). Como los grupos son seguidos, hay que definir si se marca.'))
+       + row('res', fmt('Banner puede funcionar **igual que SEUSS**: desaprobado no pasa a BASIC II; con examen de suficiencia '
+                        'aprobado, sí.'))))
     b.append(ex('I-5', 'ing', 'Dos docentes en un NRC', 'BASIC II de noche con dos docentes: Docente A dicta lunes y miércoles; '
                 'Docente B dicta el viernes (conversación).', [
         ('ell', '<div class="sess"><div><b>Sesión 01</b> · lunes y miércoles · Docente A · <span class="ap ok">Principal</span> · 67%</div>'
                 '<div><b>Sesión 02</b> · viernes · Docente B · 33%</div></div>'),
-        ('res', 'El NRC queda con los dos docentes. Cada uno lo ve en su carga (SIAASGN). Los porcentajes son de ejemplo.'),
+        ('res', 'El NRC queda con los dos docentes y cada uno lo ve en su carga, en SIAASGN. Los porcentajes son de ejemplo.'),
     ]))
     b.append(ex('I-6', 'ing', 'Notas y asistencia', 'Plan de evaluación de un NRC de BASIC I. Pesos de ejemplo, escala de 0 a 20.', [
-        ('ell', flow([('Registros carga el plan (SHAGCOM)', 'n'), ('Docente registra por autoservicio', 'p'),
-                      ('Cierre (SHRROLL)', 'g')])),
+        ('ell', flow([('Registros Académicos carga el plan', 'n'), ('El docente registra por autoservicio', 'p'),
+                      ('Cierre: la nota pasa a la historia', 'g')])
+                + f'<div class="subn">{fmt("Registros Académicos carga el plan de evaluación del NRC en SHAGCOM; el docente registra notas y asistencia en el autoservicio; al cierre, SHRROLL pasa la nota final a la historia académica.")}</div>'),
     ], notas_calc() + row('res', '<b>Rosa</b> saca 16, 14 y 15 con 90% de asistencia: <b>aprueba con 15,0</b>. '
                                  '<b>Luis</b> saca las mismas notas pero tiene 65% de asistencia: <b>desaprueba</b> por asistencia '
                                  '(en el ejemplo del instructivo queda con la nota INH).')))
 
     # 3. Informática
     b.append('<div class="keep">' + section(3, 'Centro de Informática: ejemplos'))
-    b.append('<div class="intro2">Cronograma 2026: siete grupos, X01 a X07; cada grupo incluye todos los cursos del mes. El catálogo lo '
-             'diseña el centro. Para egresar, los estudiantes de pregrado deben cumplir el requisito de computación (instructivo 8).</div>'
+    b.append(explicar('<div class="intro2">Cronograma 2026: siete grupos, X01 a X07; cada grupo incluye todos los cursos del mes. El catálogo lo '
+             'diseña el centro. Para egresar, los estudiantes de pregrado deben cumplir el requisito de computación (instructivo 8).</div>')
              + grupos_inf() + '</div>')
 
     b.append(ex('X-1', 'inf', 'Grupo corto de agosto', 'Grupo de Informática de 4 semanas, del 3 al 30 de agosto de 2026.', [
         ('seuss', 'Periodo **2026-II**.'),
         ('ell', flow([('Inicio 3/8/2026', 'n'), ('Periodo **202656**', 'p'), ('Parte de periodo **X05**', 'p'),
-                      ('Sus NRC toman esas fechas', 'g')])),
+                      ('Todos sus cursos toman esas fechas', 'g')])),
     ]))
     b.append(ex('X-2', 'inf', 'Crear un NRC del grupo X03', 'Curso **Excel Básico** (nombre de ejemplo), grupo X03 (6/4 al 31/5/2026), '
                 'de día, 25 cupos.', [
@@ -323,28 +347,28 @@ def build():
         ('seuss', '90 minutos = **2 horas** de 45 minutos por día y **4 horas** por semana.'),
         ('ell', 'Con el mismo factor de **50** del turno noche, SSASECT calcula 90 ÷ 50 = **1,8 horas** por día y **3,6** por semana.'),
         ('res', '<span class="ap bad">No coincide</span> Con un solo factor por periodo, siempre falla un turno:'),
-    ], factores() + '<p class="fxn">Por eso es la primera duda para Ellucian (sección 6).</p>'))
+    ], factores() + '<p class="fxn">Por eso es la primera duda para Ellucian (sección 7).</p>'))
     b.append(ex('X-4', 'inf', 'Un docente en tres NRC', 'El mismo docente dicta tres NRC en el grupo X03: mañana (08:00 a 09:30), '
                 'tarde (15:00 a 16:30) y noche (19:00 a 20:40).', [
-        ('ell', 'Se le asigna en cada NRC (SSASECT). En **SIAASGN** aparecen los tres NRC con sus horas.'),
+        ('ell', 'Se le asigna en cada NRC, en SSASECT. En **SIAASGN** aparecen los tres NRC con sus horas.'),
         ('ojo', 'Si se le intenta asignar otro NRC a las 08:00 del mismo día, Banner avisa del cruce y no lo asigna, '
                 'salvo que se marque el **indicador de sobrepaso**.'),
     ]))
     b.append(ex('X-5', 'inf', 'Curso que pide otro', '**Excel Intermedio** pide haber aprobado **Excel Básico** (nombres de ejemplo).', [
-        ('ell', 'Igual que en Inglés: en SCAPREQ se pone Excel Básico como prerrequisito, o «Excel Básico **o** examen con puntaje mínimo».'),
+        ('ell', 'Igual que en Inglés (ejemplo I-4): en SCAPREQ se pone Excel Básico como prerrequisito, o «Excel Básico **o** examen con puntaje mínimo».'),
         ('res', 'Quien ya sabe Excel rinde el examen (puntaje en SOATEST) y entra directo al intermedio. '
                 'Si los cursos no tienen orden, no se configura nada.'),
     ]))
     b.append(ex('X-6', 'inf', 'Aula virtual', 'El NRC de Excel Básico usará el aula virtual.', [
         ('ell', 'En SSASECT se llena **Socio de integración** con el código del aula virtual (creado en GTVINTP y relacionado en GORINTG). '
                 'Así los datos del NRC se envían al aula virtual.'),
-        ('ojo', 'Falta confirmar si las notas del aula virtual **regresan** a Banner (sección 6).'),
+        ('ojo', 'Falta confirmar si las notas del aula virtual **regresan** a Banner (sección 7).'),
     ]))
     b.append(ex('X-7', 'inf', 'Matrícula', 'Pedro se matricula en Excel Básico del grupo X06.', [
-        ('ell', '<div class="two"><div><b>Backoffice</b>Registros Académicos lo inscribe en <span class="code">SFAREGS</span>.</div>'
-                '<div><b>Autoservicio</b>Pedro se inscribe solo, en las fechas web del periodo (<span class="code">SOATERM</span>).</div></div>'),
-        ('res', 'En los dos casos Banner revisa cupo, prerrequisitos y cruces de horario. La inscripción genera el cobro según las '
-                'reglas de cobro (SFARGFE).'),
+        ('ell', '<div class="two"><div><b class="twh">Backoffice</b>Registros Académicos lo inscribe por backoffice en <span class="code">SFAREGS</span>.</div>'
+                '<div><b class="twh">Autoservicio</b>Pedro se inscribe solo por autoservicio, en las fechas web del periodo que fija <span class="code">SOATERM</span>.</div></div>'),
+        ('res', 'En los dos casos Banner revisa cupo, prerrequisitos y cruces de horario. La inscripción genera el cobro según lo '
+                'configurado en SFARGFE.'),
     ]))
 
     # 4. Emprendimiento
@@ -352,21 +376,35 @@ def build():
 
     # 5. Qué probar
     b.append(section(5, 'Qué probar', 'Según la lista de pruebas del Zoom, con casos de los tres centros.'))
-    b.append('<div class="tests">' + ''.join(
+    b.append('<div class="tests">' + ''.join(explicar(
         f'<div class="tc"><div class="tt"><span class="k">{i}</span>{t}</div>'
-        + ''.join(f'<div class="ti"><span class="bx"></span>{fmt(x)}</div>' for x in items) + '</div>'
+        + ''.join(f'<div class="ti"><span class="bx"></span><div>{fmt(x)}</div></div>' for x in items) + '</div>')
         for i, (t, items) in enumerate(PRUEBAS, 1)) + '</div>')
 
-    # 5. Dudas
-    b.append(section(6, 'Dudas para confirmar'))
-    b.append('<div class="dudas"><div class="dc"><div class="dh">Para Ellucian</div><ol>'
-             + ''.join(f'<li>{fmt(q)}</li>' for q in DUDAS_ELLUCIAN) + '</ol></div>'
-             '<div class="dc uss"><div class="dh">Para la USS</div><ol start="6">'
-             + ''.join(f'<li>{fmt(q)}</li>' for q in DUDAS_USS) + '</ol></div></div>')
+    # 6. Dudas (se arman antes del glosario para que sus términos entren en él)
+    dudas = ('<div class="dudas"><div class="dc">' + explicar('<div class="dh">Para Ellucian</div><ol>'
+             + ''.join(f'<li>{fmt(q)}</li>' for q in DUDAS_ELLUCIAN) + '</ol>') + '</div>'
+             f'<div class="dc uss">' + explicar(f'<div class="dh">Para la USS</div><ol start="{len(DUDAS_ELLUCIAN) + 1}">'
+             + ''.join(f'<li>{fmt(q)}</li>' for q in DUDAS_USS) + '</ol>') + '</div></div>')
+
+    # 6. Glosario
+    b.append(section(6, 'Glosario', 'Qué significa cada sigla y cada página de Banner que aparece en el documento.'))
+    b.append('<div class="glos keep"><div class="gh">Grupos y periodos</div><div class="gg">'
+             '<div class="gi"><b>I01…I12</b><span>Partes de periodo (grupos del mes) de Idiomas.</span></div>'
+             '<div class="gi"><b>X01…X12</b><span>Partes de periodo de Computación (Informática).</span></div>'
+             '<div class="gi"><b>P01…P12</b><span>Partes de periodo de Emprendimiento.</span></div>'
+             '<div class="gi"><b>2026 5 4</b><span>Código de periodo: año + nivel 5 (Centros Empresariales) + secuencia.</span></div>'
+             '<div class="gi"><b>Fatal</b><span>Tipo de verificación que impide inscribir si no se cumple la regla.</span></div>'
+             '<div class="gi"><b>Sobrepaso</b><span>Permiso para inscribir a pesar de un error de inscripción.</span></div>'
+             '</div></div>' + glosario_html())
+
+    # 7. Dudas
+    b.append(section(7, 'Dudas para confirmar'))
+    b.append(dudas)
     return '\n'.join(b)
 
 
-CSS = '''
+CSS = GLOS_CSS + '''
 :root { --ing: #7030A0; --inf: #0E8A5F; --infl: #E4F5EE; --sand: #FFF6E3; --sandb: #F1DDB0; --sandt: #8A5A00; }
 .lead .tg { display: inline-block; border-radius: 5px; padding: 0 6px; font-weight: 700; font-size: 8.4pt; }
 .tg.seuss { background: var(--sand); color: var(--sandt); border: 1px solid var(--sandb); }
@@ -485,6 +523,11 @@ table.fx td:first-child { font-weight: 700; }
 .ex.emp { border-left-color: var(--emp); } .ex.emp .exn { background: var(--emp); } .ex.emp .ctr { background: var(--empl); color: var(--emp); }
 .cr.must { background: #FFF3EC; } .cr.must span:first-child { font-weight: 700; }
 .pr { grid-template-columns: 70px 1fr; }
+.r.conf { background: #F4F1FA; } .r.conf .lab { color: var(--pd); }
+.steps1 { margin: 4px 0 0; padding-left: 18px; } .steps1 li { margin: 0 0 3px; }
+.cite { font-size: 7.3pt; color: var(--mut); white-space: nowrap; }
+.subn { margin-top: 4px; font-size: 8.2pt; color: #2E2E36; }
+.ti > div { min-width: 0; }
 '''
 
 

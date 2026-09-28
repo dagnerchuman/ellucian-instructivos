@@ -1,6 +1,6 @@
 # Registro de preguntas, dudas y decisiones
 
-Última actualización: **28/09/2026**. Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
+Última actualización: **28/09/2026** (cierre de la sesión: el usuario pasa a trabajar en Antigravity IDE). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
 
 ---
 
@@ -21,6 +21,7 @@
 | C12 | **Formato:** toda sigla o término entre paréntesis debe llevar su significado, por ejemplo «NRC (Número de Referencia de Curso)». | 26/09/2026 | Usuario |
 | C13 | Reunión del 28/09 (alcance general de la USS, no solo los centros): (a) en un grupo de la maestría en Educación falleció el docente a mitad del curso: se reemplaza, y debe estar en las pruebas integrales; (b) hay programas en rediseño sin equivalencias, sin cursos y sin nueva versión; (c) posgrado envió su plan pero los cursos no están cargados en Registros Académicos, lo que pone en riesgo 20271; (d) ofrecer algo sin información impacta desde la capacidad 3 (admisión) y todo termina en Registros Académicos; (e) ¿cómo trabajarán los tutores? | 28/09/2026 | Usuario |
 | C14 | Hay que sumar **casuísticas** a las pruebas integrales, además de la muestra de estudiantes: docente separado («hasta aquí no puede dictar clases»); docente que no gestiona estrategias para un estudiante con problemas; estudiante que se queja de desprecio del docente; denuncia ante Gobierno de Personas (¿lo genera Ellucian?). | 28/09/2026 | Usuario |
+| C15 | **Práctica en TEST (28/09):** el usuario creó un NRC de **ESEC 00650 «Ofimática Word 365»** en el periodo **202656**, sección **B**. En TEST existen el periodo 202656 y el curso en el catálogo. En SMAAREA, la regla **ECOM-01 «Computación I»** (área MC38-01 «Ciclo I») se cumple con uno de los cursos ESEC 00650 a 00657. Detalle en `arquitectura-centros-empresariales/references/guia-crear-nrc.md`. | 28/09/2026 | Capturas del usuario |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -78,6 +79,9 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U14 | ¿Qué área recibe las quejas contra docentes y cómo se protege al estudiante? ¿Se crea en Banner un servicio de «queja o denuncia» o se atiende fuera? | 28/09 | Casuísticas |
 | U15 | ¿Qué tipos de comentario de seguimiento (SPACMNT) usarán los tutores? | 28/09 | Casuísticas |
 | U16 | ¿Quién decide separar a un docente y cómo se avisa a Registros Académicos? | 28/09 | Casuísticas |
+| U17 | ¿Qué código de **campus** se usa para los NRC de los centros? | 28/09 | SSASECT en TEST |
+| U18 | ¿Qué son las escuelas **EM** y **CE** del catálogo? ¿Por qué existen **ESEC 00650** (EM) y **ESEP 00650** (CE) con el mismo número? ¿Cuál programa el Centro de Informática? | 28/09 | SSASECT en TEST |
+| U19 | ¿Qué programa es **MC38** y qué significa el nivel **C** en SMAAREA? ¿Esa regla ECOM-01 es el requisito de computación de pregrado? | 28/09 | SMAAREA en TEST |
 | U02 | Informática y Emprendimiento: ¿los cursos tienen orden (uno pide aprobar otro) o todos son independientes? | 26/09 | PDF de ejemplos |
 | U03 | ¿Qué **asistencia mínima** se exige para aprobar? (el instructivo usa 70% como ejemplo) | 26/09 | PDF de ejemplos |
 | U04 | ¿Quién carga el **plan de evaluación** de cada NRC: Registros Académicos (como dice el instructivo) o el centro? | 26/09 | PDF de ejemplos |

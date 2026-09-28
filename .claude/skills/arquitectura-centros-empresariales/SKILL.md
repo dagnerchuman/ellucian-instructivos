@@ -65,6 +65,7 @@ El flujo completo de 7 fases y 17 pasos está en [references/flujo-de-inicio-a-f
 | Qué dice Ellucian sobre horas, docentes, prerrequisitos, notas, asistencia, aula virtual y egreso (con cita) | [references/reglas-ellucian.md](references/reglas-ellucian.md) |
 | Páginas de Banner por proceso y en qué instructivo están | [references/paginas-banner.md](references/paginas-banner.md) |
 | Migración R2: validación, umbrales, muestra y cronograma | [references/migracion-r2.md](references/migracion-r2.md) |
+| **Crear un NRC desde cero en SSASECT, campo por campo, con lo visto en TEST** | [references/guia-crear-nrc.md](references/guia-crear-nrc.md) |
 | Glosario: qué significa cada sigla y página (va entre paréntesis en todo entregable) | [references/glosario.md](references/glosario.md) |
 | Carpetas e instructivos del repositorio | [references/mapa-instructivos.md](references/mapa-instructivos.md) |
 
@@ -77,6 +78,11 @@ python3 $S --diapositiva "6.2.1 Asignar Docentes" 21   # texto completo de una d
 python3 $S --listar                              # 83 instructivos y cuántas diapositivas tiene cada uno
 ```
 Cita siempre así: «instructivo 5.2 Carga de trabajo docente, diap. 12». El número de diapositiva es el que se ve en PowerPoint.
+
+## Cómo ayudar mientras el usuario trabaja en Banner
+- Suele mandar **capturas de la pantalla** y preguntar «¿qué pongo aquí?».
+- Responde corto, **campo por campo**, en el orden de la pantalla. Cita la diapositiva del instructivo y di qué hacer si algo no aparece.
+- Si no conoces un código de la USS (campus, escuela, programa), dilo y explica cómo buscarlo con «•••». No lo inventes.
 
 ## Reglas de trabajo
 - **No inventes datos de la USS.** Si no está en los instructivos ni lo dijo el usuario, es una duda. Si usas un dato ilustrativo (nombre de curso, peso de una nota, horario), márcalo «de ejemplo».

@@ -113,5 +113,8 @@ En `scripts/pptx/`:
 - Verifica que haya **0 errores** de fórmula.
 - **No** mates `soffice` con `pkill -f soffice`: mata también la shell.
 
+## Generadores originales
+En `fuentes/` están los scripts con los que se hizo cada entregable, con todos sus datos y textos. Úsalos para corregir o regenerar un entregable. Lee antes `fuentes/LEEME.md`: hay rutas que ajustar.
+
 ## Entregables hechos hasta ahora
 Lista, estructura y qué supuestos usa cada uno: [references/entregables.md](references/entregables.md). Si un supuesto cambia (ver el registro de dudas), ofrece corregir los entregables afectados.

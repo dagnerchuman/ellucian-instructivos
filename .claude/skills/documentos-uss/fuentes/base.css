@@ -1,0 +1,89 @@
+:root {
+  --p: #7030A0; --pd: #5C2193; --pl: #F3EAFA; --pz: #FBF8FD; --pb: #E3D2F3;
+  --g: #4EA72E; --gl: #EDF7E8; --gd: #2F6B1B; --lime: #92D050;
+  --ink: #1E1E24; --mut: #5F5F6B; --line: #E4DFEA; --soft: #F2F2F5;
+}
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html, body { margin: 0; padding: 0; background: #fff; }
+body { font-family: 'InterStatic', sans-serif; font-size: 8.7pt; line-height: 1.38; color: var(--ink);
+       font-feature-settings: 'tnum' 1, 'cv11' 1; }
+b { font-weight: 600; }
+
+/* ---------- portada compacta */
+.cover .logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
+.cover .logos img:first-child { height: 34px; }
+.cover .logos img:last-child { height: 22px; }
+.band { position: relative; background: linear-gradient(118deg, var(--pd) 0%, var(--p) 70%, #8A45C0 100%);
+        color: #fff; border-radius: 10px; padding: 16px 22px 17px; overflow: hidden; }
+.band::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 5px;
+               background: linear-gradient(90deg, var(--lime), var(--g)); }
+.band .kicker { font-size: 7.6pt; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #D5EFC2; }
+.band h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 21pt; line-height: 1.15;
+           margin: 5px 0 4px; letter-spacing: .01em; }
+.band .sub { font-size: 9.6pt; opacity: .95; }
+.meta { display: grid; grid-template-columns: 1.15fr .8fr 1.45fr 1.2fr; gap: 8px; margin: 10px 0 2px; }
+.meta div { border-left: 3px solid var(--g); padding: 1px 0 1px 8px; font-weight: 600; font-size: 8.2pt; }
+.meta span { display: block; font-size: 6.9pt; font-weight: 600; color: var(--mut); text-transform: uppercase;
+             letter-spacing: .07em; margin-bottom: 1px; }
+
+/* ---------- secciones */
+.sec { display: flex; align-items: center; gap: 8px; margin: 15px 0 4px; break-after: avoid; page-break-after: avoid; }
+.sec .num { flex: none; width: 21px; height: 21px; border-radius: 6px; background: var(--p); color: #fff;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 10pt; line-height: 21px; text-align: center; }
+.sec h2 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12.3pt; margin: 0;
+          text-transform: uppercase; letter-spacing: .015em; white-space: nowrap; }
+.sec .bar { flex: 1; height: 6px; border-radius: 3px; background: linear-gradient(90deg, rgba(146,208,80,0) 0%, var(--lime) 45%, var(--g) 100%); }
+.intro { margin: 0 0 6px; color: var(--mut); break-after: avoid; page-break-after: avoid; }
+h3 { font-family: 'Montserrat', sans-serif; font-size: 8.9pt; font-weight: 700; margin: 0 0 4px; }
+h3 .eg { font-family: 'InterStatic', sans-serif; font-weight: 500; color: var(--mut); font-size: 7.6pt; margin-left: 5px; }
+
+/* ---------- tablas */
+table.t { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0;
+          border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin: 0 0 4px; }
+table.t thead { display: table-header-group; }
+table.t th { background: var(--p); color: #fff; font-weight: 600; font-size: 7.9pt; text-align: left;
+             padding: 5px 7px; letter-spacing: .01em; }
+table.t td { padding: 4.6px 7px; border-top: 1px solid var(--line); vertical-align: top; }
+table.t tbody tr:first-child td { border-top: none; }
+table.t tbody tr:nth-child(even):not(.grp) td { background: var(--pz); }
+table.t tr { break-inside: avoid; page-break-inside: avoid; }
+table.t tr.grp td { background: var(--gl); color: var(--gd); font-weight: 700; font-size: 7.6pt;
+                    text-transform: uppercase; letter-spacing: .05em; padding: 4px 7px; border-top: 1px solid #D3EAC7; }
+table.t tr.grp td .code { color: var(--gd); }
+table.t td:first-child, table.t th:first-child { text-align: center; }
+table.kv td:first-child, table.kv th:first-child,
+table.mini td:first-child, table.mini th:first-child,
+table.when td:first-child, table.when th:first-child,
+table.index td:first-child, table.index th:first-child { text-align: left; }
+table.mini td, table.mini th { padding: 4px 7px; }
+table.steps td:nth-child(3) { font-weight: 600; }
+
+.n { display: inline-block; min-width: 17px; height: 17px; line-height: 17px; border-radius: 9px; padding: 0 4px;
+     background: var(--pl); color: var(--pd); font-weight: 700; font-size: 7.4pt; text-align: center; }
+.pg { display: inline-block; font-weight: 700; font-size: 7.5pt; letter-spacing: .02em; color: var(--pd);
+      background: var(--pl); border: 1px solid var(--pb); border-radius: 4px; padding: 0 4px; margin: 1px 2px 1px 0;
+      white-space: nowrap; }
+.code { font-weight: 600; color: var(--pd); }
+.tag { display: inline-block; background: var(--soft); border-radius: 9px; padding: 0 7px; font-weight: 600; font-size: 7.6pt; white-space: nowrap; }
+.st { display: inline-block; border-radius: 9px; padding: 0 7px; font-size: 7.5pt; font-weight: 700; background: var(--soft); color: #6B6B76; }
+.st.sig { background: var(--pl); color: var(--pd); }
+.prop { color: var(--pd); }
+
+/* ---------- piezas */
+.seq { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin: 3px 0 8px; }
+.seq span { background: var(--pl); color: var(--pd); font-weight: 700; font-size: 8pt; border-radius: 12px; padding: 3px 11px; }
+.seq span.next { background: #fff; border: 1px dashed var(--p); }
+.seq i { color: var(--g); font-style: normal; font-weight: 800; font-size: 10pt; }
+.foot { font-size: 7.3pt; color: var(--mut); margin: 3px 0 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 2px 0 8px; break-inside: avoid; }
+.grid2.wide-left { grid-template-columns: 1.5fr 1fr; }
+.note { margin: 6px 0 0; padding: 6px 10px; border-left: 4px solid var(--g); background: var(--gl); border-radius: 6px;
+        font-size: 8.3pt; break-inside: avoid; }
+
+table.kv, table.mini, table.when, table.confirm, table.next { break-inside: avoid; page-break-inside: avoid; }
+table.index td { padding: 3.6px 7px; }
+table.index .use { font-size: 7.5pt; color: var(--mut); font-weight: 400; margin-top: 1px; }
+table.index td:last-child, table.index th:last-child { text-align: center; }
+.grid2.index2 { gap: 10px; break-inside: avoid; page-break-inside: avoid; }
+.grid2.wide-left { grid-template-columns: 1.4fr 1fr; }
+table.next .st { margin-left: 3px; }

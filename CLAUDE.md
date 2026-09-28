@@ -11,4 +11,6 @@ Responde en español. Antes de trabajar en el proyecto, usa estas skills:
 - `preguntas-y-dudas-centros`: qué está confirmado, qué se resolvió y qué dudas siguen abiertas (`registro.md`). Mantenlo actualizado.
 - `documentos-uss`: preferencias del usuario y cómo generar PDF, PPTX y Excel con formato USS.
 
+`AGENTS.md` tiene lo mismo, para otros agentes (por ejemplo Antigravity).
+
 **Git:** los cambios del visor ya se subieron a `main` cuando el usuario lo pidió. No publiques en `main` sin que lo pida.

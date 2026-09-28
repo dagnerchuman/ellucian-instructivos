@@ -18,6 +18,7 @@ Se entregaron por chat. Los archivos no están en el repositorio: si hace falta 
 | DIAGRAMA DE INICIO A FIN | PDF A3 (2 pág.) + PNG + PPTX (6 diap.) | 7 carriles, 7 fases, 17 pasos; ciclo 17 → 8 | Tutoría, jefatura, certificado (U07, U08, E10) |
 | NOTAS DE LA REUNIÓN - RESPUESTAS | PDF (4 pág.) | Transcripción de las notas del Zoom, respuestas con cita y casos de prueba | Hablaba de 40–45 min (S02) y de «¿pasa automático?» en BASIC I (S03): lo reemplaza el PDF de ejemplos |
 | INGLÉS, INFORMÁTICA Y EMPRENDIMIENTO EN ELLUCIAN - EJEMPLOS | PDF (10 pág.) | Reglas comunes, 18 ejemplos (I-1…I-6, X-1…X-7, E-1…E-5), qué probar, glosario y dudas al final. I-4 corregido el 26/09 (BASIC I desaprobado: SEUSS no lo deja pasar; Banner igual con prerrequisito Fatal o examen). **Es el estilo de referencia** (`scripts/pdf/ejemplo_centros.py`) | Nombres de cursos y pesos de ejemplo (U05); nombres de las horas (U09) |
+| RESUMEN DE LA REUNIÓN 28-09 - PRUEBAS INTEGRALES Y PLANES CURRICULARES | PDF (4 pág.) | Notas de la reunión, reemplazo de docente, dependencias de los planes curriculares (capacidades 1, 3 y 5), tutores, cuadro de totales contra legado (en blanco para llenar), escenarios de las pruebas integrales, glosario y dudas | Totales reales pendientes (U11, E12); dudas E14 a E16, U12 y U13 |
 
 ## Temas pendientes (numeración del usuario)
 - 5 Inscripción al NRC (SFAREGS, proyección, sobrepasos).

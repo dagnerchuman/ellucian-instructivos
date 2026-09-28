@@ -87,3 +87,27 @@ Todas las citas se verificaron con `scripts/buscar_instructivos.py`. Formato: in
 - **Configuración:** SMAPROG (programa), SMAAREA (áreas y reglas), SMADFLT (ONLINE/BATCH), STVCPRT / SMACPRT / SHAGPAR / SMAWCRL.
 - **Ejecución:** SMARQCM (individual), SMRBCMP (masivo). **Resultado:** SMICRLT.
 - **Proyección:** SFPPROJ, SFAPROJ, SFALPROJ. Con «restringir a cursos proyectados» en SOATERM, solo se inscribe lo proyectado. *(7.2.4; 5.4_4.1.4.1.6)*
+
+## Reemplazo de un docente a mitad del curso (reunión 28/09)
+1. **SPAIDEN**, pestaña Biográfica: fecha de fallecimiento y casilla «Fallecido». *(5.1.1, diap. 40)*
+2. **SIAINST:** estatus del docente (códigos en STVFCST). *(5.2 Información de docentes, diap. 10 y 18)*
+3. **SSASECT:** asignar al nuevo docente en la sesión del NRC, marcarlo como principal y ajustar el % de responsabilidad y de sesión. *(6.2.1, diap. 19 y 21)*
+4. **Notas:** el nuevo docente debe estar asignado al NRC. Si la regla PRIMINSTR es «Y», solo el principal registra notas; con «N», todos los docentes asignados. *(7.1.4, diap. 21 y 24)*
+5. **Carga:** se ve en SIAASGN: horas semanales × semanas del NRC. *(5.2 Carga, diap. 18)*
+- **No documentado:** si el docente anterior se deja o se elimina, qué pasa con sus notas y con la encuesta de evaluación docente (duda E14).
+
+## Planes curriculares: orden de dependencias (reunión 28/09)
+- **El orden:** cursos en SCACRSE › malla y versión en SMAPROG y SMAAREA › equivalencias en SCADETL o SMAAREA › regla curricular (SOACURR) activa para admisiones, gestión del alumno, historia académica y evaluación de grado › admisión › NRC › tutores y CAPP.
+- **Citas:**
+  - Sin cursos no hay NRC: 5.3, diap. 53.
+  - Los cursos nuevos se crean antes de cambiar las áreas; un área nueva, antes de cambiar el programa: 1.3.1, diap. 5.
+  - Los cursos equivalentes deben existir antes; Ellucian recomienda cargar las equivalencias por malla: 1.2.3, diap. 6 y 15.
+  - La admisión trae la regla de currículo del programa: 1.1.3, diap. 34; 3.2.1, diap. 15 y 25.
+
+## Tutores o asesores (capacidad 9)
+- **Habilitar:** SIAINST, casilla Asesor, vigente desde un periodo. Tipos de asesor en STVADVR. *(9.1.1, diap. 20 y 24)*
+- **Asignar:**
+  - individual en SGAADVR (desde un periodo);
+  - masivo con reglas en SGAAVRL y el proceso SGPADVA (por programa, cohorte, atributo, deporte…). *(9.1.1, diap. 27 y 30 a 35)*
+- **Acceso en el autoservicio:** reglas de SOAFACS (proceso disponible, todos los accesos, NIP) y perfil del alumno para asesoría. *(9.1.1, diap. 9, 10 y 36)*
+- **El asesor en asistencia y notas:** puede actuar si tiene una relación de asesor con el alumno en SGAADVR. *(7.1.1, diap. 15)*

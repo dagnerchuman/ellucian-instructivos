@@ -19,6 +19,7 @@
 | C10 | Lo que anota el usuario del Zoom es **lo que se hace hoy en SEUSS**; lo que se quiere es confirmar cómo será en Ellucian. | 26/09/2026 | Usuario |
 | C11 | **Inglés en SEUSS:** si desaprueba BASIC I, sale desaprobado y **no puede pasar a BASIC II**. La única forma de pasar sin aprobarlo es rendir un **examen de suficiencia**. Lo que se quiere confirmar es si Ellucian tiene un requisito que lo bloquee, o si permite pasar con el examen. | 26/09/2026 | Usuario (corrigió el ejemplo I-4) |
 | C12 | **Formato:** toda sigla o término entre paréntesis debe llevar su significado, por ejemplo «NRC (Número de Referencia de Curso)». | 26/09/2026 | Usuario |
+| C13 | Reunión del 28/09 (alcance general de la USS, no solo los centros): (a) en un grupo de la maestría en Educación falleció el docente a mitad del curso: se reemplaza, y debe estar en las pruebas integrales; (b) hay programas en rediseño sin equivalencias, sin cursos y sin nueva versión; (c) posgrado envió su plan pero los cursos no están cargados en Registros Académicos, lo que pone en riesgo 20271; (d) ofrecer algo sin información impacta desde la capacidad 3 (admisión) y todo termina en Registros Académicos; (e) ¿cómo trabajarán los tutores? | 28/09/2026 | Usuario |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -35,6 +36,9 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | R08 | ¿Por qué importan los centros a pregrado? | Idiomas, computación y emprendimiento son requisitos para ser **egresado** (EG). | 08_4.1.4.1.5, diap. 13; 08_4.4.4.1.5, diap. 42 |
 | R09 | ¿Ellucian bloquea BASIC II si BASIC I está desaprobado? | **Sí.** El prerrequisito «BASIC I aprobado **o** examen de suficiencia con puntaje mínimo» va en SCAPREQ y el NRC lo hereda en SSAPREQ. Con la verificación «Prerrequisitos» en **Fatal** (SOATERM), SFAREGS no lo inscribe. Con el puntaje en SOATEST, sí. La proyección (SFPPROJ) con verificación de prerrequisitos tampoco le ofrece BASIC II. Un sobrepaso (SFAROVR) puede saltar la regla. | 1.1.5, diap. 5 y 18; 5.3, diap. 41 y 42; 5.4 backoffice, diap. 14 y 15; 5.4 sobrepasos, diap. 10, 20, 21 y 37; 5.4 proyección, diap. 34; 3.2.2, diap. 14 |
 | R10 | ¿Un curso en curso cuenta para el prerrequisito? | Solo si se marca **«En progreso»** en SOATERM: el curso en curso cuenta como completo. Cuando se califica, se revisa contra SSAPREQ. | 1.1.2, diap. 18 y 19 |
+| R11 | ¿Cómo se reemplaza a un docente a mitad del curso? | Se registra el fallecimiento en SPAIDEN (fecha y casilla «Fallecido»). Se cambia el estatus en SIAINST (códigos en STVFCST). Se asigna al nuevo docente en SSASECT como principal, con su % de responsabilidad y de sesión. Para registrar notas debe estar asignado al NRC; si PRIMINSTR = Y, solo el principal registra notas. Su carga se ve en SIAASGN. | 5.1.1, diap. 40; 5.2 Información de docentes, diap. 10 y 18; 6.2.1, diap. 19 y 21; 7.1.4, diap. 21 y 24; 5.2 Carga, diap. 18 |
+| R12 | ¿Qué pasa si un programa no tiene su plan completo? | Todo depende del orden: cursos en el catálogo (SCACRSE) › malla y versión (SMAPROG, SMAAREA) › equivalencias (SCADETL o SMAAREA) › regla curricular activa para admisiones (SOACURR). Sin cursos no hay NRC (5.3, diap. 53). Los cursos nuevos se crean antes de cambiar las áreas (1.3.1, diap. 5). Los equivalentes deben existir antes (1.2.3, diap. 6 y 15). La admisión trae la regla de currículo del programa (1.1.3, diap. 34; 3.2.1, diap. 15 y 25). | ver citas |
+| R13 | ¿Cómo trabajan los tutores? | El docente se marca como asesor en SIAINST (vigente desde un periodo); los tipos de asesor van en STVADVR. Se asigna uno por uno en SGAADVR, o de forma masiva con SGAAVRL y SGPADVA (por programa, cohorte o atributo). Lo que ve en el autoservicio lo define SOAFACS. | 9.1.1, diap. 9, 10, 20, 24, 27 y 30 a 36 |
 
 ## 3. Dudas abiertas para Ellucian
 | ID | Duda | Desde | Origen |
@@ -44,6 +48,9 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | E03 | Hora de **60 minutos**: si se necesita (carga o pago del docente), ¿dónde se registra? | 26/09 | Usuario |
 | E04 | Si un participante pasa a BASIC II con **examen de suficiencia**, ¿cómo queda BASIC I en la historia y en CAPP: pendiente o reconocido? | 26/09 | Ejemplo I-4 |
 | E13 | Casilla **«En progreso»** de SOATERM: con grupos seguidos (I04 termina el 31/5 e I06 empieza el 1/6), ¿se marca? Si se marca y luego desaprueba BASIC I, ¿Banner lo retira de BASIC II o se hace a mano? | 26/09 | Instructivo 1.1.2 |
+| E14 | Reemplazo de docente: ¿el docente anterior se deja en el NRC con su % (historial y pago) o se elimina? ¿Qué pasa con sus notas ya registradas y con la encuesta de evaluación docente? | 28/09 | Reunión 28/09 |
+| E15 | ¿Qué se hace si un programa no tiene su plan completo (cursos, versión, equivalencias) al abrir 20271? | 28/09 | Reunión 28/09 |
+| E16 | Tutores: ¿qué ve el tutor en el autoservicio si el programa del estudiante no tiene su malla cargada? | 28/09 | Reunión 28/09 |
 | E05 | ¿Los programas de los tres centros tendrán su **malla en CAPP** (SMAPROG, SMAAREA)? Si no, ¿cómo funciona la inscripción proyectada? | 25/09 | PDF «Lo que entiendo» |
 | E06 | ¿Se migra la historia de los centros? ¿A qué periodos de Banner van los cursos llevados en SEUSS? | 25/09 | PDF «Lo que entiendo» |
 | E07 | ¿Qué incluye la «Carga LD01 con equivalencias»? ¿Tiene cursos de los centros? | 25/09 | Zoom de migración |
@@ -59,6 +66,8 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U01 | Examen de suficiencia de Inglés: ¿qué **puntaje mínimo** se exige y quién lo registra en Banner (SOATEST)? La regla ya está confirmada (C11). | 26/09 | Ejemplo I-4 |
 | U10 | ¿Quién podrá dar **sobrepasos** de prerrequisito (SFAROVR)? En SEUSS ese camino no existe. | 26/09 | Ejemplo I-4 |
 | U11 | Validación contra legado: ¿quién saca de SEUSS los **totales por centro** (TI o Registros Académicos) y con qué **fecha de corte**? Debe ser la misma de la extracción que migró Ellucian, o los totales no cuadrarán. | 28/09 | Pregunta del usuario sobre la validación contra legado |
+| U12 | ¿Quién termina los planes en rediseño y el de posgrado (cursos, versión, equivalencias) y con qué fecha límite antes de 20271? | 28/09 | Reunión 28/09 |
+| U13 | «20271»: ¿es el primer periodo de 2027 de posgrado? ¿Cuál es su código de 6 dígitos? | 28/09 | Reunión 28/09 |
 | U02 | Informática y Emprendimiento: ¿los cursos tienen orden (uno pide aprobar otro) o todos son independientes? | 26/09 | PDF de ejemplos |
 | U03 | ¿Qué **asistencia mínima** se exige para aprobar? (el instructivo usa 70% como ejemplo) | 26/09 | PDF de ejemplos |
 | U04 | ¿Quién carga el **plan de evaluación** de cada NRC: Registros Académicos (como dice el instructivo) o el centro? | 26/09 | PDF de ejemplos |

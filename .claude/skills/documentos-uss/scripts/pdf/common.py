@@ -138,6 +138,11 @@ SIGLAS = {
     'backoffice': ('páginas internas de Banner que usa el personal', 'Páginas internas de Banner que usa el personal administrativo.'),
     'autoservicio': ('portal web de Banner para docentes y estudiantes', 'Portal web de Banner para docentes y estudiantes.'),
     'pitch': ('presentación corta del proyecto', 'Presentación corta del proyecto o plan de negocio.'),
+    'insight': ('herramienta de reportes de Ellucian', 'Herramienta de reportes y consultas de Ellucian.'),
+    'issue log': ('registro de errores', 'Registro de cada error encontrado en la revisión, con su evidencia y responsable.'),
+    'PRIMINSTR': ('regla que define si solo el docente principal registra notas',
+                  'Regla de autoservicio: «Y» = solo el docente principal registra notas; «N» = todos los docentes del NRC.'),
+    'ID': ('código de cada persona en Banner', 'Código único de cada persona en Banner.'),
 }
 PAGINAS = {
     'STVTERM': 'códigos de periodo', 'STVPTRM': 'códigos de parte de periodo', 'SOATERM': 'Control de periodo',
@@ -159,6 +164,9 @@ PAGINAS = {
     'SHRCINC': 'notas incompletas', 'SHAEGBC': 'fechas de corrección extemporánea de notas',
     'SHRROLL': 'paso de notas a la historia académica', 'SHACRSE': 'historia académica por curso', 'SHADEGR': 'grado del estudiante',
     'GTVINTP': 'códigos de socio de integración', 'GORINTG': 'reglas de socio de integración',
+    'SOACURR': 'reglas de currículo del programa', 'SMAPRLE': 'programa académico', 'STVFCST': 'códigos de estatus del docente',
+    'STVADVR': 'tipos de asesor', 'SGAAVRL': 'reglas de asignación de asesores', 'SGPADVA': 'proceso de asignación masiva de asesores',
+    'SOAFACS': 'reglas de acceso de docentes y asesores en el autoservicio', 'SVPTESS': 'asignación de encuestas de evaluación docente',
 }
 # Clases donde no se agrega significado: etiquetas, títulos de tarjetas, píldoras y encabezados.
 _NO_EXPLICAR = ('lab', 'tg', 'exh', 'rh', 'tt', 'dh', 'gh', 'ap', 'sec', 'flow', 'twh', 'cite', 'src', 'pcode', 'ps', 'pl', 'k', 'num', 'gls')
@@ -167,7 +175,7 @@ UNA_VEZ = {'SEUSS'}
 _VISTOS_DOC = set()
 _VACIOS = ('br', 'img', 'col', 'path', 'input', 'hr', 'meta', 'line', 'rect', 'circle')
 _TERM_RE = re.compile(r'\b(' + '|'.join(sorted(list(PAGINAS) + [k for k in SIGLAS if k.isupper()], key=len, reverse=True))
-                      + r')\b|\b(backoffice|autoservicio|pitch)\b', re.I)
+                      + r')\b|\b(' + '|'.join(sorted((k for k in SIGLAS if k.islower()), key=len, reverse=True)) + r')\b', re.I)
 USADOS = set()
 
 

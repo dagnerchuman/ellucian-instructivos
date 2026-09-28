@@ -143,6 +143,7 @@ SIGLAS = {
     'PRIMINSTR': ('regla que define si solo el docente principal registra notas',
                   'Regla de autoservicio: «Y» = solo el docente principal registra notas; «N» = todos los docentes del NRC.'),
     'ID': ('código de cada persona en Banner', 'Código único de cada persona en Banner.'),
+    'BCM': ('comunicaciones masivas de Banner', 'Banner Communication Management: envío de comunicaciones a una población seleccionada.'),
 }
 PAGINAS = {
     'STVTERM': 'códigos de periodo', 'STVPTRM': 'códigos de parte de periodo', 'SOATERM': 'Control de periodo',
@@ -167,6 +168,9 @@ PAGINAS = {
     'SOACURR': 'reglas de currículo del programa', 'SMAPRLE': 'programa académico', 'STVFCST': 'códigos de estatus del docente',
     'STVADVR': 'tipos de asesor', 'SGAAVRL': 'reglas de asignación de asesores', 'SGPADVA': 'proceso de asignación masiva de asesores',
     'SOAFACS': 'reglas de acceso de docentes y asesores en el autoservicio', 'SVPTESS': 'asignación de encuestas de evaluación docente',
+    'SVASVPR': 'administración de solicitudes de servicio', 'SVVSRCA': 'categorías de servicio', 'SVVSRVC': 'servicios',
+    'SVVSRVS': 'estados de la solicitud de servicio', 'STVRADM': 'roles administrativos', 'SVARSRV': 'reglas de cada servicio',
+    'SPACMNT': 'comentarios de la persona', 'STVHLDD': 'tipos de retención', 'SGASTHD': 'retenciones del plan de estudios',
 }
 # Clases donde no se agrega significado: etiquetas, títulos de tarjetas, píldoras y encabezados.
 _NO_EXPLICAR = ('lab', 'tg', 'exh', 'rh', 'tt', 'dh', 'gh', 'ap', 'sec', 'flow', 'twh', 'cite', 'src', 'pcode', 'ps', 'pl', 'k', 'num', 'gls')

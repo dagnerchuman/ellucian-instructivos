@@ -111,3 +111,33 @@ Todas las citas se verificaron con `scripts/buscar_instructivos.py`. Formato: in
   - masivo con reglas en SGAAVRL y el proceso SGPADVA (por programa, cohorte, atributo, deporte…). *(9.1.1, diap. 27 y 30 a 35)*
 - **Acceso en el autoservicio:** reglas de SOAFACS (proceso disponible, todos los accesos, NIP) y perfil del alumno para asesoría. *(9.1.1, diap. 9, 10 y 36)*
 - **El asesor en asistencia y notas:** puede actuar si tiene una relación de asesor con el alumno en SGAADVR. *(7.1.1, diap. 15)*
+
+## Quejas, denuncias y sanciones (casuísticas del 28/09)
+- **Queja como solicitud de servicio:**
+  - El estudiante la presenta por autoservicio (categoría y servicio) y agrega comentarios mientras no esté cerrada. *(4.3.2, diap. 10 y 12)*
+  - El área la atiende en SVASVPR: estado, fecha estimada, comentarios internos que el estudiante no ve. *(4.3.2, diap. 18 y 20)*
+  - Configuración:
+    - SVVSRCA: categorías;
+    - SVVSRVC: servicios;
+    - SVVSRVS: estados;
+    - SVVCHNL: canal;
+    - SVVRQST: tipos;
+    - STVWSSO: opciones;
+    - SVVSRCT: controles;
+    - STVRADM: roles;
+    - SVARSRV: reglas (tipo de persona, rol, retención que lo impide);
+    - SVASRAD: datos extra.
+    *(4.3.1, diap. 10 a 25)*
+- **Denuncia ante Gobierno de Personas:** Banner Student no la genera ni la envía por sí solo. Los procesos de personal no están en los instructivos (dudas E17 y E18).
+- **Evaluación docente:** es una encuesta de los estudiantes por NRC (SVPTESS, SVPSTSS) cuyos resultados se ven en el autoservicio. Da indicadores; no es una queja. *(6.2.5, diap. 5 y 68)*
+- **Seguimiento del estudiante:**
+  - SPACMNT: comentarios por tipo y fecha; la USS no tiene tipos definidos. *(5.1.1, diap. 46)*
+  - Estado académico por promedio y horas, con regla de dificultad académica. *(7.2.3, diap. 5 y 19)*
+  - Comunicaciones masivas a una población con BCM. *(10.2, diap. 102)*
+  - No hay alertas tempranas en los instructivos (duda E19).
+- **Sanción disciplinaria del estudiante:**
+  - Estado del plan en SGASTDN: «Suspendido» (temporal) o «Expulsado» (definitivo); ninguno permite inscripción. *(3.2.7, diap. 9 y 42)*
+  - Retención en SOAHOLD (tipos en STVHLDD; por plan en SGASTHD): no se borra, se le pone fecha de fin. *(5.2.1, diap. 19; 5.2.2, diap. 24)*
+  - Puede impedir presentar solicitudes de servicio. *(4.3.1, diap. 21)*
+  - Para egresar no debe tener retenciones. *(08_4.4.4.1.5, diap. 42)*
+

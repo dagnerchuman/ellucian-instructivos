@@ -29,6 +29,7 @@ description: Cómo producir los entregables del proyecto Centros Empresariales U
   - logos de la USS y de Ellucian;
   - para las presentaciones, la plantilla «Ppt USS 2026».
   - Color por centro: Inglés **#7030A0**, Informática **#0E8A5F** (en gráficos #1BAF7A), Emprendimiento **#C2501C** (en gráficos #EB6834).
+- **«Buen PDF como PPT, sé profesional»:** cuando pide los dos, genera el mismo contenido desde un solo módulo de datos (como `casos_data.py`) para que el PDF y el PPTX coincidan. En el PPTX, las siglas también llevan su significado entre paréntesis y hay una diapositiva de glosario.
 - **PDF por defecto.** Presentaciones solo si las pide. Mientras «te estoy alimentando» con información, **no generes diapositivas**.
   - El PPTX **debe abrir sin «reparar»** en PowerPoint.
 - **Datos inventados:** márcalos siempre «de ejemplo». Nunca los presentes como datos de la USS.

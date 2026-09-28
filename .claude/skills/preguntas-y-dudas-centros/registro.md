@@ -20,6 +20,7 @@
 | C11 | **Inglés en SEUSS:** si desaprueba BASIC I, sale desaprobado y **no puede pasar a BASIC II**. La única forma de pasar sin aprobarlo es rendir un **examen de suficiencia**. Lo que se quiere confirmar es si Ellucian tiene un requisito que lo bloquee, o si permite pasar con el examen. | 26/09/2026 | Usuario (corrigió el ejemplo I-4) |
 | C12 | **Formato:** toda sigla o término entre paréntesis debe llevar su significado, por ejemplo «NRC (Número de Referencia de Curso)». | 26/09/2026 | Usuario |
 | C13 | Reunión del 28/09 (alcance general de la USS, no solo los centros): (a) en un grupo de la maestría en Educación falleció el docente a mitad del curso: se reemplaza, y debe estar en las pruebas integrales; (b) hay programas en rediseño sin equivalencias, sin cursos y sin nueva versión; (c) posgrado envió su plan pero los cursos no están cargados en Registros Académicos, lo que pone en riesgo 20271; (d) ofrecer algo sin información impacta desde la capacidad 3 (admisión) y todo termina en Registros Académicos; (e) ¿cómo trabajarán los tutores? | 28/09/2026 | Usuario |
+| C14 | Hay que sumar **casuísticas** a las pruebas integrales, además de la muestra de estudiantes: docente separado («hasta aquí no puede dictar clases»); docente que no gestiona estrategias para un estudiante con problemas; estudiante que se queja de desprecio del docente; denuncia ante Gobierno de Personas (¿lo genera Ellucian?). | 28/09/2026 | Usuario |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -39,6 +40,9 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | R11 | ¿Cómo se reemplaza a un docente a mitad del curso? | Se registra el fallecimiento en SPAIDEN (fecha y casilla «Fallecido»). Se cambia el estatus en SIAINST (códigos en STVFCST). Se asigna al nuevo docente en SSASECT como principal, con su % de responsabilidad y de sesión. Para registrar notas debe estar asignado al NRC; si PRIMINSTR = Y, solo el principal registra notas. Su carga se ve en SIAASGN. | 5.1.1, diap. 40; 5.2 Información de docentes, diap. 10 y 18; 6.2.1, diap. 19 y 21; 7.1.4, diap. 21 y 24; 5.2 Carga, diap. 18 |
 | R12 | ¿Qué pasa si un programa no tiene su plan completo? | Todo depende del orden: cursos en el catálogo (SCACRSE) › malla y versión (SMAPROG, SMAAREA) › equivalencias (SCADETL o SMAAREA) › regla curricular activa para admisiones (SOACURR). Sin cursos no hay NRC (5.3, diap. 53). Los cursos nuevos se crean antes de cambiar las áreas (1.3.1, diap. 5). Los equivalentes deben existir antes (1.2.3, diap. 6 y 15). La admisión trae la regla de currículo del programa (1.1.3, diap. 34; 3.2.1, diap. 15 y 25). | ver citas |
 | R13 | ¿Cómo trabajan los tutores? | El docente se marca como asesor en SIAINST (vigente desde un periodo); los tipos de asesor van en STVADVR. Se asigna uno por uno en SGAADVR, o de forma masiva con SGAAVRL y SGPADVA (por programa, cohorte o atributo). Lo que ve en el autoservicio lo define SOAFACS. | 9.1.1, diap. 9, 10, 20, 24, 27 y 30 a 36 |
+| R14 | ¿Cómo se registra una queja de un estudiante? | Como **solicitud de servicio**. El estudiante la presenta por autoservicio y agrega comentarios; el área la atiende en SVASVPR con estado, fecha estimada y comentarios internos. Hay que configurar la categoría, el servicio, los estados, los roles y a quién va dirigido. Los instructivos no traen un servicio de queja ya hecho. | 4.3.1, diap. 10 a 25; 4.3.2, diap. 10, 12, 18 y 20 |
+| R15 | ¿Ellucian genera la denuncia ante Gobierno de Personas? | **No por sí solo.** Banner Student registra la solicitud y define para quién está disponible; los procesos de personal (investigación, sanción al docente) no están en los instructivos de Banner Student. | 4.3.1, diap. 18, 19 y 22 |
+| R16 | Estudiante con dificultades o sancionado | Seguimiento en SPACMNT (sin tipos definidos hoy en la USS); estado académico por promedio y horas (7.2.3); comunicaciones con BCM. Sanción: estado del plan «Suspendido» o «Expulsado» en SGASTDN, más una retención en SOAHOLD (no se borra: se le pone fecha de fin). No hay alertas tempranas en los instructivos. | 5.1.1, diap. 46; 7.2.3, diap. 5 y 19; 3.2.7, diap. 9 y 42; 5.2.1, diap. 19 |
 
 ## 3. Dudas abiertas para Ellucian
 | ID | Duda | Desde | Origen |
@@ -51,6 +55,9 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | E14 | Reemplazo de docente: ¿el docente anterior se deja en el NRC con su % (historial y pago) o se elimina? ¿Qué pasa con sus notas ya registradas y con la encuesta de evaluación docente? | 28/09 | Reunión 28/09 |
 | E15 | ¿Qué se hace si un programa no tiene su plan completo (cursos, versión, equivalencias) al abrir 20271? | 28/09 | Reunión 28/09 |
 | E16 | Tutores: ¿qué ve el tutor en el autoservicio si el programa del estudiante no tiene su malla cargada? | 28/09 | Reunión 28/09 |
+| E17 | ¿Las solicitudes de servicio pueden avisar por correo o asignarse a Gobierno de Personas? ¿Hay integración con su sistema? | 28/09 | Casuísticas |
+| E18 | ¿Cómo se define quién atiende cada servicio y quién puede ver una queja (confidencialidad)? | 28/09 | Casuísticas |
+| E19 | ¿Banner tiene alertas tempranas por faltas o notas bajas, o solo reportes y comunicaciones? | 28/09 | Casuísticas |
 | E05 | ¿Los programas de los tres centros tendrán su **malla en CAPP** (SMAPROG, SMAAREA)? Si no, ¿cómo funciona la inscripción proyectada? | 25/09 | PDF «Lo que entiendo» |
 | E06 | ¿Se migra la historia de los centros? ¿A qué periodos de Banner van los cursos llevados en SEUSS? | 25/09 | PDF «Lo que entiendo» |
 | E07 | ¿Qué incluye la «Carga LD01 con equivalencias»? ¿Tiene cursos de los centros? | 25/09 | Zoom de migración |
@@ -68,6 +75,9 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U11 | Validación contra legado: ¿quién saca de SEUSS los **totales por centro** (TI o Registros Académicos) y con qué **fecha de corte**? Debe ser la misma de la extracción que migró Ellucian, o los totales no cuadrarán. | 28/09 | Pregunta del usuario sobre la validación contra legado |
 | U12 | ¿Quién termina los planes en rediseño y el de posgrado (cursos, versión, equivalencias) y con qué fecha límite antes de 20271? | 28/09 | Reunión 28/09 |
 | U13 | «20271»: ¿es el primer periodo de 2027 de posgrado? ¿Cuál es su código de 6 dígitos? | 28/09 | Reunión 28/09 |
+| U14 | ¿Qué área recibe las quejas contra docentes y cómo se protege al estudiante? ¿Se crea en Banner un servicio de «queja o denuncia» o se atiende fuera? | 28/09 | Casuísticas |
+| U15 | ¿Qué tipos de comentario de seguimiento (SPACMNT) usarán los tutores? | 28/09 | Casuísticas |
+| U16 | ¿Quién decide separar a un docente y cómo se avisa a Registros Académicos? | 28/09 | Casuísticas |
 | U02 | Informática y Emprendimiento: ¿los cursos tienen orden (uno pide aprobar otro) o todos son independientes? | 26/09 | PDF de ejemplos |
 | U03 | ¿Qué **asistencia mínima** se exige para aprobar? (el instructivo usa 70% como ejemplo) | 26/09 | PDF de ejemplos |
 | U04 | ¿Quién carga el **plan de evaluación** de cada NRC: Registros Académicos (como dice el instructivo) o el centro? | 26/09 | PDF de ejemplos |

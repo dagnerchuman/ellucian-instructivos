@@ -1,6 +1,6 @@
 # Registro de preguntas, dudas y decisiones
 
-Última actualización: **26/09/2026**. Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
+Última actualización: **28/09/2026**. Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
 
 ---
 
@@ -58,6 +58,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 |---|---|---|---|
 | U01 | Examen de suficiencia de Inglés: ¿qué **puntaje mínimo** se exige y quién lo registra en Banner (SOATEST)? La regla ya está confirmada (C11). | 26/09 | Ejemplo I-4 |
 | U10 | ¿Quién podrá dar **sobrepasos** de prerrequisito (SFAROVR)? En SEUSS ese camino no existe. | 26/09 | Ejemplo I-4 |
+| U11 | Validación contra legado: ¿quién saca de SEUSS los **totales por centro** (TI o Registros Académicos) y con qué **fecha de corte**? Debe ser la misma de la extracción que migró Ellucian, o los totales no cuadrarán. | 28/09 | Pregunta del usuario sobre la validación contra legado |
 | U02 | Informática y Emprendimiento: ¿los cursos tienen orden (uno pide aprobar otro) o todos son independientes? | 26/09 | PDF de ejemplos |
 | U03 | ¿Qué **asistencia mínima** se exige para aprobar? (el instructivo usa 70% como ejemplo) | 26/09 | PDF de ejemplos |
 | U04 | ¿Quién carga el **plan de evaluación** de cada NRC: Registros Académicos (como dice el instructivo) o el centro? | 26/09 | PDF de ejemplos |

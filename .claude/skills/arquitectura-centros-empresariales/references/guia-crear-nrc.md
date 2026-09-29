@@ -45,12 +45,12 @@ En TEST existe **202656** (el usuario lo usó).
    - Fechas de reunión (diap. 29): tipo CLAS, hora de inicio y fin en 24 h, días, sesión 01.
    - Créditos y ubicación (diap. 30): horas por semana automáticas; edificio y salón (6.2.1 Espacios físicos, diap. 16 a 18).
    - Instructor (6.2.1, diap. 11 a 19): ID o SIAFAVL, casilla Principal, % de responsabilidad; si hay cruce, indicador de sobrepaso. Requisitos: el docente activo en SIAINST para el periodo y el NRC con al menos un bloque de horario guardado.
-5. **Al final (menú relacionado):** SSADETL, SSAPREQ (prerrequisitos heredados), SSARRES. Verificar el NRC en SSASECQ.
+5. **Al final (menú relacionado):** SSADETL, SSAPREQ (prerrequisitos heredados), SSARRES. Verificar o buscar el NRC en **SSASECQ** (ver [guia-buscar-nrc.md](guia-buscar-nrc.md)).
 
-## Datos reales vistos en TEST (capturas del 28/09)
+## Datos reales vistos en TEST (capturas del 28/09 y 29/09)
 - **Catálogo:** **ESEC 00650 «Ofimática Word 365»**. ESEC = «ESTUDIOS ESPECÍFICOS», escuela **EM**, vigente de 000000 a 999999. Existe también **ESEP 00650**, escuela **CE**. No se sabe qué son EM y CE (duda U18).
 - **SMAAREA:**
   - Área **MC38-01 «Ciclo I»**, periodo 202454, nivel del alumno **C**, catálogo 2024.
   - Regla **ECOM-01 «Computación I»**, número de condiciones requerido **1**: la cumple **uno** de los cursos **ESEC 00650 a 00657**.
   - Computación no es un área aparte: es una regla dentro del área del ciclo.
-- El usuario creó el NRC de ESEC 00650 en **202656**, sección **B**.
+- **SSASECQ (29/09):** En el periodo **202656**, parte de periodo **X07** (Computación), el NRC creado por el usuario corresponde exactamente al **1021** (**ESEC 00650**, sección **B**, cupo máximo 2). También figuran los NRCs 1015, 1016 y 1017. Para Idiomas (**I08**) figuran **1007**, **1008**, **1009**, **1010**, **1013** y **1014** (materia ESEP).

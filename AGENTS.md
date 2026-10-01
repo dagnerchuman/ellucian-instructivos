@@ -7,18 +7,21 @@
 - **Idioma:** responde **en español**, simple y directo.
 
 ## Antes de responder, lee la memoria del proyecto
-Está en `.claude/skills/`. Son archivos Markdown y cualquier agente puede leerlos.
+Está en `.agents/skills/` (y sincronizada en `.claude/skills/`). Son archivos Markdown y cualquier agente puede leerlos.
 
 1. `.claude/skills/arquitectura-centros-empresariales/SKILL.md`: modelo, periodos, flujo, reglas de trabajo. Referencias en `references/`:
-   - `guia-crear-nrc.md`: crear un NRC en SSASECT campo por campo, con lo visto en TEST;
-   - `reglas-ellucian.md`: qué dice Ellucian, con cita del instructivo y la diapositiva;
-   - `periodos-y-cronograma.md`, `flujo-de-inicio-a-fin.md`, `paginas-banner.md`, `migracion-r2.md`, `glosario.md` y `mapa-instructivos.md`.
+   - Guías operativas paso a paso: `01-guia-crear-nrc.md`, `02-guia-buscar-nrc.md`, `03-guia-crear-persona.md`, `04-guia-admision-saaquik.md`, `05-guia-matricula-sfaregs.md`, `06-guia-autoservicio-matricula.md`, `07-guia-capp-auditoria.md`, `08-guia-docente-carga-notas.md`;
+   - Documentos de marco: `00-flujo-de-inicio-a-fin.md`, `ref-periodos-y-cronograma.md`, `ref-reglas-ellucian.md`, `ref-paginas-banner.md`, `ref-glosario.md`, `ref-mapa-instructivos.md`, `ref-migracion-r2.md`.
 2. `.claude/skills/preguntas-y-dudas-centros/registro.md`: lo **confirmado** (C##), lo **resuelto** con los instructivos (R##), las **dudas abiertas** para Ellucian (E##) y para la USS (U##), y los supuestos descartados (S##). **Mantenlo actualizado.** El método para procesar notas de reuniones está en su `SKILL.md`.
 3. `.claude/skills/documentos-uss/SKILL.md`: preferencias del usuario y cómo generar PDF, PPTX y Excel con formato USS.
    - `scripts/pdf/`: pipeline HTML → Chromium; el ejemplo de referencia es `ejemplo_centros.py`.
    - `scripts/pptx/`: piezas para presentaciones con la plantilla USS.
    - `fuentes/`: generadores de todos los entregables hechos.
    - `references/entregables.md`: lista de los entregables.
+4. `.claude/skills/workflow-consultas-banner/SKILL.md`: resolver dudas de pantallas Banner (SSASECT, SOATERM, etc.) con citas de instructivos.
+5. `.claude/skills/workflow-entregables-uss/SKILL.md`: pipeline y control de calidad de entregables PDF, PPTX y Excel.
+6. `.claude/skills/workflow-procesar-reunion/SKILL.md`: procesar notas y minutas de Zoom/reuniones y actualizar registro.md.
+7. `.claude/skills/workflow-pruebas-test/SKILL.md`: guía y checklist para pruebas integrales en Banner TEST.
 
 ## Buscar evidencia en los instructivos
 ```bash

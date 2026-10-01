@@ -55,19 +55,30 @@ description: Arquitectura y contexto del proyecto de los Centros Empresariales d
   5. Enseñanza-aprendizaje (notas y asistencia).
 - **Pruebas que pidieron en el Zoom:** periodos, generación de mallas y programas, creación de NRC, matrículas por backoffice y por autoservicio.
 
-El flujo completo de 7 fases y 17 pasos está en [references/flujo-de-inicio-a-fin.md](references/flujo-de-inicio-a-fin.md).
+El flujo completo de 7 fases y 17 pasos está en [references/00-flujo-de-inicio-a-fin.md](references/00-flujo-de-inicio-a-fin.md).
 
-## Referencias: lee solo la que necesites
+## Guías operativas paso a paso (ordenadas cronológicamente)
+| Paso | Guía Operativa | Contenido y Pantallas |
+|---|---|---|
+| **00** | [00-flujo-de-inicio-a-fin.md](references/00-flujo-de-inicio-a-fin.md) | Ciclo de vida completo de 7 fases y 17 pasos |
+| **01** | [01-guia-crear-nrc.md](references/01-guia-crear-nrc.md) | Crear un NRC en `SSASECT` con los 3 hitos de guardado |
+| **02** | [02-guia-buscar-nrc.md](references/02-guia-buscar-nrc.md) | Buscar y consultar NRCs creados en `SSASECQ` |
+| **03** | [03-guia-crear-persona.md](references/03-guia-crear-persona.md) | Alta de Persona Natural en `GOAMTCH` (regla de los 3 clics) |
+| **04** | [04-guia-admision-saaquik.md](references/04-guia-admision-saaquik.md) | Admisión rápida y asignación de programa en `SAAQUIK` |
+| **05** | [05-guia-matricula-sfaregs.md](references/05-guia-matricula-sfaregs.md) | Matrícula e inscripción en `SFAREGS` (desbloqueo con estatus EL) |
+| **06** | [06-guia-autoservicio-matricula.md](references/06-guia-autoservicio-matricula.md) | Inscripción de asignaturas por el Autoservicio del Estudiante |
+| **07** | [07-guia-capp-auditoria.md](references/07-guia-capp-auditoria.md) | Auditoría de malla CAPP (`SMARQCM`, `SMICRLT`, `GJAPCTL`) |
+| **08** | [08-guia-docente-carga-notas.md](references/08-guia-docente-carga-notas.md) | Carga docente (`SIAASGN`), notas (`SHAGCOM`), autoservicio y `SHRROLL` |
+
+## Documentos de referencia complementarios
 | Tema | Archivo |
 |---|---|
-| Periodos, partes de periodo y cronograma 2026 de los tres centros | [references/periodos-y-cronograma.md](references/periodos-y-cronograma.md) |
-| Flujo de inicio a fin: fases, pasos, responsables y páginas | [references/flujo-de-inicio-a-fin.md](references/flujo-de-inicio-a-fin.md) |
-| Qué dice Ellucian sobre horas, docentes, prerrequisitos, notas, asistencia, aula virtual y egreso (con cita) | [references/reglas-ellucian.md](references/reglas-ellucian.md) |
-| Páginas de Banner por proceso y en qué instructivo están | [references/paginas-banner.md](references/paginas-banner.md) |
-| Migración R2: validación, umbrales, muestra y cronograma | [references/migracion-r2.md](references/migracion-r2.md) |
-| **Crear un NRC desde cero en SSASECT, campo por campo, con lo visto en TEST** | [references/guia-crear-nrc.md](references/guia-crear-nrc.md) |
-| Glosario: qué significa cada sigla y página (va entre paréntesis en todo entregable) | [references/glosario.md](references/glosario.md) |
-| Carpetas e instructivos del repositorio | [references/mapa-instructivos.md](references/mapa-instructivos.md) |
+| Periodos, partes de periodo y cronograma 2026 de los tres centros | [references/ref-periodos-y-cronograma.md](references/ref-periodos-y-cronograma.md) |
+| Qué dice Ellucian sobre horas, docentes, notas, asistencia y egreso | [references/ref-reglas-ellucian.md](references/ref-reglas-ellucian.md) |
+| Directorio de páginas de Banner por proceso y número de instructivo | [references/ref-paginas-banner.md](references/ref-paginas-banner.md) |
+| Glosario de siglas y páginas explicadas (para usar entre paréntesis) | [references/ref-glosario.md](references/ref-glosario.md) |
+| Mapa de instructivos PPTX del repositorio por capacidad | [references/ref-mapa-instructivos.md](references/ref-mapa-instructivos.md) |
+| Parámetros y umbrales de la Migración R2 | [references/ref-migracion-r2.md](references/ref-migracion-r2.md) |
 
 ## Buscar evidencia en los instructivos
 ```bash

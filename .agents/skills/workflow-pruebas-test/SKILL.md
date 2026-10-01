@@ -62,11 +62,11 @@ Documento de referencia exhaustivo: `ref-scripts-ccee-casuisticas.md`.
 7. **Matrículas para tres programas en simultáneo** (`SGASTDN` → `SFAREGS`).
 8. **Eliminación / Retiro de matrícula** (`SFAREGS` con código `DD`/`DW`).
 9. **Reactivación de matrícula** (`SGASTDN` → `SFAREGS`).
-10. **Retorno automático a un ciclo anterior** (`SFAGRDE` → `SHRROLL` → `SFPPROJ`).
+10. **Retorno automático a un ciclo anterior** (`SFASLST` → `SHRROLL` → `SFPPROJ`).
 11. **Apertura de periodo** (`SOATERM` → `STVTERM` → `SOAPRPT`).
 12. **Cierre de periodo** (`SOATERM` → `SHRROLL` → `SMRBCMP`).
-13. **Procesamiento de calificaciones** (`SHAGCOM` → `SFAGRDE` / Autoservicio Docente).
-14. **Cierre de curso** (`SSASECT` → `SFAGRDE`).
+13. **Procesamiento de calificaciones** (`SHAGCOM` → `SFASLST` / Autoservicio Docente).
+14. **Cierre de curso** (`SSASECT` → `SFASLST`).
 15. **Ampliación de cupos** (`SSASECT` `Enrollment Details` / `Reserved Seats`) - *Validado en TEST*.
 16. **División de grupos** (`SSASECT` → `SFAREGS`).
 17. **Gestión de horarios** (`SSASECT` → `SIAFAVL` → `SLARSLT`).

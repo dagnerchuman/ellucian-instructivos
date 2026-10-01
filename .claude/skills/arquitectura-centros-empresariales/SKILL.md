@@ -57,22 +57,22 @@ description: Arquitectura y contexto del proyecto de los Centros Empresariales d
 
 El flujo completo de 7 fases y 17 pasos está en [references/00-flujo-de-inicio-a-fin.md](references/00-flujo-de-inicio-a-fin.md).
 
-## Guías operativas paso a paso (ordenadas cronológicamente)
-| Paso | Guía Operativa | Contenido y Pantallas |
+## Guías operativas paso a paso (siguiendo las pestañas de trabajo del usuario)
+| N° | Pestaña / Guía Operativa | Archivo |
 |---|---|---|
-| **00** | [00-flujo-de-inicio-a-fin.md](references/00-flujo-de-inicio-a-fin.md) | Ciclo de vida completo de 7 fases y 17 pasos |
-| **01** | [01-guia-crear-nrc.md](references/01-guia-crear-nrc.md) | Crear un NRC en `SSASECT` con los 3 hitos de guardado |
-| **02** | [02-guia-buscar-nrc.md](references/02-guia-buscar-nrc.md) | Buscar y consultar NRCs creados en `SSASECQ` |
-| **03** | [03-guia-crear-persona.md](references/03-guia-crear-persona.md) | Alta de Persona Natural en `GOAMTCH` (regla de los 3 clics) |
-| **04** | [04-guia-admision-saaquik.md](references/04-guia-admision-saaquik.md) | Admisión rápida y asignación de programa en `SAAQUIK` |
-| **05** | [05-guia-matricula-sfaregs.md](references/05-guia-matricula-sfaregs.md) | Matrícula e inscripción en `SFAREGS` (desbloqueo con estatus EL) |
-| **06** | [06-guia-autoservicio-matricula.md](references/06-guia-autoservicio-matricula.md) | Inscripción de asignaturas por el Autoservicio del Estudiante |
-| **07** | [07-guia-capp-auditoria.md](references/07-guia-capp-auditoria.md) | Auditoría de malla CAPP (`SMARQCM`, `SMICRLT`, `GJAPCTL`) |
-| **08** | [08-guia-docente-carga-notas.md](references/08-guia-docente-carga-notas.md) | Carga docente (`SIAASGN`), notas (`SHAGCOM`), autoservicio y `SHRROLL` |
+| **1** | **1.CREACION NRC** (SSASECT) | [references/01-creacion-nrc.md](references/01-creacion-nrc.md) |
+| **—** | BUSQUEDA NRC (SSASECQ) | [references/ref-busqueda-nrc.md](references/ref-busqueda-nrc.md) |
+| **2** | **2.CREACION DE PERSONA** (GOAMTCH) | [references/02-creacion-de-persona.md](references/02-creacion-de-persona.md) |
+| **3** | **3.ADMISION Y ASIGNACION AL PROGRAMA** (SAAQUIK) | [references/03-admision-y-asignacion-al-programa.md](references/03-admision-y-asignacion-al-programa.md) |
+| **4** | **4.MATRICULA EN EL NRC** (SFAREGS) | [references/04-matricula-en-el-nrc.md](references/04-matricula-en-el-nrc.md) |
+| **—** | ADMISION CAPP (SMARQCM / SMRBCMP) | [references/ref-admision-capp.md](references/ref-admision-capp.md) |
+| **5** | **5.NOTAS ASIGNA DOCENTE** (SIAASGN / SHAGCOM) | [references/05-notas-asigna-docente.md](references/05-notas-asigna-docente.md) |
 
 ## Documentos de referencia complementarios
 | Tema | Archivo |
 |---|---|
+| Flujo de inicio a fin: fases, pasos, responsables y páginas | [references/00-flujo-de-inicio-a-fin.md](references/00-flujo-de-inicio-a-fin.md) |
+| Matrícula por autoservicio del estudiante | [references/ref-autoservicio-matricula.md](references/ref-autoservicio-matricula.md) |
 | Periodos, partes de periodo y cronograma 2026 de los tres centros | [references/ref-periodos-y-cronograma.md](references/ref-periodos-y-cronograma.md) |
 | Qué dice Ellucian sobre horas, docentes, notas, asistencia y egreso | [references/ref-reglas-ellucian.md](references/ref-reglas-ellucian.md) |
 | Directorio de páginas de Banner por proceso y número de instructivo | [references/ref-paginas-banner.md](references/ref-paginas-banner.md) |

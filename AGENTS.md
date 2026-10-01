@@ -10,7 +10,8 @@
 Está en `.agents/skills/` (y sincronizada en `.claude/skills/`). Son archivos Markdown y cualquier agente puede leerlos.
 
 1. `.claude/skills/arquitectura-centros-empresariales/SKILL.md`: modelo, periodos, flujo, reglas de trabajo. Referencias en `references/`:
-   - Guías operativas paso a paso: `01-guia-crear-nrc.md`, `02-guia-buscar-nrc.md`, `03-guia-crear-persona.md`, `04-guia-admision-saaquik.md`, `05-guia-matricula-sfaregs.md`, `06-guia-autoservicio-matricula.md`, `07-guia-capp-auditoria.md`, `08-guia-docente-carga-notas.md`;
+   - Guías operativas paso a paso (según pestañas): `01-creacion-nrc.md`, `02-creacion-de-persona.md`, `03-admision-y-asignacion-al-programa.md`, `04-matricula-en-el-nrc.md`, `05-notas-asigna-docente.md`;
+   - Apoyos y consultas: `ref-busqueda-nrc.md`, `ref-admision-capp.md`, `ref-autoservicio-matricula.md`;
    - Documentos de marco: `00-flujo-de-inicio-a-fin.md`, `ref-periodos-y-cronograma.md`, `ref-reglas-ellucian.md`, `ref-paginas-banner.md`, `ref-glosario.md`, `ref-mapa-instructivos.md`, `ref-migracion-r2.md`.
 2. `.claude/skills/preguntas-y-dudas-centros/registro.md`: lo **confirmado** (C##), lo **resuelto** con los instructivos (R##), las **dudas abiertas** para Ellucian (E##) y para la USS (U##), y los supuestos descartados (S##). **Mantenlo actualizado.** El método para procesar notas de reuniones está en su `SKILL.md`.
 3. `.claude/skills/documentos-uss/SKILL.md`: preferencias del usuario y cómo generar PDF, PPTX y Excel con formato USS.

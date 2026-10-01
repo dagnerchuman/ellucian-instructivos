@@ -49,3 +49,26 @@ Este workflow guía y audita la ejecución de pruebas en el ambiente **TEST de E
 - **Caso D-2 (Docente separado por medida disciplinaria):** Inactivar estatus en SIAINST, desvincular de SSASECT con reemplazo inmediato, registrar retención administrativa.
 - **Caso E-1 / Q-1 (Quejas de estudiantes contra docente):** Registrar solicitud de servicio en autoservicio, tramitar en **SVASVPR** con comentarios confidenciales.
 - **Caso Q-3 (Sanción disciplinaria a estudiante):** Cambiar estado en **SGASTDN** a «Suspendido» o «Expulsado», registrar retención en **SOAHOLD**. Verificar que SFAREGS bloquee cualquier intento de matrícula.
+
+## 4. Scripts Oficiales de Centros Empresariales (CCEE)
+Documento de referencia exhaustivo: `ref-scripts-ccee-casuisticas.md`.
+
+1. **Matrícula regular** (`SFAREGS` / Autoservicio Alumnos) - *Validado en TEST (29/09 y 01/10)*.
+2. **Matrícula especial** (`SFASRPO` → `SFAREGS`).
+3. **Matrícula por convalidación** (`SHATRNS` → `SHATFAC` → `CAPP`).
+4. **Matrícula por examen de suficiencia** (`SOATEST` → `SCAPREQ` / `SSAPREQ` → `SFAREGS`).
+5. **Curso especial para egresados** (`SSASECT` → `SGASTDN` → `SFAREGS`).
+6. **Matrículas para dos programas en simultáneo** (`SGASTDN` → `SFAREGS`) - *Validado en TEST*.
+7. **Matrículas para tres programas en simultáneo** (`SGASTDN` → `SFAREGS`).
+8. **Eliminación / Retiro de matrícula** (`SFAREGS` con código `DD`/`DW`).
+9. **Reactivación de matrícula** (`SGASTDN` → `SFAREGS`).
+10. **Retorno automático a un ciclo anterior** (`SFAGRDE` → `SHRROLL` → `SFPPROJ`).
+11. **Apertura de periodo** (`SOATERM` → `STVTERM` → `SOAPRPT`).
+12. **Cierre de periodo** (`SOATERM` → `SHRROLL` → `SMRBCMP`).
+13. **Procesamiento de calificaciones** (`SHAGCOM` → `SFAGRDE` / Autoservicio Docente).
+14. **Cierre de curso** (`SSASECT` → `SFAGRDE`).
+15. **Ampliación de cupos** (`SSASECT` `Enrollment Details` / `Reserved Seats`) - *Validado en TEST*.
+16. **División de grupos** (`SSASECT` → `SFAREGS`).
+17. **Gestión de horarios** (`SSASECT` → `SIAFAVL` → `SLARSLT`).
+18. **Otros requerimientos especiales** (`SIAASGN`, `SVASVPR`, `SOAHOLD`).
+

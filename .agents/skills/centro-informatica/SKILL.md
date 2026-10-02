@@ -61,7 +61,7 @@ Parte de periodo general: **CGE**.
 |---|---|---|---|---|---|---|
 | **1021** | ESEC 00650 | B | X07 | 2 | Dagner Chuman (100582059) | Validado: matrícula, notas, retiro |
 | **1024** | ESEC 00650 | C | — | — | Dagner Chuman (100582059) | Activo (auditado en SIAASGN) |
-| **1026** | ESEC 00650 | D | X07 | 1 | Dagner Chuman (100582059) | Creado para convalidación (C31) |
+| **1026** | ESEC 00650 | D | X07 | 4 | Dagner Chuman (100582059) | Script 15 validado (aforo 1 a 4). 2 inscritos: S00581109 y S00581108 |
 
 ## Alumnos creados / usados en TEST
 
@@ -69,26 +69,81 @@ Parte de periodo general: **CGE**.
 |---|---|---|---|
 | **S00581081** | (Alumno 1 - Centros) | Alumno regular de Computación | 01, 06, 13 (nota 16 = Aprobado) |
 | **S00581091** | (Alumno 2 - Pregrado+Centros) | Doble programa (pregrado + centros) | 01, 06, 08 (retirado DD), 13 (nota 10 = Desaprobado), 18-B (retención TT) |
-| **S00581108** | CARLOS TORRES MENDOZA | Nuevo, limpio para convalidación | 32 (persona creada en GOAMTCH) |
+| **S00581108** | CARLOS TORRES MENDOZA | Admitido CMEMC38 / Matriculado 1026 | 01, 15 (inscrito en NRC 1026 - Casuística Desaprueba) |
+| **S00581109** | MARIA RAMIREZ GARCIA | Admitida CMEMC38 / Matriculada 1026 | 01, 15 (inscrita en NRC 1026 - Casuística Aprueba) |
+| **S00581110** | JUAN FLORES CASTILLO | Creado en GOAMTCH | Casuística Inhabilitado (INH) |
+| **S00581111** | ANA ROJAS VERA | Creada en GOAMTCH | Casuística Convalidación Externa (SHATRNS) |
 | **100582059** | Dagner Chuman (DCHUMAN) | Usuario institucional / docente | 18-A, autoservicio, docente principal |
 
-## Scripts validados para Computación (al 02/10/2026)
+## Matriz de los 18 Scripts de Computación (Estado al 02/10/2026)
 
-| Script | Nombre | Estado | Evidencia |
-|---|---|---|---|
-| 01 | Matrícula regular | ✅ Validado | 2/2 alumnos en NRC 1021 |
-| 06 | Doble programa | ✅ Validado | S00581091 con Study Paths 2/3/4 |
-| 08 | Retiro de matrícula (DD) | ✅ Validado | S00581091 retirado, cupo liberado |
-| 13 | Procesamiento de calificaciones | ✅ Validado | Notas 16 y 10 en SFASLST |
-| 15 | Gestión de cupos y reservas | ✅ Validado | SSARRES con regla CMEMC38 + nula |
-| 18-A | Auditoría de carga docente | ✅ Validado | SIAASGN: 4 NRCs, horas y FTE |
-| 18-B | Retenciones y bloqueo | ✅ Validado | SOAHOLD TT, error fatal en SFAREGS |
+| # | Script / Casuística | Páginas Banner | Estado | Evidencia en TEST |
+|---|---|---|---|---|
+| **01** | Matrícula regular | `SFAREGS` | ✅ Validado | NRC 1021 (S00581081/S00581091) y NRC 1026 (S00581109/S00581108). |
+| **02** | Matrícula especial (sobrepasos) | `SFASRPO` → `SFAREGS` | ⏳ **PENDIENTE** | Probar permiso de sobrepaso administrativo por tope o prerrequisito. |
+| **03** | Matrícula por convalidación | `SHATRNS` → `SHATFAC` | ✅ Validado | S00581111 (Ana Rojas) convalidada con IST150 (nota 16, modo P) y rolada a historia. |
+| **04** | Matrícula por examen suficiencia | `SOATEST` → `SFAREGS` | ⏳ **PENDIENTE** | Asentar puntaje de examen de suficiencia para exonerar o habilitar curso. |
+| **05** | Curso especial para egresados | `SSASECT` → `SFAREGS` | ⏳ **PENDIENTE** | Sección modular/intensiva para alumnos bachilleres/egresados. |
+| **06** | Doble programa simultáneo | `SGASTDN` → `SFAREGS` | ✅ Validado | S00581091 con Pregrado (L1) y Computación (LC) en paralelo. |
+| **07** | Tres programas simultáneos | `SGASTDN` → `SFAREGS` | ⏳ **PENDIENTE** | Alumno activo en Pregrado (L1), Idiomas (LI) y Computación (LC). |
+| **08** | Retiro de matrícula (DD) | `SFAREGS` | ✅ Validado | S00581091 retirado DD del NRC 1021; vacante liberada automáticamente. |
+| **09** | Reactivación de matrícula | `SGASTDN` → `SFAREGS` | ⏳ **PENDIENTE** | Cambiar estatus de alumno a inactivo/suspendido y luego reactivar a `AS`. |
+| **10** | Retorno obligatorio por desaprobado | `SFASLST` → `SFPPROJ` | ⏳ **PENDIENTE** | Consultar a S00581108 (nota 08 rolada) en SFPPROJ para auditar repitencia obligatoria. |
+| **11** | Apertura de nuevo periodo | `SOATERM` → `STVTERM` | ⏳ **PENDIENTE** | Habilitar partes de periodo X01..X07 en nuevo periodo (ej. 202751). |
+| **12** | Cierre de periodo / actas | `GJAPCTL` (`SHRROLL`) | ✅ Validado | Jobs 8113 y 8114 exitosos con pase masivo a historia académica. |
+| **13** | Procesamiento de calificaciones | `SFASLST` | ✅ Validado | Registro de notas 16, 10, 08 e INH en actas de NRC 1021 y 1026. |
+| **14** | Cierre de curso | `SSASECT` → `SFASLST` | ✅ Validado | Cierre y paso oficial a historia completado con `SHRROLL`. |
+| **15** | Ampliación de cupos y reservas | `SSASECT` (`SSARRES`) | ✅ Validado | NRC 1021 (aforo 2/2) y NRC 1026 (error *Closed*, ampliación 1 a 4). |
+| **16** | División de grupos / Traslado | `SSASECT` → `SFAREGS` | ⏳ **PENDIENTE** | Mover alumno entre secciones paralelas por sobrecupo o cambio de horario. |
+| **17** | Gestión de horarios y cruces | `SSASECT` → `SLARSLT` | ⏳ **PENDIENTE** | Auditoría de conflicto de horas y aulas en bloques de reunión. |
+| **18-A** | Auditoría de carga docente | `SIAASGN` | ✅ Validado | Docente DCHUMAN con 4 NRCs (horas semanales, contacto y FTE nativos). |
+| **18-B** | Retenciones y bloqueo fatal | `SOAHOLD` / `STVHLDD` | ✅ Validado | Retención TT bloqueando matrícula en SFAREGS (*ERROR*). |
+| **18-C** | Solicitud de servicio / queja | `SVASVPR` | ⏳ **PENDIENTE** | Registro y atención de solicitud/queja estudiantil en backoffice. |
 
-## Incidencias abiertas
+---
 
-| ID | Descripción | Impacto |
+## 📋 Checklist de Scripts Pendientes para Próximas Sesiones
+
+> **Instrucción para el agente:** A medida que se ejecute cada prueba, marca con `[x]` el script correspondiente y actualiza la evidencia arriba.
+
+- [ ] **Script 10 — Retorno obligatorio tras desaprobado (`SFPPROJ`):**
+  - *Contexto:* Carlos Torres Mendoza (`S00581108`) ya tiene nota `08` rolada a historia en el curso `ESEC 00650`.
+  - *Paso:* Entrar a `SFPPROJ` con periodo `202656` o `202751` e ID `S00581108`, correr proyección y verificar que el sistema lo obligue a repetir `ESEC 00650` antes de avanzar al siguiente curso.
+- [ ] **Script 04 — Examen de suficiencia (`SOATEST` → `SFAREGS`):**
+  - *Contexto:* Acreditar curso mediante examen de suficiencia sin llevar clases.
+  - *Paso:* Entrar a `SOATEST`, ingresar ID de alumno, código de prueba de computación, puntaje aprobatorio (≥ 11) y fecha. Verificar en `SGASTDN`/`CAPP` o matricular curso superior.
+- [ ] **Script 02 — Matrícula especial con sobrepasos (`SFASRPO` → `SFAREGS`):**
+  - *Contexto:* Autorización especial para saltar bloqueo de aforo o prerrequisito.
+  - *Paso:* En `SFASRPO`, asignar código de sobrepaso institucional (ej. `CAPA` o `REQU`) al alumno para el NRC, y luego inscribir en `SFAREGS`.
+- [ ] **Script 16 — División de grupos / Traslado de sección (`SFAREGS`):**
+  - *Contexto:* Reubicación de participantes de una sección saturada a una sección espejo.
+  - *Paso:* Entrar a `SFAREGS`, seleccionar al alumno en NRC `1021` o `1026`, cambiar NRC al paralelo y verificar traspaso sin pérdida de cobro.
+- [ ] **Script 07 — Tres programas en simultáneo (`SGASTDN` → `SFAREGS`):**
+  - *Contexto:* Alumno multiescuela (Pregrado + Idiomas + Computación).
+  - *Paso:* Crear Study Path 1 (Pregrado `1`), Study Path 2 (Idiomas `I`) y Study Path 3 (Computación `C`) en `SGASTDN`. Inscribir un NRC en cada programa en `SFAREGS`.
+- [ ] **Script 09 — Reactivación de matrícula (`SGASTDN` → `SFAREGS`):**
+  - *Contexto:* Participante que suspendió estudios y retorna.
+  - *Paso:* En `SGASTDN`, cambiar estatus de estudiante a inactivo (`IS`/`SU`), verificar bloqueo en `SFAREGS`, luego restablecer a `AS` y completar inscripción.
+- [ ] **Script 05 — Curso especial para egresados (`SSASECT` → `SFAREGS`):**
+  - *Contexto:* Módulo intensivo de acreditación rápida para graduandos.
+  - *Paso:* Programar NRC en parte de periodo intensiva y matricular bachiller.
+- [ ] **Script 11 — Apertura de periodo (`SOATERM` → `STVTERM`):**
+  - *Contexto:* Parametrización del nuevo periodo académico (ej. `202751`).
+  - *Paso:* Configurar fechas de inicio/fin y partes de periodo `X01` a `X07`.
+- [ ] **Script 17 — Gestión de horarios y cruces (`SSASECT`):**
+  - *Contexto:* Detección de conflicto horario.
+  - *Paso:* Programar dos NRCs con el mismo bloque de horario y docente/aula, y verificar la advertencia de conflicto de Banner.
+- [ ] **Script 18-C — Trámite de quejas / reclamos (`SVASVPR`):**
+  - *Contexto:* Atención de solicitudes de servicio estudiantil.
+  - *Paso:* Tramitar solicitud de servicio en `SVASVPR` con estatus y comentarios internos.
+
+---
+
+## Incidencias resueltas
+
+| ID | Descripción | Solución aplicada y confirmada |
 |---|---|---|
-| **U20** | Modo de calificación V (catálogo) vs P (SHAGRDE Nivel C) → SHRROLL falla con «No Substitute Grade Found» | Bloquea el pase a historia académica |
+| **U20** | Modo de calificación V (catálogo) vs P (SHAGRDE Nivel C) | **RESUELTA (02/10):** Se añadió el Modo `V` (*Vigesimal Regular*) a las notas del Nivel `C` en `SHAGRDE` (Instructivo 7.1.3 diap. 16). `SHRROLL` procesó de inmediato el cierre del NRC 1026 con 100% de éxito. |
 
 ## Prerrequisitos y orden de cursos
 

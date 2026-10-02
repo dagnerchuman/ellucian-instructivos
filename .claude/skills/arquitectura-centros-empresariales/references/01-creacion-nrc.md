@@ -39,18 +39,21 @@ En TEST existe **202656** (el usuario lo usó).
      - Se revisan también las **horas de cobro**.
      - Con tipo **Teoría**: casilla **Calificable** marcada, horas de cobro incluidas y **sin** marcar «Dispensa de colegiatura y cuotas».
      - Las horas crédito **no son** las horas por semana: esas se calculan después con el horario y el factor de SIATERM.
-   - **GUARDAR:** «ADD» pasa a ser el número de NRC (diap. 26).
-3. **Pestaña «Información de ingreso de sección»:** cupo máximo (diap. 27). Si hay lugares reservados, primero va la regla «nula» y luego las demás (diap. 28).
+    - **GUARDAR:** «ADD» pasa a ser el número de NRC (diap. 26). **Crítico:** No intentar cambiar de pestaña antes de presionar Guardar, o Banner bloqueará con `*ERROR* Debe guardar antes de salir de la información de sección`. Aprobación especial debe quedar vacía.
+3. **Pestaña «Información de ingreso de sección»:** cupo máximo (diap. 27). Presionar Guardar (2do guardado). Si hay lugares reservados, primero va la regla «nula» y luego las demás (diap. 28).
 4. **Pestaña «Instructor y horas de reunión»:**
    - Fechas de reunión (diap. 29): tipo CLAS, hora de inicio y fin en 24 h, días, sesión 01.
-   - Créditos y ubicación (diap. 30): horas por semana automáticas; edificio y salón (6.2.1 Espacios físicos, diap. 16 a 18).
-   - Instructor (6.2.1, diap. 11 a 19): ID o SIAFAVL, casilla Principal, % de responsabilidad; si hay cruce, indicador de sobrepaso. Requisitos: el docente activo en SIAINST para el periodo y el NRC con al menos un bloque de horario guardado.
+   - Créditos y ubicación (diap. 30): horas por semana automáticas; edificio y salón oficial virtual de campus S: **`SAUVIR`** y **`SALA VIRT.`**. Si se usa un salón físico con cruce, ingresar `O` en la casilla `Indicador de sobrepaso` para resolver `*ERROR* Conflicto de salón`.
+   - Instructor (6.2.1, diap. 11 a 19): ID o SIAFAVL, casilla Principal, % de responsabilidad (100%) y sesión (100%). **Regla de oro:** El `Indicador de sesión` de HORARIO debe coincidir idénticamente con el de INSTRUCTOR (ambos `01` o ambos `1`), de lo contrario arroja `*ERROR* Sesión no tiene horas de reunión definidas`. Si el docente tiene cruce, marcar la casilla `Indicador de sobrepaso` de la grilla de instructor.
+   - Presionar Guardar (3er guardado).
 5. **Al final (menú relacionado):** SSADETL, SSAPREQ (prerrequisitos heredados), SSARRES. Verificar o buscar el NRC en **SSASECQ** (ver [guia-buscar-nrc.md](guia-buscar-nrc.md)).
 
-## Datos reales vistos en TEST (capturas del 28/09 y 29/09)
+## Datos reales vistos en TEST (capturas del 28/09, 29/09 y 02/10/2026)
 - **Catálogo:** **ESEC 00650 «Ofimática Word 365»**. ESEC = «ESTUDIOS ESPECÍFICOS», escuela **EM**, vigente de 000000 a 999999. Existe también **ESEP 00650**, escuela **CE**. No se sabe qué son EM y CE (duda U18).
 - **SMAAREA:**
   - Área **MC38-01 «Ciclo I»**, periodo 202454, nivel del alumno **C**, catálogo 2024.
   - Regla **ECOM-01 «Computación I»**, número de condiciones requerido **1**: la cumple **uno** de los cursos **ESEC 00650 a 00657**.
   - Computación no es un área aparte: es una regla dentro del área del ciclo.
-- **SSASECQ (29/09):** En el periodo **202656**, parte de periodo **X07** (Computación), el NRC creado por el usuario corresponde exactamente al **1021** (**ESEC 00650**, sección **B**, cupo máximo 2). También figuran los NRCs 1015, 1016 y 1017. Para Idiomas (**I08**) figuran **1007**, **1008**, **1009**, **1010**, **1013** y **1014** (materia ESEP).
+- **SSASECQ (29/09 y 02/10):** 
+  - NRC **1021** (28/09): `ESEC 00650`, sección `B`, periodo `202656`, parte `X07`, aforo 2/2, docente Dagner Chuman (`100582059`).
+  - NRC **1026** (02/10): `ESEC 00650`, sección `D`, periodo `202656`, parte `X07`, aforo 1, horario Lunes/Miércoles 08:00 a 12:00, aula virtual `SAUVIR` / `SALA VIRT.` (9,6 h/sem calculadas), docente Dagner Chuman (`100582059`, 100% resp). Creado para casuísticas CCEE.

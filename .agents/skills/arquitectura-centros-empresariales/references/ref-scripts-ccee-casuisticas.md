@@ -29,14 +29,20 @@ Este documento define el catálogo de los **18 scripts operativos y casuísticas
 
 ---
 
-## Estado de Validación en TEST (Al 01/10/2026)
+## Estado de Validación en TEST (Al 02/10/2026)
 
 * **Completados y validados:**
   * **Script 01 (Matrícula regular):** Validado al 100% con los estudiantes `S00581081` y `S00581091` en NRC `1021` (periodo `202656`).
   * **Script 15 (Gestión de cupos y reservas):** Probado y validado en SSASECT (`SSARRES`), resolviendo errores de cupo nulo y logrando ocupación de 2/2.
-  * **Script 06 (Doble programa pregrado / centros):** Probado al admitir al alumno con Study Path 2 en `202656`.
+  * **Script 06 (Doble programa pregrado / centros):** Probado al admitir al alumno con Study Path 2/4 en `202656`.
+  * **Script 13 (Procesamiento de calificaciones):** Probado y validado en `SFASLST` registrando notas aprobatorias (16) y desaprobatorias (10) para el NRC `1021`.
+  * **Script 08 (Eliminación / Retiro de matrícula):** Validado al 100% en `SFAREGS` aplicando estatus `DD` al estudiante `S00581091` en NRC `1021`, auditando en `SSASECT` la liberación automática de vacante (`Actual` de 2 a 1, `Remaining` de 0 a 1).
+  * **Script 18-A (Auditoría de carga docente):** Validado al 100% en `SIAASGN` con el docente Dagner Chuman (`100582059`) en `202656`, auditando 4 secciones asignadas en Computación (`ESEC`), Especiales (`ESEP`) y Emprendimiento (`ESGE`), demostrando el cálculo nativo de horas semanales, horas de contacto y FTE sin matrices Excel.
+  * **Script 18-B (Retenciones y bloqueo de matrícula):** Validado al 100% aplicando en `SOAHOLD` la retención `TT` (*Mora cuota CCEE*), activando la casilla *Inscripción* en `STVHLDD` y auditando en `SFAREGS` el bloqueo fatal de ingreso (`*ERROR* La persona tiene retenciones, no se puede inscribir`).
 
-* **Próximos scripts inmediatos a ejecutar:**
-  * **Script 13:** Procesamiento de calificaciones en `SFAGRDE`.
-  * **Script 14:** Cierre del NRC `1021` y pase a historia con `SHRROLL`.
-  * **Script 08:** Retiro de matrícula para auditar liberación de vacantes.
+* **Probado con Incidencia Técnica Documentada:**
+  * **Script 12 / 14 (Cierre de actas y pase a historia con SHRROLL):** Probado vía `GJAPCTL` (Jobs 8103, 8104, 8105). Detectada incidencia institucional **`U20`**: discrepancia de Modo de Calificación entre catálogo (`SCACRSE` exige `V`) y tabla de notas (`SHAGRDE` Nivel C tiene `P`), generando error `No Substitute Grade Found` en `GJIREVO`.
+
+* **Próximos scripts inmediatos a ejecutar (Pendientes):**
+  * **Script 04:** Matrícula por examen de suficiencia (`SOATEST` → `SFAREGS`).
+  * **Script 02:** Matrícula especial con sobrepasos (`SFASRPO` → `SFAREGS`).

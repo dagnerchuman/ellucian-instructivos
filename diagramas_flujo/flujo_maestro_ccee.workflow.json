@@ -1,0 +1,84 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Flujo Maestro de los Centros Empresariales USS en Banner",
+    "animation": "trace",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "programacion-a-matricula",
+        "label": "Programación y Matrícula",
+        "focus": ["nrc", "persona", "admision", "matricula", "autoservicio"],
+        "note": "Ciclo desde la apertura del NRC hasta la inscripción oficial en Backoffice y Autoservicio."
+      },
+      {
+        "id": "evaluacion-y-cierre",
+        "label": "Evaluación, Notas y Cierre de Actas",
+        "focus": ["docente_asgn", "capp_eval", "notas", "cierre", "historia"],
+        "note": "Asignación docente, calificación en Modo Vigesimal y cierre masivo con SHRROLL hacia historia académica."
+      }
+    ],
+    "output": "diagramas_flujo/flujo_maestro_ccee.html"
+  },
+  "lanes": [
+    { "id": "ce", "label": "Centro Empresarial (Idiomas / Informática / Emprendimiento)" },
+    { "id": "adm", "label": "Admisión y Registro de Personas" },
+    { "id": "ra", "label": "Registros Académicos" },
+    { "id": "alu", "label": "Estudiante (Autoservicio Experience)" },
+    { "id": "doc", "label": "Docente (Carga y Calificación)" }
+  ],
+  "phases": [
+    { "id": "fase_prog", "label": "Fase 1: Programación y Alta", "fromCol": 0, "toCol": 1 },
+    { "id": "fase_adm_mat", "label": "Fase 2: Admisión y Matrícula", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "fase_cierre", "label": "Fase 3: Evaluación y Cierre", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "grp_nrc", "label": "Configuración de Sección", "lane": "ce", "fromCol": 0, "toCol": 0, "variant": "emphasis" },
+    { "id": "grp_exp", "label": "Alta Institucional", "lane": "adm", "fromCol": 1, "toCol": 2, "variant": "emphasis" },
+    { "id": "grp_cierre", "label": "Certificación y Cierre", "lane": "ra", "fromCol": 4, "toCol": 5, "variant": "security" }
+  ],
+  "mainPath": ["nrc", "persona", "admision", "matricula", "autoservicio", "notas", "cierre", "historia"],
+  "nodes": [
+    { "id": "nrc", "lane": "ce", "col": 0, "type": "frontend", "label": "1. Crear NRC", "sublabel": "SSASECT (202656)", "tag": "Aforo + SAUVIR", "width": 140 },
+    { "id": "persona", "lane": "adm", "col": 1, "type": "backend", "label": "2. Crear Persona", "sublabel": "GOAMTCH (PERS_NATU)", "tag": "Genera ID S0058xxxx", "width": 140 },
+    { "id": "admision", "lane": "adm", "col": 2, "type": "backend", "label": "3. Admisión Rápida", "sublabel": "SAAQUIK (CMEMC38)", "tag": "Nivel C/I/M • ACXP", "width": 140 },
+    { "id": "matricula", "lane": "ra", "col": 3, "type": "cloud", "label": "4. Matrícula NRC", "sublabel": "SFAREGS (Estatus EL ➔ RE)", "tag": "Desbloquea Plan", "width": 140 },
+    { "id": "docente_asgn", "lane": "doc", "col": 3, "type": "backend", "label": "Carga Docente", "sublabel": "SIAINST / SIAASGN", "tag": "100% Principal", "width": 140 },
+    { "id": "capp_eval", "lane": "ra", "col": 4, "type": "database", "label": "Auditoría CAPP", "sublabel": "SMARQCM / SMRBCMP", "tag": "In-Progress", "width": 140 },
+    { "id": "autoservicio", "lane": "alu", "col": 4, "type": "frontend", "label": "Autoservicio Web", "sublabel": "Experience (Dashboard)", "tag": "Register for Classes", "width": 140 },
+    { "id": "notas", "lane": "doc", "col": 4, "type": "frontend", "label": "5. Ingreso Notas", "sublabel": "SFASLST (Modo V)", "tag": "Mínima 11 / INH", "width": 140 },
+    { "id": "cierre", "lane": "ra", "col": 5, "type": "database", "label": "6. Cierre de Actas", "sublabel": "GJAPCTL (SHRROLL)", "tag": "Job 8114 Exitoso", "width": 140 },
+    { "id": "historia", "lane": "alu", "col": 5, "type": "external", "label": "Historia Académica", "sublabel": "SHACRSE / CAPP", "tag": "Rolled to History", "width": 140 }
+  ],
+  "edges": [
+    { "id": "e-nrc-pers", "from": "nrc", "to": "persona", "label": "habilita vacante", "variant": "default" },
+    { "id": "e-pers-adm", "from": "persona", "to": "admision", "label": "ID generado", "variant": "emphasis" },
+    { "id": "e-adm-mat", "from": "admision", "to": "matricula", "label": "plan elegible", "variant": "emphasis" },
+    { "id": "e-mat-auto", "from": "matricula", "to": "autoservicio", "label": "código **WEB", "variant": "default" },
+    { "id": "e-mat-capp", "from": "matricula", "to": "capp_eval", "label": "evalúa avance", "variant": "dashed" },
+    { "id": "e-doc-notas", "from": "docente_asgn", "to": "notas", "label": "dictado y actas", "variant": "dashed" },
+    { "id": "e-auto-notas", "from": "autoservicio", "to": "notas", "variant": "default" },
+    { "id": "e-notas-cierre", "from": "notas", "to": "cierre", "label": "cierre periodo", "variant": "emphasis" },
+    { "id": "e-cierre-hist", "from": "cierre", "to": "historia", "label": "créditos ganados", "variant": "emphasis" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Secuencia Operativa Garantizada",
+      "items": [
+        "El NRC se programa en SSASECT con aula SAUVIR y aforo blindado en SSARRES",
+        "GOAMTCH crea persona con 3 clics y SAAQUIK asigna programa CMEMC38",
+        "SFAREGS autoriza plan en estatus EL antes de ingresar el NRC"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Integración y Cierre de Actas",
+      "items": [
+        "La matrícula web se refleja bidireccionalmente con código **WEB y estado In-Progress en CAPP",
+        "La homologación de Modo V en SHAGRDE resuelve U20 y garantiza pase a historia académica con SHRROLL"
+      ]
+    }
+  ]
+}

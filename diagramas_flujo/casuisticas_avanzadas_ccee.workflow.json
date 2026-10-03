@@ -1,0 +1,85 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Casuísticas Avanzadas y Contingencias en Banner — Centros USS",
+    "animation": "trace",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "cupos-y-movilidad",
+        "label": "Cupos, Retiros y Traslados",
+        "focus": ["cupo_full", "amplia_cupo", "drop_libera", "traslado"],
+        "note": "Control de vacantes, ampliación de aforo, retiros con DD y traslados directos sin duplicidad de cobros."
+      },
+      {
+        "id": "cierre-y-capp",
+        "label": "Convalidación, Cierre U20 y CAPP",
+        "focus": ["convalidacion", "deg_created", "incidencia_u20", "cierre_ok", "desaprobado", "capp_bloqueo"],
+        "note": "Articulación de créditos externos, homologación de Modo V y dictamen de repitencia curricular."
+      }
+    ],
+    "output": "diagramas_flujo/casuisticas_avanzadas_ccee.html"
+  },
+  "lanes": [
+    { "id": "reg", "label": "Registro y Matrícula (SFAREGS / SGASTDN)" },
+    { "id": "sec", "label": "Sección y Aforos (SSASECT / SSARRES)" },
+    { "id": "con", "label": "Convalidación y Grados (SHATRNS / SHADEGR)" },
+    { "id": "cal", "label": "Calificaciones y Cierre (SFASLST / SHAGRDE / SHRROLL)" },
+    { "id": "cap", "label": "Auditoría Curricular CAPP (SMARQCM / SMICRLT)" }
+  ],
+  "phases": [
+    { "id": "fase_cupos", "label": "Fase 1: Control de Cupos y Retiros", "fromCol": 0, "toCol": 1 },
+    { "id": "fase_movilidad", "label": "Fase 2: Movilidad y Convalidación", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "fase_cierre_capp", "label": "Fase 3: Cierre de Actas y Avance CAPP", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "grp_aforo", "label": "Aforo y Contingencias", "lane": "sec", "fromCol": 0, "toCol": 1, "variant": "emphasis" },
+    { "id": "grp_conv", "label": "Acreditación Externa", "lane": "con", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "grp_cierre", "label": "Cierre y Dictamen", "lane": "cal", "fromCol": 4, "toCol": 5, "variant": "security" }
+  ],
+  "mainPath": ["cupo_full", "amplia_cupo", "drop_libera", "traslado", "convalidacion", "deg_created", "incidencia_u20", "cierre_ok"],
+  "nodes": [
+    { "id": "suspension", "lane": "reg", "col": 0, "type": "backend", "label": "Suspensión IS ➔ AS", "sublabel": "SGASTDN (Rehabilitación)", "tag": "Script 09", "width": 140 },
+    { "id": "cupo_full", "lane": "sec", "col": 0, "type": "security", "label": "Aforo Lleno (1/1)", "sublabel": "SSASECT (Cupo saturado)", "tag": "Error Closed", "width": 140 },
+    { "id": "drop_libera", "lane": "reg", "col": 1, "type": "frontend", "label": "Retiro / Drop (DD)", "sublabel": "SFAREGS (Libera vacante)", "tag": "Script 08", "width": 140 },
+    { "id": "amplia_cupo", "lane": "sec", "col": 1, "type": "cloud", "label": "Ampliación de Cupo", "sublabel": "Maximum 1 ➔ 4 vacantes", "tag": "Script 15", "width": 140 },
+    { "id": "traslado", "lane": "reg", "col": 2, "type": "frontend", "label": "Traslado de Sección", "sublabel": "DD en 1026 + RE en 1021", "tag": "Script 16", "width": 140 },
+    { "id": "convalidacion", "lane": "con", "col": 2, "type": "backend", "label": "Convalidación Externa", "sublabel": "SHATRNS (IST150 Nota 16)", "tag": "Script 03", "width": 140 },
+    { "id": "deg_created", "lane": "con", "col": 3, "type": "database", "label": "Registro de Grado", "sublabel": "SHADEGR (Deg Created)", "tag": "Rolled to History", "width": 140 },
+    { "id": "desaprobado", "lane": "cal", "col": 3, "type": "frontend", "label": "Nota Reprobada (08)", "sublabel": "SFASLST (Nota < 11)", "tag": "Script 10", "width": 140 },
+    { "id": "incidencia_u20", "lane": "cal", "col": 4, "type": "security", "label": "Resolución U20", "sublabel": "SHAGRDE (Homologa Modo V)", "tag": "Script 12/14", "width": 140 },
+    { "id": "cierre_ok", "lane": "cal", "col": 5, "type": "database", "label": "Cierre de Actas OK", "sublabel": "SHRROLL (Job 8114 exitoso)", "tag": "Grade Roll = Y", "width": 140 },
+    { "id": "capp_bloqueo", "lane": "cap", "col": 5, "type": "external", "label": "Bloqueo Curricular", "sublabel": "SMICRLT (Curso no usado)", "tag": "Dictamen NO CUMPLE", "width": 140 }
+  ],
+  "edges": [
+    { "id": "e-full-amp", "from": "cupo_full", "to": "amplia_cupo", "label": "autoriza aforo", "variant": "emphasis" },
+    { "id": "e-susp-drop", "from": "suspension", "to": "drop_libera", "label": "habilita alumno", "variant": "default" },
+    { "id": "e-amp-drop", "from": "amplia_cupo", "to": "drop_libera", "label": "balancea cupos", "variant": "default" },
+    { "id": "e-drop-tras", "from": "drop_libera", "to": "traslado", "label": "reubica alumno", "variant": "emphasis" },
+    { "id": "e-tras-conv", "from": "traslado", "to": "convalidacion", "label": "expediente", "variant": "default" },
+    { "id": "e-conv-deg", "from": "convalidacion", "to": "deg_created", "label": "acredita créditos", "variant": "emphasis" },
+    { "id": "e-deg-u20", "from": "deg_created", "to": "incidencia_u20", "label": "pase masivo", "variant": "default" },
+    { "id": "e-u20-cierre", "from": "incidencia_u20", "to": "cierre_ok", "label": "cierre 100% exitoso", "variant": "emphasis" },
+    { "id": "e-desap-capp", "from": "desaprobado", "to": "capp_bloqueo", "label": "no otorga créditos", "variant": "security" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Casuísticas de Matrícula y Aforo",
+      "items": [
+        "Script 15: Sube capacidad máxima a 4 resolviendo el error de sección cerrada",
+        "Script 08: El código DD retira la materia y libera la vacante automáticamente en SSASECT",
+        "Script 16: El traslado reubica entre grupos en una transacción sin duplicar cobros"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Auditoría de Notas y CAPP",
+      "items": [
+        "Script 12/14: La homologación de Modo V en SHAGRDE resuelve U20 y rola las notas con Job 8114",
+        "Script 10: La nota 08 envía el curso a «Cursos no usados» y bloquea el avance en CAPP"
+      ]
+    }
+  ]
+}

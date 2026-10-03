@@ -40,9 +40,14 @@ Este documento define el catálogo de los **18 scripts operativos y casuísticas
   * **Script 18-A (Auditoría de carga docente):** Validado al 100% en `SIAASGN` con el docente Dagner Chuman (`100582059`) en `202656`, auditando 4 secciones asignadas en Computación (`ESEC`), Especiales (`ESEP`) y Emprendimiento (`ESGE`), demostrando el cálculo nativo de horas semanales, horas de contacto y FTE sin matrices Excel.
   * **Script 18-B (Retenciones y bloqueo de matrícula):** Validado al 100% aplicando en `SOAHOLD` la retención `TT` (*Mora cuota CCEE*), activando la casilla *Inscripción* en `STVHLDD` y auditando en `SFAREGS` el bloqueo fatal de ingreso (`*ERROR* La persona tiene retenciones, no se puede inscribir`).
 
-* **Probado con Incidencia Técnica Documentada:**
-  * **Script 12 / 14 (Cierre de actas y pase a historia con SHRROLL):** Probado vía `GJAPCTL` (Jobs 8103, 8104, 8105). Detectada incidencia institucional **`U20`**: discrepancia de Modo de Calificación entre catálogo (`SCACRSE` exige `V`) y tabla de notas (`SHAGRDE` Nivel C tiene `P`), generando error `No Substitute Grade Found` en `GJIREVO`.
+  * **Script 12 / 14 (Cierre de actas y pase a historia con SHRROLL):** Validado al 100% en `GJAPCTL` (Jobs 8113 y 8114 exitosos) tras resolver la incidencia **`U20`** agregando el Modo **`V`** a las notas de Nivel `C` en `SHAGRDE`. Cierre definitivo y actas completadas.
+  * **Script 03 (Matrícula por convalidación externa):** Validado al 100% con la estudiante `S00581111` (*Ana Rojas Vera*), convalidando curso externo `IST150` en `SHATRNS` y pasando a historia académica con registro de grado en `SHRROLL` (Job 8113).
+  * **Script 10 (Retorno obligatorio tras desaprobado):** Validado al 100% en CAPP individual (`SMARQCM` → `SMICRLT` / `SMIPOUT`) con `S00581108` (*Carlos Torres Mendoza*, nota 08): Requerimientos y Áreas en «No cumple», créditos ganados 0/4 y curso `ESEC 00650` catalogado como «Curso no usado» (reprobado).
+
+* **En ejecución actual:**
+  * **Script 16:** División de grupos / Traslado de sección entre NRCs paralelos (`SFAREGS`).
 
 * **Próximos scripts inmediatos a ejecutar (Pendientes):**
-  * **Script 04:** Matrícula por examen de suficiencia (`SOATEST` → `SFAREGS`).
+  * **Script 09:** Suspensión y reactivación de matrícula (`SGASTDN` → `SFAREGS`).
   * **Script 02:** Matrícula especial con sobrepasos (`SFASRPO` → `SFAREGS`).
+  * **Script 04 (Exclusivo Idiomas):** Matrícula por examen de suficiencia (`SOATEST` → `SFAREGS`). Se descartó para Computación por confirmación institucional (C36).

@@ -82,19 +82,19 @@ Parte de periodo general: **CGE**.
 | **01** | Matrícula regular | `SFAREGS` | ✅ Validado | NRC 1021 (S00581081/S00581091) y NRC 1026 (S00581109/S00581108). |
 | **02** | Matrícula especial (sobrepasos) | `SFASRPO` → `SFAREGS` | ⏳ **PENDIENTE** | Probar permiso de sobrepaso administrativo por tope o prerrequisito. |
 | **03** | Matrícula por convalidación | `SHATRNS` → `SHATFAC` | ✅ Validado | S00581111 (Ana Rojas) convalidada con IST150 (nota 16, modo P) y rolada a historia. |
-| **04** | Matrícula por examen suficiencia | `SOATEST` → `SFAREGS` | ⏳ **PENDIENTE** | Asentar puntaje de examen de suficiencia para exonerar o habilitar curso. |
+| **04** | Matrícula por examen suficiencia | `SOATEST` → `SFAREGS` | 🚫 **NO APLICA** | Confirmado por usuario (C36): Computación **NO** rinde examen de suficiencia (exclusivo de Idiomas). |
 | **05** | Curso especial para egresados | `SSASECT` → `SFAREGS` | ⏳ **PENDIENTE** | Sección modular/intensiva para alumnos bachilleres/egresados. |
 | **06** | Doble programa simultáneo | `SGASTDN` → `SFAREGS` | ✅ Validado | S00581091 con Pregrado (L1) y Computación (LC) en paralelo. |
 | **07** | Tres programas simultáneos | `SGASTDN` → `SFAREGS` | ⏳ **PENDIENTE** | Alumno activo en Pregrado (L1), Idiomas (LI) y Computación (LC). |
 | **08** | Retiro de matrícula (DD) | `SFAREGS` | ✅ Validado | S00581091 retirado DD del NRC 1021; vacante liberada automáticamente. |
 | **09** | Reactivación de matrícula | `SGASTDN` → `SFAREGS` | ⏳ **PENDIENTE** | Cambiar estatus de alumno a inactivo/suspendido y luego reactivar a `AS`. |
-| **10** | Retorno obligatorio por desaprobado | `SFASLST` → `SFPPROJ` | ⏳ **PENDIENTE** | Consultar a S00581108 (nota 08 rolada) en SFPPROJ para auditar repitencia obligatoria. |
+| **10** | Retorno obligatorio por desaprobado | `SMARQCM` → `SMICRLT` | ✅ **Validado** | S00581108 (nota 08 rolada) auditado en CAPP: Requerimientos y Áreas en «No cumple», créditos usados 0/4, curso `ESEC 00650` clasificado como «Curso no usado» (reprobado). |
 | **11** | Apertura de nuevo periodo | `SOATERM` → `STVTERM` | ⏳ **PENDIENTE** | Habilitar partes de periodo X01..X07 en nuevo periodo (ej. 202751). |
 | **12** | Cierre de periodo / actas | `GJAPCTL` (`SHRROLL`) | ✅ Validado | Jobs 8113 y 8114 exitosos con pase masivo a historia académica. |
 | **13** | Procesamiento de calificaciones | `SFASLST` | ✅ Validado | Registro de notas 16, 10, 08 e INH en actas de NRC 1021 y 1026. |
 | **14** | Cierre de curso | `SSASECT` → `SFASLST` | ✅ Validado | Cierre y paso oficial a historia completado con `SHRROLL`. |
 | **15** | Ampliación de cupos y reservas | `SSASECT` (`SSARRES`) | ✅ Validado | NRC 1021 (aforo 2/2) y NRC 1026 (error *Closed*, ampliación 1 a 4). |
-| **16** | División de grupos / Traslado | `SSASECT` → `SFAREGS` | ⏳ **PENDIENTE** | Mover alumno entre secciones paralelas por sobrecupo o cambio de horario. |
+| **16** | División de grupos / Traslado | `SSASECT` → `SFAREGS` | ✅ **Validado** | María Ramírez (`S00581109`) trasladada de NRC 1026 (`DD`) a NRC 1021 (`RE`), resolviendo `Reserve Closed` ampliando cupo CMEMC38 y confirmada en `SFASLST`. |
 | **17** | Gestión de horarios y cruces | `SSASECT` → `SLARSLT` | ⏳ **PENDIENTE** | Auditoría de conflicto de horas y aulas en bloques de reunión. |
 | **18-A** | Auditoría de carga docente | `SIAASGN` | ✅ Validado | Docente DCHUMAN con 4 NRCs (horas semanales, contacto y FTE nativos). |
 | **18-B** | Retenciones y bloqueo fatal | `SOAHOLD` / `STVHLDD` | ✅ Validado | Retención TT bloqueando matrícula en SFAREGS (*ERROR*). |
@@ -106,12 +106,12 @@ Parte de periodo general: **CGE**.
 
 > **Instrucción para el agente:** A medida que se ejecute cada prueba, marca con `[x]` el script correspondiente y actualiza la evidencia arriba.
 
-- [ ] **Script 10 — Retorno obligatorio tras desaprobado (`SFPPROJ`):**
-  - *Contexto:* Carlos Torres Mendoza (`S00581108`) ya tiene nota `08` rolada a historia en el curso `ESEC 00650`.
-  - *Paso:* Entrar a `SFPPROJ` con periodo `202656` o `202751` e ID `S00581108`, correr proyección y verificar que el sistema lo obligue a repetir `ESEC 00650` antes de avanzar al siguiente curso.
-- [ ] **Script 04 — Examen de suficiencia (`SOATEST` → `SFAREGS`):**
-  - *Contexto:* Acreditar curso mediante examen de suficiencia sin llevar clases.
-  - *Paso:* Entrar a `SOATEST`, ingresar ID de alumno, código de prueba de computación, puntaje aprobatorio (≥ 11) y fecha. Verificar en `SGASTDN`/`CAPP` o matricular curso superior.
+- [x] **Script 10 — Retorno obligatorio tras desaprobado (`SMARQCM` → `SMICRLT`):**
+  - *Contexto:* Carlos Torres Mendoza (`S00581108`) con nota `08` rolada en `ESEC 00650`.
+  - *Evidencia:* CAPP individual arrojó «No cumple» en requerimientos y áreas, 0 créditos obtenidos y curso enviado a «Cursos no usados» (02/10/2026).
+- [x] **Script 16 — División de grupos / Traslado de sección (`SFAREGS`):**
+  - *Contexto:* Reubicación de participantes de una sección saturada a una sección espejo o cambio de horario.
+  - *Evidencia:* María Ramírez (`S00581109`) retirada con `DD` del NRC 1026 e inscrita con `RE` en NRC 1021, auditada en `SFASLST` (02/10/2026).
 - [ ] **Script 02 — Matrícula especial con sobrepasos (`SFASRPO` → `SFAREGS`):**
   - *Contexto:* Autorización especial para saltar bloqueo de aforo o prerrequisito.
   - *Paso:* En `SFASRPO`, asignar código de sobrepaso institucional (ej. `CAPA` o `REQU`) al alumno para el NRC, y luego inscribir en `SFAREGS`.

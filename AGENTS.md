@@ -1,12 +1,14 @@
 # Instrucciones para agentes (Antigravity, Claude Code u otros)
 
 ## El proyecto
+
 - **Usuario:** Dagner Anibal Chuman Lluen, de los **Centros Empresariales** de la Universidad Señor de Sipán (USS): Idiomas/Inglés, Computación/Informática y Emprendimiento.
 - **Qué hace:** documenta y prueba cómo pasan del sistema actual **SEUSS** a **Ellucian Banner Student**.
 - **Este repositorio:** instructivos de Ellucian (PPTX, carpetas `CAPACIDAD n`) y un visor web (`visor_instructivos/`, que Netlify publica con `publish = "."`).
 - **Idioma:** responde **en español**, simple y directo.
 
 ## Antes de responder, lee la memoria del proyecto
+
 Está en `.agents/skills/` (y sincronizada en `.claude/skills/`). Son archivos Markdown y cualquier agente puede leerlos.
 
 1. `.claude/skills/arquitectura-centros-empresariales/SKILL.md`: modelo, periodos, flujo, reglas de trabajo. Referencias en `references/`:
@@ -25,13 +27,16 @@ Está en `.agents/skills/` (y sincronizada en `.claude/skills/`). Son archivos M
 7. `.claude/skills/workflow-pruebas-test/SKILL.md`: guía y checklist para pruebas integrales en Banner TEST.
 
 ## Buscar evidencia en los instructivos
+
 ```bash
 python3 .claude/skills/arquitectura-centros-empresariales/scripts/buscar_instructivos.py "texto o regex" [--archivo 5.3] [--max 10]
 python3 .claude/skills/arquitectura-centros-empresariales/scripts/buscar_instructivos.py --diapositiva "5.3_4.1.4.1.6" 23
 ```
+
 Cita así: «instructivo 5.3, diap. 23».
 
 ## Reglas clave
+
 - **Fuentes:**
   - «**Hoy en SEUSS**» es lo que dice el usuario; no lo interpretes.
   - «**En Ellucian**» es lo que dicen los instructivos, con cita.
@@ -47,4 +52,3 @@ Cita así: «instructivo 5.3, diap. 23».
 - **Periodos:** año + 5 + secuencia (1 verano, 4 semestre I, 6 semestre II). SEUSS 2026-0 / I / II equivale a 202651 / 202654 / 202656.
 - **Inglés:** en SEUSS, quien desaprueba BASIC I no pasa a BASIC II, salvo con examen de suficiencia. Banner lo reproduce con el prerrequisito en «Fatal».
 - **No uses** «periodo de 3 meses» para SEUSS: el usuario no lo confirmó.
-- **Git:** no publiques en `main` sin que el usuario lo pida.

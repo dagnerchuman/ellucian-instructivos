@@ -40,3 +40,31 @@
 - Paleta USS: Morado `#7030A0` / `#5C2193`, Verdes `#4EA72E` y `#92D050`. Colores por centro: Idiomas `#7030A0`, Informática `#0E8A5F`, Emprendimiento `#C2501C`.
 - En presentaciones PPTX: deben abrir limpiamente en PowerPoint sin requerir reparación.
 - En hojas Excel: fórmulas dinámicas verificadas con 0 errores.
+
+## 5. Referencia Rápida en Memoria (Quick Reference)
+- **Computación (Informática):** Nivel alumno: `C` (STVLEVL) | Escuela: `EM` | Campus: `S` (Chiclayo) | Programa: `CMEMC38` | Mayor: `ACXP` | Depto: `EMCI` | Grado: `000000` | Materia: `ESEC` (ej. ESEC 00650) | Regla currículo: `ECOM-01` | Modos calificación: Catálogo `V`, SHAGRDE `V` (resuelto U20) | **NO rinde** examen de suficiencia (C36) | Partes: `CGE` / `X01` a `X07`.
+- **Idiomas (Inglés):** Nivel alumno: `I` (STVLEVL) | Escuela: `EM` | Campus: `S` | Grado: `000000` | Cursos conocidos: BASIC I..III, INTERMEDIATE I..III (prerrequisitos en Fatal) | **SÍ rinde** examen de suficiencia en `SOATEST` (C11, R03) | Partes: `IGE` / `I01` a `I12`.
+- **Emprendimiento:** Nivel alumno: `M` (STVLEVL) | Escuela: `EM` | Campus: `S` | Grado: `000000` | Materia: `ESGE` (ej. ESGE 00117) | Todos los grupos duran 10 semanas fijas (P02 y P03 se superponen) | Partes: `EGE` / `P01` a `P06`.
+- **Periodos:** `202651` (verano 2026-0), `202654` (semestre 2026-I), `202656` (semestre 2026-II), `202751` (verano 2027).
+- **Pantallas clave:** `SSASECT` (NRC/aforo/reservas `SSARRES`) → `GOAMTCH` (persona `S00...`) → `SAAQUIK`/`SGASTDN` (admisión/plan) → `SFAREGS` (`RE` matricula, `DD` retira y libera vacante) → `SOAHOLD` (retenciones) → `SIAASGN` (carga docente) → `SFASLST` (notas) → `GJAPCTL` / `SHRROLL` (cierre actas e historia) → `SMARQCM`/`SMICRLT` (CAPP).
+
+## 6. Mapa Mental de Capacidades (Cap 1 al 11)
+- **CAP 1:** Diseño Curricular (`STVTERM`, `SOATERM`, `SCACRSE`, `SCAPREQ`, `SOATEST`, `SMAPROG`, `SMAAREA`).
+- **CAP 3:** Admisión y Convalidaciones (`SAAADMS`, `SAAQUIK`, `SHATRNS`).
+- **CAP 4:** Gestión del Estudiante (`SGASTDN`, `SOAHOLD`, `STVHLDD`, `SVASVPR`).
+- **CAP 5:** Carga Docente, Programación e Inscripción (`GOAMTCH`, `SPAIDEN`, `SIAINST`, `SIAASGN`, `SSASECT`, `SSARRES`, `SFAREGS`).
+- **CAP 6:** Asignar Docentes y Horarios (`GORINTG`, `SAUVIR`, docentes en `SSASECT`).
+- **CAP 7:** Calificaciones y Cierre de Periodo (`SHAGCOM`, `SFASLST`, `SHAGRDE`, `SHRROLL` en `GJAPCTL`).
+- **CAP 8:** Egreso y CAPP (`SMARQCM`, `SMICRLT`, `SMRBCMP`).
+- **CAP 9:** Tutoría y Asesoría (`SGAADVR`).
+- **CAP 10:** Solicitudes y Servicios (`SVASVPR`).
+- **CAP 11:** Finanzas y Cobranzas (`SFARGFE`, `TSAAREV`, `TVACAJA`).
+
+## 7. Los 5 Pasos Operativos de los Centros (Guía Maestra)
+1. **Paso 1: Creación de NRC (`SSASECT` / `SSASECQ`):** Periodo (`202656`), Materia (`ESEC`/`ESGE`), Curso, Sección, Parte de periodo (`X01..X07`, `I01..I12`, `P01..P06`), Aforo y reservas (`SSARRES`), Horario con Aula virtual (`SAUVIR`), Docente principal en *Faculty*.
+2. **Paso 2: Creación de Persona (`GOAMTCH`):** Origen `PERS_NATU`, Marcar-Duplicar → Crear nuevo → Guardar (genera ID `S0058xxxx`). Requisitos: Dirección (`PP`), Móvil (`MOV`), Correo (`PER1`).
+3. **Paso 3: Admisión y Asignación de Plan (`SAAQUIK` / `SGASTDN`):** Periodo, Nivel (`C`/`I`/`M`), Campus `S`, Escuela `EM`, Grado `000000`, Programa `CMEMC38` (autocompleta Mayor `ACXP`, Depto `EMCI`, Estatus `INPROGRESS`/`AS`).
+4. **Paso 4: Matrícula y Retiros en el NRC (`SFAREGS`):** Autorizar plan (`EL`), ingresar NRC con código `RE` (inscribe). Si se retira: código `DD` libera la vacante automáticamente en `SSASECT`. Si tiene retención en `SOAHOLD`, bloquea con error fatal.
+5. **Paso 5: Notas y Cierre de Actas (`SFASLST` → `GJAPCTL` / `SHRROLL`):** Docente califica en `SFASLST` con Modo `V` (aprueba ≥11, desaprueba ≤10). Cierre masivo en `GJAPCTL` ejecutando `SHRROLL` para rolar a historia académica. Auditoría en CAPP con `SMARQCM`/`SMICRLT`.
+
+

@@ -1,6 +1,40 @@
 # Registro de preguntas, dudas y decisiones
 
-Última actualización: **01/10/2026** (validación de matrícula completa 2/2 en SFAREGS, reserva de cupos en SSASECT y sobrepasos en TEST). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
+Última actualización: **02/10/2026** (validación de matrícula completa 2/2 en SFAREGS, reserva de cupos en SSASECT, scripts 08-18 validados y resolución definitiva U20). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
+
+---
+
+## 📌 Índice Rápido de Navegación
+- **Confirmado por el usuario (C01 – C39):**
+  - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
+  - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
+  - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
+  - *C22–C25:* Usuario institucional `100582059` / `DCHUMAN`, SGASTDN Curricula, flujo previo oficial, Autoservicio Alumnos en Experience.
+  - *C26–C30:* Reserva cupos SSARRES (2/2), escala SHAGRDE y notas en SFASLST, retiro `DD` en SFAREGS y liberación cupo, auditoría carga SIAASGN, retención mora `TT` y bloqueo SOAHOLD.
+  - *C31–C35:* Creación NRC 1026 con aula virtual SAUVIR, alumno nuevo `S00581108`, ampliación cupos a 4, SHRROLL (Job 8113) con diagnóstico y resolución definitiva de incidencia U20 agregando modo `V` en SHAGRDE (Job 8114 exitoso).
+  - *C36–C39:* Computación no rinde suficiencia, validación de bloqueo por repitencia en CAPP (SMARQCM), traslado sección NRC 1026→1021 con ajuste reserva, suspensión y reactivación de estatus en SGASTDN.
+- **Resuelto con los instructivos (R01 – R16):**
+  - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
+  - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
+  - *R06–R08:* Aula virtual SSASECT, hora académica SIATERM, egreso pregrado en CAPP.
+  - *R09–R10:* Bloqueo Fatal de BASIC II en SOATERM y cursos en progreso.
+  - *R11–R13:* Reemplazo docente a mitad de curso, programas incompletos y asignación de tutores.
+  - *R14–R16:* Quejas por solicitudes de servicio, investigación de personal y alumnos sancionados en SGASTDN/SOAHOLD.
+- **Dudas abiertas para Ellucian (E01 – E19):**
+  - *E01–E04:* Horas día/noche en SIATERM, retorno notas aula virtual, hora de 60m, suficiencia en CAPP.
+  - *E05–E12:* Malla en CAPP, migración historia SEUSS, muestra validación, SMARQCM en TEST, grado SHADEGR, reportes Insight.
+  - *E13–E19:* Casilla en progreso SOATERM, historial docente relevado, programas incompletos en 20271, alertas tempranas.
+- **Dudas abiertas para la USS (U01 – U21):**
+  - *U01, U10:* Puntaje mínimo suficiencia inglés y política sobrepasos SFAROVR.
+  - *U02–U05:* Secuencialidad informática/emprendimiento, % asistencia, plan evaluación, nombres/pesos oficiales.
+  - *U06–U09:* Matrícula autoservicio vs backoffice, tutoría en CCEE, jefatura, denominación formal horas.
+  - *U11–U16:* Conciliación migración, planes rediseño, código 20271, canal quejas, separación docente.
+  - *U17–U20:* Confirmados en TEST: Campus S (U17), Escuela EM (U18), Programa CMEMC38 (U19), Modo calificación V resuelto en SHAGRDE (U20).
+  - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
+- **Supuestos descartados (S01 – S03):**
+  - *S01:* Periodos de 3 meses (NO usar).
+  - *S02:* Horas de 40-45m (es 45m).
+  - *S03:* Pase automático BASIC I→II (Descartado: es prerrequisito fatal).
 
 ---
 

@@ -52,3 +52,61 @@ Cita así: «instructivo 5.3, diap. 23».
 - **Periodos:** año + 5 + secuencia (1 verano, 4 semestre I, 6 semestre II). SEUSS 2026-0 / I / II equivale a 202651 / 202654 / 202656.
 - **Inglés:** en SEUSS, quien desaprueba BASIC I no pasa a BASIC II, salvo con examen de suficiencia. Banner lo reproduce con el prerrequisito en «Fatal».
 - **No uses** «periodo de 3 meses» para SEUSS: el usuario no lo confirmó.
+
+## Referencia Rápida en Memoria (Quick Reference)
+
+- **Identificadores por Centro (Confirmados en Banner TEST):**
+  - **Computación (Informática):** Nivel alumno: `C` (STVLEVL) | Escuela/College: `EM` | Campus: `S` (Chiclayo) | Programa: `CMEMC38` | Mayor: `ACXP` | Depto: `EMCI` | Grado: `000000` | Materia: `ESEC` (ej. ESEC 00650) | Regla currículo: `ECOM-01` | Modos calificación: Catálogo `V`, SHAGRDE `V` (resuelto U20) | **NO rinde** examen de suficiencia (C36) | Partes de periodo: `CGE` / `X01` a `X07`.
+  - **Idiomas (Inglés):** Nivel alumno: `I` (STVLEVL) | Escuela/College: `EM` | Campus: `S` | Grado: `000000` | Cursos: BASIC I..III, INTERMEDIATE I..III (prerrequisitos en Fatal) | **SÍ rinde** examen de suficiencia en `SOATEST` (C11, R03) | Partes de periodo: `IGE` / `I01` a `I12`.
+  - **Emprendimiento:** Nivel alumno: `M` (STVLEVL) | Escuela/College: `EM` | Campus: `S` | Grado: `000000` | Materia: `ESGE` (ej. ESGE 00117) | Todos los grupos duran 10 semanas fijas (P02 y P03 se superponen) | Partes de periodo: `EGE` / `P01` a `P06`.
+- **Periodos y Horas:**
+  - Códigos: `202651` (verano 2026-0), `202654` (semestre 2026-I), `202656` (semestre 2026-II), `202751` (verano 2027).
+  - Hora académica en Banner: Factor de duración en `SIATERM` (uno por periodo). En SEUSS: 45 min día, 50 min noche, 60 min presencial.
+- **Cadena de Pantallas Banner:**
+  - NRC: `SSASECT` (búsqueda: `SSASECQ`, reservas: `SSARRES`)
+  - Persona: `GOAMTCH` (crea ID `S00...`) → Admisión: `SAAQUIK` / `SGASTDN`
+  - Matrícula: `SFAREGS` (código `RE` inscribe, `DD` retira y libera cupo) | Retenciones: `SOAHOLD` / `STVHLDD`
+  - Carga docente: `SIAASGN` (reemplaza planillas Excel)
+  - Calificaciones y Cierre: `SFASLST` (ingreso docente) → `SHAGRDE` (escalas) → `GJAPCTL` ejecuta `SHRROLL` (cierre actas e historia)
+  - Auditoría curricular: `SMARQCM` / `SMICRLT` (CAPP y avance).
+
+## Mapa Mental de Capacidades e Instructivos (Cap 1 al 11)
+- **CAPACIDAD 1: Diseño Curricular** → Periodos (`STVTERM`, `SOATERM`), Cursos catálogo (`SCACRSE`), Prerrequisitos y suficiencia (`SCAPREQ`, `SOATEST`), Mallas y programas (`SMAPROG`, `SMAAREA`).
+- **CAPACIDAD 3: Admisión y Convalidaciones** → Solicitudes de admisión (`SAAADMS`, `SAAQUIK`), Requisitos de ingreso, Convalidación y equivalencias externas (`SHATRNS`).
+- **CAPACIDAD 4: Gestión del Estudiante** → Estados de permanencia (`SGASTDN`), Retenciones administrativas (`SOAHOLD`, `STVHLDD`), Solicitudes de servicio (`SVASVPR`).
+- **CAPACIDAD 5: Carga Docente, Programación e Inscripción** → Personas naturales (`GOAMTCH`, `SPAIDEN`), Información docente (`SIAINST`), Carga lectiva (`SIAASGN`), Programar NRC (`SSASECT`, `SSARRES`, `SSAPREQ`), Inscripción backoffice (`SFAREGS`).
+- **CAPACIDAD 6: Asignar Docentes y Horarios** → Horarios y aulas (`GORINTG`, `SAUVIR`), Docente principal y % responsabilidad en NRC (`SSASECT`).
+- **CAPACIDAD 7: Calificaciones y Cierre de Periodo** → Plan de evaluación (`SHAGCOM`), Ingreso de notas (`SFASLST` y Autoservicio), Escalas vigesimales (`SHAGRDE`), Cierre masivo a historia académica (`SHRROLL` en `GJAPCTL`).
+- **CAPACIDAD 8: Egreso y Auditoría Curricular (CAPP)** → Evaluación de avance y requisitos de egreso (`SMARQCM`, `SMICRLT`, `SMRBCMP`).
+- **CAPACIDAD 9: Tutoría y Asesoría** → Asignación de tutores (`SIAINST`, `SGAADVR`).
+- **CAPACIDAD 10: Solicitudes de Servicio Estudiantiles** → Configuración y atención de quejas/trámites (`SVASVPR`).
+- **CAPACIDAD 11: Finanzas y Cobranzas** → Definición de cobro por curso (`SFARGFE`), Cuentas de alumnos (`TSAAREV`), Caja (`TVACAJA`).
+
+## Los 5 Pasos Operativos de los Centros (Guía Maestra sin búsquedas)
+1. **Paso 1: CREACIÓN DE NRC (`SSASECT` / `SSASECQ`)**
+   - Acceso: `SSASECT` con Periodo (ej. `202656`) y NRC (o crear nuevo).
+   - Encabezado: Materia (`ESEC` / `ESGE`), Curso (`00650` / `00117`), Sección (`A`, `B`, `DC1`), Parte de periodo (`X01..X07`, `I01..I12`, `P01..P06`).
+   - Pestaña *Enrollment Details*: Aforo máximo (`Maximum`). Si hay reservas por programa: configurar en `SSARRES`.
+   - Pestaña *Meeting Times*: Horario, días y Aula virtual oficial (`SAUVIR` / `SALA VIRT.`).
+   - Pestaña *Faculty*: Docente principal (ID institucional, ej. `100582059`), 100% responsabilidad.
+2. **Paso 2: CREACIÓN DE PERSONA (`GOAMTCH`)**
+   - Acceso: `GOAMTCH` con origen `PERS_NATU` (Persona Natural).
+   - Ingresar DNI y nombres/apellidos. Botón *«Marcar-Duplicar»* → *«Crear nuevo»* → *«Guardar»*.
+   - Genera ID institucional con prefijo `S` (ej. `S00581081`).
+   - Requisitos obligatorios: Dirección institucional (`PP`), Teléfono móvil (`MOV`), Correo personal (`PER1`).
+3. **Paso 3: ADMISIÓN Y ASIGNACIÓN AL PROGRAMA (`SAAQUIK` / `SGASTDN`)**
+   - Acceso: `SAAQUIK` (rápida) o `SGASTDN` (pestaña *Curricula*).
+   - Parámetros: Periodo (ej. `202656`), Nivel alumno (`C` Computación, `I` Idiomas, `M` Emprendimiento), Campus `S` (Chiclayo), Escuela `EM`, Grado `000000`.
+   - Programa: ej. `CMEMC38` → autocompleta Mayor `ACXP`, Depto `EMCI`, Estatus `INPROGRESS` o `AS` (Activo).
+4. **Paso 4: MATRÍCULA Y RETIROS EN EL NRC (`SFAREGS`)**
+   - Acceso: `SFAREGS` con Periodo e ID del alumno.
+   - Bloque 1: Autorizar plan de estudios en estatus elegible (`EL`).
+   - Bloque 2 (*Información de curso*): Ingresar NRC. Código `RE` inscribe formalmente.
+   - Retiro / Drop: Código `DD` (*Drop/Delete*) retira la matrícula y **libera la vacante automáticamente en SSASECT** (`Remaining` suma 1).
+   - Bloqueo por mora: Si tiene retención en `SOAHOLD` / `STVHLDD`, `SFAREGS` emite error fatal bloqueando la inscripción.
+5. **Paso 5: NOTAS Y CIERRE DE ACTAS (`SFASLST` → `GJAPCTL` / `SHRROLL`)**
+   - Registro de notas: Docente ingresa en `SFASLST` (o Autoservicio) con Modo `V` (nota mínima aprobatoria `11`; `≤10` e `INH` desaprueban).
+   - Cierre oficial de periodo: En `GJAPCTL` ejecutar `SHRROLL` (con Periodo y NRC). Banner pasa las calificaciones a historia académica (*Rolled to Academic History*).
+   - Auditoría CAPP: `SMARQCM` / `SMICRLT` audita cumplimiento curricular; notas reprobadas van a *«Curso no usado»* y bloquean el avance.
+
+

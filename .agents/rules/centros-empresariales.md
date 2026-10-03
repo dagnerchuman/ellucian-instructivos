@@ -42,6 +42,8 @@
 - En hojas Excel: fórmulas dinámicas verificadas con 0 errores.
 
 ## 5. Referencia Rápida en Memoria (Quick Reference)
+> Fuente única de los datos de cada centro: `centros/<centro>/datos.json`. Si este resumen no coincide, manda `datos.json`. Los diagramas paso a paso están en `centros/<centro>/diagramas/`; no se editan a mano, se regeneran con `python3 herramientas/diagramas/generar.py`.
+
 - **Computación (Informática):** Nivel alumno: `C` (STVLEVL) | Escuela: `EM` | Campus: `S` (Chiclayo) | Programa: `CMEMC38` | Mayor: `ACXP` | Depto: `EMCI` | Grado: `000000` | Materia: `ESEC` (ej. ESEC 00650) | Regla currículo: `ECOM-01` | Modos calificación: Catálogo `V`, SHAGRDE `V` (resuelto U20) | **NO rinde** examen de suficiencia (C36) | Partes: `CGE` / `X01` a `X07`.
 - **Idiomas (Inglés):** Nivel alumno: `I` (STVLEVL) | Escuela: `EM` | Campus: `S` | Grado: `000000` | Cursos conocidos: BASIC I..III, INTERMEDIATE I..III (prerrequisitos en Fatal) | **SÍ rinde** examen de suficiencia en `SOATEST` (C11, R03) | Partes: `IGE` / `I01` a `I12`.
 - **Emprendimiento:** Nivel alumno: `M` (STVLEVL) | Escuela: `EM` | Campus: `S` | Grado: `000000` | Materia: `ESGE` (ej. ESGE 00117) | Todos los grupos duran 10 semanas fijas (P02 y P03 se superponen) | Partes: `EGE` / `P01` a `P06`.

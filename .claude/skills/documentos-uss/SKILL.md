@@ -113,6 +113,12 @@ En `scripts/pptx/`:
 - Verifica que haya **0 errores** de fórmula.
 - **No** mates `soffice` con `pkill -f soffice`: mata también la shell.
 
+## Diagramas interactivos paso a paso (Archify)
+- Cuando el usuario pida un diagrama, un flujo o un mapa de estados, primero revisa los que ya existen en `centros/<centro>/diagramas/`. Hay 7 por centro y un comparativo; el índice está en `centros/README.md`.
+- Se entregan en **HTML interactivo** (claro y oscuro, animación, vistas guiadas, menú «Exportar»), **PNG claro**, **PNG oscuro** y **SVG**. Para un PDF o una presentación, usa el PNG claro.
+- **No se editan a mano.** Se cambia `centros/<centro>/datos.json` o `herramientas/diagramas/plantillas.py` y se regenera; el detalle está en la skill `workflow-diagramas-archify`.
+- El diagrama A3 en PDF (`fuentes/diag/build_diagrama.py`) es la versión anterior, común a los tres centros. Para trabajar por centro, usa los de Archify.
+
 ## Generadores originales
 En `fuentes/` están los scripts con los que se hizo cada entregable, con todos sus datos y textos. Úsalos para corregir o regenerar un entregable. Lee antes `fuentes/LEEME.md`: hay rutas que ajustar.
 

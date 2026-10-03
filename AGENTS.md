@@ -5,11 +5,15 @@
 - **Usuario:** Dagner Anibal Chuman Lluen, de los **Centros Empresariales** de la Universidad Señor de Sipán (USS): Idiomas/Inglés, Computación/Informática y Emprendimiento.
 - **Qué hace:** documenta y prueba cómo pasan del sistema actual **SEUSS** a **Ellucian Banner Student**.
 - **Este repositorio:** instructivos de Ellucian (PPTX, carpetas `CAPACIDAD n`) y un visor web (`visor_instructivos/`, que Netlify publica con `publish = "."`).
+- **Todo por carpetas:**
+  - `centros/<centro>/` (`idiomas`, `computacion`, `emprendimiento`): `datos.json` (**fuente única** de los datos del centro), `README.md` (ficha) y `diagramas/` (HTML interactivo, PNG claro y oscuro, SVG). Lo común va en `centros/comun/`.
+  - `herramientas/`: generador de diagramas (Archify) y sincronizador de skills.
+  - `docs/`: documentos sueltos.
 - **Idioma:** responde **en español**, simple y directo.
 
 ## Antes de responder, lee la memoria del proyecto
 
-Está en `.agents/skills/` (y sincronizada en `.claude/skills/`). Son archivos Markdown y cualquier agente puede leerlos.
+Está en `.agents/skills/` y es igual a `.claude/skills/`. Son archivos Markdown y cualquier agente puede leerlos. Después de editar una skill, cópiala a la otra carpeta con `python3 herramientas/sincronizar_skills.py --desde agents` (o `--desde claude`). `--check` solo revisa.
 
 1. `.claude/skills/arquitectura-centros-empresariales/SKILL.md`: modelo, periodos, flujo, reglas de trabajo. Referencias en `references/`:
    - Guías operativas paso a paso (según pestañas): `01-creacion-nrc.md`, `02-creacion-de-persona.md`, `03-admision-y-asignacion-al-programa.md`, `04-matricula-en-el-nrc.md`, `05-notas-asigna-docente.md`;
@@ -25,6 +29,8 @@ Está en `.agents/skills/` (y sincronizada en `.claude/skills/`). Son archivos M
 5. `.claude/skills/workflow-entregables-uss/SKILL.md`: pipeline y control de calidad de entregables PDF, PPTX y Excel.
 6. `.claude/skills/workflow-procesar-reunion/SKILL.md`: procesar notas y minutas de Zoom/reuniones y actualizar registro.md.
 7. `.claude/skills/workflow-pruebas-test/SKILL.md`: guía y checklist para pruebas integrales en Banner TEST.
+8. `.claude/skills/centro-idiomas/`, `centro-computacion/` y `centro-emprendimiento/`: lo propio de cada centro (antes `centro-ingles` y `centro-informatica`).
+9. `.claude/skills/workflow-diagramas-archify/SKILL.md`: diagramas paso a paso por centro con Archify. **No los edites a mano:** cambia `centros/<centro>/datos.json` o `herramientas/diagramas/plantillas.py` y ejecuta `python3 herramientas/diagramas/generar.py`.
 
 ## Buscar evidencia en los instructivos
 
@@ -54,6 +60,8 @@ Cita así: «instructivo 5.3, diap. 23».
 - **No uses** «periodo de 3 meses» para SEUSS: el usuario no lo confirmó.
 
 ## Referencia Rápida en Memoria (Quick Reference)
+
+> Resumen. Si algo de aquí no coincide con `centros/<centro>/datos.json`, manda `datos.json`: corrige este resumen.
 
 - **Identificadores por Centro (Confirmados en Banner TEST):**
   - **Computación (Informática):** Nivel alumno: `C` (STVLEVL) | Escuela/College: `EM` | Campus: `S` (Chiclayo) | Programa: `CMEMC38` | Mayor: `ACXP` | Depto: `EMCI` | Grado: `000000` | Materia: `ESEC` (ej. ESEC 00650) | Regla currículo: `ECOM-01` | Modos calificación: Catálogo `V`, SHAGRDE `V` (resuelto U20) | **NO rinde** examen de suficiencia (C36) | Partes de periodo: `CGE` / `X01` a `X07`.

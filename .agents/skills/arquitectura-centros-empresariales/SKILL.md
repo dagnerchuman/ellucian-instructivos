@@ -22,9 +22,10 @@ description: Arquitectura y contexto del proyecto de los Centros Empresariales d
   - SEUSS 2026-0, 2026-I y 2026-II equivalen a **202651, 202654 y 202656**.
   - El verano 2027 será **202751**.
 - **Parte de periodo:** cada grupo que empieza en un mes es una parte de periodo con sus propias fechas (STVPTRM, SOATERM).
-  - Idiomas: I01 a I12 (periodo general IGE).
-  - Computación: X01 a X12 (CGE).
-  - Emprendimiento: P01 a P12 (EGE).
+  - Idiomas: I01 a I12 en 2026 (parte general IGE).
+  - Computación: X01 a X07 en 2026 (CGE).
+  - Emprendimiento: P01 a P06 en 2026 (EGE).
+  - Son los grupos del cronograma 2026. Si en otro año hay más grupos, el código sigue la misma secuencia; no está confirmado hasta qué número.
 - **Curso y NRC:** el curso del catálogo (SCACRSE) se programa como **NRC = sección** (SSASECT) dentro de una parte de periodo. El NRC tiene cupo, horario, docentes, reglas y aula virtual.
 - **Recorrido del participante:**
   1. Persona (SPAIDEN).
@@ -56,6 +57,12 @@ description: Arquitectura y contexto del proyecto de los Centros Empresariales d
 - **Pruebas que pidieron en el Zoom:** periodos, generación de mallas y programas, creación de NRC, matrículas por backoffice y por autoservicio.
 
 El flujo completo de 7 fases y 17 pasos está en [references/00-flujo-de-inicio-a-fin.md](references/00-flujo-de-inicio-a-fin.md).
+
+## Datos y diagramas por centro (carpeta `centros/`)
+- **Fuente única de datos:** `centros/<centro>/datos.json`, con `<centro>` = `idiomas`, `computacion` o `emprendimiento`. Lo común (periodos, escuela, campus y el catálogo de los 18 scripts) está en `centros/comun/datos.json`. Un `null` significa «por confirmar».
+- **Diagramas paso a paso:** `centros/<centro>/diagramas/NN-tema/`, en HTML interactivo, PNG claro y oscuro, y SVG. El comparativo de los tres centros está en `centros/comun/diagramas/00-tres-centros/`, y el índice en `centros/README.md`.
+- Para cambiar o regenerar un diagrama, usa la skill `workflow-diagramas-archify`.
+- **Skills de cada centro:** `centro-idiomas`, `centro-computacion` y `centro-emprendimiento`.
 
 ## Guías operativas paso a paso (siguiendo las pestañas de trabajo del usuario)
 | N° | Pestaña / Guía Operativa | Archivo |

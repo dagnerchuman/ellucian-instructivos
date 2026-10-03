@@ -1,12 +1,16 @@
 ---
 name: centro-emprendimiento
-description: Arquitectura específica del Centro de Emprendimiento de la USS en Ellucian Banner. Partes de periodo P01-P06, materia ESGE, NRC 1025 probado en TEST. Úsala siempre que se trabaje exclusivamente con Emprendimiento.
+description: Arquitectura específica del Centro de Emprendimiento de la USS en Ellucian Banner. Partes de periodo P01-P06, materia ESGE, NRC 1025 probado en TEST y diagramas paso a paso (centros/emprendimiento). Úsala siempre que se trabaje exclusivamente con Emprendimiento.
 ---
 
 # Centro de Emprendimiento — Arquitectura Específica
 
 > Este skill contiene la data confirmada y específica del **Centro de Emprendimiento**.
 > Para la arquitectura general de los tres centros, ver `arquitectura-centros-empresariales`.
+>
+> **Carpeta del centro:** `centros/emprendimiento/`
+> - `datos.json` es la **fuente única** de los datos de este centro. Lo que allí está en `null` sigue **por confirmar** en TEST y en los diagramas se muestra así.
+> - `diagramas/` tiene los 7 diagramas paso a paso (HTML interactivo, PNG claro y oscuro, SVG). Ver la skill `workflow-diagramas-archify`.
 
 ## Identificadores en Banner
 

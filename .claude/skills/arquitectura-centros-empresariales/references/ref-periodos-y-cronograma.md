@@ -27,9 +27,9 @@ Una parte de periodo es un rango de fechas dentro del periodo. Tiene sus propias
 
 | Centro | General | Grupos |
 |---|---|---|
-| Idiomas | IGE | I01 … I12 (Idiomas Grupo 01…12) |
-| Computación | CGE | X01 … X12 |
-| Emprendimiento | EGE | P01 … P12 |
+| Idiomas | IGE | I01 … I12 en 2026 (Idiomas Grupo 01…12) |
+| Computación | CGE | X01 … X07 en 2026 |
+| Emprendimiento | EGE | P01 … P06 en 2026 |
 
 ## Cronograma 2026: Idiomas
 Cada grupo abre 6 cursos: BASIC I, II y III e INTERMEDIATE I, II y III.

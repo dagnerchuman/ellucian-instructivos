@@ -3,3 +3,9 @@ node_modules/
 .tempmediaStorage/
 *.log
 __pycache__/
+
+# Motor Archify descargado por herramientas/diagramas/instalar_archify.sh
+herramientas/diagramas/.archify/
+# Recibos temporales de `archify finalize`
+centros/**/*.finalize*.json
+centros/**/*.delivery*.json

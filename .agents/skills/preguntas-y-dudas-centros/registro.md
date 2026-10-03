@@ -1,11 +1,11 @@
 # Registro de preguntas, dudas y decisiones
 
-Última actualización: **02/10/2026** (validación de matrícula completa 2/2 en SFAREGS, reserva de cupos en SSASECT, scripts 08-18 validados y resolución definitiva U20). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
+Última actualización: **03/10/2026** (carpeta `centros/` por centro con `datos.json` y diagramas paso a paso con Archify; U17 a U20 marcadas). Antes: 02/10/2026 (validación de matrícula completa 2/2 en SFAREGS, reserva de cupos en SSASECT, scripts 08-18 validados y resolución definitiva U20). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
 
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C39):**
+- **Confirmado por el usuario (C01 – C40):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -13,6 +13,7 @@
   - *C26–C30:* Reserva cupos SSARRES (2/2), escala SHAGRDE y notas en SFASLST, retiro `DD` en SFAREGS y liberación cupo, auditoría carga SIAASGN, retención mora `TT` y bloqueo SOAHOLD.
   - *C31–C35:* Creación NRC 1026 con aula virtual SAUVIR, alumno nuevo `S00581108`, ampliación cupos a 4, SHRROLL (Job 8113) con diagnóstico y resolución definitiva de incidencia U20 agregando modo `V` en SHAGRDE (Job 8114 exitoso).
   - *C36–C39:* Computación no rinde suficiencia, validación de bloqueo por repitencia en CAPP (SMARQCM), traslado sección NRC 1026→1021 con ajuste reserva, suspensión y reactivación de estatus en SGASTDN.
+  - *C40:* Todo por carpetas y por centro (`centros/<centro>/`); diagramas paso a paso con Archify.
 - **Resuelto con los instructivos (R01 – R16):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
   - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
@@ -29,7 +30,7 @@
   - *U02–U05:* Secuencialidad informática/emprendimiento, % asistencia, plan evaluación, nombres/pesos oficiales.
   - *U06–U09:* Matrícula autoservicio vs backoffice, tutoría en CCEE, jefatura, denominación formal horas.
   - *U11–U16:* Conciliación migración, planes rediseño, código 20271, canal quejas, separación docente.
-  - *U17–U20:* Confirmados en TEST: Campus S (U17), Escuela EM (U18), Programa CMEMC38 (U19), Modo calificación V resuelto en SHAGRDE (U20).
+  - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
 - **Supuestos descartados (S01 – S03):**
   - *S01:* Periodos de 3 meses (NO usar).
@@ -80,6 +81,7 @@
 | C37 | **Validación de avance y repitencia en CAPP individual SMARQCM / SMICRLT (Script 10 - 02/10):** Al evaluar el avance curricular en `SMARQCM` para el estudiante `S00581108` (*Carlos Torres Mendoza*) con su nota desaprobatoria `08` rolada en el NRC 1026: (a) En `SMICRLT`, los Requerimientos Generales y las Áreas curriculares quedaron en la columna **«No cumple»**; (b) En `SMIPOUT`, la regla exigió nota mínima `11`, computando `0,000` créditos usados y `0` cursos aprobados; (c) En «Detalle de cursos no usados» (`SMICRLT`), `ESEC 00650` fue clasificado como **«Curso no usado»** (reprobado). Valida al 100% que la reprobación bloquea el avance curricular y lo obliga a repetir. | 02/10/2026 | Práctica del usuario (SMARQCM/SMICRLT/SMIPOUT) |
 | C38 | **División de grupos / Traslado de sección en SFAREGS (Script 16 - 02/10):** Se validó al 100% el traslado de la estudiante `S00581109` (*María Ramírez García*) desde el NRC **1026** (cambiada a estatus `DD`) hacia el NRC paralelo **1021** (estatus `RE`). Se diagnosticó el error `Reserve Closed` por agotamiento del cupo específico del programa `CMEMC38`, el cual se resolvió ampliando la reserva de 1 a 2 en `SSARRES` (`SSASECT`) y aforo total a 3 en `Detalles de ingreso`. La lista de clase en `SFASLST` auditó la presencia oficial de 2 estudiantes en el NRC 1021 (`S00581081` y `S00581109`). | 02/10/2026 | Práctica del usuario (SFAREGS / SSASECT / SFASLST) |
 | C39 | **Suspensión y reactivación de matrícula (Script 09 - 02/10):** Se comprobó el ciclo de vida del estatus de estudiante en `SGASTDN` / `SFAREGS`: el estatus Inactivo (`IS` / `SU`) bloquea las autorizaciones y la inscripción de cursos futuros (*El estatus del estudiante no permite inscripción*), mientras que la restitución del código Activo (`AS`) rehabilita la elegibilidad institucional inmediata. | 02/10/2026 | Práctica del usuario (SGASTDN / SFAREGS) |
+| C40 | **Todo por carpetas y por centro, con diagramas paso a paso en Archify (03/10):** El usuario pidió separar todo por carpetas, incluidos los agentes, y que cada archivo diga de qué centro es. Se creó `centros/<centro>/` con `datos.json` (fuente única de los datos del centro), una ficha `README.md` y `diagramas/` con 7 diagramas por centro: recorrido, NRC, persona y admisión, estados de la matrícula, notas y cierre, y dos de casuísticas. Cada uno tiene HTML interactivo, PNG claro, PNG oscuro y SVG; además hay un comparativo en `centros/comun/`. Se generan con `herramientas/diagramas/generar.py`. Los diagramas de `diagramas_flujo/` (03/10) se reemplazaron porque mezclaban datos de Computación bajo el nombre de los tres centros; quedan en `centros/computacion/diagramas/anterior-03-10-archify/`. Las skills `centro-informatica` y `centro-ingles` pasan a llamarse `centro-computacion` y `centro-idiomas`. | 03/10/2026 | Usuario (chat) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -137,10 +139,10 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U14 | ¿Qué área recibe las quejas contra docentes y cómo se protege al estudiante? ¿Se crea en Banner un servicio de «queja o denuncia» o se atiende fuera? | 28/09 | Casuísticas |
 | U15 | ¿Qué tipos de comentario de seguimiento (SPACMNT) usarán los tutores? | 28/09 | Casuísticas |
 | U16 | ¿Quién decide separar a un docente y cómo se avisa a Registros Académicos? | 28/09 | Casuísticas |
-| U17 | ¿Qué código de **campus** se usa para los NRC de los centros? | 28/09 | SSASECT en TEST |
-| U18 | ¿Qué son las escuelas **EM** y **CE** del catálogo? ¿Por qué existen **ESEC 00650** (EM) y **ESEP 00650** (CE) con el mismo número? ¿Cuál programa el Centro de Informática? | 28/09 | SSASECT en TEST |
-| U19 | ¿Qué programa es **MC38** y qué significa el nivel **C** en SMAAREA? ¿Esa regla ECOM-01 es el requisito de computación de pregrado? | 28/09 | SMAAREA en TEST |
-| U20 | **Modo de calificación en Centros Empresariales (V vs P):** En TEST, el catálogo de cursos (`SCACRSE` / `SSASECT` / `ESEC 00650`) exige Modo de Calificación **`V`** (Vigesimal regular). Sin embargo, en la tabla de notas (**`SHAGRDE`**) para Nivel **`C`** (Computación), las calificaciones se configuraron únicamente bajo el Modo **`P`** (*Vigesimal Especial*). Esta discrepancia provoca que el pase a historia (**`SHRROLL`**) falle con el error *«No Substitute Grade Found»*. Definir si los centros usarán `V` (homologando `SHAGRDE`) o `P` (homologando `SCACRSE`). | 02/10/2026 | Pruebas TEST de cierre de actas (SHRROLL / SHAGRDE) |
+| U17 | ✅ **Resuelta en TEST:** campus `S` (Sede Chiclayo). Pregunta original: ¿qué código de **campus** se usa para los NRC de los centros? | 28/09 | SSASECT en TEST |
+| U18 | **En parte:** los NRC y programas de los centros usan la escuela `EM` (confirmado en TEST). Sigue abierto: ¿qué son las escuelas **EM** y **CE** del catálogo? ¿Por qué existen **ESEC 00650** (EM) y **ESEP 00650** (CE) con el mismo número? ¿Cuál programa el Centro de Informática? | 28/09 | SSASECT en TEST |
+| U19 | **En parte:** `CMEMC38` es el programa de Computación y el nivel `C` es Computación (STVLEVL), confirmados en TEST. Sigue abierto: ¿qué programa es **MC38** y qué significa el nivel **C** en SMAAREA? ¿Esa regla ECOM-01 es el requisito de computación de pregrado? | 28/09 | SMAAREA en TEST |
+| U20 | ✅ **Resuelta el 02/10 (C35):** se agregó el modo `V` en SHAGRDE para el nivel C. Para Idiomas (I) y Emprendimiento (M), revisar lo mismo antes de su primer cierre. Detalle original: **Modo de calificación en Centros Empresariales (V vs P):** En TEST, el catálogo de cursos (`SCACRSE` / `SSASECT` / `ESEC 00650`) exige Modo de Calificación **`V`** (Vigesimal regular). Sin embargo, en la tabla de notas (**`SHAGRDE`**) para Nivel **`C`** (Computación), las calificaciones se configuraron únicamente bajo el Modo **`P`** (*Vigesimal Especial*). Esta discrepancia provoca que el pase a historia (**`SHRROLL`**) falle con el error *«No Substitute Grade Found»*. Definir si los centros usarán `V` (homologando `SHAGRDE`) o `P` (homologando `SCACRSE`). | 02/10/2026 | Pruebas TEST de cierre de actas (SHRROLL / SHAGRDE) |
 | U21 | ¿El Centro de Emprendimiento rinde examen de suficiencia para acreditar o exonerar módulos, o solo aplica a Idiomas? | 02/10/2026 | Usuario |
 | U02 | Informática y Emprendimiento: ¿los cursos tienen orden (uno pide aprobar otro) o todos son independientes? | 26/09 | PDF de ejemplos |
 | U03 | ¿Qué **asistencia mínima** se exige para aprobar? (el instructivo usa 70% como ejemplo) | 26/09 | PDF de ejemplos |

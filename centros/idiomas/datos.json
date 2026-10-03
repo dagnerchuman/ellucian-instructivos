@@ -1,0 +1,273 @@
+{
+  "_leeme": "Fuente única de datos del Centro de Idiomas. Los diagramas de centros/idiomas/diagramas se generan desde aquí (herramientas/diagramas/generar.py). Un valor null significa «por confirmar»: todavía no se verificó en TEST.",
+  "id": "idiomas",
+  "nombre": "Centro de Idiomas",
+  "alias": "Inglés",
+  "color": "#7030A0",
+  "nivel": {
+    "codigo": "I",
+    "nombre": "Idiomas",
+    "fuente": "C18"
+  },
+  "programa": null,
+  "mayor": null,
+  "departamento": null,
+  "materia": null,
+  "capp": null,
+  "curso_ejemplo": {
+    "materia": null,
+    "numero": null,
+    "titulo": "BASIC I"
+  },
+  "cursos_conocidos": [
+    "BASIC I",
+    "BASIC II",
+    "BASIC III",
+    "INTERMEDIATE I",
+    "INTERMEDIATE II",
+    "INTERMEDIATE III"
+  ],
+  "cursos_nota": "Nombres confirmados (C11). Los códigos de materia y curso en SCACRSE no se verificaron en TEST.",
+  "parte_general": "IGE",
+  "partes_2026": [
+    {
+      "codigo": "I01",
+      "periodo": "202651",
+      "fechas": "05/01 – 15/02/2026",
+      "semanas": 6,
+      "nivel_iii": "05/01 – 31/03/2026 (12 sem)"
+    },
+    {
+      "codigo": "I02",
+      "periodo": "202651",
+      "fechas": "02/02 – 29/03/2026",
+      "semanas": 8,
+      "nivel_iii": "02/02 – 30/04/2026 (13 sem)"
+    },
+    {
+      "codigo": "I03",
+      "periodo": "202651",
+      "fechas": "02/03 – 26/04/2026",
+      "semanas": 8,
+      "nivel_iii": "02/03 – 31/05/2026 (13 sem)"
+    },
+    {
+      "codigo": "I04",
+      "periodo": "202654",
+      "fechas": "06/04 – 31/05/2026",
+      "semanas": 8,
+      "nivel_iii": "06/04 – 30/06/2026 (12 sem)"
+    },
+    {
+      "codigo": "I05",
+      "periodo": "202654",
+      "fechas": "04/05 – 28/06/2026",
+      "semanas": 8,
+      "nivel_iii": "04/05 – 31/07/2026 (13 sem)"
+    },
+    {
+      "codigo": "I06",
+      "periodo": "202654",
+      "fechas": "01/06 – 26/07/2026",
+      "semanas": 8,
+      "nivel_iii": "01/06 – 31/08/2026 (13 sem)"
+    },
+    {
+      "codigo": "I07",
+      "periodo": "202654",
+      "fechas": "06/07 – 30/08/2026",
+      "semanas": 8,
+      "nivel_iii": "06/07 – 30/09/2026 (13 sem)"
+    },
+    {
+      "codigo": "I08",
+      "periodo": "202656",
+      "fechas": "03/08 – 27/09/2026",
+      "semanas": 8,
+      "nivel_iii": "03/08 – 31/10/2026 (13 sem)"
+    },
+    {
+      "codigo": "I09",
+      "periodo": "202656",
+      "fechas": "07/09 – 31/10/2026",
+      "semanas": 8,
+      "nivel_iii": "07/09 – 30/11/2026 (12 sem)"
+    },
+    {
+      "codigo": "I10",
+      "periodo": "202656",
+      "fechas": "05/10 – 29/11/2026",
+      "semanas": 8,
+      "nivel_iii": "05/10 – 31/12/2026 (13 sem)"
+    },
+    {
+      "codigo": "I11",
+      "periodo": "202656",
+      "fechas": "02/11 – 27/12/2026",
+      "semanas": 8,
+      "nivel_iii": "02/11/2026 – 31/01/2027 (13 sem)"
+    },
+    {
+      "codigo": "I12",
+      "periodo": "202656",
+      "fechas": "07/12/2026 – 31/01/2027",
+      "semanas": 8,
+      "nivel_iii": "07/12/2026 – 28/02/2027 (12 sem)"
+    }
+  ],
+  "duracion": "Niveles I y II: 8 semanas (I01: 6). Niveles III: 12 o 13 semanas",
+  "escala": null,
+  "examen_suficiencia": {
+    "aplica": true,
+    "pagina": "SOATEST",
+    "puntaje_minimo": null,
+    "fuente": "C11, R03",
+    "duda": "U01"
+  },
+  "prerrequisitos": {
+    "estado": "confirmado",
+    "fuente": "C11, R09",
+    "regla": "Quien desaprueba BASIC I no pasa a BASIC II, salvo con examen de suficiencia",
+    "en_banner": "Prerrequisito en SCAPREQ/SSAPREQ: BASIC I aprobado o puntaje de suficiencia; verificación en Fatal en SOATERM",
+    "cadena": [
+      "BASIC I",
+      "BASIC II",
+      "BASIC III",
+      "INTERMEDIATE I",
+      "INTERMEDIATE II",
+      "INTERMEDIATE III"
+    ],
+    "nota_cadena": "BASIC I → BASIC II está confirmado; el resto de la cadena se asume igual"
+  },
+  "nrc_test": [],
+  "nrc_ejemplo": null,
+  "periodo_ejemplo": "202656",
+  "parte_ejemplo": "I08",
+  "personas_test": [],
+  "persona_ejemplo": null,
+  "docente_test": null,
+  "scripts": {
+    "01": {
+      "estado": "por probar",
+      "evidencia": "Primer NRC de Idiomas en TEST"
+    },
+    "02": {
+      "estado": "por probar",
+      "evidencia": "Sobrepaso de prerrequisito (SFAROVR): quién lo autoriza es U10"
+    },
+    "03": {
+      "estado": "por probar",
+      "evidencia": "Convalidar niveles de Inglés de otra institución"
+    },
+    "04": {
+      "estado": "por probar",
+      "evidencia": "Puntaje en SOATEST y luego inscribir BASIC II en SFAREGS"
+    },
+    "05": {
+      "estado": "por probar",
+      "evidencia": "Sección intensiva para egresados"
+    },
+    "06": {
+      "estado": "por probar",
+      "evidencia": "Pregrado + Idiomas"
+    },
+    "07": {
+      "estado": "por probar",
+      "evidencia": "Pregrado + Idiomas + Computación"
+    },
+    "08": {
+      "estado": "por probar",
+      "evidencia": "Retiro con DD"
+    },
+    "09": {
+      "estado": "por probar",
+      "evidencia": "Suspensión y reactivación"
+    },
+    "10": {
+      "estado": "por probar",
+      "evidencia": "Desaprueba BASIC I: el prerrequisito Fatal bloquea BASIC II"
+    },
+    "11": {
+      "estado": "por probar",
+      "evidencia": "Partes I01–I12 en un periodo nuevo"
+    },
+    "12": {
+      "estado": "por probar",
+      "evidencia": "SHRROLL con escala del nivel I"
+    },
+    "13": {
+      "estado": "por probar",
+      "evidencia": "Notas con la escala del nivel I"
+    },
+    "14": {
+      "estado": "por probar",
+      "evidencia": "Cierre de curso"
+    },
+    "15": {
+      "estado": "por probar",
+      "evidencia": "Ampliación de cupo"
+    },
+    "16": {
+      "estado": "por probar",
+      "evidencia": "Traslado de sección"
+    },
+    "17": {
+      "estado": "por probar",
+      "evidencia": "Horarios y cruces"
+    },
+    "18-A": {
+      "estado": "por probar",
+      "evidencia": "Carga docente de Idiomas"
+    },
+    "18-B": {
+      "estado": "por probar",
+      "evidencia": "Retención que bloquea la matrícula"
+    },
+    "18-C": {
+      "estado": "por probar",
+      "evidencia": "Solicitud o queja"
+    }
+  },
+  "particularidades": [
+    "Prerrequisito en Fatal: sin BASIC I aprobado no se inscribe BASIC II (C11, R09)",
+    "Examen de suficiencia en SOATEST: permite saltar el nivel (C11, R03)",
+    "Los niveles III duran 12 o 13 semanas; los demás, 8"
+  ],
+  "dudas": [
+    {
+      "id": "U01",
+      "texto": "Puntaje mínimo del examen de suficiencia y quién lo registra en SOATEST"
+    },
+    {
+      "id": "E04",
+      "texto": "Si pasa con suficiencia, ¿cómo queda BASIC I en la historia y en CAPP?"
+    },
+    {
+      "id": "E13",
+      "texto": "Casilla «En progreso» de SOATERM con grupos seguidos (I04 termina el 31/5, I06 empieza el 1/6)"
+    },
+    {
+      "id": "U10",
+      "texto": "¿Quién puede dar sobrepasos de prerrequisito (SFAROVR)?"
+    },
+    {
+      "id": "TEST",
+      "texto": "Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST"
+    }
+  ],
+  "casuisticas": {
+    "matricula": [
+      "04",
+      "15",
+      "08",
+      "16"
+    ],
+    "notas": [
+      "10",
+      "03",
+      "12",
+      "18-B"
+    ],
+    "_leeme": "Scripts que se dibujan en los diagramas 6 (matrícula) y 7 (notas y cierre)."
+  }
+}

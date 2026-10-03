@@ -1,0 +1,299 @@
+{
+  "_leeme": "Fuente única de datos del Centro de Computación. Los diagramas de centros/computacion/diagramas se generan desde aquí (herramientas/diagramas/generar.py). Un valor null significa «por confirmar».",
+  "id": "computacion",
+  "nombre": "Centro de Computación",
+  "alias": "Informática",
+  "color": "#0E8A5F",
+  "nivel": {
+    "codigo": "C",
+    "nombre": "Computación",
+    "fuente": "C18"
+  },
+  "programa": {
+    "codigo": "CMEMC38",
+    "nombre": "Acreditación Computación XP 01",
+    "regla_base": "649",
+    "fuente": "U19"
+  },
+  "mayor": {
+    "codigo": "ACXP",
+    "nombre": "Acreditación en Computación XP"
+  },
+  "departamento": {
+    "codigo": "EMCI",
+    "nombre": "Jefatura del Centro de Informática"
+  },
+  "materia": {
+    "codigo": "ESEC",
+    "nombre": "Estudios Específicos"
+  },
+  "capp": {
+    "area": "MC38-01",
+    "area_nombre": "Ciclo I",
+    "regla": "ECOM-01",
+    "regla_nombre": "Computación I",
+    "condicion": "Cumple con uno de los cursos ESEC 00650 a 00657"
+  },
+  "curso_ejemplo": {
+    "materia": "ESEC",
+    "numero": "00650",
+    "titulo": "Ofimática Word 365"
+  },
+  "cursos_conocidos": [
+    "ESEC 00650 Ofimática Word 365"
+  ],
+  "cursos_nota": "Los nombres oficiales de los demás cursos no se conocen (U05).",
+  "parte_general": "CGE",
+  "partes_2026": [
+    {
+      "codigo": "X01",
+      "periodo": "202651",
+      "fechas": "12/01 – 22/02/2026",
+      "semanas": 6
+    },
+    {
+      "codigo": "X02",
+      "periodo": "202651",
+      "fechas": "23/02 – 22/03/2026",
+      "semanas": 4
+    },
+    {
+      "codigo": "X03",
+      "periodo": "202654",
+      "fechas": "06/04 – 31/05/2026",
+      "semanas": 8
+    },
+    {
+      "codigo": "X04",
+      "periodo": "202654",
+      "fechas": "01/06 – 12/07/2026",
+      "semanas": 6
+    },
+    {
+      "codigo": "X05",
+      "periodo": "202656",
+      "fechas": "03/08 – 30/08/2026",
+      "semanas": 4
+    },
+    {
+      "codigo": "X06",
+      "periodo": "202656",
+      "fechas": "07/09 – 31/10/2026",
+      "semanas": 8
+    },
+    {
+      "codigo": "X07",
+      "periodo": "202656",
+      "fechas": "02/11 – 13/12/2026",
+      "semanas": 6
+    }
+  ],
+  "duracion": "4 a 8 semanas según el grupo",
+  "escala": {
+    "modo": "V",
+    "nombre": "Vigesimal regular",
+    "nota_minima": 11,
+    "inhabilitado": "INH por inasistencia (70 % es el ejemplo del instructivo; mínimo real por confirmar, U03)",
+    "fuente": "C27, C35 (U20 resuelta)"
+  },
+  "examen_suficiencia": {
+    "aplica": false,
+    "fuente": "C36"
+  },
+  "prerrequisitos": {
+    "estado": "por confirmar",
+    "duda": "U02"
+  },
+  "nrc_test": [
+    {
+      "nrc": "1021",
+      "curso": "ESEC 00650",
+      "seccion": "B",
+      "parte": "X07",
+      "cupo": "2",
+      "docente": "100582059",
+      "uso": "Matrícula, notas, retiro y traslado"
+    },
+    {
+      "nrc": "1024",
+      "curso": "ESEC 00650",
+      "seccion": "C",
+      "parte": null,
+      "cupo": null,
+      "docente": "100582059",
+      "uso": "Auditado en SIAASGN"
+    },
+    {
+      "nrc": "1026",
+      "curso": "ESEC 00650",
+      "seccion": "D",
+      "parte": "X07",
+      "cupo": "1 → 4",
+      "docente": "100582059",
+      "horario": "Lunes y miércoles 08:00–12:00",
+      "aula": "SAUVIR / SALA VIRT.",
+      "uso": "Casuísticas CCEE"
+    }
+  ],
+  "nrc_ejemplo": "1026",
+  "periodo_ejemplo": "202656",
+  "parte_ejemplo": "X07",
+  "personas_test": [
+    {
+      "id": "S00581081",
+      "nombre": "Alumno 1 (Centros)",
+      "caso": "Matrícula regular, nota 16 (aprueba)"
+    },
+    {
+      "id": "S00581091",
+      "nombre": "Alumno 2 (Pregrado + Centros)",
+      "caso": "Doble programa, retiro DD, nota 10, retención TT"
+    },
+    {
+      "id": "S00581108",
+      "nombre": "Carlos Torres Mendoza",
+      "caso": "NRC 1026, nota 08: curso no usado en CAPP"
+    },
+    {
+      "id": "S00581109",
+      "nombre": "María Ramírez García",
+      "caso": "Traslado del NRC 1026 al 1021"
+    },
+    {
+      "id": "S00581110",
+      "nombre": "Juan Flores Castillo",
+      "caso": "Inhabilitado (INH)"
+    },
+    {
+      "id": "S00581111",
+      "nombre": "Ana Rojas Vera",
+      "caso": "Convalidación externa IST150 (nota 16)"
+    }
+  ],
+  "persona_ejemplo": "S00581108",
+  "docente_test": {
+    "id": "100582059",
+    "usuario": "DCHUMAN",
+    "nombre": "Dagner Chuman"
+  },
+  "scripts": {
+    "01": {
+      "estado": "validado",
+      "evidencia": "NRC 1021 (S00581081, S00581091) y NRC 1026 (S00581108, S00581109)"
+    },
+    "02": {
+      "estado": "pendiente",
+      "evidencia": "Probar sobrepaso de cupo o prerrequisito"
+    },
+    "03": {
+      "estado": "validado",
+      "evidencia": "S00581111 convalidada con IST150 (nota 16) y rolada a historia"
+    },
+    "04": {
+      "estado": "no aplica",
+      "evidencia": "Computación no rinde examen de suficiencia (C36)"
+    },
+    "05": {
+      "estado": "pendiente",
+      "evidencia": "Sección intensiva para egresados"
+    },
+    "06": {
+      "estado": "validado",
+      "evidencia": "S00581091 con Pregrado y Computación en paralelo"
+    },
+    "07": {
+      "estado": "pendiente",
+      "evidencia": "Pregrado + Idiomas + Computación"
+    },
+    "08": {
+      "estado": "validado",
+      "evidencia": "S00581091 retirado con DD del NRC 1021; cupo liberado"
+    },
+    "09": {
+      "estado": "validado",
+      "evidencia": "Bloqueo con estatus inactivo y reactivación a AS en SGASTDN"
+    },
+    "10": {
+      "estado": "validado",
+      "evidencia": "S00581108 (nota 08): «No cumple» y curso no usado en CAPP"
+    },
+    "11": {
+      "estado": "pendiente",
+      "evidencia": "Partes X01–X07 en un periodo nuevo (202751)"
+    },
+    "12": {
+      "estado": "validado",
+      "evidencia": "GJAPCTL: jobs SHRROLL 8113 y 8114 exitosos"
+    },
+    "13": {
+      "estado": "validado",
+      "evidencia": "Notas 16, 10, 08 e INH en NRC 1021 y 1026"
+    },
+    "14": {
+      "estado": "validado",
+      "evidencia": "Cierre y pase a historia con SHRROLL"
+    },
+    "15": {
+      "estado": "validado",
+      "evidencia": "NRC 1026: error de sección cerrada, cupo de 1 a 4"
+    },
+    "16": {
+      "estado": "validado",
+      "evidencia": "S00581109: DD en NRC 1026 y RE en NRC 1021"
+    },
+    "17": {
+      "estado": "pendiente",
+      "evidencia": "Dos NRC con el mismo bloque de horario"
+    },
+    "18-A": {
+      "estado": "validado",
+      "evidencia": "SIAASGN: docente 100582059 con 4 NRC, horas y FTE"
+    },
+    "18-B": {
+      "estado": "validado",
+      "evidencia": "Retención TT bloquea la inscripción en SFAREGS"
+    },
+    "18-C": {
+      "estado": "pendiente",
+      "evidencia": "Solicitud o queja en SVASVPR"
+    }
+  },
+  "particularidades": [
+    "No rinde examen de suficiencia (C36)",
+    "Escala del nivel C en SHAGRDE con modo V: nota mínima 11 (U20 resuelta)",
+    "Los grupos duran 4, 6 u 8 semanas (X01–X07 en 2026)"
+  ],
+  "dudas": [
+    {
+      "id": "U02",
+      "texto": "¿Los cursos tienen orden (uno exige aprobar otro) o son independientes?"
+    },
+    {
+      "id": "U03",
+      "texto": "¿Qué asistencia mínima se exige? El instructivo usa 70 % como ejemplo"
+    },
+    {
+      "id": "U04",
+      "texto": "¿Quién carga el plan de evaluación (SHAGCOM): Registros Académicos o el centro?"
+    },
+    {
+      "id": "U05",
+      "texto": "Nombres oficiales de los cursos y pesos de evaluación"
+    }
+  ],
+  "casuisticas": {
+    "matricula": [
+      "15",
+      "08",
+      "16",
+      "09"
+    ],
+    "notas": [
+      "03",
+      "10",
+      "12",
+      "18-B"
+    ],
+    "_leeme": "Scripts que se dibujan en los diagramas 6 (matrícula) y 7 (notas y cierre)."
+  }
+}

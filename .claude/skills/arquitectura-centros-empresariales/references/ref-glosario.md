@@ -22,7 +22,7 @@ Este archivo sale de los diccionarios `SIGLAS` y `PAGINAS` de ese mismo archivo.
 
 ## Grupos y periodos
 
-- **I01…I12 / X01…X12 / P01…P12:** partes de periodo (grupos del mes) de Idiomas, Computación y Emprendimiento.
+- **I01…I12 / X01…X07 / P01…P06:** partes de periodo (grupos de 2026) de Idiomas, Computación y Emprendimiento.
 - **IGE / CGE / EGE:** parte de periodo general de cada centro.
 - **2026 5 4:** código de periodo: año + nivel 5 (Centros Empresariales) + secuencia (1 verano, 4 semestre I, 6 semestre II).
 - **Fatal / Alerta / No verificar:** severidad de cada verificación de inscripción en SOATERM (Fatal impide inscribir).

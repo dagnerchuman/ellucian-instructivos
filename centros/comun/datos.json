@@ -1,0 +1,40 @@
+{
+  "_leeme": "Datos comunes a los tres Centros Empresariales. Fuente: skills arquitectura-centros-empresariales y preguntas-y-dudas-centros (registro.md). Lo propio de cada centro está en centros/<centro>/datos.json.",
+  "autor": "Dagner Anibal Chuman Lluen",
+  "institucion": "Universidad Señor de Sipán (USS)",
+  "ambiente_test": "experience-test.elluciancloud.com/ussipantest",
+  "actualizado": "2026-10-03",
+  "escuela": { "codigo": "EM", "nombre": "Centros Empresariales", "fuente": "U18" },
+  "campus": { "codigo": "S", "nombre": "Sede Chiclayo", "fuente": "U17" },
+  "grado": { "codigo": "000000", "nombre": "No otorga grado" },
+  "periodos": [
+    { "codigo": "202651", "seuss": "2026-0", "nombre": "Verano 2026", "grupos_que_empiezan": "enero a marzo 2026" },
+    { "codigo": "202654", "seuss": "2026-I", "nombre": "Semestre 2026-I", "grupos_que_empiezan": "abril a julio 2026" },
+    { "codigo": "202656", "seuss": "2026-II", "nombre": "Semestre 2026-II", "grupos_que_empiezan": "agosto a diciembre 2026" },
+    { "codigo": "202751", "seuss": "2027-0", "nombre": "Verano 2027", "grupos_que_empiezan": "enero a marzo 2027" }
+  ],
+  "regla_periodo": "Año + 5 (Centros) + secuencia: 1 verano, 4 semestre I, 6 semestre II. El periodo lo decide la fecha de inicio del grupo, no la de fin.",
+  "scripts": [
+    { "id": "01", "nombre": "Matrícula regular", "paginas": ["SFAREGS"] },
+    { "id": "02", "nombre": "Matrícula especial con sobrepasos", "paginas": ["SFASRPO", "SFAREGS"] },
+    { "id": "03", "nombre": "Matrícula por convalidación", "paginas": ["SHATRNS", "SHATFAC"] },
+    { "id": "04", "nombre": "Matrícula por examen de suficiencia", "paginas": ["SOATEST", "SFAREGS"] },
+    { "id": "05", "nombre": "Curso especial para egresados", "paginas": ["SSASECT", "SFAREGS"] },
+    { "id": "06", "nombre": "Dos programas en simultáneo", "paginas": ["SGASTDN", "SFAREGS"] },
+    { "id": "07", "nombre": "Tres programas en simultáneo", "paginas": ["SGASTDN", "SFAREGS"] },
+    { "id": "08", "nombre": "Retiro de matrícula (DD)", "paginas": ["SFAREGS"] },
+    { "id": "09", "nombre": "Suspensión y reactivación", "paginas": ["SGASTDN", "SFAREGS"] },
+    { "id": "10", "nombre": "Retorno por desaprobado", "paginas": ["SMARQCM", "SMICRLT"] },
+    { "id": "11", "nombre": "Apertura de periodo", "paginas": ["SOATERM", "STVTERM"] },
+    { "id": "12", "nombre": "Cierre de periodo", "paginas": ["GJAPCTL", "SHRROLL"] },
+    { "id": "13", "nombre": "Procesamiento de calificaciones", "paginas": ["SHAGCOM", "SFASLST"] },
+    { "id": "14", "nombre": "Cierre de curso", "paginas": ["SSASECT", "SFASLST"] },
+    { "id": "15", "nombre": "Ampliación de cupos y reservas", "paginas": ["SSASECT", "SSARRES"] },
+    { "id": "16", "nombre": "División de grupos y traslado", "paginas": ["SSASECT", "SFAREGS"] },
+    { "id": "17", "nombre": "Gestión de horarios y cruces", "paginas": ["SSASECT", "SLARSLT"] },
+    { "id": "18-A", "nombre": "Auditoría de carga docente", "paginas": ["SIAASGN"] },
+    { "id": "18-B", "nombre": "Retenciones y bloqueo de matrícula", "paginas": ["SOAHOLD", "STVHLDD"] },
+    { "id": "18-C", "nombre": "Solicitud de servicio o queja", "paginas": ["SVASVPR"] }
+  ],
+  "centros": ["idiomas", "computacion", "emprendimiento"]
+}

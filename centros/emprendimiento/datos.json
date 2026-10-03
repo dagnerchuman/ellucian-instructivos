@@ -1,0 +1,220 @@
+{
+  "_leeme": "Fuente única de datos del Centro de Emprendimiento. Los diagramas de centros/emprendimiento/diagramas se generan desde aquí (herramientas/diagramas/generar.py). Un valor null significa «por confirmar»: todavía no se verificó en TEST.",
+  "id": "emprendimiento",
+  "nombre": "Centro de Emprendimiento",
+  "alias": null,
+  "color": "#C2501C",
+  "nivel": {
+    "codigo": "M",
+    "nombre": "Emprendimiento",
+    "fuente": "C18"
+  },
+  "programa": null,
+  "mayor": null,
+  "departamento": null,
+  "materia": {
+    "codigo": "ESGE",
+    "nombre": "Cursos de Emprendimiento"
+  },
+  "capp": null,
+  "curso_ejemplo": {
+    "materia": "ESGE",
+    "numero": "00117",
+    "titulo": null
+  },
+  "cursos_conocidos": [
+    "ESGE 00117 (nombre por confirmar)"
+  ],
+  "cursos_nota": "El cronograma solo dice «TODOS»; los nombres oficiales no se conocen (U05).",
+  "parte_general": "EGE",
+  "partes_2026": [
+    {
+      "codigo": "P01",
+      "periodo": "202651",
+      "fechas": "07/01 – 15/03/2026",
+      "semanas": 10
+    },
+    {
+      "codigo": "P02",
+      "periodo": "202651",
+      "fechas": "04/02 – 12/04/2026",
+      "semanas": 10
+    },
+    {
+      "codigo": "P03",
+      "periodo": "202651",
+      "fechas": "11/03 – 17/05/2026",
+      "semanas": 10,
+      "nota": "Empieza en verano y termina ya en el semestre I"
+    },
+    {
+      "codigo": "P04",
+      "periodo": "202654",
+      "fechas": "06/05 – 12/07/2026",
+      "semanas": 10
+    },
+    {
+      "codigo": "P05",
+      "periodo": "202656",
+      "fechas": "05/08 – 11/10/2026",
+      "semanas": 10
+    },
+    {
+      "codigo": "P06",
+      "periodo": "202656",
+      "fechas": "30/09 – 06/12/2026",
+      "semanas": 10
+    }
+  ],
+  "duracion": "Todos los grupos duran 10 semanas; P02 y P03 se dictan al mismo tiempo",
+  "escala": null,
+  "examen_suficiencia": {
+    "aplica": null,
+    "duda": "U21"
+  },
+  "prerrequisitos": {
+    "estado": "por confirmar",
+    "duda": "U02"
+  },
+  "nrc_test": [
+    {
+      "nrc": "1025",
+      "curso": "ESGE 00117",
+      "seccion": "A",
+      "parte": null,
+      "cupo": null,
+      "docente": "100582059",
+      "uso": "Solo carga docente: sesión 02, no principal (1,98 h/sem, 19,8 h, FTE 0,04)"
+    }
+  ],
+  "nrc_ejemplo": "1025",
+  "periodo_ejemplo": "202656",
+  "parte_ejemplo": "P06",
+  "personas_test": [],
+  "persona_ejemplo": null,
+  "docente_test": {
+    "id": "100582059",
+    "usuario": "DCHUMAN",
+    "nombre": "Dagner Chuman"
+  },
+  "scripts": {
+    "01": {
+      "estado": "por probar",
+      "evidencia": "Matrícula con un programa de nivel M"
+    },
+    "02": {
+      "estado": "por probar",
+      "evidencia": "Sobrepaso de cupo"
+    },
+    "03": {
+      "estado": "por probar",
+      "evidencia": "Convalidar módulos de emprendimiento"
+    },
+    "04": {
+      "estado": "por definir",
+      "evidencia": "¿Aplica examen de suficiencia? (U21)"
+    },
+    "05": {
+      "estado": "por probar",
+      "evidencia": "Grupo intensivo para egresados"
+    },
+    "06": {
+      "estado": "por probar",
+      "evidencia": "Pregrado + Emprendimiento"
+    },
+    "07": {
+      "estado": "por probar",
+      "evidencia": "Tres programas en simultáneo"
+    },
+    "08": {
+      "estado": "por probar",
+      "evidencia": "Retiro con DD"
+    },
+    "09": {
+      "estado": "por probar",
+      "evidencia": "Suspensión y reactivación"
+    },
+    "10": {
+      "estado": "por probar",
+      "evidencia": "Depende de U02 (orden de los cursos)"
+    },
+    "11": {
+      "estado": "por probar",
+      "evidencia": "Partes P01–P06 en un periodo nuevo"
+    },
+    "12": {
+      "estado": "por probar",
+      "evidencia": "SHRROLL con la escala del nivel M"
+    },
+    "13": {
+      "estado": "por probar",
+      "evidencia": "Escala y modo de calificación del nivel M"
+    },
+    "14": {
+      "estado": "por probar",
+      "evidencia": "Cierre de curso"
+    },
+    "15": {
+      "estado": "por probar",
+      "evidencia": "Ampliación de cupo"
+    },
+    "16": {
+      "estado": "por probar",
+      "evidencia": "Traslado entre P02 y P03, que se cruzan"
+    },
+    "17": {
+      "estado": "por probar",
+      "evidencia": "Cruces por grupos simultáneos"
+    },
+    "18-A": {
+      "estado": "validado",
+      "evidencia": "NRC 1025 aparece en la carga del docente (SIAASGN)"
+    },
+    "18-B": {
+      "estado": "por probar",
+      "evidencia": "Retención que bloquea la matrícula"
+    },
+    "18-C": {
+      "estado": "por probar",
+      "evidencia": "Solicitud o queja"
+    }
+  },
+  "particularidades": [
+    "Todos los grupos duran 10 semanas",
+    "P02 y P03 se dictan al mismo tiempo: un participante podría estar en dos grupos",
+    "P03 empieza en 202651 y termina en el semestre I: manda la parte de periodo, no la fecha de fin"
+  ],
+  "dudas": [
+    {
+      "id": "U02",
+      "texto": "¿Los cursos tienen orden o son independientes?"
+    },
+    {
+      "id": "U05",
+      "texto": "Nombres oficiales de los cursos, pesos de evaluación y nota aprobatoria"
+    },
+    {
+      "id": "U21",
+      "texto": "¿Rinde examen de suficiencia o solo aplica a Idiomas?"
+    },
+    {
+      "id": "TEST",
+      "texto": "Programa, mayor, departamento y escala de notas del nivel M: verificar en TEST"
+    }
+  ],
+  "casuisticas": {
+    "matricula": [
+      "01",
+      "16",
+      "15",
+      "08"
+    ],
+    "notas": [
+      "13",
+      "03",
+      "12",
+      "18-B"
+    ],
+    "_leeme": "Scripts que se dibujan en los diagramas 6 (matrícula) y 7 (notas y cierre)."
+  }
+}

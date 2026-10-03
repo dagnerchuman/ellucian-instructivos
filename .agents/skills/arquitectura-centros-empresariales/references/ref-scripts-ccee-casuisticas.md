@@ -43,11 +43,14 @@ Este documento define el catálogo de los **18 scripts operativos y casuísticas
   * **Script 12 / 14 (Cierre de actas y pase a historia con SHRROLL):** Validado al 100% en `GJAPCTL` (Jobs 8113 y 8114 exitosos) tras resolver la incidencia **`U20`** agregando el Modo **`V`** a las notas de Nivel `C` en `SHAGRDE`. Cierre definitivo y actas completadas.
   * **Script 03 (Matrícula por convalidación externa):** Validado al 100% con la estudiante `S00581111` (*Ana Rojas Vera*), convalidando curso externo `IST150` en `SHATRNS` y pasando a historia académica con registro de grado en `SHRROLL` (Job 8113).
   * **Script 10 (Retorno obligatorio tras desaprobado):** Validado al 100% en CAPP individual (`SMARQCM` → `SMICRLT` / `SMIPOUT`) con `S00581108` (*Carlos Torres Mendoza*, nota 08): Requerimientos y Áreas en «No cumple», créditos ganados 0/4 y curso `ESEC 00650` catalogado como «Curso no usado» (reprobado).
+  * **Script 16 (División de grupos / Traslado de sección):** Validado al 100% en `SFAREGS` trasladando a María Ramírez (`S00581109`) de NRC 1026 (`DD`) a NRC 1021 (`RE`), resolviendo `Reserve Closed` ampliando cupo CMEMC38 en `SSARRES` (`SSASECT`) y confirmada en lista `SFASLST`.
+  * **Script 09 (Suspensión y reactivación de matrícula):** Validado al 100% comprobando bloqueo fatal de inscripción bajo estatus inactivo (`IS`/`SU`) y restitución inmediata de elegibilidad académica al reactivar como activo (`AS`) en `SGASTDN` / `SFAREGS`.
 
-* **En ejecución actual:**
-  * **Script 16:** División de grupos / Traslado de sección entre NRCs paralelos (`SFAREGS`).
-
-* **Próximos scripts inmediatos a ejecutar (Pendientes):**
-  * **Script 09:** Suspensión y reactivación de matrícula (`SGASTDN` → `SFAREGS`).
+* **Próximos scripts pendientes (Para siguientes sesiones):**
   * **Script 02:** Matrícula especial con sobrepasos (`SFASRPO` → `SFAREGS`).
-  * **Script 04 (Exclusivo Idiomas):** Matrícula por examen de suficiencia (`SOATEST` → `SFAREGS`). Se descartó para Computación por confirmación institucional (C36).
+  * **Script 04 (Exclusivo Idiomas):** Matrícula por examen de suficiencia (`SOATEST` → `SFAREGS`).
+  * **Script 05:** Curso especial para egresados (`SSASECT` → `SFAREGS`).
+  * **Script 07:** Tres programas en simultáneo (`SGASTDN` → `SFAREGS`).
+  * **Script 11:** Apertura de nuevo periodo (`SOATERM` → `STVTERM`).
+  * **Script 17:** Gestión de horarios y cruces (`SSASECT` → `SLARSLT`).
+  * **Script 18-C:** Solicitud de servicio / queja estudiantil (`SVASVPR`).

@@ -87,7 +87,7 @@ Parte de periodo general: **CGE**.
 | **06** | Doble programa simultáneo | `SGASTDN` → `SFAREGS` | ✅ Validado | S00581091 con Pregrado (L1) y Computación (LC) en paralelo. |
 | **07** | Tres programas simultáneos | `SGASTDN` → `SFAREGS` | ⏳ **PENDIENTE** | Alumno activo en Pregrado (L1), Idiomas (LI) y Computación (LC). |
 | **08** | Retiro de matrícula (DD) | `SFAREGS` | ✅ Validado | S00581091 retirado DD del NRC 1021; vacante liberada automáticamente. |
-| **09** | Reactivación de matrícula | `SGASTDN` → `SFAREGS` | ⏳ **PENDIENTE** | Cambiar estatus de alumno a inactivo/suspendido y luego reactivar a `AS`. |
+| **09** | Reactivación de matrícula | `SGASTDN` → `SFAREGS` | ✅ **Validado** | Probado ciclo de suspensión en `SGASTDN`/`SFAREGS` (bloqueo por inactivo y reactivación inmediata a `AS`). |
 | **10** | Retorno obligatorio por desaprobado | `SMARQCM` → `SMICRLT` | ✅ **Validado** | S00581108 (nota 08 rolada) auditado en CAPP: Requerimientos y Áreas en «No cumple», créditos usados 0/4, curso `ESEC 00650` clasificado como «Curso no usado» (reprobado). |
 | **11** | Apertura de nuevo periodo | `SOATERM` → `STVTERM` | ⏳ **PENDIENTE** | Habilitar partes de periodo X01..X07 en nuevo periodo (ej. 202751). |
 | **12** | Cierre de periodo / actas | `GJAPCTL` (`SHRROLL`) | ✅ Validado | Jobs 8113 y 8114 exitosos con pase masivo a historia académica. |

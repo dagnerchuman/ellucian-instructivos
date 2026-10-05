@@ -1,6 +1,6 @@
 # Registro de preguntas, dudas y decisiones
 
-Última actualización: **03/10/2026** (carpeta `centros/` por centro con `datos.json` y diagramas paso a paso con Archify; U17 a U20 marcadas). Antes: 02/10/2026 (validación de matrícula completa 2/2 en SFAREGS, reserva de cupos en SSASECT, scripts 08-18 validados y resolución definitiva U20). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
+Última actualización: **05/10/2026** (scripts 02, 11, 17 y 18-C de Computación; usuarios finales C46; orden de la carga docente R17; duda BRAW U23). Antes: 03/10/2026 (carpeta `centros/` por centro con `datos.json` y diagramas paso a paso con Archify; U17 a U20 marcadas). Antes: 02/10/2026 (validación de matrícula completa 2/2 en SFAREGS, reserva de cupos en SSASECT, scripts 08-18 validados y resolución definitiva U20). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
 
 ---
 
@@ -19,18 +19,19 @@
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
   - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
   - *C46:* Usuarios administrativos (jefes, especialistas, asistentes o con permisos) y población: USS + externos.
-- **Resuelto con los instructivos (R01 – R16):**
+- **Resuelto con los instructivos (R01 – R17):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
   - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
   - *R06–R08:* Aula virtual SSASECT, hora académica SIATERM, egreso pregrado en CAPP.
   - *R09–R10:* Bloqueo Fatal de BASIC II en SOATERM y cursos en progreso.
   - *R11–R13:* Reemplazo docente a mitad de curso, programas incompletos y asignación de tutores.
   - *R14–R16:* Quejas por solicitudes de servicio, investigación de personal y alumnos sancionados en SGASTDN/SOAHOLD.
+  - *R17:* Orden de la carga docente: SIAINST → NRC en SSASECT → SIAASGN (y SIACONA por contrato).
 - **Dudas abiertas para Ellucian (E01 – E19):**
   - *E01–E04:* Horas día/noche en SIATERM, retorno notas aula virtual, hora de 60m, suficiencia en CAPP.
   - *E05–E12:* Malla en CAPP, migración historia SEUSS, muestra validación, SMARQCM en TEST, grado SHADEGR, reportes Insight.
   - *E13–E19:* Casilla en progreso SOATERM, historial docente relevado, programas incompletos en 20271, alertas tempranas.
-- **Dudas abiertas para la USS (U01 – U22):**
+- **Dudas abiertas para la USS (U01 – U23):**
   - *U01, U10:* Puntaje mínimo suficiencia inglés y política sobrepasos SFAROVR.
   - *U02–U05:* Secuencialidad informática/emprendimiento, % asistencia, plan evaluación, nombres/pesos oficiales.
   - *U06–U09:* Matrícula autoservicio vs backoffice, tutoría en CCEE, jefatura, denominación formal horas.
@@ -38,6 +39,7 @@
   - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
   - *U22:* Grupos de verano 2027 que faltan en 202751 (X02, I02, I03, P02, P03).
+  - *U23:* Qué significa «Centros Empresariales → BRAW» (¿regla de carga, contrato?).
 - **Supuestos descartados (S01 – S03):**
   - *S01:* Periodos de 3 meses (NO usar).
   - *S02:* Horas de 40-45m (es 45m).
@@ -116,6 +118,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | R14 | ¿Cómo se registra una queja de un estudiante? | Como **solicitud de servicio**. El estudiante la presenta por autoservicio y agrega comentarios; el área la atiende en SVASVPR con estado, fecha estimada y comentarios internos. Hay que configurar la categoría, el servicio, los estados, los roles y a quién va dirigido. Los instructivos no traen un servicio de queja ya hecho. | 4.3.1, diap. 10 a 25; 4.3.2, diap. 10, 12, 18 y 20 |
 | R15 | ¿Ellucian genera la denuncia ante Gobierno de Personas? | **No por sí solo.** Banner Student registra la solicitud y define para quién está disponible; los procesos de personal (investigación, sanción al docente) no están en los instructivos de Banner Student. | 4.3.1, diap. 18, 19 y 22 |
 | R16 | Estudiante con dificultades o sancionado | Seguimiento en SPACMNT (sin tipos definidos hoy en la USS); estado académico por promedio y horas (7.2.3); comunicaciones con BCM. Sanción: estado del plan «Suspendido» o «Expulsado» en SGASTDN, más una retención en SOAHOLD (no se borra: se le pone fecha de fin). No hay alertas tempranas en los instructivos. | 5.1.1, diap. 46; 7.2.3, diap. 5 y 19; 3.2.7, diap. 9 y 42; 5.2.1, diap. 19 |
+| R17 | ¿Primero el NRC y después la carga lectiva del docente? | **Sí.** Orden del instructivo 5.2: (1) el docente existe como persona (SPAIDEN); (2) se activa como docente en **SIAINST** desde un periodo, con categoría, tipo de personal, contrato y **regla de carga de trabajo**; (3) se asigna al **NRC en SSASECT**: «debe estar asignado al menos a un NRC del periodo» para calcular la carga educativa; (4) se revisa en **SIAASGN**: carga por NRC, labor no educativa (tipos de STVNIST) y sobrecarga (O) o subcarga (U) según SIAFLRT. Por contrato se analiza en SIACONA (reglas en SIAFLCT y SIAFCTR). En Computación ya se hizo hasta SIAASGN (C29). En el script 5.2 de la USS, «Validar las asignaciones educativas y no educativas (SIAASGN)» y «Análisis en SIACONA» figuran **pendientes, con responsable Dr. Pedro Martinto**. En los catálogos ya existen el contrato `CE` *Continuing Ed* (STVFCNT) y la regla `PTCE` *Part Time/Continuing Education* (STVCNTR). | 5.2 Información de docentes, diap. 16–20 y 28; 5.2 Carga de trabajo, diap. 6, 16–27, 29–42; script 5.2 v3 |
 
 ## 3. Dudas abiertas para Ellucian
 | ID | Duda | Desde | Origen |
@@ -165,6 +168,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U08 | ¿Qué aprueba **Jefatura**? ¿Los sobrepasos (SFAROVR)? | 25/09 | Diagrama |
 | U09 | **Nombres de las horas.** El 26/09 el usuario dijo «pedagógica = presencial, 60 min» y «cronológica = 45 min de día / 50 de noche = 1 hora». En su nota del Zoom estaba al revés («40–45 / 50 min → h. académicas; 1 hora → h. cronológicas»), y en el uso común la hora pedagógica es la de 45/50 y la cronológica la de 60. En los PDF se usan sus nombres, siempre con los minutos al lado. Confirmar. | 26/09 | Usuario |
 | U22 | El periodo `202751` (verano 2027) solo tiene X01, P01 e I01. En 2026 el verano tuvo **X02**, I02, I03, P02 y P03. ¿Se agregan esos grupos en 202751? ¿Con qué fechas? (cronograma 2027) | 05/10/2026 | SOATERM en TEST |
+| U23 | Al usuario le comentaron «**Centros Empresariales → BRAW**». ¿Qué es BRAW: una regla de carga de trabajo (STVWKLD/SIAFLRT), un tipo de contrato, una categoría del docente u otra cosa? No aparece en los instructivos ni en el script 5.2. Lo que sí existe: contrato `CE` *Continuing Ed* y regla `PTCE` *Part Time/Continuing Education*. Confirmar quién lo dijo y en qué pantalla va. | 05/10 | Usuario (comentario recibido) |
 
 ## 5. Supuestos descartados o por corregir
 | ID | Supuesto | Estado | Entregables afectados |

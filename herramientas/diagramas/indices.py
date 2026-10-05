@@ -115,6 +115,7 @@ def ficha_centro(c):
         "Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los datos de este centro. "
         f"Lo marcado «{POR_CONFIRMAR}» todavía no se verificó en TEST.",
         "",
+        *([f"**Guía de pruebas en TEST:** [`pruebas-test.md`](pruebas-test.md)", ""] if (carpeta / "pruebas-test.md").exists() else []),
         "## Diagramas paso a paso",
         tabla_diagramas(carpeta, carpeta),
         "",

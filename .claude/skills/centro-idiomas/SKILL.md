@@ -10,6 +10,7 @@ description: Arquitectura específica del Centro de Idiomas (Inglés) de la USS 
 >
 > **Carpeta del centro:** `centros/idiomas/`
 > - `datos.json` es la **fuente única** de los datos de este centro. Lo que allí está en `null` sigue **por confirmar** en TEST y en los diagramas se muestra así.
+> - `pruebas-test.md` es la **guía de pruebas en TEST**: 6 bloques que cierran los 20 scripts de Idiomas. Empieza por el bloque 0 (descubrir los códigos, U25).
 > - `diagramas/` tiene 14 diagramas paso a paso (un flujo y un código por paso) (HTML interactivo, PNG claro y oscuro, SVG). Ver la skill `workflow-diagramas-archify`.
 
 ## Identificadores en Banner
@@ -23,7 +24,7 @@ description: Arquitectura específica del Centro de Idiomas (Inglés) de la USS 
 | **Campo de estudio mayor** | *(por confirmar)* | Acreditación en Idiomas |
 | **Departamento** | *(por confirmar)* | Jef. de Centro de Idiomas |
 | **Grado** | `000000` | No otorga grado |
-| **Materia del catálogo** | *(por confirmar — probablemente `ESEI` o similar)* | Cursos de Idiomas |
+| **Materia del catálogo** | *(por confirmar, U25)* | Cursos de Idiomas |
 
 > ⚠ Los identificadores exactos de Programa, Campo de Estudio y Departamento para Idiomas **no han sido verificados en TEST** todavía. Solo se han confirmado los de Computación (CMEMC38 / ACXP / EMCI).
 

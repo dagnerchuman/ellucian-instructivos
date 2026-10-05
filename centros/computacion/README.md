@@ -65,7 +65,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 04 | Matrícula por examen de suficiencia | no aplica | Computación no rinde examen de suficiencia (C36) |
 | 05 | Curso especial para egresados | pendiente | Curso para egresados. En Idiomas el egresado no lleva el curso: nota de la plataforma pasada a mano en un solo NRC (C50). Falta saber si Computación trabaja igual (U24) |
 | 06 | Dos programas en simultáneo | validado | S00581091 con Pregrado y Computación en paralelo |
-| 07 | Tres programas en simultáneo | pendiente | Pregrado + Idiomas + Computación |
+| 07 | Tres programas en simultáneo | pendiente | Pregrado + Idiomas + Computación. Se cierra con S00581091 (ya tiene Pregrado y Computación) cuando se le agregue el programa de Idiomas: bloque 2 de centros/idiomas/pruebas-test.md |
 | 08 | Retiro de matrícula (DD) | validado | S00581091 retirado con DD del NRC 1021; cupo liberado |
 | 09 | Suspensión y reactivación | validado | Bloqueo con estatus inactivo y reactivación a AS en SGASTDN |
 | 10 | Retorno por desaprobado | validado | S00581108 (nota 08): «No cumple» y curso no usado en CAPP |

@@ -175,8 +175,9 @@ def revisar_manifest(adrs, registro):
             error("conocimiento/manifest.json", f"{donde}: no existe «{ruta}»")
 
     for c in m["centros"]:
-        for clave in ("datos", "ficha", "diagramas"):
-            existe(c[clave], f"centro {c['id']}")
+        for clave in ("datos", "ficha", "diagramas", "guia_pruebas"):
+            if clave in c or clave != "guia_pruebas":
+                existe(c[clave], f"centro {c['id']}")
         if c["skill"] not in m["skills"]:
             error("conocimiento/manifest.json", f"centro {c['id']}: la skill {c['skill']} no está en «skills»")
     if [c["id"] for c in m["centros"]] != comun["centros"]:

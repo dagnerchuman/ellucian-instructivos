@@ -203,7 +203,7 @@
     },
     "07": {
       "estado": "pendiente",
-      "evidencia": "Pregrado + Idiomas + Computación"
+      "evidencia": "Pregrado + Idiomas + Computación. Se cierra con S00581091 (ya tiene Pregrado y Computación) cuando se le agregue el programa de Idiomas: bloque 2 de centros/idiomas/pruebas-test.md"
     },
     "08": {
       "estado": "validado",

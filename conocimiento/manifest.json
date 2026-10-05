@@ -7,47 +7,242 @@
     "alcance": "ADR-001"
   },
   "centros": [
-    {"id": "idiomas", "datos": "centros/idiomas/datos.json", "ficha": "centros/idiomas/README.md", "diagramas": "centros/idiomas/diagramas", "skill": "centro-idiomas"},
-    {"id": "computacion", "datos": "centros/computacion/datos.json", "ficha": "centros/computacion/README.md", "diagramas": "centros/computacion/diagramas", "skill": "centro-computacion"},
-    {"id": "emprendimiento", "datos": "centros/emprendimiento/datos.json", "ficha": "centros/emprendimiento/README.md", "diagramas": "centros/emprendimiento/diagramas", "skill": "centro-emprendimiento"}
+    {
+      "id": "idiomas",
+      "datos": "centros/idiomas/datos.json",
+      "ficha": "centros/idiomas/README.md",
+      "diagramas": "centros/idiomas/diagramas",
+      "skill": "centro-idiomas",
+      "guia_pruebas": "centros/idiomas/pruebas-test.md"
+    },
+    {
+      "id": "computacion",
+      "datos": "centros/computacion/datos.json",
+      "ficha": "centros/computacion/README.md",
+      "diagramas": "centros/computacion/diagramas",
+      "skill": "centro-computacion"
+    },
+    {
+      "id": "emprendimiento",
+      "datos": "centros/emprendimiento/datos.json",
+      "ficha": "centros/emprendimiento/README.md",
+      "diagramas": "centros/emprendimiento/diagramas",
+      "skill": "centro-emprendimiento"
+    }
   ],
   "fuentes": [
-    {"id": "datos-comunes", "ruta": "centros/comun/datos.json", "que": "Escuela, campus, grado, periodos y catálogo de scripts de prueba", "adr": "ADR-002"},
-    {"id": "registro", "ruta": ".claude/skills/preguntas-y-dudas-centros/registro.md", "que": "Confirmado (C##), resuelto con instructivos (R##), dudas para Ellucian (E##) y la USS (U##), supuestos descartados (S##)"},
-    {"id": "decisiones", "ruta": "conocimiento/decisiones", "que": "ADR: por qué se decidió cada cosa, qué se descartó y cuándo revisarlo", "adr": "ADR-018"},
-    {"id": "instructivos", "ruta": "CAPACIDAD 1", "que": "Instructivos oficiales de Ellucian (PPTX) y scripts de prueba de la USS, en CAPACIDAD 1 a CAPACIDAD 11", "adr": "ADR-015"},
-    {"id": "skills", "ruta": ".claude/skills", "que": "Memoria de trabajo de los agentes; espejo en .agents/skills", "adr": "ADR-014"},
-    {"id": "propuesta", "ruta": "docs/propuesta-usuarios-finales", "que": "Borrador confidencial de usuarios finales para Pedro Pérez Martinto", "adr": "ADR-016"}
+    {
+      "id": "datos-comunes",
+      "ruta": "centros/comun/datos.json",
+      "que": "Escuela, campus, grado, periodos y catálogo de scripts de prueba",
+      "adr": "ADR-002"
+    },
+    {
+      "id": "registro",
+      "ruta": ".claude/skills/preguntas-y-dudas-centros/registro.md",
+      "que": "Confirmado (C##), resuelto con instructivos (R##), dudas para Ellucian (E##) y la USS (U##), supuestos descartados (S##)"
+    },
+    {
+      "id": "decisiones",
+      "ruta": "conocimiento/decisiones",
+      "que": "ADR: por qué se decidió cada cosa, qué se descartó y cuándo revisarlo",
+      "adr": "ADR-018"
+    },
+    {
+      "id": "instructivos",
+      "ruta": "CAPACIDAD 1",
+      "que": "Instructivos oficiales de Ellucian (PPTX) y scripts de prueba de la USS, en CAPACIDAD 1 a CAPACIDAD 11",
+      "adr": "ADR-015"
+    },
+    {
+      "id": "skills",
+      "ruta": ".claude/skills",
+      "que": "Memoria de trabajo de los agentes; espejo en .agents/skills",
+      "adr": "ADR-014"
+    },
+    {
+      "id": "propuesta",
+      "ruta": "docs/propuesta-usuarios-finales",
+      "que": "Borrador confidencial de usuarios finales para Pedro Pérez Martinto",
+      "adr": "ADR-016"
+    }
   ],
   "generadores": [
-    {"id": "diagramas", "comando": "python3 herramientas/diagramas/generar.py", "entradas": ["centros/comun/datos.json", "centros/idiomas/datos.json", "centros/computacion/datos.json", "centros/emprendimiento/datos.json", "herramientas/diagramas/plantillas.py"], "salidas": ["centros/README.md", "centros/index.html"], "adr": "ADR-003"},
-    {"id": "espejo-skills", "comando": "python3 herramientas/sincronizar_skills.py --desde claude", "entradas": [".claude/skills"], "salidas": [".agents/skills"], "adr": "ADR-014"},
-    {"id": "validador", "comando": "python3 herramientas/validar_conocimiento.py", "entradas": ["conocimiento", ".claude/skills", "centros"], "salidas": [], "adr": "ADR-018"},
-    {"id": "buscar-instructivos", "comando": "python3 .claude/skills/arquitectura-centros-empresariales/scripts/buscar_instructivos.py", "entradas": ["CAPACIDAD 1"], "salidas": []}
+    {
+      "id": "diagramas",
+      "comando": "python3 herramientas/diagramas/generar.py",
+      "entradas": [
+        "centros/comun/datos.json",
+        "centros/idiomas/datos.json",
+        "centros/computacion/datos.json",
+        "centros/emprendimiento/datos.json",
+        "herramientas/diagramas/plantillas.py"
+      ],
+      "salidas": [
+        "centros/README.md",
+        "centros/index.html"
+      ],
+      "adr": "ADR-003"
+    },
+    {
+      "id": "espejo-skills",
+      "comando": "python3 herramientas/sincronizar_skills.py --desde claude",
+      "entradas": [
+        ".claude/skills"
+      ],
+      "salidas": [
+        ".agents/skills"
+      ],
+      "adr": "ADR-014"
+    },
+    {
+      "id": "validador",
+      "comando": "python3 herramientas/validar_conocimiento.py",
+      "entradas": [
+        "conocimiento",
+        ".claude/skills",
+        "centros"
+      ],
+      "salidas": [],
+      "adr": "ADR-018"
+    },
+    {
+      "id": "buscar-instructivos",
+      "comando": "python3 .claude/skills/arquitectura-centros-empresariales/scripts/buscar_instructivos.py",
+      "entradas": [
+        "CAPACIDAD 1"
+      ],
+      "salidas": []
+    }
   ],
   "contratos": [
-    {"de": "centros/<centro>/datos.json", "a": "herramientas/diagramas", "que": "Campos obligatorios por centro", "campos": ["id", "nombre", "color", "nivel", "programa", "materia", "partes_2026", "escala", "prerrequisitos", "nrc_test", "personas_test", "scripts", "particularidades", "dudas", "casuisticas"]},
-    {"de": "centros/<centro>/datos.json › scripts", "a": "centros/comun/datos.json › scripts", "que": "Cada centro tiene un estado para cada script del catálogo, y nada más", "estados": ["validado", "pendiente", "por probar", "no aplica", "por definir"]},
-    {"de": "conocimiento/decisiones › fuentes", "a": "registro.md", "que": "Todo C##, R##, E##, U## o S## que cite un ADR existe en el registro"},
-    {"de": ".claude/skills", "a": ".agents/skills", "que": "Copia exacta"},
-    {"de": "visor_instructivos/data.js", "a": "CAPACIDAD n/", "que": "Rutas de los PPTX; por eso esas carpetas no se mueven", "adr": "ADR-015"}
+    {
+      "de": "centros/<centro>/datos.json",
+      "a": "herramientas/diagramas",
+      "que": "Campos obligatorios por centro",
+      "campos": [
+        "id",
+        "nombre",
+        "color",
+        "nivel",
+        "programa",
+        "materia",
+        "partes_2026",
+        "escala",
+        "prerrequisitos",
+        "nrc_test",
+        "personas_test",
+        "scripts",
+        "particularidades",
+        "dudas",
+        "casuisticas"
+      ]
+    },
+    {
+      "de": "centros/<centro>/datos.json › scripts",
+      "a": "centros/comun/datos.json › scripts",
+      "que": "Cada centro tiene un estado para cada script del catálogo, y nada más",
+      "estados": [
+        "validado",
+        "pendiente",
+        "por probar",
+        "no aplica",
+        "por definir"
+      ]
+    },
+    {
+      "de": "conocimiento/decisiones › fuentes",
+      "a": "registro.md",
+      "que": "Todo C##, R##, E##, U## o S## que cite un ADR existe en el registro"
+    },
+    {
+      "de": ".claude/skills",
+      "a": ".agents/skills",
+      "que": "Copia exacta"
+    },
+    {
+      "de": "visor_instructivos/data.js",
+      "a": "CAPACIDAD n/",
+      "que": "Rutas de los PPTX; por eso esas carpetas no se mueven",
+      "adr": "ADR-015"
+    }
   ],
   "sistemas": [
-    {"id": "banner-test", "nombre": "Ellucian Banner Student (TEST)", "acceso": "experience-test.elluciancloud.com/ussipantest", "uso": "Pruebas integrales"},
-    {"id": "seuss", "nombre": "SEUSS", "uso": "Sistema actual que se reemplaza"},
-    {"id": "intranet-uss", "nombre": "Intranet de la USS", "uso": "Oficios con número y resoluciones del Vicerrector (aprobación de la carga lectiva)", "adr": "ADR-011"},
-    {"id": "plataforma-idiomas", "nombre": null, "uso": "Plataforma de inglés para egresados; nombre por confirmar (U24)", "adr": "ADR-012"},
-    {"id": "netlify", "nombre": "Netlify", "uso": "Publica la rama main con publish = \".\"", "adr": "ADR-016"},
-    {"id": "obsidian", "nombre": "Obsidian", "uso": "Abrir el repositorio como bóveda para navegar conocimiento/ como grafo"}
+    {
+      "id": "banner-test",
+      "nombre": "Ellucian Banner Student (TEST)",
+      "acceso": "experience-test.elluciancloud.com/ussipantest",
+      "uso": "Pruebas integrales"
+    },
+    {
+      "id": "seuss",
+      "nombre": "SEUSS",
+      "uso": "Sistema actual que se reemplaza"
+    },
+    {
+      "id": "intranet-uss",
+      "nombre": "Intranet de la USS",
+      "uso": "Oficios con número y resoluciones del Vicerrector (aprobación de la carga lectiva)",
+      "adr": "ADR-011"
+    },
+    {
+      "id": "plataforma-idiomas",
+      "nombre": null,
+      "uso": "Plataforma de inglés para egresados; nombre por confirmar (U24)",
+      "adr": "ADR-012"
+    },
+    {
+      "id": "netlify",
+      "nombre": "Netlify",
+      "uso": "Publica la rama main con publish = \".\"",
+      "adr": "ADR-016"
+    },
+    {
+      "id": "obsidian",
+      "nombre": "Obsidian",
+      "uso": "Abrir el repositorio como bóveda para navegar conocimiento/ como grafo"
+    }
   ],
   "actores": [
-    {"id": "alumno", "nombre": "Alumno", "que": "De la USS (Pregrado o Posgrado) o externo", "adr": "ADR-010"},
-    {"id": "asistente", "nombre": "Asistente o especialista", "que": "Crea personas, admite y matricula (Nivel A)", "adr": "ADR-010"},
-    {"id": "jefe", "nombre": "Jefe del centro", "que": "Matricula, asigna docentes y da el visto bueno de la carga lectiva (Nivel A)", "adr": "ADR-011"},
-    {"id": "docente", "nombre": "Docente", "que": "Asistencia y notas por Autoservicio"},
-    {"id": "registros", "nombre": "Registros Académicos", "que": "Periodos, escala, plan de evaluación y pase a historia"},
-    {"id": "vicerrectorado", "nombre": "Vicerrectorado Académico", "que": "Revisa y aprueba la carga lectiva por resolución (Nivel B)", "adr": "ADR-011"},
-    {"id": "usuario-clave", "nombre": "Usuario clave", "que": "Dagner Anibal Chuman Lluen: valida, prueba en TEST y capacita (Nivel C)"}
+    {
+      "id": "alumno",
+      "nombre": "Alumno",
+      "que": "De la USS (Pregrado o Posgrado) o externo",
+      "adr": "ADR-010"
+    },
+    {
+      "id": "asistente",
+      "nombre": "Asistente o especialista",
+      "que": "Crea personas, admite y matricula (Nivel A)",
+      "adr": "ADR-010"
+    },
+    {
+      "id": "jefe",
+      "nombre": "Jefe del centro",
+      "que": "Matricula, asigna docentes y da el visto bueno de la carga lectiva (Nivel A)",
+      "adr": "ADR-011"
+    },
+    {
+      "id": "docente",
+      "nombre": "Docente",
+      "que": "Asistencia y notas por Autoservicio"
+    },
+    {
+      "id": "registros",
+      "nombre": "Registros Académicos",
+      "que": "Periodos, escala, plan de evaluación y pase a historia"
+    },
+    {
+      "id": "vicerrectorado",
+      "nombre": "Vicerrectorado Académico",
+      "que": "Revisa y aprueba la carga lectiva por resolución (Nivel B)",
+      "adr": "ADR-011"
+    },
+    {
+      "id": "usuario-clave",
+      "nombre": "Usuario clave",
+      "que": "Dagner Anibal Chuman Lluen: valida, prueba en TEST y capacita (Nivel C)"
+    }
   ],
   "skills": [
     "arquitectura-centros-empresariales",
@@ -64,7 +259,14 @@
     "workflow-pruebas-test"
   ],
   "datos_sensibles": {
-    "revisar": ["conocimiento", ".claude/skills", "centros", "herramientas", "CLAUDE.md", "AGENTS.md"],
+    "revisar": [
+      "conocimiento",
+      ".claude/skills",
+      "centros",
+      "herramientas",
+      "CLAUDE.md",
+      "AGENTS.md"
+    ],
     "_leeme": "Correos personales, DNI, teléfonos, contraseñas o claves no se escriben en estas rutas. Los IDs de prueba de Banner (S00…, 100582059) sí, porque son datos de TEST."
   }
 }

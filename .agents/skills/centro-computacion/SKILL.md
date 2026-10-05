@@ -108,9 +108,9 @@ Parte de periodo general: **CGE**.
 
 ## ▶️ Dónde quedamos (05/10/2026)
 - **17 de 19 scripts validados** (el 04 no aplica). Hoy se cerraron: 17, 02, 18-C y 11.
-- **Faltan 05 y 07.** Dependen de que la USS responda, no de Banner:
-  1. Script 05: ¿cómo se programa el curso para egresados (parte de periodo, sección, precio)? Y un egresado de prueba.
-  2. Script 07: ¿cuál es el código del programa de Idiomas en TEST?
+- **Faltan 05 y 07:**
+  1. Script 05: en Idiomas el egresado no lleva el curso (C50, ADR-012). ¿Computación trabaja igual? (U24)
+  2. Script 07: ya no hay que esperar a la USS. Se cierra en el **bloque 2 de `centros/idiomas/pruebas-test.md`**, al agregar el programa de Idiomas a `S00581091`.
   3. U22: ¿se agregan X02 y los demás grupos del verano 2027 en 202751?
   4. U14: ¿quién crea el servicio de quejas en SVVSRVC?
 - **Para ordenar en TEST:**
@@ -118,7 +118,7 @@ Parte de periodo general: **CGE**.
   - estatus de S00581109 en SGASTDN;
   - el NRC 1021 sigue con máximo 2 y reserva general 0 desde el Script 02;
   - NRC de prueba en 202751/X01 (número por anotar).
-- **Al retomar:** preguntar si ya hay respuesta a 1–4; si no, seguir con Emprendimiento o Idiomas.
+- **Al retomar:** seguir con las pruebas de Idiomas (`centros/idiomas/pruebas-test.md`); cierran también el Script 07 de Computación.
 
 ## 📋 Checklist de Scripts Pendientes para Próximas Sesiones
 

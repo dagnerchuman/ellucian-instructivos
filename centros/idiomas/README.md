@@ -3,6 +3,8 @@
 
 Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los datos de este centro. Lo marcado «por confirmar» todavía no se verificó en TEST.
 
+**Guía de pruebas en TEST:** [`pruebas-test.md`](pruebas-test.md)
+
 ## Diagramas paso a paso
 | N.º | Diagrama | Archivos |
 |---|---|---|

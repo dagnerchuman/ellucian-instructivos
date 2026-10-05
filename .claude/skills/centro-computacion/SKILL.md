@@ -106,6 +106,20 @@ Parte de periodo general: **CGE**.
 
 ---
 
+## ▶️ Dónde quedamos (05/10/2026)
+- **17 de 19 scripts validados** (el 04 no aplica). Hoy se cerraron: 17, 02, 18-C y 11.
+- **Faltan 05 y 07.** Dependen de que la USS responda, no de Banner:
+  1. Script 05: ¿cómo se programa el curso para egresados (parte de periodo, sección, precio)? Y un egresado de prueba.
+  2. Script 07: ¿cuál es el código del programa de Idiomas en TEST?
+  3. U22: ¿se agregan X02 y los demás grupos del verano 2027 en 202751?
+  4. U14: ¿quién crea el servicio de quejas en SVVSRVC?
+- **Para ordenar en TEST:**
+  - retención de S00581081;
+  - estatus de S00581109 en SGASTDN;
+  - el NRC 1021 sigue con máximo 2 y reserva general 0 desde el Script 02;
+  - NRC de prueba en 202751/X01 (número por anotar).
+- **Al retomar:** preguntar si ya hay respuesta a 1–4; si no, seguir con Emprendimiento o Idiomas.
+
 ## 📋 Checklist de Scripts Pendientes para Próximas Sesiones
 
 > **Instrucción para el agente:** A medida que se ejecute cada prueba, marca con `[x]` el script correspondiente y actualiza la evidencia arriba.

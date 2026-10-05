@@ -13,6 +13,7 @@ Pedro Pérez Martinto pidió identificar a los usuarios finales por niveles (A, 
 
 ## Decisión
 - **Usuarios administrativos:** jefes, especialistas y asistentes de cada centro, o quien tenga permisos en Banner. **Todos matriculan,** incluidos los jefes, así que son Nivel A.
+- Los **especialistas** (`ES`) son además docentes a tiempo completo de 48 horas, con funciones administrativas (C56, [ADR-020](ADR-020-carga-por-contrato.md)).
 - **Población que se matricula:** alumnos de la USS (Pregrado y Posgrado) y **externos**, que no son de la USS o vienen de otras universidades.
 - La matrícula se hace en el backoffice: GOAMTCH → SAAQUIK → SFAREGS.
 

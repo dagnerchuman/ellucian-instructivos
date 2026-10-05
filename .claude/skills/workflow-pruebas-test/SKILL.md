@@ -72,3 +72,19 @@ Documento de referencia exhaustivo: `ref-scripts-ccee-casuisticas.md`.
 17. **Gestión de horarios** (`SSASECT` → `SIAFAVL` → `SLARSLT`).
 18. **Otros requerimientos especiales** (`SIAASGN`, `SVASVPR`, `SOAHOLD`).
 
+## 5. Prueba de carga por contrato (ADR-020, propuesto)
+Cubre lo que falta del script 5.2: la labor no educativa y SIACONA. Hazla cuando la USS confirme U28.
+1. **Tablas:**
+   - en STVFCNT, los tipos de contrato `ES` (especialista) y `FC` (facilitador). Si no existen, se crean (U28-a);
+   - en STVCNTR, sus reglas;
+   - en STVNIST, los tipos de labor no educativa del especialista, como la matrícula.
+2. **SIATERM:** en el periodo de Centros (por ejemplo 202656), el factor FTE en 48.
+3. **SIAFLCT:**
+   - regla de `ES` con «Total de carga de trabajo» de 48 a 48;
+   - regla de `FC` de 14 a 23 horas. Si son semanales, en «Horas de contacto semanal».
+4. **SIAINST:** al docente `100582059`, en el bloque «Contrato de docente», el contrato `ES` con su regla, como predefinido.
+5. **SIAASGN:**
+   - el contrato `ES` en sus NRC;
+   - una labor no educativa (STVNIST) con sus horas.
+6. **SIACONA:** con contrato `ES`, el periodo y el docente, ver si queda debajo (U) o encima (O) de las 48 horas.
+

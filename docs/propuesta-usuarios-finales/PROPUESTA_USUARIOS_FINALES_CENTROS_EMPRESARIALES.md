@@ -98,7 +98,7 @@ Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra
 #### Nivel A: Usuarios Finales Directos
 * **Quiénes son:**
   1. **Jefes, Especialistas, Asistentes y personal con permisos:** Personal administrativo encargado de atender al público, crear personas, admitir y matricular en los periodos mensuales, tanto a estudiantes de la USS (Pregrado y Posgrado) como a externos.
-  2. **Docentes de los 3 Centros (Idiomas, Computación, Emprendimiento):** Profesores que dictan clases en las distintas partes de periodo. Son **especialistas** a tiempo completo (48 horas) o **facilitadores** a tiempo parcial, según su carga (C54).
+  2. **Docentes de los 3 Centros (Idiomas, Computación, Emprendimiento):** Profesores que dictan clases en las distintas partes de periodo. Son **especialistas** (`ES`), a tiempo completo con 48 horas, que además matriculan y tienen funciones administrativas, o **facilitadores** (`FC`), a tiempo parcial, de 14 a 23 horas (C54, C56).
 * **Operaciones diarias:**
   - Jefes, Especialistas y Asistentes: `GOAMTCH` (Personas), `SAAQUIK` (Admisión), `SFAREGS` (Matrícula), `SSASECQ` (Consulta de cupos).
   - Jefes, además: asignan a los docentes en los NRC (`SSASECT`), revisan su carga lectiva (`SIAASGN`) y dan el visto bueno antes de enviarla al Vicerrectorado Académico.

@@ -49,7 +49,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **1024**: ESEC 00650, sección C. Auditado en SIAASGN.
 - NRC **1026**: ESEC 00650, sección D, parte X07. Casuísticas CCEE.
 
-## Los 18 scripts (15 validado · 4 pendiente · 1 no aplica)
+## Los 18 scripts (16 validado · 3 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |
 |---|---|---|---|
 | 01 | Matrícula regular | validado | NRC 1021 (S00581081, S00581091) y NRC 1026 (S00581108, S00581109) |
@@ -71,7 +71,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 17 | Gestión de horarios y cruces | validado | 05/10: NRC 1021 y 1026 con el mismo bloque (L-M 08:00–12:00, docente 100582059). Al reasignar al docente en el 1021, SSASECT dio «Conflicto de horario del instructor» y ofreció crear el sobrepaso; con OK quedó «Indicador de sobrepaso» marcado |
 | 18-A | Auditoría de carga docente | validado | SIAASGN: docente 100582059 con 4 NRC, horas y FTE |
 | 18-B | Retenciones y bloqueo de matrícula | validado | Retención TT bloquea la inscripción en SFAREGS |
-| 18-C | Solicitud de servicio o queja | pendiente | Solicitud o queja en SVASVPR |
+| 18-C | Solicitud de servicio o queja | validado | 05/10: no existe un servicio de queja (17 servicios en SVVSRVC; U14). El mecanismo se validó con CER (Certificado): la solicitud se crea en el Autoservicio del alumno (100582059) y se atiende en SVASVPR (estatus, comentario interno y de respuesta). SVASVPR no deja crear solicitudes («Función inválida») |
 
 ## Por confirmar
 - **U02**: ¿Los cursos tienen orden (uno exige aprobar otro) o son independientes?

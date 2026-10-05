@@ -102,7 +102,7 @@ Parte de periodo general: **CGE**.
 | **17** | Gestión de horarios y cruces | `SSASECT` | ✅ **Validado (05/10)** | NRC 1021 y 1026 con el mismo bloque y docente: SSASECT dio «*ERROR* Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso?»; con OK quedó «Indicador de sobrepaso». El cruce del alumno en SFAREGS no se pudo probar (ver C41). |
 | **18-A** | Auditoría de carga docente | `SIAASGN` | ✅ Validado | Docente DCHUMAN con 4 NRCs (horas semanales, contacto y FTE nativos). |
 | **18-B** | Retenciones y bloqueo fatal | `SOAHOLD` / `STVHLDD` | ✅ Validado | Retención TT bloqueando matrícula en SFAREGS (*ERROR*). |
-| **18-C** | Solicitud de servicio / queja | `SVASVPR` | ⏳ **PENDIENTE** | Registro y atención de solicitud/queja estudiantil en backoffice. |
+| **18-C** | Solicitud de servicio / queja | Autoservicio → `SVASVPR` | ✅ **Validado (05/10)** | Mecanismo validado con `CER` (Certificado): el alumno (100582059) crea la solicitud en el Autoservicio y se atiende en `SVASVPR` (estatus, comentario interno y comentario de respuesta). `SVASVPR` no deja crear solicitudes (*«Función inválida»*). **No existe un servicio de queja**: hay 17 en SVVSRVC, todos de carpetas, certificado y constancia (U14). |
 
 ---
 
@@ -135,10 +135,8 @@ Parte de periodo general: **CGE**.
 - [x] **Script 17 — Gestión de horarios y cruces (`SSASECT`):**
   - *Evidencia (05/10):* conflicto del docente detectado en el NRC 1021; se resolvió con el sobrepaso del instructor.
   - *Pendiente opcional:* cruce del alumno en SFAREGS con un alumno sin retención, con estatus activo y con ambos NRC sin rolar.
-- [ ] **Script 18-C — Trámite de quejas / reclamos (`SVASVPR`):**
-  - *Contexto:* Atención de solicitudes de servicio estudiantil.
-  - *Paso:* Tramitar solicitud de servicio en `SVASVPR` con estatus y comentarios internos.
-
+- [x] **Script 18-C — Solicitudes de servicio (Autoservicio → `SVASVPR`):**
+  - *Evidencia (05/10):* solicitud CER creada en el Autoservicio y atendida en SVASVPR. Falta que la USS cree el servicio de quejas (U14).
 ---
 
 ## Incidencias resueltas

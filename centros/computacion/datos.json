@@ -254,8 +254,8 @@
       "evidencia": "Retención TT bloquea la inscripción en SFAREGS"
     },
     "18-C": {
-      "estado": "pendiente",
-      "evidencia": "Solicitud o queja en SVASVPR"
+      "estado": "validado",
+      "evidencia": "05/10: no existe un servicio de queja (17 servicios en SVVSRVC; U14). El mecanismo se validó con CER (Certificado): la solicitud se crea en el Autoservicio del alumno (100582059) y se atiende en SVASVPR (estatus, comentario interno y de respuesta). SVASVPR no deja crear solicitudes («Función inválida»)"
     }
   },
   "particularidades": [

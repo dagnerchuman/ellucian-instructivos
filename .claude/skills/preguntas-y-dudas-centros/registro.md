@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C43):**
+- **Confirmado por el usuario (C01 – C44):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -16,6 +16,7 @@
   - *C40:* Todo por carpetas y por centro (`centros/<centro>/`); diagramas paso a paso con Archify.
   - *C41:* Script 17 validado: conflicto de horario del docente y sobrepaso del instructor en SSASECT.
   - *C42–C43:* Script 02 validado: regla CAPACIDAD en SFAROVR, permiso en SFASRPO, S00581110 inscrito con el NRC 1021 lleno.
+  - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
 - **Resuelto con los instructivos (R01 – R16):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
   - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
@@ -87,6 +88,7 @@
 | C41 | **Script 17 · Cruce de horario del docente (05/10):** El NRC **1021** quedó con el mismo bloque del **1026** (lunes y miércoles 08:00–12:00) y el mismo docente `100582059`. Al reasignar al docente en el bloque INSTRUCTOR de `SSASECT`, Banner mostró *«\*ERROR\* Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso para el instructor?»*; con **OK** se marcó solo «Indicador de sobrepaso» y se guardó. Para pasar al bloque INSTRUCTOR hay que usar «Sección siguiente» (⤓); si se hace clic directo, Banner da error. **Prueba del alumno sin hacer:** `S00581081` tiene una **retención** que bloquea SFAREGS; en `S00581109`, cambiar a RE el 1026 (en DD) da la alerta «El curso ha sido calificado y pasado al historial» y luego «El estatus del alumno impide la inscripción», es decir, su estatus en SGASTDN no permite inscribir. No se guardó nada. Revisar la retención de S00581081 y el estatus de S00581109. | 05/10/2026 | Capturas del usuario (SSASECT / SFAREGS) |
 | C42 | **Script 02 · Configuración del sobrepaso de cupo (05/10, en curso):** (a) `SFAROVR` en 202656 no tenía reglas. Se creó `CAPACIDAD` («Capacidad de sección/aula», elegido de `STVROVR`, que tiene 78 códigos; también existe `CAP`, *Overload Enrollment Capacity*) con la casilla **Capacidad** marcada: *Saved successfully*. «Copiar del periodo» debe quedar vacío; si se pone el mismo periodo, sale *«No existen datos para el periodo del cual está copiando»*. (b) En `SFASRPO`, `S00581108` (Carlos Torres) recibió `CAPACIDAD` para el NRC **1021** (ESEC 00650 B). (c) El NRC 1021 se dejó lleno: en *Lugares reservados*, la regla general pasó de 1 a 0 (CMEMC38 2/2) y en *Detalles de ingreso* el máximo pasó de 3 a 2. **Falta:** inscribir en `SFAREGS`. | 05/10/2026 | Capturas del usuario (SFAROVR / SFASRPO / SSASECT) |
 | C43 | **Script 02 validado (05/10):** con `S00581108`, SFAREGS no dio error de cupo, pero rechazó el NRC 1021 por *«Duplicate Course with Section 1026»* (ya tenía ESEC 00650 en el 1026): Banner no deja el mismo curso dos veces en el periodo. Se usó `S00581110` (Juan Flores): admitido en SAAQUIK con CMEMC38, con permiso `CAPACIDAD` en SFASRPO para el 1021, y quedó **inscrito con RE en el NRC 1021 lleno** (2/2). El usuario confirmó que todo salió bien. | 05/10/2026 | Usuario (SAAQUIK / SFASRPO / SFAREGS) |
+| C44 | **Script 18-C validado (05/10):** en `SVVSRVC` hay 17 servicios: carpetas de bachiller, título, maestría y doctorado, `CER` Certificado, `CON` Constancia de primera matrícula y tres de prueba (PRPOS, PRTIT, PRU). **Ninguno es de queja o reclamo** (U14 sigue abierta). En `SVASVPR` no se pueden crear solicitudes: al intentarlo sale *«Función inválida»*, porque nacen en el Autoservicio del alumno (instructivo 4.3.2, diap. 18). El mecanismo se validó con `CER`: el usuario 100582059 la creó en el Autoservicio y se atendió en SVASVPR (estatus, comentario interno y comentario de respuesta). El usuario confirmó que salió bien. | 05/10/2026 | Usuario (Autoservicio / SVASVPR) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.

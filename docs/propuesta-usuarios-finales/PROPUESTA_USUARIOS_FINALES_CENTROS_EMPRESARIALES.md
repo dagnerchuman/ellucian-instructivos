@@ -61,9 +61,9 @@ Conforme a la metodología solicitada por Pedro Pérez Martinto, se clasifica al
 ```
 [Nivel C: Power User] ------------> Dagner Anibal Chuman Lluen (Supervisa y audita)
          │
-         ├──> [Nivel A: Directos] --> Especialistas y Asistentes (Backoffice), otros con permisos + Docentes (Autoservicio)
+         ├──> [Nivel A: Directos] --> Jefes, Especialistas y Asistentes (Backoffice), otros con permisos + Docentes (Autoservicio)
          │
-         ├──> [Nivel B: Consulta] --> Jefes de Centro (Idiomas, Computación, Emprendimiento)
+         ├──> [Nivel B: Consulta] --> Personal de informes y atención al estudiante
          │
          └──> [Nivel D: Indirectos]-> Dirección de Centros + Decanos de Pregrado (Egresos)
 ```
@@ -81,17 +81,17 @@ Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra
 
 #### Nivel A: Usuarios Finales Directos
 * **Quiénes son:**
-  1. **Especialistas, Asistentes y personal con permisos:** Personal administrativo encargado de atender al público, crear personas, admitir y matricular en los periodos mensuales, tanto a estudiantes de la USS (Pregrado y Posgrado) como a externos.
+  1. **Jefes, Especialistas, Asistentes y personal con permisos:** Personal administrativo encargado de atender al público, crear personas, admitir y matricular en los periodos mensuales, tanto a estudiantes de la USS (Pregrado y Posgrado) como a externos.
   2. **Docentes de los 3 Centros (Idiomas, Computación, Emprendimiento):** Profesores que dictan clases en las distintas partes de periodo.
 * **Operaciones diarias:**
-  - Especialistas y Asistentes: `GOAMTCH` (Personas), `SAAQUIK` (Admisión), `SFAREGS` (Matrícula), `SSASECQ` (Consulta de cupos).
+  - Jefes, Especialistas y Asistentes: `GOAMTCH` (Personas), `SAAQUIK` (Admisión), `SFAREGS` (Matrícula), `SSASECQ` (Consulta de cupos).
   - Docentes: Portal Autoservicio Banner (asistencia diaria, registro de notas de evaluación continua y actas finales).
 * **Tipo de Capacitación:**
-  - Especialistas y Asistentes: **Avanzada Operativa**.
+  - Jefes, Especialistas y Asistentes: **Avanzada Operativa**. Los jefes, además, consultan cupos, estatus y avance (`SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM`).
   - Docentes: **Básica / Funcional (Autoservicio)**.
 
 #### Nivel B: Usuarios Finales de Consulta
-* **Quiénes son:** Jefes de cada centro (Idiomas, Computación/Informática, Emprendimiento) y personal de informes/atención al estudiante. *Nivel propuesto: si los jefes también matriculan, pasan al Nivel A.*
+* **Quiénes son:** Personal de informes y atención al estudiante que solo consulta. Los jefes de centro no van aquí: también matriculan, así que son Nivel A.
 * **Operaciones:** Consultar cupos de secciones abiertas (`SSASECQ`), revisar si un alumno tiene condición activa (`SGASTDN`) y auditar el avance de cursos para egreso (`SMICRLT`).
 * **Tipo de Capacitación:** **Intermedia / Reportería y Consulta**.
 
@@ -117,9 +117,9 @@ Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra
 | **Cuerpo Docente** | Docente | Docentes de Idiomas (Inglés) | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
 | **Cuerpo Docente** | Docente | Docentes de Computación (Ofimática/Espec.) | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
 | **Cuerpo Docente** | Docente | Docentes de Emprendimiento | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
-| **Administrativa** | Jefe de Centro | Jefe de Idiomas | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
-| **Administrativa** | Jefe de Centro | Jefe de Computación | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
-| **Administrativa** | Jefe de Centro | Jefe de Emprendimiento | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
+| **Administrativa** | Jefe de Centro | Jefe de Idiomas | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Jefe de Centro | Jefe de Computación | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Jefe de Centro | Jefe de Emprendimiento | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
 | **Dirección** | Directivo | Dirección de Centros Empresariales | **D** | Reportes gerenciales, avance de metas y egreso | Mensual | **Baja** | **Informativa / Ejecutiva** |
 
 ---
@@ -134,6 +134,5 @@ Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra
    - *Ya validado en Computación:* desaprobados por nota e `INH`, y pase a historia con `SHRROLL`.
 3. **Validación de Nombres Reales:**
    - Una vez que la Jefatura asigne los nombres de los jefes, especialistas, asistentes y demás personal con permisos de cada centro, reemplazar los roles genéricos por los nombres propios en la matriz.
-   - Confirmar si los jefes de centro solo consultan (Nivel B) o también matriculan (Nivel A).
 4. **Emisión de la versión final:**
    - Generar el entregable en PDF formal con la plantilla USS para respuesta oficial a Pedro Pérez.

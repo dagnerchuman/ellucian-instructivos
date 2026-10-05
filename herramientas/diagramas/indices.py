@@ -130,7 +130,7 @@ def ficha_centro(c):
         "## NRC en TEST",
         *nrcs,
         "",
-        f"## Los 18 scripts ({resumen})",
+        f"## Scripts de prueba ({resumen})",
         *scripts,
         "",
         "## Por confirmar",

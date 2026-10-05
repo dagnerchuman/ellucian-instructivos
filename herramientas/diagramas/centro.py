@@ -58,7 +58,7 @@ class Centro:
         """True si el centro ya tiene su programa verificado en TEST."""
         return self.d["programa"] is not None
 
-    # ---- periodo y grupos ------------------------------------------------
+    # ---- periodo y partes ------------------------------------------------
     @property
     def partes(self):
         p = self.d["partes_2026"]
@@ -108,7 +108,7 @@ class Centro:
         partes = [f"Nivel {self.nivel}", f"Programa {self.programa}"]
         if self.d["materia"]:
             partes.append(f"Materia {self.materia}")
-        partes.append(f"Grupos {self.partes} (2026)")
+        partes.append(f"Partes {self.partes} (2026)")
         return " · ".join(partes) + f" · Elaborado por: {self.autor}"
 
     def script(self, id_script):

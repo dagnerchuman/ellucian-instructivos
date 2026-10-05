@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C48):**
+- **Confirmado por el usuario (C01 – C49):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -19,6 +19,7 @@
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
   - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
   - *C46:* Usuarios administrativos (jefes, especialistas, asistentes o con permisos) y población: USS + externos.
+  - *C49:* Diagramas con un solo flujo, un código por paso y un glosario único (43 diagramas).
   - *C47–C48:* Carga lectiva: el jefe asigna y da visto bueno; el Vicerrectorado Académico aprueba por oficio en la intranet (número de oficio y resolución del Vicerrector).
 - **Resuelto con los instructivos (R01 – R17):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
@@ -99,6 +100,7 @@
 | C46 | **Usuarios finales y población (propuesta para Pedro Pérez Martinto, 05/10):** (a) Los **usuarios administrativos** de los centros son los **jefes, especialistas y asistentes, o a quien se le den permisos** en Banner. (b) Se matricula la **población de la universidad** (Pregrado y Posgrado de la USS) **más externos**: personas que no son de Pregrado ni de Posgrado, que vienen de fuera o de otras universidades. Se actualizó `docs/propuesta-usuarios-finales/`; (c) Los **jefes también matriculan**, así que van en el Nivel A con los especialistas y asistentes. | 05/10/2026 | Usuario (chat) |
 | C47 | **Aprobación de la carga lectiva (05/10):** el **jefe del centro asigna** al docente en los NRC y da su **visto bueno**; recién entonces pasa al **Vicerrectorado Académico**, que **revisa y aprueba** la carga lectiva de los docentes. En la propuesta, los jefes suman `SSASECT` y `SIAASGN` (Nivel A) y el Vicerrectorado Académico pasa del Nivel D al B (consulta en SIAASGN/SIACONA). Queda abierto cómo se deja constancia del visto bueno y de la aprobación, porque el instructivo 5.2 no trae un paso de aprobación en Banner (U23). | 05/10/2026 | Usuario (chat) |
 | C48 | **Constancia de la aprobación de la carga (05/10):** se tramita **fuera de Banner, en la intranet de la USS**. El jefe registra un oficio o documento con **asunto, detalle y observación**, y **adjunta el documento** (la carga lectiva). La intranet genera un **número de oficio**, y la **resolución la emite el Vicerrector Académico**. Por ahí se tramita todo. Cierra la U23. | 05/10/2026 | Usuario (chat) |
+| C49 | **Diagramas rehechos: un flujo, un código, un término (05/10):** el usuario pidió que queden «hermosos y específicos, un solo flujo, un solo código o término». Ahora cada diagrama es un solo flujo, cada paso es una sola página de Banner (o un término fuera de Banner) y se usa un glosario único (alumno, NRC, parte, matrícula, cupo, pase a historia). El recorrido es una secuencia que muestra quién hace cada paso; se agregó el diagrama de carga lectiva (C47, C48) y cada casuística tiene su propio diagrama. Son 43 diagramas (14 por centro y el comparativo). | 05/10/2026 | Usuario (chat) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.

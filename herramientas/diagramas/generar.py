@@ -2,7 +2,7 @@
 """Genera los diagramas interactivos paso a paso de los Centros Empresariales.
 
 Para cada centro (centros/<centro>/datos.json) y cada plantilla de plantillas.py:
-  1. escribe la especificación Archify (<nombre>.workflow.json o .lifecycle.json);
+  1. escribe la especificación Archify (<nombre>.workflow.json o .sequence.json);
   2. la compila con `archify finalize`, que valida esquema, geometría, textos y navegador;
   3. exporta <nombre>-claro.png, <nombre>-oscuro.png y <nombre>.svg con exportar.mjs.
 Además genera el comparativo de los tres centros (centros/comun/diagramas) y los índices
@@ -76,10 +76,20 @@ def resumen_fallas(salida):
 def limpiar_recibos(carpeta, nombre):
     """finalize deja recibos y evidencias junto al HTML; no forman parte del entregable."""
     for f in carpeta.glob(f"{nombre}.*.json"):
-        if not f.name.endswith((".workflow.json", ".lifecycle.json")):
+        if not f.name.endswith((".workflow.json", ".sequence.json", ".lifecycle.json")):
             f.unlink()
     for sub in ("browser-check", "visual-check", "review-2", "review-3"):
         shutil.rmtree(carpeta / sub, ignore_errors=True)
+
+
+def limpiar_obsoletos(id_centro, numeros_slugs):
+    """Borra las carpetas NN-tema de un centro que ya no corresponden a ninguna plantilla."""
+    carpeta = RAIZ / "centros" / id_centro / "diagramas"
+    vigentes = {f"{n:02d}-{s}" for n, s in numeros_slugs}
+    for sub in sorted(carpeta.glob("[0-9][0-9]-*")):
+        if sub.is_dir() and sub.name not in vigentes:
+            shutil.rmtree(sub)
+            print(f"BORRADO {sub.relative_to(RAIZ)} (ya no se genera)")
 
 
 def generar(tipo, spec):
@@ -114,7 +124,11 @@ def main():
             trabajos += [(n, lambda f=f: f(centros, tr)) for n, _, f in plantillas.DIAGRAMAS_COMUNES]
         else:
             c = Centro(id_centro)
-            trabajos += [(n, lambda f=f, c=c: f(c, tr)) for n, _, f in plantillas.DIAGRAMAS]
+            c.tr = tr
+            lista = plantillas.diagramas_de(c)
+            if not args.solo:
+                limpiar_obsoletos(c.id, [(n, s) for n, s, _ in lista])
+            trabajos += [(n, lambda f=f, c=c: f(c)) for n, _, f in lista]
 
     hechos, fallas = [], []
     for numero, construir in trabajos:

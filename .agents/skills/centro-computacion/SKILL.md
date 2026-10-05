@@ -10,7 +10,7 @@ description: Arquitectura específica del Centro de Computación (Informática) 
 >
 > **Carpeta del centro:** `centros/computacion/`
 > - `datos.json` es la **fuente única** de los datos de esta página (códigos, grupos, NRC, personas de TEST, estado de los 18 scripts y dudas). Si un dato cambia, cámbialo allí y en esta skill, y regenera los diagramas.
-> - `diagramas/` tiene los 7 diagramas paso a paso en HTML interactivo, PNG claro y oscuro, y SVG: recorrido, NRC, persona y admisión, estados de la matrícula, notas y cierre, y dos de casuísticas. Ver la skill `workflow-diagramas-archify`.
+> - `diagramas/` tiene 14 diagramas paso a paso en HTML interactivo, PNG claro y oscuro, y SVG: recorrido, crear el NRC, carga lectiva, persona y admisión, matrícula en el NRC, notas y pase a historia, y una casuística por diagrama. Ver la skill `workflow-diagramas-archify`.
 
 ## Identificadores en Banner
 

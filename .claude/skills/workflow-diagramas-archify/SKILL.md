@@ -11,31 +11,38 @@ Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salid
 | Qué | Dónde |
 |---|---|
 | Datos de cada centro (fuente única) | `centros/<centro>/datos.json` (`idiomas`, `computacion`, `emprendimiento`). `null` = «por confirmar» |
-| Datos comunes y catálogo de los 18 scripts | `centros/comun/datos.json` |
+| Datos comunes y catálogo de los scripts | `centros/comun/datos.json` |
 | Plantillas de los diagramas (el flujo, igual para los tres) | `herramientas/diagramas/plantillas.py` |
 | Lectura de datos y textos derivados | `herramientas/diagramas/centro.py` |
 | Generador (JSON → `finalize` → imágenes) | `herramientas/diagramas/generar.py` |
 | Exportación PNG/SVG (menú «Exportar» del HTML con Playwright) | `herramientas/diagramas/exportar.mjs` |
 | Motor Archify (MIT, versión fija, no se sube) | `herramientas/diagramas/instalar_archify.sh` → `herramientas/diagramas/.archify/` |
-| Salida | `centros/<centro>/diagramas/NN-tema/<centro>-NN-tema.{workflow,lifecycle}.json`, `.html`, `-claro.png`, `-oscuro.png`, `.svg` |
+| Salida | `centros/<centro>/diagramas/NN-tema/<centro>-NN-tema.{workflow,sequence}.json`, `.html`, `-claro.png`, `-oscuro.png`, `.svg` |
 | Índices | `centros/README.md`, `centros/index.html` y `centros/<centro>/README.md`, generados por `generar.py` |
+
+## Tres reglas de diseño (pedido del usuario, 05/10)
+1. **Un solo flujo por diagrama.** Los pasos van en una línea, sin ramas ni casos en paralelo. Los errores y las variantes van en las tarjetas («Si sale un error», «Si no deja matricular»). Cada casuística tiene su propio diagrama.
+2. **Un solo código por paso.** El título del nodo es una sola página de Banner (`SSASECT`) o, fuera de Banner, un solo término (`Oficio`, `Autoservicio`). Debajo va la acción (verbo + objeto) y en la etiqueta el dato de TEST. Nunca «SCACRSE · SMAAREA».
+3. **Un solo término por concepto** (`TERMINOS` en `plantillas.py`): alumno (no participante ni estudiante), NRC (no sección ni grupo), parte (X07), matrícula (no inscripción), cupo (no vacante), pase a historia (no cierre de actas), retención, carga lectiva.
 
 ## Diagramas por centro
 | N.º | Tema | Tipo Archify |
 |---|---|---|
-| 0 | Los tres centros (comparativo, en `centros/comun`) | workflow |
-| 1 | Recorrido completo en Banner (6 carriles, 15 pasos) | workflow |
-| 2 | Crear un NRC paso a paso (SSASECT, tres guardados, errores) | workflow |
-| 3 | Persona y admisión (GOAMTCH, SAAQUIK, casos especiales) | workflow |
-| 4 | Estados de la matrícula en el NRC (EL, RE, DD, bloqueos) | lifecycle |
-| 5 | Notas, asistencia y cierre de actas (SHAGRDE → SHRROLL → CAPP) | workflow |
-| 6 | Casuísticas de matrícula (scripts de `datos.json › casuisticas.matricula`) | workflow |
-| 7 | Casuísticas de notas y cierre (`casuisticas.notas`) | workflow |
+| 0 | El mismo flujo en los tres centros (`centros/comun`) | workflow |
+| 1 | Recorrido completo: quién hace cada paso (alumno, asistente, jefe, Banner, docente, Registros, Vicerrectorado) | sequence |
+| 2 | Crear el NRC (SOATERM → SCACRSE → SSASECT ×3 → SSASECQ) | workflow |
+| 3 | Carga lectiva (SIAINST → SSASECT → SIAASGN → Oficio → Resolución) | workflow |
+| 4 | Persona y admisión (GOAMTCH → SAAQUIK → SGASTDN) | workflow |
+| 5 | Matrícula en el NRC (SSASECQ → SFAREGS → TSAAREV → SFASLST) | workflow |
+| 6 | Notas y pase a historia (SHAGRDE → SHAGCOM → Autoservicio → SHRROLL → SMICRLT) | workflow |
+| 7+ | Una casuística por diagrama, en el orden de `datos.json › casuisticas` | workflow |
+
+`generar.py` borra solo las carpetas `NN-tema` que ya no corresponden a ninguna plantilla (no toca `anterior-…`).
 
 ## Regenerar
 ```bash
 bash herramientas/diagramas/instalar_archify.sh            # una vez por máquina o sesión
-python3 herramientas/diagramas/generar.py                  # todo: 22 diagramas + índices
+python3 herramientas/diagramas/generar.py                  # todo: 43 diagramas + índices
 python3 herramientas/diagramas/generar.py idiomas --solo 4 # un diagrama de un centro
 python3 herramientas/diagramas/generar.py --sin-imagenes   # más rápido: solo JSON + HTML
 ```
@@ -56,7 +63,7 @@ python3 herramientas/diagramas/generar.py --sin-imagenes   # más rápido: solo 
   - ni cruces ni corredores compartidos;
   - primero deja la ruta automática; fija `fromSide`/`toSide` solo cuando haga falta;
   - si Archify dice que una ruta fijada es inviable, quita el lado que indica.
-- **Casos independientes,** cada uno en su carril: no los encadenes entre sí.
+- **Secuencia:** ancho ≤ 1085 px y relación ancho/alto ≥ 1,55; mensajes cada 28 px, sin notas (se superponen con la etiqueta siguiente). Lo que hace cada paso va en la tarjeta «Qué hace cada paso».
 
 ## Reglas del proyecto que los diagramas cumplen
 - **El centro siempre visible:** en el nombre del archivo, en el título («Centro de Computación · 2. …») y en el subtítulo (nivel, programa, materia, grupos). Nunca un diagrama «de los tres» con datos de uno solo.

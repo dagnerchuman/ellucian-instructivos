@@ -10,7 +10,7 @@ description: Arquitectura específica del Centro de Emprendimiento de la USS en 
 >
 > **Carpeta del centro:** `centros/emprendimiento/`
 > - `datos.json` es la **fuente única** de los datos de este centro. Lo que allí está en `null` sigue **por confirmar** en TEST y en los diagramas se muestra así.
-> - `diagramas/` tiene los 7 diagramas paso a paso (HTML interactivo, PNG claro y oscuro, SVG). Ver la skill `workflow-diagramas-archify`.
+> - `diagramas/` tiene 14 diagramas paso a paso (un flujo y un código por paso) (HTML interactivo, PNG claro y oscuro, SVG). Ver la skill `workflow-diagramas-archify`.
 
 ## Identificadores en Banner
 

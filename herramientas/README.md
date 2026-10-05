@@ -9,7 +9,7 @@
 | Archivo | Qué hace |
 |---|---|
 | `generar.py` | Orquesta todo: escribe la especificación, la valida y compila con `archify finalize`, exporta las imágenes y arma los índices |
-| `plantillas.py` | Los 7 diagramas por centro y el comparativo: carriles, pasos, flechas y tarjetas. El flujo es el mismo para los tres centros |
+| `plantillas.py` | Los 14 diagramas por centro (6 flujos y una casuística por diagrama) y el comparativo. Reglas: un solo flujo, un código por paso y el glosario `TERMINOS` |
 | `centro.py` | Lee `datos.json` y arma los textos cortos. Un `null` se muestra como «por confirmar» |
 | `indices.py` | `centros/README.md`, `centros/index.html` y la ficha `README.md` de cada centro |
 | `exportar.mjs` | Usa el menú «Exportar» del HTML (Playwright y Chromium) para sacar el PNG claro, el PNG oscuro y el SVG |

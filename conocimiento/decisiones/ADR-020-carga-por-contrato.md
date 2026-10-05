@@ -3,7 +3,7 @@ id: ADR-020
 titulo: La carga de los docentes de Centros se mediría por contrato (SIAFLCT y SIACONA)
 estado: propuesto
 fecha: 2026-10-05
-fuentes: [C46, C53, C54, C55, C56, R19, E20, U28]
+fuentes: [C46, C53, C54, C55, C56, C57, R19, E20, U28]
 temas: [carga, docentes, contratos]
 ---
 # ADR-020 · La carga de los docentes de Centros se mediría por contrato (SIAFLCT y SIACONA)
@@ -25,9 +25,10 @@ En los periodos de Centros, la carga se mide **por contrato**:
 | Contrato | Regla en SIAFLCT | Qué cuenta |
 |---|---|---|
 | `ES` especialista | «Total de carga de trabajo» de **48 a 48** | Sus NRC (carga educativa) + sus funciones administrativas (labor no educativa) |
-| `FC` facilitador | **14 a 23 horas** (por confirmar si son «Horas de contacto semanal», U28-b) | Sus NRC |
+| `FC` facilitador | «Horas de contacto semanal» de **14 a 23** (son horas por semana, C57) | Sus NRC |
 
-- **Labor no educativa:** las funciones administrativas del especialista, como la matrícula, se registran en SIAASGN con los tipos de STVNIST que defina la USS (U28-c).
+- **Labor no educativa:** las funciones administrativas del especialista (matrícula, coordinación, atención a estudiantes, C57) se registran en SIAASGN con un tipo de STVNIST para cada una, con su «Carga de trabajo» y su «Contacto semanal» (5.2, diap. 25).
+- **Ojo con el especialista:** el rango «Total de carga de trabajo» se escribe aparte, porque no se calcula solo (5.2, diap. 19). Y la carga educativa sale del catálogo (SCACRSE), que no siempre equivale a horas por semana. Por eso la prueba en TEST debe comprobar que las 48 horas cuadren.
 - **SIATERM:** el factor FTE de cada periodo de Centros va en **48**, para que un especialista sea 1 FTE (E20).
 - **SIAASGN:** cada NRC lleva el contrato del docente en «Tipo de contrato».
 - **SIACONA:** muestra si cada docente está debajo (U) o encima (O) de su contrato. Por ejemplo, un facilitador con 10 horas sale U.
@@ -40,15 +41,15 @@ En los periodos de Centros, la carga se mide **por contrato**:
 - **Configurar las 40 horas de Pregrado junto a las de Centros:** Pregrado está en otros periodos y fuera del alcance (C55).
 
 ## Consecuencias
-- Hay que crear o verificar:
-  - en STVFCNT, los tipos de contrato `ES` y `FC` (no aparecen en la lista de PROD del 18/07, U28-a);
-  - en STVCNTR, sus reglas;
-  - en STVNIST, los tipos de labor no educativa.
+- En STVFCNT ya están `ES` y `FC` (C57). Falta crear:
+  - en STVCNTR, el código de regla de cada uno;
+  - en STVNIST, los tipos de labor no educativa (matrícula, coordinación, atención a estudiantes).
 - Luego se configuran SIAINST, SIAFLCT y SIAFCTR, y en SIAASGN se elige el contrato de cada NRC.
 - Con esto se pueden probar las partes pendientes del script 5.2: labor no educativa y SIACONA.
 
 ## Criterio de salida
-- Que la USS acepte medir por contrato (U28-d) y confirme las tablas y las horas (U28-a y b).
+- Que la prueba en TEST muestre que SIACONA mide bien las 48 horas del especialista y las 14 a 23 del facilitador.
+- Que el usuario decida medir por contrato (U28-d).
 - Que Ellucian responda E20.
 - Con eso, este ADR pasa a `aceptado`.
 

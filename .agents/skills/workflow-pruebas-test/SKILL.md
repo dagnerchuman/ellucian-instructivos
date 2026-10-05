@@ -73,18 +73,20 @@ Documento de referencia exhaustivo: `ref-scripts-ccee-casuisticas.md`.
 18. **Otros requerimientos especiales** (`SIAASGN`, `SVASVPR`, `SOAHOLD`).
 
 ## 5. Prueba de carga por contrato (ADR-020, propuesto)
-Cubre lo que falta del script 5.2: la labor no educativa y SIACONA. Hazla cuando la USS confirme U28.
+Cubre lo que falta del script 5.2: la labor no educativa y SIACONA. Sirve también para decidir si se mide por contrato o por regla de carga (U28-d).
 1. **Tablas:**
-   - en STVFCNT, los tipos de contrato `ES` (especialista) y `FC` (facilitador). Si no existen, se crean (U28-a);
-   - en STVCNTR, sus reglas;
-   - en STVNIST, los tipos de labor no educativa del especialista, como la matrícula.
+   - en STVFCNT ya están `ES` y `FC` (C57);
+   - en STVCNTR crea un código de regla para cada uno (6 caracteres; por ejemplo `ESP48` y `FAC23`, **de ejemplo**);
+   - en STVNIST crea los tipos de labor no educativa (4 caracteres; por ejemplo `MATR` matrícula, `COOR` coordinación y `ATEN` atención a estudiantes, **de ejemplo**).
 2. **SIATERM:** en el periodo de Centros (por ejemplo 202656), el factor FTE en 48.
 3. **SIAFLCT:**
-   - regla de `ES` con «Total de carga de trabajo» de 48 a 48;
-   - regla de `FC` de 14 a 23 horas. Si son semanales, en «Horas de contacto semanal».
-4. **SIAINST:** al docente `100582059`, en el bloque «Contrato de docente», el contrato `ES` con su regla, como predefinido.
+   - tipo de contrato `ES`, con su regla, «Activo» y «Total de carga de trabajo» de 48 a 48;
+   - tipo `FC`, con su regla y «Horas de contacto semanal» de 14 a 23.
+4. **SIAINST:** al docente `100582059`, en el bloque «Contrato de docente», el contrato `ES` con su regla y la marca de predefinido.
 5. **SIAASGN:**
-   - el contrato `ES` en sus NRC;
-   - una labor no educativa (STVNIST) con sus horas.
-6. **SIACONA:** con contrato `ES`, el periodo y el docente, ver si queda debajo (U) o encima (O) de las 48 horas.
-
+   - en cada NRC, «Tipo de contrato» `ES`;
+   - en la labor no educativa, una fila por función (`MATR`, `COOR`, `ATEN`), con su «Carga de trabajo» y su «Contacto semanal».
+6. **SIACONA:** con contrato `ES`, el periodo y el docente:
+   - ¿queda debajo (U), dentro o encima (O) de las 48 horas?
+   - ¿la carga educativa que viene del catálogo cuadra con las horas por semana?
+7. **Para comparar:** en SIAASGN mira también el análisis por regla de carga (SIAFLRT). Con las dos pantallas a la vista se decide cuál es más clara para el jefe, que revisa la carga y da el visto bueno (ADR-011).

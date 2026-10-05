@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C56):**
+- **Confirmado por el usuario (C01 – C57):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -19,6 +19,7 @@
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
   - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
   - *C46:* Usuarios administrativos (jefes, especialistas, asistentes o con permisos) y población: USS + externos.
+  - *C57:* `ES` y `FC` creados en STVFCNT; horas por semana; funciones: matrícula, coordinación, atención a estudiantes.
   - *C56:* Especialista `ES` (48 h, también matricula y hace funciones administrativas); facilitador `FC` (14 a 23 h).
   - *C55:* Pregrado fuera de la carga: está en otros periodos.
   - *C54:* Pregrado tiempo completo 40 horas; Centros: especialistas a tiempo completo 48 horas o facilitadores a tiempo parcial.
@@ -51,7 +52,7 @@
   - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
   - *U22:* Grupos de verano 2027 que faltan en 202751 (X02, I02, I03, P02, P03).
-  - *U28:* Casi resuelta: `ES` 48 h y `FC` 14–23 h (C56). Falta en qué tabla van `ES`/`FC`, si las horas son semanales y las actividades administrativas.
+  - *U28:* Casi resuelta (C57). Falta decidir si se mide por contrato o por regla de carga, y crear las reglas (STVCNTR) y la labor no educativa (STVNIST).
   - *U27:* Ligas de Inglés: tipo de horario del club, si se califica y se cobra, escenario y docente.
   - *U26:* Qué hace Registros Académicos en la carga lectiva (C06 frente a C47).
   - *U25:* Programa, mayor, materia y escala de Idiomas y Emprendimiento en TEST.
@@ -123,6 +124,7 @@
 | C54 | **Tipos de docente y horas (05/10):** el docente de **Pregrado** a tiempo completo tiene **40 horas**. En **Centros Empresariales**, los docentes son de dos tipos: **especialistas**, a tiempo completo con **48 horas**, o **facilitadores**, a tiempo parcial según su carga de trabajo. El usuario no sabe cómo se registra eso en la carga de Banner (ADR-020, propuesto). | 05/10/2026 | Usuario (chat) |
 | C55 | **Pregrado queda fuera de la carga (05/10):** «olvídate de pregrado, porque ellos están en otro periodo». La carga de los centros se configura y se mide **solo en los periodos de Centros** (202651, 202654, 202656, 202751). Las reglas (SIAFLRT, SIAFLCT) y el factor FTE (SIATERM) son por periodo, así que no se mezclan con Pregrado (ADR-001, ADR-020). | 05/10/2026 | Usuario (chat) |
 | C56 | **Códigos y horas de los docentes de Centros (05/10):** el **especialista** tiene código **`ES`** y el **facilitador**, código **`FC`**. Los facilitadores tienen un **mínimo de 14 horas y un máximo de 23**. Los especialistas **también matriculan** y tienen **otras funciones administrativas** (responde U28-b, d y e). | 05/10/2026 | Usuario (chat) |
+| C57 | **Contratos y labor administrativa (05/10):** (a) el usuario **creó en STVFCNT** los tipos de contrato **`ES`** (especialista) y **`FC`** (facilitador); (b) las 14 a 23 horas del facilitador son **por semana**; (c) las funciones administrativas del especialista son **matrícula, coordinación, atención a estudiantes**, etc. (d) No sabe si conviene medir la carga por contrato o por regla de carga; ADR-020 sigue propuesto. | 05/10/2026 | Usuario (TEST y chat) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -203,7 +205,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U25 | Idiomas (nivel I) y Emprendimiento (nivel M): ¿cuáles son su **programa, mayor, departamento, materia y escala de notas** en TEST? Hay que verificarlos en SAAQUIK, SGASTDN y SHAGRDE antes de probar sus scripts. | 05/10 | `datos.json` (antes como duda «TEST») |
 | U26 | **Carga lectiva: ¿qué hace Registros Académicos?** En el flujo del usuario (C06) dice «periodos y carga lectiva (RA)», pero el 05/10 confirmó que el jefe asigna a los docentes y el Vicerrectorado Académico aprueba (C47, C48, ADR-011). ¿RA solo abre el periodo y configura SIATERM y SIAINST, o también revisa la carga? | 05/10 | Auditoría de la base de conocimiento |
 | U27 | **Ligas de Inglés (C52):** (a) ¿Qué **tipo de horario** tiene el club de conversación en SCACRSE (¿Práctica `PRA` u otro?) y qué **identificador de liga** se usará? (b) ¿El club **se califica** o solo el teórico? El instructivo pone al secundario como no calificable. (c) ¿El club **se cobra** aparte o va con «Dispensa de colegiatura y cuotas»? (d) ¿Un teórico tiene **varios clubes** a elegir (uno a muchos) o cada teórico va con su club (muchos a muchos con restricción)? (e) ¿El club tiene **otro docente**? (f) ¿Aplica a **todos los niveles** (BASIC e INTERMEDIATE)? (g) ¿Computación o Emprendimiento usan ligas? | 05/10 | Usuario (chat) e instructivo 5.3_4.1.4.1.9 |
-| U28 | **Casi resuelta (C54, C55, C56):** especialistas `ES`, a tiempo completo con 48 horas, que también matriculan y hacen funciones administrativas; facilitadores `FC`, de 14 a 23 horas; Pregrado fuera. **Sigue abierto:** (a) `ES` y `FC`, ¿son el **tipo de contrato** (STVFCNT)? En la lista de PROD del 18/07 no aparecen; ¿hay que crearlos o son otra tabla (categoría, tipo de personal)? (b) Las 14 a 23 horas, ¿son **semanales**? (c) ¿Qué **actividades administrativas** tiene el especialista (matrícula, atención, coordinación…), para crearlas como tipos de labor no educativa en STVNIST? (d) ¿La USS acepta medir la carga **por contrato** (ADR-020)? | 05/10 | Usuario (chat) |
+| U28 | **Casi resuelta (C54 a C57):** contratos `ES` (48 h por semana, con funciones administrativas) y `FC` (14 a 23 h por semana), ya creados en STVFCNT; Pregrado fuera. **Sigue abierto:** (d) ¿la carga se mide **por contrato** (SIAFLCT + SIACONA, lo recomendado en ADR-020) o **por regla de carga** (SIAFLRT + SIAASGN)? Se decide después de probarlo en TEST. (f) Falta crear en STVCNTR los **códigos de regla** de cada contrato y en STVNIST los **tipos de labor no educativa** (matrícula, coordinación, atención a estudiantes). | 05/10 | Usuario (chat) |
 
 ## 5. Supuestos descartados o por corregir
 | ID | Supuesto | Estado | Entregables afectados |

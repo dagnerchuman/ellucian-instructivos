@@ -47,3 +47,8 @@ Actualizar directamente `.claude/skills/preguntas-y-dudas-centros/registro.md`:
 Consultar `.claude/skills/documentos-uss/references/entregables.md`:
 - Si un supuesto cambió (ej. de 40-45 min a 45 min), listar los entregables afectados.
 - Alertar al usuario sobre los documentos que requieren regeneración.
+
+## Base de conocimiento
+- Una decisión con alternativas descartadas va también como ADR en `conocimiento/decisiones/`.
+- Antes de anotar, revisa si contradice un ADR aceptado; si es así, pregunta al usuario.
+- Al final ejecuta `python3 herramientas/validar_conocimiento.py`.

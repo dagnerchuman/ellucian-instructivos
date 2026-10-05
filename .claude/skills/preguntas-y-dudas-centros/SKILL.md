@@ -30,6 +30,9 @@ Las notas suelen llegar como fotos de apuntes a mano, sin texto.
    - Mueve lo confirmado a «Confirmado por el usuario» o a «Resuelto con los instructivos», con la fecha.
    - Si cambia un supuesto, lista los entregables que hay que corregir.
 
+## Cuándo además va un ADR
+Si lo confirmado es una **decisión con alternativas** (se eligió un camino y se descartó otro), además de la C## escribe o actualiza un ADR en `conocimiento/decisiones/`. Usa `plantilla-adr.md` y cita la C## en `fuentes`. Si contradice un ADR aceptado, no lo cambies sin que el usuario lo confirme: el viejo se marca `reemplazado`. Al final ejecuta `python3 herramientas/validar_conocimiento.py`.
+
 ## Cuando llega una respuesta
 - **Del usuario o de la USS:** pasa la duda a «Confirmado» con la fecha y la fuente (quién lo dijo y en qué reunión). Revisa qué entregables usan el supuesto anterior y ofrece corregirlos.
 - **De Ellucian:** igual, y anota si contradice un instructivo.

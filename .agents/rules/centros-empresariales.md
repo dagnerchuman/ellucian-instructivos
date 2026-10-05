@@ -4,7 +4,7 @@
 - **Usuario:** Dagner Anibal Chuman Lluen.
 - **Área:** Centros Empresariales de la Universidad Señor de Sipán (USS):
   - **Idiomas** (Inglés: BASIC I..III, INTERMEDIATE I..III).
-  - **Computación** (Informática: ESEC/ESEP).
+  - **Computación** (Informática: materia ESEC; ESEP es de la escuela CE y está por confirmar, U18).
   - **Emprendimiento**.
 - **Proyecto:** Migración del sistema legado **SEUSS** a **Ellucian Banner Student**.
 - **Idioma:** Español directo, claro y sin rodeos.
@@ -69,4 +69,7 @@
 4. **Paso 4: Matrícula y Retiros en el NRC (`SFAREGS`):** Autorizar plan (`EL`), ingresar NRC con código `RE` (inscribe). Si se retira: código `DD` libera la vacante automáticamente en `SSASECT`. Si tiene retención en `SOAHOLD`, bloquea con error fatal.
 5. **Paso 5: Notas y Cierre de Actas (`SFASLST` → `GJAPCTL` / `SHRROLL`):** Docente califica en `SFASLST` con Modo `V` (aprueba ≥11, desaprueba ≤10). Cierre masivo en `GJAPCTL` ejecutando `SHRROLL` para rolar a historia académica. Auditoría en CAPP con `SMARQCM`/`SMICRLT`.
 
-
+## 5. Base de conocimiento
+- Antes de trabajar, lee `conocimiento/README.md`, `conocimiento/manifest.json` y los ADR aceptados del tema en `conocimiento/decisiones/`.
+- Un ADR aceptado es una restricción. Si la tarea lo contradice, detente y pide revisión explícita al usuario.
+- Al terminar, actualiza el registro, el ADR, `datos.json` o el manifest según corresponda. Después ejecuta `python3 herramientas/validar_conocimiento.py` (0 errores).

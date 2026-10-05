@@ -198,7 +198,7 @@
       "texto": "¿Rinde examen de suficiencia o solo aplica a Idiomas?"
     },
     {
-      "id": "TEST",
+      "id": "U25",
       "texto": "Programa, mayor, departamento y escala de notas del nivel M: verificar en TEST"
     }
   ],
@@ -215,6 +215,6 @@
       "12",
       "18-B"
     ],
-    "_leeme": "Scripts que se dibujan en los diagramas 6 (matrícula) y 7 (notas y cierre)."
+    "_leeme": "Scripts que tienen su propio diagrama de casuística (del n.º 7 en adelante), en este orden."
   }
 }

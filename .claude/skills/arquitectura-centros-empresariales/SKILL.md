@@ -11,7 +11,7 @@ description: Arquitectura y contexto del proyecto de los Centros Empresariales d
   - **Idiomas**, que es sobre todo Inglés;
   - **Computación**, también llamada Informática;
   - **Emprendimiento**.
-- **Este repositorio:** tiene los instructivos de Ellucian (PPTX) por capacidad y un visor web (`visor_instructivos/`, publicado en Netlify). Mapa en [references/mapa-instructivos.md](references/mapa-instructivos.md).
+- **Este repositorio:** tiene los instructivos de Ellucian (PPTX) por capacidad y un visor web (`visor_instructivos/`, publicado en Netlify). Mapa en [references/ref-mapa-instructivos.md](references/ref-mapa-instructivos.md).
 - **Fuentes de verdad:**
   - Lo que dicen los instructivos se presenta como **«En Ellucian»**.
   - Lo que el usuario cuenta que se hace hoy se presenta como **«Hoy en SEUSS»**.

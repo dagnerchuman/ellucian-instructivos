@@ -46,7 +46,7 @@ En TEST existe **202656** (el usuario lo usó).
    - Créditos y ubicación (diap. 30): horas por semana automáticas; edificio y salón oficial virtual de campus S: **`SAUVIR`** y **`SALA VIRT.`**. Si se usa un salón físico con cruce, ingresar `O` en la casilla `Indicador de sobrepaso` para resolver `*ERROR* Conflicto de salón`.
    - Instructor (6.2.1, diap. 11 a 19): ID o SIAFAVL, casilla Principal, % de responsabilidad (100%) y sesión (100%). **Regla de oro:** El `Indicador de sesión` de HORARIO debe coincidir idénticamente con el de INSTRUCTOR (ambos `01` o ambos `1`), de lo contrario arroja `*ERROR* Sesión no tiene horas de reunión definidas`. Si el docente tiene cruce, marcar la casilla `Indicador de sobrepaso` de la grilla de instructor.
    - Presionar Guardar (3er guardado).
-5. **Al final (menú relacionado):** SSADETL, SSAPREQ (prerrequisitos heredados), SSARRES. Verificar o buscar el NRC en **SSASECQ** (ver [guia-buscar-nrc.md](guia-buscar-nrc.md)).
+5. **Al final (menú relacionado):** SSADETL, SSAPREQ (prerrequisitos heredados), SSARRES. Verificar o buscar el NRC en **SSASECQ** (ver [ref-busqueda-nrc.md](ref-busqueda-nrc.md)).
 
 ## Datos reales vistos en TEST (capturas del 28/09, 29/09 y 02/10/2026)
 - **Catálogo:** **ESEC 00650 «Ofimática Word 365»**. ESEC = «ESTUDIOS ESPECÍFICOS», escuela **EM**, vigente de 000000 a 999999. Existe también **ESEP 00650**, escuela **CE**. No se sabe qué son EM y CE (duda U18).

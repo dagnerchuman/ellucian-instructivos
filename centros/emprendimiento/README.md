@@ -81,4 +81,4 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - **U02**: ¿Los cursos tienen orden o son independientes?
 - **U05**: Nombres oficiales de los cursos, pesos de evaluación y nota aprobatoria
 - **U21**: ¿Rinde examen de suficiencia o solo aplica a Idiomas?
-- **TEST**: Programa, mayor, departamento y escala de notas del nivel M: verificar en TEST
+- **U25**: Programa, mayor, departamento y escala de notas del nivel M: verificar en TEST

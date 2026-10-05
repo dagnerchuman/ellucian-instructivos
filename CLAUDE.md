@@ -9,8 +9,15 @@ El usuario, Dagner Anibal Chuman Lluen, trabaja en los **Centros Empresariales**
 | `visor_instructivos/` | Visor web. Netlify publica solo la rama `main` (`publish = "."`); lo que está en otras ramas o solo en local no sale en el sitio |
 | `centros/` | **Todo lo propio de cada centro**, en `idiomas/`, `computacion/` y `emprendimiento/`: `datos.json` (fuente única), `README.md` (ficha) y `diagramas/` (HTML, PNG, SVG). Lo común va en `comun/`. Índice: `centros/README.md`; galería: `centros/index.html` |
 | `herramientas/` | `diagramas/` (generador Archify) y `sincronizar_skills.py` |
+| `conocimiento/` | Base de conocimiento: `manifest.json`, ADR en `decisiones/` y auditorías. Se abre en Obsidian |
 | `docs/` | Documentos sueltos: propuesta de usuarios finales y la skill de Computación exportada |
 | `.claude/skills/` y `.agents/skills/` | Memoria de los agentes; las dos carpetas son iguales |
+
+## Base de conocimiento (léela primero)
+Está en `conocimiento/`: `README.md`, `manifest.json` (qué existe) y `decisiones/` (18 ADR: por qué se decidió cada cosa).
+- **Antes de trabajar:** lee el manifest y los ADR **aceptados** del tema.
+- **Un ADR aceptado es una restricción.** Si la tarea lo contradice, **detente y pide revisión explícita** al usuario; nunca lo pases por alto en silencio.
+- **Al terminar:** devuelve lo aprendido. Va al registro (C##, U##…), a un ADR nuevo o actualizado si se decidió algo, a `datos.json` o al manifest. Luego ejecuta `python3 herramientas/validar_conocimiento.py`, que debe quedar con 0 errores.
 
 Responde en español. Antes de trabajar en el proyecto, usa estas skills:
 - `arquitectura-centros-empresariales`: modelo, periodos, flujo, páginas de Banner, reglas con cita y buscador de instructivos.

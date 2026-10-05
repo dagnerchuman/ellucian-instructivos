@@ -9,3 +9,7 @@ herramientas/diagramas/.archify/
 # Recibos temporales de `archify finalize`
 centros/**/*.finalize*.json
 centros/**/*.delivery*.json
+
+# Obsidian: configuración local de la bóveda
+.obsidian/workspace*.json
+.obsidian/cache

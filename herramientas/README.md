@@ -3,6 +3,7 @@
 | Herramienta | Para qué | Uso |
 |---|---|---|
 | `diagramas/` | Genera los diagramas paso a paso de cada centro (HTML interactivo, PNG claro y oscuro, SVG) a partir de `centros/<centro>/datos.json` | `bash herramientas/diagramas/instalar_archify.sh` y luego `python3 herramientas/diagramas/generar.py` |
+| `validar_conocimiento.py` | Revisa la base de conocimiento: enlaces, ADR, manifest, `datos.json`, espejo de skills y datos sensibles | `python3 herramientas/validar_conocimiento.py` (`--estricto` cuenta los avisos como error) |
 | `sincronizar_skills.py` | Mantiene iguales `.claude/skills` (Claude Code) y `.agents/skills` (Antigravity) | `--check` revisa · `--desde claude` o `--desde agents` copia en espejo |
 
 ## diagramas/

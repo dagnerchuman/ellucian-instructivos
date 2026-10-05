@@ -11,6 +11,12 @@
   - `docs/`: documentos sueltos.
 - **Idioma:** responde **en español**, simple y directo.
 
+## Primero: la base de conocimiento
+Está en `conocimiento/`: `README.md`, `manifest.json` (qué existe) y `decisiones/` (18 ADR: por qué se decidió cada cosa).
+- **Antes de trabajar:** lee el manifest y los ADR **aceptados** del tema.
+- **Un ADR aceptado es una restricción.** Si la tarea lo contradice, **detente y pide revisión explícita** al usuario; nunca lo pases por alto en silencio.
+- **Al terminar:** devuelve lo aprendido. Va al registro (C##, U##…), a un ADR nuevo o actualizado si se decidió algo, a `datos.json` o al manifest. Luego ejecuta `python3 herramientas/validar_conocimiento.py`, que debe quedar con 0 errores.
+
 ## Antes de responder, lee la memoria del proyecto
 
 Está en `.agents/skills/` y es igual a `.claude/skills/`. Son archivos Markdown y cualquier agente puede leerlos. Después de editar una skill, cópiala a la otra carpeta con `python3 herramientas/sincronizar_skills.py --desde agents` (o `--desde claude`). `--check` solo revisa.

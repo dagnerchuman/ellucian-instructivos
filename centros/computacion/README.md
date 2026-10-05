@@ -49,11 +49,11 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **1024**: ESEC 00650, sección C. Auditado en SIAASGN.
 - NRC **1026**: ESEC 00650, sección D, parte X07. Casuísticas CCEE.
 
-## Los 18 scripts (14 validado · 5 pendiente · 1 no aplica)
+## Los 18 scripts (15 validado · 4 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |
 |---|---|---|---|
 | 01 | Matrícula regular | validado | NRC 1021 (S00581081, S00581091) y NRC 1026 (S00581108, S00581109) |
-| 02 | Matrícula especial con sobrepasos | pendiente | En curso (05/10): SFAROVR 202656 con el código CAPACIDAD («Capacidad de sección/aula») y la casilla Capacidad; SFASRPO da CAPACIDAD a S00581108 para el NRC 1021; el 1021 quedó lleno (máximo 2, reserva general 0, CMEMC38 2/2). Falta inscribir en SFAREGS |
+| 02 | Matrícula especial con sobrepasos | validado | 05/10: regla CAPACIDAD en SFAROVR; S00581110 admitido con CMEMC38, con permiso CAPACIDAD en SFASRPO, quedó inscrito con RE en el NRC 1021 lleno (2/2). Con S00581108 salió «Duplicate Course with Section 1026» |
 | 03 | Matrícula por convalidación | validado | S00581111 convalidada con IST150 (nota 16) y rolada a historia |
 | 04 | Matrícula por examen de suficiencia | no aplica | Computación no rinde examen de suficiencia (C36) |
 | 05 | Curso especial para egresados | pendiente | Sección intensiva para egresados |

@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C42):**
+- **Confirmado por el usuario (C01 – C43):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -15,7 +15,7 @@
   - *C36–C39:* Computación no rinde suficiencia, validación de bloqueo por repitencia en CAPP (SMARQCM), traslado sección NRC 1026→1021 con ajuste reserva, suspensión y reactivación de estatus en SGASTDN.
   - *C40:* Todo por carpetas y por centro (`centros/<centro>/`); diagramas paso a paso con Archify.
   - *C41:* Script 17 validado: conflicto de horario del docente y sobrepaso del instructor en SSASECT.
-  - *C42:* Script 02 en curso: regla CAPACIDAD en SFAROVR, permiso a S00581108 en SFASRPO, NRC 1021 lleno.
+  - *C42–C43:* Script 02 validado: regla CAPACIDAD en SFAROVR, permiso en SFASRPO, S00581110 inscrito con el NRC 1021 lleno.
 - **Resuelto con los instructivos (R01 – R16):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
   - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
@@ -86,6 +86,7 @@
 | C40 | **Todo por carpetas y por centro, con diagramas paso a paso en Archify (03/10):** El usuario pidió separar todo por carpetas, incluidos los agentes, y que cada archivo diga de qué centro es. Se creó `centros/<centro>/` con `datos.json` (fuente única de los datos del centro), una ficha `README.md` y `diagramas/` con 7 diagramas por centro: recorrido, NRC, persona y admisión, estados de la matrícula, notas y cierre, y dos de casuísticas. Cada uno tiene HTML interactivo, PNG claro, PNG oscuro y SVG; además hay un comparativo en `centros/comun/`. Se generan con `herramientas/diagramas/generar.py`. Los diagramas de `diagramas_flujo/` (03/10) se reemplazaron porque mezclaban datos de Computación bajo el nombre de los tres centros; quedan en `centros/computacion/diagramas/anterior-03-10-archify/`. Las skills `centro-informatica` y `centro-ingles` pasan a llamarse `centro-computacion` y `centro-idiomas`. | 03/10/2026 | Usuario (chat) |
 | C41 | **Script 17 · Cruce de horario del docente (05/10):** El NRC **1021** quedó con el mismo bloque del **1026** (lunes y miércoles 08:00–12:00) y el mismo docente `100582059`. Al reasignar al docente en el bloque INSTRUCTOR de `SSASECT`, Banner mostró *«\*ERROR\* Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso para el instructor?»*; con **OK** se marcó solo «Indicador de sobrepaso» y se guardó. Para pasar al bloque INSTRUCTOR hay que usar «Sección siguiente» (⤓); si se hace clic directo, Banner da error. **Prueba del alumno sin hacer:** `S00581081` tiene una **retención** que bloquea SFAREGS; en `S00581109`, cambiar a RE el 1026 (en DD) da la alerta «El curso ha sido calificado y pasado al historial» y luego «El estatus del alumno impide la inscripción», es decir, su estatus en SGASTDN no permite inscribir. No se guardó nada. Revisar la retención de S00581081 y el estatus de S00581109. | 05/10/2026 | Capturas del usuario (SSASECT / SFAREGS) |
 | C42 | **Script 02 · Configuración del sobrepaso de cupo (05/10, en curso):** (a) `SFAROVR` en 202656 no tenía reglas. Se creó `CAPACIDAD` («Capacidad de sección/aula», elegido de `STVROVR`, que tiene 78 códigos; también existe `CAP`, *Overload Enrollment Capacity*) con la casilla **Capacidad** marcada: *Saved successfully*. «Copiar del periodo» debe quedar vacío; si se pone el mismo periodo, sale *«No existen datos para el periodo del cual está copiando»*. (b) En `SFASRPO`, `S00581108` (Carlos Torres) recibió `CAPACIDAD` para el NRC **1021** (ESEC 00650 B). (c) El NRC 1021 se dejó lleno: en *Lugares reservados*, la regla general pasó de 1 a 0 (CMEMC38 2/2) y en *Detalles de ingreso* el máximo pasó de 3 a 2. **Falta:** inscribir en `SFAREGS`. | 05/10/2026 | Capturas del usuario (SFAROVR / SFASRPO / SSASECT) |
+| C43 | **Script 02 validado (05/10):** con `S00581108`, SFAREGS no dio error de cupo, pero rechazó el NRC 1021 por *«Duplicate Course with Section 1026»* (ya tenía ESEC 00650 en el 1026): Banner no deja el mismo curso dos veces en el periodo. Se usó `S00581110` (Juan Flores): admitido en SAAQUIK con CMEMC38, con permiso `CAPACIDAD` en SFASRPO para el 1021, y quedó **inscrito con RE en el NRC 1021 lleno** (2/2). El usuario confirmó que todo salió bien. | 05/10/2026 | Usuario (SAAQUIK / SFASRPO / SFAREGS) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.

@@ -142,7 +142,7 @@
     {
       "id": "S00581081",
       "nombre": "Alumno 1 (Centros)",
-      "caso": "Matrícula regular, nota 16 (aprueba)"
+      "caso": "Matrícula regular, nota 16 (aprueba) · tiene una retención que bloquea SFAREGS (05/10)"
     },
     {
       "id": "S00581091",
@@ -157,12 +157,12 @@
     {
       "id": "S00581109",
       "nombre": "María Ramírez García",
-      "caso": "Traslado del NRC 1026 al 1021"
+      "caso": "Traslado del NRC 1026 al 1021 · su estatus en SGASTDN impide inscribir (05/10)"
     },
     {
       "id": "S00581110",
       "nombre": "Juan Flores Castillo",
-      "caso": "Inhabilitado (INH)"
+      "caso": "Admitido con CMEMC38 (05/10); inscrito en el 1021 con el sobrepaso CAPACIDAD (Script 02). Pendiente: caso INH"
     },
     {
       "id": "S00581111",
@@ -182,8 +182,8 @@
       "evidencia": "NRC 1021 (S00581081, S00581091) y NRC 1026 (S00581108, S00581109)"
     },
     "02": {
-      "estado": "pendiente",
-      "evidencia": "En curso (05/10): SFAROVR 202656 con el código CAPACIDAD («Capacidad de sección/aula») y la casilla Capacidad; SFASRPO da CAPACIDAD a S00581108 para el NRC 1021; el 1021 quedó lleno (máximo 2, reserva general 0, CMEMC38 2/2). Falta inscribir en SFAREGS"
+      "estado": "validado",
+      "evidencia": "05/10: regla CAPACIDAD en SFAROVR; S00581110 admitido con CMEMC38, con permiso CAPACIDAD en SFASRPO, quedó inscrito con RE en el NRC 1021 lleno (2/2). Con S00581108 salió «Duplicate Course with Section 1026»"
     },
     "03": {
       "estado": "validado",

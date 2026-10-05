@@ -110,9 +110,9 @@
       "curso": "ESEC 00650",
       "seccion": "B",
       "parte": "X07",
-      "cupo": "2",
+      "cupo": "2 (lleno para el Script 02)",
       "docente": "100582059",
-      "uso": "Matrícula, notas, retiro y traslado"
+      "uso": "Matrícula, notas, retiro y traslado. 05/10: mismo horario que el 1026 con sobrepaso del docente (Script 17) y cupo cerrado para el Script 02"
     },
     {
       "nrc": "1024",
@@ -183,7 +183,7 @@
     },
     "02": {
       "estado": "pendiente",
-      "evidencia": "Probar sobrepaso de cupo o prerrequisito"
+      "evidencia": "En curso (05/10): SFAROVR 202656 con el código CAPACIDAD («Capacidad de sección/aula») y la casilla Capacidad; SFASRPO da CAPACIDAD a S00581108 para el NRC 1021; el 1021 quedó lleno (máximo 2, reserva general 0, CMEMC38 2/2). Falta inscribir en SFAREGS"
     },
     "03": {
       "estado": "validado",

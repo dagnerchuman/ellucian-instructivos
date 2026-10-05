@@ -45,7 +45,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | X07 | 202656 | 02/11 – 13/12/2026 | 6 |
 
 ## NRC en TEST
-- NRC **1021**: ESEC 00650, sección B, parte X07. Matrícula, notas, retiro y traslado.
+- NRC **1021**: ESEC 00650, sección B, parte X07. Matrícula, notas, retiro y traslado. 05/10: mismo horario que el 1026 con sobrepaso del docente (Script 17) y cupo cerrado para el Script 02.
 - NRC **1024**: ESEC 00650, sección C. Auditado en SIAASGN.
 - NRC **1026**: ESEC 00650, sección D, parte X07. Casuísticas CCEE.
 
@@ -53,7 +53,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | Script | Nombre | Estado | Evidencia o pendiente |
 |---|---|---|---|
 | 01 | Matrícula regular | validado | NRC 1021 (S00581081, S00581091) y NRC 1026 (S00581108, S00581109) |
-| 02 | Matrícula especial con sobrepasos | pendiente | Probar sobrepaso de cupo o prerrequisito |
+| 02 | Matrícula especial con sobrepasos | pendiente | En curso (05/10): SFAROVR 202656 con el código CAPACIDAD («Capacidad de sección/aula») y la casilla Capacidad; SFASRPO da CAPACIDAD a S00581108 para el NRC 1021; el 1021 quedó lleno (máximo 2, reserva general 0, CMEMC38 2/2). Falta inscribir en SFAREGS |
 | 03 | Matrícula por convalidación | validado | S00581111 convalidada con IST150 (nota 16) y rolada a historia |
 | 04 | Matrícula por examen de suficiencia | no aplica | Computación no rinde examen de suficiencia (C36) |
 | 05 | Curso especial para egresados | pendiente | Sección intensiva para egresados |

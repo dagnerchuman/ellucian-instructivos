@@ -84,7 +84,7 @@ Parte de periodo general: **CGE**.
 | # | Script / Casuística | Páginas Banner | Estado | Evidencia en TEST |
 |---|---|---|---|---|
 | **01** | Matrícula regular | `SFAREGS` | ✅ Validado | NRC 1021 (S00581081/S00581091) y NRC 1026 (S00581109/S00581108). |
-| **02** | Matrícula especial (sobrepasos) | `SFASRPO` → `SFAREGS` | ⏳ **PENDIENTE** | Probar permiso de sobrepaso administrativo por tope o prerrequisito. |
+| **02** | Matrícula especial (sobrepasos) | `SFAROVR` → `SFASRPO` → `SFAREGS` | 🔄 **EN CURSO (05/10)** | Configurado: `SFAROVR` 202656 → código `CAPACIDAD` («Capacidad de sección/aula») con la casilla *Capacidad*; `SFASRPO` → `CAPACIDAD` para `S00581108` en el NRC 1021 (ESEC 00650 B); NRC 1021 lleno (Detalles de ingreso: máximo 2; reserva general 0; CMEMC38 2/2). **Falta:** inscribir en `SFAREGS` y una prueba de control sin permiso. |
 | **03** | Matrícula por convalidación | `SHATRNS` → `SHATFAC` | ✅ Validado | S00581111 (Ana Rojas) convalidada con IST150 (nota 16, modo P) y rolada a historia. |
 | **04** | Matrícula por examen suficiencia | `SOATEST` → `SFAREGS` | 🚫 **NO APLICA** | Confirmado por usuario (C36): Computación **NO** rinde examen de suficiencia (exclusivo de Idiomas). |
 | **05** | Curso especial para egresados | `SSASECT` → `SFAREGS` | ⏳ **PENDIENTE** | Sección modular/intensiva para alumnos bachilleres/egresados. |
@@ -116,9 +116,10 @@ Parte de periodo general: **CGE**.
 - [x] **Script 16 — División de grupos / Traslado de sección (`SFAREGS`):**
   - *Contexto:* Reubicación de participantes de una sección saturada a una sección espejo o cambio de horario.
   - *Evidencia:* María Ramírez (`S00581109`) retirada con `DD` del NRC 1026 e inscrita con `RE` en NRC 1021, auditada en `SFASLST` (02/10/2026).
-- [ ] **Script 02 — Matrícula especial con sobrepasos (`SFASRPO` → `SFAREGS`):**
-  - *Contexto:* Autorización especial para saltar bloqueo de aforo o prerrequisito.
-  - *Paso:* En `SFASRPO`, asignar código de sobrepaso institucional (ej. `CAPA` o `REQU`) al alumno para el NRC, y luego inscribir en `SFAREGS`.
+- [ ] **Script 02 — Matrícula especial con sobrepasos (`SFAROVR` → `SFASRPO` → `SFAREGS`):**
+  - *Hecho (05/10):* en `SFAROVR` (202656) estaba vacío y se creó la regla `CAPACIDAD` con la casilla *Capacidad*. `STVROVR` tiene 78 códigos; también existe `CAP` (Overload Enrollment Capacity). En `SFASRPO` se dio `CAPACIDAD` a `S00581108` para el NRC 1021, y el 1021 quedó lleno (máximo 2/2).
+  - *Falta:* en `SFAREGS` inscribir a S00581108 en el 1021 (esperado RE) y comprobar que un alumno sin permiso recibe «Closed». Ojo: S00581108 tiene el 1026, con el mismo horario, y puede salir un conflicto de hora.
+  - *Al terminar:* devolver el 1021 a máximo 3 y reserva general 1, si se quiere.
 - [ ] **Script 07 — Tres programas en simultáneo (`SGASTDN` → `SFAREGS`):**
   - *Contexto:* Alumno multiescuela (Pregrado + Idiomas + Computación).
   - *Paso:* Crear Study Path 1 (Pregrado `1`), Study Path 2 (Idiomas `I`) y Study Path 3 (Computación `C`) en `SGASTDN`. Inscribir un NRC en cada programa en `SFAREGS`.

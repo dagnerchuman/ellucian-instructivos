@@ -1,6 +1,6 @@
 # Registro de preguntas, dudas y decisiones
 
-Última actualización: **05/10/2026** (scripts 02, 11, 17 y 18-C de Computación; usuarios finales C46; orden de la carga docente R17; duda BRAW U23). Antes: 03/10/2026 (carpeta `centros/` por centro con `datos.json` y diagramas paso a paso con Archify; U17 a U20 marcadas). Antes: 02/10/2026 (validación de matrícula completa 2/2 en SFAREGS, reserva de cupos en SSASECT, scripts 08-18 validados y resolución definitiva U20). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
+Última actualización: **05/10/2026** (scripts 02, 11, 17 y 18-C de Computación; usuarios finales C46; orden de la carga docente R17; duda sobre el Vicerrectorado Académico U23). Antes: 03/10/2026 (carpeta `centros/` por centro con `datos.json` y diagramas paso a paso con Archify; U17 a U20 marcadas). Antes: 02/10/2026 (validación de matrícula completa 2/2 en SFAREGS, reserva de cupos en SSASECT, scripts 08-18 validados y resolución definitiva U20). Alcance: Centros Empresariales de la USS (Idiomas/Inglés, Computación/Informática, Emprendimiento) en Ellucian Banner.
 
 ---
 
@@ -39,7 +39,7 @@
   - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
   - *U22:* Grupos de verano 2027 que faltan en 202751 (X02, I02, I03, P02, P03).
-  - *U23:* «Centros Empresariales → BRAW»: BRAW es el Vicerrectorado Académico; falta saber en qué pantalla y campo de Banner va.
+  - *U23:* Carga académica: «Centros Empresariales → Vicerrectorado Académico». ¿Lo revisa o aprueba, o es la dependencia?
 - **Supuestos descartados (S01 – S03):**
   - *S01:* Periodos de 3 meses (NO usar).
   - *S02:* Horas de 40-45m (es 45m).
@@ -168,7 +168,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U08 | ¿Qué aprueba **Jefatura**? ¿Los sobrepasos (SFAROVR)? | 25/09 | Diagrama |
 | U09 | **Nombres de las horas.** El 26/09 el usuario dijo «pedagógica = presencial, 60 min» y «cronológica = 45 min de día / 50 de noche = 1 hora». En su nota del Zoom estaba al revés («40–45 / 50 min → h. académicas; 1 hora → h. cronológicas»), y en el uso común la hora pedagógica es la de 45/50 y la cronológica la de 60. En los PDF se usan sus nombres, siempre con los minutos al lado. Confirmar. | 26/09 | Usuario |
 | U22 | El periodo `202751` (verano 2027) solo tiene X01, P01 e I01. En 2026 el verano tuvo **X02**, I02, I03, P02 y P03. ¿Se agregan esos grupos en 202751? ¿Con qué fechas? (cronograma 2027) | 05/10/2026 | SOATERM en TEST |
-| U23 | **En parte (05/10):** al usuario le comentaron «**Centros Empresariales → BRAW**» y aclaró que **BRAW es el Vicerrectorado Académico**, es decir, el área de la que dependen los centros. Falta saber dónde va en Banner: ¿es un código de división, de departamento o de unidad organizativa? ¿Cambia algo en SIAINST (escuela o departamento del docente) o en los NRC? En los instructivos y en el script 5.2 no aparece BRAW. | 05/10 | Usuario (comentario recibido) |
+| U23 | Al usuario le comentaron, sobre la carga académica (5.2), «**Centros Empresariales → Vicerrectorado Académico**». ¿Qué significa? ¿Que la carga lectiva de los docentes de los centros la revisa o aprueba el Vicerrectorado Académico? ¿O que los centros dependen de él en Banner (escuela o departamento del docente en SIAINST)? Los instructivos 5.2 no dicen quién aprueba la carga: solo cómo se arma (SIAINST → NRC en SSASECT → SIAASGN/SIACONA). *Nota:* el «BRAW» del primer mensaje fue un error de escritura; no es un código. | 05/10 | Usuario (comentario recibido) |
 
 ## 5. Supuestos descartados o por corregir
 | ID | Supuesto | Estado | Entregables afectados |

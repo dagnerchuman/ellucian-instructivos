@@ -24,7 +24,7 @@ La primera versión tenía nodos con dos códigos («SCACRSE · SMAAREA»), vari
 - **Un diagrama grande con todos los casos:** se ve recargado y no enseña nada concreto.
 
 ## Consecuencias
-- Hay 14 diagramas por centro, más el comparativo. Son más archivos, pero cada uno es una lección.
+- Cada centro tiene 6 flujos base, los propios del centro (como las ligas de Idiomas) y una casuística por diagrama, más el comparativo. Son más archivos, pero cada uno es una lección.
 - Los errores frecuentes no se ven en el PNG, solo en las tarjetas del HTML.
 
 ## Criterio de salida

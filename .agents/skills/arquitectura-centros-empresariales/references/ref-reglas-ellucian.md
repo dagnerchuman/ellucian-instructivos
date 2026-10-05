@@ -43,6 +43,23 @@ Todas las citas se verificaron con `scripts/buscar_instructivos.py`. Formato: in
   - El único camino distinto es un sobrepaso (SFAROVR): definir quién lo da (U10).
   - Dudas: E04 (cómo queda BASIC I en CAPP) y E13 («En progreso»).
 
+## Ligas: NRC del mismo curso que se matriculan juntos (R18)
+- **Qué son:** si un curso tiene más de un tipo de horario en SCACRSE (por ejemplo, Teoría y Práctica), sus NRC se unen con **ligas** para que el alumno los matricule juntos. En Inglés: el NRC teórico + el club de conversación (C52, ADR-019). *(5.3_4.1.4.1.9 Crear Ligas, diap. 9 y 11)*
+- **Liga principal:** el NRC del tipo de horario principal (la teoría). **Liga secundaria:** el de práctica, laboratorio o taller. *(diap. 9)*
+- **Créditos y cobro:**
+  - el principal va con las horas crédito del curso, «Calificable» marcado y sin «Dispensa de colegiatura y cuotas»;
+  - el secundario va con **0 horas crédito**, sin «Calificable» y con «Dispensa de colegiatura y cuotas» marcada. *(diap. 12)*
+- **SSASECT:** pestaña «Información de sección de curso», bloque «Indicadores de clase», campo **«Identificador de liga»** (2 caracteres que recuerden el tipo de horario: `TE` Teoría, `PR` Práctica). *(diap. 14 y 15)*
+- **SSADETL:** pestaña «Correquisitos y ligas de sección», campo **«Conector de liga»**: en cada NRC va la liga del otro. *(diap. 16 a 18; 5.3_4.1.4.1.6, diap. 36)*
+- **Escenarios:**
+  - uno a muchos: un teórico con varios clubes a elegir;
+  - muchos a muchos sin restricción;
+  - muchos a muchos con restricción: cada teórico con su club. *(diap. 20 a 22)*
+- **Matrícula:**
+  - SOATERM tiene la verificación «Ligas», en Fatal o No verificar *(5.4_4.1.4.1.12, diap. 15)*;
+  - el sobrepaso es la casilla «Enlaces» de SFAROVR *(5.4_4.1.4.1.15, diap. 21)*;
+  - en el Autoservicio el alumno ve las «Secciones ligadas» *(5.3_4.1.4.1.9, diap. 24)*.
+
 ## Notas
 1. **Escalas** en SHAGRDE y SHAGSCH (7.1.3).
 2. **Plan de evaluación por NRC** en **SHAGCOM**, que carga Registros Académicos. *(7.1.4, diap. 5 y 44 a 54)*

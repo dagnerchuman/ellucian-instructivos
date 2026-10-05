@@ -633,7 +633,8 @@
         "E13: Casilla «En progreso» de SOATERM con grupos seguidos (I04 termina el 31/5, I06 empieza el 1/6)",
         "U10: ¿Quién puede dar sobrepasos de prerrequisito (SFAROVR)?",
         "U25: Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST",
-        "U24: Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?"
+        "U24: Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?",
+        "U27: Ligas: tipo de horario del club en SCACRSE, su identificador de liga, si se califica y se cobra, cuántos clubes por teórico y si aplica a todos los niveles"
       ]
     }
   ]

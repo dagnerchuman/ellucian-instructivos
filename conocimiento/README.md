@@ -52,5 +52,6 @@ Memoria compartida de las personas y los agentes (Claude Code, Antigravity u otr
 | [ADR-016](decisiones/ADR-016-confidencialidad-y-publicacion.md) | Netlify publica solo main, y en main se publica solo lo que pide el usuario | aceptado |
 | [ADR-017](decisiones/ADR-017-formato-entregables-uss.md) | Los entregables siguen el formato USS y la estructura SEUSS / Ellucian / Resultado | aceptado |
 | [ADR-018](decisiones/ADR-018-base-de-conocimiento.md) | El conocimiento del proyecto vive como código, y los ADR aceptados son restricciones | aceptado |
+| [ADR-019](decisiones/ADR-019-ligas-ingles.md) | En Inglés, el NRC teórico y el club de conversación van unidos por una liga | aceptado |
 
 Para una decisión nueva, copia [`decisiones/plantilla-adr.md`](decisiones/plantilla-adr.md).

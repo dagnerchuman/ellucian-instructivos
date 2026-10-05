@@ -12,7 +12,7 @@
 - **Idioma:** responde **en español**, simple y directo.
 
 ## Primero: la base de conocimiento
-Está en `conocimiento/`: `README.md`, `manifest.json` (qué existe) y `decisiones/` (18 ADR: por qué se decidió cada cosa).
+Está en `conocimiento/`: `README.md`, `manifest.json` (qué existe) y `decisiones/` (los ADR: por qué se decidió cada cosa).
 - **Antes de trabajar:** lee el manifest y los ADR **aceptados** del tema.
 - **Un ADR aceptado es una restricción.** Si la tarea lo contradice, **detente y pide revisión explícita** al usuario; nunca lo pases por alto en silencio.
 - **Al terminar:** devuelve lo aprendido. Va al registro (C##, U##…), a un ADR nuevo o actualizado si se decidió algo, a `datos.json` o al manifest. Luego ejecuta `python3 herramientas/validar_conocimiento.py`, que debe quedar con 0 errores.

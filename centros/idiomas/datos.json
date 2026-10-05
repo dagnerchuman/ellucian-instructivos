@@ -231,6 +231,7 @@
   "particularidades": [
     "Prerrequisito en Fatal: sin BASIC I aprobado no se inscribe BASIC II (C11, R09)",
     "Examen de suficiencia en SOATEST: permite saltar el nivel (C11, R03)",
+    "Cada curso tiene un NRC teórico y un NRC de club de conversación unidos por liga (C52, R18)",
     "Los niveles III duran 12 o 13 semanas; los demás, 8",
     "Egresados: no llevan el curso; nota de la plataforma, pasada a mano a Banner en un solo NRC (C50)"
   ],
@@ -258,6 +259,10 @@
     {
       "id": "U24",
       "texto": "Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?"
+    },
+    {
+      "id": "U27",
+      "texto": "Ligas: tipo de horario del club en SCACRSE, su identificador de liga, si se califica y se cobra, cuántos clubes por teórico y si aplica a todos los niveles"
     }
   ],
   "casuisticas": {
@@ -275,5 +280,28 @@
       "18-B"
     ],
     "_leeme": "Scripts que tienen su propio diagrama de casuística (del n.º 7 en adelante), en este orden."
+  },
+  "ligas": {
+    "estado": "por probar",
+    "fuente": "C52, R18",
+    "principal": {
+      "nrc": "teórico",
+      "tipo_horario": "TEO (Teoría)",
+      "identificador": "TE",
+      "creditos": "los del curso",
+      "calificable": true,
+      "cobro": true
+    },
+    "secundaria": {
+      "nrc": "club de conversación",
+      "tipo_horario": null,
+      "identificador": null,
+      "creditos": 0,
+      "calificable": false,
+      "cobro": false,
+      "nota": "Créditos, calificación y cobro según la premisa del instructivo; por confirmar con la USS (U27)"
+    },
+    "escenario": null,
+    "_leeme": "Liga = NRC del mismo curso que el alumno matricula juntos. null = por confirmar (U27)."
   }
 }

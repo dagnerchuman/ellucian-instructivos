@@ -11,7 +11,7 @@ description: Arquitectura específica del Centro de Idiomas (Inglés) de la USS 
 > **Carpeta del centro:** `centros/idiomas/`
 > - `datos.json` es la **fuente única** de los datos de este centro. Lo que allí está en `null` sigue **por confirmar** en TEST y en los diagramas se muestra así.
 > - `pruebas-test.md` es la **guía de pruebas en TEST**: 6 bloques que cierran los 20 scripts de Idiomas. Empieza por el bloque 0 (descubrir los códigos, U25).
-> - `diagramas/` tiene 14 diagramas paso a paso (un flujo y un código por paso) (HTML interactivo, PNG claro y oscuro, SVG). Ver la skill `workflow-diagramas-archify`.
+> - `diagramas/` tiene 16 diagramas paso a paso (un flujo y un código por paso), entre ellos el de **ligas** (n.º 7) (HTML interactivo, PNG claro y oscuro, SVG). Ver la skill `workflow-diagramas-archify`.
 
 ## Identificadores en Banner
 
@@ -71,6 +71,20 @@ En SEUSS, quien desaprueba BASIC I **NO puede pasar a BASIC II** salvo con exame
 3. **SOATEST:** se registra el puntaje del examen de suficiencia.
 4. **SFPPROJ:** la proyección con verificación de prerrequisitos **no ofrece** BASIC II si no hay BASIC I aprobado o examen.
 5. **SFAROVR:** un sobrepaso administrativo puede saltar la regla.
+
+## Ligas: NRC teórico + club de conversación (C52, R18, ADR-019)
+- Cada curso de Inglés tiene **dos NRC del mismo curso**: el **teórico** y el **club de conversación**. Se unen con una **liga** y el alumno los matricula juntos.
+- **SSASECT:** «Identificador de liga» en «Indicadores de clase». El teórico lleva `TE`; el del club se define según su tipo de horario (por confirmar, U27).
+- **SSADETL:** «Conector de liga» en «Correquisitos y ligas de sección»; en cada NRC va la liga del otro.
+- **Según el instructivo,** el club va con 0 créditos, sin calificación y con «Dispensa de colegiatura y cuotas». La USS debe confirmarlo (U27).
+- **SOATERM:** con «Ligas» en Fatal, Banner no deja matricular el teórico sin el club.
+- **Pendiente (U27):**
+  - el tipo de horario del club;
+  - si el club se califica o se cobra;
+  - cuántos clubes hay por teórico;
+  - si el club tiene otro docente;
+  - si aplica a todos los niveles.
+- La prueba está en el bloque 1 y el paso 1 del bloque 3 de `centros/idiomas/pruebas-test.md`.
 
 ## Egresados (Script 05, C50)
 - El egresado **no se matricula en un curso**: se le activa la plataforma (fuera de Banner; nombre por confirmar, el usuario escribió «Alticia»).

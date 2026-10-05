@@ -36,6 +36,7 @@ TERMINOS = {
     "carga lectiva": "Horas del docente en sus NRC, que se ven en SIAASGN.",
     "pase a historia": "SHRROLL lleva las notas a la historia académica. No se dice «cierre de actas».",
     "retención": "Bloqueo en SOAHOLD que impide la matrícula.",
+    "liga": "Unión de dos o más NRC del mismo curso que el alumno matricula juntos, como el NRC teórico y el club de conversación de Inglés. Es el término de Banner en español.",
 }
 
 ESTADO_TEXTO = {
@@ -64,6 +65,7 @@ CITAS = {
     "capp": "CAPP: instructivo 7.2.4, diap. 30 a 55",
     "convalidacion": "Convalidación: capacidad 3.3 (SHATRNS, SHATFAC)",
     "egreso": "Requisito de egreso de Pregrado: instructivo 8, diap. 13",
+    "ligas": "Ligas: instructivo 5.3_4.1.4.1.9 Crear Ligas, diap. 9 a 24; verificación «Ligas» en SOATERM: 5.4_4.1.4.1.12, diap. 15",
 }
 
 LEYENDA_FLUJO = {
@@ -109,6 +111,7 @@ TITULOS = {
     "persona-y-admision": "Persona y admisión",
     "matricula-en-el-nrc": "Matrícula en el NRC",
     "notas-y-pase-a-historia": "Notas y pase a historia",
+    "ligas-teorico-y-club": "Ligas: NRC teórico + club de conversación",
     **{slug_script(i): f"Script {i} · {n}" for i, n in CATALOGO.items()},
 }
 
@@ -522,9 +525,46 @@ def casuistica(c, numero, id_script):
     )
 
 
-def casuisticas_de(c):
+def casuisticas_de(c, inicio=7):
     ids = c.d["casuisticas"]["matricula"] + c.d["casuisticas"]["notas"]
-    return [(7 + k, slug_script(i), lambda c, i=i, n=7 + k: casuistica(c, n, i)) for k, i in enumerate(ids)]
+    return [(inicio + k, slug_script(i), lambda c, i=i, n=inicio + k: casuistica(c, n, i)) for k, i in enumerate(ids)]
+
+
+# --------------------------------------------------------------------------- ligas (solo si el centro las usa)
+def ligas(c, numero):
+    """SCACRSE → SSASECT (teórico) → SSASECT (club) → SSADETL → SFAREGS: dos NRC del mismo curso, juntos."""
+    lg = c.d["ligas"]
+    sec = lg["secundaria"]
+    curso = "BASIC I" if c.id == "idiomas" else c.curso_ejemplo
+    liga_sec = f"liga {sec['identificador']}" if sec["identificador"] else "su liga: por confirmar"
+    nodos = [
+        paso("g1", "nrc", 0, "SCACRSE", "revisar tipos de horario", f"{curso}: teoría y club", icono="calendar"),
+        paso("g2", "nrc", 1, "SSASECT", "NRC teórico", f"liga {lg['principal']['identificador']} · con créditos"),
+        paso("g3", "nrc", 2, "SSASECT", "NRC del club", f"{liga_sec} · 0 créditos"),
+        paso("g4", "nrc", 3, "SSADETL", "unir las ligas", "conector en los dos NRC"),
+        paso("g5", "nrc", 4, "SFAREGS", "matricular los dos", "teórico + club"),
+        paso("g6", "nrc", 5, "Matriculado", "en el teórico y el club", ESTADO_TEXTO[lg["estado"]], "database", "success"),
+    ]
+    escenarios = {"dot": "rose", "title": "Escenarios de liga", "items": [
+        "Uno a muchos: con un teórico, el alumno elige uno de varios clubes",
+        "Muchos a muchos sin restricción: cualquier teórico con cualquier club",
+        "Muchos a muchos con restricción: cada teórico con su club",
+        "Si SOATERM tiene «Ligas» en Fatal, no deja matricular solo el teórico; el sobrepaso es «Enlaces» en SFAROVR",
+    ]}
+    probado = ["Todavía no se probó en TEST: ver el bloque 1 de la guía de pruebas del centro"] \
+        if lg["estado"] != "validado" else [lg.get("evidencia", "Validado en TEST")]
+    return flujo(
+        c, numero, "ligas-teorico-y-club",
+        [{"id": "nrc", "label": "Programar y matricular con liga"}],
+        nodos,
+        tarjetas(c, probado, [CITAS["ligas"], CITAS["nrc"], CITAS["matricula"]],
+                 [escenarios, tarjeta_terminos("liga", "NRC")]),
+        fases=[
+            {"id": "f0", "label": "Catálogo", "fromCol": 0, "toCol": 0},
+            {"id": "f1", "label": "Programar", "fromCol": 1, "toCol": 3, "variant": "emphasis"},
+            {"id": "f2", "label": "Matricular", "fromCol": 4, "toCol": 5},
+        ],
+    )
 
 
 DIAGRAMAS_BASE = [
@@ -538,8 +578,9 @@ DIAGRAMAS_BASE = [
 
 
 def diagramas_de(c):
-    """[(número, slug, función(c))]: los 6 flujos base y una casuística por diagrama."""
-    return DIAGRAMAS_BASE + casuisticas_de(c)
+    """[(número, slug, función(c))]: los 6 flujos base, los propios del centro y una casuística por diagrama."""
+    propios = [(7, "ligas-teorico-y-club", lambda c: ligas(c, 7))] if c.d.get("ligas") else []
+    return DIAGRAMAS_BASE + propios + casuisticas_de(c, 7 + len(propios))
 
 
 # --------------------------------------------------------------------------- 0 (común)

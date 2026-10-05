@@ -35,7 +35,8 @@ Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salid
 | 4 | Persona y admisión (GOAMTCH → SAAQUIK → SGASTDN) | workflow |
 | 5 | Matrícula en el NRC (SSASECQ → SFAREGS → TSAAREV → SFASLST) | workflow |
 | 6 | Notas y pase a historia (SHAGRDE → SHAGCOM → Autoservicio → SHRROLL → SMICRLT) | workflow |
-| 7+ | Una casuística por diagrama, en el orden de `datos.json › casuisticas` | workflow |
+| 7 | Solo si el centro tiene `ligas` en `datos.json` (hoy, Idiomas): Ligas, NRC teórico + club (SCACRSE → SSASECT ×2 → SSADETL → SFAREGS) | workflow |
+| 7 u 8+ | Una casuística por diagrama, en el orden de `datos.json › casuisticas` | workflow |
 
 `generar.py` borra solo las carpetas `NN-tema` que ya no corresponden a ninguna plantilla (no toca `anterior-…`).
 

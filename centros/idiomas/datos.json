@@ -165,7 +165,7 @@
     },
     "05": {
       "estado": "por probar",
-      "evidencia": "Sección intensiva para egresados"
+      "evidencia": "Definido el 05/10 (C50): el egresado no se matricula en un curso. Se le activa la plataforma (fuera de Banner) y la nota que obtiene se pone igual en BASIC I, BASIC II, etc., como un examen de suficiencia. El costo del servicio es distinto. En Banner se crea un solo NRC y la nota se pasa a mano. Falta probarlo en TEST (U24)"
     },
     "06": {
       "estado": "por probar",
@@ -231,7 +231,8 @@
   "particularidades": [
     "Prerrequisito en Fatal: sin BASIC I aprobado no se inscribe BASIC II (C11, R09)",
     "Examen de suficiencia en SOATEST: permite saltar el nivel (C11, R03)",
-    "Los niveles III duran 12 o 13 semanas; los demás, 8"
+    "Los niveles III duran 12 o 13 semanas; los demás, 8",
+    "Egresados: no llevan el curso; nota de la plataforma, pasada a mano a Banner en un solo NRC (C50)"
   ],
   "dudas": [
     {
@@ -253,6 +254,10 @@
     {
       "id": "TEST",
       "texto": "Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST"
+    },
+    {
+      "id": "U24",
+      "texto": "Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?"
     }
   ],
   "casuisticas": {
@@ -263,6 +268,7 @@
       "16"
     ],
     "notas": [
+      "05",
       "10",
       "03",
       "12",

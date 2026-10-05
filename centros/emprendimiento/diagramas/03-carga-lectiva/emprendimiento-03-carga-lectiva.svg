@@ -535,9 +535,9 @@ rect.c-bg-rect { fill: var(--bg); }
             <rect x="153" y="320" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
             <text x="175" y="328" class="t-muted" font-size="7.5" font-weight="500">Banner: se consulta</text>
           </g>
-          <g data-legend-semantic-kind="external" data-legend-x="286" data-legend-baseline="328" data-legend-width="156">
+          <g data-legend-semantic-kind="external" data-legend-x="286" data-legend-baseline="328" data-legend-width="109">
             <rect x="286" y="320" width="14" height="9" rx="2" class="c-external" stroke-width="1"/>
-            <text x="308" y="328" class="t-muted" font-size="7.5" font-weight="500">Fuera de Banner (intranet)</text>
+            <text x="308" y="328" class="t-muted" font-size="7.5" font-weight="500">Fuera de Banner</text>
           </g>
         </g>
       </svg>

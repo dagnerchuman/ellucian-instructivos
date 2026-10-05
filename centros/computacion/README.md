@@ -63,7 +63,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 02 | Matrícula especial con sobrepasos | validado | 05/10: regla CAPACIDAD en SFAROVR; S00581110 admitido con CMEMC38, con permiso CAPACIDAD en SFASRPO, quedó inscrito con RE en el NRC 1021 lleno (2/2). Con S00581108 salió «Duplicate Course with Section 1026» |
 | 03 | Matrícula por convalidación | validado | S00581111 convalidada con IST150 (nota 16) y rolada a historia |
 | 04 | Matrícula por examen de suficiencia | no aplica | Computación no rinde examen de suficiencia (C36) |
-| 05 | Curso especial para egresados | pendiente | Sección intensiva para egresados |
+| 05 | Curso especial para egresados | pendiente | Curso para egresados. En Idiomas el egresado no lleva el curso: nota de la plataforma pasada a mano en un solo NRC (C50). Falta saber si Computación trabaja igual (U24) |
 | 06 | Dos programas en simultáneo | validado | S00581091 con Pregrado y Computación en paralelo |
 | 07 | Tres programas en simultáneo | pendiente | Pregrado + Idiomas + Computación |
 | 08 | Retiro de matrícula (DD) | validado | S00581091 retirado con DD del NRC 1021; cupo liberado |

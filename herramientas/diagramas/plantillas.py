@@ -74,7 +74,7 @@ LEYENDA_FLUJO = {
         "frontend": {"label": "Autoservicio (web)"},
         "messagebus": {"label": "Proceso masivo"},
         "cloud": {"label": "Cobro (Finanzas)"},
-        "external": {"label": "Fuera de Banner (intranet)"},
+        "external": {"label": "Fuera de Banner"},
         "security": {"label": "Situación o bloqueo"},
     },
 }
@@ -487,6 +487,10 @@ CASOS = {
 
 def caso(c, id_script):
     """Situación, pasos y resultado de un script, con los ajustes de cada centro."""
+    if c.id == "idiomas" and id_script == "05":
+        return (("Egresado", "no lleva el curso"),
+                [("Plataforma", "activar y rendir"), ("SSASECT", "crear un solo NRC"), ("Nota manual", "pasar la nota a Banner")],
+                ("BASIC I, II…", "la misma nota en todos"), "egreso")
     if c.id == "idiomas" and id_script == "10":
         return (("Desaprueba BASIC I", "nota bajo el mínimo"),
                 [("SHRROLL", "pase a historia"), ("SFAREGS", "BASIC II: error Fatal")],
@@ -506,7 +510,7 @@ def casuistica(c, numero, id_script):
     s = c.script(id_script)
     nodos = [paso("c0", "caso", 0, sit, sit_sub, tipo="security", ancho=170)]
     for j, (codigo, accion) in enumerate(pasos, start=1):
-        tipo = "messagebus" if codigo == "SHRROLL" else ("database" if codigo in ("SSASECQ", "SMARQCM") else "backend")
+        tipo = {"SHRROLL": "messagebus", "SSASECQ": "database", "SMARQCM": "database", "Plataforma": "external"}.get(codigo, "backend")
         nodos.append(paso(f"c{j}", "caso", j, codigo, accion, tipo=tipo, ancho=170))
     nodos.append(paso("cr", "caso", len(pasos) + 1, res, res_sub, ESTADO_TEXTO[s["estado"]], "database", "success", ancho=170))
     probado = [s["evidencia"]] if s["estado"] == "validado" else [f"{ESTADO_TEXTO[s['estado']].capitalize()}: {s['evidencia']}"]

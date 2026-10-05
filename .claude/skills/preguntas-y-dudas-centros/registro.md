@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C49):**
+- **Confirmado por el usuario (C01 – C50):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -19,6 +19,7 @@
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
   - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
   - *C46:* Usuarios administrativos (jefes, especialistas, asistentes o con permisos) y población: USS + externos.
+  - *C50:* Egresados de Idiomas: nota de la plataforma pasada a mano en un solo NRC.
   - *C49:* Diagramas con un solo flujo, un código por paso y un glosario único (43 diagramas).
   - *C47–C48:* Carga lectiva: el jefe asigna y da visto bueno; el Vicerrectorado Académico aprueba por oficio en la intranet (número de oficio y resolución del Vicerrector).
 - **Resuelto con los instructivos (R01 – R17):**
@@ -33,7 +34,7 @@
   - *E01–E04:* Horas día/noche en SIATERM, retorno notas aula virtual, hora de 60m, suficiencia en CAPP.
   - *E05–E12:* Malla en CAPP, migración historia SEUSS, muestra validación, SMARQCM en TEST, grado SHADEGR, reportes Insight.
   - *E13–E19:* Casilla en progreso SOATERM, historial docente relevado, programas incompletos en 20271, alertas tempranas.
-- **Dudas abiertas para la USS (U01 – U23):**
+- **Dudas abiertas para la USS (U01 – U24):**
   - *U01, U10:* Puntaje mínimo suficiencia inglés y política sobrepasos SFAROVR.
   - *U02–U05:* Secuencialidad informática/emprendimiento, % asistencia, plan evaluación, nombres/pesos oficiales.
   - *U06–U09:* Matrícula autoservicio vs backoffice, tutoría en CCEE, jefatura, denominación formal horas.
@@ -41,6 +42,7 @@
   - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
   - *U22:* Grupos de verano 2027 que faltan en 202751 (X02, I02, I03, P02, P03).
+  - *U24:* Egresados: cómo queda la nota en cada BASIC con un solo NRC, plataforma y costo.
   - *U23:* Resuelta: aprobación de la carga por oficio en la intranet (C47, C48).
 - **Supuestos descartados (S01 – S03):**
   - *S01:* Periodos de 3 meses (NO usar).
@@ -101,6 +103,7 @@
 | C47 | **Aprobación de la carga lectiva (05/10):** el **jefe del centro asigna** al docente en los NRC y da su **visto bueno**; recién entonces pasa al **Vicerrectorado Académico**, que **revisa y aprueba** la carga lectiva de los docentes. En la propuesta, los jefes suman `SSASECT` y `SIAASGN` (Nivel A) y el Vicerrectorado Académico pasa del Nivel D al B (consulta en SIAASGN/SIACONA). Queda abierto cómo se deja constancia del visto bueno y de la aprobación, porque el instructivo 5.2 no trae un paso de aprobación en Banner (U23). | 05/10/2026 | Usuario (chat) |
 | C48 | **Constancia de la aprobación de la carga (05/10):** se tramita **fuera de Banner, en la intranet de la USS**. El jefe registra un oficio o documento con **asunto, detalle y observación**, y **adjunta el documento** (la carga lectiva). La intranet genera un **número de oficio**, y la **resolución la emite el Vicerrector Académico**. Por ahí se tramita todo. Cierra la U23. | 05/10/2026 | Usuario (chat) |
 | C49 | **Diagramas rehechos: un flujo, un código, un término (05/10):** el usuario pidió que queden «hermosos y específicos, un solo flujo, un solo código o término». Ahora cada diagrama es un solo flujo, cada paso es una sola página de Banner (o un término fuera de Banner) y se usa un glosario único (alumno, NRC, parte, matrícula, cupo, pase a historia). El recorrido es una secuencia que muestra quién hace cada paso; se agregó el diagrama de carga lectiva (C47, C48) y cada casuística tiene su propio diagrama. Son 43 diagramas (14 por centro y el comparativo). | 05/10/2026 | Usuario (chat) |
+| C50 | **Egresados en Idiomas (Script 05, 05/10):** el egresado **no se matricula en un curso**. Se le **activa la plataforma** (el usuario la escribió «Alticia»; nombre por confirmar), **fuera de Banner**. La nota que obtiene en la plataforma se pone **igual en BASIC I, BASIC II, etc.**, como un examen de suficiencia. Se trabaja de la misma manera, pero **el costo del servicio es distinto**. Luego esa nota se **pasa a mano a Banner**. En Banner **se crea un solo NRC** y listo. Diagrama: Idiomas, casuística del Script 05. | 05/10/2026 | Usuario (chat) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -174,6 +177,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U09 | **Nombres de las horas.** El 26/09 el usuario dijo «pedagógica = presencial, 60 min» y «cronológica = 45 min de día / 50 de noche = 1 hora». En su nota del Zoom estaba al revés («40–45 / 50 min → h. académicas; 1 hora → h. cronológicas»), y en el uso común la hora pedagógica es la de 45/50 y la cronológica la de 60. En los PDF se usan sus nombres, siempre con los minutos al lado. Confirmar. | 26/09 | Usuario |
 | U22 | El periodo `202751` (verano 2027) solo tiene X01, P01 e I01. En 2026 el verano tuvo **X02**, I02, I03, P02 y P03. ¿Se agregan esos grupos en 202751? ¿Con qué fechas? (cronograma 2027) | 05/10/2026 | SOATERM en TEST |
 | U23 | **Resuelta (C47, C48):** el jefe asigna y da su visto bueno; el Vicerrectorado Académico revisa y aprueba. La constancia va por oficio en la intranet de la USS (número de oficio), y el Vicerrector emite la resolución. Banner solo calcula la carga (SIAASGN). | 05/10 | Usuario (chat) |
+| U24 | **Egresados (C50):** (a) con un solo NRC, ¿cómo queda la misma nota en BASIC I, II…? ¿Se matricula al egresado en ese NRC y la nota se pasa en SFASLST, se carga en la historia (SHATCKN) o como puntaje en SOATEST? (b) ¿Cómo se llama la plataforma («Alticia»)? (c) ¿Qué servicio o código de cobro tiene el costo distinto? (d) ¿Computación y Emprendimiento trabajan igual con sus egresados? | 05/10 | Usuario (chat) |
 
 ## 5. Supuestos descartados o por corregir
 | ID | Supuesto | Estado | Entregables afectados |

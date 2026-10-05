@@ -2,7 +2,7 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Idiomas · 12. Script 03 · Matrícula por convalidación",
+    "title": "Centro de Idiomas · 14. Script 12 · Cierre de periodo",
     "subtitle": "Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
@@ -445,7 +445,7 @@
       "viewer.common.clear": "Borrar",
       "viewer.common.close": "Cerrar"
     },
-    "output": "centros/idiomas/diagramas/12-script-03-matricula-por-convalidacion/idiomas-12-script-03-matricula-por-convalidacion.html",
+    "output": "centros/idiomas/diagramas/14-script-12-cierre-de-periodo/idiomas-14-script-12-cierre-de-periodo.html",
     "quality_profile": "showcase",
     "animation": "trace",
     "legend": {
@@ -467,7 +467,7 @@
           "label": "Cobro (Finanzas)"
         },
         "external": {
-          "label": "Fuera de Banner (intranet)"
+          "label": "Fuera de Banner"
         },
         "security": {
           "label": "Situación o bloqueo"
@@ -485,7 +485,6 @@
     "c0",
     "c1",
     "c2",
-    "c3",
     "cr"
   ],
   "nodes": [
@@ -494,8 +493,8 @@
       "lane": "caso",
       "col": 0,
       "type": "security",
-      "label": "Curso externo",
-      "sublabel": "aprobado en otra institución",
+      "label": "Fin del periodo",
+      "sublabel": "notas finales listas",
       "width": 170
     },
     {
@@ -503,23 +502,14 @@
       "lane": "caso",
       "col": 1,
       "type": "backend",
-      "label": "SHATRNS",
-      "sublabel": "registrar la institución",
+      "label": "SHAGRDE",
+      "sublabel": "revisar el modo",
       "width": 170
     },
     {
       "id": "c2",
       "lane": "caso",
       "col": 2,
-      "type": "backend",
-      "label": "SHATFAC",
-      "sublabel": "registrar la nota",
-      "width": 170
-    },
-    {
-      "id": "c3",
-      "lane": "caso",
-      "col": 3,
       "type": "messagebus",
       "label": "SHRROLL",
       "sublabel": "pase a historia",
@@ -528,10 +518,10 @@
     {
       "id": "cr",
       "lane": "caso",
-      "col": 4,
+      "col": 3,
       "type": "database",
-      "label": "Convalidado",
-      "sublabel": "CAPP lo cuenta",
+      "label": "En la historia",
+      "sublabel": "Rolled to History",
       "width": 170,
       "tag": "por probar en TEST",
       "icon": "success"
@@ -551,14 +541,8 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-c3",
+      "id": "e-c2-cr",
       "from": "c2",
-      "to": "c3",
-      "variant": "emphasis"
-    },
-    {
-      "id": "e-c3-cr",
-      "from": "c3",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -568,14 +552,14 @@
       "dot": "emerald",
       "title": "Probado en TEST",
       "items": [
-        "Por probar en test: Convalidar niveles de Inglés de otra institución"
+        "Por probar en test: SHRROLL con escala del nivel I"
       ]
     },
     {
       "dot": "cyan",
       "title": "En Ellucian (instructivos)",
       "items": [
-        "Convalidación: capacidad 3.3 (SHATRNS, SHATFAC)"
+        "Pase a historia: instructivo 7.1.9 (SHRROLL)"
       ]
     },
     {
@@ -586,7 +570,8 @@
         "E04: Si pasa con suficiencia, ¿cómo queda BASIC I en la historia y en CAPP?",
         "E13: Casilla «En progreso» de SOATERM con grupos seguidos (I04 termina el 31/5, I06 empieza el 1/6)",
         "U10: ¿Quién puede dar sobrepasos de prerrequisito (SFAROVR)?",
-        "TEST: Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST"
+        "TEST: Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST",
+        "U24: Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?"
       ]
     }
   ]

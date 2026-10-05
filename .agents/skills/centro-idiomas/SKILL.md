@@ -71,6 +71,12 @@ En SEUSS, quien desaprueba BASIC I **NO puede pasar a BASIC II** salvo con exame
 4. **SFPPROJ:** la proyección con verificación de prerrequisitos **no ofrece** BASIC II si no hay BASIC I aprobado o examen.
 5. **SFAROVR:** un sobrepaso administrativo puede saltar la regla.
 
+## Egresados (Script 05, C50)
+- El egresado **no se matricula en un curso**: se le activa la plataforma (fuera de Banner; nombre por confirmar, el usuario escribió «Alticia»).
+- La nota de la plataforma se pone **igual en BASIC I, BASIC II, etc.**, como un examen de suficiencia. El costo del servicio es distinto.
+- En Banner se crea **un solo NRC** y la nota se pasa **a mano**.
+- Falta (U24): en qué página se pasa la nota a cada BASIC, el nombre de la plataforma y el servicio de cobro.
+
 ## Examen de suficiencia
 
 | Aspecto | Detalle | Duda abierta |

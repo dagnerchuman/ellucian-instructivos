@@ -2,7 +2,7 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Idiomas · 14. Script 18-B · Retenciones y bloqueo de matrícula",
+    "title": "Centro de Idiomas · 11. Script 05 · Curso especial para egresados",
     "subtitle": "Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
@@ -445,7 +445,7 @@
       "viewer.common.clear": "Borrar",
       "viewer.common.close": "Cerrar"
     },
-    "output": "centros/idiomas/diagramas/14-script-18-b-retenciones-y-bloqueo-de-matricula/idiomas-14-script-18-b-retenciones-y-bloqueo-de-matricula.html",
+    "output": "centros/idiomas/diagramas/11-script-05-curso-especial-para-egresados/idiomas-11-script-05-curso-especial-para-egresados.html",
     "quality_profile": "showcase",
     "animation": "trace",
     "legend": {
@@ -467,7 +467,7 @@
           "label": "Cobro (Finanzas)"
         },
         "external": {
-          "label": "Fuera de Banner (intranet)"
+          "label": "Fuera de Banner"
         },
         "security": {
           "label": "Situación o bloqueo"
@@ -485,6 +485,7 @@
     "c0",
     "c1",
     "c2",
+    "c3",
     "cr"
   ],
   "nodes": [
@@ -493,17 +494,17 @@
       "lane": "caso",
       "col": 0,
       "type": "security",
-      "label": "Tiene deuda",
-      "sublabel": "cuota vencida",
+      "label": "Egresado",
+      "sublabel": "no lleva el curso",
       "width": 170
     },
     {
       "id": "c1",
       "lane": "caso",
       "col": 1,
-      "type": "backend",
-      "label": "SOAHOLD",
-      "sublabel": "retención TT",
+      "type": "external",
+      "label": "Plataforma",
+      "sublabel": "activar y rendir",
       "width": 170
     },
     {
@@ -511,17 +512,26 @@
       "lane": "caso",
       "col": 2,
       "type": "backend",
-      "label": "SFAREGS",
-      "sublabel": "no deja matricular",
+      "label": "SSASECT",
+      "sublabel": "crear un solo NRC",
+      "width": 170
+    },
+    {
+      "id": "c3",
+      "lane": "caso",
+      "col": 3,
+      "type": "backend",
+      "label": "Nota manual",
+      "sublabel": "pasar la nota a Banner",
       "width": 170
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 3,
+      "col": 4,
       "type": "database",
-      "label": "Sin matrícula",
-      "sublabel": "hasta pagar",
+      "label": "BASIC I, II…",
+      "sublabel": "la misma nota en todos",
       "width": 170,
       "tag": "por probar en TEST",
       "icon": "success"
@@ -541,8 +551,14 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-cr",
+      "id": "e-c2-c3",
       "from": "c2",
+      "to": "c3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c3-cr",
+      "from": "c3",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -552,14 +568,14 @@
       "dot": "emerald",
       "title": "Probado en TEST",
       "items": [
-        "Por probar en test: Retención que bloquea la matrícula"
+        "Por probar en test: Definido el 05/10 (C50): el egresado no se matricula en un curso. Se le activa la plataforma (fuera de Banner) y la nota que obtiene se pone igual en BASIC I, BASIC II, etc., como un examen de suficiencia. El costo del servicio es distinto. En Banner se crea un solo NRC y la nota se pasa a mano. Falta probarlo en TEST (U24)"
       ]
     },
     {
       "dot": "cyan",
       "title": "En Ellucian (instructivos)",
       "items": [
-        "Retenciones: instructivos 5.2.1 y 5.2.2 (SOAHOLD)"
+        "Requisito de egreso de Pregrado: instructivo 8, diap. 13"
       ]
     },
     {
@@ -570,7 +586,8 @@
         "E04: Si pasa con suficiencia, ¿cómo queda BASIC I en la historia y en CAPP?",
         "E13: Casilla «En progreso» de SOATERM con grupos seguidos (I04 termina el 31/5, I06 empieza el 1/6)",
         "U10: ¿Quién puede dar sobrepasos de prerrequisito (SFAROVR)?",
-        "TEST: Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST"
+        "TEST: Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST",
+        "U24: Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?"
       ]
     }
   ]

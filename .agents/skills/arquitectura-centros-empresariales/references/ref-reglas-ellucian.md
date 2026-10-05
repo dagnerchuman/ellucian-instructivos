@@ -26,7 +26,7 @@ Todas las citas se verificaron con `scripts/buscar_instructivos.py`. Formato: in
 - **Cada NRC tributa a un contrato:** campo «Tipo de contrato» en SIAASGN. Así se separa, por ejemplo, la carga de Pregrado de la de Centros. *(diap. 24, 25 y 38)*
 - **El instructivo no las hace excluyentes:** «de igual forma, la evaluación… puede ser realizada en función al tipo de contrato». *(diap. 43)* Si se usan las dos, o solo una, lo decide la USS (U28; a Ellucian, E20).
 - **Rangos:** los de «Carga de trabajo» (educativa, no educativa, total y FTE) se usan para el docente a tiempo completo o de planta. Los de horas crédito y horas de contacto sirven para todos. *(diap. 18, 19, 31 y 32)*
-- **FTE:** el factor FTE de SIATERM es uno por periodo; en el ejemplo, 50 horas = 1 FTE. *(diap. 12)* Con docentes de 40 y de 48 horas, la diferencia se marca en los rangos de cada regla (E20).
+- **FTE:** el factor FTE de SIATERM es uno por periodo; en el ejemplo, 50 horas = 1 FTE. *(diap. 12)* En la USS hay docentes de 40 horas (Pregrado, tiempo completo) y de 48 (especialistas de Centros); los facilitadores de Centros van a tiempo parcial según su carga (C54). La diferencia se marca en los rangos de cada regla de contrato (ADR-020, propuesto; E20).
 
 ## Docentes en el NRC
 - «Un NRC puede tener uno o más docentes… pudiendo haber simultáneamente dos o tres docentes, pero siempre definiendo uno de ellos como el docente **principal**». *(6.2.1 Asignar docentes, diap. 21)*

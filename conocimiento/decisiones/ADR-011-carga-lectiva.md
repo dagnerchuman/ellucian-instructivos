@@ -23,7 +23,7 @@ Hoy la carga docente se hace en Excel (C03). El instructivo 5.2 explica cómo se
 ## Consecuencias
 - El Vicerrectorado Académico es Nivel B (consulta en SIAASGN).
 - Del script 5.2 faltan la labor no educativa y SIACONA; el responsable es Pedro Martinto.
-- Falta decidir **cómo se mide** la carga: por regla (SIAFLRT, en SIAASGN), por contrato (SIAFLCT, en SIACONA) o con las dos. También si el tiempo completo es de 40 o de 48 horas (R19, U28, E20).
+- Falta decidir **cómo se mide** la carga: por regla (SIAFLRT, en SIAASGN), por contrato (SIAFLCT, en SIACONA) o con las dos. El tiempo completo es de 40 horas en Pregrado y de 48 para los especialistas de Centros (C54); la propuesta es medir por contrato, en [ADR-020](ADR-020-carga-por-contrato.md).
 
 ## Criterio de salida
 Que la USS decida registrar la aprobación en Banner, por ejemplo con un flujo de Workflow o un campo propio.

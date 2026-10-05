@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C53):**
+- **Confirmado por el usuario (C01 – C54):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -19,6 +19,7 @@
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
   - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
   - *C46:* Usuarios administrativos (jefes, especialistas, asistentes o con permisos) y población: USS + externos.
+  - *C54:* Pregrado tiempo completo 40 horas; Centros: especialistas a tiempo completo 48 horas o facilitadores a tiempo parcial.
   - *C53:* Docente a tiempo completo con horas fijas (40; ¿48?), parcial según la carga.
   - *C52:* Inglés: NRC teórico + club de conversación unidos por liga.
   - *C51:* Base de conocimiento como código: `conocimiento/` con manifest, ADR y validador.
@@ -48,7 +49,7 @@
   - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
   - *U22:* Grupos de verano 2027 que faltan en 202751 (X02, I02, I03, P02, P03).
-  - *U28:* Tiempo completo de 40 o 48 horas, contrato de los docentes de Centros y cómo se medirá la carga.
+  - *U28:* En parte: 40 horas Pregrado, 48 especialistas de Centros, facilitadores por carga (C54). Falta el contrato en Banner y cómo se mide.
   - *U27:* Ligas de Inglés: tipo de horario del club, si se califica y se cobra, escenario y docente.
   - *U26:* Qué hace Registros Académicos en la carga lectiva (C06 frente a C47).
   - *U25:* Programa, mayor, materia y escala de Idiomas y Emprendimiento en TEST.
@@ -117,6 +118,7 @@
 | C51 | **Base de conocimiento como código (05/10):** el usuario pidió darle «buena memoria» a los agentes, como en su equipo de agentes de IA: un manifest como fuente única, ADR con contexto, alternativas descartadas, trade-offs y criterio de salida, ADR aceptados que funcionan como restricción, un ciclo que arma el contexto antes y lo actualiza después, y un validador automático. Se creó `conocimiento/` (manifest, 18 ADR, auditoría) y `herramientas/validar_conocimiento.py` (ADR-018). | 05/10/2026 | Usuario (chat) |
 | C52 | **Inglés: NRC teórico + club de conversación unidos por «liga» (05/10):** al usuario le comentaron que cada curso de Inglés tiene un **NRC teórico** y un **NRC de club de conversación**, y que en Banner eso se llama **liga**: un mismo curso puede tener varios NRC. Es la función de Banner de NRC ligados (R18, ADR-019). | 05/10/2026 | Usuario (chat) |
 | C53 | **Horas del docente (05/10):** el docente a **tiempo completo** tiene **horas fijas: 40** (también se mencionaron 48; por confirmar, U28). El de **tiempo parcial**, según la **carga asignada**. El usuario preguntó si SIAFLRT y SIAFLCT («siafur» y «siajur») son excluyentes por periodo (R19, E20). | 05/10/2026 | Usuario (chat) |
+| C54 | **Tipos de docente y horas (05/10):** el docente de **Pregrado** a tiempo completo tiene **40 horas**. En **Centros Empresariales**, los docentes son de dos tipos: **especialistas**, a tiempo completo con **48 horas**, o **facilitadores**, a tiempo parcial según su carga de trabajo. El usuario no sabe cómo se registra eso en la carga de Banner (ADR-020, propuesto). | 05/10/2026 | Usuario (chat) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -197,7 +199,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U25 | Idiomas (nivel I) y Emprendimiento (nivel M): ¿cuáles son su **programa, mayor, departamento, materia y escala de notas** en TEST? Hay que verificarlos en SAAQUIK, SGASTDN y SHAGRDE antes de probar sus scripts. | 05/10 | `datos.json` (antes como duda «TEST») |
 | U26 | **Carga lectiva: ¿qué hace Registros Académicos?** En el flujo del usuario (C06) dice «periodos y carga lectiva (RA)», pero el 05/10 confirmó que el jefe asigna a los docentes y el Vicerrectorado Académico aprueba (C47, C48, ADR-011). ¿RA solo abre el periodo y configura SIATERM y SIAINST, o también revisa la carga? | 05/10 | Auditoría de la base de conocimiento |
 | U27 | **Ligas de Inglés (C52):** (a) ¿Qué **tipo de horario** tiene el club de conversación en SCACRSE (¿Práctica `PRA` u otro?) y qué **identificador de liga** se usará? (b) ¿El club **se califica** o solo el teórico? El instructivo pone al secundario como no calificable. (c) ¿El club **se cobra** aparte o va con «Dispensa de colegiatura y cuotas»? (d) ¿Un teórico tiene **varios clubes** a elegir (uno a muchos) o cada teórico va con su club (muchos a muchos con restricción)? (e) ¿El club tiene **otro docente**? (f) ¿Aplica a **todos los niveles** (BASIC e INTERMEDIATE)? (g) ¿Computación o Emprendimiento usan ligas? | 05/10 | Usuario (chat) e instructivo 5.3_4.1.4.1.9 |
-| U28 | **Horas y contratos de los docentes (C53):** (a) Tiempo completo: ¿**40 o 48 horas**? ¿Depende de Pregrado o Centros, o del contrato? (b) ¿Qué **tipo de contrato y regla** tendrán los docentes de Centros: `CE` y `PTCE`, que ya existen en PROD, u otros? (c) ¿La USS medirá la carga **por regla (SIAFLRT)**, **por contrato (SIAFLCT)** o con las dos? (d) Tiempo parcial: ¿con qué **rango de horas** según la carga asignada? | 05/10 | Usuario (chat) |
+| U28 | **En parte (C54):** Pregrado a tiempo completo con 40 horas; en Centros, especialistas a tiempo completo con 48 horas y facilitadores a tiempo parcial según su carga. **Sigue abierto:** (b) ¿qué **tipo de contrato y regla** tendrán en Banner? ¿`CE` y `PTCE`, que ya existen en PROD, u otros? (c) ¿La USS medirá la carga **por contrato (SIAFLCT)**, que es lo propuesto en ADR-020, por regla (SIAFLRT) o con las dos? (d) Facilitador: ¿hay un **mínimo o un máximo** de horas? (e) Los **especialistas** que dictan, ¿son los mismos que matriculan (C46)? Si es así, ¿sus 48 horas incluyen esa labor administrativa, que en SIAASGN va como «labor no educativa»? | 05/10 | Usuario (chat) |
 
 ## 5. Supuestos descartados o por corregir
 | ID | Supuesto | Estado | Entregables afectados |

@@ -15,7 +15,7 @@
   1. **Centro de Idiomas** (Inglés: BASIC I..III, INTERMEDIATE I..III).
   2. **Centro de Computación** (Informática: Ofimática ESEC y Especialidades ESEP).
   3. **Centro de Emprendimiento** (Cursos de planes de negocio y proyectos).
-* **Fecha de corte de pruebas:** Octubre 2026
+* **Fecha de corte de pruebas:** 05/10/2026
 
 ---
 
@@ -46,6 +46,15 @@ Antes de consolidar el padrón definitivo de personal a capacitar, se deja const
 * [x] **Carga Lectiva en `SIAASGN`:** Docente de prueba con sus NRC, horas y FTE (Computación, Script 18-A).
 * [x] **Notas y Cierre con `SHRROLL`:** Notas aprobatorias, desaprobatorias e `INH`; pase a historia con los jobs 8113 y 8114 en `GJAPCTL` (Computación, Scripts 12 a 14).
 * [x] **Sobrepasos:** Cruce de horario del docente en `SSASECT` y sobrepaso de cupo con `SFAROVR`/`SFASRPO` (Computación, Scripts 02 y 17).
+
+### Avance por centro (scripts de prueba, corte 05/10/2026)
+| Centro | Validados | Pendientes | Nota |
+| :--- | :--- | :--- | :--- |
+| **Computación** | 17 de 19 (el 04 no aplica) | 05 (curso para egresados) y 07 (tres programas) | Ambos esperan datos de la USS |
+| **Emprendimiento** | 1 (18-A, carga docente) | Los demás por probar; el 04 por definir | Falta confirmar el programa en TEST |
+| **Idiomas** | 0 | Todos por probar | Falta confirmar programa y materia en TEST |
+
+Las pruebas de Computación sirven de modelo: el flujo en Banner es el mismo para los tres centros y solo cambian los códigos.
 
 ### B. Procesos Pendientes por Configurar y Probar (Lo que falta)
 * [ ] **Parametrización de Docentes en `SIAINST`:** Configuración de atributos, departamentos y elegibilidad para dictar en los centros.

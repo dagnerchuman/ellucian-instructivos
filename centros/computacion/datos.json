@@ -242,8 +242,8 @@
       "evidencia": "S00581109: DD en NRC 1026 y RE en NRC 1021"
     },
     "17": {
-      "estado": "pendiente",
-      "evidencia": "Dos NRC con el mismo bloque de horario"
+      "estado": "validado",
+      "evidencia": "05/10: NRC 1021 y 1026 con el mismo bloque (L-M 08:00–12:00, docente 100582059). Al reasignar al docente en el 1021, SSASECT dio «Conflicto de horario del instructor» y ofreció crear el sobrepaso; con OK quedó «Indicador de sobrepaso» marcado"
     },
     "18-A": {
       "estado": "validado",

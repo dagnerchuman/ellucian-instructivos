@@ -49,7 +49,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **1024**: ESEC 00650, sección C. Auditado en SIAASGN.
 - NRC **1026**: ESEC 00650, sección D, parte X07. Casuísticas CCEE.
 
-## Los 18 scripts (13 validado · 6 pendiente · 1 no aplica)
+## Los 18 scripts (14 validado · 5 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |
 |---|---|---|---|
 | 01 | Matrícula regular | validado | NRC 1021 (S00581081, S00581091) y NRC 1026 (S00581108, S00581109) |
@@ -68,7 +68,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 14 | Cierre de curso | validado | Cierre y pase a historia con SHRROLL |
 | 15 | Ampliación de cupos y reservas | validado | NRC 1026: error de sección cerrada, cupo de 1 a 4 |
 | 16 | División de grupos y traslado | validado | S00581109: DD en NRC 1026 y RE en NRC 1021 |
-| 17 | Gestión de horarios y cruces | pendiente | Dos NRC con el mismo bloque de horario |
+| 17 | Gestión de horarios y cruces | validado | 05/10: NRC 1021 y 1026 con el mismo bloque (L-M 08:00–12:00, docente 100582059). Al reasignar al docente en el 1021, SSASECT dio «Conflicto de horario del instructor» y ofreció crear el sobrepaso; con OK quedó «Indicador de sobrepaso» marcado |
 | 18-A | Auditoría de carga docente | validado | SIAASGN: docente 100582059 con 4 NRC, horas y FTE |
 | 18-B | Retenciones y bloqueo de matrícula | validado | Retención TT bloquea la inscripción en SFAREGS |
 | 18-C | Solicitud de servicio o queja | pendiente | Solicitud o queja en SVASVPR |

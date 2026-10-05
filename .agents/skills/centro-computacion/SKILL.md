@@ -99,7 +99,7 @@ Parte de periodo general: **CGE**.
 | **14** | Cierre de curso | `SSASECT` → `SFASLST` | ✅ Validado | Cierre y paso oficial a historia completado con `SHRROLL`. |
 | **15** | Ampliación de cupos y reservas | `SSASECT` (`SSARRES`) | ✅ Validado | NRC 1021 (aforo 2/2) y NRC 1026 (error *Closed*, ampliación 1 a 4). |
 | **16** | División de grupos / Traslado | `SSASECT` → `SFAREGS` | ✅ **Validado** | María Ramírez (`S00581109`) trasladada de NRC 1026 (`DD`) a NRC 1021 (`RE`), resolviendo `Reserve Closed` ampliando cupo CMEMC38 y confirmada en `SFASLST`. |
-| **17** | Gestión de horarios y cruces | `SSASECT` → `SLARSLT` | ⏳ **PENDIENTE** | Auditoría de conflicto de horas y aulas en bloques de reunión. |
+| **17** | Gestión de horarios y cruces | `SSASECT` | ✅ **Validado (05/10)** | NRC 1021 y 1026 con el mismo bloque y docente: SSASECT dio «*ERROR* Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso?»; con OK quedó «Indicador de sobrepaso». El cruce del alumno en SFAREGS no se pudo probar (ver C41). |
 | **18-A** | Auditoría de carga docente | `SIAASGN` | ✅ Validado | Docente DCHUMAN con 4 NRCs (horas semanales, contacto y FTE nativos). |
 | **18-B** | Retenciones y bloqueo fatal | `SOAHOLD` / `STVHLDD` | ✅ Validado | Retención TT bloqueando matrícula en SFAREGS (*ERROR*). |
 | **18-C** | Solicitud de servicio / queja | `SVASVPR` | ⏳ **PENDIENTE** | Registro y atención de solicitud/queja estudiantil en backoffice. |
@@ -132,9 +132,9 @@ Parte de periodo general: **CGE**.
 - [ ] **Script 11 — Apertura de periodo (`SOATERM` → `STVTERM`):**
   - *Contexto:* Parametrización del nuevo periodo académico (ej. `202751`).
   - *Paso:* Configurar fechas de inicio/fin y partes de periodo `X01` a `X07`.
-- [ ] **Script 17 — Gestión de horarios y cruces (`SSASECT`):**
-  - *Contexto:* Detección de conflicto horario.
-  - *Paso:* Programar dos NRCs con el mismo bloque de horario y docente/aula, y verificar la advertencia de conflicto de Banner.
+- [x] **Script 17 — Gestión de horarios y cruces (`SSASECT`):**
+  - *Evidencia (05/10):* conflicto del docente detectado en el NRC 1021; se resolvió con el sobrepaso del instructor.
+  - *Pendiente opcional:* cruce del alumno en SFAREGS con un alumno sin retención, con estatus activo y con ambos NRC sin rolar.
 - [ ] **Script 18-C — Trámite de quejas / reclamos (`SVASVPR`):**
   - *Contexto:* Atención de solicitudes de servicio estudiantil.
   - *Paso:* Tramitar solicitud de servicio en `SVASVPR` con estatus y comentarios internos.

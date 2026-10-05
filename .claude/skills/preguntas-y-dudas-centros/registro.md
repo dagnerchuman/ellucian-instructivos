@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C40):**
+- **Confirmado por el usuario (C01 – C41):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -14,6 +14,7 @@
   - *C31–C35:* Creación NRC 1026 con aula virtual SAUVIR, alumno nuevo `S00581108`, ampliación cupos a 4, SHRROLL (Job 8113) con diagnóstico y resolución definitiva de incidencia U20 agregando modo `V` en SHAGRDE (Job 8114 exitoso).
   - *C36–C39:* Computación no rinde suficiencia, validación de bloqueo por repitencia en CAPP (SMARQCM), traslado sección NRC 1026→1021 con ajuste reserva, suspensión y reactivación de estatus en SGASTDN.
   - *C40:* Todo por carpetas y por centro (`centros/<centro>/`); diagramas paso a paso con Archify.
+  - *C41:* Script 17 validado: conflicto de horario del docente y sobrepaso del instructor en SSASECT.
 - **Resuelto con los instructivos (R01 – R16):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
   - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
@@ -82,6 +83,7 @@
 | C38 | **División de grupos / Traslado de sección en SFAREGS (Script 16 - 02/10):** Se validó al 100% el traslado de la estudiante `S00581109` (*María Ramírez García*) desde el NRC **1026** (cambiada a estatus `DD`) hacia el NRC paralelo **1021** (estatus `RE`). Se diagnosticó el error `Reserve Closed` por agotamiento del cupo específico del programa `CMEMC38`, el cual se resolvió ampliando la reserva de 1 a 2 en `SSARRES` (`SSASECT`) y aforo total a 3 en `Detalles de ingreso`. La lista de clase en `SFASLST` auditó la presencia oficial de 2 estudiantes en el NRC 1021 (`S00581081` y `S00581109`). | 02/10/2026 | Práctica del usuario (SFAREGS / SSASECT / SFASLST) |
 | C39 | **Suspensión y reactivación de matrícula (Script 09 - 02/10):** Se comprobó el ciclo de vida del estatus de estudiante en `SGASTDN` / `SFAREGS`: el estatus Inactivo (`IS` / `SU`) bloquea las autorizaciones y la inscripción de cursos futuros (*El estatus del estudiante no permite inscripción*), mientras que la restitución del código Activo (`AS`) rehabilita la elegibilidad institucional inmediata. | 02/10/2026 | Práctica del usuario (SGASTDN / SFAREGS) |
 | C40 | **Todo por carpetas y por centro, con diagramas paso a paso en Archify (03/10):** El usuario pidió separar todo por carpetas, incluidos los agentes, y que cada archivo diga de qué centro es. Se creó `centros/<centro>/` con `datos.json` (fuente única de los datos del centro), una ficha `README.md` y `diagramas/` con 7 diagramas por centro: recorrido, NRC, persona y admisión, estados de la matrícula, notas y cierre, y dos de casuísticas. Cada uno tiene HTML interactivo, PNG claro, PNG oscuro y SVG; además hay un comparativo en `centros/comun/`. Se generan con `herramientas/diagramas/generar.py`. Los diagramas de `diagramas_flujo/` (03/10) se reemplazaron porque mezclaban datos de Computación bajo el nombre de los tres centros; quedan en `centros/computacion/diagramas/anterior-03-10-archify/`. Las skills `centro-informatica` y `centro-ingles` pasan a llamarse `centro-computacion` y `centro-idiomas`. | 03/10/2026 | Usuario (chat) |
+| C41 | **Script 17 · Cruce de horario del docente (05/10):** El NRC **1021** quedó con el mismo bloque del **1026** (lunes y miércoles 08:00–12:00) y el mismo docente `100582059`. Al reasignar al docente en el bloque INSTRUCTOR de `SSASECT`, Banner mostró *«\*ERROR\* Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso para el instructor?»*; con **OK** se marcó solo «Indicador de sobrepaso» y se guardó. Para pasar al bloque INSTRUCTOR hay que usar «Sección siguiente» (⤓); si se hace clic directo, Banner da error. **Prueba del alumno sin hacer:** `S00581081` tiene una **retención** que bloquea SFAREGS; en `S00581109`, cambiar a RE el 1026 (en DD) da la alerta «El curso ha sido calificado y pasado al historial» y luego «El estatus del alumno impide la inscripción», es decir, su estatus en SGASTDN no permite inscribir. No se guardó nada. Revisar la retención de S00581081 y el estatus de S00581109. | 05/10/2026 | Capturas del usuario (SSASECT / SFAREGS) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.

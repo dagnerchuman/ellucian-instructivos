@@ -6,7 +6,7 @@ El usuario, Dagner Anibal Chuman Lluen, trabaja en los **Centros Empresariales**
 | Carpeta | Qué hay |
 |---|---|
 | `CAPACIDAD n/` | Instructivos de Ellucian Banner (PPTX) y scripts de prueba de la USS. No se mueven: el visor depende de sus rutas |
-| `visor_instructivos/` | Visor web, que Netlify publica con `publish = "."` |
+| `visor_instructivos/` | Visor web. Netlify publica solo la rama `main` (`publish = "."`); lo que está en otras ramas o solo en local no sale en el sitio |
 | `centros/` | **Todo lo propio de cada centro**, en `idiomas/`, `computacion/` y `emprendimiento/`: `datos.json` (fuente única), `README.md` (ficha) y `diagramas/` (HTML, PNG, SVG). Lo común va en `comun/`. Índice: `centros/README.md`; galería: `centros/index.html` |
 | `herramientas/` | `diagramas/` (generador Archify) y `sincronizar_skills.py` |
 | `docs/` | Documentos sueltos: propuesta de usuarios finales y la skill de Computación exportada |

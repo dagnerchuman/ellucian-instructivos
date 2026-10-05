@@ -52,7 +52,7 @@ def readme_general(ids):
         "",
         "**Cada diagrama tiene cinco archivos:**",
         "- **HTML** interactivo: modo claro u oscuro, animación, vistas guiadas, búsqueda y menú «Exportar». "
-        "Ábrelo con doble clic o desde Netlify en `/centros/`.",
+        "Ábrelo con doble clic, o desde Netlify en `/centros/` cuando esté en `main`.",
         "- **PNG claro** y **PNG oscuro**, en alta resolución, para documentos y presentaciones.",
         "- **SVG** vectorial: cambia solo entre claro y oscuro.",
         "- **`.json`**: la especificación que se compiló. No se edita a mano; ver `herramientas/diagramas`.",

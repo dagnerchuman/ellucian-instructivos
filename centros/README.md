@@ -4,7 +4,7 @@
 Diagramas interactivos de cómo trabaja cada centro en Ellucian Banner, hechos con [Archify](https://github.com/tt-a1i/archify).
 
 **Cada diagrama tiene cinco archivos:**
-- **HTML** interactivo: modo claro u oscuro, animación, vistas guiadas, búsqueda y menú «Exportar». Ábrelo con doble clic o desde Netlify en `/centros/`.
+- **HTML** interactivo: modo claro u oscuro, animación, vistas guiadas, búsqueda y menú «Exportar». Ábrelo con doble clic, o desde Netlify en `/centros/` cuando esté en `main`.
 - **PNG claro** y **PNG oscuro**, en alta resolución, para documentos y presentaciones.
 - **SVG** vectorial: cambia solo entre claro y oscuro.
 - **`.json`**: la especificación que se compiló. No se edita a mano; ver `herramientas/diagramas`.

@@ -72,13 +72,20 @@ Conforme a la metodología solicitada por Pedro Pérez Martinto, se clasifica al
          │
          ├──> [Nivel A: Directos] --> Jefes, Especialistas y Asistentes (Backoffice), otros con permisos + Docentes (Autoservicio)
          │
-         ├──> [Nivel B: Consulta] --> Personal de informes y atención al estudiante
+         ├──> [Nivel B: Consulta] --> Vicerrectorado Académico (revisa y aprueba la carga lectiva) + Informes y atención al estudiante
          │
          └──> [Nivel D: Indirectos]-> Dirección de Centros + Decanos de Pregrado (Egresos)
 ```
 
 ### Usuarios administrativos de los centros
 Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra persona a la que se le den permisos** en Banner. Ellos operan la matrícula de toda la población del centro: estudiantes de Pregrado y Posgrado de la USS y externos.
+
+### Flujo de la carga lectiva de los docentes
+1. El **jefe del centro** asigna al docente en cada NRC (`SSASECT`). Antes, el docente debe estar activo en `SIAINST`.
+2. El **jefe** revisa la carga lectiva del docente en `SIAASGN` y da su **visto bueno**.
+3. Recién con ese visto bueno pasa al **Vicerrectorado Académico**, que **revisa y aprueba** la carga lectiva.
+
+*Por definir:* los instructivos 5.2 no tienen un paso de aprobación dentro de Banner. Falta acordar cómo se deja constancia del visto bueno del jefe y de la aprobación del Vicerrectorado.
 
 ### Detalle por Nivel:
 
@@ -94,18 +101,24 @@ Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra
   2. **Docentes de los 3 Centros (Idiomas, Computación, Emprendimiento):** Profesores que dictan clases en las distintas partes de periodo.
 * **Operaciones diarias:**
   - Jefes, Especialistas y Asistentes: `GOAMTCH` (Personas), `SAAQUIK` (Admisión), `SFAREGS` (Matrícula), `SSASECQ` (Consulta de cupos).
+  - Jefes, además: asignan a los docentes en los NRC (`SSASECT`), revisan su carga lectiva (`SIAASGN`) y dan el visto bueno antes de enviarla al Vicerrectorado Académico.
   - Docentes: Portal Autoservicio Banner (asistencia diaria, registro de notas de evaluación continua y actas finales).
 * **Tipo de Capacitación:**
   - Jefes, Especialistas y Asistentes: **Avanzada Operativa**. Los jefes, además, consultan cupos, estatus y avance (`SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM`).
   - Docentes: **Básica / Funcional (Autoservicio)**.
 
 #### Nivel B: Usuarios Finales de Consulta
-* **Quiénes son:** Personal de informes y atención al estudiante que solo consulta. Los jefes de centro no van aquí: también matriculan, así que son Nivel A.
-* **Operaciones:** Consultar cupos de secciones abiertas (`SSASECQ`), revisar si un alumno tiene condición activa (`SGASTDN`) y auditar el avance de cursos para egreso (`SMICRLT`).
+* **Quiénes son:**
+  1. **Vicerrectorado Académico:** revisa y aprueba la carga lectiva de los docentes de los centros, después del visto bueno del jefe.
+  2. Personal de informes y atención al estudiante que solo consulta.
+  Los jefes de centro no van aquí: también matriculan y asignan docentes, así que son Nivel A.
+* **Operaciones:**
+  - Vicerrectorado Académico: consultar la carga lectiva por docente (`SIAASGN`) y, si se usa, el análisis por contrato (`SIACONA`).
+  - Informes: consultar cupos de secciones abiertas (`SSASECQ`), revisar si un alumno tiene condición activa (`SGASTDN`) y auditar el avance de cursos para egreso (`SMICRLT`).
 * **Tipo de Capacitación:** **Intermedia / Reportería y Consulta**.
 
 #### Nivel D: Usuarios Finales Indirectos
-* **Quiénes son:** Dirección General de Centros Empresariales, Vicerrectorado Académico, Decanos de Facultades y Directores de Escuelas Profesionales.
+* **Quiénes son:** Dirección General de Centros Empresariales, Decanos de Facultades y Directores de Escuelas Profesionales. (El Vicerrectorado Académico pasó al Nivel B porque aprueba la carga lectiva.)
 * **Relación con el sistema:** No digitan transacciones operativas, pero consumen reportes consolidados de egreso (si los alumnos de pregrado cumplieron con inglés y computación para graduarse) y analítica de recaudación.
 * **Tipo de Capacitación:** **Informativa / Ejecutiva**.
 
@@ -126,9 +139,10 @@ Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra
 | **Cuerpo Docente** | Docente | Docentes de Idiomas (Inglés) | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
 | **Cuerpo Docente** | Docente | Docentes de Computación (Ofimática/Espec.) | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
 | **Cuerpo Docente** | Docente | Docentes de Emprendimiento | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
-| **Administrativa** | Jefe de Centro | Jefe de Idiomas | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
-| **Administrativa** | Jefe de Centro | Jefe de Computación | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
-| **Administrativa** | Jefe de Centro | Jefe de Emprendimiento | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Jefe de Centro | Jefe de Idiomas | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SSASECT` (docente), `SIAASGN` (visto bueno), `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Jefe de Centro | Jefe de Computación | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SSASECT` (docente), `SIAASGN` (visto bueno), `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Jefe de Centro | Jefe de Emprendimiento | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ`, `SSASECT` (docente), `SIAASGN` (visto bueno), `SGASTDN`, `SMICRLT`, `SOATERM` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Vicerrectorado Académico** | Aprobador | Vicerrectorado Académico | **B** | `SIAASGN` y `SIACONA` (consulta): revisión y aprobación de la carga lectiva | Por periodo | **Alta** | **Intermedia (Consulta de carga)** |
 | **Dirección** | Directivo | Dirección de Centros Empresariales | **D** | Reportes gerenciales, avance de metas y egreso | Mensual | **Baja** | **Informativa / Ejecutiva** |
 
 ---

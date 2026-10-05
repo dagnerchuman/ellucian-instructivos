@@ -4,7 +4,7 @@
 > [!CAUTION]
 > **ESTADO DEL DOCUMENTO: BORRADOR DE TRABAJO INTERNO (CONFIDENCIAL)**  
 > **NO ENVIAR AÚN A PEDRO PÉREZ MARTINTO.**  
-> Este documento contiene el mapeo funcional preliminar. Se mantendrá en reserva hasta culminar las pruebas integrales pendientes de: **Asignación formal de docentes (`SIAINST`), Carga horaria lectiva (`SIAASGN`), Ponderaciones de notas (`SHAGCOM`), Asistencia por Autoservicio y Pase a historia (`SHRROLL`)**.
+> Este documento contiene el mapeo funcional preliminar. Se mantendrá en reserva hasta culminar las pruebas integrales pendientes de: **Asignación formal de docentes (`SIAINST`), Ponderaciones de notas (`SHAGCOM`) y Asistencia y notas por Autoservicio docente**. La carga lectiva (`SIAASGN`) y el pase a historia (`SHRROLL`) ya se validaron en TEST.
 
 ---
 
@@ -22,7 +22,9 @@
 ## 1. Justificación y Alcance de los Centros Empresariales
 
 Los Centros Empresariales de la Universidad Señor de Sipán tienen una dinámica académica particular en Banner Student:
-1. **Población Mixta:** Atienden tanto a público externo/participantes libres como a estudiantes regulares de **Pregrado** que deben cumplir con los cursos de Idiomas, Computación y Emprendimiento como **requisito obligatorio de egreso** (Instructivo Capacidad 8).
+1. **Población Mixta (quiénes se matriculan):**
+   - **Población de la universidad:** estudiantes de **Pregrado** y **Posgrado** de la USS. En Pregrado, Idiomas, Computación y Emprendimiento son **requisito obligatorio de egreso** (Instructivo Capacidad 8).
+   - **Externos:** personas que no son de Pregrado ni de Posgrado de la USS: público en general y estudiantes o egresados de otras universidades. Se registran como persona nueva (`GOAMTCH`) y se admiten en el programa del centro (`SAAQUIK`).
 2. **Ciclos Mensuales y Flexibles:** A diferencia de las carreras semestrales, los centros operan con múltiples partes de periodo al año:
    - Idiomas: `IGE` / partes `I01` a `I12`.
    - Computación: `CGE` / partes `X01` a `X07`.
@@ -41,13 +43,14 @@ Antes de consolidar el padrón definitivo de personal a capacitar, se deja const
 * [x] **Admisión Rápida (`SAAQUIK`):** Registro con nivel `C`/`I`/`M` y vinculación a malla curricular base (`CMEMC38`, regla 649).
 * [x] **Matrícula Backoffice (`SFAREGS`):** Inscripción en NRC con desbloqueo crítico mediante estatus `EL` y consumo real de vacantes.
 * [x] **Auditoría Curricular CAPP (`SMARQCM`, `SMICRLT`, `GJAPCTL`, `GJIREVO`):** Verificación individual y por lotes (`SMRBCMP`) para reflejar avance en autoservicio.
+* [x] **Carga Lectiva en `SIAASGN`:** Docente de prueba con sus NRC, horas y FTE (Computación, Script 18-A).
+* [x] **Notas y Cierre con `SHRROLL`:** Notas aprobatorias, desaprobatorias e `INH`; pase a historia con los jobs 8113 y 8114 en `GJAPCTL` (Computación, Scripts 12 a 14).
+* [x] **Sobrepasos:** Cruce de horario del docente en `SSASECT` y sobrepaso de cupo con `SFAROVR`/`SFASRPO` (Computación, Scripts 02 y 17).
 
 ### B. Procesos Pendientes por Configurar y Probar (Lo que falta)
 * [ ] **Parametrización de Docentes en `SIAINST`:** Configuración de atributos, departamentos y elegibilidad para dictar en los centros.
-* [ ] **Carga Lectiva en `SIAASGN`:** Registro de horas semanales frente a grupo y reemplazo definitivo de las planillas Excel de control de horas docentes.
-* [ ] **Esquema de Notas en `SHAGCOM`:** Configuración de componentes de calificación (teoría, práctica, examen final) y regla de inhabilitación por inasistencia (`ATTRGRD` < 70%).
+* [ ] **Esquema de Notas en `SHAGCOM`:** Configuración de componentes de calificación (teoría, práctica, examen final) y regla de inhabilitación por inasistencia (`ATTRGRD`; el 70 % es el ejemplo del instructivo, el mínimo real está por confirmar).
 * [ ] **Flujo en Autoservicio Docente:** Pruebas reales de toma de asistencia diaria y carga de actas de notas por parte de los profesores de los 3 centros.
-* [ ] **Cierre de Periodo con `SHRROLL`:** Pase de calificaciones finales al historial permanente del alumno (`SHACRSE`).
 
 ---
 
@@ -58,12 +61,15 @@ Conforme a la metodología solicitada por Pedro Pérez Martinto, se clasifica al
 ```
 [Nivel C: Power User] ------------> Dagner Anibal Chuman Lluen (Supervisa y audita)
          │
-         ├──> [Nivel A: Directos] --> Asistentes de Matrícula (Backoffice) + Docentes (Autoservicio)
+         ├──> [Nivel A: Directos] --> Especialistas y Asistentes (Backoffice), otros con permisos + Docentes (Autoservicio)
          │
-         ├──> [Nivel B: Consulta] --> Coordinadores Académicos (Idiomas, Computación, Emprendimiento)
+         ├──> [Nivel B: Consulta] --> Jefes de Centro (Idiomas, Computación, Emprendimiento)
          │
          └──> [Nivel D: Indirectos]-> Dirección de Centros + Decanos de Pregrado (Egresos)
 ```
+
+### Usuarios administrativos de los centros
+Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra persona a la que se le den permisos** en Banner. Ellos operan la matrícula de toda la población del centro: estudiantes de Pregrado y Posgrado de la USS y externos.
 
 ### Detalle por Nivel:
 
@@ -75,17 +81,17 @@ Conforme a la metodología solicitada por Pedro Pérez Martinto, se clasifica al
 
 #### Nivel A: Usuarios Finales Directos
 * **Quiénes son:**
-  1. **Asistentes de Matrícula y Operadores de Centro:** Personal administrativo encargado de atender al público, crear personas, admitir y matricular en los periodos mensuales.
+  1. **Especialistas, Asistentes y personal con permisos:** Personal administrativo encargado de atender al público, crear personas, admitir y matricular en los periodos mensuales, tanto a estudiantes de la USS (Pregrado y Posgrado) como a externos.
   2. **Docentes de los 3 Centros (Idiomas, Computación, Emprendimiento):** Profesores que dictan clases en las distintas partes de periodo.
 * **Operaciones diarias:**
-  - Asistentes: `GOAMTCH` (Personas), `SAAQUIK` (Admisión), `SFAREGS` (Matrícula), `SSASECQ` (Consulta de cupos).
+  - Especialistas y Asistentes: `GOAMTCH` (Personas), `SAAQUIK` (Admisión), `SFAREGS` (Matrícula), `SSASECQ` (Consulta de cupos).
   - Docentes: Portal Autoservicio Banner (asistencia diaria, registro de notas de evaluación continua y actas finales).
 * **Tipo de Capacitación:**
-  - Asistentes: **Avanzada Operativa**.
+  - Especialistas y Asistentes: **Avanzada Operativa**.
   - Docentes: **Básica / Funcional (Autoservicio)**.
 
 #### Nivel B: Usuarios Finales de Consulta
-* **Quiénes son:** Coordinadores Académicos de cada área (Coordinador de Idiomas, Coordinador de Computación/Informática, Coordinador de Emprendimiento) y personal de informes/atención al estudiante.
+* **Quiénes son:** Jefes de cada centro (Idiomas, Computación/Informática, Emprendimiento) y personal de informes/atención al estudiante. *Nivel propuesto: si los jefes también matriculan, pasan al Nivel A.*
 * **Operaciones:** Consultar cupos de secciones abiertas (`SSASECQ`), revisar si un alumno tiene condición activa (`SGASTDN`) y auditar el avance de cursos para egreso (`SMICRLT`).
 * **Tipo de Capacitación:** **Intermedia / Reportería y Consulta**.
 
@@ -101,15 +107,19 @@ Conforme a la metodología solicitada por Pedro Pérez Martinto, se clasifica al
 | Área | Rol | Perfil / Puesto Sugerido | Nivel | Funcionalidad Banner | Frecuencia | Criticidad | Capacitación Requerida |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Centros Empresariales** | Responsable Funcional / *Power User* | Dagner Anibal Chuman Lluen | **C** | Flujos 1 al 7 completos (`SSASECT`, `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `CAPP`, `SIAASGN`) | Diaria | **Crítica** | **Avanzada / Especializada** |
-| **Registro / Matrícula** | Asistente de Matrícula | Asistente Operativo - Idiomas | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
-| **Registro / Matrícula** | Asistente de Matrícula | Asistente Operativo - Computación | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
-| **Registro / Matrícula** | Asistente de Matrícula | Asistente Operativo - Emprendimiento | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Especialista | Especialista de Idiomas | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Especialista | Especialista de Computación | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Especialista | Especialista de Emprendimiento | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SFASRPO`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Asistente | Asistente de Idiomas | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Asistente | Asistente de Computación | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Asistente | Asistente de Emprendimiento | **A** | `GOAMTCH`, `SAAQUIK`, `SFAREGS`, `SSASECQ` | Alta (Mensual) | **Alta** | **Avanzada (Backoffice)** |
+| **Administrativa** | Otro personal con permisos | Según los permisos que se le asignen | **A** | Las pantallas que cubran sus permisos | Según asignación | **Media** | **Según funciones** |
 | **Cuerpo Docente** | Docente | Docentes de Idiomas (Inglés) | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
 | **Cuerpo Docente** | Docente | Docentes de Computación (Ofimática/Espec.) | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
 | **Cuerpo Docente** | Docente | Docentes de Emprendimiento | **A** | Autoservicio Docente (Asistencia y Calificaciones) | Diaria / Semanal | **Alta** | **Básica (Autoservicio)** |
-| **Coordinación Académica**| Coordinador de Centro | Coordinador de Idiomas | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
-| **Coordinación Académica**| Coordinador de Centro | Coordinador de Computación | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
-| **Coordinación Académica**| Coordinador de Centro | Coordinador de Emprendimiento | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
+| **Administrativa** | Jefe de Centro | Jefe de Idiomas | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
+| **Administrativa** | Jefe de Centro | Jefe de Computación | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
+| **Administrativa** | Jefe de Centro | Jefe de Emprendimiento | **B** | `SSASECQ`, `SGASTDN`, `SMICRLT`, `SOATERM` | Media | **Media** | **Intermedia (Consulta)** |
 | **Dirección** | Directivo | Dirección de Centros Empresariales | **D** | Reportes gerenciales, avance de metas y egreso | Mensual | **Baja** | **Informativa / Ejecutiva** |
 
 ---
@@ -118,11 +128,12 @@ Conforme a la metodología solicitada por Pedro Pérez Martinto, se clasifica al
 
 1. **Ejecutar Pruebas de Docentes en TEST:**
    - Crear 2 docentes de prueba adicionales y habilitar estatus en `SIAINST`.
-   - Asignar carga lectiva en `SIAASGN` y validar que no genere advertencias de sobrecarga.
-2. **Probar Cierre de Notas:**
-   - Ingresar notas de prueba simulando desaprobados por nota y por inasistencia (< 70%).
-   - Correr proceso `SHRROLL` para verificar que la nota se traslade a `SHACRSE`.
+   - Probar asistencia y notas desde el Autoservicio docente.
+2. **Plan de Evaluación:**
+   - Definir quién carga `SHAGCOM` (Registros Académicos o el centro) y probarlo.
+   - *Ya validado en Computación:* desaprobados por nota e `INH`, y pase a historia con `SHRROLL`.
 3. **Validación de Nombres Reales:**
-   - Una vez que la Jefatura asigne los nombres de los asistentes y coordinadores definitivos de cada centro, reemplazar los roles genéricos por los nombres propios en la matriz.
+   - Una vez que la Jefatura asigne los nombres de los jefes, especialistas, asistentes y demás personal con permisos de cada centro, reemplazar los roles genéricos por los nombres propios en la matriz.
+   - Confirmar si los jefes de centro solo consultan (Nivel B) o también matriculan (Nivel A).
 4. **Emisión de la versión final:**
    - Generar el entregable en PDF formal con la plantilla USS para respuesta oficial a Pedro Pérez.

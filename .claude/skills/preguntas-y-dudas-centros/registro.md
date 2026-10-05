@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C45):**
+- **Confirmado por el usuario (C01 – C46):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -18,6 +18,7 @@
   - *C42–C43:* Script 02 validado: regla CAPACIDAD en SFAROVR, permiso en SFASRPO, S00581110 inscrito con el NRC 1021 lleno.
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
   - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
+  - *C46:* Usuarios administrativos (jefes, especialistas, asistentes o con permisos) y población: USS + externos.
 - **Resuelto con los instructivos (R01 – R16):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
   - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
@@ -92,6 +93,7 @@
 | C43 | **Script 02 validado (05/10):** con `S00581108`, SFAREGS no dio error de cupo, pero rechazó el NRC 1021 por *«Duplicate Course with Section 1026»* (ya tenía ESEC 00650 en el 1026): Banner no deja el mismo curso dos veces en el periodo. Se usó `S00581110` (Juan Flores): admitido en SAAQUIK con CMEMC38, con permiso `CAPACIDAD` en SFASRPO para el 1021, y quedó **inscrito con RE en el NRC 1021 lleno** (2/2). El usuario confirmó que todo salió bien. | 05/10/2026 | Usuario (SAAQUIK / SFASRPO / SFAREGS) |
 | C44 | **Script 18-C validado (05/10):** en `SVVSRVC` hay 17 servicios: carpetas de bachiller, título, maestría y doctorado, `CER` Certificado, `CON` Constancia de primera matrícula y tres de prueba (PRPOS, PRTIT, PRU). **Ninguno es de queja o reclamo** (U14 sigue abierta). En `SVASVPR` no se pueden crear solicitudes: al intentarlo sale *«Función inválida»*, porque nacen en el Autoservicio del alumno (instructivo 4.3.2, diap. 18). El mecanismo se validó con `CER`: el usuario 100582059 la creó en el Autoservicio y se atendió en SVASVPR (estatus, comentario interno y comentario de respuesta). El usuario confirmó que salió bien. | 05/10/2026 | Usuario (Autoservicio / SVASVPR) |
 | C45 | **Script 11 validado (05/10):** el periodo `202751` («2027-V Verano Idi.Com.Emp.») ya existía en STVTERM y SOATERM. *Inscripción*: permitida, plan requerido, modelo básico + proyectado, web maestro activo, primer NRC 1000, vigencia de cuotas desde 01-ENE-2027 y corte de cargo el 07-MAR-2027. *Partes*: I01 (05-ENE→31-MAR-2027, 12 sem), P01 (07-ENE→15-MAR, 10), **X01 (12-ENE→22-FEB, 6)** y 1 (periodo completo). *Inscripción web*: del 20-SEP-2026 al 15-MAR-2027. *Acceso docente*: del 03-ENE al 05-ABR-2027. Se creó en SSASECT un NRC de prueba ESEC 00650 sección A en 202751/X01 (campus S, estatus A, tipo de horario Teoría, modo V). Al crearlo, campus, estatus y tipo de horario son obligatorios. | 05/10/2026 | Usuario (SOATERM / SSASECT) |
+| C46 | **Usuarios finales y población (propuesta para Pedro Pérez Martinto, 05/10):** (a) Los **usuarios administrativos** de los centros son los **jefes, especialistas y asistentes, o a quien se le den permisos** en Banner. (b) Se matricula la **población de la universidad** (Pregrado y Posgrado de la USS) **más externos**: personas que no son de Pregrado ni de Posgrado, que vienen de fuera o de otras universidades. Se actualizó `docs/propuesta-usuarios-finales/`; queda por confirmar si los jefes solo consultan (Nivel B) o también matriculan (Nivel A). | 05/10/2026 | Usuario (chat) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.

@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C52):**
+- **Confirmado por el usuario (C01 – C53):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -19,25 +19,28 @@
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
   - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
   - *C46:* Usuarios administrativos (jefes, especialistas, asistentes o con permisos) y población: USS + externos.
+  - *C53:* Docente a tiempo completo con horas fijas (40; ¿48?), parcial según la carga.
   - *C52:* Inglés: NRC teórico + club de conversación unidos por liga.
   - *C51:* Base de conocimiento como código: `conocimiento/` con manifest, ADR y validador.
   - *C50:* Egresados de Idiomas: nota de la plataforma pasada a mano en un solo NRC.
   - *C49:* Diagramas con un solo flujo, un código por paso y un glosario único (43 diagramas).
   - *C47–C48:* Carga lectiva: el jefe asigna y da visto bueno; el Vicerrectorado Académico aprueba por oficio en la intranet (número de oficio y resolución del Vicerrector).
-- **Resuelto con los instructivos (R01 – R18):**
+- **Resuelto con los instructivos (R01 – R19):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
   - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
   - *R06–R08:* Aula virtual SSASECT, hora académica SIATERM, egreso pregrado en CAPP.
   - *R09–R10:* Bloqueo Fatal de BASIC II en SOATERM y cursos en progreso.
   - *R11–R13:* Reemplazo docente a mitad de curso, programas incompletos y asignación de tutores.
   - *R14–R16:* Quejas por solicitudes de servicio, investigación de personal y alumnos sancionados en SGASTDN/SOAHOLD.
+  - *R19:* SIAFLRT (regla, en SIAASGN) y SIAFLCT (contrato, en SIACONA) son dos formas de evaluar la carga, no excluyentes según el instructivo.
   - *R18:* Ligas: NRC del mismo curso que se matriculan juntos (SSASECT + SSADETL).
   - *R17:* Orden de la carga docente: SIAINST → NRC en SSASECT → SIAASGN (y SIACONA por contrato).
-- **Dudas abiertas para Ellucian (E01 – E19):**
+- **Dudas abiertas para Ellucian (E01 – E20):**
   - *E01–E04:* Horas día/noche en SIATERM, retorno notas aula virtual, hora de 60m, suficiencia en CAPP.
   - *E05–E12:* Malla en CAPP, migración historia SEUSS, muestra validación, SMARQCM en TEST, grado SHADEGR, reportes Insight.
   - *E13–E19:* Casilla en progreso SOATERM, historial docente relevado, programas incompletos en 20271, alertas tempranas.
-- **Dudas abiertas para la USS (U01 – U27):**
+  - *E20:* ¿SIAFLRT y SIAFLCT a la vez? Docente con contrato en Pregrado y en Centros; factor FTE con 40 y 48 horas.
+- **Dudas abiertas para la USS (U01 – U28):**
   - *U01, U10:* Puntaje mínimo suficiencia inglés y política sobrepasos SFAROVR.
   - *U02–U05:* Secuencialidad informática/emprendimiento, % asistencia, plan evaluación, nombres/pesos oficiales.
   - *U06–U09:* Matrícula autoservicio vs backoffice, tutoría en CCEE, jefatura, denominación formal horas.
@@ -45,6 +48,7 @@
   - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
   - *U22:* Grupos de verano 2027 que faltan en 202751 (X02, I02, I03, P02, P03).
+  - *U28:* Tiempo completo de 40 o 48 horas, contrato de los docentes de Centros y cómo se medirá la carga.
   - *U27:* Ligas de Inglés: tipo de horario del club, si se califica y se cobra, escenario y docente.
   - *U26:* Qué hace Registros Académicos en la carga lectiva (C06 frente a C47).
   - *U25:* Programa, mayor, materia y escala de Idiomas y Emprendimiento en TEST.
@@ -112,6 +116,7 @@
 | C50 | **Egresados en Idiomas (Script 05, 05/10):** el egresado **no se matricula en un curso**. Se le **activa la plataforma** (el usuario la escribió «Alticia»; nombre por confirmar), **fuera de Banner**. La nota que obtiene en la plataforma se pone **igual en BASIC I, BASIC II, etc.**, como un examen de suficiencia. Se trabaja de la misma manera, pero **el costo del servicio es distinto**. Luego esa nota se **pasa a mano a Banner**. En Banner **se crea un solo NRC** y listo. Diagrama: Idiomas, casuística del Script 05. | 05/10/2026 | Usuario (chat) |
 | C51 | **Base de conocimiento como código (05/10):** el usuario pidió darle «buena memoria» a los agentes, como en su equipo de agentes de IA: un manifest como fuente única, ADR con contexto, alternativas descartadas, trade-offs y criterio de salida, ADR aceptados que funcionan como restricción, un ciclo que arma el contexto antes y lo actualiza después, y un validador automático. Se creó `conocimiento/` (manifest, 18 ADR, auditoría) y `herramientas/validar_conocimiento.py` (ADR-018). | 05/10/2026 | Usuario (chat) |
 | C52 | **Inglés: NRC teórico + club de conversación unidos por «liga» (05/10):** al usuario le comentaron que cada curso de Inglés tiene un **NRC teórico** y un **NRC de club de conversación**, y que en Banner eso se llama **liga**: un mismo curso puede tener varios NRC. Es la función de Banner de NRC ligados (R18, ADR-019). | 05/10/2026 | Usuario (chat) |
+| C53 | **Horas del docente (05/10):** el docente a **tiempo completo** tiene **horas fijas: 40** (también se mencionaron 48; por confirmar, U28). El de **tiempo parcial**, según la **carga asignada**. El usuario preguntó si SIAFLRT y SIAFLCT («siafur» y «siajur») son excluyentes por periodo (R19, E20). | 05/10/2026 | Usuario (chat) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -136,6 +141,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | R16 | Estudiante con dificultades o sancionado | Seguimiento en SPACMNT (sin tipos definidos hoy en la USS); estado académico por promedio y horas (7.2.3); comunicaciones con BCM. Sanción: estado del plan «Suspendido» o «Expulsado» en SGASTDN, más una retención en SOAHOLD (no se borra: se le pone fecha de fin). No hay alertas tempranas en los instructivos. | 5.1.1, diap. 46; 7.2.3, diap. 5 y 19; 3.2.7, diap. 9 y 42; 5.2.1, diap. 19 |
 | R17 | ¿Primero el NRC y después la carga lectiva del docente? | **Sí.** Orden del instructivo 5.2: (1) el docente existe como persona (SPAIDEN); (2) se activa como docente en **SIAINST** desde un periodo, con categoría, tipo de personal, contrato y **regla de carga de trabajo**; (3) se asigna al **NRC en SSASECT**: «debe estar asignado al menos a un NRC del periodo» para calcular la carga educativa; (4) se revisa en **SIAASGN**: carga por NRC, labor no educativa (tipos de STVNIST) y sobrecarga (O) o subcarga (U) según SIAFLRT. Por contrato se analiza en SIACONA (reglas en SIAFLCT y SIAFCTR). En Computación ya se hizo hasta SIAASGN (C29). En el script 5.2 de la USS, «Validar las asignaciones educativas y no educativas (SIAASGN)» y «Análisis en SIACONA» figuran **pendientes, con responsable Dr. Pedro Martinto**. En los catálogos ya existen el contrato `CE` *Continuing Ed* (STVFCNT) y la regla `PTCE` *Part Time/Continuing Education* (STVCNTR). | 5.2 Información de docentes, diap. 16–20 y 28; 5.2 Carga de trabajo, diap. 6, 16–27, 29–42; script 5.2 v3 |
 | R18 | ¿Qué es una «liga»? | Une dos o más **NRC del mismo curso** con distintos tipos de horario (en el instructivo, Teoría y Práctica), para que el alumno **los matricule juntos**. Premisa: el curso tiene más de un tipo de horario en SCACRSE. (1) En **SSASECT**, pestaña «Información de sección de curso», bloque «Indicadores de clase», campo **«Identificador de liga»** (2 caracteres, por ejemplo `TE` para Teoría y `PR` para Práctica). (2) En **SSADETL**, pestaña «Correquisitos y ligas de sección», campo **«Conector de liga»**: en el NRC de Teoría va la liga de la Práctica, y al revés. (3) El NRC principal (Teoría) lleva los créditos, es **calificable** y se cobra. El secundario va con **0 créditos, no calificable y con «Dispensa de colegiatura y cuotas»**. (4) Hay tres escenarios: uno a muchos, muchos a muchos sin restricción y muchos a muchos con restricción. (5) En el Autoservicio el alumno ve «Secciones ligadas». (6) SOATERM, en la verificación «Ligas», usa **Fatal** o No verificar. (7) SFAROVR tiene la casilla «Enlaces» para el sobrepaso de ligas. | 5.3_4.1.4.1.9 Crear Ligas, diap. 9, 11, 12, 14 a 18, 20 a 22 y 24; 5.3_4.1.4.1.6, diap. 36; 5.4_4.1.4.1.12, diap. 15; 5.4_4.1.4.1.15, diap. 21 |
+| R19 | ¿SIAFLRT y SIAFLCT son excluyentes? | **El instructivo no dice que lo sean:** son **dos formas de evaluar** la carga («de igual forma»). (1) **Por regla de carga de trabajo:** es el tipo de asignación (docente, investigador, pasante, en comisión administrativa). Va en SIAINST, una por docente; sus rangos van en **SIAFLRT** por periodo y se ve en **SIAASGN** con todos los NRC del docente. (2) **Por contrato:** es el tipo de contrato (tiempo completo, tiempo parcial, por horas, honorarios). Va en el bloque «Contrato de docente» de SIAINST, con su «Regla»; un docente puede tener **varios contratos** y uno «predefinido». Sus rangos van en **SIAFLCT** por periodo y tipo de contrato, los periodos que cuentan en SIAFCTR, y se ve en **SIACONA**. **Cada NRC tributa a un contrato** con el campo «Tipo de contrato» de SIAASGN. Así se puede separar la carga de Pregrado y la de Centros. Los rangos «Carga de trabajo» (educativa, no educativa, total y FTE) se usan para el docente a tiempo completo o de planta. El factor FTE de SIATERM es uno por periodo (en el ejemplo, 50 horas = 1 FTE). En el catálogo de PROD ya existen el contrato `CE` *Continuing Ed* y la regla `PTCE` *Part Time/Continuing Education*. | 5.2 Carga de trabajo, diap. 7, 12, 16 a 19, 24, 25, 29 a 34, 36 a 43; 5.2 Información de docentes, diap. 18 y 19; script 5.2 v3 (capturas de STVFCNT y STVCNTR) |
 
 ## 3. Dudas abiertas para Ellucian
 | ID | Duda | Desde | Origen |
@@ -151,6 +157,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | E17 | ¿Las solicitudes de servicio pueden avisar por correo o asignarse a Gobierno de Personas? ¿Hay integración con su sistema? | 28/09 | Casuísticas |
 | E18 | ¿Cómo se define quién atiende cada servicio y quién puede ver una queja (confidencialidad)? | 28/09 | Casuísticas |
 | E19 | ¿Banner tiene alertas tempranas por faltas o notas bajas, o solo reportes y comunicaciones? | 28/09 | Casuísticas |
+| E20 | **Reglas de carga (R19):** (a) ¿Se pueden usar **SIAFLRT** (regla de carga, en SIAASGN) y **SIAFLCT** (contrato, en SIACONA) a la vez, o recomiendan una sola? (b) Un docente a tiempo completo en Pregrado que además dicta en Centros por horas: ¿se registran **dos contratos** en SIAINST y cada NRC a su contrato en SIAASGN? (c) Si hay docentes de 40 y de 48 horas, ¿cómo se usa el factor FTE de SIATERM, que es uno por periodo? | 05/10 | Usuario (C53) |
 | E05 | ¿Los programas de los tres centros tendrán su **malla en CAPP** (SMAPROG, SMAAREA)? Si no, ¿cómo funciona la inscripción proyectada? | 25/09 | PDF «Lo que entiendo» |
 | E06 | ¿Se migra la historia de los centros? ¿A qué periodos de Banner van los cursos llevados en SEUSS? | 25/09 | PDF «Lo que entiendo» |
 | E07 | ¿Qué incluye la «Carga LD01 con equivalencias»? ¿Tiene cursos de los centros? | 25/09 | Zoom de migración |
@@ -190,6 +197,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U25 | Idiomas (nivel I) y Emprendimiento (nivel M): ¿cuáles son su **programa, mayor, departamento, materia y escala de notas** en TEST? Hay que verificarlos en SAAQUIK, SGASTDN y SHAGRDE antes de probar sus scripts. | 05/10 | `datos.json` (antes como duda «TEST») |
 | U26 | **Carga lectiva: ¿qué hace Registros Académicos?** En el flujo del usuario (C06) dice «periodos y carga lectiva (RA)», pero el 05/10 confirmó que el jefe asigna a los docentes y el Vicerrectorado Académico aprueba (C47, C48, ADR-011). ¿RA solo abre el periodo y configura SIATERM y SIAINST, o también revisa la carga? | 05/10 | Auditoría de la base de conocimiento |
 | U27 | **Ligas de Inglés (C52):** (a) ¿Qué **tipo de horario** tiene el club de conversación en SCACRSE (¿Práctica `PRA` u otro?) y qué **identificador de liga** se usará? (b) ¿El club **se califica** o solo el teórico? El instructivo pone al secundario como no calificable. (c) ¿El club **se cobra** aparte o va con «Dispensa de colegiatura y cuotas»? (d) ¿Un teórico tiene **varios clubes** a elegir (uno a muchos) o cada teórico va con su club (muchos a muchos con restricción)? (e) ¿El club tiene **otro docente**? (f) ¿Aplica a **todos los niveles** (BASIC e INTERMEDIATE)? (g) ¿Computación o Emprendimiento usan ligas? | 05/10 | Usuario (chat) e instructivo 5.3_4.1.4.1.9 |
+| U28 | **Horas y contratos de los docentes (C53):** (a) Tiempo completo: ¿**40 o 48 horas**? ¿Depende de Pregrado o Centros, o del contrato? (b) ¿Qué **tipo de contrato y regla** tendrán los docentes de Centros: `CE` y `PTCE`, que ya existen en PROD, u otros? (c) ¿La USS medirá la carga **por regla (SIAFLRT)**, **por contrato (SIAFLCT)** o con las dos? (d) Tiempo parcial: ¿con qué **rango de horas** según la carga asignada? | 05/10 | Usuario (chat) |
 
 ## 5. Supuestos descartados o por corregir
 | ID | Supuesto | Estado | Entregables afectados |

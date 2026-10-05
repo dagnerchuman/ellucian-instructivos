@@ -13,6 +13,21 @@ Todas las citas se verificaron con `scripts/buscar_instructivos.py`. Formato: in
   - **Duda E01.**
 - No aparece un campo para una hora de 60 minutos. **Duda E03.**
 
+### Regla de carga (SIAFLRT) y regla de contrato (SIAFLCT): dos formas de medir (R19)
+- **Por regla de carga de trabajo:**
+  - es el tipo de asignación: docente, investigador, pasante, en comisión administrativa;
+  - una por docente en SIAINST; sus rangos van en **SIAFLRT** por periodo;
+  - se analiza en **SIAASGN**, con todos los NRC del docente. *(5.2 Carga de trabajo, diap. 7, 16 a 19 y 21 a 27)*
+- **Por contrato:**
+  - es el tipo de contrato: tiempo completo, tiempo parcial, por horas, honorarios;
+  - va en el bloque «Contrato de docente» de SIAINST, con su «Regla». Un docente puede tener **varios contratos**, uno «predefinido» *(5.2 Información de docentes, diap. 19)*;
+  - sus rangos van en **SIAFLCT** por periodo y tipo de contrato; los periodos que cuentan van en SIAFCTR;
+  - se analiza en **SIACONA**. *(diap. 29 a 34 y 36 a 42)*
+- **Cada NRC tributa a un contrato:** campo «Tipo de contrato» en SIAASGN. Así se separa, por ejemplo, la carga de Pregrado de la de Centros. *(diap. 24, 25 y 38)*
+- **El instructivo no las hace excluyentes:** «de igual forma, la evaluación… puede ser realizada en función al tipo de contrato». *(diap. 43)* Si se usan las dos, o solo una, lo decide la USS (U28; a Ellucian, E20).
+- **Rangos:** los de «Carga de trabajo» (educativa, no educativa, total y FTE) se usan para el docente a tiempo completo o de planta. Los de horas crédito y horas de contacto sirven para todos. *(diap. 18, 19, 31 y 32)*
+- **FTE:** el factor FTE de SIATERM es uno por periodo; en el ejemplo, 50 horas = 1 FTE. *(diap. 12)* Con docentes de 40 y de 48 horas, la diferencia se marca en los rangos de cada regla (E20).
+
 ## Docentes en el NRC
 - «Un NRC puede tener uno o más docentes… pudiendo haber simultáneamente dos o tres docentes, pero siempre definiendo uno de ellos como el docente **principal**». *(6.2.1 Asignar docentes, diap. 21)*
 - Cada docente tiene su % de responsabilidad, su % de sesión y un «indicador de principal» (solo uno). *(6.2.1, diap. 19)*

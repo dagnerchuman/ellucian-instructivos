@@ -3,7 +3,7 @@ id: ADR-011
 titulo: La carga lectiva se arma en Banner y se aprueba por oficio en la intranet
 estado: aceptado
 fecha: 2026-10-05
-fuentes: [R17, C29, C47, C48]
+fuentes: [R17, R19, C29, C47, C48, C53]
 temas: [carga, docentes, aprobacion]
 ---
 # ADR-011 · La carga lectiva se arma en Banner y se aprueba por oficio en la intranet
@@ -23,6 +23,7 @@ Hoy la carga docente se hace en Excel (C03). El instructivo 5.2 explica cómo se
 ## Consecuencias
 - El Vicerrectorado Académico es Nivel B (consulta en SIAASGN).
 - Del script 5.2 faltan la labor no educativa y SIACONA; el responsable es Pedro Martinto.
+- Falta decidir **cómo se mide** la carga: por regla (SIAFLRT, en SIAASGN), por contrato (SIAFLCT, en SIACONA) o con las dos. También si el tiempo completo es de 40 o de 48 horas (R19, U28, E20).
 
 ## Criterio de salida
 Que la USS decida registrar la aprobación en Banner, por ejemplo con un flujo de Workflow o un campo propio.

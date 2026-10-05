@@ -3,38 +3,42 @@ id: ADR-020
 titulo: La carga de los docentes de Centros se mediría por contrato (SIAFLCT y SIACONA)
 estado: propuesto
 fecha: 2026-10-05
-fuentes: [C53, C54, R19, E20, U28]
+fuentes: [C53, C54, C55, R19, E20, U28]
 temas: [carga, docentes, contratos]
 ---
 # ADR-020 · La carga de los docentes de Centros se mediría por contrato (SIAFLCT y SIACONA)
 
 ## Contexto
-En la USS, el docente a tiempo completo de **Pregrado** tiene **40 horas**. En **Centros Empresariales** hay dos tipos (C54):
+En Centros Empresariales hay dos tipos de docente (C54):
 - **especialistas**, a tiempo completo con **48 horas**;
 - **facilitadores**, a tiempo parcial según su carga.
 
-Un mismo docente puede dictar en Pregrado y en Centros. Banner ofrece dos formas de medir la carga, que el instructivo no hace excluyentes (R19):
-- **por regla de carga de trabajo:** una por docente; se configura en SIAFLRT y se ve en SIAASGN;
-- **por contrato:** el docente puede tener varios; se configura en SIAFLCT y se ve en SIACONA.
+**Pregrado queda fuera:** sus docentes están en otros periodos (C55, [ADR-001](ADR-001-alcance-solo-centros.md)). Las reglas de carga y el factor FTE de SIATERM son **por periodo**, así que en los periodos de Centros (2026 5x) solo cuentan los NRC de Centros.
+
+Banner ofrece dos formas de medir la carga, que el instructivo no hace excluyentes (R19):
+- **por regla de carga:** el tipo de asignación (docente, investigador…); se configura en SIAFLRT y se ve en SIAASGN;
+- **por contrato:** tiempo completo, tiempo parcial o por horas; se configura en SIAFLCT y se ve en SIACONA.
 
 ## Decisión (propuesta)
-Medir la carga **por contrato**:
-- **Un contrato por tipo de docente,** cada uno con su regla en SIAFLCT:
-  - Pregrado a tiempo completo: «Total de carga de trabajo» de 40 a 40;
-  - especialista de Centros: de 48 a 48;
-  - facilitador: el rango que defina la USS (U28).
-- **Cada NRC tributa a su contrato:** se elige en el campo «Tipo de contrato» de SIAASGN. Así, un docente de Pregrado que también dicta en Centros tiene su carga separada.
-- **SIACONA** muestra si cada docente está debajo (U) o encima (O) de su contrato.
-- Los códigos de contrato y de regla los define la USS. En PROD ya existen el tipo `CE` (*Continuing Ed*) y la regla `PTCE` (*Part Time/Continuing Education*).
+En los periodos de Centros, la carga se mide **por contrato**:
+- **Especialista:** contrato a tiempo completo, con regla en SIAFLCT de «Total de carga de trabajo» de 48 a 48.
+- **Facilitador:** contrato a tiempo parcial, con el rango de horas que defina la USS (U28).
+- **SIATERM:** el factor FTE de cada periodo de Centros va en **48**, para que un especialista sea 1 FTE (por confirmar con Ellucian, E20).
+- **SIAASGN:** cada NRC lleva el contrato del docente en «Tipo de contrato».
+- **SIACONA:** muestra si cada docente está debajo (U) o encima (O) de su contrato.
+- Los códigos los define la USS. En PROD ya existen el tipo `CE` (*Continuing Ed*) y la regla `PTCE` (*Part Time/Continuing Education*).
 
 ## Alternativas descartadas
-- **Solo por regla de carga (SIAFLRT):** hay una sola regla por docente y suma todos sus NRC. No separa Pregrado de Centros ni distingue 40 de 48 horas si el docente tiene las dos funciones.
-- **Diferenciar 40 y 48 con el factor FTE de SIATERM:** es uno solo por periodo y vale para todos los docentes.
+- **Solo por regla de carga (SIAFLRT), con una regla de especialista y otra de facilitador:**
+  - funcionaría;
+  - pero el instructivo usa la regla para el *tipo de asignación* (docente, investigador) y el contrato para *tiempo completo o parcial* (5.2, diap. 7);
+  - mezclarlos haría que la regla deje de servir para lo suyo.
+- **Configurar las 40 horas de Pregrado junto a las de Centros:** Pregrado está en otros periodos y fuera del alcance (C55).
 
 ## Consecuencias
 - Hay que configurar contratos y reglas en SIAINST, SIAFLCT y SIAFCTR, y elegir el contrato de cada NRC en SIAASGN.
 - Si los especialistas también matriculan (C46), sus 48 horas incluirían «labor no educativa» en SIAASGN, con los tipos de STVNIST (U28-e).
-- La regla de carga (SIAFLRT) puede seguir para el tipo de asignación (docente, investigador), si la USS quiere las dos (E20).
+- La regla de carga (SIAFLRT) puede seguir para el tipo de asignación, si la USS quiere las dos (E20).
 
 ## Criterio de salida
 - La respuesta de la USS a U28 y la de Ellucian a E20.

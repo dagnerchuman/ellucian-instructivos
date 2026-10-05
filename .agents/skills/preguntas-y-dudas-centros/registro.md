@@ -39,7 +39,7 @@
   - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
   - *U22:* Grupos de verano 2027 que faltan en 202751 (X02, I02, I03, P02, P03).
-  - *U23:* Qué significa «Centros Empresariales → BRAW» (¿regla de carga, contrato?).
+  - *U23:* «Centros Empresariales → BRAW»: BRAW es el Vicerrectorado Académico; falta saber en qué pantalla y campo de Banner va.
 - **Supuestos descartados (S01 – S03):**
   - *S01:* Periodos de 3 meses (NO usar).
   - *S02:* Horas de 40-45m (es 45m).
@@ -168,7 +168,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U08 | ¿Qué aprueba **Jefatura**? ¿Los sobrepasos (SFAROVR)? | 25/09 | Diagrama |
 | U09 | **Nombres de las horas.** El 26/09 el usuario dijo «pedagógica = presencial, 60 min» y «cronológica = 45 min de día / 50 de noche = 1 hora». En su nota del Zoom estaba al revés («40–45 / 50 min → h. académicas; 1 hora → h. cronológicas»), y en el uso común la hora pedagógica es la de 45/50 y la cronológica la de 60. En los PDF se usan sus nombres, siempre con los minutos al lado. Confirmar. | 26/09 | Usuario |
 | U22 | El periodo `202751` (verano 2027) solo tiene X01, P01 e I01. En 2026 el verano tuvo **X02**, I02, I03, P02 y P03. ¿Se agregan esos grupos en 202751? ¿Con qué fechas? (cronograma 2027) | 05/10/2026 | SOATERM en TEST |
-| U23 | Al usuario le comentaron «**Centros Empresariales → BRAW**». ¿Qué es BRAW: una regla de carga de trabajo (STVWKLD/SIAFLRT), un tipo de contrato, una categoría del docente u otra cosa? No aparece en los instructivos ni en el script 5.2. Lo que sí existe: contrato `CE` *Continuing Ed* y regla `PTCE` *Part Time/Continuing Education*. Confirmar quién lo dijo y en qué pantalla va. | 05/10 | Usuario (comentario recibido) |
+| U23 | **En parte (05/10):** al usuario le comentaron «**Centros Empresariales → BRAW**» y aclaró que **BRAW es el Vicerrectorado Académico**, es decir, el área de la que dependen los centros. Falta saber dónde va en Banner: ¿es un código de división, de departamento o de unidad organizativa? ¿Cambia algo en SIAINST (escuela o departamento del docente) o en los NRC? En los instructivos y en el script 5.2 no aparece BRAW. | 05/10 | Usuario (comentario recibido) |
 
 ## 5. Supuestos descartados o por corregir
 | ID | Supuesto | Estado | Entregables afectados |

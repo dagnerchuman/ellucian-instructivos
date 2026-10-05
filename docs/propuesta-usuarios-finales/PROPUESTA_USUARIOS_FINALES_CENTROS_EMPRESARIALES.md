@@ -29,7 +29,8 @@ Los Centros Empresariales de la Universidad Señor de Sipán tienen una dinámic
    - Idiomas: `IGE` / partes `I01` a `I12`.
    - Computación: `CGE` / partes `X01` a `X07`.
    - Emprendimiento: `EGE` / partes `P01` a `P06`.
-3. **Flujo de Matrícula Continua:** Requiere agilidad extrema en la admisión rápida (`SAAQUIK`) y la inscripción directa en sección (`SFAREGS`).
+3. **Dependencia:** Los Centros Empresariales dependen del **Vicerrectorado Académico** (en Banner se identificaría como `BRAW`; falta confirmar en qué pantalla y campo).
+4. **Flujo de Matrícula Continua:** Requiere agilidad extrema en la admisión rápida (`SAAQUIK`) y la inscripción directa en sección (`SFAREGS`).
 
 ---
 

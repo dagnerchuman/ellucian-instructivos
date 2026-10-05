@@ -93,7 +93,7 @@ Parte de periodo general: **CGE**.
 | **08** | Retiro de matrícula (DD) | `SFAREGS` | ✅ Validado | S00581091 retirado DD del NRC 1021; vacante liberada automáticamente. |
 | **09** | Reactivación de matrícula | `SGASTDN` → `SFAREGS` | ✅ **Validado** | Probado ciclo de suspensión en `SGASTDN`/`SFAREGS` (bloqueo por inactivo y reactivación inmediata a `AS`). |
 | **10** | Retorno obligatorio por desaprobado | `SMARQCM` → `SMICRLT` | ✅ **Validado** | S00581108 (nota 08 rolada) auditado en CAPP: Requerimientos y Áreas en «No cumple», créditos usados 0/4, curso `ESEC 00650` clasificado como «Curso no usado» (reprobado). |
-| **11** | Apertura de nuevo periodo | `SOATERM` → `STVTERM` | ⏳ **PENDIENTE** | Habilitar partes de periodo X01..X07 en nuevo periodo (ej. 202751). |
+| **11** | Apertura de nuevo periodo | `STVTERM` → `SOATERM` → `SSASECT` | ✅ **Validado (05/10)** | `202751` («2027-V Verano Idi.Com.Emp.») ya existía: inscripción permitida, modelo básico + proyectado, web maestro activo, primer NRC 1000, inscripción web del 20-SEP-2026 al 15-MAR-2027 y acceso docente del 03-ENE al 05-ABR-2027. Partes: **X01 12-ENE→22-FEB-2027 (6 sem)**, P01, I01 y 1. Se creó un NRC de prueba ESEC 00650 A en X01. **Falta X02** (U22). |
 | **12** | Cierre de periodo / actas | `GJAPCTL` (`SHRROLL`) | ✅ Validado | Jobs 8113 y 8114 exitosos con pase masivo a historia académica. |
 | **13** | Procesamiento de calificaciones | `SFASLST` | ✅ Validado | Registro de notas 16, 10, 08 e INH en actas de NRC 1021 y 1026. |
 | **14** | Cierre de curso | `SSASECT` → `SFASLST` | ✅ Validado | Cierre y paso oficial a historia completado con `SHRROLL`. |
@@ -129,9 +129,9 @@ Parte de periodo general: **CGE**.
 - [ ] **Script 05 — Curso especial para egresados (`SSASECT` → `SFAREGS`):**
   - *Contexto:* Módulo intensivo de acreditación rápida para graduandos.
   - *Paso:* Programar NRC en parte de periodo intensiva y matricular bachiller.
-- [ ] **Script 11 — Apertura de periodo (`SOATERM` → `STVTERM`):**
-  - *Contexto:* Parametrización del nuevo periodo académico (ej. `202751`).
-  - *Paso:* Configurar fechas de inicio/fin y partes de periodo `X01` a `X07`.
+- [x] **Script 11 — Apertura de periodo (`SOATERM` → `SSASECT`):**
+  - *Evidencia (05/10):* 202751 con la parte X01; NRC de prueba creado en X01. No se usó «Copiar de periodo» porque el periodo ya estaba configurado.
+  - *Duda U22:* falta X02 (y I02, I03, P02, P03) en 202751.
 - [x] **Script 17 — Gestión de horarios y cruces (`SSASECT`):**
   - *Evidencia (05/10):* conflicto del docente detectado en el NRC 1021; se resolvió con el sobrepaso del instructor.
   - *Pendiente opcional:* cruce del alumno en SFAREGS con un alumno sin retención, con estatus activo y con ambos NRC sin rolar.

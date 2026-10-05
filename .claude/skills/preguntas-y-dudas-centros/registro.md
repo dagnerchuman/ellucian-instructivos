@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C44):**
+- **Confirmado por el usuario (C01 – C45):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -17,6 +17,7 @@
   - *C41:* Script 17 validado: conflicto de horario del docente y sobrepaso del instructor en SSASECT.
   - *C42–C43:* Script 02 validado: regla CAPACIDAD en SFAROVR, permiso en SFASRPO, S00581110 inscrito con el NRC 1021 lleno.
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
+  - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
 - **Resuelto con los instructivos (R01 – R16):**
   - *R01–R02:* Varios docentes en NRC y carga en SIAASGN.
   - *R03–R05:* Examen suficiencia en SCAPREQ/SOATEST, circuito notas/cierre SHRROLL, asistencia ATTRGRD.
@@ -28,13 +29,14 @@
   - *E01–E04:* Horas día/noche en SIATERM, retorno notas aula virtual, hora de 60m, suficiencia en CAPP.
   - *E05–E12:* Malla en CAPP, migración historia SEUSS, muestra validación, SMARQCM en TEST, grado SHADEGR, reportes Insight.
   - *E13–E19:* Casilla en progreso SOATERM, historial docente relevado, programas incompletos en 20271, alertas tempranas.
-- **Dudas abiertas para la USS (U01 – U21):**
+- **Dudas abiertas para la USS (U01 – U22):**
   - *U01, U10:* Puntaje mínimo suficiencia inglés y política sobrepasos SFAROVR.
   - *U02–U05:* Secuencialidad informática/emprendimiento, % asistencia, plan evaluación, nombres/pesos oficiales.
   - *U06–U09:* Matrícula autoservicio vs backoffice, tutoría en CCEE, jefatura, denominación formal horas.
   - *U11–U16:* Conciliación migración, planes rediseño, código 20271, canal quejas, separación docente.
   - *U17–U20:* Resueltas U17 (campus S) y U20 (modo V en SHAGRDE). U18 y U19, en parte: los centros usan escuela EM y el programa de Computación es CMEMC38; falta lo que se indica en cada fila.
   - *U21:* Examen suficiencia en Emprendimiento (por definir si aplica o no).
+  - *U22:* Grupos de verano 2027 que faltan en 202751 (X02, I02, I03, P02, P03).
 - **Supuestos descartados (S01 – S03):**
   - *S01:* Periodos de 3 meses (NO usar).
   - *S02:* Horas de 40-45m (es 45m).
@@ -89,6 +91,7 @@
 | C42 | **Script 02 · Configuración del sobrepaso de cupo (05/10, en curso):** (a) `SFAROVR` en 202656 no tenía reglas. Se creó `CAPACIDAD` («Capacidad de sección/aula», elegido de `STVROVR`, que tiene 78 códigos; también existe `CAP`, *Overload Enrollment Capacity*) con la casilla **Capacidad** marcada: *Saved successfully*. «Copiar del periodo» debe quedar vacío; si se pone el mismo periodo, sale *«No existen datos para el periodo del cual está copiando»*. (b) En `SFASRPO`, `S00581108` (Carlos Torres) recibió `CAPACIDAD` para el NRC **1021** (ESEC 00650 B). (c) El NRC 1021 se dejó lleno: en *Lugares reservados*, la regla general pasó de 1 a 0 (CMEMC38 2/2) y en *Detalles de ingreso* el máximo pasó de 3 a 2. **Falta:** inscribir en `SFAREGS`. | 05/10/2026 | Capturas del usuario (SFAROVR / SFASRPO / SSASECT) |
 | C43 | **Script 02 validado (05/10):** con `S00581108`, SFAREGS no dio error de cupo, pero rechazó el NRC 1021 por *«Duplicate Course with Section 1026»* (ya tenía ESEC 00650 en el 1026): Banner no deja el mismo curso dos veces en el periodo. Se usó `S00581110` (Juan Flores): admitido en SAAQUIK con CMEMC38, con permiso `CAPACIDAD` en SFASRPO para el 1021, y quedó **inscrito con RE en el NRC 1021 lleno** (2/2). El usuario confirmó que todo salió bien. | 05/10/2026 | Usuario (SAAQUIK / SFASRPO / SFAREGS) |
 | C44 | **Script 18-C validado (05/10):** en `SVVSRVC` hay 17 servicios: carpetas de bachiller, título, maestría y doctorado, `CER` Certificado, `CON` Constancia de primera matrícula y tres de prueba (PRPOS, PRTIT, PRU). **Ninguno es de queja o reclamo** (U14 sigue abierta). En `SVASVPR` no se pueden crear solicitudes: al intentarlo sale *«Función inválida»*, porque nacen en el Autoservicio del alumno (instructivo 4.3.2, diap. 18). El mecanismo se validó con `CER`: el usuario 100582059 la creó en el Autoservicio y se atendió en SVASVPR (estatus, comentario interno y comentario de respuesta). El usuario confirmó que salió bien. | 05/10/2026 | Usuario (Autoservicio / SVASVPR) |
+| C45 | **Script 11 validado (05/10):** el periodo `202751` («2027-V Verano Idi.Com.Emp.») ya existía en STVTERM y SOATERM. *Inscripción*: permitida, plan requerido, modelo básico + proyectado, web maestro activo, primer NRC 1000, vigencia de cuotas desde 01-ENE-2027 y corte de cargo el 07-MAR-2027. *Partes*: I01 (05-ENE→31-MAR-2027, 12 sem), P01 (07-ENE→15-MAR, 10), **X01 (12-ENE→22-FEB, 6)** y 1 (periodo completo). *Inscripción web*: del 20-SEP-2026 al 15-MAR-2027. *Acceso docente*: del 03-ENE al 05-ABR-2027. Se creó en SSASECT un NRC de prueba ESEC 00650 sección A en 202751/X01 (campus S, estatus A, tipo de horario Teoría, modo V). Al crearlo, campus, estatus y tipo de horario son obligatorios. | 05/10/2026 | Usuario (SOATERM / SSASECT) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.
@@ -159,6 +162,7 @@ Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucia
 | U07 | ¿La **tutoría** aplica a los centros? | 25/09 | Diagrama |
 | U08 | ¿Qué aprueba **Jefatura**? ¿Los sobrepasos (SFAROVR)? | 25/09 | Diagrama |
 | U09 | **Nombres de las horas.** El 26/09 el usuario dijo «pedagógica = presencial, 60 min» y «cronológica = 45 min de día / 50 de noche = 1 hora». En su nota del Zoom estaba al revés («40–45 / 50 min → h. académicas; 1 hora → h. cronológicas»), y en el uso común la hora pedagógica es la de 45/50 y la cronológica la de 60. En los PDF se usan sus nombres, siempre con los minutos al lado. Confirmar. | 26/09 | Usuario |
+| U22 | El periodo `202751` (verano 2027) solo tiene X01, P01 e I01. En 2026 el verano tuvo **X02**, I02, I03, P02 y P03. ¿Se agregan esos grupos en 202751? ¿Con qué fechas? (cronograma 2027) | 05/10/2026 | SOATERM en TEST |
 
 ## 5. Supuestos descartados o por corregir
 | ID | Supuesto | Estado | Entregables afectados |

@@ -218,8 +218,8 @@
       "evidencia": "S00581108 (nota 08): «No cumple» y curso no usado en CAPP"
     },
     "11": {
-      "estado": "pendiente",
-      "evidencia": "Partes X01–X07 en un periodo nuevo (202751)"
+      "estado": "validado",
+      "evidencia": "05/10: el periodo 202751 «2027-V Verano Idi.Com.Emp.» ya existía, con la parte X01 (12-ENE a 22-FEB-2027, 6 semanas). Se creó en SSASECT un NRC de prueba ESEC 00650 sección A en 202751/X01. Falta X02 en 202751 (U22)"
     },
     "12": {
       "estado": "validado",
@@ -279,6 +279,10 @@
     {
       "id": "U05",
       "texto": "Nombres oficiales de los cursos y pesos de evaluación"
+    },
+    {
+      "id": "U22",
+      "texto": "202751 solo tiene X01 (y I01, P01). ¿Se agregan X02 y los demás grupos de verano 2027? ¿Con qué fechas?"
     }
   ],
   "casuisticas": {

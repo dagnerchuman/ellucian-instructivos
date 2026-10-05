@@ -85,7 +85,7 @@ Son los **jefes, especialistas y asistentes** de cada centro, **o cualquier otra
 2. El **jefe** revisa la carga lectiva del docente en `SIAASGN` y da su **visto bueno**.
 3. Recién con ese visto bueno pasa al **Vicerrectorado Académico**, que **revisa y aprueba** la carga lectiva.
 
-*Por definir:* los instructivos 5.2 no tienen un paso de aprobación dentro de Banner. Falta acordar cómo se deja constancia del visto bueno del jefe y de la aprobación del Vicerrectorado.
+**Constancia (fuera de Banner):** Banner calcula la carga, pero no registra aprobaciones (el instructivo 5.2 no trae ese paso). El trámite va por la **intranet de la USS**: el jefe envía un oficio o documento con asunto, detalle y observación, y adjunta la carga (por ejemplo, la de `SIAASGN`). La intranet le da un **número de oficio**, y el **Vicerrector Académico emite la resolución** de aprobación.
 
 ### Detalle por Nivel:
 

@@ -31,7 +31,7 @@ Esta guía documenta el procedimiento y los requisitos para la asignación de do
   * Guardar cambios (3er guardado de SSASECT).
 
 ### Paso 3: Asignación y Auditoría de Carga en SIAASGN
-* **Quién aprueba (USS, C47):** el jefe del centro asigna al docente en el NRC y da su visto bueno a la carga; luego el **Vicerrectorado Académico** la revisa y aprueba. Cómo se deja constancia está por definir (U23).
+* **Quién aprueba (USS, C47):** el jefe del centro asigna al docente en el NRC y da su visto bueno a la carga; luego el **Vicerrectorado Académico** la revisa y aprueba. La constancia va fuera de Banner (C48): oficio en la intranet de la USS (asunto, detalle, observación y adjunto), con número de oficio; el Vicerrector emite la resolución.
 * **Página:** **SIAASGN (Asignaciones de la Facultad)**.
 * Permite verificar la sumatoria de horas lectivas que acumula el docente en todas sus secciones asignadas durante el periodo:
   * Horas semanales de contacto frente a grupo.

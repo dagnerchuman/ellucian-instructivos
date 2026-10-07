@@ -5,7 +5,7 @@
 ---
 
 ## 📌 Índice Rápido de Navegación
-- **Confirmado por el usuario (C01 – C57):**
+- **Confirmado por el usuario (C01 – C58):**
   - *C01–C12:* Alcance CCEE, catálogo mensual, periodos 2026xx, horas clase, flujos, prerrequisito fatal y suficiencia de inglés, formato con paréntesis.
   - *C13–C14:* Casuísticas para pruebas (fallecimiento docente, rediseño, reclamos).
   - *C15–C21:* Primera prueba integral TEST NRC 1021 (`ESEC 00650`, SSASECQ, GOAMTCH `S00581081`, niveles STVLEVL, programa `CMEMC38`, SAAQUIK, SFAREGS).
@@ -19,6 +19,7 @@
   - *C44:* Script 18-C validado con CER (no existe un servicio de queja, U14); las solicitudes nacen en el Autoservicio.
   - *C45:* Script 11 validado: 202751 con X01 y NRC de prueba creado.
   - *C46:* Usuarios administrativos (jefes, especialistas, asistentes o con permisos) y población: USS + externos.
+  - *C58:* Ellucian: un programa presencial no puede ir con plan semipresencial; el archivo de equivalencias está mal.
   - *C57:* `ES` y `FC` creados en STVFCNT; horas por semana; funciones: matrícula, coordinación, atención a estudiantes.
   - *C56:* Especialista `ES` (48 h, también matricula y hace funciones administrativas); facilitador `FC` (14 a 23 h).
   - *C55:* Pregrado fuera de la carga: está en otros periodos.
@@ -125,6 +126,7 @@
 | C55 | **Pregrado queda fuera de la carga (05/10):** «olvídate de pregrado, porque ellos están en otro periodo». La carga de los centros se configura y se mide **solo en los periodos de Centros** (202651, 202654, 202656, 202751). Las reglas (SIAFLRT, SIAFLCT) y el factor FTE (SIATERM) son por periodo, así que no se mezclan con Pregrado (ADR-001, ADR-020). | 05/10/2026 | Usuario (chat) |
 | C56 | **Códigos y horas de los docentes de Centros (05/10):** el **especialista** tiene código **`ES`** y el **facilitador**, código **`FC`**. Los facilitadores tienen un **mínimo de 14 horas y un máximo de 23**. Los especialistas **también matriculan** y tienen **otras funciones administrativas** (responde U28-b, d y e). | 05/10/2026 | Usuario (chat) |
 | C57 | **Contratos y labor administrativa (05/10):** (a) el usuario **creó en STVFCNT** los tipos de contrato **`ES`** (especialista) y **`FC`** (facilitador); (b) las 14 a 23 horas del facilitador son **por semana**; (c) las funciones administrativas del especialista son **matrícula, coordinación, atención a estudiantes**, etc. (d) No sabe si conviene medir la carga por contrato o por regla de carga; ADR-020 sigue propuesto. | 05/10/2026 | Usuario (TEST y chat) |
+| C58 | **Equivalencias: modalidad y plan (07/10, respuesta de Ellucian):** en el archivo «Equivalencia_registradas», filas de Pregrado con MODALIDAD **PRESENCIAL** (por ejemplo Administración P01 y Contabilidad P05) están vinculadas en la columna N a un **plan semipresencial**. Ellucian respondió que **no se puede**: «en el Excel aguanta todo, pero la data está mal». Cada fila debe ir con el plan de su modalidad, y hay que corregir el archivo antes de la carga (relacionado con la carga LD01, E07). Es tema de Pregrado (fuera del alcance, ADR-001); se anota porque afecta la carga. | 07/10/2026 | Usuario (reunión con Ellucian) |
 
 ## 2. Resuelto con los instructivos
 Detalle y citas en `arquitectura-centros-empresariales/references/reglas-ellucian.md`.

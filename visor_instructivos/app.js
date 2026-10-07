@@ -252,21 +252,40 @@ function initApp() {
   // TREE NAVIGATION & EXPLORER
   // =========================================================================
 
+  // Normaliza para buscar sin importar tildes ni mayúsculas: «matricula» encuentra «Matrícula».
+  function normalizar(texto) {
+    return (texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function coincide(texto, consulta) {
+    const t = normalizar(texto);
+    return consulta.split(/\s+/).filter(Boolean).every(palabra => t.includes(palabra));
+  }
+
   function renderTree(filterQuery = '') {
     elements.explorerTree.innerHTML = '';
-    const q = filterQuery.toLowerCase().trim();
+    const q = normalizar(filterQuery).trim();
 
     if (typeof APP_TREE === 'undefined' || !APP_TREE.children) {
       elements.explorerTree.innerHTML = '<div class="empty-desc" style="padding: 16px; color:#94a3b8;">Cargando instructivos...</div>';
       return;
     }
 
+    let encontrados = 0;
     APP_TREE.children.forEach(capNode => {
       const nodeEl = createTreeNode(capNode, q);
       if (nodeEl) {
         elements.explorerTree.appendChild(nodeEl);
+        encontrados++;
       }
     });
+
+    if (q && encontrados === 0) {
+      const vacio = document.createElement('div');
+      vacio.className = 'search-empty';
+      vacio.textContent = `Sin resultados para «${filterQuery.trim()}». Prueba con otra palabra o con el código de la página (por ejemplo, SSASECT).`;
+      elements.explorerTree.appendChild(vacio);
+    }
 
     updateActiveTreeItem(state.currentId);
   }
@@ -277,10 +296,9 @@ function initApp() {
 
     if (filterQuery) {
       if (isFile) {
-        const matchTitle = node.name.toLowerCase().includes(filterQuery);
         const pres = (typeof PRESENTATIONS !== 'undefined') ? PRESENTATIONS[node.id] : null;
-        const matchForms = pres && pres.forms && pres.forms.some(f => f.toLowerCase().includes(filterQuery));
-        if (!matchTitle && !matchForms) return null;
+        const texto = [node.name, ...((pres && pres.forms) || [])].join(' ');
+        if (!coincide(texto, filterQuery)) return null;
       } else if (isDir) {
         const matchedChildren = [];
         if (node.children) {
@@ -289,7 +307,7 @@ function initApp() {
             if (childNode) matchedChildren.push(childNode);
           });
         }
-        if (matchedChildren.length === 0 && !node.name.toLowerCase().includes(filterQuery)) {
+        if (matchedChildren.length === 0 && !coincide(node.name, filterQuery)) {
           return null;
         }
       }

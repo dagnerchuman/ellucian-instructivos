@@ -686,11 +686,14 @@ function initApp() {
     if (elements.zoomLevelText) {
       elements.zoomLevelText.textContent = `${Math.round(zoom * 100)}%`;
     }
+    if (elements.btnZoomOut) {
+      elements.btnZoomOut.disabled = zoom <= 1.0;
+    }
     updateCursorState();
   }
 
   function setZoom(newZoom, pointerX = null, pointerY = null) {
-    const clamped = Math.max(0.5, Math.min(3.5, Math.round(newZoom * 100) / 100));
+    const clamped = Math.max(1.0, Math.min(3.5, Math.round(newZoom * 100) / 100)); // mínimo 100 %: más chico no se lee
     if (Math.abs(state.zoom - clamped) < 0.001) return;
 
     // En desktop al usar zoom (> 100%), cerrar automáticamente las miniaturas para máximo espacio

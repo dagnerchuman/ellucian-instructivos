@@ -3890,6 +3890,11 @@ var PptxBrowser = (() => {
       }
       fontScaleAttr = (lo + hi) / 2;
     }
+    // Medición sin dibujar: la tabla la usa para agrandar las filas cuando el texto no cabe (como PowerPoint).
+    if (inherit && inherit.medir) {
+      if (isVert) ctx.restore();
+      return totalHeight + tIns + bIns;
+    }
     let startY = ty;
     if (anchor === "ctr") {
       startY = ty + (th - totalHeight) / 2;
@@ -4487,10 +4492,30 @@ var PptxBrowser = (() => {
     const tblGrid = g1(tbl, "tblGrid");
     const colWidths = gtn(tblGrid, "gridCol").map((gc) => attrInt(gc, "w", 0) * scale);
     const rows = gtn(tbl, "tr");
+    // PowerPoint agranda cada fila hasta que su texto quepa: se mide antes de dibujar.
+    const rowHeights = [];
+    for (let ri = 0; ri < rows.length; ri++) {
+      let h = attrInt(rows[ri], "h", 457200) * scale;
+      const cellsM = gtn(rows[ri], "tc");
+      for (let ci = 0; ci < cellsM.length; ci++) {
+        const cell = cellsM[ci];
+        if (attrInt(cell, "rowSpan", 1) > 1 || attr(cell, "vMerge", "0") === "1") continue;
+        const span = attrInt(cell, "gridSpan", 1);
+        let w = 0;
+        for (let gs = 0; gs < span; gs++) w += colWidths[ci + gs] || 0;
+        const txB = g1(cell, "txBody");
+        if (!txB || w <= 0) continue;
+        ctx.save();
+        const need = await renderTextBody(ctx, txB, 0, 0, w, h, scale, themeColors, themeData, 1400, null, null, { medir: true });
+        ctx.restore();
+        if (typeof need === "number" && need > h) h = need;
+      }
+      rowHeights.push(h);
+    }
     let curY = fy;
     for (let ri = 0; ri < rows.length; ri++) {
       const row = rows[ri];
-      const rowH = attrInt(row, "h", 457200) * scale;
+      const rowH = rowHeights[ri];
       const cells = gtn(row, "tc");
       let curX = fx;
       const isFirstRow = ri === 0;

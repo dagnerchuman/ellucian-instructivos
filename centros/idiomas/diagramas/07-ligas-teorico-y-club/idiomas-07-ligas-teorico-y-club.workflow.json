@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Idiomas · 7. Ligas: NRC teórico + club de conversación",
-    "subtitle": "Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Idiomas · 7. Ligas: NRC teórico + club de conversación (Capacidad 5)",
+    "subtitle": "Capacidad 5.3 · Crear Ligas (SSADETL) · Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",

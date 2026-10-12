@@ -1,0 +1,24 @@
+,,,,,,,,
+,,,,,,,,
+,Paso,Actividad / Operación,Pantalla Banner,Datos / Parámetros Ingresados,Resultado Esperado,Resultado en TEST,Estatus,Observaciones Técnicas / Incidencia
+,6.1,Registro de notas finales en la sección,SFASLST (Lista de Clase y Calificaciones),"Periodo: 202656
+NRC: 1021
+Alumnos: S00581081 (Nota 16), S00581091 (Nota 10/16)
+Modo: V",Guardar las notas del NRC en borrador de acta.,Notas guardadas correctamente en la base de datos. Casilla Rolled desmarcada.,CONFORME,Las notas quedan asentadas provisionalmente en la sección a la espera del cierre masivo por Registros Académicos.
+,6.2,Verificación del programa del estudiante,SGASTDN (Registro General del Estudiante),"ID: S00581091
+Periodo: 202656
+Programa: CMEMC38
+Nivel: C
+Escuela: EM",El alumno debe tener asignado el programa activo de Computación con Nivel C.,Programa CMEMC38 activo y vigente en el catálogo correspondiente.,CONFORME,Se corrigió la asignación previa para que el nivel del estudiante coincida con el nivel del curso (Nivel C).
+,6.3,Envío del proceso de cierre de actas,GJAPCTL (Control de Envío de Procesos),"Proceso: SHRROLL
+Printer: DATABASE
+01 Periodo: 202656
+04 Parte: %
+05 NRC: 1021
+06 Usuario: DCHUMAN
+07 Modo: U (Update)",Ejecución del Job Submission en el servidor para cierre de actas masivo.,Job procesado con éxito en el servidor (shrroll_8105.lis).,CONFORME,El trabajo se envía correctamente en segundo plano y genera los archivos .lis y .log.
+,6.4,Auditoría de cierre y pase a historia,GJIREVO (Revisión de Salida Guardada),"Proceso: SHRROLL
+Archivo: shrroll_8105.lis
+Número: 8105",Transferencia de notas a la historia permanente (SHACRSE) y check en Rolled.,Error reportado: No Substitute Grade Found *ERROR*.,OBSERVADO (INCIDENCIA U20),Falla de parametrización institucional: Discrepancia entre el catálogo de cursos (SCACRSE exige Modo V) y la tabla maestra de notas (SHAGRDE Nivel C tiene Modo P). Falta regla GMODGRD en GTVSDAX.
+,6.5,Auditoría en Historia Académica,SHACRSE (Cursos del Estudiante en Historia),"ID: S00581091
+Periodo: 202656",Visualizar el curso ESEC 00650 con nota oficial y créditos ganados.,No muestra registro debido a la interrupción de SHRROLL.,PENDIENTE,Queda supeditado a la homologación del Modo de Calificación por parte de Registros Académicos / Ellucian.

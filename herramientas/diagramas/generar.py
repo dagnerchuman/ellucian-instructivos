@@ -9,14 +9,13 @@ Además genera el comparativo de los tres centros (centros/comun/diagramas) y lo
 centros/README.md, centros/index.html y centros/<centro>/README.md (indices.py).
 
 Uso:
-  python3 herramientas/diagramas/generar.py                       # todo
+  python3 herramientas/diagramas/generar.py                       # todo (JSON + HTML rápido, sin imágenes)
   python3 herramientas/diagramas/generar.py computacion           # un centro (sin el común)
   python3 herramientas/diagramas/generar.py comun                 # solo el comparativo
   python3 herramientas/diagramas/generar.py idiomas --solo 2 --solo 4
-  python3 herramientas/diagramas/generar.py --sin-imagenes        # solo JSON + HTML
+  python3 herramientas/diagramas/generar.py --con-imagenes        # opcional: exportar PNG y SVG (lento)
 
-Requisitos: node >= 18, el motor Archify (bash herramientas/diagramas/instalar_archify.sh)
-y Playwright con Chromium para la prueba en navegador y las imágenes.
+Requisitos: node >= 18 y el motor Archify (bash herramientas/diagramas/instalar_archify.sh).
 """
 import argparse
 import json
@@ -109,7 +108,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("centros", nargs="*", help="idiomas, computacion, emprendimiento o comun (por defecto, todo)")
     ap.add_argument("--solo", type=int, action="append", help="número de diagrama (se puede repetir)")
-    ap.add_argument("--sin-imagenes", action="store_true", help="no exportar PNG ni SVG")
+    ap.add_argument("--con-imagenes", action="store_true", help="exportar PNG y SVG con Chromium (por defecto desactivado)")
+    ap.add_argument("--sin-imagenes", action="store_true", help="(obsoleto) no exportar imágenes; ahora es el comportamiento predeterminado")
     args = ap.parse_args()
 
     if not CLI.exists():
@@ -142,7 +142,7 @@ def main():
             fallas.append(html_rel)
             print(f"FALLA  {html_rel}\n{resumen_fallas(salida)}")
 
-    if hechos and not args.sin_imagenes:
+    if hechos and args.con_imagenes and not args.sin_imagenes:
         r = subprocess.run(["node", str(AQUI / "exportar.mjs"), *hechos], cwd=RAIZ)
         if r.returncode != 0:
             fallas.append("exportar.mjs")

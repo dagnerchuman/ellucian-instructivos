@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Computación · 13. Script 12 · Cierre de periodo",
-    "subtitle": "Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Computación · Capacidad 7 · Script 12 · Cierre de periodo",
+    "subtitle": "Capacidad 7.1.9 · Cierre de periodo y pase a historia (SHRROLL) · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -478,13 +478,15 @@
   "lanes": [
     {
       "id": "caso",
-      "label": "Situación → pasos → resultado"
+      "label": "Capacidad 7 · Situación → pasos → resultado"
     }
   ],
   "mainPath": [
     "c0",
     "c1",
     "c2",
+    "c3",
+    "c4",
     "cr"
   ],
   "nodes": [
@@ -493,8 +495,8 @@
       "lane": "caso",
       "col": 0,
       "type": "security",
-      "label": "Fin del periodo",
-      "sublabel": "notas finales listas",
+      "label": "Fin de periodo",
+      "sublabel": "calificaciones listas",
       "width": 170
     },
     {
@@ -502,26 +504,48 @@
       "lane": "caso",
       "col": 1,
       "type": "backend",
-      "label": "SHAGRDE",
-      "sublabel": "revisar el modo",
-      "width": 170
+      "label": "SFASLST",
+      "sublabel": "ingreso de notas",
+      "width": 170,
+      "tag": "S00581109 (16), S00581108 (08), INH"
     },
     {
       "id": "c2",
       "lane": "caso",
       "col": 2,
-      "type": "messagebus",
-      "label": "SHRROLL",
-      "sublabel": "pase a historia",
-      "width": 170
+      "type": "backend",
+      "label": "SHAGRDE",
+      "sublabel": "alineación modo V",
+      "width": 170,
+      "tag": "diagnóstico y resolución U20"
+    },
+    {
+      "id": "c3",
+      "lane": "caso",
+      "col": 3,
+      "type": "backend",
+      "label": "GJAPCTL",
+      "sublabel": "reejecución SHRROLL",
+      "width": 170,
+      "tag": "Job 8114 exitoso (100 %)"
+    },
+    {
+      "id": "c4",
+      "lane": "caso",
+      "col": 4,
+      "type": "backend",
+      "label": "SHATERM",
+      "sublabel": "historial y acta",
+      "width": 170,
+      "tag": "Rolled = Y · acta cerrada"
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 3,
+      "col": 5,
       "type": "database",
-      "label": "En la historia",
-      "sublabel": "Rolled to History",
+      "label": "Actas cerradas",
+      "sublabel": "notas en historia",
       "width": 170,
       "tag": "validado en TEST",
       "icon": "success"
@@ -541,8 +565,20 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-cr",
+      "id": "e-c2-c3",
       "from": "c2",
+      "to": "c3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c3-c4",
+      "from": "c3",
+      "to": "c4",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c4-cr",
+      "from": "c4",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -553,6 +589,19 @@
       "title": "Probado en TEST",
       "items": [
         "GJAPCTL: jobs SHRROLL 8113 y 8114 exitosos"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 7.1 y 8)",
+      "items": [
+        "Paso 01 (SFASLST): Ingreso de Calificaciones — Periodo 202656, NRC 1026: S00581109 (16 V), S00581108 (08 V), S00581111 (INH V).",
+        "Paso 02 (GJAPCTL): Ejecución Inicial Pase a Historia — Proceso SHRROLL, corrida preliminar para evaluar población.",
+        "Paso 03 (SHAGRDE / Catálogo): Diagnóstico Incidencia U20 — Discrepancia entre Modo V en SCACRSE vs Modo P en SHAGRDE Nivel C.",
+        "Paso 04 (SHAGRDE): Alineación de Modo de Calificación — Homologación de Modo V a nivel curso y estudiante para SHRROLL.",
+        "Paso 05 (GJAPCTL): Reejecución de Proceso Batch — SHRROLL Job 8114 exitoso con 100 % de estudiantes rolados a historia.",
+        "Paso 06 (SHATERM / SHASMRY): Validación en Historial — Estatus «Rolled to Academic History» confirmado en los expedientes.",
+        "Paso 07 (SFASLST / SHAGRDE): Cierre Formal y Bloqueo de Acta — Indicador Grade Roll Status = Y impidiendo ediciones posteriores."
       ]
     },
     {

@@ -1,0 +1,20 @@
+,,,,,,,
+,SCRIPT 09: SUSPENSIÓN TEMPORAL Y REACTIVACIÓN DE MATRÍCULA EN BANNER,,,,,,
+,Módulo:,Banner Student / Registro Académico,Responsable:,Dagner Chumán,Fecha:,02/10/2026,Ambiente: TEST
+,Objetivo:,"Validar el impedimento de inscripción en SFAREGS mientras el estudiante tenga estatus inactivo (IS), y comprobar la restitución inmediata del derecho de matrícula tras su reactivación (AS) en SGASTDN.",,,,,
+,,,,,,,
+,ESTUDIANTE (TEST),,ESTATUS DE CONTROL,PANTALLAS EVALUADAS,,ESTADO DE LA PRUEBA,
+,S00581109 - María Ramírez,,IS → AS,SGASTDN → SFAREGS,,VALIDADO AL 100%,
+,,,,,,,
+,N° Script,Nombre de la Casuística,Pantallas Banner,Datos de Prueba (TEST),Resultado Esperado,Resultado Obtenido / Evidencia,Estado
+,Script 09,Suspensión Temporal y Reactivación de Matrícula,SGASTDN → SFAREGS (Periodo de Alumno),"Estudiante: S00581109 (María Ramírez)
+Estatus probado: IS (Inactivo) y AS (Activo)",Impedir inscripción mientras el participante esté inactivo y restablecer derechos académicos al reactivarlo como AS.,Banner bloquea la autorización e inscripción de cursos cuando el estatus del estudiante no permite matrícula (IS/SU). La restitución del estatus AS en el expediente rehabilita la elegibilidad inmediata.,VALIDADO AL 100%
+,,,,,,,
+,Paso,Acción Operativa,Pantalla Banner,Descripción y Parámetros,Comportamiento Esperado,Resultado de la Ejecución,Estatus
+,Paso 01,Verificación de Estatus Suspendido,SGASTDN,ID: S00581109 | Pestaña Curricula | Status: **IS**,Constatar que el expediente del alumno se encuentra con estatus de inactividad académica.,Estatus confirmado como IS (Inactivo/Suspendido) en el periodo vigente.,Completado
+,Paso 02,Intento de Inscripción con Estatus IS,SFAREGS,ID: S00581109 | Periodo vigente | Intento de alta de NRC,El sistema de registro debe impedir cualquier transacción de inscripción por condición inactiva.,Bloqueo efectivo: SFAREGS impide agregar materias debido a la condición académica IS.,Completado
+,Paso 03,Validación de Mensaje de Restricción,SFAREGS,Barra de Notificaciones / Mensajes de Control Banner,Mostrar notificación de error o advertencia indicando estatus no elegible para inscripción.,Mensaje emitir restricción: «Estudiante no elegible para inscripción / Estatus no vigente».,Completado
+,Paso 04,Reactivación Académica de Expediente,SGASTDN,ID: S00581109 | Modificación de registro a Status: **AS**,Actualizar el estatus general del alumno a Activo (AS) y guardar cambios satisfactoriamente.,Cambio guardado exitosamente. Registro de alumno actualizado con estatus AS en SGASTDN.,Completado
+,Paso 05,Reintento de Inscripción en Registro,SFAREGS,ID: S00581109 | Periodo vigente | Registro de NRC en curso,Habilitar la captura de asignaturas y validar que el motor de reglas permita la matrícula.,Permite la selección de materias; el registro de cursos se procesa sin alertas de estatus.,Completado
+,Paso 06,Confirmación y Asignación de Materias,SFAREGS,ID: S00581109 | Guardar cambios con estatus **RE**,Guardar la inscripción asignando vacante y actualizando el estado de la matrícula.,Inscripción grabada exitosamente con código **RE**. Estatus académico activo restablecido.,Completado
+,Paso 07,Auditoría Final de Expediente e Historial,SGASTDN / SHACRSE,ID: S00581109 | Consulta de historial de cambios y carga,Asegurar coherencia integral entre el historial de estatus académico y la carga registrada.,Auditoría conforme: Expediente activo (AS) con carga horaria y créditos debidamente registrados.,Completado

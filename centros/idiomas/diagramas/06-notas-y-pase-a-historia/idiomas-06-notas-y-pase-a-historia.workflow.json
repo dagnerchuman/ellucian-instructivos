@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Idiomas · 6. Notas y pase a historia",
-    "subtitle": "Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Idiomas · 6. Notas y pase a historia (Capacidades 7 y 8)",
+    "subtitle": "Capacidad 7.1 (Calificaciones) y 8 (CAPP) · Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -623,6 +623,19 @@
       "items": [
         "«No Substitute Grade»: la escala del nivel no tiene el modo del curso; agrégalo en SHAGRDE (U20)",
         "Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Calificaciones y Cierre (Excel 1 y 2 · Instructivo 7.1 y 8)",
+      "items": [
+        "Paso 1 (SHAGRDE / Catálogo): Verificación de escala vigesimal y homologación de Modo V a nivel curso y programa.",
+        "Paso 2 (SFASLST / Autoservicio): Registro de calificaciones docentes (≥11 aprueba, ≤10 reprueba, INH inhabilitado).",
+        "Paso 3 (SFASLST): Verificación de estatus previo de acta lectiva (columna Rolled en N).",
+        "Paso 4 (GJAPCTL): Despacho de proceso batch SHRROLL (Periodo 202656, NRC correspondiente, Modo U).",
+        "Paso 5 (GJIREVO): Auditoría técnica de bitácora .lis confirmando pase masivo a historia académica sin errores.",
+        "Paso 6 (SHATERM / SHACRSE): Confirmación de notas asentadas en historial definitivo («Rolled to Academic History»).",
+        "Paso 7 (SMARQCM / SMICRLT): Auditoría CAPP de cumplimiento curricular (reprobados segregados a «Cursos no usados»)."
       ]
     },
     {

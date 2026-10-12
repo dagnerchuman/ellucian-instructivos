@@ -1,0 +1,25 @@
+,,,,,,
+,GUÍA OPERATIVA: MATRÍCULA E INSCRIPCIÓN DE ALUMNO EN EL NRC (SFAREGS),,,,Instructivo 5.4 • Inscripción por Backoffice,
+,Procedimiento estándar para registrar y matricular estudiantes en secciones de cursos (NRC) en Banner Student.,,,,Validado: TEST USS (29/09/2026),
+,TRANSACCIÓN PRINCIPAL,,REGLA DE DESBLOQUEO,,RESULTADO ESPERADO,
+,SFAREGS,,Estatus EL ➔ Guardar,,Estatus RE / RW,
+,Inscripción de curso de alumno,,Autorizar plan para desbloquear NRC,,Cupo actualizado en SSASECQ (0 ➔ 1),
+,,,,,,
+,Paso / Bloque,Campo / Sección,Valor de Referencia / Ejemplo,Tipo de Campo,Instrucciones Operativas y Validaciones,Hito / Control
+,Paso 1: Acceso a Banner,Formulario SFAREGS,SFAREGS,Acceso inicial,Entrar a SFAREGS (Inscripción de curso de alumno) escribiendo la transacción en la barra de búsqueda de Banner.,Inicio de proceso
+,Paso 2: Encabezado (Bloque Clave),Periodo,202656 (o periodo lectivo),Obligatorio,Ingresar el código del periodo correspondiente en el encabezado del formulario.,Periodo activo
+,,ID del estudiante,S00581081,Obligatorio,Digitar el ID del alumno que se va a matricular en el periodo académico.,Identificación alumno
+,,Plan de estudios,Hacer clic en la casilla (carga 1),Autocarga,Hacer clic directamente en la casilla para que cargue automáticamente el número 1.,Plan seleccionado
+,,Botón «Ir»,Clic en «Ir» (arriba a la derecha),Navegación,Hacer clic en el botón azul «Ir» para acceder a los bloques de detalle del estudiante.,Acceso a registro
+,Paso 3: Autorización del Plan,Verificación de estatus,EL (Inscripción Autorizada),Validación obligatoria,Verificar que en «Información de ingreso» el estatus figure en EL antes de proceder.,Requisito previo OK
+,(Paso obligatorio para desbloquear),Plan de estudios de ingreso,1,Obligatorio,"En el bloque intermedio «PLAN DE ESTUDIOS DE INGRESO», escribir 1 en la columna Plan de estudios.",Parámetro fijado
+,,Estatus de ingreso,EL,Mandatorio,En la columna Estatus de ingreso escribir EL para habilitar formalmente la inscripción.,Habilitación curso
+,,¡GUARDAR AUTORIZACIÓN!,Botón «Guardar» (abajo a la derecha),Hito Crítico,Hacer clic en el botón azul «GUARDAR» (abajo a la derecha) para confirmar y desbloquear la inscripción.,⭐ 1er Guardado (Desbloqueo)
+,Paso 4: Navegación a Cursos,Botón «Sección siguiente»,Clic en botón «⤓» (abajo a la izquierda),Navegación rápida,Hacer clic en el botón «Sección siguiente» (⤓) ubicado en la esquina inferior izquierda.,Salto a sección cursos
+,(Atajo clave de navegación),Atajo de teclado,Option + Fn + Flecha Abajo,Atajo de teclado,En teclado Mac: Option + Fn + Flecha Abajo (en PC: Page Down). El cursor se posiciona dentro de «NRC».,Foco directo en NRC
+,Paso 5: Registro del NRC,Columna NRC,1021,Mandatorio,"En la columna NRC de la sección inferior, digitar el número del NRC programado en SSASECT.",Asignación de cupo
+,,Tecla Tab (Autocompletar),Presionar tecla [Tab],Acción del sistema,"Al presionar Tab, Banner autocompleta: Materia ESEC, Curso 00650, Sección B y el título del curso.",Autocarga catálogo
+,,¡GUARDAR MATRÍCULA!,Botón «Guardar» (abajo a la derecha),Hito Final,Hacer clic en el botón azul «GUARDAR» (abajo a la derecha) para asentar la matrícula.,⭐ 2do Guardado (Matrícula)
+,Paso 6: Resultado Esperado,Estatus del alumno,RE o RW (Registrado),Validación exitosa,Verificar que el registro quede asentado con estatus RE o RW en la grilla de materias inscritas.,Inscripción confirmada
+,(Verificación de impacto),Cupo real en SSASECQ,NRC 1021: cupo sube de 0 a 1,Control académico,"En la transacción SSASECQ, verificar que el NRC 1021 actualizó su cupo real de participantes (0 ➔ 1).",Aforo actualizado
+,Control de Calidad,Cierre de Operación,Proceso verificado en TEST USS,Auditoría,El alumno queda matriculado formalmente y el cupo reservado de manera exitosa en Banner.,Proceso 100% Concluido

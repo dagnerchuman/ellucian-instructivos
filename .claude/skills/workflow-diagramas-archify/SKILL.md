@@ -43,9 +43,9 @@ Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salid
 ## Regenerar
 ```bash
 bash herramientas/diagramas/instalar_archify.sh            # una vez por máquina o sesión
-python3 herramientas/diagramas/generar.py                  # todo: 43 diagramas + índices
+python3 herramientas/diagramas/generar.py                  # todo: 45 diagramas (JSON + HTML + índices, sin imágenes)
 python3 herramientas/diagramas/generar.py idiomas --solo 4 # un diagrama de un centro
-python3 herramientas/diagramas/generar.py --sin-imagenes   # más rápido: solo JSON + HTML
+python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar también PNG y SVG (lento)
 ```
 - Cada diagrama pasa por `archify finalize` con calidad *showcase*: esquema, geometría, legibilidad, revisión estricta y prueba en Chromium.
 - Si falla, `generar.py` imprime el diagnóstico y el arreglo sugerido. Corrige la plantilla, no el HTML.

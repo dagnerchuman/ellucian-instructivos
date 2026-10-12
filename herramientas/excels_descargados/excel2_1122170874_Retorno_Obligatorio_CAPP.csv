@@ -1,0 +1,22 @@
+,,,,,,,
+,SCRIPT 10: RETORNO OBLIGATORIO Y BLOQUEO DE AVANCE POR DESAPROBADO (CAPP),,,,,,
+,Módulo:,Banner Student / Cumplimiento Curricular (CAPP),Responsable:,Dagner Chumán,Fecha:,02/10/2026,Ambiente: TEST
+,Objetivo:,"Validar que la auditoría curricular CAPP detecte calificación desaprobatoria (08) en ESEC 00650, rechace la acreditación de créditos, envíe el curso a «Cursos no usados» en SMICRLT y exija el retorno obligatorio a la asignatura para cumplir el plan de estudios en SMIPOUT.",,,,,
+,,,,,,,
+,ESTUDIANTE (TEST),,PROGRAMA ACADÉMICO,CONDICIÓN / NOTA,,ESTADO DE LA PRUEBA,
+,S00581108 - Carlos Torres,,CMEMC38,08 (Desaprobado),,VALIDADO AL 100%,
+,,,,,,,
+,N° Script,Nombre de la Casuística,Pantallas Banner,Datos de Prueba (TEST),Resultado Esperado,Resultado Obtenido / Evidencia,Estado
+,Script 10,Retorno Obligatorio y Bloqueo de Avance por Desaprobado,SMARQCM → SMICRLT → SMIPOUT,"Estudiante: S00581108 (Carlos Torres Mendoza)
+Programa: CMEMC38
+Calificación rolada: 08 (Desaprobado)
+Curso: ESEC 00650","La auditoría curricular CAPP debe rechazar la calificación reprobatoria, no otorgar créditos y mantener incompleto el plan de estudios.","CAPP dictaminó «NO CUMPLE» en requerimientos y áreas. SMIPOUT exigió nota mínima 11 computando 0,000 créditos usados (0/4 cursos). SMICRLT envió ESEC 00650 a «Cursos no usados» (reprobados).",VALIDADO AL 100%
+,,,,,,,
+,Paso,Acción Operativa,Pantalla Banner,Descripción y Parámetros,Comportamiento Esperado,Resultado de la Ejecución,Estatus
+,Paso 01,Solicitud de Auditoría Curricular,SMARQCM,ID: S00581108 | Programa: CMEMC38 | Generación de auditoría general CAPP,Iniciar la evaluación curricular global del estudiante contra la malla CMEMC38.,Auditoría generada exitosamente. Parámetros de evaluación curricular cargados.,Completado
+,Paso 02,Evaluación de Reglas de Calificación Mínima,SMIPOUT,Validación de nota aprobatoria mínima requerida (Nota ≥ 11) en el área curricular,Exigir nota mínima aprobatoria de 11 para otorgar créditos del curso ESEC 00650.,"Regla aplicada: Nota 08 no alcanza el umbral mínimo exigido (11). Créditos: 0,000.",Completado
+,Paso 03,Segregación a Cursos No Usados,SMICRLT,Revisión de cursos aplicados vs. no aplicados al plan de estudios,Desplazar la asignatura reprobada al bloque de cursos no usados / reprobados.,Asignatura ESEC 00650 listada en «Cursos no usados» con calificación 08.,Completado
+,Paso 04,Cómputo de Créditos y Avance de Cursos,SMIPOUT,Auditoría de progreso en área curricular de especialidad (Requerimiento 0/4 cursos),Registrar 0 créditos acumulados y 0 cursos aprobados para el bloque evaluado.,"Progreso computado: 0,000 créditos usados (0/4 cursos completados).",Completado
+,Paso 05,Determinación de Estatus de Cumplimiento,SMARQCM,Verificación de dictamen global del área y requerimientos del programa,Marcar el área y los requisitos vinculados con dictamen «NO CUMPLE».,CAPP dictamina «NO CUMPLE» a nivel de área curricular y requerimiento general.,Completado
+,Paso 06,Activación de Retorno Obligatorio,SMIPOUT / CAPP,Condición de avance curricular y elegibilidad para siguientes periodos,Exigir reincorporación/recursado obligatorio de ESEC 00650 sin permitir avance.,Bloqueo curricular activo: obligatoriedad de cursar y aprobar ESEC 00650 confirmada.,Completado
+,Paso 07,Auditoría Final y Dictamen CAPP,SMARQCM,Reporte final consolidado de auditoría curricular del expediente S00581108,Confirmar rechazo formal de créditos y plan de estudios en estado incompleto.,Expediente curricular auditado al 100% conforme. Plan incompleto ratificado.,Completado

@@ -49,6 +49,8 @@
     {
       "id": "01",
       "nombre": "Matrícula regular",
+      "capacidad": "Capacidad 5",
+      "capacidad_nombre": "Capacidad 5.4 · Inscripción por backoffice (SFAREGS)",
       "paginas": [
         "SFAREGS"
       ]
@@ -56,6 +58,8 @@
     {
       "id": "02",
       "nombre": "Matrícula especial con sobrepasos",
+      "capacidad": "Capacidad 5",
+      "capacidad_nombre": "Capacidad 5.4 · Sobrepasos de inscripción (SFASRPO, SFAREGS)",
       "paginas": [
         "SFASRPO",
         "SFAREGS"
@@ -64,6 +68,8 @@
     {
       "id": "03",
       "nombre": "Matrícula por convalidación",
+      "capacidad": "Capacidad 3",
+      "capacidad_nombre": "Capacidad 3.3 · Convalidación externa (SHATRNS, SHATFAC)",
       "paginas": [
         "SHATRNS",
         "SHATFAC"
@@ -72,6 +78,8 @@
     {
       "id": "04",
       "nombre": "Matrícula por examen de suficiencia",
+      "capacidad": "Capacidad 1 y 5",
+      "capacidad_nombre": "Capacidad 1.1.5 · Prerrequisitos y suficiencia (SOATEST)",
       "paginas": [
         "SOATEST",
         "SFAREGS"
@@ -80,6 +88,8 @@
     {
       "id": "05",
       "nombre": "Curso especial para egresados",
+      "capacidad": "Capacidad 5 y 8",
+      "capacidad_nombre": "Capacidad 5.3 · Programación especial (SSASECT) y 8 · Egreso",
       "paginas": [
         "SSASECT",
         "SFAREGS"
@@ -88,6 +98,8 @@
     {
       "id": "06",
       "nombre": "Dos programas en simultáneo",
+      "capacidad": "Capacidad 4 y 5",
+      "capacidad_nombre": "Capacidad 4.1 · Gestión curricular (SGASTDN) y 5.4 · Inscripción",
       "paginas": [
         "SGASTDN",
         "SFAREGS"
@@ -96,6 +108,8 @@
     {
       "id": "07",
       "nombre": "Tres programas en simultáneo",
+      "capacidad": "Capacidad 4 y 5",
+      "capacidad_nombre": "Capacidad 4.1 · Gestión curricular (SGASTDN) y 5.4 · Inscripción",
       "paginas": [
         "SGASTDN",
         "SFAREGS"
@@ -104,6 +118,8 @@
     {
       "id": "08",
       "nombre": "Retiro de matrícula (DD)",
+      "capacidad": "Capacidad 5",
+      "capacidad_nombre": "Capacidad 5.4 · Retiro de cursos (DD en SFAREGS)",
       "paginas": [
         "SFAREGS"
       ]
@@ -111,6 +127,8 @@
     {
       "id": "09",
       "nombre": "Suspensión y reactivación",
+      "capacidad": "Capacidad 4 y 5",
+      "capacidad_nombre": "Capacidad 4.1 · Estado de permanencia (SGASTDN) y 5.4 · Inscripción",
       "paginas": [
         "SGASTDN",
         "SFAREGS"
@@ -119,6 +137,8 @@
     {
       "id": "10",
       "nombre": "Retorno por desaprobado",
+      "capacidad": "Capacidad 7 y 8",
+      "capacidad_nombre": "Capacidad 7.1 · Calificaciones (SFASLST) y 8 · CAPP (SMARQCM)",
       "paginas": [
         "SMARQCM",
         "SMICRLT"
@@ -127,6 +147,8 @@
     {
       "id": "11",
       "nombre": "Apertura de periodo",
+      "capacidad": "Capacidad 1",
+      "capacidad_nombre": "Capacidad 1.1 · Estructura de periodos (SOATERM, STVTERM)",
       "paginas": [
         "SOATERM",
         "STVTERM"
@@ -135,6 +157,8 @@
     {
       "id": "12",
       "nombre": "Cierre de periodo",
+      "capacidad": "Capacidad 7",
+      "capacidad_nombre": "Capacidad 7.1.9 · Cierre de periodo y pase a historia (SHRROLL)",
       "paginas": [
         "GJAPCTL",
         "SHRROLL"
@@ -143,6 +167,8 @@
     {
       "id": "13",
       "nombre": "Procesamiento de calificaciones",
+      "capacidad": "Capacidad 7",
+      "capacidad_nombre": "Capacidad 7.1 · Escalas (SHAGRDE) e ingreso de notas (SFASLST)",
       "paginas": [
         "SHAGCOM",
         "SFASLST"
@@ -151,6 +177,8 @@
     {
       "id": "14",
       "nombre": "Cierre de curso",
+      "capacidad": "Capacidad 5 y 7",
+      "capacidad_nombre": "Capacidad 5.3 · Estatus de sección y 7.1 · Calificaciones",
       "paginas": [
         "SSASECT",
         "SFASLST"
@@ -159,6 +187,8 @@
     {
       "id": "15",
       "nombre": "Ampliación de cupos y reservas",
+      "capacidad": "Capacidad 5",
+      "capacidad_nombre": "Capacidad 5.3 · Aforo y reservas de cupos (SSASECT, SSARRES)",
       "paginas": [
         "SSASECT",
         "SSARRES"
@@ -167,6 +197,8 @@
     {
       "id": "16",
       "nombre": "División de grupos y traslado",
+      "capacidad": "Capacidad 5",
+      "capacidad_nombre": "Capacidad 5.3 · Programación y 5.4 · Traslado de NRC",
       "paginas": [
         "SSASECT",
         "SFAREGS"
@@ -175,6 +207,8 @@
     {
       "id": "17",
       "nombre": "Gestión de horarios y cruces",
+      "capacidad": "Capacidad 5 y 6",
+      "capacidad_nombre": "Capacidad 5.3 · Horarios (SSASECT) y 6.2 · Espacios físicos (SLARSLT)",
       "paginas": [
         "SSASECT",
         "SLARSLT"
@@ -183,6 +217,8 @@
     {
       "id": "18-A",
       "nombre": "Auditoría de carga docente",
+      "capacidad": "Capacidad 5",
+      "capacidad_nombre": "Capacidad 5.2 · Carga de trabajo docente (SIAASGN)",
       "paginas": [
         "SIAASGN"
       ]
@@ -190,6 +226,8 @@
     {
       "id": "18-B",
       "nombre": "Retenciones y bloqueo de matrícula",
+      "capacidad": "Capacidad 4 y 5",
+      "capacidad_nombre": "Capacidad 4.1.3 y 5.2.1 · Retenciones de personas (SOAHOLD)",
       "paginas": [
         "SOAHOLD",
         "STVHLDD"
@@ -198,6 +236,8 @@
     {
       "id": "18-C",
       "nombre": "Solicitud de servicio o queja",
+      "capacidad": "Capacidad 4 y 10",
+      "capacidad_nombre": "Capacidad 4.3 y 10 · Solicitudes de servicio estudiantiles (SVASVPR)",
       "paginas": [
         "SVASVPR"
       ]

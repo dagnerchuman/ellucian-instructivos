@@ -2,8 +2,8 @@
   "schema_version": 1,
   "diagram_type": "sequence",
   "meta": {
-    "title": "Centro de Emprendimiento · 1. Recorrido completo en Banner",
-    "subtitle": "Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Emprendimiento · 1. Recorrido completo en Banner (Capacidades 1 a 8)",
+    "subtitle": "Capacidades 1 a 8 · Ciclo integral en Banner · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",

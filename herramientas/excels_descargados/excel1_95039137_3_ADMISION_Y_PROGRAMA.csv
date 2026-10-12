@@ -1,0 +1,24 @@
+,,,,,,
+,GUÍA OPERATIVA: ADMISIÓN RÁPIDA Y ASIGNACIÓN DE PROGRAMA (SAAQUIK),,,,Instructivo 5.2 • Admisión Rápida,
+,"Procedimiento institucional en Banner para admitir rápidamente a un alumno, asignar programa base y habilitar su matrícula académica.",,,,Validado: TEST (29/09/2026),
+,TRANSACCIÓN PRINCIPAL,,PARÁMETROS CLAVE,,RESULTADO FINAL,
+,SAAQUIK,,ID + Periodo 202656 + Nivel C,,100% Admitido (3 rows saved),
+,Barra de búsqueda Banner,,Programa CMEMC38 (Malla MC38),,Registro listo para matrícula,
+,,,,,,
+,Paso / Bloque,Campo / Sección,Valor de Referencia / Ejemplo,Tipo de Campo,Instrucciones Operativas y Validaciones,Hito / Control
+,Paso 1: Acceso a la Página,Formulario SAAQUIK,SAAQUIK,Acceso inicial,Digitar SAAQUIK en la barra de búsqueda rápida de Banner para acceder a Admisión Rápida.,Punto de entrada
+,Paso 2: Encabezado (Bloque Clave),Identificación (ID),"[ID Alumno, ej: S00581081]",Obligatorio,Ingresar el ID previamente generado en GOAMTCH (o consultar con DNI si aplica).,Identificación única
+,,Periodo,202656,Mandatorio,Ingresar el código del periodo lectivo (ej. 202656: Centros Empresariales 2026 - Semestre II).,Periodo lectivo
+,,Nivel,C (Computación) / I (Idiomas) / M (Emprend.),Mandatorio,"Código en STVLEVL: C para Computación, I para Idiomas o M para Emprendimiento.",Nivel formativo
+,,Botón de avance,Clic en «Ir»,Navegación,Hacer clic en el botón azul «Ir» (arriba a la derecha) para desbloquear las secciones.,Desbloqueo de bloques
+,Paso 3: Bloque DETALLES,Tipo de alumno,R (Regular) o I (Ingresante),Obligatorio,Seleccionar 'R' (Regular) para continuidad o 'I' (Ingresante) según corresponda.,Clasificación alumno
+,,Estatus de alumno,AS (Activo / Active Student),Mandatorio,Ingresar 'AS' (Activo) para asegurar condición operativa hábil del estudiante.,Estado activo
+,,Residencia,R (Residente),Obligatorio,Ingresar 'R' (Residente) como valor predeterminado estándar.,Parámetro residencia
+,Paso 4: Bloque CURRÍCULO,Fila Prioridad 1,Columna «Programa»,Navegación,Ubicar la fila con Prioridad 1 y hacer clic en la casilla de la columna «Programa».,Prioridad 1
+,,Búsqueda de Catálogo,Presionar «•••» o tecla F9,Acción,Presionar el botón de tres puntos «•••» (o la tecla F9) para abrir el catálogo curricular.,Catálogo curricular
+,,Tipo de Selección,Reglas de currículo base por programa,Mandatorio,"En la lista emergente, elegir la 2da opción: «Reglas de currículo base por programa».",Regla base
+,,Programa Académico,CMEMC38,Mandatorio,"Seleccionar CMEMC38 (Malla MC38, Campus S, Nivel C, Escuela EM, Regla 649) y clic en «OK».",Programa asignado
+,,Autocompletado del Sistema,Major: ACXP | Depto: EMCI,Automático,El sistema autocompleta: Major ACXP (Acreditación en Computación) y Depto EMCI (Jefatura Informática).,Malla enlazada
+,,Estatus de Currículo,INPROGRESS,Automático,El sistema verifica y asigna automáticamente el estatus INPROGRESS para el currículo actual.,Currículo en curso
+,Paso 5: Guardar Registro,Confirmación y Guardado,Clic en «GUARDAR»,Hito Crítico,Hacer clic en el botón azul «GUARDAR» (abajo a la derecha) para confirmar la admisión.,⭐ Confirmación SAAQUIK
+,,Resultado y Validación,Saved successfully (3 rows saved),Hito Final,Verificar mensaje en verde: «Saved successfully (3 rows saved)». Alumno 100% admitido y listo para matricular.,⭐ 100% Admitido y Listo

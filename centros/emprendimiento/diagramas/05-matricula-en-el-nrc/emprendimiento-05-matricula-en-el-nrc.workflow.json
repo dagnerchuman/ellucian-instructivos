@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Emprendimiento · 5. Matrícula en el NRC",
-    "subtitle": "Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Emprendimiento · 5. Matrícula en el NRC (Capacidades 5 y 11)",
+    "subtitle": "Capacidad 5.4 (Inscripción) y 11.1 (Cobranzas) · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -603,6 +603,18 @@
         "Estatus del alumno IS o SU en SGASTDN (Script 09, por probar en TEST)",
         "NRC lleno, error «Closed» (Script 15, por probar en TEST)",
         "Mismo curso en otro NRC del periodo: «Duplicate Course with Section»"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa SFAREGS (Excel 1 · Instructivo 5.4)",
+      "items": [
+        "Paso 1 (Bloque Clave): Acceso a SFAREGS con Periodo lectivo (202656) e ID del alumno admitido.",
+        "Paso 2 (Plan de estudios): Clic en casilla de currícula (carga 1) y asignación de estatus elegible EL -> Guardar (F10).",
+        "Paso 3 (Información de curso): Ingreso del NRC asignado en la grilla de inscripción de asignaturas.",
+        "Paso 4 (Asignación código RE): Ingreso de código RE (Register) y guardado para formalizar la matrícula.",
+        "Paso 5 (Balance de cupos): Validación en SSASECT/SSASECQ de vacante consumida (Actual +1, Remaining -1).",
+        "Paso 6 (Cuentas y Asistencia): Auditoría en TSAAREV (tasación de cuota) y SFASLST (alta en lista de clase del docente)."
       ]
     },
     {

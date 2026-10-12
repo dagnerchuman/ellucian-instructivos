@@ -1,0 +1,16 @@
+,,,,,,,
+,,,,,,,
+,N° Script,Nombre de la Casuística,Pantallas Banner,Datos de Prueba (TEST),Resultado Esperado,Resultado Obtenido / Evidencia,Estado
+,Script 08,Eliminación / Retiro de Matrícula,SFAREGS → SSASECT,"Periodo: 202656
+ID: S00581091
+NRC: 1021 (ESEC 00650 Sec. B)
+Estatus: DD","Al aplicar código DD, desinscribir al alumno, recalcular cobro y liberar 1 vacante en el NRC.",Transacción procesada con «Estimación de cuota procesada». En SSASECT el cupo pasó automáticamente de Actual: 2 a Actual: 1 y Remaining: 1.,VALIDADO AL 100%
+,Script 18-A,Auditoría de Carga Docente,SIAASGN,"Periodo: 202656
+Docente: 100582059 (Dagner Chuman)
+4 Secciones asignadas","Calcular horas de contacto semanales, acumuladas y FTE por NRC, sustituyendo plantillas Excel.","Auditoría de 4 NRCs (1021, 1022, 1024, 1025) en Computación, Cursos Especiales y Emprendimiento. NRC 1021 calculó 9,6 h/sem, 120 h totales y FTE 0,02. Registró rol principal y secundario.",VALIDADO AL 100%
+,Script 12 / 14,"Cierre de Periodo, Pase a Historia y Cierre de Actas",SFASLST → GJAPCTL (SHRROLL) → SHAGRDE,"Periodo: 202656
+NRC: 1026
+Notas registradas: S00581109 (16 V), S00581108 (08 V), S00581111 (INH V)",Cierre formal del acta del curso y pase masivo de calificaciones a la historia académica definitiva de los estudiantes.,Diagnóstico y resolución de incidencia institucional U20 (discrepancia de Modo V en catálogo vs Modo P en SHAGRDE Nivel C). Job 8114 exitoso con 100% de estudiantes rolados a historia académica.,VALIDADO AL 100%
+,Script 10,Retorno Obligatorio y Bloqueo de Avance por Desaprobado,SMARQCM → SMICRLT → SMIPOUT,"Estudiante: S00581108 (Carlos Torres Mendoza)
+Programa: CMEMC38
+Calificación rolada: 08 (Desaprobado)","La auditoría curricular CAPP debe rechazar la calificación reprobatoria, no otorgar créditos y mantener incompleto el plan de estudios.","CAPP dictaminó «NO CUMPLE» en requerimientos y áreas. SMIPOUT exigió nota mínima 11 computando 0,000 créditos usados (0/4 cursos). SMICRLT envió ESEC 00650 a «Cursos no usados» (reprobados).",VALIDADO AL 100%

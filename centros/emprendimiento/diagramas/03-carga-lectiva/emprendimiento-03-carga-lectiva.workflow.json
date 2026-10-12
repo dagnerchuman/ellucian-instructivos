@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Emprendimiento · 3. Carga lectiva del docente",
-    "subtitle": "Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Emprendimiento · 3. Carga lectiva del docente (Capacidad 5)",
+    "subtitle": "Capacidad 5.2 · Carga de trabajo docente · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -604,6 +604,18 @@
       "items": [
         "Labor no educativa del docente en SIAASGN (pendiente)",
         "Análisis por contrato en SIACONA (pendiente; responsable: Pedro Martinto)"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa SIAASGN (Excel 1 y 2 · Instructivo 5.2)",
+      "items": [
+        "Paso 1 (Acceso a Carga): Acceso a SIAASGN con Periodo lectivo (202656) y docente 100582059 (Dagner Chuman).",
+        "Paso 2 (Auditoría de Secciones): Verificación de 4 NRCs asignados (1021, 1022, 1024 y 1025) en Computación y Emprendimiento.",
+        "Paso 3 (Horas Semanales): Cálculo automático de 9.6 horas de contacto semanales para el NRC 1021.",
+        "Paso 4 (Horas Totales): Cómputo de 120 horas lectivas totales programadas en el periodo académico.",
+        "Paso 5 (Asignación de FTE): Determinación de factor FTE 0.02 por dedicación académica.",
+        "Paso 6 (Consolidación Institucional): Reemplazo automático e integral de planillas Excel institucionales."
       ]
     },
     {

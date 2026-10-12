@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Emprendimiento · 2. Crear el NRC",
-    "subtitle": "Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Emprendimiento · 2. Crear el NRC (Capacidades 1 y 5)",
+    "subtitle": "Capacidad 1.1 (Catálogo) y 5.3 (Programar NRC) · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -622,6 +622,18 @@
         "«Sesión sin horas»: usa la misma sesión (01) en el horario y en el docente",
         "Al crear un NRC nuevo, campus, estatus y tipo de horario son obligatorios",
         "Para pasar al bloque del docente usa «Sección siguiente»; el clic directo da error"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa SSASECT (Excel 1 · Instructivo 5.3)",
+      "items": [
+        "Paso 1 (Encabezado): Periodo lectivo (ej. 202656) y NRC en blanco. Clic en «Crear NRC» (indicador ADD temporal).",
+        "Paso 2 (Información de sección): Materia (ESEC / ENGL / ESGE), Curso (00650 / 00117), Sección (A / B), Parte de periodo (X01..X07 / I01..I12 / P01..P06), Campus S, Método VIR.",
+        "Paso 3 (Enrollment Details): Capacidad máxima (Maximum), reservas de cupo por programa en SSARRES.",
+        "Paso 4 (Meeting Times): Horario, días (L-M-V, M-J, S-D) y Aula virtual oficial (SAUVIR / SALA VIRT.).",
+        "Paso 5 (Faculty): Docente principal (ID institucional, ej. 100582059), 100 % de responsabilidad lectiva.",
+        "Paso 6 (Guardar y Publicar): Guardar (F10), obtención del NRC asignado y consulta de estado en SSASECQ."
       ]
     },
     {

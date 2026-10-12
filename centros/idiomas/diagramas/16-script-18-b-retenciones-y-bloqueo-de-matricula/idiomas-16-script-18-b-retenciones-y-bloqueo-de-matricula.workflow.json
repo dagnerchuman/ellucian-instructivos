@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Idiomas · 16. Script 18-B · Retenciones y bloqueo de matrícula",
-    "subtitle": "Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Idiomas · Capacidad 4 y 5 · Script 18-B · Retenciones y bloqueo de matrícula",
+    "subtitle": "Capacidad 4.1.3 y 5.2.1 · Retenciones de personas (SOAHOLD) · Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -478,13 +478,15 @@
   "lanes": [
     {
       "id": "caso",
-      "label": "Situación → pasos → resultado"
+      "label": "Capacidad 4 y 5 · Situación → pasos → resultado"
     }
   ],
   "mainPath": [
     "c0",
     "c1",
     "c2",
+    "c3",
+    "c4",
     "cr"
   ],
   "nodes": [
@@ -494,7 +496,7 @@
       "col": 0,
       "type": "security",
       "label": "Tiene deuda",
-      "sublabel": "cuota vencida",
+      "sublabel": "cuota vencida o mora",
       "width": 170
     },
     {
@@ -503,8 +505,9 @@
       "col": 1,
       "type": "backend",
       "label": "SOAHOLD",
-      "sublabel": "retención TT",
-      "width": 170
+      "sublabel": "registro retención",
+      "width": 170,
+      "tag": "código TT por mora"
     },
     {
       "id": "c2",
@@ -512,16 +515,37 @@
       "col": 2,
       "type": "backend",
       "label": "SFAREGS",
-      "sublabel": "no deja matricular",
-      "width": 170
+      "sublabel": "bloqueo fatal",
+      "width": 170,
+      "tag": "error por retención activa"
+    },
+    {
+      "id": "c3",
+      "lane": "caso",
+      "col": 3,
+      "type": "backend",
+      "label": "TSAAREV",
+      "sublabel": "regularización caja",
+      "width": 170,
+      "tag": "pago en caja institucional"
+    },
+    {
+      "id": "c4",
+      "lane": "caso",
+      "col": 4,
+      "type": "backend",
+      "label": "SFAREGS",
+      "sublabel": "matrícula exitosa",
+      "width": 170,
+      "tag": "código RE · cupo asignado"
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 3,
+      "col": 5,
       "type": "database",
-      "label": "Sin matrícula",
-      "sublabel": "hasta pagar",
+      "label": "Bloqueo fatal garantizado",
+      "sublabel": "hasta regularizar",
       "width": 170,
       "tag": "por probar en TEST",
       "icon": "success"
@@ -541,8 +565,20 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-cr",
+      "id": "e-c2-c3",
       "from": "c2",
+      "to": "c3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c3-c4",
+      "from": "c3",
+      "to": "c4",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c4-cr",
+      "from": "c4",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -553,6 +589,19 @@
       "title": "Probado en TEST",
       "items": [
         "Por probar en test: Retención que bloquea la matrícula"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 4.1 y 5.4)",
+      "items": [
+        "Paso 01 (SOAHOLD): Asignación de Retención — Registro de retención TT (Cobranzas) por cuota vencida o mora.",
+        "Paso 02 (STVHLDD): Verificación de Reglas — Comprobación de flags de afectación de matrícula y servicios.",
+        "Paso 03 (SFAREGS): Intento de Matrícula — Captura de asignaturas en el formulario de inscripción.",
+        "Paso 04 (SFAREGS): Bloqueo Fatal Transaccional — Notificación de error bloqueando la asignación del código RE.",
+        "Paso 05 (TSAAREV / TVACAJA): Regularización de Deuda — Pago de saldos pendientes en caja institucional.",
+        "Paso 06 (SOAHOLD): Levantamiento de Retención — Registro de fecha de liberación desactivando la retención.",
+        "Paso 07 (SFAREGS): Inscripción Exitosa — Confirmación de matrícula con estatus RE y asignación de vacante."
       ]
     },
     {

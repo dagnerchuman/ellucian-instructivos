@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Idiomas · 13. Script 10 · Retorno por desaprobado",
-    "subtitle": "Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Idiomas · Capacidad 7 y 8 · Script 10 · Retorno por desaprobado",
+    "subtitle": "Capacidad 7.1 · Calificaciones (SFASLST) y 8 · CAPP (SMARQCM) · Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -478,13 +478,15 @@
   "lanes": [
     {
       "id": "caso",
-      "label": "Situación → pasos → resultado"
+      "label": "Capacidad 7 y 8 · Situación → pasos → resultado"
     }
   ],
   "mainPath": [
     "c0",
     "c1",
     "c2",
+    "c3",
+    "c4",
     "cr"
   ],
   "nodes": [
@@ -494,31 +496,53 @@
       "col": 0,
       "type": "security",
       "label": "Desaprueba BASIC I",
-      "sublabel": "nota bajo el mínimo",
+      "sublabel": "nota bajo el mínimo (≤10)",
       "width": 170
     },
     {
       "id": "c1",
       "lane": "caso",
       "col": 1,
-      "type": "messagebus",
-      "label": "SHRROLL",
-      "sublabel": "pase a historia",
-      "width": 170
+      "type": "backend",
+      "label": "SFASLST",
+      "sublabel": "nota final docente",
+      "width": 170,
+      "tag": "nota reprobatoria"
     },
     {
       "id": "c2",
       "lane": "caso",
       "col": 2,
       "type": "backend",
+      "label": "GJAPCTL",
+      "sublabel": "pase a historia",
+      "width": 170,
+      "tag": "proceso SHRROLL"
+    },
+    {
+      "id": "c3",
+      "lane": "caso",
+      "col": 3,
+      "type": "backend",
       "label": "SFAREGS",
-      "sublabel": "BASIC II: error Fatal",
-      "width": 170
+      "sublabel": "intento en BASIC II",
+      "width": 170,
+      "tag": "error Fatal prerrequisito"
+    },
+    {
+      "id": "c4",
+      "lane": "caso",
+      "col": 4,
+      "type": "backend",
+      "label": "SOATEST",
+      "sublabel": "alternativa suficiencia",
+      "width": 170,
+      "tag": "examen de suficiencia"
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 3,
+      "col": 5,
       "type": "database",
       "label": "Repite BASIC I",
       "sublabel": "o rinde suficiencia",
@@ -541,8 +565,20 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-cr",
+      "id": "e-c2-c3",
       "from": "c2",
+      "to": "c3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c3-c4",
+      "from": "c3",
+      "to": "c4",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c4-cr",
+      "from": "c4",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -553,6 +589,19 @@
       "title": "Probado en TEST",
       "items": [
         "Por probar en test: Desaprueba BASIC I: el prerrequisito Fatal bloquea BASIC II"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 7.1 y 8)",
+      "items": [
+        "Paso 01 (SMARQCM): Solicitud de Auditoría Curricular — ID: S00581108, Programa: CMEMC38, inicio de auditoría general CAPP.",
+        "Paso 02 (SMIPOUT): Evaluación de Regla de Calificación Mínima — Validación de nota mínima aprobatoria (Nota ≥ 11).",
+        "Paso 03 (SMICRLT): Segregación a Cursos No Usados — Desplazamiento de ESEC 00650 al bloque de cursos no usados / reprobados.",
+        "Paso 04 (SMIPOUT): Cómputo de Créditos y Avance — Requerimiento 0/4 cursos, registrando 0,000 créditos acumulados.",
+        "Paso 05 (SMARQCM): Determinación de Cumplimiento — Dictamen curricular del área y requisitos en estado «NO CUMPLE».",
+        "Paso 06 (SMIPOUT / CAPP): Activación de Retorno Obligatorio — Bloqueo de avance a siguientes ciclos y exigencia de recursado.",
+        "Paso 07 (SMARQCM): Auditoría Final y Dictamen CAPP — Reporte consolidado confirmando rechazo de créditos y plan incompleto."
       ]
     },
     {

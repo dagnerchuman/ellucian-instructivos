@@ -1,0 +1,20 @@
+,,,,,,,
+,SCRIPT 03: MATRÍCULA Y ACREDITACIÓN POR CONVALIDACIÓN EXTERNA,,,,,,
+,Módulo:,Banner Student / Transfer Articulation,Responsable:,Dagner Chumán,Fecha:,02/10/2026,Ambiente: TEST
+,Objetivo:,"Asentar créditos y calificación de estudios previos externos y transferir oficialmente al historial académico sin requerir cursado regular mediante SHATRNS, SHATFAC y GJAPCTL (SHRROLL).",,,,,
+,,,,,,,
+,ESTUDIANTE (TEST),,ASIGNATURA EXTERNA,PROCESO BATCH BANNER,,ESTADO DE LA PRUEBA,
+,S00581111 - Ana Rojas,,IST150 (Nota: 16),SHRROLL (Job 8113),,VALIDADO AL 100%,
+,,,,,,,
+,N° Script,Nombre de la Casuística,Pantallas Banner,Datos de Prueba (TEST),Resultado Esperado,Resultado Obtenido / Evidencia,Estado
+,Script 03,Matrícula y Acreditación por Convalidación Externa,SHATRNS → SHATFAC → GJAPCTL (SHRROLL),"Estudiante: S00581111 (Ana Rojas Vera)
+Asignatura externa: IST150 (nota 16, modo P)",Asentar créditos y calificación de estudios previos externos y transferir oficialmente al historial académico sin requerir cursado regular.,Registro de convalidación articulado en SHATRNS. SHRROLL (Job 8113) procesó el pase a historia con estatus «Rolled to Academic History» y creación de registro de grado institucional (Deg Created).,VALIDADO AL 100%
+,,,,,,,
+,Paso,Acción Operativa,Pantalla Banner,Descripción y Parámetros,Comportamiento Esperado,Resultado de la Ejecución,Estatus
+,Paso 01,Registro de Asignatura Externa,SHATRNS,"ID: S00581111 | Institución de Procedencia | Asignatura IST150 (Nota 16, Modo P)",Registrar la asignatura externa cursada con sus créditos y calificación de origen.,Asignatura externa registrada con éxito y asociada al expediente del estudiante.,Completado
+,Paso 02,Articulación y Equivalencia,SHATRNS,Bloque Transfer Course Articulation | Mapeo curricular con plan de estudios local,Asociar la asignatura externa con el curso equivalente institucional.,Equivalencia articulada y créditos convalidados mapeados correctamente.,Completado
+,Paso 03,Acreditación en Facultad,SHATFAC,Revisión de articulación y registro de aprobación académica oficial,Validar que la autoridad académica de la facultad apruebe la convalidación.,Aprobación facultativa registrada con estatus de articulación conforme.,Completado
+,Paso 04,Ejecución de Pase a Historia,GJAPCTL,Proceso SHRROLL | Job 8113 | Parámetros de Periodo y Alumno S00581111,Ejecutar proceso batch SHRROLL para transferir asignaturas al historial académico.,Job 8113 finalizado con código de éxito 0 y registros procesados.,Completado
+,Paso 05,Validación de Estatus Rolled,SHATERM / SHATRNS,Consulta de estatus de transferencia de historial académico,Verificar que la asignatura muestre estatus «Rolled to Academic History».,Estatus confirmado en «Rolled to Academic History» con créditos oficiales.,Completado
+,Paso 06,Creación de Registro de Grado,SHADEGR,Expediente curricular de grado institucional (Deg Created),Crear y actualizar automáticamente el registro de grado con créditos externos.,Registro de grado institucional generado satisfactoriamente (Deg Created).,Completado
+,Paso 07,Auditoría Final de Historial,SHASMRY,Historial académico y transcript consolidado de S00581111,Confirmar créditos y calificación convalidados sin requerir cursado regular.,Historial auditado y validado al 100%. Convalidación externa culminada.,Completado

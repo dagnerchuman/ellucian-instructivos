@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Idiomas · 8. Script 04 · Matrícula por examen de suficiencia",
-    "subtitle": "Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Idiomas · Capacidad 1 y 5 · Script 04 · Matrícula por examen de suficiencia",
+    "subtitle": "Capacidad 1.1.5 · Prerrequisitos y suficiencia (SOATEST) · Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -478,13 +478,15 @@
   "lanes": [
     {
       "id": "caso",
-      "label": "Situación → pasos → resultado"
+      "label": "Capacidad 1 y 5 · Situación → pasos → resultado"
     }
   ],
   "mainPath": [
     "c0",
     "c1",
     "c2",
+    "c3",
+    "c4",
     "cr"
   ],
   "nodes": [
@@ -493,8 +495,8 @@
       "lane": "caso",
       "col": 0,
       "type": "security",
-      "label": "Ya sabe inglés",
-      "sublabel": "quiere saltar BASIC I",
+      "label": "Suficiencia",
+      "sublabel": "conocimientos previos",
       "width": 170
     },
     {
@@ -503,25 +505,47 @@
       "col": 1,
       "type": "backend",
       "label": "SOATEST",
-      "sublabel": "registrar el puntaje",
-      "width": 170
+      "sublabel": "registrar puntaje",
+      "width": 170,
+      "tag": "código U01 · nota aprobatoria"
     },
     {
       "id": "c2",
       "lane": "caso",
       "col": 2,
       "type": "backend",
+      "label": "SCAPREQ",
+      "sublabel": "validar prerrequisito",
+      "width": 170,
+      "tag": "equivalencia a BASIC I"
+    },
+    {
+      "id": "c3",
+      "lane": "caso",
+      "col": 3,
+      "type": "backend",
       "label": "SFAREGS",
-      "sublabel": "matricular en BASIC II",
-      "width": 170
+      "sublabel": "inscripción directa",
+      "width": 170,
+      "tag": "matrícula en BASIC II"
+    },
+    {
+      "id": "c4",
+      "lane": "caso",
+      "col": 4,
+      "type": "backend",
+      "label": "SFAREGS",
+      "sublabel": "asignación de cupo",
+      "width": 170,
+      "tag": "código RE en sección"
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 3,
+      "col": 5,
       "type": "database",
       "label": "En BASIC II",
-      "sublabel": "puntaje mínimo: U01",
+      "sublabel": "prerrequisito superado",
       "width": 170,
       "tag": "por probar en TEST",
       "icon": "success"
@@ -541,8 +565,20 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-cr",
+      "id": "e-c2-c3",
       "from": "c2",
+      "to": "c3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c3-c4",
+      "from": "c3",
+      "to": "c4",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c4-cr",
+      "from": "c4",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -553,6 +589,17 @@
       "title": "Probado en TEST",
       "items": [
         "Por probar en test: Puntaje en SOATEST y luego inscribir BASIC II en SFAREGS"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 1.2 y 5.4)",
+      "items": [
+        "Paso 01 (SOAINST): Verificación de Evaluación — Consulta de código de examen de suficiencia institucional.",
+        "Paso 02 (SOATEST): Registro de Calificación — Ingreso de ID del alumno, código de prueba (U01) y puntaje aprobatorio.",
+        "Paso 03 (SCAPREQ): Evaluación de Prerrequisitos — El motor valida el examen como prerrequisito equivalente de BASIC I.",
+        "Paso 04 (SFAREGS): Matrícula en Nivel Siguiente — Inscripción directa en BASIC II sin bloqueo fatal.",
+        "Paso 05 (SFAREGS): Asentamiento de Matrícula — Código RE guardado y vacante asignada en el NRC de destino."
       ]
     },
     {

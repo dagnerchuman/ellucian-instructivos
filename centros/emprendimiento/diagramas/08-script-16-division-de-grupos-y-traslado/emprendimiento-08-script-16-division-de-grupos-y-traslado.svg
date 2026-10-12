@@ -408,8 +408,8 @@ svg[data-theme="light"] { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5;
 svg[data-theme="dark"] { --bg: #020617; --grid: #1e293b; --canvas-dot: rgba(148, 163, 184, 0.16); --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
 rect.c-bg-rect { fill: var(--bg); }
 </style><rect x="0" y="0" width="1041" height="282" class="c-bg-rect"/>
-        <title id="archify-diagram-title">Centro de Emprendimiento · 8. Script 16 · División de grupos y traslado</title>
-        <desc id="archify-diagram-description">Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</desc>
+        <title id="archify-diagram-title">Centro de Emprendimiento · Capacidad 5 · Script 16 · División de grupos y traslado</title>
+        <desc id="archify-diagram-description">Capacidad 5.3 · Programación y 5.4 · Traslado de NRC · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</desc>
         <!-- Definitions -->
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -434,7 +434,7 @@ rect.c-bg-rect { fill: var(--bg); }
 
         <!-- Swimlanes -->
         <rect data-graph-role="structural-frame" data-composition-frame-kind="lane" data-composition-frame-id="lane-0" x="40" y="52" width="985" height="106" rx="10" class="c-lane" stroke-width="1"/>
-        <text x="54" y="74" class="t-dim" font-size="10" font-weight="600">01 / Situación → pasos → resultado</text>
+        <text x="54" y="74" class="t-dim" font-size="10" font-weight="600">01 / Capacidad 5 · Situación → pasos → resultado</text>
 
         <!-- Phase headers -->
 
@@ -448,8 +448,8 @@ rect.c-bg-rect { fill: var(--bg); }
         <path data-edge-from="c2" data-edge-to="cr" data-edge-key="2" data-edge-id="e-c2-cr" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="614,120;642,120" d="M 614 120 L 642 120" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
 
         <!-- Nodes -->
-        <g id="node-c0" data-node-id="c0" data-node-label="Cambio de NRC" tabindex="0" role="button" aria-label="Enfocar Cambio de NRC, P02 y P03 se cruzan, Situación → pasos → resultado" aria-pressed="false" data-node-kind="security" data-node-sublabel="P02 y P03 se cruzan" data-node-context="Situación → pasos → resultado">
-          <title>Cambio de NRC · P02 y P03 se cruzan · Situación → pasos → resultado</title>
+        <g id="node-c0" data-node-id="c0" data-node-label="Cambio de NRC" tabindex="0" role="button" aria-label="Enfocar Cambio de NRC, P02 y P03 se cruzan, Capacidad 5 · Situación → pasos → resultado" aria-pressed="false" data-node-kind="security" data-node-sublabel="P02 y P03 se cruzan" data-node-context="Capacidad 5 · Situación → pasos → resultado">
+          <title>Cambio de NRC · P02 y P03 se cruzan · Capacidad 5 · Situación → pasos → resultado</title>
           <rect x="48" y="94" width="170" height="52" rx="6" class="c-mask"/>
           <rect x="48" y="94" width="170" height="52" rx="6" class="c-security" data-animate="node" style="--step:0" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="security" class="semantic-sigil s-security" transform="translate(54 100) scale(0.6875)">
@@ -460,8 +460,8 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="133" y="132" class="t-muted" font-size="8" text-anchor="middle">P02 y P03 se cruzan</text>
         </g>
 
-        <g id="node-c1" data-node-id="c1" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, DD en el NRC de origen, Situación → pasos → resultado" aria-pressed="false" data-node-kind="backend" data-node-sublabel="DD en el NRC de origen" data-node-context="Situación → pasos → resultado">
-          <title>SFAREGS · DD en el NRC de origen · Situación → pasos → resultado</title>
+        <g id="node-c1" data-node-id="c1" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, DD en el NRC de origen, Capacidad 5 · Situación → pasos → resultado" aria-pressed="false" data-node-kind="backend" data-node-sublabel="DD en el NRC de origen" data-node-context="Capacidad 5 · Situación → pasos → resultado">
+          <title>SFAREGS · DD en el NRC de origen · Capacidad 5 · Situación → pasos → resultado</title>
           <rect x="246" y="94" width="170" height="52" rx="6" class="c-mask"/>
           <rect x="246" y="94" width="170" height="52" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(252 100) scale(0.6875)">
@@ -471,8 +471,8 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="331" y="132" class="t-muted" font-size="8" text-anchor="middle">DD en el NRC de origen</text>
         </g>
 
-        <g id="node-c2" data-node-id="c2" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, RE en el NRC de destino, Situación → pasos → resultado" aria-pressed="false" data-node-kind="backend" data-node-sublabel="RE en el NRC de destino" data-node-context="Situación → pasos → resultado">
-          <title>SFAREGS · RE en el NRC de destino · Situación → pasos → resultado</title>
+        <g id="node-c2" data-node-id="c2" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, RE en el NRC de destino, Capacidad 5 · Situación → pasos → resultado" aria-pressed="false" data-node-kind="backend" data-node-sublabel="RE en el NRC de destino" data-node-context="Capacidad 5 · Situación → pasos → resultado">
+          <title>SFAREGS · RE en el NRC de destino · Capacidad 5 · Situación → pasos → resultado</title>
           <rect x="444" y="94" width="170" height="52" rx="6" class="c-mask"/>
           <rect x="444" y="94" width="170" height="52" rx="6" class="c-backend" data-animate="node" style="--step:2" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(450 100) scale(0.6875)">
@@ -482,8 +482,8 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="529" y="132" class="t-muted" font-size="8" text-anchor="middle">RE en el NRC de destino</text>
         </g>
 
-        <g id="node-cr" data-node-id="cr" data-node-label="En el nuevo NRC" tabindex="0" role="button" aria-label="Enfocar En el nuevo NRC, lista actualizada, Situación → pasos → resultado" aria-pressed="false" data-node-kind="database" data-node-sublabel="lista actualizada" data-node-tag="por probar en TEST" data-node-context="Situación → pasos → resultado">
-          <title>En el nuevo NRC · lista actualizada · Situación → pasos → resultado · por probar en TEST</title>
+        <g id="node-cr" data-node-id="cr" data-node-label="En el nuevo NRC" tabindex="0" role="button" aria-label="Enfocar En el nuevo NRC, lista actualizada, Capacidad 5 · Situación → pasos → resultado" aria-pressed="false" data-node-kind="database" data-node-sublabel="lista actualizada" data-node-tag="por probar en TEST" data-node-context="Capacidad 5 · Situación → pasos → resultado">
+          <title>En el nuevo NRC · lista actualizada · Capacidad 5 · Situación → pasos → resultado · por probar en TEST</title>
           <rect x="642" y="86" width="170" height="68" rx="6" class="c-mask"/>
           <rect x="642" y="86" width="170" height="68" rx="6" class="c-database" data-animate="node" style="--step:3" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="success" class="semantic-sigil s-database" transform="translate(648 92) scale(0.6875)">

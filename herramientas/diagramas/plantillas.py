@@ -63,7 +63,7 @@ CITAS = {
     "notas": "Plan de evaluación y notas: instructivos 7.1.4 (SHAGCOM) y 7.1.6 (SFASLST)",
     "cierre": "Pase a historia: instructivo 7.1.9 (SHRROLL)",
     "capp": "CAPP: instructivo 7.2.4, diap. 30 a 55",
-    "convalidacion": "Convalidación: capacidad 3.3 (SHATRNS, SHATFAC)",
+    "convalidacion": "Convalidación y homologación: capacidad 3.3.1, diap. 33 a 36 (SHATRNS) y diap. 47 a 56 (SHATFAC)",
     "egreso": "Requisito de egreso de Pregrado: instructivo 8, diap. 13",
     "ligas": "Ligas: instructivo 5.3_4.1.4.1.9 Crear Ligas, diap. 9 a 24; verificación «Ligas» en SOATERM: 5.4_4.1.4.1.12, diap. 15",
 }
@@ -96,7 +96,8 @@ def slug(texto):
     return re.sub(r"[^a-z0-9]+", "-", t).strip("-")
 
 
-CATALOGO = {s["id"]: s["nombre"] for s in leer_json(CENTROS / "comun" / "datos.json")["scripts"]}
+SCRIPTS_COMUN = leer_json(CENTROS / "comun" / "datos.json")["scripts"]
+CATALOGO = {s["id"]: s["nombre"] for s in SCRIPTS_COMUN}
 
 
 def slug_script(id_script):
@@ -113,6 +114,30 @@ TITULOS = {
     "notas-y-pase-a-historia": "Notas y pase a historia",
     "ligas-teorico-y-club": "Ligas: NRC teórico + club de conversación",
     **{slug_script(i): f"Script {i} · {n}" for i, n in CATALOGO.items()},
+}
+
+CAPACIDADES = {
+    "tres-centros": "Capacidades 1 a 8",
+    "recorrido-completo": "Capacidades 1 a 8",
+    "crear-el-nrc": "Capacidades 1 y 5",
+    "carga-lectiva": "Capacidad 5",
+    "persona-y-admision": "Capacidades 3, 4 y 5",
+    "matricula-en-el-nrc": "Capacidades 5 y 11",
+    "notas-y-pase-a-historia": "Capacidades 7 y 8",
+    "ligas-teorico-y-club": "Capacidad 5",
+    **{slug_script(s["id"]): s.get("capacidad", "") for s in SCRIPTS_COMUN},
+}
+
+CAPACIDADES_DETALLE = {
+    "tres-centros": "Capacidades 1 a 8 · Visión comparativa integral",
+    "recorrido-completo": "Capacidades 1 a 8 · Ciclo integral en Banner",
+    "crear-el-nrc": "Capacidad 1.1 (Catálogo) y 5.3 (Programar NRC)",
+    "carga-lectiva": "Capacidad 5.2 · Carga de trabajo docente",
+    "persona-y-admision": "Capacidad 5.1 (Persona) y 3.2 (Admisión)",
+    "matricula-en-el-nrc": "Capacidad 5.4 (Inscripción) y 11.1 (Cobranzas)",
+    "notas-y-pase-a-historia": "Capacidad 7.1 (Calificaciones) y 8 (CAPP)",
+    "ligas-teorico-y-club": "Capacidad 5.3 · Crear Ligas (SSADETL)",
+    **{slug_script(s["id"]): s.get("capacidad_nombre", "") for s in SCRIPTS_COMUN},
 }
 
 
@@ -155,10 +180,14 @@ def tarjeta_terminos(*claves):
     return {"dot": "violet", "title": "Términos", "items": [f"{k}: {TERMINOS[k]}" for k in claves]}
 
 
-def flujo(c, numero, slug_, carriles, nodos, cards, fases=None, vistas=None):
+def flujo(c, numero, slug_, carriles, nodos, cards, fases=None, vistas=None, title_override=None, subtitle_override=None):
+    cap = CAPACIDADES.get(slug_, "")
+    cap_sufijo = f" ({cap})" if cap and not slug_.startswith("script-") else ""
+    title = title_override or f"{c.nombre} · {numero}. {TITULOS[slug_]}{cap_sufijo}"
+    subtitle = subtitle_override or c.subtitulo(CAPACIDADES_DETALLE.get(slug_))
     m = {
-        "title": f"{c.nombre} · {numero}. {TITULOS[slug_]}",
-        "subtitle": c.subtitulo(),
+        "title": title,
+        "subtitle": subtitle,
         "locale": "es",
         "translations": c.tr,
         "output": salida(c, numero, slug_),
@@ -247,8 +276,8 @@ def recorrido(c):
                            "Falta probar matrícula, notas y pase a historia con el nivel M"],
     }[c.id]
     m = {
-        "title": f"{c.nombre} · 1. {TITULOS['recorrido-completo']}",
-        "subtitle": c.subtitulo(),
+        "title": f"{c.nombre} · 1. {TITULOS['recorrido-completo']} (Capacidades 1 a 8)",
+        "subtitle": c.subtitulo(CAPACIDADES_DETALLE["recorrido-completo"]),
         "locale": "es",
         "translations": c.tr,
         "output": salida(c, 1, "recorrido-completo"),
@@ -302,12 +331,24 @@ def crear_nrc(c):
         "Al crear un NRC nuevo, campus, estatus y tipo de horario son obligatorios",
         "Para pasar al bloque del docente usa «Sección siguiente»; el clic directo da error",
     ]}
+    pasos_ssasect = {
+        "dot": "violet",
+        "title": "Guía Operativa SSASECT (Excel 1 · Instructivo 5.3)",
+        "items": [
+            "Paso 1 (Encabezado): Periodo lectivo (ej. 202656) y NRC en blanco. Clic en «Crear NRC» (indicador ADD temporal).",
+            "Paso 2 (Información de sección): Materia (ESEC / ENGL / ESGE), Curso (00650 / 00117), Sección (A / B), Parte de periodo (X01..X07 / I01..I12 / P01..P06), Campus S, Método VIR.",
+            "Paso 3 (Enrollment Details): Capacidad máxima (Maximum), reservas de cupo por programa en SSARRES.",
+            "Paso 4 (Meeting Times): Horario, días (L-M-V, M-J, S-D) y Aula virtual oficial (SAUVIR / SALA VIRT.).",
+            "Paso 5 (Faculty): Docente principal (ID institucional, ej. 100582059), 100 % de responsabilidad lectiva.",
+            "Paso 6 (Guardar y Publicar): Guardar (F10), obtención del NRC asignado y consulta de estado en SSASECQ.",
+        ],
+    }
     return flujo(
         c, 2, "crear-el-nrc",
         [{"id": "nrc", "label": "Programar el NRC"}],
         nodos,
         tarjetas(c, probado, [CITAS["periodo"], CITAS["catalogo"], CITAS["nrc"]],
-                 [errores, tarjeta_terminos("NRC", "parte", "cupo")]),
+                 [errores, pasos_ssasect, tarjeta_terminos("NRC", "parte", "cupo")]),
         fases=[
             {"id": "f0", "label": "Antes", "fromCol": 0, "toCol": 1},
             {"id": "f1", "label": "SSASECT: tres guardados", "fromCol": 2, "toCol": 4, "variant": "emphasis"},
@@ -337,12 +378,24 @@ def carga_lectiva(c):
         "Labor no educativa del docente en SIAASGN (pendiente)",
         "Análisis por contrato en SIACONA (pendiente; responsable: Pedro Martinto)",
     ]}
+    pasos_siaasgn = {
+        "dot": "violet",
+        "title": "Guía Operativa SIAASGN (Excel 1 y 2 · Instructivo 5.2)",
+        "items": [
+            "Paso 1 (Acceso a Carga): Acceso a SIAASGN con Periodo lectivo (202656) y docente 100582059 (Dagner Chuman).",
+            "Paso 2 (Auditoría de Secciones): Verificación de 4 NRCs asignados (1021, 1022, 1024 y 1025) en Computación y Emprendimiento.",
+            "Paso 3 (Horas Semanales): Cálculo automático de 9.6 horas de contacto semanales para el NRC 1021.",
+            "Paso 4 (Horas Totales): Cómputo de 120 horas lectivas totales programadas en el periodo académico.",
+            "Paso 5 (Asignación de FTE): Determinación de factor FTE 0.02 por dedicación académica.",
+            "Paso 6 (Consolidación Institucional): Reemplazo automático e integral de planillas Excel institucionales.",
+        ],
+    }
     return flujo(
         c, 3, "carga-lectiva",
         [{"id": "jefe", "label": "Jefe del centro"}, {"id": "vra", "label": "Vicerrectorado Académico"}],
         nodos,
         tarjetas(c, probado, [CITAS["docente"], CITAS["nrc"], CITAS["carga"], CITAS["contrato"]],
-                 [falta, tarjeta_terminos("carga lectiva", "NRC")]),
+                 [falta, pasos_siaasgn, tarjeta_terminos("carga lectiva", "NRC")]),
         fases=[
             {"id": "f0", "label": "En Banner", "fromCol": 0, "toCol": 2, "variant": "emphasis"},
             {"id": "f1", "label": "En la intranet", "fromCol": 3, "toCol": 4, "variant": "dashed"},
@@ -374,12 +427,24 @@ def persona_admision(c):
         f"Ya es alumno de Pregrado: se le agrega el programa del centro como segundo plan (Script 06, {ESTADO_TEXTO[c.script('06')['estado']]})",
         "Sirve igual para alumnos de la USS (Pregrado y Posgrado) y para externos",
     ]}
+    pasos_admision = {
+        "dot": "violet",
+        "title": "Guía Operativa GOAMTCH y SAAQUIK (Excel 1 · Instructivos 5.1 y 5.2)",
+        "items": [
+            "Paso 1 (GOAMTCH): Búsqueda de coincidencias con origen PERS_NATU (DNI, apellidos y nombres) para evitar duplicados.",
+            "Paso 2 (GOAMTCH): Botón «Crear nuevo» para generar ID institucional con prefijo S (ej. S00581081).",
+            "Paso 3 (GOAMTCH): Registro de dirección institucional PP, teléfono móvil MOV y correo personal PER1.",
+            "Paso 4 (SAAQUIK): Acceso con ID generado, Periodo lectivo (202656), Nivel C/I/M, Campus S y Escuela EM.",
+            "Paso 5 (SAAQUIK): Selección de programa (ej. CMEMC38) poblando Mayor ACXP, Depto EMCI y Estatus AS / INPROGRESS.",
+            "Paso 6 (SGASTDN): Confirmación de expediente académico activo y habilitado para inscripción de asignaturas.",
+        ],
+    }
     return flujo(
         c, 4, "persona-y-admision",
         [{"id": "asis", "label": "Asistente o especialista"}],
         nodos,
         tarjetas(c, probado, [CITAS["persona"], CITAS["admision"], CITAS["estudiante"], CITAS["egreso"]],
-                 [casos, tarjeta_terminos("persona", "alumno")]),
+                 [casos, pasos_admision, tarjeta_terminos("persona", "alumno")]),
         fases=[
             {"id": "f0", "label": "Persona", "fromCol": 0, "toCol": 1},
             {"id": "f1", "label": "Admisión", "fromCol": 2, "toCol": 4, "variant": "emphasis"},
@@ -403,12 +468,24 @@ def matricula(c):
         f"NRC lleno, error «Closed» (Script 15, {ESTADO_TEXTO[c.script('15')['estado']]})",
         "Mismo curso en otro NRC del periodo: «Duplicate Course with Section»",
     ] + (["BASIC II sin BASIC I: prerrequisito Fatal (Script 04)"] if c.prerrequisito_fatal else [])}
+    pasos_sfaregs = {
+        "dot": "violet",
+        "title": "Guía Operativa SFAREGS (Excel 1 · Instructivo 5.4)",
+        "items": [
+            "Paso 1 (Bloque Clave): Acceso a SFAREGS con Periodo lectivo (202656) e ID del alumno admitido.",
+            "Paso 2 (Plan de estudios): Clic en casilla de currícula (carga 1) y asignación de estatus elegible EL -> Guardar (F10).",
+            "Paso 3 (Información de curso): Ingreso del NRC asignado en la grilla de inscripción de asignaturas.",
+            "Paso 4 (Asignación código RE): Ingreso de código RE (Register) y guardado para formalizar la matrícula.",
+            "Paso 5 (Balance de cupos): Validación en SSASECT/SSASECQ de vacante consumida (Actual +1, Remaining -1).",
+            "Paso 6 (Cuentas y Asistencia): Auditoría en TSAAREV (tasación de cuota) y SFASLST (alta en lista de clase del docente).",
+        ],
+    }
     return flujo(
         c, 5, "matricula-en-el-nrc",
         [{"id": "asis", "label": "Asistente o especialista"}],
         nodos,
         tarjetas(c, evidencia(c, ["01", "02", "15", "16"]), [CITAS["matricula"], CITAS["retencion"], CITAS["estudiante"]],
-                 [bloqueos, tarjeta_terminos("matrícula", "retiro", "cupo", "retención")]),
+                 [bloqueos, pasos_sfaregs, tarjeta_terminos("matrícula", "retiro", "cupo", "retención")]),
         fases=[
             {"id": "f0", "label": "Antes", "fromCol": 0, "toCol": 0},
             {"id": "f1", "label": "SFAREGS", "fromCol": 1, "toCol": 2, "variant": "emphasis"},
@@ -436,12 +513,25 @@ def notas(c):
         "«No Substitute Grade»: la escala del nivel no tiene el modo del curso; agrégalo en SHAGRDE (U20)",
         "Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)",
     ]}
+    pasos_cierre = {
+        "dot": "violet",
+        "title": "Guía Operativa Calificaciones y Cierre (Excel 1 y 2 · Instructivo 7.1 y 8)",
+        "items": [
+            "Paso 1 (SHAGRDE / Catálogo): Verificación de escala vigesimal y homologación de Modo V a nivel curso y programa.",
+            "Paso 2 (SFASLST / Autoservicio): Registro de calificaciones docentes (≥11 aprueba, ≤10 reprueba, INH inhabilitado).",
+            "Paso 3 (SFASLST): Verificación de estatus previo de acta lectiva (columna Rolled en N).",
+            "Paso 4 (GJAPCTL): Despacho de proceso batch SHRROLL (Periodo 202656, NRC correspondiente, Modo U).",
+            "Paso 5 (GJIREVO): Auditoría técnica de bitácora .lis confirmando pase masivo a historia académica sin errores.",
+            "Paso 6 (SHATERM / SHACRSE): Confirmación de notas asentadas en historial definitivo («Rolled to Academic History»).",
+            "Paso 7 (SMARQCM / SMICRLT): Auditoría CAPP de cumplimiento curricular (reprobados segregados a «Cursos no usados»).",
+        ],
+    }
     return flujo(
         c, 6, "notas-y-pase-a-historia",
         [{"id": "ra", "label": "Registros Académicos"}, {"id": "doc", "label": "Docente"}],
         nodos,
         tarjetas(c, probado, [CITAS["escala"], CITAS["notas"], CITAS["cierre"], CITAS["capp"]],
-                 [leccion, tarjeta_terminos("pase a historia", "alumno")]),
+                 [leccion, pasos_cierre, tarjeta_terminos("pase a historia", "alumno")]),
         fases=[
             {"id": "f0", "label": "Preparar", "fromCol": 0, "toCol": 1},
             {"id": "f1", "label": "Dictar", "fromCol": 2, "toCol": 3, "variant": "emphasis"},
@@ -452,55 +542,273 @@ def notas(c):
 
 # --------------------------------------------------------------------------- casuísticas
 CASOS = {
-    "01": (("Primera matrícula", "alumno admitido"),
-           [("SFAREGS", "autorizar el plan · EL"), ("SFAREGS", "matricular en el NRC · RE")],
-           ("Matriculado", "cupo real +1"), "matricula"),
+    "01": (("Primera matrícula", "alumno admitido y activo"),
+           [("SFAREGS", "autorizar plan", "casilla currícula · estatus EL"),
+            ("SFAREGS", "inscribir en NRC", "código RE en asignatura"),
+            ("SSASECT", "balance de cupos", "Actual +1 · Remaining -1"),
+            ("TSAAREV", "auditoría cobros", "cálculo automático aranceles")],
+           ("Matriculado al 100%", "cupo ocupado en NRC"), "matricula"),
     "03": (("Curso externo", "aprobado en otra institución"),
-           [("SHATRNS", "registrar la institución"), ("SHATFAC", "registrar la nota"), ("SHRROLL", "pase a historia")],
-           ("Convalidado", "CAPP lo cuenta"), "convalidacion"),
-    "04": (("Ya sabe inglés", "quiere saltar BASIC I"),
-           [("SOATEST", "registrar el puntaje"), ("SFAREGS", "matricular en BASIC II")],
-           ("En BASIC II", "puntaje mínimo: U01"), "catalogo"),
-    "08": (("Se retira", "antes de la fecha límite"),
-           [("SFAREGS", "retirar con DD"), ("SSASECQ", "revisar el cupo")],
-           ("Cupo libre", "cupo restante +1"), "matricula"),
-    "09": (("Suspendido", "estatus IS o SU"),
-           [("SFAREGS", "no deja matricular"), ("SGASTDN", "reactivar con AS")],
-           ("Puede matricularse", "alumno activo"), "estudiante"),
-    "10": (("Desaprueba", "nota bajo el mínimo"),
-           [("SFASLST", "nota final"), ("SHRROLL", "pase a historia"), ("SMARQCM", "evaluar en CAPP")],
-           ("Curso no usado", "repite el curso"), "capp"),
-    "12": (("Fin del periodo", "notas finales listas"),
-           [("SHAGRDE", "revisar el modo"), ("SHRROLL", "pase a historia")],
-           ("En la historia", "Rolled to History"), "cierre"),
+           [("SHATRNS", "materia externa", "ID S00581111 · IST150 (nota 16)"),
+            ("SHATFAC", "acreditación facultad", "articulación y aprobación"),
+            ("GJAPCTL", "pase a historia", "proceso SHRROLL · Job 8113"),
+            ("SHASMRY", "historial y grado", "Rolled · Deg Created")],
+           ("Convalidado al 100%", "CAPP acredita créditos"), "convalidacion"),
+    "04": (("Suficiencia", "conocimientos previos"),
+           [("SOATEST", "registrar puntaje", "código U01 · nota aprobatoria"),
+            ("SCAPREQ", "validar prerrequisito", "equivalencia a BASIC I"),
+            ("SFAREGS", "inscripción directa", "matrícula en BASIC II"),
+            ("SFAREGS", "asignación de cupo", "código RE en sección")],
+           ("En BASIC II", "prerrequisito superado"), "catalogo"),
+    "05": (("Curso especial", "egresado USS"),
+           [("SSASECT", "sección especial", "NRC para egresados"),
+            ("SFAREGS", "inscripción backoffice", "tarifa diferenciada"),
+            ("Plataforma", "instrucción intensiva", "evaluación externa"),
+            ("SHRROLL", "pase a historia", "reconocimiento en CAPP")],
+           ("Requisito acreditado", "apto para titulación"), "egreso"),
+    "08": (("Retiro de curso", "dentro de plazo lectivo"),
+           [("SFAREGS", "consulta matrícula", "Periodo 202656 · ID S00581091"),
+            ("SFAREGS", "código de retiro DD", "Drop/Delete en NRC 1021"),
+            ("SFAREGS", "recálculo financiero", "estimación de cuota procesada"),
+            ("SSASECT", "liberación de vacante", "Actual 2 → 1 · Remaining 0 → 1")],
+           ("Cupo liberado (+1)", "retiro procesado"), "matricula"),
+    "09": (("Suspendido", "estatus inactivo IS"),
+           [("SGASTDN", "verificación estatus", "expediente con Status IS"),
+            ("SFAREGS", "intento bloqueado", "motor impide inscripción"),
+            ("SGASTDN", "reactivación alumno", "actualización a Status AS"),
+            ("SFAREGS", "matrícula exitosa", "código RE · asignación vacante")],
+           ("Puede matricularse", "alumno activo AS"), "estudiante"),
+    "10": (("Desaprueba curso", "nota 08 en historia"),
+           [("SMARQCM", "solicitud CAPP", "auditoría malla CMEMC38"),
+            ("SMIPOUT", "regla nota mínima", "exige Nota ≥ 11 en área"),
+            ("SMICRLT", "segregación cursos", "ESEC 00650 a «Cursos no usados»"),
+            ("SMARQCM", "dictamen NO CUMPLE", "retorno obligatorio a cursar")],
+           ("Curso no usado", "repite la asignatura"), "capp"),
+    "12": (("Fin de periodo", "calificaciones listas"),
+           [("SFASLST", "ingreso de notas", "S00581109 (16), S00581108 (08), INH"),
+            ("SHAGRDE", "alineación modo V", "diagnóstico y resolución U20"),
+            ("GJAPCTL", "reejecución SHRROLL", "Job 8114 exitoso (100 %)"),
+            ("SHATERM", "historial y acta", "Rolled = Y · acta cerrada")],
+           ("Actas cerradas", "notas en historia"), "cierre"),
     "13": (("Notas del nivel", "notas finales del NRC"),
-           [("SHAGRDE", "revisar la escala"), ("SFASLST", "registrar notas finales")],
+           [("SHAGRDE", "escala vigesimal", "modo V · nota mínima 11"),
+            ("SFASLST", "ingreso en lista", "calificaciones docentes"),
+            ("GJAPCTL", "pase a historia", "corrida SHRROLL"),
+            ("SHATERM", "asentamiento notas", "historial académico")],
            ("Aprueba o no", "según la nota mínima"), "notas"),
-    "15": (("NRC lleno", "error «Closed»"),
-           [("SSASECT", "subir el cupo"), ("SSARRES", "reservar para el programa")],
-           ("Se matricula", "cupo ampliado"), "nrc"),
-    "16": (("Cambio de NRC", "otro horario"),
-           [("SFAREGS", "DD en el NRC de origen"), ("SFAREGS", "RE en el NRC de destino")],
-           ("En el nuevo NRC", "lista actualizada"), "matricula"),
-    "18-B": (("Tiene deuda", "cuota vencida"),
-             [("SOAHOLD", "retención TT"), ("SFAREGS", "no deja matricular")],
-             ("Sin matrícula", "hasta pagar"), "retencion"),
+    "15": (("NRC saturado", "capacidad 1/1 vacantes"),
+           [("SSASECT", "capacidad inicial", "aforo: 1 vacante máxima"),
+            ("SFAREGS", "saturación y bloqueo", "código RE · Closed Section"),
+            ("SSASECT", "ampliación aforo", "Maximum 1 → 4 vacantes"),
+            ("SFAREGS", "reintento inscripción", "código RE · Actual 2, Remaining 2")],
+           ("Aforo ampliado", "vacantes disponibles"), "nrc"),
+    "16": (("Traslado de grupo", "reubicación de sección"),
+           [("SFAREGS", "matrícula origen", "NRC 1026 (Sec. D) activo"),
+            ("SSARRES", "ampliar reserva", "reserva CMEMC38: 1 → 2 vacantes"),
+            ("SFAREGS", "traslado simultáneo", "NRC 1026: DD · NRC 1021: RE"),
+            ("SFASLST", "auditoría lista clase", "alta en lista de nueva sección")],
+           ("Traslado exitoso", "vacante origen liberada"), "matricula"),
+    "18-A": (("Asignación docente", "horas y secciones lectivas"),
+             [("SIAASGN", "consulta docente", "Periodo 202656 · ID 100582059"),
+              ("SIAASGN", "auditoría secciones", "4 NRCs: 1021, 1022, 1024, 1025"),
+              ("SIAASGN", "cómputo de horas", "9.6 h/sem · 120 h totales"),
+              ("SIAASGN", "asignación de FTE", "FTE 0.02 · reemplaza Excel")],
+             ("Carga auditada", "reemplaza planillas Excel"), "carga"),
+    "18-B": (("Tiene deuda", "cuota vencida o mora"),
+             [("SOAHOLD", "registro retención", "código TT por mora"),
+              ("SFAREGS", "bloqueo fatal", "error por retención activa"),
+              ("TSAAREV", "regularización caja", "pago en caja institucional"),
+              ("SFAREGS", "matrícula exitosa", "código RE · cupo asignado")],
+             ("Bloqueo fatal garantizado", "hasta regularizar"), "retencion"),
+}
+
+EXTRA_CASOS = {
+    "01": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 5.4)",
+        "items": [
+            "Paso 01 (SFAREGS): Acceso a Pantalla — Formulario con Periodo lectivo (ej. 202656) e ID del estudiante admitido.",
+            "Paso 02 (SFAREGS): Autorización Curricular — Bloque Curricula: clic en plan de estudios y cambio a estatus elegible EL (F10).",
+            "Paso 03 (SFAREGS): Captura de Asignatura — Bloque Course Registration: ingreso manual del NRC asignado a la sección.",
+            "Paso 04 (SFAREGS): Asignación de Código RE — Registro con código RE (Register) para formalizar inscripción y calcular tasa.",
+            "Paso 05 (SSASECT / SSASECQ): Auditoría de Cupos — Descuento automático de vacante (Remaining -1) y actualización en tiempo real.",
+            "Paso 06 (TSAAREV): Evaluación Financiera — Comprobación de aplicación de tarifas institucionales en cuenta corriente.",
+            "Paso 07 (SFASLST): Lista Oficial de Clase — Aparición formal en lista del docente con estatus registrado.",
+        ],
+    },
+    "03": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 3.3)",
+        "items": [
+            "Paso 01 (SHATRNS): Registro de Asignatura Externa — ID: S00581111, Institución procedencia, Asignatura IST150 (Nota: 16, Modo: P).",
+            "Paso 02 (SHATRNS): Articulación y Equivalencia — Bloque Transfer Course Articulation, mapeo curricular con plan local.",
+            "Paso 03 (SHATFAC): Acreditación en Facultad — Revisión de articulación y registro de aprobación académica oficial.",
+            "Paso 04 (GJAPCTL): Ejecución de Pase a Historia — Proceso batch SHRROLL (Job 8113), procesando asignaturas a historia.",
+            "Paso 05 (SHATERM / SHATRNS): Validación de Estatus — Confirmación de estatus «Rolled to Academic History» con créditos oficiales.",
+            "Paso 06 (SHADEGR): Creación de Registro de Grado — Expediente curricular institucional generado satisfactoriamente (Deg Created).",
+            "Paso 07 (SHASMRY): Auditoría Final de Historial — Transcript consolidado validado al 100 % sin requerir cursado regular.",
+        ],
+    },
+    "04": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 1.2 y 5.4)",
+        "items": [
+            "Paso 01 (SOAINST): Verificación de Evaluación — Consulta de código de examen de suficiencia institucional.",
+            "Paso 02 (SOATEST): Registro de Calificación — Ingreso de ID del alumno, código de prueba (U01) y puntaje aprobatorio.",
+            "Paso 03 (SCAPREQ): Evaluación de Prerrequisitos — El motor valida el examen como prerrequisito equivalente de BASIC I.",
+            "Paso 04 (SFAREGS): Matrícula en Nivel Siguiente — Inscripción directa en BASIC II sin bloqueo fatal.",
+            "Paso 05 (SFAREGS): Asentamiento de Matrícula — Código RE guardado y vacante asignada en el NRC de destino.",
+        ],
+    },
+    "05": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 5.3)",
+        "items": [
+            "Paso 01 (SSASECT): Creación de Sección Especial — Configuración de NRC con indicador de egresados y cupos específicos.",
+            "Paso 02 (SFAREGS): Inscripción Administrativa — Registro del alumno egresado con arancel y tarifa diferenciada.",
+            "Paso 03 (Plataforma): Activación y Evaluación — Asignación de credenciales en plataforma externa y cómputo de notas.",
+            "Paso 04 (SFASLST): Registro de Nota Final — Vaciado de calificación aprobatoria en lista oficial de clase de Banner.",
+            "Paso 05 (GJAPCTL / SHRROLL): Pase a Historia — Rolado formal a historial académico para reconocimiento en CAPP de egreso.",
+        ],
+    },
+    "08": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 5.4 y 11.1)",
+        "items": [
+            "Paso 01 (SFAREGS): Consulta de Inscripción — Acceso con Periodo 202656 e ID del estudiante (S00581091).",
+            "Paso 02 (SFAREGS): Asignación de Código DD — Ingreso del código Drop/Delete en el registro del curso NRC 1021.",
+            "Paso 03 (SFAREGS): Procesamiento Financiero — Transacción ejecutada con «Estimación de cuota procesada» y recálculo de cobro.",
+            "Paso 04 (SSASECT): Liberación Automática de Cupo — Aforo actualizado en tiempo real: Actual 2 → 1 y Remaining 0 → 1.",
+            "Paso 05 (SFASLST): Auditoría de Lista de Clase — Verificación de exclusión del estudiante de la lista oficial del docente.",
+        ],
+    },
+    "09": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 4.1 y 5.4)",
+        "items": [
+            "Paso 01 (SGASTDN): Verificación de Estatus Suspendido — ID: S00581109, pestaña Curricula, Status: IS (Inactivo).",
+            "Paso 02 (SFAREGS): Intento de Inscripción con IS — Intento de alta de NRC bloqueado por condición inactiva.",
+            "Paso 03 (SFAREGS): Validación de Restricción — Notificación de control indicando que el estudiante no es elegible.",
+            "Paso 04 (SGASTDN): Reactivación Académica — Modificación de registro a Status: AS (Activo) y guardado en base de datos.",
+            "Paso 05 (SFAREGS): Reintento de Inscripción — Habilitación de captura de asignaturas en el periodo lectivo.",
+            "Paso 06 (SFAREGS): Confirmación de Asignaturas — Guardado con estatus RE, asignando vacante y actualizando carga.",
+            "Paso 07 (SGASTDN / SHACRSE): Auditoría Final de Expediente — Trazabilidad integral de estatus y récord académico.",
+        ],
+    },
+    "10": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 7.1 y 8)",
+        "items": [
+            "Paso 01 (SMARQCM): Solicitud de Auditoría Curricular — ID: S00581108, Programa: CMEMC38, inicio de auditoría general CAPP.",
+            "Paso 02 (SMIPOUT): Evaluación de Regla de Calificación Mínima — Validación de nota mínima aprobatoria (Nota ≥ 11).",
+            "Paso 03 (SMICRLT): Segregación a Cursos No Usados — Desplazamiento de ESEC 00650 al bloque de cursos no usados / reprobados.",
+            "Paso 04 (SMIPOUT): Cómputo de Créditos y Avance — Requerimiento 0/4 cursos, registrando 0,000 créditos acumulados.",
+            "Paso 05 (SMARQCM): Determinación de Cumplimiento — Dictamen curricular del área y requisitos en estado «NO CUMPLE».",
+            "Paso 06 (SMIPOUT / CAPP): Activación de Retorno Obligatorio — Bloqueo de avance a siguientes ciclos y exigencia de recursado.",
+            "Paso 07 (SMARQCM): Auditoría Final y Dictamen CAPP — Reporte consolidado confirmando rechazo de créditos y plan incompleto.",
+        ],
+    },
+    "12": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 7.1 y 8)",
+        "items": [
+            "Paso 01 (SFASLST): Ingreso de Calificaciones — Periodo 202656, NRC 1026: S00581109 (16 V), S00581108 (08 V), S00581111 (INH V).",
+            "Paso 02 (GJAPCTL): Ejecución Inicial Pase a Historia — Proceso SHRROLL, corrida preliminar para evaluar población.",
+            "Paso 03 (SHAGRDE / Catálogo): Diagnóstico Incidencia U20 — Discrepancia entre Modo V en SCACRSE vs Modo P en SHAGRDE Nivel C.",
+            "Paso 04 (SHAGRDE): Alineación de Modo de Calificación — Homologación de Modo V a nivel curso y estudiante para SHRROLL.",
+            "Paso 05 (GJAPCTL): Reejecución de Proceso Batch — SHRROLL Job 8114 exitoso con 100 % de estudiantes rolados a historia.",
+            "Paso 06 (SHATERM / SHASMRY): Validación en Historial — Estatus «Rolled to Academic History» confirmado en los expedientes.",
+            "Paso 07 (SFASLST / SHAGRDE): Cierre Formal y Bloqueo de Acta — Indicador Grade Roll Status = Y impidiendo ediciones posteriores.",
+        ],
+    },
+    "13": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 7.1)",
+        "items": [
+            "Paso 01 (SHAGRDE): Verificación de Escala — Modo V con escala vigesimal (00-20), nota aprobatoria mínima 11.",
+            "Paso 02 (SFASLST): Captura de Calificaciones — Registro de notas finales por lista de clase (o Autoservicio docente).",
+            "Paso 03 (SFASLST): Inasistencias e Inhabilitados — Asignación de código INH con nota 00 a participantes inhabilitados.",
+            "Paso 04 (SFASLST): Auditoría de Pre-Cierre — Verificación de columna Rolled en estado N antes del proceso batch.",
+            "Paso 05 (GJAPCTL): Despacho SHRROLL — Pase oficial de calificaciones para asentar historial del periodo.",
+        ],
+    },
+    "15": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 1.1 y 5.3)",
+        "items": [
+            "Paso 01 (SSASECT): Configuración Inicial de Capacidad — NRC 1026, Maximum: 1, Actual: 0 (1 cupo disponible).",
+            "Paso 02 (SFAREGS): Saturación de Capacidad (Alumno 1) — ID: S00581091, código RE, ocupando la única vacante.",
+            "Paso 03 (SFAREGS): Intento de Sobrecupo (Alumno 2) — ID: S00582045, código RE, motor detecta aforo lleno.",
+            "Paso 04 (SFAREGS): Emisión de Error Fatal — Notificación explícita de «Closed Section» bloqueando inscripción.",
+            "Paso 05 (SSASECT): Ampliación de Aforo — Bloque Enrollment: Maximum 1 → 4 vacantes, recalculando Remaining a 3.",
+            "Paso 06 (SFAREGS): Reintento de Inscripción (Alumno 2) — ID: S00582045, código RE, inscripción regular permitida.",
+            "Paso 07 (SSASECT / SSARRES): Auditoría Final de Balance — NRC 1026: Actual 2, Remaining 2; gestión de reservas por programa.",
+        ],
+    },
+    "16": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 5.3 y 5.4)",
+        "items": [
+            "Paso 01 (SFAREGS): Verificación de Matrícula Origen — ID: S00581109, Periodo: 202656, NRC 1026 (Sec. D) activo.",
+            "Paso 02 (SSASECT): Verificación de Cupo Destino — NRC 1021 (Sec. B), bloque Enrollment Information.",
+            "Paso 03 (SFAREGS): Intento de Traslado y Alerta — NRC 1026 con DD y NRC 1021 con RE, alerta de reserva de cupo.",
+            "Paso 04 (SSARRES): Ajuste de Reserva de Cupo — Ampliación de reserva CMEMC38 de 1 a 2 vacantes para permitir reubicación.",
+            "Paso 05 (SFAREGS): Ejecución Exitosa de Traslado — Transacción simultánea: retiro de origen (DD) e inscripción en destino (RE).",
+            "Paso 06 (SFASLST): Auditoría de Lista de Clase — Aparición oficial en el roster de la sección B con aforo actualizado.",
+            "Paso 07 (SFAREGS / TSAAREV): Validación de Récord y Finanzas — Sin duplicidad de cargos ni afectación de créditos acumulados.",
+        ],
+    },
+    "18-A": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 5.2)",
+        "items": [
+            "Paso 01 (SIAASGN): Acceso a Carga Docente — Formulario con Periodo 202656 y docente 100582059 (Dagner Chuman).",
+            "Paso 02 (SIAASGN): Auditoría de 4 NRCs — Verificación de secciones 1021, 1022, 1024 y 1025 en Computación y Emprendimiento.",
+            "Paso 03 (SIAASGN): Horas Semanales — Cálculo automático de 9.6 horas de contacto semanales para el NRC 1021.",
+            "Paso 04 (SIAASGN): Horas Totales — Cómputo de 120 horas lectivas totales programadas en el periodo.",
+            "Paso 05 (SIAASGN): Asignación de FTE — Determinación de factor FTE 0.02 por dedicación académica.",
+            "Paso 06 (SIAASGN): Roles de Instrucción — Registro de rol primario (100 %) y roles secundarios en co-docencia.",
+            "Paso 07 (SIAASGN): Consolidación Institucional — Sustitución integral y automática de las planillas Excel.",
+        ],
+    },
+    "18-B": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 4.1 y 5.4)",
+        "items": [
+            "Paso 01 (SOAHOLD): Asignación de Retención — Registro de retención TT (Cobranzas) por cuota vencida o mora.",
+            "Paso 02 (STVHLDD): Verificación de Reglas — Comprobación de flags de afectación de matrícula y servicios.",
+            "Paso 03 (SFAREGS): Intento de Matrícula — Captura de asignaturas en el formulario de inscripción.",
+            "Paso 04 (SFAREGS): Bloqueo Fatal Transaccional — Notificación de error bloqueando la asignación del código RE.",
+            "Paso 05 (TSAAREV / TVACAJA): Regularización de Deuda — Pago de saldos pendientes en caja institucional.",
+            "Paso 06 (SOAHOLD): Levantamiento de Retención — Registro de fecha de liberación desactivando la retención.",
+            "Paso 07 (SFAREGS): Inscripción Exitosa — Confirmación de matrícula con estatus RE y asignación de vacante.",
+        ],
+    },
 }
 
 
 def caso(c, id_script):
     """Situación, pasos y resultado de un script, con los ajustes de cada centro."""
     if c.id == "idiomas" and id_script == "05":
-        return (("Egresado", "no lleva el curso"),
-                [("Plataforma", "activar y rendir"), ("SSASECT", "crear un solo NRC"), ("Nota manual", "pasar la nota a Banner")],
+        return (("Egresado", "no lleva el curso regular"),
+                [("Plataforma", "activar y rendir en plataforma", "instrucción intensiva"),
+                 ("SSASECT", "crear un solo NRC especial", "sección para egresados"),
+                 ("Nota manual", "pasar nota a Banner", "calificación docente"),
+                 ("GJAPCTL", "pase a historia SHRROLL", "reconocimiento CAPP")],
                 ("BASIC I, II…", "la misma nota en todos"), "egreso")
     if c.id == "idiomas" and id_script == "10":
-        return (("Desaprueba BASIC I", "nota bajo el mínimo"),
-                [("SHRROLL", "pase a historia"), ("SFAREGS", "BASIC II: error Fatal")],
+        return (("Desaprueba BASIC I", "nota bajo el mínimo (≤10)"),
+                [("SFASLST", "nota final docente", "nota reprobatoria"),
+                 ("GJAPCTL", "pase a historia", "proceso SHRROLL"),
+                 ("SFAREGS", "intento en BASIC II", "error Fatal prerrequisito"),
+                 ("SOATEST", "alternativa suficiencia", "examen de suficiencia")],
                 ("Repite BASIC I", "o rinde suficiencia"), "capp")
     if c.id == "emprendimiento" and id_script == "16":
-        return (("Cambio de NRC", "P02 y P03 se cruzan"),
-                [("SFAREGS", "DD en el NRC de origen"), ("SFAREGS", "RE en el NRC de destino")],
+        return (("Cambio de NRC", "P02 y P03 se superponen"),
+                [("SFAREGS", "verificar origen", "grupo activo en curso"),
+                 ("SSASECT", "verificar destino", "aforo en sección alterna"),
+                 ("SFAREGS", "traslado simultáneo", "DD en origen · RE en destino"),
+                 ("SFASLST", "auditoría lista", "alta en nueva sección")],
                 ("En el nuevo NRC", "lista actualizada"), "matricula")
     sit, pasos, res, cita = CASOS[id_script]
     if id_script == "13" and c.d["escala"]:
@@ -511,17 +819,27 @@ def caso(c, id_script):
 def casuistica(c, numero, id_script):
     (sit, sit_sub), pasos, (res, res_sub), cita = caso(c, id_script)
     s = c.script(id_script)
+    cap = c.capacidad_script(id_script)
+    cap_det = c.capacidad_detalle_script(id_script)
     nodos = [paso("c0", "caso", 0, sit, sit_sub, tipo="security", ancho=170)]
-    for j, (codigo, accion) in enumerate(pasos, start=1):
+    for j, item in enumerate(pasos, start=1):
+        codigo, accion = item[0], item[1]
+        tag = item[2] if len(item) > 2 else None
         tipo = {"SHRROLL": "messagebus", "SSASECQ": "database", "SMARQCM": "database", "Plataforma": "external"}.get(codigo, "backend")
-        nodos.append(paso(f"c{j}", "caso", j, codigo, accion, tipo=tipo, ancho=170))
+        nodos.append(paso(f"c{j}", "caso", j, codigo, accion, dato=tag, tipo=tipo, ancho=170))
     nodos.append(paso("cr", "caso", len(pasos) + 1, res, res_sub, ESTADO_TEXTO[s["estado"]], "database", "success", ancho=170))
     probado = [s["evidencia"]] if s["estado"] == "validado" else [f"{ESTADO_TEXTO[s['estado']].capitalize()}: {s['evidencia']}"]
+    lane_label = f"{cap} · Situación → pasos → resultado" if cap else "Situación → pasos → resultado"
+    extra = EXTRA_CASOS.get(id_script)
+    if extra:
+        extra = extra if isinstance(extra, list) else [extra]
     return flujo(
         c, numero, slug_script(id_script),
-        [{"id": "caso", "label": "Situación → pasos → resultado"}],
+        [{"id": "caso", "label": lane_label}],
         nodos,
-        tarjetas(c, probado, [CITAS[cita]]),
+        tarjetas(c, probado, [CITAS[cita]], extra=extra),
+        title_override=f"{c.nombre} · {cap} · Script {id_script} · {c.nombre_script(id_script)}" if cap else None,
+        subtitle_override=c.subtitulo(cap_det) if cap_det else None,
     )
 
 
@@ -617,8 +935,8 @@ def tres_centros(centros, tr):
         aristas += [{"id": f"e-{a['id']}-{b['id']}", "from": a["id"], "to": b["id"], "variant": "default"}
                     for a, b in zip(fila, fila[1:])]
     m = {
-        "title": f"Centros Empresariales · 0. {TITULOS['tres-centros']}",
-        "subtitle": "Idiomas, Computación y Emprendimiento · Escuela EM · Campus S · Elaborado por: " + centros[0].autor,
+        "title": f"Centros Empresariales · 0. {TITULOS['tres-centros']} (Capacidades 1 a 8)",
+        "subtitle": "Capacidades 1 a 8 · Idiomas, Computación y Emprendimiento · Escuela EM · Campus S · Elaborado por: " + centros[0].autor,
         "locale": "es",
         "translations": tr,
         "output": "centros/comun/diagramas/00-tres-centros/centros-00-tres-centros.html",

@@ -1,0 +1,14 @@
+,,,,,,,,
+,GUÍA OPERATIVA: ASIGNACIÓN DE DOCENTE Y REGISTRO DE CALIFICACIONES (SIAINST / SSASECT / SFASLST / SHRROLL),,,,,,Instructivo 5.5 • Gestión Docente y Calificaciones,
+,"Procedimiento institucional en Banner para habilitar y asignar docentes a NRCs, auditar escalas y registrar calificaciones con pase a historia académica.",,,,,,Validado: TEST USS (01/10/2026),
+,TRANSACCIÓN PRINCIPAL,,ESCALA & AUDITORÍA DE NOTAS,,,CIERRE & HISTORIA ACADÉMICA,,
+,SIAINST / SSASECT / SFASLST,,Escala Vigesimal (0 - 20) • Mínima 11,,,SHRROLL ➔ Proceso Rolled CAPP,,
+,"Habilitación docente, asignación a NRC y actas",,Nivel C (Computación) con control INH (<70%),,,Pase masivo a historia académica y avance CAPP,,
+,,,,,,,,
+,Paso (N°),Fase / Proceso,Página Banner (Código),Bloque o Pestaña,Acción y Campos a Ingresar,Datos de Prueba (TEST USS),Resultado Esperado / Verificación,Área Responsable
+,Paso 1,Habilitación de Docente,SIAINST,Encabezado y Facultad,Verificar que el docente esté activo en el periodo y habilitado para dictar materias de Centros (ESEC/ESEP),"ID Docente S00580901, Periodo 202656",Estatus Activo confirmado,Registros Académicos
+,Paso 2,Asignación de Docente al NRC,SSASECT,Horario e instructores > Instructor,"Ingresar ID del docente, definir porcentaje de responsabilidad y marcar casilla de principal","NRC 1021, ID Docente S00580901, 100% Responsabilidad, Casilla Principal marcada",Docente vinculado al NRC con mensaje de guardado exitoso,Jefatura de Centro Empresarial
+,Paso 3,Auditoría de Escala de Calificaciones,SHAGRDE,Grade Code Maintenance,"Validar escala vigesimal por nivel: nota 10 desaprobada (sin créditos ganados), nota 11 a 20 aprobada (con créditos), e INH para inhabilitados por inasistencia (<70%)","Nivel C (Computación), notas 10 a 20 e INH",Regla institucional de aprobación comprobada (mínima aprobatoria 11),Registros Académicos
+,Paso 4,Ingreso de Calificaciones por Backoffice,SFASLST,Class Roster / Lista de Clase,Ingresar notas finales vigesimales a los estudiantes matriculados en la sección para auditar casos de aprobado y desaprobado,"Periodo 202656, NRC 1021, Alumno S00581081 = Nota 16 (Aprobado), Alumno S00581091 = Nota 10 (Desaprobado)","Mensaje en verde ""Saved successfully (2 rows saved)"", actas asentadas",Docente / Registros Académicos
+,Paso 5,Verificación de Estatus de Acta,SFASLST,Columna Rolled,Auditar que las notas queden en estado preliminar antes del pase a historia académica,Casilla Rolled (Pasada) desmarcada para ambos estudiantes,"Calificaciones guardadas en el acta del curso, pendientes de cierre de periodo",Registros Académicos
+,Paso 6,Pase a Historia Académica y Avance CAPP,SHRROLL,Parámetros del Proceso,Ejecutar el pase masivo de calificaciones a historia académica (SHACRSE) y auditar auditoría de grado,"Periodo 202656, NRC 1021","Casilla Rolled marcada en SFASLST, nota 16 acredita créditos y cumple CAPP, nota 10 bloquea avance a ciclo superior",Registros Académicos

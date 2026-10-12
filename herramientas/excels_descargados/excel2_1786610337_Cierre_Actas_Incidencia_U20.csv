@@ -1,0 +1,21 @@
+,,,,,,,
+,SCRIPT 12 / 14: CIERRE DE ACTAS Y RESOLUCIÓN INCIDENCIA U20 EN BANNER,,,,,,
+,Módulo:,Banner Student / Calificaciones y Cierre de Actas,Responsable:,Dagner Chumán,Fecha:,02/10/2026,Ambiente: TEST
+,Objetivo:,"Validar el ingreso de calificaciones en SFASLST, ejecución del pase a historia mediante SHRROLL (Job 8114), diagnóstico y corrección de discrepancia de modo de calificación (Incidencia U20) en SHAGRDE y cierre formal de actas.",,,,,
+,,,,,,,
+,PERIODO ACADÉMICO,,NRC DE PRUEBA,PROCESO BATCH BANNER,,ESTADO DE LA PRUEBA,
+,202656,,1026,SHRROLL (Job 8114),,VALIDADO AL 100%,
+,,,,,,,
+,N° Script,Nombre de la Casuística,Pantallas Banner,Datos de Prueba (TEST),Resultado Esperado,Resultado Obtenido / Evidencia,Estado
+,Script 12 / 14,"Cierre de Periodo, Pase a Historia y Cierre de Actas",SFASLST → GJAPCTL (SHRROLL) → SHAGRDE,"Periodo: 202656
+NRC: 1026
+Notas registradas: S00581109 (16 V), S00581108 (08 V), S00581111 (INH V)",Cierre formal del acta del curso y pase masivo de calificaciones a la historia académica definitiva de los estudiantes.,Diagnóstico y resolución de incidencia institucional U20 (discrepancia de Modo V en catálogo vs Modo P en SHAGRDE Nivel C). Job 8114 exitoso con 100% de estudiantes rolados a historia académica.,VALIDADO AL 100%
+,,,,,,,
+,Paso,Acción Operativa,Pantalla Banner,Descripción y Parámetros,Comportamiento Esperado,Resultado de la Ejecución,Estatus
+,Paso 01,Ingreso de Calificaciones Finales,SFASLST,"Periodo: 202656 | NRC: 1026 | Alumnos: S00581109 (16 V), S00581108 (08 V), S00581111 (INH V)",Registrar calificaciones y calificador de asistencia/inhabilitado sin bloqueo en lista de clase.,Notas ingresadas y guardadas exitosamente en la lista de clase SFASLST.,Completado
+,Paso 02,Ejecución Inicial Pase a Historia,GJAPCTL,"Proceso: SHRROLL | Parámetros: Periodo 202656, NRC 1026 | Corrida de prueba",Procesar el pase masivo a historia académica de todos los alumnos calificados.,Proceso SHRROLL ejecutado; reporte emite advertencia de discrepancia institucional U20.,Completado
+,Paso 03,Diagnóstico de Incidencia U20,SHAGRDE / Catálogo,Auditoría de consistencia de modos de calificación (Modo V en catálogo vs Modo P en SHAGRDE),Identificar la causa raíz que impide el rolado definitivo a la historia académica.,Incidencia U20 confirmada: discrepancia de Modo V en catálogo vs Modo P en SHAGRDE a Nivel C.,Completado
+,Paso 04,Alineación de Modo de Calificación,SHAGRDE,Alineación de Modo de Calificación V a nivel curso y estudiante para compatibilidad con SHRROLL,Homologar modo de calificación institucional para desbloquear el rolado a historia académica.,Modo V homologado y guardado correctamente en SHAGRDE sin inconsistencias.,Completado
+,Paso 05,Reejecución de Proceso Batch,GJAPCTL,"Proceso SHRROLL | Job 8114 | Parámetros: Periodo 202656, NRC 1026",Ejecutar pase a historia definitivo con 100% de registros procesados.,Job 8114 finalizado exitosamente con código de salida 0. Cero errores reportados.,Completado
+,Paso 06,Validación en Historial Académico,SHATERM / SHASMRY,"Verificación de estatus «Rolled to Academic History» para S00581109, S00581108 y S00581111",Confirmar que el 100% de estudiantes aparezcan con calificaciones asentadas en su expediente.,100% de estudiantes rolados a historia académica definitiva con notas y créditos oficiales.,Completado
+,Paso 07,Cierre Formal y Bloqueo de Acta,SFASLST / SHAGRDE,Validación de indicador de acta cerrada (Grade Roll Status = Y) y bloqueo de edición,Garantizar el cierre definitivo del acta lectiva impidiendo modificaciones posteriores no autorizadas.,Acta formalmente cerrada con estatus consolidado y seguro institucional validado.,Completado

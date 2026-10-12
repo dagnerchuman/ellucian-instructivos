@@ -42,7 +42,13 @@ async function abrir(browser, html, tema) {
   return page;
 }
 
-const browser = await chromium.launch();
+const launchOpts = {};
+if (process.env.ARCHIFY_CHROME && fs.existsSync(process.env.ARCHIFY_CHROME)) {
+  launchOpts.executablePath = process.env.ARCHIFY_CHROME;
+} else if (fs.existsSync('/Applications/Google Chrome.app')) {
+  launchOpts.channel = 'chrome';
+}
+const browser = await chromium.launch(launchOpts);
 let fallas = 0;
 for (const html of archivos) {
   const base = html.replace(/\.html$/i, '');

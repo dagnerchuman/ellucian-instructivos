@@ -1,0 +1,33 @@
+,,,,,,
+,Paso / Bloque,Campo / Sección,Valor de Referencia / Ejemplo,Tipo de Campo,Instrucciones Operativas y Validaciones,Hito / Control
+,Paso 1: Encabezado (Bloque Clave),Formulario SSASECT,SSASECT,Acceso inicial,Escribir en la barra de búsqueda de Banner y presionar Enter.,Inicio de proceso
+,Paso 1: Encabezado (Bloque Clave),Periodo,202656 (o periodo lectivo),Obligatorio,"Ingresar periodo (202651: verano, 202654: sem I, 202656: sem II).",Parámetro base
+,Paso 1: Encabezado (Bloque Clave),NRC,(DEJAR EN BLANCO),Mandatorio,Dejar TOTALMENTE VACÍO para aperturar una nueva sección.,Regla crítica
+,Paso 1: Encabezado (Bloque Clave),Botón de Creación,Clic en «Crear NRC»,Acción del sistema,Hacer clic en el botón azul. El campo mostrará temporalmente ADD.,Indicador ADD activo
+,Paso 2: Información de sección,Materia,"ESEC (o ENGL, ESGE)",Obligatorio,Escribir directo en mayúsculas y presionar Tab. Evita abrir la lista si ya conoces la materia.,Catálogo institucional
+,Paso 2: Información de sección,Número de curso,00650 (ej. Word 365),Obligatorio,Digitar y presionar Tab. El campo Título se autocompleta desde el catálogo.,Autocarga catálogo
+,Paso 2: Información de sección,Sección,"A (o correlativo: B, C, D...)",Obligatorio,Asignar letra única que no esté ocupada en ese curso y periodo.,Correlativo asignado
+,Paso 2: Información de sección,Campus,S (Sede Chiclayo),Obligatorio,Digitar S o elegir de lista. Corresponde al campus operativo del centro.,Sede operativa
+,Paso 2: Información de sección,Estatus,A (Activo),Mandatorio,Seleccionar 'Activo'; indispensable para permitir la posterior matrícula.,Habilitación matrícula
+,Paso 2: Información de sección,Tipo de horario,TEO (Teórico),Obligatorio,Digitar TEO o derivado del catálogo. El método educativo hereda VIRT.,Modalidad lectiva
+,Paso 2: Información de sección,Modo de calificar,V (Vigesimal),Obligatorio,Digitar V. Obligatorio según el plan curricular del centro.,Evaluación académica
+,Paso 2: Información de sección,Aprobación especial,(DEJAR EN BLANCO),Control operativo,Dejar vacía: no seleccionar nada para evitar bloqueos de asesor/decano.,Matrícula sin traba
+,Paso 2: Información de sección,Parte de periodo,X07 (Computación) / I08 (Idiomas),Obligatorio,En «Clase tradicional»: digitar y presionar Tab. Fechas inicio/fin se calculan solas.,Cálculo fechas auto
+,Paso 2: Información de sección,¡PRIMER GUARDADO!,Botón «Guardar» (abajo a la derecha),Hito Crítico,MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña para evitar el error Debe guardar antes de salir. El ADD cambia al nuevo NRC oficial (ej. 1026).,⭐ 1er Guardado (NRC generado)
+,Paso 3: Aforo de sección,Pestaña Ingreso de sección,Clic en pestaña 2,Navegación,Ir a «Información de ingreso de sección» (Enrollment Details).,Acceso a cupos
+,Paso 3: Aforo de sección,Máximo (Cupos del aula),"1, 2 (o aforo aula: 25, 30)",Obligatorio,Ingresar cantidad autorizada de vacantes para el NRC.,Aforo definido
+,Paso 3: Aforo de sección,¡SEGUNDO GUARDADO!,Botón «Guardar» (abajo a la derecha),Hito Crítico,Guardar (F10) para fijar el cupo. El contador Restante se actualiza al aforo.,⭐ 2do Guardado (Cupos confirmados)
+,Paso 4: Horario y Docente,Pestaña Horario y reunión,Clic en pestaña 3,Navegación,Ir a «Instructor y horas de reunión».,Programación lectiva
+,Paso 4: Horario y Docente,Horario (Días y Horas),Tipo CLAS | 0800 a 1200 | Lunes y Mié,Obligatorio,"En subpestaña «Fechas de reunión»: tipo CLAS, formato 24h y marcar casillas de días.",Bloque horario fijado
+,Paso 4: Horario y Docente,Ubicación (Edificio y Aula),Edificio: SAUVIR | Salón: SALA VIRT.,Obligatorio,En «Créditos y ubicación»: usar SAUVIR / SALA VIRT. (aula virtual oficial campus S). Previene el *ERROR* Conflicto de salón.,Espacio asignado sin cruce
+,Paso 4: Horario y Docente,Sobrepaso de Salón,Casilla Indicador de sobrepaso,Contingencia,"Si se usa salón físico con cruce, escribir O en la casilla rectangular para omitir conflicto.",Sobrepaso de aula activo
+,Paso 4: Horario y Docente,Horas Semanales,"Calculado automático (ej. 9,60 h)",Informativo,Banner multiplica días/horas por el factor institucional de SIATERM.,Horas lectivas auditadas
+,Paso 4: Horario y Docente,Consistencia de Sesión,Indicador de sesión: 01 (o 1),Regla Crítica,"REGLA DE ORO: El indicador de sesión de HORARIO debe ser idéntico al de INSTRUCTOR (ambos 01 o ambos 1), de lo contrario arroja Sesión no tiene horas de reunión definidas.",Sesiones sincronizadas
+,Paso 4: Horario y Docente,Docente Principal,ID 100582059 | Principal ☑ | 100%,Obligatorio,"En tabla «Instructor»: digitar ID (activo en SIAINST), presionar Tab, marcar Principal y colocar 100% responsabilidad y sesión.",Docente asignado
+,Paso 4: Horario y Docente,Sobrepaso de Docente,Casilla Indicador de sobrepaso,Contingencia,"Si el docente ya tiene otro NRC a esa misma hora, marcar la casilla Indicador de sobrepaso ☑ para resolver *ERROR* Conflicto de horario del instructor.",Sobrepaso docente activo
+,Paso 4: Horario y Docente,¡TERCER GUARDADO!,Botón «Guardar» (abajo a la derecha),Hito Crítico,Guardar (F10). Mensaje verde: ✓ Saved successfully. NRC listo con horario y profesor.,⭐ 3er Guardado (Horario y Docente)
+,Paso 5: Reserva de cupos (SSARRES),Lugares Reservados,Menú Relacionado → SSARRES,Navegación,Subpestaña «Lugares reservados» para blindar cupos por tipo de participante.,Control de aforo segmentado
+,Paso 5: Reserva de cupos (SSARRES),Regla Nula (Cupo General),Regla NULL | Cupo: 1,Mandatorio institucional,OBLIGATORIA: La fila con clave nula no se borra; asegura cupo a pregrado institucional.,Aforo general garantizado
+,Paso 5: Reserva de cupos (SSARRES),Regla por Programa CCEE,Programa: CMEMC38 | Cupo: 1,Condicional CCEE,"Presionar +, seleccionar PROGRAMA y código CMEMC38 para reservar cupo exclusivo al centro.",Reserva de centro blindada
+,Paso 5: Reserva de cupos (SSARRES),¡CUARTO GUARDADO!,Botón «Guardar» (abajo a la derecha),Hito Crítico,Guardar reservas (F10). Previene el error fatal de inscripción *ERROR* Reserve Closed.,⭐ 4to Guardado (Reservas activas)
+,Paso 6: Publicación y Auditoría,Consulta en SSASECQ,Transacción SSASECQ,Verificación Final,"Entrar a SSASECQ con periodo 202656, materia ESEC y curso 00650. Confirmar que figure Activo (A), horario visible y vacante disponible.",🎯 NRC 100% PUBLICADO Y AUDITADO

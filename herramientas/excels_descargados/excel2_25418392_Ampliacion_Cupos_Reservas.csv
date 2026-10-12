@@ -1,0 +1,35 @@
+,,,,,,,
+,SCRIPT 15: AMPLIACIÓN DE CUPOS Y MANEJO DE RESERVAS EN BANNER,,,,,,
+,Módulo:,Banner Student / Registro Académico,Responsable:,Dagner Chumán,Fecha:,02/10/2026,Ambiente: TEST
+,Objetivo:,"Validar la restricción por sección saturada en SSASECT, emisión de error por cupo lleno en SFAREGS, posterior ampliación de aforo a 4 vacantes y confirmación de matrícula exitosa.",,,,,
+,,,,,,,
+,PERIODO ACADÉMICO,,NRC DE PRUEBA,CAPACIDAD (INICIAL → FINAL),,ESTADO DE LA PRUEBA,
+,202656,,1026,1 → 4 Vacantes,,VALIDADO AL 100%,
+,,,,,,,
+,N° Script,Nombre de la Casuística,Pantallas Banner,Datos de Prueba (TEST),Resultado Esperado,Resultado Obtenido / Evidencia,Estado
+,Script 15-A,Control de Capacidad y Bloqueo por Sobrecupo,SSASECT → SFAREGS,"Periodo: 202656
+NRC: 1026
+Capacidad Inicial: 1
+Alumno 1: S00581091
+Alumno 2: S00582045","Al matricular al Alumno 1 se satura el aforo (1/1). Al intentar inscribir al Alumno 2, emitir error fatal por cupo agotado.","Alumno 1 inscrito exitosamente. Al intentar Alumno 2, SFAREGS bloqueó con error: «SECCIÓN CERRADA - CUPO MÁXIMO ALCANZADO».",VALIDADO AL 100%
+,Script 15-B,Ampliación de Aforo / Capacidad de Sección,SSASECT,"Periodo: 202656
+NRC: 1026
+Bloque: Enrollment Information
+Capacidad Máxima: 1 → 4 vacantes",Permitir la modificación de capacidad máxima de 1 a 4 vacantes en la sección sin alterar inscripciones previas.,"Modificación guardada exitosamente. En SSASECT la capacidad reflejó Maximum: 4, Actual: 1 y Remaining: 3 vacantes libres.",VALIDADO AL 100%
+,Script 15-C,Inscripción Post-Ampliación de Cupo,SFAREGS → SSASECT,"Periodo: 202656
+ID Alumno: S00582045
+NRC: 1026
+Código Estatus: **RE**",Permitir inscripción exitosa del Alumno 2 tras ampliación de cupos y actualizar automáticamente el aforo disponible.,"Transacción aprobada con éxito. En SSASECT el aforo pasó a Maximum: 4, Actual: 2 y Remaining: 2. Estimación de cuota procesada.",VALIDADO AL 100%
+,Script 15-D,Gestión y Validación de Reservas de Cupo,SSASECT (Reservations),"Periodo: 202656
+NRC: 1026
+Reserva: 2 cupos
+Programa: Ingeniería de Sistemas",Garantizar que las vacantes reservadas queden asignadas exclusivamente a estudiantes del programa académico configurado.,Regla de cupo reservado validada. Restricción por regla de programa académica ejecutada correctamente en motor de matrícula.,VALIDADO AL 100%
+,,,,,,,
+,Paso,Acción Operativa,Pantalla Banner,Descripción y Parámetros,Comportamiento Esperado,Resultado de la Ejecución,Estatus
+,Paso 01,Configuración Inicial de Capacidad,SSASECT,NRC: 1026 | Capacidad Maximum: 1 | Actual: 0,Establecer la capacidad máxima de la sección en 1 cupo disponible.,"Sección configurada con Maximum: 1, Actual: 0 y Remaining: 1 vacante.",Completado
+,Paso 02,Saturación de Capacidad (Alumno 1),SFAREGS,ID: S00581091 | NRC: 1026 | Código: **RE**,Inscribir al estudiante ocupando la única vacante disponible.,"Matrícula procesada. Cupo ocupado al 100% (Maximum: 1, Actual: 1, Remaining: 0).",Completado
+,Paso 03,Intento de Sobrecupo (Alumno 2),SFAREGS,ID: S00582045 | NRC: 1026 | Código: **RE**,Motor de inscripción detecta aforo lleno y rechaza la transacción.,Bloqueo inmediato; la fila de inscripción no permite guardar el registro.,Completado
+,Paso 04,Emisión de Error Fatal de Sobrecupo,SFAREGS,Mensaje de control en barra de estado Banner,Emitir mensaje explícito de sección cerrada por cupo completo.,Mensaje confirmado: «ERROR: Sección cerrada. Cupo máximo alcanzado».,Completado
+,Paso 05,Ampliación de Aforo de Sección,SSASECT,Bloque Enrollment: Maximum 1 → 4 vacantes,Incrementar capacidad máxima a 4 y recalcular cupos restantes a 3.,"Aforo actualizado con éxito: Maximum: 4, Actual: 1 y Remaining: 3 vacantes.",Completado
+,Paso 06,Reintento de Inscripción de Alumno 2,SFAREGS,ID: S00582045 | NRC: 1026 | Código: **RE**,Permitir la inscripción regular al existir vacantes disponibles.,Inscripción aceptada. Alumno 2 matriculado y liquidación estimada procesada.,Completado
+,Paso 07,Auditoría Final y Balance de Cupos,SSASECT,NRC: 1026 | Validación de balance global,Verificar balance coherente de ocupación y cupos restantes.,"Balance auditado y conforme: Maximum: 4, Actual: 2, Remaining: 2 vacantes.",Completado

@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Computación · 10. Script 09 · Suspensión y reactivación",
-    "subtitle": "Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Computación · Capacidad 4 y 5 · Script 09 · Suspensión y reactivación",
+    "subtitle": "Capacidad 4.1 · Estado de permanencia (SGASTDN) y 5.4 · Inscripción · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -478,13 +478,15 @@
   "lanes": [
     {
       "id": "caso",
-      "label": "Situación → pasos → resultado"
+      "label": "Capacidad 4 y 5 · Situación → pasos → resultado"
     }
   ],
   "mainPath": [
     "c0",
     "c1",
     "c2",
+    "c3",
+    "c4",
     "cr"
   ],
   "nodes": [
@@ -494,7 +496,7 @@
       "col": 0,
       "type": "security",
       "label": "Suspendido",
-      "sublabel": "estatus IS o SU",
+      "sublabel": "estatus inactivo IS",
       "width": 170
     },
     {
@@ -502,26 +504,48 @@
       "lane": "caso",
       "col": 1,
       "type": "backend",
-      "label": "SFAREGS",
-      "sublabel": "no deja matricular",
-      "width": 170
+      "label": "SGASTDN",
+      "sublabel": "verificación estatus",
+      "width": 170,
+      "tag": "expediente con Status IS"
     },
     {
       "id": "c2",
       "lane": "caso",
       "col": 2,
       "type": "backend",
+      "label": "SFAREGS",
+      "sublabel": "intento bloqueado",
+      "width": 170,
+      "tag": "motor impide inscripción"
+    },
+    {
+      "id": "c3",
+      "lane": "caso",
+      "col": 3,
+      "type": "backend",
       "label": "SGASTDN",
-      "sublabel": "reactivar con AS",
-      "width": 170
+      "sublabel": "reactivación alumno",
+      "width": 170,
+      "tag": "actualización a Status AS"
+    },
+    {
+      "id": "c4",
+      "lane": "caso",
+      "col": 4,
+      "type": "backend",
+      "label": "SFAREGS",
+      "sublabel": "matrícula exitosa",
+      "width": 170,
+      "tag": "código RE · asignación vacante"
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 3,
+      "col": 5,
       "type": "database",
       "label": "Puede matricularse",
-      "sublabel": "alumno activo",
+      "sublabel": "alumno activo AS",
       "width": 170,
       "tag": "validado en TEST",
       "icon": "success"
@@ -541,8 +565,20 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-cr",
+      "id": "e-c2-c3",
       "from": "c2",
+      "to": "c3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c3-c4",
+      "from": "c3",
+      "to": "c4",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c4-cr",
+      "from": "c4",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -553,6 +589,19 @@
       "title": "Probado en TEST",
       "items": [
         "Bloqueo con estatus inactivo y reactivación a AS en SGASTDN"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 4.1 y 5.4)",
+      "items": [
+        "Paso 01 (SGASTDN): Verificación de Estatus Suspendido — ID: S00581109, pestaña Curricula, Status: IS (Inactivo).",
+        "Paso 02 (SFAREGS): Intento de Inscripción con IS — Intento de alta de NRC bloqueado por condición inactiva.",
+        "Paso 03 (SFAREGS): Validación de Restricción — Notificación de control indicando que el estudiante no es elegible.",
+        "Paso 04 (SGASTDN): Reactivación Académica — Modificación de registro a Status: AS (Activo) y guardado en base de datos.",
+        "Paso 05 (SFAREGS): Reintento de Inscripción — Habilitación de captura de asignaturas en el periodo lectivo.",
+        "Paso 06 (SFAREGS): Confirmación de Asignaturas — Guardado con estatus RE, asignando vacante y actualizando carga.",
+        "Paso 07 (SGASTDN / SHACRSE): Auditoría Final de Expediente — Trazabilidad integral de estatus y récord académico."
       ]
     },
     {

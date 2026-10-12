@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Idiomas · 9. Script 15 · Ampliación de cupos y reservas",
-    "subtitle": "Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Idiomas · Capacidad 5 · Script 15 · Ampliación de cupos y reservas",
+    "subtitle": "Capacidad 5.3 · Aforo y reservas de cupos (SSASECT, SSARRES) · Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -478,13 +478,15 @@
   "lanes": [
     {
       "id": "caso",
-      "label": "Situación → pasos → resultado"
+      "label": "Capacidad 5 · Situación → pasos → resultado"
     }
   ],
   "mainPath": [
     "c0",
     "c1",
     "c2",
+    "c3",
+    "c4",
     "cr"
   ],
   "nodes": [
@@ -493,8 +495,8 @@
       "lane": "caso",
       "col": 0,
       "type": "security",
-      "label": "NRC lleno",
-      "sublabel": "error «Closed»",
+      "label": "NRC saturado",
+      "sublabel": "capacidad 1/1 vacantes",
       "width": 170
     },
     {
@@ -503,25 +505,47 @@
       "col": 1,
       "type": "backend",
       "label": "SSASECT",
-      "sublabel": "subir el cupo",
-      "width": 170
+      "sublabel": "capacidad inicial",
+      "width": 170,
+      "tag": "aforo: 1 vacante máxima"
     },
     {
       "id": "c2",
       "lane": "caso",
       "col": 2,
       "type": "backend",
-      "label": "SSARRES",
-      "sublabel": "reservar para el programa",
-      "width": 170
+      "label": "SFAREGS",
+      "sublabel": "saturación y bloqueo",
+      "width": 170,
+      "tag": "código RE · Closed Section"
+    },
+    {
+      "id": "c3",
+      "lane": "caso",
+      "col": 3,
+      "type": "backend",
+      "label": "SSASECT",
+      "sublabel": "ampliación aforo",
+      "width": 170,
+      "tag": "Maximum 1 → 4 vacantes"
+    },
+    {
+      "id": "c4",
+      "lane": "caso",
+      "col": 4,
+      "type": "backend",
+      "label": "SFAREGS",
+      "sublabel": "reintento inscripción",
+      "width": 170,
+      "tag": "código RE · Actual 2, Remaining 2"
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 3,
+      "col": 5,
       "type": "database",
-      "label": "Se matricula",
-      "sublabel": "cupo ampliado",
+      "label": "Aforo ampliado",
+      "sublabel": "vacantes disponibles",
       "width": 170,
       "tag": "por probar en TEST",
       "icon": "success"
@@ -541,8 +565,20 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-cr",
+      "id": "e-c2-c3",
       "from": "c2",
+      "to": "c3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c3-c4",
+      "from": "c3",
+      "to": "c4",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c4-cr",
+      "from": "c4",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -553,6 +589,19 @@
       "title": "Probado en TEST",
       "items": [
         "Por probar en test: Ampliación de cupo"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 1.1 y 5.3)",
+      "items": [
+        "Paso 01 (SSASECT): Configuración Inicial de Capacidad — NRC 1026, Maximum: 1, Actual: 0 (1 cupo disponible).",
+        "Paso 02 (SFAREGS): Saturación de Capacidad (Alumno 1) — ID: S00581091, código RE, ocupando la única vacante.",
+        "Paso 03 (SFAREGS): Intento de Sobrecupo (Alumno 2) — ID: S00582045, código RE, motor detecta aforo lleno.",
+        "Paso 04 (SFAREGS): Emisión de Error Fatal — Notificación explícita de «Closed Section» bloqueando inscripción.",
+        "Paso 05 (SSASECT): Ampliación de Aforo — Bloque Enrollment: Maximum 1 → 4 vacantes, recalculando Remaining a 3.",
+        "Paso 06 (SFAREGS): Reintento de Inscripción (Alumno 2) — ID: S00582045, código RE, inscripción regular permitida.",
+        "Paso 07 (SSASECT / SSARRES): Auditoría Final de Balance — NRC 1026: Actual 2, Remaining 2; gestión de reservas por programa."
       ]
     },
     {

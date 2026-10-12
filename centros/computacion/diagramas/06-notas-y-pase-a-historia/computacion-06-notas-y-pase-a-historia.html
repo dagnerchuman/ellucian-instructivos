@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="generator" content="archify 3.0.1">
   <meta name="archify-reader-contract" content="declared-wide-v1">
-  <title>Centro de Computación · 6. Notas y pase a historia · Diagrama</title>
+  <title>Centro de Computación · 6. Notas y pase a historia (Capacidades 7 y 8) · Diagrama</title>
   <script>
     // Resolve the theme before first paint so light-preference users don't
     // see a dark flash. The toolbar script below re-applies with UI state.
@@ -4978,9 +4978,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
            data-preset-badge-blueprint="PLANO / REV 01"
            data-preset-badge-editorial="EDITORIAL / NOTA DE CAMPO">
         <div class="pulse-dot"></div>
-        <h1>Centro de Computación · 6. Notas y pase a historia</h1>
+        <h1>Centro de Computación · 6. Notas y pase a historia (Capacidades 7 y 8)</h1>
       </div>
-      <p class="subtitle">Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</p>
+      <p class="subtitle">Capacidad 7.1 (Calificaciones) y 8 (CAPP) · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</p>
     </div>
 
 
@@ -4989,8 +4989,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <div class="diagram-container" data-detail-level="read"
          data-preset-badge-editorial-plate="ARCHIFY / LÁMINA 04">
       <svg viewBox="0 0 996 408" data-layout-contract="readable-v2" role="img" lang="es" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase">
-        <title id="archify-diagram-title">Centro de Computación · 6. Notas y pase a historia</title>
-        <desc id="archify-diagram-description">Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</desc>
+        <title id="archify-diagram-title">Centro de Computación · 6. Notas y pase a historia (Capacidades 7 y 8)</title>
+        <desc id="archify-diagram-description">Capacidad 7.1 (Calificaciones) y 8 (CAPP) · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</desc>
         <!-- Definitions -->
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -5348,6 +5348,22 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <ul>
           <li>«No Substitute Grade»: la escala del nivel no tiene el modo del curso; agrégalo en SHAGRDE (U20)</li>
           <li>Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-dot violet"></div>
+          <h3>Guía Operativa Calificaciones y Cierre (Excel 1 y 2 · Instructivo 7.1 y 8)</h3>
+        </div>
+        <ul>
+          <li>Paso 1 (SHAGRDE / Catálogo): Verificación de escala vigesimal y homologación de Modo V a nivel curso y programa.</li>
+          <li>Paso 2 (SFASLST / Autoservicio): Registro de calificaciones docentes (≥11 aprueba, ≤10 reprueba, INH inhabilitado).</li>
+          <li>Paso 3 (SFASLST): Verificación de estatus previo de acta lectiva (columna Rolled en N).</li>
+          <li>Paso 4 (GJAPCTL): Despacho de proceso batch SHRROLL (Periodo 202656, NRC correspondiente, Modo U).</li>
+          <li>Paso 5 (GJIREVO): Auditoría técnica de bitácora .lis confirmando pase masivo a historia académica sin errores.</li>
+          <li>Paso 6 (SHATERM / SHACRSE): Confirmación de notas asentadas en historial definitivo («Rolled to Academic History»).</li>
+          <li>Paso 7 (SMARQCM / SMICRLT): Auditoría CAPP de cumplimiento curricular (reprobados segregados a «Cursos no usados»).</li>
         </ul>
       </div>
 

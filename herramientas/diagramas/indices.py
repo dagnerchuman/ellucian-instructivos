@@ -8,21 +8,23 @@ import html
 from pathlib import Path
 
 from centro import CENTROS, POR_CONFIRMAR, Centro, centros_disponibles
-from plantillas import TITULOS
+from plantillas import TITULOS, CAPACIDADES
 
 AVISO = "<!-- Archivo generado por herramientas/diagramas/generar.py: no lo edites a mano. -->"
 
 
 def diagramas_de(carpeta):
-    """[(numero, titulo, base)] de cada subcarpeta NN-tema con su HTML; base = ruta sin extensión."""
+    """[(numero, titulo, capacidad, base)] de cada subcarpeta NN-tema con su HTML; base = ruta sin extensión."""
     salida = []
     for sub in sorted((carpeta / "diagramas").glob("[0-9][0-9]-*")):
         html_ = next(sub.glob("*.html"), None)
         if not html_:
             continue
         numero = int(sub.name[:2])
-        titulo = TITULOS.get(sub.name[3:], sub.name[3:].replace("-", " ").capitalize())
-        salida.append((numero, titulo, html_.with_suffix("")))
+        slug_ = sub.name[3:]
+        titulo = TITULOS.get(slug_, slug_.replace("-", " ").capitalize())
+        cap = CAPACIDADES.get(slug_, "")
+        salida.append((numero, titulo, cap, html_.with_suffix("")))
     return salida
 
 
@@ -36,9 +38,10 @@ def enlaces_md(base, desde):
 
 
 def tabla_diagramas(carpeta, desde):
-    filas = ["| N.º | Diagrama | Archivos |", "|---|---|---|"]
-    for numero, titulo, base in diagramas_de(carpeta):
-        filas.append(f"| {numero} | {titulo} | {enlaces_md(base, desde)} |")
+    filas = ["| N.º | Capacidad Banner | Diagrama | Archivos |", "|---|---|---|---|"]
+    for numero, titulo, cap, base in diagramas_de(carpeta):
+        cap_txt = cap if cap else "General"
+        filas.append(f"| {numero} | {cap_txt} | {titulo} | {enlaces_md(base, desde)} |")
     return "\n".join(filas)
 
 
@@ -144,11 +147,12 @@ def ficha_centro(c):
 def galeria(ids):
     def tarjetas(carpeta):
         t = []
-        for numero, titulo, base in diagramas_de(carpeta):
+        for numero, titulo, cap, base in diagramas_de(carpeta):
             b = html.escape(rel(base, CENTROS))
+            cap_badge = f'<span class="cap">{html.escape(cap)}</span>' if cap else ""
             t.append(
                 f'<article class="card"><a class="thumb" href="{b}.html"><img loading="lazy" src="{b}.svg" alt="{html.escape(titulo)}"></a>'
-                f'<div class="meta"><span class="num">{numero}</span><a href="{b}.html">{html.escape(titulo)}</a></div>'
+                f'<div class="meta"><span class="num">{numero}</span>{cap_badge}<a href="{b}.html">{html.escape(titulo)}</a></div>'
                 f'<div class="files"><a href="{b}.html">HTML</a><a href="{b}-claro.png">PNG claro</a>'
                 f'<a href="{b}-oscuro.png">PNG oscuro</a><a href="{b}.svg">SVG</a></div></article>')
         return "\n".join(t)
@@ -178,14 +182,22 @@ section {{ margin-top:28px; border-top:4px solid var(--c); padding-top:12px; }}
 h2 {{ margin:0; font-size:20px; color:var(--c); }}
 .sub {{ margin:4px 0 0; color:var(--muted); font-size:13px; }}
 a {{ color:inherit; }}
-.grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin-top:14px; }}
-.card {{ background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }}
+.grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px; margin-top:14px; }}
+.card {{ background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.15s ease, box-shadow 0.15s ease; }}
+.card:hover {{ transform:translateY(-2px); box-shadow:0 6px 18px rgba(92,33,147,0.08); }}
 .thumb {{ display:block; aspect-ratio:16/10; overflow:hidden; background:#fff; border-bottom:1px solid var(--line); }}
 .thumb img {{ display:block; width:100%; height:100%; object-fit:contain; }}
-.meta {{ display:flex; gap:8px; align-items:center; padding:10px 12px 4px; font-weight:600; }}
-.meta a {{ text-decoration:none; }}
-.num {{ background:var(--c); color:#fff; border-radius:6px; padding:0 7px; font-size:13px; }}
-.files {{ display:flex; flex-wrap:wrap; gap:6px 12px; padding:4px 12px 12px; font-size:13px; color:var(--muted); }}
+.meta {{ display:flex; flex-wrap:wrap; gap:6px 8px; align-items:center; padding:10px 12px 4px; font-weight:600; }}
+.meta a {{ text-decoration:none; width:100%; }}
+.meta a:hover {{ color:var(--brand); text-decoration:underline; }}
+.num {{ background:var(--c); color:#fff; border-radius:6px; padding:0 7px; font-size:12px; }}
+.cap {{ background:rgba(112,48,160,0.1); color:var(--c); border:1px solid rgba(112,48,160,0.22); border-radius:5px; padding:1px 6px; font-size:11px; font-weight:600; white-space:nowrap; }}
+@media (prefers-color-scheme: dark) {{
+  .cap {{ background:rgba(185,138,224,0.18); border-color:rgba(185,138,224,0.35); }}
+}}
+.files {{ display:flex; flex-wrap:wrap; gap:6px 12px; padding:6px 12px 12px; font-size:13px; color:var(--muted); }}
+.files a {{ text-decoration:none; }}
+.files a:hover {{ text-decoration:underline; }}
 </style></head><body>
 <header><h1>Centros Empresariales en Banner: diagramas paso a paso</h1>
 <p>Idiomas, Computación y Emprendimiento · Universidad Señor de Sipán · Elaborado por: {autor}</p></header>

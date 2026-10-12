@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Computación · 12. Script 10 · Retorno por desaprobado",
-    "subtitle": "Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Computación · Capacidad 7 y 8 · Script 10 · Retorno por desaprobado",
+    "subtitle": "Capacidad 7.1 · Calificaciones (SFASLST) y 8 · CAPP (SMARQCM) · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -478,7 +478,7 @@
   "lanes": [
     {
       "id": "caso",
-      "label": "Situación → pasos → resultado"
+      "label": "Capacidad 7 y 8 · Situación → pasos → resultado"
     }
   ],
   "mainPath": [
@@ -486,6 +486,7 @@
     "c1",
     "c2",
     "c3",
+    "c4",
     "cr"
   ],
   "nodes": [
@@ -494,44 +495,57 @@
       "lane": "caso",
       "col": 0,
       "type": "security",
-      "label": "Desaprueba",
-      "sublabel": "nota bajo el mínimo",
+      "label": "Desaprueba curso",
+      "sublabel": "nota 08 en historia",
       "width": 170
     },
     {
       "id": "c1",
       "lane": "caso",
       "col": 1,
-      "type": "backend",
-      "label": "SFASLST",
-      "sublabel": "nota final",
-      "width": 170
+      "type": "database",
+      "label": "SMARQCM",
+      "sublabel": "solicitud CAPP",
+      "width": 170,
+      "tag": "auditoría malla CMEMC38"
     },
     {
       "id": "c2",
       "lane": "caso",
       "col": 2,
-      "type": "messagebus",
-      "label": "SHRROLL",
-      "sublabel": "pase a historia",
-      "width": 170
+      "type": "backend",
+      "label": "SMIPOUT",
+      "sublabel": "regla nota mínima",
+      "width": 170,
+      "tag": "exige Nota ≥ 11 en área"
     },
     {
       "id": "c3",
       "lane": "caso",
       "col": 3,
+      "type": "backend",
+      "label": "SMICRLT",
+      "sublabel": "segregación cursos",
+      "width": 170,
+      "tag": "ESEC 00650 a «Cursos no usados»"
+    },
+    {
+      "id": "c4",
+      "lane": "caso",
+      "col": 4,
       "type": "database",
       "label": "SMARQCM",
-      "sublabel": "evaluar en CAPP",
-      "width": 170
+      "sublabel": "dictamen NO CUMPLE",
+      "width": 170,
+      "tag": "retorno obligatorio a cursar"
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 4,
+      "col": 5,
       "type": "database",
       "label": "Curso no usado",
-      "sublabel": "repite el curso",
+      "sublabel": "repite la asignatura",
       "width": 170,
       "tag": "validado en TEST",
       "icon": "success"
@@ -557,8 +571,14 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c3-cr",
+      "id": "e-c3-c4",
       "from": "c3",
+      "to": "c4",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c4-cr",
+      "from": "c4",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -569,6 +589,19 @@
       "title": "Probado en TEST",
       "items": [
         "S00581108 (nota 08): «No cumple» y curso no usado en CAPP"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 7.1 y 8)",
+      "items": [
+        "Paso 01 (SMARQCM): Solicitud de Auditoría Curricular — ID: S00581108, Programa: CMEMC38, inicio de auditoría general CAPP.",
+        "Paso 02 (SMIPOUT): Evaluación de Regla de Calificación Mínima — Validación de nota mínima aprobatoria (Nota ≥ 11).",
+        "Paso 03 (SMICRLT): Segregación a Cursos No Usados — Desplazamiento de ESEC 00650 al bloque de cursos no usados / reprobados.",
+        "Paso 04 (SMIPOUT): Cómputo de Créditos y Avance — Requerimiento 0/4 cursos, registrando 0,000 créditos acumulados.",
+        "Paso 05 (SMARQCM): Determinación de Cumplimiento — Dictamen curricular del área y requisitos en estado «NO CUMPLE».",
+        "Paso 06 (SMIPOUT / CAPP): Activación de Retorno Obligatorio — Bloqueo de avance a siguientes ciclos y exigencia de recursado.",
+        "Paso 07 (SMARQCM): Auditoría Final y Dictamen CAPP — Reporte consolidado confirmando rechazo de créditos y plan incompleto."
       ]
     },
     {

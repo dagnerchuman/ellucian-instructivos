@@ -1,0 +1,21 @@
+,,,,,,,
+,SCRIPT 16: DIVISIÓN DE GRUPOS / TRASLADO DE SECCIÓN EN BANNER,,,,,,
+,Módulo:,Banner Student / Registro Académico,Responsable:,Dagner Chumán,Fecha:,2026-10-02,Ambiente: TEST
+,Objetivo:,"Reubicar al participante entre secciones paralelas en un solo paso (DD en origen y RE en destino), liberando cupo sin duplicar cobros ni perder récord, gestionando aforo en SSARRES.",,,,,
+,,,,,,,
+,ESTUDIANTE (TEST),,NRC ORIGEN → DESTINO,ACCIÓN EN REGISTRO,,ESTADO DE LA PRUEBA,
+,S00581109 (María Ramírez),,NRC 1026 → NRC 1021,DD (Drop) / RE (Register),,VALIDADO AL 100%,
+,,,,,,,
+,N° Script,Nombre de la Casuística,Pantallas Banner,Datos de Prueba (TEST),Resultado Esperado,Resultado Obtenido / Evidencia,Estado
+,Script 16,División de Grupos y Traslado entre Secciones Paralelas,SSASECT (SSARRES) → SFAREGS → SFASLST,"Estudiante: S00581109 (María Ramírez)
+Origen: NRC 1026 (Sec. D)
+Destino: NRC 1021 (Sec. B)","Reubicar al participante entre secciones paralelas en un solo paso, liberando cupo de origen sin duplicar cobros ni perder récord.",Se aplicó DD en NRC 1026 e inscripción RE en NRC 1021. Se resolvió bloqueo Reserve Closed aumentando cupo reservado de CMEMC38 en SSARRES de 1 a 2. SFASLST auditó presencia oficial de 2 alumnos en NRC 1021.,VALIDADO AL 100%
+,,,,,,,
+,Paso,Acción Operativa,Pantalla Banner,Descripción y Parámetros,Comportamiento Esperado,Resultado de la Ejecución,Estatus
+,Paso 01,Verificación de Matrícula de Origen,SFAREGS,ID: S00581109 | Periodo: 202656 | NRC: 1026 (Sec. D),Confirmar inscripción activa en la sección origen y estado regular del estudiante.,Estudiante con estado **RE** en NRC 1026 verificado correctamente.,Completado
+,Paso 02,Verificación de Cupo en Sección Destino,SSASECT,NRC: 1021 (Sec. B) | Bloque Enrollment Information,Revisar disponibilidad general y reglas de cupo en la sección de destino.,"Aforo general con vacantes, pero restricción activa por reserva de grupo/programa.",Completado
+,Paso 03,Intento de Traslado Directo y Alerta de Reserva,SFAREGS,NRC 1026 Acción: DD | NRC 1021 Acción: RE,Procesar el traslado en una sola transacción liberando e inscribiendo simultáneamente.,Motor emitió bloqueo controlado: «Reserve Closed» para el grupo de reserva CMEMC38.,Completado
+,Paso 04,Ajuste y Ampliación de Reserva de Cupo,SSARRES,NRC: 1021 | Reserva: CMEMC38 | Capacidad: 1 → 2 vacantes,Ampliar la cuota de reserva en SSARRES para viabilizar el ingreso del alumno por reubicación.,Reserva modificada exitosamente en SSARRES a 2 cupos para la cohorte correspondiente.,Completado
+,Paso 05,Ejecución Exitosa del Traslado de Sección,SFAREGS,NRC 1026: DD (Drop) | NRC 1021: RE (Register),Guardar transacción simultánea: retiro de origen e inscripción en destino sin error.,Transacción completada: NRC 1026 liberó 1 vacante y NRC 1021 registró al estudiante exitosamente.,Completado
+,Paso 06,Auditoría de Lista de Clase Oficial,SFASLST,NRC: 1021 (Sec. B) | Lista de clase oficial y roster,Comprobar aparición del alumno en la lista oficial de la nueva sección con aforo correcto.,SFASLST auditó y confirmó 2 alumnos inscritos en lista oficial de NRC 1021.,Completado
+,Paso 07,Validación de Récord Académico y Finanzas,SFAREGS / TSAAREV,ID: S00581109 | Evaluación de cargos y créditos académicos,Verificar que no se generen duplicidades en la tasación ni pérdida de trazabilidad académica.,Finanzas auditadas: no hubo cargos duplicados por traslado; récord histórico preservado.,Completado

@@ -104,8 +104,11 @@ class Centro:
         return self.d["prerrequisitos"]["estado"] == "confirmado"
 
     # ---- textos de cabecera ----------------------------------------------
-    def subtitulo(self):
-        partes = [f"Nivel {self.nivel}", f"Programa {self.programa}"]
+    def subtitulo(self, capacidad=None):
+        partes = []
+        if capacidad:
+            partes.append(capacidad)
+        partes += [f"Nivel {self.nivel}", f"Programa {self.programa}"]
         if self.d["materia"]:
             partes.append(f"Materia {self.materia}")
         partes.append(f"Partes {self.partes} (2026)")
@@ -116,6 +119,14 @@ class Centro:
 
     def nombre_script(self, id_script):
         return next(s["nombre"] for s in self.comun["scripts"] if s["id"] == id_script)
+
+    def capacidad_script(self, id_script):
+        s = next((s for s in self.comun["scripts"] if s["id"] == id_script), None)
+        return s.get("capacidad", "") if s else ""
+
+    def capacidad_detalle_script(self, id_script):
+        s = next((s for s in self.comun["scripts"] if s["id"] == id_script), None)
+        return s.get("capacidad_nombre", "") if s else ""
 
     def dudas(self):
         return [f"{d['id']}: {d['texto']}" for d in self.d["dudas"]]

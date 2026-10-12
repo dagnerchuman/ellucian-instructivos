@@ -1,0 +1,51 @@
+,,,,,,,,
+,GUÍA OPERATIVA: CREACIÓN DE PERSONA NATURAL EN BANNER (GOAMTCH),,,,Instructivo 5.1.1 • Alta de Persona Natural,,,
+,"Procedimiento estándar para dar de alta una nueva persona natural en Banner evitando duplicados y asegurando datos biográficos, dirección y contacto.",,,,Validado: TEST (29/09/2026),,,
+,TRANSACCIÓN PRINCIPAL,,ORIGEN DE COINCIDENCIA,,PROCESO DE VALIDACIÓN,,,
+,GOAMTCH,,PERS_NATU (ID: GENERATED),,Secuencia de 3 Clics,,,
+,Barra de búsqueda o botón '+' en SPAIDEN(datos completos) / SAAQUIK,,Verificación estricta previa a la creación,,Marcar-Duplicar ➔ Crear nuevo ➔ Guardar,,,
+,,,,,,,,
+,Paso / Bloque,Campo / Sección,Valor de Referencia / Ejemplo,Tipo de Campo,Instrucciones Operativas y Validaciones,Hito / Control,,
+,Paso 1: Acceso a la Página,Formulario GOAMTCH,GOAMTCH,Acceso inicial,Entrar a GOAMTCH escribiendo la transacción en la barra de búsqueda (o clic en el botón '+' en el campo ID de SPAIDEN / SAAQUIK).,Punto de entrada,,
+,Paso 2: Bloque Clave,Identificación (ID),GENERATED,Automático,Ingresar GENERATED en el campo ID para que el sistema asigne automáticamente el identificador.,Correlativo automático,,
+,,Origen de coincidencia,PERS_NATU,Mandatorio,Seleccionar PERS_NATU (Persona Natural) para aplicar los filtros de búsqueda correspondientes.,Filtro de homonimia,,
+,,Botón de avance,Clic en «Ir»,Navegación,Hacer clic en el botón azul «Ir» para acceder a la pantalla de captura de datos.,Apertura de formulario,,
+,Paso 3: Campos Obligatorios en Pantalla,Apellido,[APELLIDO PATERNO / APELLIDO MATERNO],Obligatorio,Ingresar los dos apellidos separados obligatoriamente por una barra diagonal (/).,Identidad legal,,
+,,Nombre,[PRIMER NOMBRE],Obligatorio,Ingresar el primer nombre (o nombres) tal como figura en el documento oficial.,Identidad legal,,
+,,Tipo de dirección,PP (Dirección principal),Mandatorio,Ingresar PP (Dirección principal). ¡Campo estrictamente obligatorio para continuar!,⭐ Dirección principal,,
+,,Calle línea 1,[Dirección / Av. / Jr. / Calle],Mandatorio,"Digitar la dirección física (Av. / Jr. / Calle, número y distrito). ¡Campo estrictamente obligatorio!",⭐ Domicilio registrado,,
+,,País,PE (Perú),Obligatorio,Seleccionar o digitar PE para registrar la nacionalidad o país de residencia Perú.,País Perú,,
+,,NSS / NIT,[DNI de 8 dígitos],Obligatorio,Ingresar el número de DNI de 8 dígitos numéricos exactos.,Documento nacional,,
+,,Fecha de nacimiento,Día [DD] | Mes [MM] | Año [YYYY],Obligatorio,"Ingresar Día [DD], Mes [MM] y Año completo en 4 dígitos [YYYY].",Dato biográfico,,
+,,Género,M (Male) o F (Female),Obligatorio,Seleccionar M o F de acuerdo con el documento de identidad oficial.,Dato biográfico,,
+,,Tipo y Teléfono,MOV | Teléfono: [999 999 999],Obligatorio,Seleccionar tipo MOV e ingresar el número de teléfono celular de 9 dígitos.,Canal de contacto,,
+,,Tipo y Correo-e,PER1 | Correo: [ejemplo@gmail.com],Obligatorio,Seleccionar tipo PER1 e ingresar la dirección de correo electrónico válida.,Canal de contacto,,
+,Paso 4: Proceso de Validación (3 Clics),Clic 1: Marcar-Duplicar,Botón «Marcar-Duplicar»,Validación,Hacer clic en el botón «Marcar-Duplicar» (columna izquierda) para verificar coincidencias.,1er Clic: Verificación,,
+,,Clic 2: Crear nuevo,Botón «Crear nuevo»,Habilitación,Hacer clic en el botón «Crear nuevo» (se habilitará en la columna derecha tras el primer clic).,2do Clic: Confirmación,,
+,,Clic 3: GUARDAR,Botón azul «GUARDAR»,Hito Crítico,Hacer clic en el botón azul «GUARDAR» (abajo a la derecha) para confirmar la inserción.,⭐ 3er Clic: Guardado final,,
+,Paso 5: Resultado Esperado,Confirmación del Sistema,ID generado: S########,Hito Final,"Verificar mensaje verde: 'ID generado: S########. Creó registro de identificación, biográfico, dirección, teléfono y correo'.",⭐ Persona Creada,,
+,,,,,,,,
+,,,,,,,,
+,N°,ID Banner,Tipo de Registro,Transacción,Detalle de Registro y Validaciones,Estado,Tipo de Alumno,NRC
+,1,S00581081,Persona Natural (PERS_NATU),GOAMTCH,"Creó registro de identificación, biográfico, dirección, teléfono y correo",✔ Conforme,Regular,REGISTRADO A SU NRC 1021
+,2,S00581091,Persona Natural (PERS_NATU),GOAMTCH,"Creó registro de identificación, biográfico, dirección, teléfono y correo",✔ Conforme,Ingresante,REGISTRADO A SU NRC 1021
+,3,S00580901,Persona Natural (PERS_NATU),GOAMTCH,"Creó registro de identificación, biográfico, dirección, teléfono y correo (Docente: Liliana Ocampo)",✔ Conforme,Docente,REGISTRADO A SU NRC 1021
+,4,100582059,Persona Natural (PERS_NATU),GOAMTCH,"Creó registro de identificación, biográfico, dirección, teléfono y correo (Alumno: Dagner Chumán)",✔ Conforme,Docente,REGISTRADO A SU NRC 1021
+,5,S00581108,Persona Natural (PERS_NATU),GOAMTCH,"Creó registro de identificación, biográfico, dirección, teléfono y correo",✔ Conforme,Regular,REGISTRADO A SU NRC 1021
+,6,S00581109,Persona Natural (PERS_NATU),GOAMTCH,"Creó registro de identificación, biográfico, dirección, teléfono y correo",✔ Conforme,Regular,REGISTRADO A SU NRC 1021
+,7,S00581110,Persona Natural (PERS_NATU),GOAMTCH,"Creó registro de identificación, biográfico, dirección, teléfono y correo",✔ Conforme,Regular,REGISTRADO A SU NRC 1021
+,8,S00581111,Persona Natural (PERS_NATU),GOAMTCH,"Creó registro de identificación, biográfico, dirección, teléfono y correo",✔ Conforme,Regular,REGISTRADO A SU NRC 1021
+,Total,8 IDs Generados,Persona Natural,GOAMTCH,8 registros generados exitosamente en Banner,8 de 8 Conforme,6 Alumnos / 2 Docente,
+,,,,,,,,
+,,,,,,,,
+,TABLA DE PRUEBAS - DAGNER CHUMÁN,,,,,,,
+,N°,ID Banner,Tipo de Registro,Transacción,Detalle de Registro y Validaciones,Estado,Tipo de Alumno,NRC
+,1,,,,Registro para pruebas desde cero (Alumno: Dagner Chumán),,,
+,2,,,,Registro para pruebas desde cero (Alumno: Dagner Chumán),,,
+,3,,,,Registro para pruebas desde cero (Alumno: Dagner Chumán),,,
+,4,,,,Registro para pruebas desde cero (Alumno: Dagner Chumán),,,
+,5,,,,Registro para pruebas desde cero (Alumno: Dagner Chumán),,,
+,6,,,,Registro para pruebas desde cero (Alumno: Dagner Chumán),,,
+,7,,,,Registro para pruebas desde cero (Alumno: Dagner Chumán),,,
+,8,,,,Registro para pruebas desde cero (Alumno: Dagner Chumán),,,
+,Total,0 IDs Registrados,,,8 registros de prueba en preparación,0 de 8 Conforme,0 Alumnos / 0 Docente,

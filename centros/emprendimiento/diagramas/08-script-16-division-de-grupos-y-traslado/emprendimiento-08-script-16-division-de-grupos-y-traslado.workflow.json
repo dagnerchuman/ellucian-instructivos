@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Emprendimiento · 8. Script 16 · División de grupos y traslado",
-    "subtitle": "Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Emprendimiento · Capacidad 5 · Script 16 · División de grupos y traslado",
+    "subtitle": "Capacidad 5.3 · Programación y 5.4 · Traslado de NRC · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -478,13 +478,15 @@
   "lanes": [
     {
       "id": "caso",
-      "label": "Situación → pasos → resultado"
+      "label": "Capacidad 5 · Situación → pasos → resultado"
     }
   ],
   "mainPath": [
     "c0",
     "c1",
     "c2",
+    "c3",
+    "c4",
     "cr"
   ],
   "nodes": [
@@ -494,7 +496,7 @@
       "col": 0,
       "type": "security",
       "label": "Cambio de NRC",
-      "sublabel": "P02 y P03 se cruzan",
+      "sublabel": "P02 y P03 se superponen",
       "width": 170
     },
     {
@@ -503,22 +505,44 @@
       "col": 1,
       "type": "backend",
       "label": "SFAREGS",
-      "sublabel": "DD en el NRC de origen",
-      "width": 170
+      "sublabel": "verificar origen",
+      "width": 170,
+      "tag": "grupo activo en curso"
     },
     {
       "id": "c2",
       "lane": "caso",
       "col": 2,
       "type": "backend",
+      "label": "SSASECT",
+      "sublabel": "verificar destino",
+      "width": 170,
+      "tag": "aforo en sección alterna"
+    },
+    {
+      "id": "c3",
+      "lane": "caso",
+      "col": 3,
+      "type": "backend",
       "label": "SFAREGS",
-      "sublabel": "RE en el NRC de destino",
-      "width": 170
+      "sublabel": "traslado simultáneo",
+      "width": 170,
+      "tag": "DD en origen · RE en destino"
+    },
+    {
+      "id": "c4",
+      "lane": "caso",
+      "col": 4,
+      "type": "backend",
+      "label": "SFASLST",
+      "sublabel": "auditoría lista",
+      "width": 170,
+      "tag": "alta en nueva sección"
     },
     {
       "id": "cr",
       "lane": "caso",
-      "col": 3,
+      "col": 5,
       "type": "database",
       "label": "En el nuevo NRC",
       "sublabel": "lista actualizada",
@@ -541,8 +565,20 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-c2-cr",
+      "id": "e-c2-c3",
       "from": "c2",
+      "to": "c3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c3-c4",
+      "from": "c3",
+      "to": "c4",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-c4-cr",
+      "from": "c4",
       "to": "cr",
       "variant": "emphasis"
     }
@@ -553,6 +589,19 @@
       "title": "Probado en TEST",
       "items": [
         "Por probar en test: Traslado entre P02 y P03, que se cruzan"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 5.3 y 5.4)",
+      "items": [
+        "Paso 01 (SFAREGS): Verificación de Matrícula Origen — ID: S00581109, Periodo: 202656, NRC 1026 (Sec. D) activo.",
+        "Paso 02 (SSASECT): Verificación de Cupo Destino — NRC 1021 (Sec. B), bloque Enrollment Information.",
+        "Paso 03 (SFAREGS): Intento de Traslado y Alerta — NRC 1026 con DD y NRC 1021 con RE, alerta de reserva de cupo.",
+        "Paso 04 (SSARRES): Ajuste de Reserva de Cupo — Ampliación de reserva CMEMC38 de 1 a 2 vacantes para permitir reubicación.",
+        "Paso 05 (SFAREGS): Ejecución Exitosa de Traslado — Transacción simultánea: retiro de origen (DD) e inscripción en destino (RE).",
+        "Paso 06 (SFASLST): Auditoría de Lista de Clase — Aparición oficial en el roster de la sección B con aforo actualizado.",
+        "Paso 07 (SFAREGS / TSAAREV): Validación de Récord y Finanzas — Sin duplicidad de cargos ni afectación de créditos acumulados."
       ]
     },
     {

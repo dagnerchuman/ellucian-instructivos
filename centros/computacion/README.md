@@ -55,6 +55,8 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **1021**: ESEC 00650, sección B, parte X07. Matrícula, notas, retiro y traslado. 05/10: mismo horario que el 1026 con sobrepaso del docente (Script 17) y cupo cerrado para el Script 02.
 - NRC **1024**: ESEC 00650, sección C. Auditado en SIAASGN.
 - NRC **1026**: ESEC 00650, sección D, parte X07. Casuísticas CCEE.
+- NRC **10018**: ESEC 00678, sección A, parte X06. OFIMÁTICA WORD 365 (Hoja oficial 202656).
+- NRC **10019**: ESEC 00679, sección A, parte X06. OFIMÁTICA EXCEL 365 (Hoja oficial 202656).
 
 ## Scripts de prueba (17 validado · 2 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |

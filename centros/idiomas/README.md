@@ -32,10 +32,10 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | Escuela | `EM` | Centros Empresariales |
 | Campus | `S` | Sede Chiclayo |
 | Grado | `000000` | No otorga grado |
-| Programa | por confirmar |  |
-| Mayor | por confirmar |  |
-| Departamento | por confirmar |  |
-| Materia | por confirmar |  |
+| Programa | `IMEMI03` | Acreditación Idiomas |
+| Mayor | `MI03-01` | Acreditación Idiomas Básicos / Intermedios |
+| Departamento | `EMID` | Jefatura Centro de Idiomas |
+| Materia | `ESEP` | Estudios de Especialidad - Idiomas / Posgrado |
 | Escala de notas | escala por confirmar |  |
 | Parte general | `IGE` | grupos I01–I12 en 2026 |
 
@@ -63,7 +63,12 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | I12 | 202656 | 07/12/2026 – 31/01/2027 (nivel III: 07/12/2026 – 28/02/2027 (12 sem)) | 8 |
 
 ## NRC en TEST
-- Todavía no hay NRC de este centro en TEST.
+- NRC **10010**: ESEP 02458, sección AT, parte I10. Curso Principal Teórico · 4 créditos · Calificable · Con cobro.
+- NRC **10011**: ESEP 02458, sección AC1, parte I10. Práctica Presencial · Dispensado de cobro · No calificable.
+- NRC **10013**: ESEP 02458, sección AC2, parte I10. Práctica Virtual · Dispensado de cobro · No calificable.
+- NRC **10024**: ESEP 02458, sección AC3, parte I10. Práctica Virtual · Cupo 40 · Modo C Centesimal · Dispensado de cobro.
+- NRC **10001**: ESEP 02456, sección AT, parte I10. Basic I Teórico.
+- NRC **10002**: ESEP 02456, sección AC1, parte I10. Basic I Práctico Presencial.
 
 ## Scripts de prueba (20 por probar)
 | Script | Nombre | Estado | Evidencia o pendiente |
@@ -94,6 +99,4 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - **E04**: Si pasa con suficiencia, ¿cómo queda BASIC I en la historia y en CAPP?
 - **E13**: Casilla «En progreso» de SOATERM con grupos seguidos (I04 termina el 31/5, I06 empieza el 1/6)
 - **U10**: ¿Quién puede dar sobrepasos de prerrequisito (SFAROVR)?
-- **U25**: Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST
 - **U24**: Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?
-- **U27**: Ligas: tipo de horario del club en SCACRSE, su identificador de liga, si se califica y se cobra, cuántos clubes por teórico y si aplica a todos los niveles

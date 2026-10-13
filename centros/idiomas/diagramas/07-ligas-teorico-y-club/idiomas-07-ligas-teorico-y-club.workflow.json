@@ -3,7 +3,7 @@
   "diagram_type": "workflow",
   "meta": {
     "title": "Centro de Idiomas · 7. Ligas: NRC teórico + club de conversación (Capacidad 5)",
-    "subtitle": "Capacidad 5.3 · Crear Ligas (SSADETL) · Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "subtitle": "Capacidad 5.3 · Crear Ligas (SSADETL) · Nivel I · Programa IMEMI03 · Materia ESEP · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -519,7 +519,7 @@
       "label": "SCACRSE",
       "sublabel": "revisar tipos de horario",
       "width": 150,
-      "tag": "BASIC I: teoría y club",
+      "tag": "BASIC I: TEO y PRA",
       "icon": "calendar"
     },
     {
@@ -528,9 +528,9 @@
       "col": 1,
       "type": "backend",
       "label": "SSASECT",
-      "sublabel": "NRC teórico",
+      "sublabel": "NRC teórico virtual",
       "width": 150,
-      "tag": "liga TE · con créditos"
+      "tag": "sección AT · liga TA · cobro"
     },
     {
       "id": "g3",
@@ -538,9 +538,9 @@
       "col": 2,
       "type": "backend",
       "label": "SSASECT",
-      "sublabel": "NRC del club",
+      "sublabel": "NRCs prácticos",
       "width": 150,
-      "tag": "su liga: por confirmar · 0 créditos"
+      "tag": "liga PA · prácticas (dispensa)"
     },
     {
       "id": "g4",
@@ -550,7 +550,7 @@
       "label": "SSADETL",
       "sublabel": "unir las ligas",
       "width": 150,
-      "tag": "conector en los dos NRC"
+      "tag": "conector cruzado TA ↔ PA"
     },
     {
       "id": "g5",
@@ -560,7 +560,7 @@
       "label": "SFAREGS",
       "sublabel": "matricular los dos",
       "width": 150,
-      "tag": "teórico + club"
+      "tag": "teórico + práctica juntos"
     },
     {
       "id": "g6",
@@ -568,9 +568,9 @@
       "col": 5,
       "type": "database",
       "label": "Matriculado",
-      "sublabel": "en el teórico y el club",
+      "sublabel": "en el teórico y la práctica",
       "width": 150,
-      "tag": "por probar en TEST",
+      "tag": "validado en TEST",
       "icon": "success"
     }
   ],
@@ -611,17 +611,18 @@
       "dot": "emerald",
       "title": "Probado en TEST",
       "items": [
-        "Todavía no se probó en TEST: ver el bloque 1 de la guía de pruebas del centro"
+        "Validado en TEST (202656): NRC 10024 creado con liga PA y dispensa, y hoja oficial con NRCs 10001 a 10024"
       ]
     },
     {
       "dot": "rose",
-      "title": "Escenarios de liga",
+      "title": "Reglas de Ligas confirmadas",
       "items": [
-        "Uno a muchos: con un teórico, el alumno elige uno de varios clubes",
-        "Muchos a muchos sin restricción: cualquier teórico con cualquier club",
-        "Muchos a muchos con restricción: cada teórico con su club",
-        "Si SOATERM tiene «Ligas» en Fatal, no deja matricular solo el teórico; el sobrepaso es «Enlaces» en SFAROVR"
+        "Curso principal: Virtual y Teórico (sección AT, aula SAUVIR, calificable=SÍ, dispensa=NO, liga TA)",
+        "Segundo curso: Presencial y Práctico (sección AC1, aula SPOSGR posgrado, calificable=NO, dispensa=SÍ, liga PA)",
+        "Resto de cursos prácticos: Virtuales (secciones AC2, AC3, aula SAUVIR, calificable=NO, dispensa=SÍ, liga PA)",
+        "Vinculación en SSADETL: Teórico lleva conector PA; Prácticos llevan conector TA (muchos a muchos con restricción)",
+        "Si SOATERM tiene «Ligas» en Fatal, el estudiante debe inscribir ambos simultáneamente en SFAREGS o Autoservicio"
       ]
     },
     {
@@ -649,9 +650,7 @@
         "E04: Si pasa con suficiencia, ¿cómo queda BASIC I en la historia y en CAPP?",
         "E13: Casilla «En progreso» de SOATERM con grupos seguidos (I04 termina el 31/5, I06 empieza el 1/6)",
         "U10: ¿Quién puede dar sobrepasos de prerrequisito (SFAROVR)?",
-        "U25: Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST",
-        "U24: Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?",
-        "U27: Ligas: tipo de horario del club en SCACRSE, su identificador de liga, si se califica y se cobra, cuántos clubes por teórico y si aplica a todos los niveles"
+        "U24: Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?"
       ]
     }
   ]

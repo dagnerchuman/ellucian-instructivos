@@ -20,13 +20,13 @@ description: Arquitectura específica del Centro de Idiomas (Inglés) de la USS 
 | **Nivel de alumno** | `I` | Idiomas (STVLEVL) |
 | **Escuela / College** | `EM` | Centros Empresariales |
 | **Campus** | `S` | Sede de Chiclayo |
-| **Programa** | *(por confirmar)* | Acreditación Idiomas (pendiente de verificar en TEST) |
-| **Campo de estudio mayor** | *(por confirmar)* | Acreditación en Idiomas |
-| **Departamento** | *(por confirmar)* | Jef. de Centro de Idiomas |
+| **Programa** | `IMEMI03` | Acreditación Idiomas (confirmado C60) |
+| **Campo de estudio mayor** | `MI03-01` / `MI03-02` | Malla Idiomas Básicos / Intermedios (confirmado C60) |
+| **Departamento** | `EMID` | Jefatura de Centro de Idiomas (confirmado C60) |
 | **Grado** | `000000` | No otorga grado |
-| **Materia del catálogo** | *(por confirmar, U25)* | Cursos de Idiomas |
+| **Materia del catálogo** | `ESEP` | Estudios de Especialidad - Idiomas / Posgrado (confirmado C59, C60) |
 
-> ⚠ Los identificadores exactos de Programa, Campo de Estudio y Departamento para Idiomas **no han sido verificados en TEST** todavía. Solo se han confirmado los de Computación (CMEMC38 / ACXP / EMCI).
+> ✅ Los identificadores de Idiomas (`IMEMI03`, `EMID`, `MI03-01`, `ESEP`) fueron confirmados en TEST y en la hoja oficial de programación de NRCs (C60).
 
 ## Partes de periodo (Idiomas)
 

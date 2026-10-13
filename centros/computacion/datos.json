@@ -40,9 +40,11 @@
     "titulo": "Ofimática Word 365"
   },
   "cursos_conocidos": [
-    "ESEC 00650 Ofimática Word 365"
+    "ESEC 00650 Ofimática Word 365",
+    "ESEC 00678 OFIMÁTICA WORD 365 (NRC 10018 · Sec A)",
+    "ESEC 00679 OFIMÁTICA EXCEL 365 (NRC 10019 · Sec A)"
   ],
-  "cursos_nota": "Los nombres oficiales de los demás cursos no se conocen (U05).",
+  "cursos_nota": "Cursos confirmados en TEST y en la hoja oficial de programación de NRCs (13/10/2026). HT: 1, HP: 1, Lib_Area MC38-01.",
   "parte_general": "CGE",
   "partes_2026": [
     {
@@ -133,6 +135,28 @@
       "horario": "Lunes y miércoles 08:00–12:00",
       "aula": "SAUVIR / SALA VIRT.",
       "uso": "Casuísticas CCEE"
+    },
+    {
+      "nrc": "10018",
+      "curso": "ESEC 00678",
+      "seccion": "A",
+      "parte": "X06",
+      "cupo": "40",
+      "docente": "100582059 (Dagner Chuman)",
+      "horario": "Martes 08:00 AM – 09:40 AM",
+      "aula": "SAUVIR / SALA-VIRT",
+      "uso": "OFIMÁTICA WORD 365 (Hoja oficial 202656)"
+    },
+    {
+      "nrc": "10019",
+      "curso": "ESEC 00679",
+      "seccion": "A",
+      "parte": "X06",
+      "cupo": "40",
+      "docente": "100122229 (María Alejandra Pueller)",
+      "horario": "Miércoles 07:40 PM – 09:20 PM",
+      "aula": "SAUVIR / SALA-VIRT",
+      "uso": "OFIMÁTICA EXCEL 365 (Hoja oficial 202656)"
     }
   ],
   "nrc_ejemplo": "1026",

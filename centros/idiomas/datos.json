@@ -9,25 +9,45 @@
     "nombre": "Idiomas",
     "fuente": "C18"
   },
-  "programa": null,
-  "mayor": null,
-  "departamento": null,
-  "materia": null,
-  "capp": null,
+  "programa": {
+    "codigo": "IMEMI03",
+    "nombre": "Acreditación Idiomas",
+    "fuente": "Hoja oficial de NRCs 202656 (13/10/2026)"
+  },
+  "mayor": {
+    "codigo": "MI03-01",
+    "nombre": "Acreditación Idiomas Básicos / Intermedios",
+    "fuente": "Hoja oficial de NRCs 202656 (13/10/2026)"
+  },
+  "departamento": {
+    "codigo": "EMID",
+    "nombre": "Jefatura Centro de Idiomas",
+    "fuente": "Hoja oficial de NRCs 202656 (13/10/2026)"
+  },
+  "materia": {
+    "codigo": "ESEP",
+    "nombre": "Estudios de Especialidad - Idiomas / Posgrado",
+    "fuente": "SSASECT TEST (13/10/2026)"
+  },
+  "capp": {
+    "codigo": "MI03-01",
+    "nombre": "Reglas curriculares MI03-01 (Básicos) y MI03-02 (Intermedios)",
+    "fuente": "Hoja oficial de NRCs 202656 (13/10/2026)"
+  },
   "curso_ejemplo": {
-    "materia": null,
-    "numero": null,
-    "titulo": "BASIC I"
+    "materia": "ESEP",
+    "numero": "02458",
+    "titulo": "Basic Iii"
   },
   "cursos_conocidos": [
-    "BASIC I",
-    "BASIC II",
-    "BASIC III",
-    "INTERMEDIATE I",
-    "INTERMEDIATE II",
-    "INTERMEDIATE III"
+    "BASIC I (ESEP 02456 · HT 4, HP 3 · MI03-01)",
+    "BASIC II (ESEP 02457 · HT 4, HP 3 · MI03-01)",
+    "BASIC III (ESEP 02458 · HT 4, HP 3 · MI03-01)",
+    "INTERMEDIATE I (ESEP 02693 · HT 4, HP 3 · MI03-02)",
+    "INTERMEDIATE II (ESEP 02721 · HT 4, HP 3 · MI03-02)",
+    "INTERMEDIATE III (ESEP 02997 · HT 4, HP 3 · MI03-02)"
   ],
-  "cursos_nota": "Nombres confirmados (C11). Los códigos de materia y curso en SCACRSE no se verificaron en TEST.",
+  "cursos_nota": "Cursos y códigos del catálogo SCACRSE confirmados en la hoja oficial de programación de NRCs (13/10/2026). HT: 4, HP: 3.",
   "parte_general": "IGE",
   "partes_2026": [
     {
@@ -139,10 +159,89 @@
     ],
     "nota_cadena": "BASIC I → BASIC II está confirmado; el resto de la cadena se asume igual"
   },
-  "nrc_test": [],
-  "nrc_ejemplo": null,
+  "nrc_test": [
+    {
+      "nrc": "10010",
+      "curso": "ESEP 02458",
+      "seccion": "AT",
+      "parte": "I10",
+      "cupo": "40",
+      "docente": "100582059 (Dagner Anibal Chuman Lluen)",
+      "horario": "Lunes 06:00 PM – 08:30 PM (18:00–20:30)",
+      "aula": "SAUVIR / SALA-VIRT",
+      "liga": "TA",
+      "modalidad": "Virtual Teórico (Principal)",
+      "uso": "Curso Principal Teórico · 4 créditos · Calificable · Con cobro"
+    },
+    {
+      "nrc": "10011",
+      "curso": "ESEP 02458",
+      "seccion": "AC1",
+      "parte": "I10",
+      "cupo": "25",
+      "docente": "S00912435 (Jossymar Cabanillas)",
+      "horario": "Martes 08:00 PM – 11:20 PM (20:00–23:20)",
+      "aula": "SPOSGR A-31",
+      "liga": "PA",
+      "modalidad": "Presencial Práctico (Posgrado)",
+      "uso": "Práctica Presencial · Dispensado de cobro · No calificable"
+    },
+    {
+      "nrc": "10013",
+      "curso": "ESEP 02458",
+      "seccion": "AC2",
+      "parte": "I10",
+      "cupo": "40",
+      "docente": "S00912438 (Arnold Vaca)",
+      "horario": "Sábado 06:00 PM – 08:30 PM (18:00–20:30)",
+      "aula": "SAUVIR / SALA-VIRT",
+      "liga": "PA",
+      "modalidad": "Virtual Práctico",
+      "uso": "Práctica Virtual · Dispensado de cobro · No calificable"
+    },
+    {
+      "nrc": "10024",
+      "curso": "ESEP 02458",
+      "seccion": "AC3",
+      "parte": "I10",
+      "cupo": "40",
+      "docente": "S00912437 (Willy Valverde)",
+      "horario": "Miércoles 08:00 AM – 11:20 AM (08:00–11:20)",
+      "aula": "SA / SAUVIR",
+      "liga": "PA",
+      "modalidad": "Virtual Práctico",
+      "uso": "Práctica Virtual · Cupo 40 · Modo C Centesimal · Dispensado de cobro"
+    },
+    {
+      "nrc": "10001",
+      "curso": "ESEP 02456",
+      "seccion": "AT",
+      "parte": "I10",
+      "cupo": "40",
+      "docente": "100448074 (Rosa Liliana Ocampo)",
+      "horario": "Lunes 08:00 AM – 11:20 AM",
+      "aula": "SAUVIR / SALA-VIRT",
+      "liga": "TA",
+      "modalidad": "Virtual Teórico",
+      "uso": "Basic I Teórico"
+    },
+    {
+      "nrc": "10002",
+      "curso": "ESEP 02456",
+      "seccion": "AC1",
+      "parte": "I10",
+      "cupo": "25",
+      "docente": "S00912437 (Willy Valverde)",
+      "horario": "Martes 08:00 AM – 11:20 AM",
+      "aula": "SPOSGR A-21",
+      "liga": "PA",
+      "modalidad": "Presencial Práctico",
+      "uso": "Basic I Práctico Presencial"
+    }
+  ],
+  "nrc_ejemplo": "10024",
   "periodo_ejemplo": "202656",
-  "parte_ejemplo": "I08",
+  "parte_ejemplo": "I10",
   "personas_test": [],
   "persona_ejemplo": null,
   "docente_test": null,
@@ -253,16 +352,8 @@
       "texto": "¿Quién puede dar sobrepasos de prerrequisito (SFAROVR)?"
     },
     {
-      "id": "U25",
-      "texto": "Programa, mayor, departamento, materia y escala de notas del nivel I: verificar en TEST"
-    },
-    {
       "id": "U24",
       "texto": "Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?"
-    },
-    {
-      "id": "U27",
-      "texto": "Ligas: tipo de horario del club en SCACRSE, su identificador de liga, si se califica y se cobra, cuántos clubes por teórico y si aplica a todos los niveles"
     }
   ],
   "casuisticas": {
@@ -282,26 +373,53 @@
     "_leeme": "Scripts que tienen su propio diagrama de casuística (del n.º 7 en adelante), en este orden."
   },
   "ligas": {
-    "estado": "por probar",
-    "fuente": "C52, R18",
+    "estado": "validado",
+    "fuente": "C52, R18, C60 (PPT Liliana Ocampo y TEST 13/10/2026)",
+    "evidencia": "Validado en TEST (202656): NRC 10024 creado con liga PA y dispensa, y hoja oficial con NRCs 10001 a 10024",
     "principal": {
-      "nrc": "teórico",
+      "nrc": "Teórico (Sección AT)",
       "tipo_horario": "TEO (Teoría)",
-      "identificador": "TE",
-      "creditos": "los del curso",
+      "modalidad": "Virtual (SAUVIR / SALA-VIRT)",
+      "identificador": "TA",
+      "conector": "PA",
+      "creditos": 4,
       "calificable": true,
       "cobro": true
     },
     "secundaria": {
-      "nrc": "club de conversación",
-      "tipo_horario": null,
-      "identificador": null,
+      "nrc": "Práctico (Club de conversación)",
+      "tipo_horario": "PRA (Práctico)",
+      "grupos": [
+        {
+          "seccion": "AC1",
+          "modalidad": "Presencial",
+          "ambiente": "SPOSGR (Aulas Posgrado)",
+          "liga": "PA",
+          "conector": "TA"
+        },
+        {
+          "seccion": "AC2",
+          "modalidad": "Virtual",
+          "ambiente": "SAUVIR (SALA-VIRT)",
+          "liga": "PA",
+          "conector": "TA"
+        },
+        {
+          "seccion": "AC3",
+          "modalidad": "Virtual",
+          "ambiente": "SAUVIR (SALA-VIRT)",
+          "liga": "PA",
+          "conector": "TA"
+        }
+      ],
+      "identificador": "PA",
+      "conector": "TA",
       "creditos": 0,
       "calificable": false,
       "cobro": false,
-      "nota": "Créditos, calificación y cobro según la premisa del instructivo; por confirmar con la USS (U27)"
+      "nota": "Calificable DESMARCADO y Dispensa de colegiatura y cuotas MARCADA para no duplicar créditos ni cobros (PPT Liliana Ocampo)"
     },
-    "escenario": null,
-    "_leeme": "Liga = NRC del mismo curso que el alumno matricula juntos. null = por confirmar (U27)."
+    "escenario": "Muchos a muchos con restricción: sección teórica AT (liga TA) vinculada a sus opciones de práctica AC1 presencial o AC2/AC3 virtual (liga PA)",
+    "_leeme": "Liga = NRC del mismo curso que el alumno matricula juntos. Validado con PPT de programación y TEST."
   }
 }

@@ -549,7 +549,7 @@
       "label": "SSASECT",
       "sublabel": "BASIC I … INTERM. III",
       "width": 150,
-      "tag": "materia por confirmar"
+      "tag": "materia ESEP"
     },
     {
       "id": "idiomas_2",
@@ -557,7 +557,7 @@
       "col": 2,
       "type": "backend",
       "label": "SAAQUIK",
-      "sublabel": "programa por confirmar",
+      "sublabel": "programa IMEMI03",
       "width": 150,
       "tag": "nivel I"
     },

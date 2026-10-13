@@ -1,136 +1,380 @@
-"""Guías operativas paso a paso extraídas de Excel 1 y Excel 2 de Centros Empresariales.
+"""Guías operativas paso a paso de los Centros Empresariales USS en Banner Student.
 
-Se inyectan directamente en el modal (Pasaporte semántico) de Archify al hacer clic
-en cada nodo del flujo, evitando textos largos en las tarjetas al pie de página.
+Se inyectan directamente en el modal interactivo (Pasaporte semántico) de Archify
+al hacer clic sobre cualquier nodo del flujo en el navegador, adaptadas de forma
+100% específica para cada centro (Idiomas, Computación y Emprendimiento).
 """
 
-# Guías para los diagramas base (Excel 1)
-GUIAS_BASE = {
-    "crear-el-nrc": {
-        "s1": {
-            "fase": "Paso 1: Encabezado (Bloque Clave)",
-            "pantalla": "SSASECT",
-            "hito": "Inicio de proceso · Indicador ADD temporal",
-            "instrucciones": [
-                {"campo": "Formulario", "valor": "SSASECT", "tipo": "Acceso inicial", "detalle": "Escribir SSASECT en la barra de búsqueda de Banner y presionar Enter."},
-                {"campo": "Periodo", "valor": "202656 (o periodo lectivo)", "tipo": "Obligatorio", "detalle": "Ingresar periodo (202651: verano, 202654: sem I, 202656: sem II)."},
-                {"campo": "NRC", "valor": "(DEJAR EN BLANCO)", "tipo": "Mandatorio", "detalle": "Dejar TOTALMENTE VACÍO para aperturar una nueva sección."},
-                {"campo": "Botón de Creación", "valor": "Clic en «Crear NRC»", "tipo": "Acción del sistema", "detalle": "Hacer clic en el botón azul. El campo mostrará temporalmente ADD."}
-            ]
-        },
-        "s2": {
-            "fase": "Paso 2: Información de sección",
-            "pantalla": "SSASECT",
-            "hito": "⭐ ¡PRIMER GUARDADO! (NRC generado)",
-            "instrucciones": [
-                {"campo": "Materia", "valor": "ESEC (o ENGL, ESGE)", "tipo": "Obligatorio", "detalle": "Escribir directo en mayúsculas y presionar Tab. Evita abrir la lista si ya conoces la materia."},
-                {"campo": "Número de curso", "valor": "00650 (ej. Word 365)", "tipo": "Obligatorio", "detalle": "Digitar y presionar Tab. El campo Título se autocompleta desde el catálogo."},
-                {"campo": "Sección", "valor": "A (o correlativo: B, C, D...)", "tipo": "Obligatorio", "detalle": "Asignar letra única que no esté ocupada en ese curso y periodo."},
-                {"campo": "Campus", "valor": "S (Sede Chiclayo)", "tipo": "Obligatorio", "detalle": "Digitar S o elegir de lista. Corresponde al campus operativo del centro."},
-                {"campo": "Estatus", "valor": "A (Activo)", "tipo": "Mandatorio", "detalle": "Seleccionar 'Activo'; indispensable para permitir la posterior matrícula."},
-                {"campo": "Tipo de horario", "valor": "TEO (Teórico)", "tipo": "Obligatorio", "detalle": "Digitar TEO o derivado del catálogo. El método educativo hereda VIRT."},
-                {"campo": "Modo de calificar", "valor": "V (Vigesimal)", "tipo": "Obligatorio", "detalle": "Digitar V. Obligatorio según el plan curricular del centro."},
-                {"campo": "Aprobación especial", "valor": "(DEJAR EN BLANCO)", "tipo": "Control operativo", "detalle": "Dejar vacía: no seleccionar nada para evitar bloqueos de asesor/decano."},
-                {"campo": "Parte de periodo", "valor": "X07 (Computación) / I08 (Idiomas)", "tipo": "Obligatorio", "detalle": "En «Clase tradicional»: digitar y presionar Tab. Fechas inicio/fin se calculan solas."},
-                {"campo": "¡PRIMER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña para evitar error 'Debe guardar antes de salir'. El ADD cambia al NRC oficial (ej. 1026)."}
-            ]
-        },
-        "s3": {
-            "fase": "Paso 3: Aforo de sección",
-            "pantalla": "SSASECT",
-            "hito": "⭐ ¡SEGUNDO GUARDADO! (Cupos confirmados)",
-            "instrucciones": [
-                {"campo": "Pestaña Ingreso de sección", "valor": "Clic en pestaña 2", "tipo": "Navegación", "detalle": "Ir a «Información de ingreso de sección» (Enrollment Details)."},
-                {"campo": "Máximo (Cupos del aula)", "valor": "1, 2 (o aforo aula: 25, 30)", "tipo": "Obligatorio", "detalle": "Ingresar cantidad autorizada de vacantes para el NRC."},
-                {"campo": "¡SEGUNDO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) para fijar el cupo. El contador Restante se actualiza automáticamente al aforo."}
-            ]
-        },
-        "s4": {
-            "fase": "Paso 4: Horario, Aula y Docente",
-            "pantalla": "SSASECT",
-            "hito": "⭐ ¡TERCER GUARDADO! (Horario y Docente)",
-            "instrucciones": [
-                {"campo": "Pestaña Horario y reunión", "valor": "Clic en pestaña 3", "tipo": "Navegación", "detalle": "Ir a «Instructor y horas de reunión»."},
-                {"campo": "Horario (Días y Horas)", "valor": "Tipo CLAS | 0800 a 1200 | Lunes y Mié", "tipo": "Obligatorio", "detalle": "En subpestaña «Fechas de reunión»: tipo CLAS, formato 24h y marcar casillas de días."},
-                {"campo": "Ubicación (Edificio y Aula)", "valor": "Edificio SAUVIR | Salón SALA VIRT.", "tipo": "Obligatorio", "detalle": "En «Créditos y ubicación»: usar SAUVIR / SALA VIRT. (aula virtual oficial). Previene el *ERROR* Conflicto de salón."},
-                {"campo": "Sobrepaso de Salón", "valor": "Casilla Indicador de sobrepaso", "tipo": "Contingencia", "detalle": "Si se usa salón físico con cruce, escribir O en la casilla rectangular para omitir conflicto."},
-                {"campo": "Horas Semanales", "valor": "Calculado automático (ej. 9,60 h)", "tipo": "Informativo", "detalle": "Banner multiplica días/horas por el factor institucional de SIATERM."},
-                {"campo": "Consistencia de Sesión", "valor": "Indicador de sesión: 01 (o 1)", "tipo": "Regla Crítica", "detalle": "REGLA DE ORO: El indicador de sesión de HORARIO debe ser idéntico al de INSTRUCTOR (ambos 01 o ambos 1)."},
-                {"campo": "Docente Principal", "valor": "ID 100582059 | Principal ☑ | 100%", "tipo": "Obligatorio", "detalle": "En tabla «Instructor»: digitar ID (activo en SIAINST), presionar Tab, marcar Principal y colocar 100% responsabilidad y sesión."},
-                {"campo": "Sobrepaso de Docente", "valor": "Casilla Indicador de sobrepaso", "tipo": "Contingencia", "detalle": "Si el docente ya tiene otro NRC a esa misma hora, marcar la casilla Indicador de sobrepaso ☑ para resolver conflicto de horario."},
-                {"campo": "¡TERCER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). Mensaje verde: ✓ Saved successfully. NRC listo con horario y profesor."}
-            ]
-        },
-        "s5": {
-            "fase": "Paso 5: Reserva de cupos (SSARRES)",
-            "pantalla": "SSARRES",
-            "hito": "⭐ ¡CUARTO GUARDADO! (Reservas activas)",
-            "instrucciones": [
-                {"campo": "Lugares Reservados", "valor": "Menú Relacionado → SSARRES", "tipo": "Navegación", "detalle": "Subpestaña «Lugares reservados» para blindar cupos por tipo de participante."},
-                {"campo": "Regla Nula (Cupo General)", "valor": "Regla NULL | Cupo: 1", "tipo": "Mandatorio institucional", "detalle": "OBLIGATORIA: La fila con clave nula no se borra; asegura cupo a pregrado institucional."},
-                {"campo": "Regla por Programa CCEE", "valor": "Programa: CMEMC38 | Cupo: 1", "tipo": "Condicional CCEE", "detalle": "Presionar +, seleccionar PROGRAMA y código CMEMC38 para reservar cupo exclusivo al centro."},
-                {"campo": "¡CUARTO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar reservas (F10). Previene el error fatal de inscripción *ERROR* Reserve Closed."}
-            ]
-        },
-        "s6": {
-            "fase": "Paso 6: Publicación y Auditoría",
-            "pantalla": "SSASECQ",
-            "hito": "🎯 NRC 100% PUBLICADO Y AUDITADO",
-            "instrucciones": [
-                {"campo": "Consulta en SSASECQ", "valor": "Transacción SSASECQ", "tipo": "Verificación Final", "detalle": "Entrar a SSASECQ con periodo 202656, materia ESEC y curso 00650."},
-                {"campo": "Confirmación de Estado", "valor": "Activo (A) | Horario visible | Vacante libre", "tipo": "Control de Calidad", "detalle": "Confirmar que figure Activo (A), horario visible y vacante disponible sin bloqueos."}
-            ]
-        }
+# ===========================================================================
+# 1. CREACIÓN DE NRC (SSASECT / SSARRES / SSASECQ) - POR CENTRO
+# ===========================================================================
+
+GUIA_CREAR_NRC_IDIOMAS = {
+    "s1": {
+        "fase": "Paso 1: Encabezado (Bloque Clave)",
+        "pantalla": "SSASECT",
+        "hito": "Inicio de proceso · Indicador ADD temporal",
+        "instrucciones": [
+            {"campo": "Formulario", "valor": "SSASECT", "tipo": "Acceso inicial", "detalle": "Escribir SSASECT en la barra de búsqueda de Banner y presionar Enter."},
+            {"campo": "Periodo", "valor": "202656 (o periodo lectivo vigente)", "tipo": "Obligatorio", "detalle": "Ingresar periodo académico (202651: verano, 202654: semestre I, 202656: semestre II)."},
+            {"campo": "NRC", "valor": "(DEJAR EN BLANCO)", "tipo": "Mandatorio", "detalle": "Dejar TOTALMENTE VACÍO para aperturar una nueva sección en el Centro de Idiomas."},
+            {"campo": "Botón de Creación", "valor": "Clic en «Crear NRC»", "tipo": "Acción del sistema", "detalle": "Hacer clic en el botón azul. El campo mostrará temporalmente el indicador ADD."}
+        ]
     },
-    "carga-lectiva": {
-        "k1": {
-            "fase": "Paso 1: Activación y Habilitación Docente",
-            "pantalla": "SIAINST",
-            "hito": "Docente activo en facultad y periodo",
-            "instrucciones": [
-                {"campo": "Formulario", "valor": "SIAINST", "tipo": "Acceso inicial", "detalle": "Ingresar ID del docente (ej. 100582059) y verificar estatus en facultad."},
-                {"campo": "Pestaña Facultad", "valor": "Status: Activo", "tipo": "Obligatorio", "detalle": "Comprobar que el docente tenga permisos vigentes para dictado en el periodo lectivo."}
-            ]
-        },
-        "k2": {
-            "fase": "Paso 2: Asignación al NRC",
-            "pantalla": "SSASECT",
-            "hito": "Docente principal asignado al 100%",
-            "instrucciones": [
-                {"campo": "Formulario", "valor": "SSASECT", "tipo": "Programación", "detalle": "En pestaña Horario e instructores, asignar ID con sesión 01 y 100% responsabilidad."},
-                {"campo": "Indicador Principal", "valor": "Casilla Principal ☑", "tipo": "Mandatorio", "detalle": "Marcar como instructor principal para emisión de actas oficiales."}
-            ]
-        },
-        "k3": {
-            "fase": "Paso 3: Auditoría de Carga Docente",
-            "pantalla": "SIAASGN",
-            "hito": "Horas y FTE computados automáticamente",
-            "instrucciones": [
-                {"campo": "Formulario", "valor": "SIAASGN", "tipo": "Auditoría", "detalle": "Consultar con Periodo 202656 e ID del docente (100582059 Dagner Chuman)."},
-                {"campo": "Secciones asignadas", "valor": "4 NRCs (1021, 1022, 1024, 1025)", "tipo": "Consolidación", "detalle": "Auditoría de carga lectiva en Computación y Emprendimiento."},
-                {"campo": "Horas semanales", "valor": "9,60 h/semana (NRC 1021)", "tipo": "Cálculo", "detalle": "Multiplicación de horas y factor de duración institucional de SIATERM."},
-                {"campo": "Horas acumuladas", "valor": "120 horas lectivas totales", "tipo": "Cálculo", "detalle": "Cómputo acumulado de la carga lectiva total del periodo."},
-                {"campo": "Asignación de FTE", "valor": "FTE 0.02 por sección", "tipo": "Cálculo", "detalle": "Factor de dedicación académica generado automáticamente sustituyendo planillas Excel."}
-            ]
-        },
-        "k4": {
-            "fase": "Paso 4: Visto Bueno del Centro",
-            "pantalla": "Intranet USS",
-            "hito": "Oficio institucional tramitado",
-            "instrucciones": [
-                {"campo": "Trámite", "valor": "Oficio del Jefe de Centro", "tipo": "Administrativo", "detalle": "Remitir consolidado de carga lectiva auditada al Vicerrectorado Académico."}
-            ]
-        },
-        "k5": {
-            "fase": "Paso 5: Aprobación Oficial",
-            "pantalla": "Resolución VRA",
-            "hito": "Resolución de carga docente aprobada",
-            "instrucciones": [
-                {"campo": "Aprobación", "valor": "Resolución Vicerrectoral", "tipo": "Oficial", "detalle": "El Vicerrectorado Académico emite la resolución formal de aprobación de carga."}
-            ]
-        }
+    "s2": {
+        "fase": "Paso 2: Información de sección (Centro de Idiomas)",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡PRIMER GUARDADO! (NRC generado)",
+        "instrucciones": [
+            {"campo": "Materia", "valor": "ESEP (Estudios de Especialidad)", "tipo": "Obligatorio", "detalle": "CONFIRMADO: Digitar ESEP para cursos del Centro de Idiomas (Inglés y Portugués Posgrado)."},
+            {"campo": "Número de curso", "valor": "02458 (Basic III) o 02456 (Basic I)", "tipo": "Obligatorio", "detalle": "Digitar número de curso oficial de catálogo (ej. 02458 Basic III, 02456 Basic I, 02693 Intermediate I)."},
+            {"campo": "Sección", "valor": "AT (Teórico) / AC1 (Presencial) / AC2, AC3 (Virtual)", "tipo": "Obligatorio", "detalle": "REGLA USS: Sección AT para teoría virtual; AC1 para práctica presencial; AC2 y AC3 para prácticas virtuales."},
+            {"campo": "Campus", "valor": "S (Sede de Chiclayo)", "tipo": "Obligatorio", "detalle": "Digitar S o elegir de lista. Corresponde al campus operativo del centro."},
+            {"campo": "Estatus", "valor": "A (Activo)", "tipo": "Mandatorio", "detalle": "Seleccionar 'Activo'; indispensable para permitir la posterior matrícula."},
+            {"campo": "Tipo de horario", "valor": "TEO (Teórico para AT) / PRA (Práctico para AC1-AC3)", "tipo": "Obligatorio", "detalle": "TEO para el NRC principal teórico; PRA para las secciones prácticas ligadas."},
+            {"campo": "Modo de calificar", "valor": "C (Escala Centesimal)", "tipo": "Obligatorio", "detalle": "CONFIRMADO EN TEST: Modo C (Escala Centesimal) en catálogo de SSASECT para ESEP 02458."},
+            {"campo": "Parte de periodo", "valor": "I10 (05-OCT-2026 a 31-DIC-2026 · 13 semanas)", "tipo": "Obligatorio", "detalle": "En «Clase tradicional»: digitar I10 (o grupos I01 a I12 en 2026). Fechas de inicio/fin se calculan automáticamente."},
+            {"campo": "Ligas y Cobro", "valor": "AT: TA (con cobro) | AC1-AC3: PA (dispensado)", "tipo": "Regla Crítica", "detalle": "En Indicadores de clase: Para AT marcar Calificable ☑ y desmarcar Dispensa ☐ con Liga TA. Para AC1-AC3 desmarcar Calificable ☐ y marcar Dispensa ☑ con Liga PA."},
+            {"campo": "¡PRIMER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña. El ADD cambia al NRC oficial generado (ej. 10024, 10010, 10001)."}
+        ]
     },
-    "persona-y-admision": {
+    "s3": {
+        "fase": "Paso 3: Información de ingreso de sección",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡SEGUNDO GUARDADO! (Aforo y Reservas)",
+        "instrucciones": [
+            {"campo": "Pestaña Ingreso de sección", "valor": "Clic en pestaña 2", "tipo": "Navegación", "detalle": "Ir a «Información de ingreso de sección» (Enrollment Details)."},
+            {"campo": "Aforo Máximo y Proyectado", "valor": "Máximo: 40 | Proyectado: 40", "tipo": "Obligatorio", "detalle": "En subpestaña «Detalles de ingreso»: ingresar 40 en Máximo y 40 en Proyectado (o 25 en salón presencial AC1)."},
+            {"campo": "Indicador de Reservado", "valor": "Casilla «Reservado» ☑", "tipo": "Mandatorio", "detalle": "Marcar check Reservado para habilitar la subpestaña «Lugares reservados»."},
+            {"campo": "Códigos de Autorización", "valor": "Casilla «Códigos activos» ☑", "tipo": "Control", "detalle": "Verificar marcado para control de permisos de inscripción en la sección."},
+            {"campo": "Créditos Generados", "valor": "AT: 4.000 cr | AC1-AC3: 0.000 cr", "tipo": "Control Cobro", "detalle": "La teoría genera 4 créditos; las prácticas asociadas generan 0 créditos por estar dispensadas."},
+            {"campo": "Subpestaña Lugares Reservados", "valor": "Regla nula (0) + Regla Centro (40)", "tipo": "Blindaje", "detalle": "En subpestaña «Lugares reservados»: Fila 1 regla NULL con cupo 0; Fila 2 regla por programa IMEMI03 con Máximo reservado: 40."},
+            {"campo": "¡SEGUNDO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) para fijar el cupo. Los contadores Total reservado y Restante se actualizan a 40."}
+        ]
+    },
+    "s4": {
+        "fase": "Paso 4: Instructor y horas de reunión",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡TERCER GUARDADO! (Horario, Aula y Docente)",
+        "instrucciones": [
+            {"campo": "Pestaña Horario y reunión", "valor": "Clic en pestaña 3", "tipo": "Navegación", "detalle": "Ir a «Instructor y horas de reunión» (Meeting Times and Faculty)."},
+            {"campo": "Fechas de reunión (Horario)", "valor": "Tipo CLAS | 05-OCT-2026 a 26-NOV-2026", "tipo": "Obligatorio", "detalle": "En subpestaña «Fechas de reunión»: tipo CLAS, vigencia de ciclo según parte de periodo I10."},
+            {"campo": "Días y Horas según Sección", "valor": "Múltiples opciones reales configuradas:", "tipo": "Opciones TEST", "detalle": "• AT (Teoría 10010): Lunes 18:00–20:30 (SAUVIR)\n• AC1 (Presencial 10011): Martes 20:00–23:20 (SPOSGR A-31)\n• AC2 (Virtual 10013): Sábado 18:00–20:30 (SAUVIR)\n• AC3 (Virtual 10024): Miércoles 08:00–11:20 (SAUVIR)"},
+            {"campo": "Créditos y Ubicación", "valor": "Edificio SA / SPOSGR | Tipo PRA / TEO", "tipo": "Obligatorio", "detalle": "En subpestaña «Créditos y ubicación»: Edificio SA / SAUVIR (Virtual) o SPOSGR (Presencial). Horas por semana: 4.00. Créditos sesión: 4.000 para AT y 0.000 para AC1-AC3."},
+            {"campo": "Consistencia de Sesión", "valor": "Indicador de sesión: 01 en ambos", "tipo": "Regla Crítica", "detalle": "REGLA DE ORO: El campo «Indicador de sesión» del bloque HORARIO debe ser exactamente igual al de INSTRUCTOR (ambos 01)."},
+            {"campo": "Docente Asignado (Múltiples)", "valor": "ID Docente | Principal ☑ | 100% resp", "tipo": "Obligatorio", "detalle": "• AT (10010): 100582059 (Dagner Anibal Chuman Lluen)\n• AC1 (10011): S00912435 (Jossymar Cabanillas)\n• AC2 (10013): S00912438 (Arnold Vaca)\n• AC3 (10024): S00912437 (Willy Valverde)\nMarcar Principal ☑, 100% responsabilidad, 100% sesión y carga 4.000 (AT) o 3.000 (AC)."},
+            {"campo": "¡TERCER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). Mensaje superior Banner: ✓ Saved successfully (1 rows saved)."}
+        ]
+    },
+    "s5": {
+        "fase": "Paso 5: Ligas de Sección y Detalle (SSADETL)",
+        "pantalla": "SSADETL",
+        "hito": "⭐ ¡CUARTO GUARDADO! (Ligas cruzadas TA ↔ PA)",
+        "instrucciones": [
+            {"campo": "Acceso a SSADETL", "valor": "Menú Relacionados → SSADETL", "tipo": "Navegación", "detalle": "Desde SSASECT, ir a Relacionados → SSADETL (Detalle de horario de sección) con Periodo y NRC."},
+            {"campo": "Pestaña Correquisitos y Ligas", "valor": "Subpestaña «Ligas de sección»", "tipo": "Configuración", "detalle": "Ir al bloque inferior donde se define el conector vinculado para armar el bloque de matrícula obligatoria."},
+            {"campo": "En NRC Teórico (10010 · TA)", "valor": "Conector vinculado: PA", "tipo": "Enlace TA→PA", "detalle": "El teórico con Identificador TA se enlaza con el conector de liga PA. Exige cualquiera de las prácticas asociadas."},
+            {"campo": "En NRCs Prácticos (10011, 10013, 10024 · PA)", "valor": "Conector vinculado: TA", "tipo": "Enlace PA→TA", "detalle": "Cada práctica con Identificador PA se enlaza con el conector TA del curso teórico."},
+            {"campo": "¡CUARTO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) en cada NRC. En SFAREGS, Banner impedirá inscribir el teórico sin su práctica ligada."}
+        ]
+    },
+    "s6": {
+        "fase": "Paso 6: Publicación y Auditoría",
+        "pantalla": "SSASECQ",
+        "hito": "🎯 NRC 100% PUBLICADO Y AUDITADO",
+        "instrucciones": [
+            {"campo": "Consulta en SSASECQ", "valor": "Transacción SSASECQ", "tipo": "Verificación Final", "detalle": "Entrar a SSASECQ con periodo 202656, materia ESEP y curso 02458 (Basic III)."},
+            {"campo": "Confirmación de Secciones", "valor": "4 NRCs activos (10010, 10011, 10013, 10024)", "tipo": "Control de Calidad", "detalle": "Comprobar que figuren visibles la teoría (AT) y las 3 opciones de práctica (AC1 presencial, AC2 y AC3 virtuales), con cupos de 40 y docentes asignados."}
+        ]
+    }
+}
+
+GUIA_CREAR_NRC_COMPUTACION = {
+    "s1": {
+        "fase": "Paso 1: Encabezado (Bloque Clave)",
+        "pantalla": "SSASECT",
+        "hito": "Inicio de proceso · Indicador ADD temporal",
+        "instrucciones": [
+            {"campo": "Formulario", "valor": "SSASECT", "tipo": "Acceso inicial", "detalle": "Escribir SSASECT en la barra de búsqueda de Banner y presionar Enter."},
+            {"campo": "Periodo", "valor": "202656 (o periodo lectivo vigente)", "tipo": "Obligatorio", "detalle": "Ingresar periodo (202651: verano, 202654: sem I, 202656: sem II)."},
+            {"campo": "NRC", "valor": "(DEJAR EN BLANCO)", "tipo": "Mandatorio", "detalle": "Dejar TOTALMENTE VACÍO para aperturar una nueva sección de Computación."},
+            {"campo": "Botón de Creación", "valor": "Clic en «Crear NRC»", "tipo": "Acción del sistema", "detalle": "Hacer clic en el botón azul. El campo mostrará temporalmente ADD."}
+        ]
+    },
+    "s2": {
+        "fase": "Paso 2: Información de sección (Centro de Computación)",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡PRIMER GUARDADO! (NRC generado)",
+        "instrucciones": [
+            {"campo": "Materia", "valor": "ESEC (Estudios Específicos)", "tipo": "Obligatorio", "detalle": "CONFIRMADO: Escribir ESEC en mayúsculas y presionar Tab (materia oficial del Centro de Computación / Informática)."},
+            {"campo": "Número de curso", "valor": "00678 (Word 365) / 00679 (Excel 365) / 00650", "tipo": "Obligatorio", "detalle": "Digitar número de curso oficial. El campo Título autocompleta: OFIMÁTICA WORD 365 / OFIMÁTICA EXCEL 365."},
+            {"campo": "Sección", "valor": "A (o correlativo: B, C, D...)", "tipo": "Obligatorio", "detalle": "Asignar letra única para la sección del curso (ej. Sección A en NRC 10018 y NRC 10019)."},
+            {"campo": "Campus", "valor": "S (Sede Chiclayo)", "tipo": "Obligatorio", "detalle": "Digitar S o elegir de lista. Corresponde al campus operativo del centro."},
+            {"campo": "Estatus", "valor": "A (Activo)", "tipo": "Mandatorio", "detalle": "Seleccionar 'Activo'; indispensable para permitir la posterior matrícula."},
+            {"campo": "Tipo de horario", "valor": "TEO (Teórico)", "tipo": "Obligatorio", "detalle": "Digitar TEO o derivado del catálogo. El método educativo hereda VIRT."},
+            {"campo": "Modo de calificar", "valor": "V (Vigesimal 00 a 20)", "tipo": "Obligatorio", "detalle": "Digitar V (Vigesimal regular). Nota mínima aprobatoria 11 (resuelto U20 en SHAGRDE)."},
+            {"campo": "Parte de periodo", "valor": "X06 / X07 (grupos X01 a X07 en 2026)", "tipo": "Obligatorio", "detalle": "En «Clase tradicional»: digitar X06 o X07. Fechas inicio/fin se calculan solas."},
+            {"campo": "¡PRIMER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña. El ADD cambia al NRC oficial (ej. 10018, 10019, 1026)."}
+        ]
+    },
+    "s3": {
+        "fase": "Paso 3: Aforo de sección",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡SEGUNDO GUARDADO! (Cupos confirmados)",
+        "instrucciones": [
+            {"campo": "Pestaña Ingreso de sección", "valor": "Clic en pestaña 2", "tipo": "Navegación", "detalle": "Ir a «Información de ingreso de sección» (Enrollment Details)."},
+            {"campo": "Máximo (Cupos del aula)", "valor": "40 (o aforo aula: 25, 30)", "tipo": "Obligatorio", "detalle": "Ingresar cantidad autorizada de vacantes para el NRC."},
+            {"campo": "¡SEGUNDO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) para fijar el cupo. El contador Restante se actualiza automáticamente al aforo."}
+        ]
+    },
+    "s4": {
+        "fase": "Paso 4: Horario, Aula y Docente",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡TERCER GUARDADO! (Horario y Docente)",
+        "instrucciones": [
+            {"campo": "Pestaña Horario y reunión", "valor": "Clic en pestaña 3", "tipo": "Navegación", "detalle": "Ir a «Instructor y horas de reunión»."},
+            {"campo": "Horario (Días y Horas)", "valor": "Tipo CLAS | Formato 24h", "tipo": "Obligatorio", "detalle": "Ejemplo: Martes 08:00 AM – 09:40 AM (Word) o Miércoles 07:40 PM – 09:20 PM (Excel)."},
+            {"campo": "Ubicación (Edificio y Aula)", "valor": "Edificio SAUVIR | Salón SALA VIRT.", "tipo": "Obligatorio", "detalle": "Usar SAUVIR / SALA VIRT. (aula virtual oficial). Previene el *ERROR* Conflicto de salón."},
+            {"campo": "Consistencia de Sesión", "valor": "Indicador de sesión: 01", "tipo": "Regla Crítica", "detalle": "REGLA DE ORO: El indicador de sesión de HORARIO debe ser idéntico al de INSTRUCTOR (ambos 01)."},
+            {"campo": "Docente Principal", "valor": "ID 100582059 (Dagner Chuman) | Principal ☑ | 100%", "tipo": "Obligatorio", "detalle": "Digitar ID institucional, marcar Principal y colocar 100% responsabilidad."},
+            {"campo": "¡TERCER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). Mensaje verde: ✓ Saved successfully. NRC listo con horario y profesor."}
+        ]
+    },
+    "s5": {
+        "fase": "Paso 5: Reserva de cupos (SSARRES)",
+        "pantalla": "SSARRES",
+        "hito": "⭐ ¡CUARTO GUARDADO! (Reservas activas)",
+        "instrucciones": [
+            {"campo": "Lugares Reservados", "valor": "Menú Relacionado → SSARRES", "tipo": "Navegación", "detalle": "Subpestaña «Lugares reservados» para blindar cupos por tipo de participante."},
+            {"campo": "Regla Nula (Cupo General)", "valor": "Regla NULL | Cupo: 1", "tipo": "Mandatorio institucional", "detalle": "OBLIGATORIA: La fila con clave nula no se borra; asegura cupo general."},
+            {"campo": "Regla por Programa CCEE", "valor": "Programa: CMEMC38 (Lib_Area MC38-01, Depto EMCI)", "tipo": "Condicional CCEE", "detalle": "Presionar +, seleccionar PROGRAMA y código CMEMC38 para reservar cupo exclusivo de Computación."},
+            {"campo": "¡CUARTO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar reservas (F10). Previene el error fatal de inscripción *ERROR* Reserve Closed."}
+        ]
+    },
+    "s6": {
+        "fase": "Paso 6: Publicación y Auditoría",
+        "pantalla": "SSASECQ",
+        "hito": "🎯 NRC 100% PUBLICADO Y AUDITADO",
+        "instrucciones": [
+            {"campo": "Consulta en SSASECQ", "valor": "Transacción SSASECQ", "tipo": "Verificación Final", "detalle": "Entrar a SSASECQ con periodo 202656, materia ESEC y curso (00678 / 00679 / 00650)."},
+            {"campo": "Confirmación de Estado", "valor": "Activo (A) | Horario visible | Vacante libre", "tipo": "Control de Calidad", "detalle": "Confirmar que figure Activo (A), horario visible y vacante disponible sin bloqueos."}
+        ]
+    }
+}
+
+GUIA_CREAR_NRC_EMPRENDIMIENTO = {
+    "s1": {
+        "fase": "Paso 1: Encabezado (Bloque Clave)",
+        "pantalla": "SSASECT",
+        "hito": "Inicio de proceso · Indicador ADD temporal",
+        "instrucciones": [
+            {"campo": "Formulario", "valor": "SSASECT", "tipo": "Acceso inicial", "detalle": "Escribir SSASECT en la barra de búsqueda de Banner y presionar Enter."},
+            {"campo": "Periodo", "valor": "202656 (o periodo lectivo vigente)", "tipo": "Obligatorio", "detalle": "Ingresar periodo (202651: verano, 202654: sem I, 202656: sem II)."},
+            {"campo": "NRC", "valor": "(DEJAR EN BLANCO)", "tipo": "Mandatorio", "detalle": "Dejar TOTALMENTE VACÍO para aperturar una nueva sección de Emprendimiento."},
+            {"campo": "Botón de Creación", "valor": "Clic en «Crear NRC»", "tipo": "Acción del sistema", "detalle": "Hacer clic en el botón azul. El campo mostrará temporalmente ADD."}
+        ]
+    },
+    "s2": {
+        "fase": "Paso 2: Información de sección (Centro de Emprendimiento)",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡PRIMER GUARDADO! (NRC generado)",
+        "instrucciones": [
+            {"campo": "Materia", "valor": "ESGE (Estudios Generales - Emprendimiento)", "tipo": "Obligatorio", "detalle": "CONFIRMADO: Escribir ESGE en mayúsculas y presionar Tab (materia oficial del Centro de Emprendimiento)."},
+            {"campo": "Número de curso", "valor": "00117 (Emprendimiento)", "tipo": "Obligatorio", "detalle": "Digitar número de curso y presionar Tab. El campo Título autocompleta desde el catálogo."},
+            {"campo": "Sección", "valor": "A (o correlativo: B, C...)", "tipo": "Obligatorio", "detalle": "Asignar letra única para la sección del periodo (ej. Sección A en NRC 1025)."},
+            {"campo": "Campus", "valor": "S (Sede Chiclayo)", "tipo": "Obligatorio", "detalle": "Digitar S o elegir de lista. Campus operativo del centro."},
+            {"campo": "Estatus", "valor": "A (Activo)", "tipo": "Mandatorio", "detalle": "Seleccionar 'Activo'; indispensable para permitir la posterior matrícula."},
+            {"campo": "Tipo de horario", "valor": "TEO (Teórico)", "tipo": "Obligatorio", "detalle": "Digitar TEO o derivado del catálogo."},
+            {"campo": "Modo de calificar", "valor": "V (Vigesimal)", "tipo": "Obligatorio", "detalle": "Digitar V según plan curricular institucional."},
+            {"campo": "Parte de periodo", "valor": "P01 a P06 (duración fija de 10 semanas)", "tipo": "Obligatorio", "detalle": "En «Clase tradicional»: digitar grupo P01 a P06. Todos los grupos de Emprendimiento duran 10 semanas fijas (P02 y P03 se superponen)."},
+            {"campo": "¡PRIMER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña. El ADD cambia al NRC oficial (ej. 1025)."}
+        ]
+    },
+    "s3": {
+        "fase": "Paso 3: Aforo de sección",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡SEGUNDO GUARDADO! (Cupos confirmados)",
+        "instrucciones": [
+            {"campo": "Pestaña Ingreso de sección", "valor": "Clic en pestaña 2", "tipo": "Navegación", "detalle": "Ir a «Información de ingreso de sección» (Enrollment Details)."},
+            {"campo": "Máximo (Cupos del aula)", "valor": "40 (o aforo aula: 30, 35)", "tipo": "Obligatorio", "detalle": "Ingresar cantidad autorizada de vacantes para el NRC."},
+            {"campo": "¡SEGUNDO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) para fijar el cupo."}
+        ]
+    },
+    "s4": {
+        "fase": "Paso 4: Horario, Aula y Docente",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡TERCER GUARDADO! (Horario y Docente)",
+        "instrucciones": [
+            {"campo": "Pestaña Horario y reunión", "valor": "Clic en pestaña 3", "tipo": "Navegación", "detalle": "Ir a «Instructor y horas de reunión»."},
+            {"campo": "Horario (Días y Horas)", "valor": "Tipo CLAS | Formato 24h", "tipo": "Obligatorio", "detalle": "Definir días y horas de la sesión según cronograma de 10 semanas."},
+            {"campo": "Ubicación (Edificio y Aula)", "valor": "Edificio SAUVIR | Salón SALA VIRT.", "tipo": "Obligatorio", "detalle": "Usar aula virtual oficial SAUVIR."},
+            {"campo": "Consistencia de Sesión", "valor": "Indicador de sesión: 01", "tipo": "Regla Crítica", "detalle": "Indicador de sesión de Horario idéntico al de Instructor."},
+            {"campo": "Docente Asignado", "valor": "ID Docente | Principal ☑ | 100%", "tipo": "Obligatorio", "detalle": "ID activo en SIAINST con 100% responsabilidad."},
+            {"campo": "¡TERCER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). NRC listo con horario y profesor."}
+        ]
+    },
+    "s5": {
+        "fase": "Paso 5: Reserva de cupos (SSARRES)",
+        "pantalla": "SSARRES",
+        "hito": "⭐ ¡CUARTO GUARDADO! (Reservas activas)",
+        "instrucciones": [
+            {"campo": "Lugares Reservados", "valor": "Menú Relacionado → SSARRES", "tipo": "Navegación", "detalle": "Subpestaña «Lugares reservados» para blindar cupos."},
+            {"campo": "Regla Nula (Cupo General)", "valor": "Regla NULL | Cupo: 1", "tipo": "Mandatorio institucional", "detalle": "Asegura cupo general."},
+            {"campo": "Regla por Nivel M", "valor": "Nivel: M (Emprendimiento)", "tipo": "Condicional CCEE", "detalle": "Reserva de cupos para estudiantes del nivel M."},
+            {"campo": "¡CUARTO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar reservas (F10)."}
+        ]
+    },
+    "s6": {
+        "fase": "Paso 6: Publicación y Auditoría",
+        "pantalla": "SSASECQ",
+        "hito": "🎯 NRC 100% PUBLICADO Y AUDITADO",
+        "instrucciones": [
+            {"campo": "Consulta en SSASECQ", "valor": "Transacción SSASECQ", "tipo": "Verificación Final", "detalle": "Entrar a SSASECQ con periodo 202656, materia ESGE y curso 00117."},
+            {"campo": "Confirmación de Estado", "valor": "Activo (A) | Horario visible | Vacante libre", "tipo": "Control de Calidad", "detalle": "Confirmar que figure Activo (A)."}
+        ]
+    }
+}
+
+# ===========================================================================
+# 2. LIGAS: TEÓRICO + CLUB DE CONVERSACIÓN (SSASECT / SSADETL / SFAREGS)
+# ===========================================================================
+
+GUIA_LIGAS = {
+    "g1": {
+        "fase": "Paso 1: Catálogo y Horarios (SCACRSE)",
+        "pantalla": "SCACRSE",
+        "hito": "Asignatura configurada con Teoría y Práctica en el catálogo",
+        "instrucciones": [
+            {"campo": "Formulario", "valor": "SCACRSE", "tipo": "Catálogo base", "detalle": "Comprobar que el curso de Idiomas (ej. ESEP 02456 BASIC I, 02457 BASIC II, 02458 BASIC III) tenga dos tipos de horario: TEO (Teoría) y PRA (Práctica)."},
+            {"campo": "Créditos y Horas", "valor": "HT: 4 | HP: 3 | 4 Créditos", "tipo": "Estructura académica", "detalle": "La teoría concentra la carga académica evaluable; la práctica es el espacio complementario de conversación."}
+        ]
+    },
+    "g2": {
+        "fase": "Paso 2: NRC Principal Teórico Virtual (SSASECT)",
+        "pantalla": "SSASECT",
+        "hito": "Sección AT · Liga TA · Calificable ☑ · Sin Dispensa ☐",
+        "instrucciones": [
+            {"campo": "Encabezado", "valor": "Periodo 202656 | Materia ESEP | Curso 02458", "tipo": "Identificación", "detalle": "Crear sección AT (ej. NRC 10010 de Basic III)."},
+            {"campo": "Tipo de horario", "valor": "TEO (Teórico)", "tipo": "Horario principal", "detalle": "Método educativo: VIRT (Virtual). Aula: SAUVIR / SALA-VIRT."},
+            {"campo": "Horas y Créditos", "valor": "4.000 créditos / 4.000 cobro", "tipo": "Obligatorio", "detalle": "Lleva los créditos completos de la asignatura."},
+            {"campo": "Indicadores de Clase", "valor": "Calificable ☑ | Dispensa ☐", "tipo": "Regla Mandatoria", "detalle": "Calificable MARCADO y Dispensa de colegiatura DESMARCADA para liquidar el cobro regular."},
+            {"campo": "Identificador de liga", "valor": "TA (Teoría Sección A)", "tipo": "Clave de Liga", "detalle": "Ingresar código TA en campo Identificador de liga de SSASECT. Guardar (F10)."}
+        ]
+    },
+    "g3": {
+        "fase": "Paso 3: NRCs Secundarios Prácticos (SSASECT)",
+        "pantalla": "SSASECT",
+        "hito": "Secciones AC1 (Presencial) y AC2/AC3 (Virtual) · Liga PA · No Calificable ☐ · Dispensa ☑",
+        "instrucciones": [
+            {"campo": "Segundo curso (AC1)", "valor": "Presencial y Práctico (SPOSGR)", "tipo": "Regla Institucional", "detalle": "REGLA CONFIRMADA: El segundo curso (sección AC1, ej. 10011) es PRESENCIAL en aulas de Posgrado (SPOSGR A-21 / A-11 / A-31)."},
+            {"campo": "Resto de cursos (AC2, AC3)", "valor": "Virtual y Práctico (SAUVIR)", "tipo": "Regla Institucional", "detalle": "REGLA CONFIRMADA: Las demás secciones de práctica (AC2, AC3, ej. 10013, 10024) son VIRTUALES en SAUVIR SALA-VIRT."},
+            {"campo": "Tipo de horario", "valor": "PRA (Práctico)", "tipo": "Horario secundario", "detalle": "Asignado a las sesiones de práctica / club de conversación."},
+            {"campo": "Créditos y Cobro", "valor": "0 créditos (o con dispensa)", "tipo": "Configuración", "detalle": "Horas crédito y cobro con dispensa para no duplicar el costo de la matrícula."},
+            {"campo": "Indicadores de Clase", "valor": "Calificable ☐ | Dispensa ☑", "tipo": "Regla Mandatoria", "detalle": "Calificable DESMARCADO y Dispensa de colegiatura y cuotas MARCADA."},
+            {"campo": "Identificador de liga", "valor": "PA (Práctica Sección A)", "tipo": "Clave de Liga", "detalle": "Ingresar código PA en campo Identificador de liga de SSASECT. Guardar (F10)."}
+        ]
+    },
+    "g4": {
+        "fase": "Paso 4: Vinculación Bidireccional (SSADETL)",
+        "pantalla": "SSADETL",
+        "hito": "⭐ ¡VINCULACIÓN BIDIRECCIONAL COMPLETA!",
+        "instrucciones": [
+            {"campo": "Acceso", "valor": "Menú Relacionados → SSADETL", "tipo": "Navegación", "detalle": "Desde SSASECT ir a SSADETL con el periodo y el NRC cargado."},
+            {"campo": "Pestaña", "valor": "Correquisitos y ligas de sección", "tipo": "Configuración", "detalle": "Ir a la pestaña 2 de SSADETL."},
+            {"campo": "En el NRC Teórico (TA)", "valor": "Conector de liga: PA", "tipo": "Enlace", "detalle": "En el NRC de Teoría (ej. 10010), colocar PA en el campo Conector de liga y Guardar (F10)."},
+            {"campo": "En los NRC Prácticos (PA)", "valor": "Conector de liga: TA", "tipo": "Enlace", "detalle": "En cada NRC de Práctica (ej. 10011, 10013, 10024), colocar TA en Conector de liga y Guardar (F10)."},
+            {"campo": "Escenario", "valor": "Muchos a muchos con restricción", "tipo": "Lógica", "detalle": "Al elegir el teórico sección AT (TA), el estudiante debe escoger obligatoriamente una de las prácticas PA (AC1 presencial o AC2/AC3 virtual)."}
+        ]
+    },
+    "g5": {
+        "fase": "Paso 5: Inscripción Conjunta Obligatoria",
+        "pantalla": "SFAREGS / Web",
+        "hito": "Matrícula exigida de Teórico + Práctico juntos",
+        "instrucciones": [
+            {"campo": "Control SOATERM", "valor": "Verificación Ligas en Fatal", "tipo": "Restricción", "detalle": "Banner bloquea la inscripción si el alumno solo ingresa el teórico sin su práctica ligada."},
+            {"campo": "Inscripción Backoffice", "valor": "Digitar Teórico + Práctico (código RE)", "tipo": "Inscripción", "detalle": "Ingresar en SFAREGS el NRC teórico (ej. 10010) junto al práctico seleccionado (ej. 10011 o 10024) y Guardar (F10)."},
+            {"campo": "Autoservicio Web", "valor": "Panel «Secciones ligadas»", "tipo": "Autoservicio", "detalle": "El alumno marca su clase teórica y el autoservicio le despliega para elegir el grupo de práctica correspondiente."},
+            {"campo": "Tasación", "valor": "Estimación de cuota procesada", "tipo": "Financiero", "detalle": "Solo se liquidan los 4 créditos del NRC teórico principal; la práctica queda dispensada."}
+        ]
+    },
+    "g6": {
+        "fase": "Paso 6: Participante Matriculado",
+        "pantalla": "SFASLST / SSASECT",
+        "hito": "🎯 ESTUDIANTE MATRICULADO EN AMBOS NRCS",
+        "instrucciones": [
+            {"campo": "Estado de Matrícula", "valor": "Estatus RE en ambos NRCs", "tipo": "Verificación", "detalle": "El estudiante figura formalmente matriculado en la teoría y en su grupo práctico."},
+            {"campo": "Listas de Clase (SFASLST)", "valor": "Listas docentes independientes", "tipo": "Académico", "detalle": "Docente de teoría evalúa la nota final; docente de práctica supervisa asistencia y avance."},
+            {"campo": "Aforo SSASECT", "valor": "Vacantes descontadas en ambos", "tipo": "Control", "detalle": "El contador Actual suma 1 y Remaining resta 1 en cada sección involucrada."}
+        ]
+    }
+}
+
+# ===========================================================================
+# 3. CARGA LECTIVA (SIAINST / SSASECT / SIAASGN / INTRANET USS)
+# ===========================================================================
+
+GUIA_CARGA_LECTIVA = {
+    "k1": {
+        "fase": "Paso 1: Activación y Habilitación Docente",
+        "pantalla": "SIAINST",
+        "hito": "Docente activo en facultad y periodo",
+        "instrucciones": [
+            {"campo": "Formulario", "valor": "SIAINST", "tipo": "Acceso inicial", "detalle": "Ingresar ID del docente (ej. 100582059 Dagner Chuman) y verificar estatus en facultad."},
+            {"campo": "Pestaña Facultad", "valor": "Status: Activo", "tipo": "Obligatorio", "detalle": "Comprobar que el docente tenga permisos vigentes para dictado en el periodo lectivo."},
+            {"campo": "Contrato Docente", "valor": "ES (Especialista) / FC (Facilitador)", "tipo": "Régimen CCEE", "detalle": "Régimen docente confirmado: Especialista ES (48h/sem con funciones administrativas) o Facilitador FC (14 a 23h/sem)."}
+        ]
+    },
+    "k2": {
+        "fase": "Paso 2: Asignación al NRC",
+        "pantalla": "SSASECT",
+        "hito": "Docente principal asignado al 100%",
+        "instrucciones": [
+            {"campo": "Formulario", "valor": "SSASECT", "tipo": "Programación", "detalle": "En pestaña Horario e instructores, asignar ID con sesión 01 y 100% responsabilidad."},
+            {"campo": "Indicador Principal", "valor": "Casilla Principal ☑", "tipo": "Mandatorio", "detalle": "Marcar como instructor principal para emisión de actas oficiales."},
+            {"campo": "Sobrepaso de Horario", "valor": "Indicador de sobrepaso ☑", "tipo": "Contingencia", "detalle": "Si el docente tiene otro NRC a la misma hora, marcar sobrepaso para salvar el cruce."}
+        ]
+    },
+    "k3": {
+        "fase": "Paso 3: Auditoría de Carga Docente",
+        "pantalla": "SIAASGN",
+        "hito": "Horas y FTE computados automáticamente",
+        "instrucciones": [
+            {"campo": "Formulario", "valor": "SIAASGN", "tipo": "Auditoría", "detalle": "Consultar con Periodo 202656 e ID del docente (100582059 Dagner Chuman)."},
+            {"campo": "Secciones asignadas", "valor": "Carga consolidada del periodo", "tipo": "Consolidación", "detalle": "Auditoría de todas las secciones asignadas al docente en el periodo."},
+            {"campo": "Horas semanales", "valor": "Calculadas según factor SIATERM", "tipo": "Cálculo", "detalle": "Multiplicación de horas y factor de duración institucional de SIATERM."},
+            {"campo": "Horas acumuladas", "valor": "Cómputo total del periodo", "tipo": "Cálculo", "detalle": "Cómputo acumulado de la carga lectiva total del periodo."},
+            {"campo": "Asignación de FTE", "valor": "FTE generado automáticamente", "tipo": "Cálculo", "detalle": "Factor de dedicación académica generado automáticamente sustituyendo planillas Excel."}
+        ]
+    },
+    "k4": {
+        "fase": "Paso 4: Visto Bueno del Centro",
+        "pantalla": "Intranet USS",
+        "hito": "Oficio institucional tramitado",
+        "instrucciones": [
+            {"campo": "Trámite", "valor": "Oficio del Jefe de Centro", "tipo": "Administrativo", "detalle": "El jefe de centro valida la carga lectiva y genera oficio con asunto, detalle y adjunto en la intranet USS."}
+        ]
+    },
+    "k5": {
+        "fase": "Paso 5: Aprobación Oficial",
+        "pantalla": "Resolución VRA",
+        "hito": "Resolución de carga docente aprobada",
+        "instrucciones": [
+            {"campo": "Aprobación", "valor": "Resolución Vicerrectoral", "tipo": "Oficial", "detalle": "El Vicerrectorado Académico revisa y emite la resolución formal de aprobación de carga."}
+        ]
+    }
+}
+
+# ===========================================================================
+# 4. PERSONA Y ADMISIÓN (GOAMTCH / SAAQUIK / SGASTDN) - POR CENTRO
+# ===========================================================================
+
+def obtener_guia_persona_admision(id_centro):
+    prog = "IMEMI03 (Acreditación Idiomas)" if id_centro == "idiomas" else ("CMEMC38 (Computación)" if id_centro == "computacion" else "Programa de Emprendimiento")
+    dept = "EMID (Idiomas)" if id_centro == "idiomas" else ("EMCI (Computación)" if id_centro == "computacion" else "Escuela EM")
+    mayor = "MI03-01 / MI03-02" if id_centro == "idiomas" else ("ACXP (Malla MC38-01)" if id_centro == "computacion" else "Emprendimiento")
+    nivel = "I (Idiomas)" if id_centro == "idiomas" else ("C (Computación)" if id_centro == "computacion" else "M (Emprendimiento)")
+
+    return {
         "a1": {
             "fase": "Paso 1: Búsqueda de Coincidencias",
             "pantalla": "GOAMTCH",
@@ -153,20 +397,20 @@ GUIAS_BASE = {
             ]
         },
         "a3": {
-            "fase": "Paso 3: Admisión Rápida (Bloque Clave)",
+            "fase": f"Paso 3: Admisión Rápida (Nivel {nivel})",
             "pantalla": "SAAQUIK",
             "hito": "Inicio de admisión rápida en el centro",
             "instrucciones": [
-                {"campo": "Formulario", "valor": "SAAQUIK", "tipo": "Acceso", "detalle": "Ingresar ID generado (ej. S00581081) y Periodo lectivo (202656)."},
-                {"campo": "Parámetros base", "valor": "Nivel C/I/M · Campus S · Escuela EM", "tipo": "Mandatorio", "detalle": "Nivel C (Computación), I (Idiomas) o M (Emprendimiento); Campus S (Chiclayo); Grado 000000."}
+                {"campo": "Formulario", "valor": "SAAQUIK", "tipo": "Acceso", "detalle": "Ingresar ID generado y Periodo lectivo (202656)."},
+                {"campo": "Parámetros base", "valor": f"Nivel {nivel} · Campus S · Escuela EM", "tipo": "Mandatorio", "detalle": f"Nivel {nivel}; Campus S (Chiclayo); Escuela EM (Centros Empresariales); Grado 000000."}
             ]
         },
         "a4": {
             "fase": "Paso 4: Asignación de Programa Curricular",
             "pantalla": "SAAQUIK",
-            "hito": "Programa curricular activo (3 rows saved)",
+            "hito": f"Programa {prog} activo",
             "instrucciones": [
-                {"campo": "Programa", "valor": "CMEMC38 (o código del centro)", "tipo": "Obligatorio", "detalle": "Seleccionar programa; autocompleta Major ACXP, Depto EMCI y Malla MC38."},
+                {"campo": "Programa", "valor": prog, "tipo": "Obligatorio", "detalle": f"Seleccionar {prog}; autocompleta Departamento {dept} y Mayor {mayor}."},
                 {"campo": "Guardar", "valor": "Guardar (F10)", "tipo": "Transacción", "detalle": "Mensaje verde: 3 rows saved. Registro admitido exitosamente."}
             ]
         },
@@ -179,8 +423,16 @@ GUIAS_BASE = {
                 {"campo": "Estatus académico", "valor": "Status: AS (Activo)", "tipo": "Verificación", "detalle": "Confirmar que figure Activo y con currícula vigente sin bloqueos."}
             ]
         }
-    },
-    "matricula-en-el-nrc": {
+    }
+
+# ===========================================================================
+# 5. MATRÍCULA EN EL NRC (SFAREGS / TSAAREV / SFASLST)
+# ===========================================================================
+
+def obtener_guia_matricula(id_centro):
+    nrc_desc = "NRC Teórico AT + NRC Práctico AC1/AC3" if id_centro == "idiomas" else ("NRC oficial de Computación (ej. 10018 / 1026)" if id_centro == "computacion" else "NRC oficial de Emprendimiento (ej. 1025)")
+
+    return {
         "i1": {
             "fase": "Paso 1: Consulta Previa de Vacantes",
             "pantalla": "SSASECQ",
@@ -203,7 +455,7 @@ GUIAS_BASE = {
             "pantalla": "SFAREGS",
             "hito": "Inscripción regular (código RE)",
             "instrucciones": [
-                {"campo": "Información de curso", "valor": "Ingresar NRC oficial", "tipo": "Obligatorio", "detalle": "En bloque Course Registration, digitar el NRC en la casilla correspondiente."},
+                {"campo": "Información de curso", "valor": nrc_desc, "tipo": "Obligatorio", "detalle": "En bloque Course Registration, digitar el o los NRCs según corresponda (en Idiomas ingresar Teórico + Práctico juntos por regla de ligas)."},
                 {"campo": "Código de estatus", "valor": "RE (Web / Backoffice Registered)", "tipo": "Mandatorio", "detalle": "Digitar RE y presionar Guardar (F10). Mensaje: Estimación de cuota procesada."}
             ]
         },
@@ -223,14 +475,22 @@ GUIAS_BASE = {
                 {"campo": "Formulario", "valor": "SFASLST", "tipo": "Verificación", "detalle": "Abrir lista de clase con periodo y NRC; confirmar que el alumno figure como matriculado."}
             ]
         }
-    },
-    "notas-y-pase-a-historia": {
+    }
+
+# ===========================================================================
+# 6. NOTAS Y PASE A HISTORIA (SHAGRDE / SFASLST / GJAPCTL / CAPP)
+# ===========================================================================
+
+def obtener_guia_notas(id_centro):
+    modo_txt = "Modo C (Escala Centesimal) / Modo V" if id_centro == "idiomas" else "Modo V (Vigesimal 00 a 20)"
+
+    return {
         "n1": {
             "fase": "Paso 1: Verificación de Escala y Modo",
             "pantalla": "SHAGRDE",
-            "hito": "Modo V vigesimal configurado",
+            "hito": f"{modo_txt} configurado",
             "instrucciones": [
-                {"campo": "Formulario", "valor": "SHAGRDE", "tipo": "Catálogo", "detalle": "Verificar que el nivel del alumno tenga el Modo V con escala vigesimal (00 a 20)."}
+                {"campo": "Formulario", "valor": "SHAGRDE", "tipo": "Catálogo", "detalle": f"Verificar que el nivel del centro tenga configurado {modo_txt} con sus notas aprobatorias y de pase a historia."}
             ]
         },
         "n2": {
@@ -254,7 +514,7 @@ GUIAS_BASE = {
             "pantalla": "SFASLST / Web",
             "hito": "Calificaciones docentes registradas",
             "instrucciones": [
-                {"campo": "Ingreso de notas", "valor": "Nota final vigesimal (00 a 20)", "tipo": "Docencia", "detalle": "Aprobado: nota ≥ 11; Desaprobado: nota ≤ 10. Columna Rolled permanece en N."}
+                {"campo": "Ingreso de notas", "valor": "Nota final según escala oficial", "tipo": "Docencia", "detalle": "Aprobado: nota aprobatoria; Desaprobado: reprobado o INH. Columna Rolled permanece en N."}
             ]
         },
         "n5": {
@@ -275,9 +535,11 @@ GUIAS_BASE = {
             ]
         }
     }
-}
 
-# Guías para las casuísticas / scripts (Excel 2)
+# ===========================================================================
+# 7. CASUÍSTICAS / SCRIPTS (Excel 2)
+# ===========================================================================
+
 GUIAS_SCRIPTS = {
     "01": {
         "c0": {"fase": "Condición Previa", "pantalla": "SAAQUIK / SGASTDN", "hito": "Participante admitido y con estatus activo AS"},
@@ -383,4 +645,57 @@ GUIAS_SCRIPTS = {
         "c4": {"fase": "Paso 4: Levantamiento y Matrícula", "pantalla": "SOAHOLD → SFAREGS", "hito": "Retención desactivada; matrícula permitida de inmediato con código RE"},
         "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Bloqueo fatal y desbloqueo por mora validados al 100%"}
     }
+}
+
+# ===========================================================================
+# 8. FUNCIÓN DESPACHADORA PRINCIPAL
+# ===========================================================================
+
+def obtener_guia(slug, id_centro=""):
+    """Devuelve la guía operativa paso a paso adaptada de forma 100% específica al centro."""
+    slug_limpio = slug.lower()
+    centro = id_centro.lower() if id_centro else ("idiomas" if "idiomas" in slug_limpio else ("computacion" if "computacion" in slug_limpio else ("emprendimiento" if "emprendimiento" in slug_limpio else "comun")))
+
+    # 1. Crear el NRC
+    if "crear-el-nrc" in slug_limpio:
+        if centro == "idiomas":
+            return GUIA_CREAR_NRC_IDIOMAS
+        elif centro == "computacion":
+            return GUIA_CREAR_NRC_COMPUTACION
+        elif centro == "emprendimiento":
+            return GUIA_CREAR_NRC_EMPRENDIMIENTO
+        return GUIA_CREAR_NRC_COMPUTACION
+
+    # 2. Ligas
+    if "ligas-teorico-y-club" in slug_limpio or "ligas" in slug_limpio:
+        return GUIA_LIGAS
+
+    # 3. Carga Lectiva
+    if "carga-lectiva" in slug_limpio:
+        return GUIA_CARGA_LECTIVA
+
+    # 4. Persona y Admisión
+    if "persona-y-admision" in slug_limpio:
+        return obtener_guia_persona_admision(centro)
+
+    # 5. Matrícula en el NRC
+    if "matricula-en-el-nrc" in slug_limpio:
+        return obtener_guia_matricula(centro)
+
+    # 6. Notas y Cierre
+    if "notas-y-pase-a-historia" in slug_limpio:
+        return obtener_guia_notas(centro)
+
+    # 7. Scripts / Casuísticas
+    for s_id, s_map in GUIAS_SCRIPTS.items():
+        if f"script-{s_id}" in slug_limpio or f"script_{s_id}" in slug_limpio:
+            return s_map
+
+    return None
+
+# Compatibilidad retrospectiva con código previo
+GUIAS_BASE = {
+    "crear-el-nrc": GUIA_CREAR_NRC_COMPUTACION,
+    "carga-lectiva": GUIA_CARGA_LECTIVA,
+    "ligas-teorico-y-club": GUIA_LIGAS
 }

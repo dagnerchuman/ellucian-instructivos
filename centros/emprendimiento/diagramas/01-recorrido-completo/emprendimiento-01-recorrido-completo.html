@@ -14030,20 +14030,21 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease, max-height 0.25s ease !important;
 }
 
-/* Modal amplio y espacioso tipo Wizard centrado en pantalla */
+/* Modal amplio y espacioso tipo Wizard centrado en pantalla con altura dinámica */
 .focus-chip.tiene-guia {
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
-  width: min(72rem, calc(100vw - 2.5rem)) !important;
-  max-width: 74rem !important;
-  max-height: min(88vh, calc(100vh - 2.5rem)) !important;
+  width: min(74rem, calc(100vw - 2rem)) !important;
+  max-width: 76rem !important;
   height: auto !important;
+  min-height: min(30rem, 60vh) !important;
+  max-height: min(92vh, calc(100vh - 1.5rem)) !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
-  border-radius: 1.25rem !important;
+  border-radius: 1rem !important;
   box-shadow: 0 32px 90px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--frontend-stroke) !important;
   backdrop-filter: blur(25px) !important;
   -webkit-backdrop-filter: blur(25px) !important;
@@ -14062,6 +14063,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   transform: none !important;
   width: min(44rem, calc(50vw - 1.5rem)) !important;
   max-width: 46rem !important;
+  height: calc(100vh - 2.5rem) !important;
   max-height: calc(100vh - 2.5rem) !important;
 }
 
@@ -14075,8 +14077,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   width: auto !important;
   min-width: 22rem !important;
   max-width: calc(100vw - 3rem) !important;
-  max-height: 3.5rem !important;
-  height: 3.5rem !important;
+  max-height: 3.2rem !important;
+  height: 3.2rem !important;
   overflow: hidden !important;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--frontend-stroke) !important;
 }
@@ -14111,14 +14113,14 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   background: transparent !important;
 }
 
-/* Barra superior unificada */
+/* Barra superior unificada esbelta */
 .guia-modal-topbar {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 0.65rem 1.25rem !important;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95)) !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.2) !important;
+  padding: 0.45rem 1rem !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.98)) !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18) !important;
   flex-shrink: 0 !important;
   z-index: 10 !important;
   user-select: none !important;
@@ -14132,22 +14134,22 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
 .guia-modal-brand {
   display: flex !important;
   align-items: center !important;
-  gap: 0.65rem !important;
+  gap: 0.55rem !important;
 }
 
 .guia-brand-badge {
-  font-size: 0.68rem !important;
+  font-size: 0.66rem !important;
   font-weight: 800 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
-  padding: 0.22rem 0.55rem !important;
+  padding: 0.18rem 0.5rem !important;
   border-radius: 0.35rem !important;
   background: #4338ca !important;
   color: #ffffff !important;
 }
 
 .guia-brand-title {
-  font-size: 0.88rem !important;
+  font-size: 0.84rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
 }
@@ -14159,7 +14161,7 @@ html:not([data-theme="dark"]) .guia-brand-title {
 .guia-topbar-actions {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.4rem !important;
+  gap: 0.35rem !important;
 }
 
 .chip-btn-ctrl {
@@ -14167,13 +14169,13 @@ html:not([data-theme="dark"]) .guia-brand-title {
   border: 1px solid rgba(148, 163, 184, 0.25) !important;
   color: var(--toolbar-text, #e2e8f0) !important;
   border-radius: 0.45rem !important;
-  padding: 0.25rem 0.65rem !important;
-  font-size: 0.72rem !important;
+  padding: 0.22rem 0.55rem !important;
+  font-size: 0.7rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
+  gap: 0.3rem !important;
   transition: all 0.15s ease !important;
   line-height: 1.2 !important;
 }
@@ -14196,13 +14198,13 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
 }
 
 .chip-btn-close {
-  width: 1.85rem !important;
-  height: 1.85rem !important;
+  width: 1.7rem !important;
+  height: 1.7rem !important;
   border-radius: 50% !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 1.1rem !important;
+  font-size: 1rem !important;
   line-height: 1 !important;
   padding: 0 !important;
   background: rgba(239, 68, 68, 0.12) !important;
@@ -14210,7 +14212,7 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   color: #f87171 !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
-  margin-left: 0.35rem !important;
+  margin-left: 0.25rem !important;
 }
 
 .chip-btn-close:hover {
@@ -14220,7 +14222,7 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   transform: scale(1.08) !important;
 }
 
-/* Cuerpo con scroll suave */
+/* Cuerpo con scroll suave y padding compacto */
 .focus-chip.tiene-guia .relationship-lens-copy {
   width: 100% !important;
   min-width: 0 !important;
@@ -14229,7 +14231,7 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   flex: 1 1 auto !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  padding: 1.15rem 1.35rem 0 1.35rem !important;
+  padding: 0.5rem 1rem 0 1rem !important;
   scrollbar-width: thin !important;
   position: relative !important;
 }
@@ -14254,33 +14256,33 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   flex: 1 1 auto !important;
 }
 
-/* Stepper de Fases Interactivo Horizontal */
+/* Stepper de Fases Interactivo Horizontal Compacto */
 .guia-stepper-wrap {
   overflow-x: auto !important;
   scrollbar-width: thin !important;
   -webkit-overflow-scrolling: touch !important;
-  padding: 0.15rem 0 0.65rem 0 !important;
-  margin-bottom: 0.75rem !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.18) !important;
+  padding: 0.1rem 0 0.4rem 0 !important;
+  margin-bottom: 0.45rem !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16) !important;
 }
 
 .guia-stepper-track {
   display: flex !important;
   align-items: center !important;
-  gap: 0.4rem !important;
+  gap: 0.35rem !important;
   min-width: max-content !important;
 }
 
 .guia-step-pill {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.45rem !important;
+  gap: 0.35rem !important;
   background: rgba(148, 163, 184, 0.1) !important;
   border: 1px solid rgba(148, 163, 184, 0.22) !important;
   color: var(--text-muted, #94a3b8) !important;
-  padding: 0.32rem 0.75rem !important;
+  padding: 0.22rem 0.65rem !important;
   border-radius: 999px !important;
-  font-size: 0.73rem !important;
+  font-size: 0.72rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   transition: all 0.18s ease !important;
@@ -14305,7 +14307,7 @@ html:not([data-theme="dark"]) .guia-step-pill {
   border-color: #60a5fa !important;
   color: #ffffff !important;
   font-weight: 700 !important;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35) !important;
+  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.35) !important;
 }
 
 .guia-step-pill.past {
@@ -14321,13 +14323,13 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
 }
 
 .pill-badge {
-  width: 1.15rem !important;
-  height: 1.15rem !important;
+  width: 1.1rem !important;
+  height: 1.1rem !important;
   border-radius: 50% !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 0.65rem !important;
+  font-size: 0.62rem !important;
   font-weight: 800 !important;
   background: rgba(255, 255, 255, 0.2) !important;
 }
@@ -14339,7 +14341,7 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
 
 .stepper-arrow {
   color: rgba(148, 163, 184, 0.4) !important;
-  font-size: 0.85rem !important;
+  font-size: 0.8rem !important;
   user-select: none !important;
   flex-shrink: 0 !important;
 }
@@ -14348,55 +14350,20 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   color: #10b981 !important;
 }
 
-/* Barra de navegación de pasos superior */
-.guia-step-nav {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 0.75rem !important;
-  background: rgba(30, 41, 59, 0.5) !important;
-  padding: 0.55rem 0.85rem !important;
-  border-radius: 0.65rem !important;
-  border: 1px solid rgba(148, 163, 184, 0.2) !important;
-  margin-bottom: 0.65rem !important;
-}
-
-html:not([data-theme="dark"]) .guia-step-nav {
-  background: rgba(241, 245, 249, 0.8) !important;
-  border-color: #cbd5e1 !important;
-}
-
-.guia-step-indicator {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 0.25rem !important;
-  flex: 1 !important;
-}
-
-.guia-step-title {
-  font-size: 0.8rem !important;
-  font-weight: 700 !important;
-  color: var(--toolbar-text, #f1f5f9) !important;
-  letter-spacing: 0.01em !important;
-}
-
-html:not([data-theme="dark"]) .guia-step-title {
-  color: #0f172a !important;
-}
-
-.guia-progress-bar {
-  width: min(15rem, 85%) !important;
-  height: 5px !important;
-  background: rgba(148, 163, 184, 0.25) !important;
-  border-radius: 3px !important;
+/* Barra de progreso integrada debajo del stepper */
+.guia-stepper-progress {
+  width: 100% !important;
+  height: 3px !important;
+  background: rgba(148, 163, 184, 0.2) !important;
+  border-radius: 2px !important;
   overflow: hidden !important;
+  margin-top: 0.35rem !important;
 }
 
 .guia-progress-fill {
   height: 100% !important;
   background: linear-gradient(90deg, #38bdf8, #34d399) !important;
-  border-radius: 3px !important;
+  border-radius: 2px !important;
   transition: width 0.25s ease !important;
 }
 
@@ -14404,9 +14371,9 @@ html:not([data-theme="dark"]) .guia-step-title {
   background: rgba(148, 163, 184, 0.15) !important;
   border: 1px solid rgba(148, 163, 184, 0.3) !important;
   color: var(--toolbar-text, #f1f5f9) !important;
-  padding: 0.38rem 0.85rem !important;
+  padding: 0.35rem 0.75rem !important;
   border-radius: 0.45rem !important;
-  font-size: 0.75rem !important;
+  font-size: 0.74rem !important;
   font-weight: 700 !important;
   cursor: pointer !important;
   display: inline-flex !important;
@@ -14447,16 +14414,16 @@ html:not([data-theme="dark"]) .guia-nav-btn.primary {
   transform: none !important;
 }
 
-/* Hero de Fase actual e Hito */
+/* Hero de Fase actual e Hito Compacto */
 .guia-fase-hero {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
-  gap: 0.6rem !important;
-  margin-bottom: 0.85rem !important;
-  padding: 0.75rem 1rem !important;
-  border-radius: 0.65rem !important;
+  gap: 0.45rem !important;
+  margin-bottom: 0.45rem !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: 0.55rem !important;
   background: rgba(30, 41, 59, 0.45) !important;
   border: 1px solid rgba(148, 163, 184, 0.18) !important;
 }
@@ -14469,15 +14436,15 @@ html:not([data-theme="dark"]) .guia-fase-hero {
 .guia-fase-main {
   display: flex !important;
   align-items: center !important;
-  gap: 0.6rem !important;
+  gap: 0.5rem !important;
   flex-wrap: wrap !important;
 }
 
 .guia-pantalla-pill {
-  font-size: 0.75rem !important;
+  font-size: 0.72rem !important;
   font-weight: 800 !important;
-  padding: 0.25rem 0.6rem !important;
-  border-radius: 0.35rem !important;
+  padding: 0.18rem 0.5rem !important;
+  border-radius: 0.3rem !important;
   background: #0284c7 !important;
   color: #ffffff !important;
   letter-spacing: 0.03em !important;
@@ -14485,7 +14452,7 @@ html:not([data-theme="dark"]) .guia-fase-hero {
 
 .guia-fase-title {
   margin: 0 !important;
-  font-size: 0.92rem !important;
+  font-size: 0.86rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
 }
@@ -14497,11 +14464,11 @@ html:not([data-theme="dark"]) .guia-fase-title {
 .guia-hito-badge {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.4rem !important;
-  font-size: 0.75rem !important;
+  gap: 0.35rem !important;
+  font-size: 0.72rem !important;
   font-weight: 700 !important;
-  padding: 0.3rem 0.75rem !important;
-  border-radius: 0.45rem !important;
+  padding: 0.22rem 0.6rem !important;
+  border-radius: 0.4rem !important;
   background: rgba(16, 185, 129, 0.15) !important;
   border: 1px solid rgba(16, 185, 129, 0.35) !important;
   color: #34d399 !important;
@@ -14513,14 +14480,14 @@ html:not([data-theme="dark"]) .guia-hito-badge {
   border-color: #6ee7b7 !important;
 }
 
-/* Tabla 4 Columnas Balanceada */
+/* Tabla 4 Columnas Densa y Optimizada */
 .guia-tabla-wrap {
   width: 100% !important;
   overflow-x: auto !important;
-  border-radius: 0.65rem !important;
-  border: 1px solid rgba(148, 163, 184, 0.2) !important;
-  background: rgba(15, 23, 42, 0.5) !important;
-  margin-bottom: 1rem !important;
+  border-radius: 0.55rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.18) !important;
+  background: rgba(15, 23, 42, 0.45) !important;
+  margin-bottom: 0.45rem !important;
 }
 
 html:not([data-theme="dark"]) .guia-tabla-wrap {
@@ -14531,7 +14498,7 @@ html:not([data-theme="dark"]) .guia-tabla-wrap {
 .guia-tabla {
   width: 100% !important;
   border-collapse: collapse !important;
-  font-size: 0.76rem !important;
+  font-size: 0.74rem !important;
   text-align: left !important;
 }
 
@@ -14540,10 +14507,10 @@ html:not([data-theme="dark"]) .guia-tabla-wrap {
   color: #94a3b8 !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
-  font-size: 0.66rem !important;
+  font-size: 0.64rem !important;
   letter-spacing: 0.04em !important;
-  padding: 0.65rem 0.9rem !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.2) !important;
+  padding: 0.45rem 0.75rem !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18) !important;
 }
 
 .guia-tabla th:nth-child(1), .guia-tabla td:nth-child(1) { width: 18% !important; }
@@ -14558,8 +14525,8 @@ html:not([data-theme="dark"]) .guia-tabla th {
 }
 
 .guia-tabla td {
-  padding: 0.6rem 0.9rem !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.14) !important;
+  padding: 0.4rem 0.75rem !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12) !important;
   vertical-align: top !important;
 }
 
@@ -14583,11 +14550,11 @@ html:not([data-theme="dark"]) .guia-campo {
   font-weight: 600 !important;
   color: #38bdf8 !important;
   background: rgba(56, 189, 248, 0.12) !important;
-  padding: 0.2rem 0.55rem !important;
+  padding: 0.14rem 0.45rem !important;
   border-radius: 0.35rem !important;
   display: inline-block !important;
   word-break: break-word !important;
-  font-size: 0.74rem !important;
+  font-size: 0.72rem !important;
 }
 
 html:not([data-theme="dark"]) .guia-valor {
@@ -14622,9 +14589,9 @@ html:not([data-theme="dark"]) .guia-valor.valor-accion {
 }
 
 .guia-tipo-tag {
-  font-size: 0.65rem !important;
+  font-size: 0.62rem !important;
   font-weight: 600 !important;
-  padding: 0.18rem 0.5rem !important;
+  padding: 0.12rem 0.4rem !important;
   border-radius: 0.3rem !important;
   background: rgba(148, 163, 184, 0.15) !important;
   color: #cbd5e1 !important;
@@ -14651,51 +14618,51 @@ html:not([data-theme="dark"]) .guia-tipo-tag.critico {
 
 .guia-detalle {
   color: #94a3b8 !important;
-  font-size: 0.74rem !important;
+  font-size: 0.72rem !important;
   word-break: break-word !important;
-  line-height: 1.5 !important;
+  line-height: 1.45 !important;
 }
 
 html:not([data-theme="dark"]) .guia-detalle {
   color: #334155 !important;
 }
 
-/* Sticky Footer Inferior Permanente */
+/* Sticky Footer Inferior Permanente Esbelto */
 .guia-footer-sticky {
   position: sticky !important;
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
   background: rgba(15, 23, 42, 0.96) !important;
-  padding: 0.85rem 1.35rem !important;
-  margin: 1rem -1.35rem 0 -1.35rem !important;
-  border-top: 1px solid rgba(148, 163, 184, 0.22) !important;
+  padding: 0.55rem 1rem !important;
+  margin: 0.65rem -1rem 0 -1rem !important;
+  border-top: 1px solid rgba(148, 163, 184, 0.2) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  gap: 1rem !important;
+  gap: 0.75rem !important;
   z-index: 40 !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.35) !important;
 }
 
 html:not([data-theme="dark"]) .guia-footer-sticky {
   background: rgba(255, 255, 255, 0.98) !important;
   border-top-color: #cbd5e1 !important;
-  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.06) !important;
 }
 
 .btn-pie-next {
-  min-width: 14rem !important;
+  min-width: 12rem !important;
   justify-content: center !important;
-  font-size: 0.82rem !important;
-  padding: 0.52rem 1.25rem !important;
-  border-radius: 0.55rem !important;
+  font-size: 0.78rem !important;
+  padding: 0.42rem 1.1rem !important;
+  border-radius: 0.5rem !important;
 }
 
 .guia-pie-status {
-  font-size: 0.76rem !important;
+  font-size: 0.74rem !important;
   color: var(--text-muted, #94a3b8) !important;
   font-weight: 600 !important;
 }
@@ -14705,7 +14672,7 @@ html:not([data-theme="dark"]) .guia-pie-status {
 }
 
 .guia-pie-final {
-  font-size: 0.8rem !important;
+  font-size: 0.78rem !important;
   font-weight: 700 !important;
   color: #34d399 !important;
 }
@@ -14722,7 +14689,8 @@ html:not([data-theme="dark"]) .guia-pie-status {
     transform: none !important;
     width: 100vw !important;
     max-width: 100vw !important;
-    max-height: 88vh !important;
+    height: 90vh !important;
+    max-height: 90vh !important;
     border-radius: 1.25rem 1.25rem 0 0 !important;
     box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--frontend-stroke) !important;
     margin: 0 !important;
@@ -14730,11 +14698,11 @@ html:not([data-theme="dark"]) .guia-pie-status {
   }
 
   .guia-modal-topbar {
-    padding: 0.55rem 0.85rem !important;
+    padding: 0.45rem 0.75rem !important;
   }
 
   .guia-brand-title {
-    font-size: 0.8rem !important;
+    font-size: 0.78rem !important;
   }
 
   .guia-topbar-actions .btn-dock {
@@ -14747,29 +14715,29 @@ html:not([data-theme="dark"]) .guia-pie-status {
   }
 
   .chip-btn-ctrl {
-    padding: 0.25rem 0.45rem !important;
+    padding: 0.2rem 0.4rem !important;
   }
 
   .focus-chip.tiene-guia .relationship-lens-copy {
-    padding: 0.75rem 0.85rem 0 0.85rem !important;
+    padding: 0.5rem 0.75rem 0 0.75rem !important;
   }
 
   .guia-footer-sticky {
-    padding: 0.75rem 0.85rem !important;
-    margin: 0.75rem -0.85rem 0 -0.85rem !important;
+    padding: 0.55rem 0.75rem !important;
+    margin: auto -0.75rem 0 -0.75rem !important;
   }
 
   .btn-pie-next {
     min-width: auto !important;
     flex: 1 !important;
     font-size: 0.74rem !important;
-    padding: 0.45rem 0.65rem !important;
+    padding: 0.42rem 0.65rem !important;
   }
 
   .guia-campo {
     word-break: normal !important;
-    margin-bottom: 0.25rem !important;
-    font-size: 0.8rem !important;
+    margin-bottom: 0.2rem !important;
+    font-size: 0.78rem !important;
   }
 
   .guia-tabla,
@@ -14787,9 +14755,9 @@ html:not([data-theme="dark"]) .guia-pie-status {
   }
 
   .guia-tabla tr {
-    margin-bottom: 0.65rem !important;
-    padding: 0.65rem 0.75rem !important;
-    border-radius: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0.5rem 0.65rem !important;
+    border-radius: 0.45rem !important;
     background: rgba(30, 41, 59, 0.45) !important;
     border: 1px solid rgba(148, 163, 184, 0.18) !important;
   }
@@ -14800,7 +14768,7 @@ html:not([data-theme="dark"]) .guia-pie-status {
   }
 
   .guia-tabla td {
-    padding: 0.22rem 0 !important;
+    padding: 0.18rem 0 !important;
     border-bottom: none !important;
   }
 }
@@ -14847,22 +14815,11 @@ html:not([data-theme="dark"]) .guia-pie-status {
 
     var html = '';
 
-    // 1. Barra de navegación de pasos superior (Progreso)
+    // 1. Stepper horizontal interactivo con todas las fases y barrita de progreso integrada
     if (totalSteps > 1) {
-      html += '<div class="guia-step-nav">';
-      html += '<button type="button" class="guia-nav-btn btn-anterior" ' + (hasPrev ? 'data-nav-paso="-1"' : 'disabled') + ' title="Ir al paso anterior (Flecha Izquierda)">← Anterior</button>';
-
       var progressPct = Math.round(((currentIndex + 1) / totalSteps) * 100);
-      html += '<div class="guia-step-indicator">';
-      html += '<span class="guia-step-title">Paso ' + (currentIndex + 1) + ' de ' + totalSteps + ' · ' + escapeHtml(info.pantalla || '') + '</span>';
-      html += '<div class="guia-progress-bar"><div class="guia-progress-fill" style="width:' + progressPct + '%;"></div></div>';
-      html += '</div>';
-
-      html += '<button type="button" class="guia-nav-btn btn-siguiente primary" ' + (hasNext ? 'data-nav-paso="1"' : 'disabled') + ' title="Avanzar al siguiente paso (Flecha Derecha)">' + (hasNext ? 'Siguiente paso →' : '✓ Final') + '</button>';
-      html += '</div>';
-
-      // 2. Stepper horizontal interactivo con todas las fases
-      html += '<div class="guia-stepper-wrap"><div class="guia-stepper-track" role="tablist" aria-label="Fases del flujo">';
+      html += '<div class="guia-stepper-wrap">';
+      html += '<div class="guia-stepper-track" role="tablist" aria-label="Fases del flujo">';
       stepKeys.forEach(function(k, idx) {
         var sInfo = GUIA_MAP[k];
         var isAct = (k === nodeId);
@@ -14885,10 +14842,12 @@ html:not([data-theme="dark"]) .guia-pie-status {
           html += '<span class="' + arrowClass + '">›</span>';
         }
       });
-      html += '</div></div>';
+      html += '</div>';
+      html += '<div class="guia-stepper-progress"><div class="guia-progress-fill" style="width:' + progressPct + '%;"></div></div>';
+      html += '</div>';
     }
 
-    // 3. Hero de fase actual y pantalla Banner
+    // 2. Hero de fase actual y pantalla Banner compacto
     html += '<div class="guia-fase-hero">';
     html += '<div class="guia-fase-main">';
     if (info.pantalla) {
@@ -14903,7 +14862,7 @@ html:not([data-theme="dark"]) .guia-pie-status {
     }
     html += '</div>';
 
-    // 4. Tabla amplia de instrucciones operativas con valores inteligentes
+    // 3. Tabla de instrucciones operativas compacta con valores inteligentes
     if (info.instrucciones && info.instrucciones.length > 0) {
       html += '<div class="guia-tabla-wrap"><table class="guia-tabla">';
       html += '<thead><tr><th>Campo / Acción</th><th>Valor / Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
@@ -14934,7 +14893,7 @@ html:not([data-theme="dark"]) .guia-pie-status {
       html += '</tbody></table></div>';
     }
 
-    // 5. Sticky Footer inferior permanente
+    // 4. Sticky Footer inferior permanente esbelto
     if (totalSteps > 1) {
       var pct = Math.round(((currentIndex + 1) / totalSteps) * 100);
       html += '<div class="guia-footer-sticky">';

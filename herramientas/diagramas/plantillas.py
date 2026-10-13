@@ -795,18 +795,19 @@ def ligas(c, numero):
     curso = "BASIC I" if c.id == "idiomas" else c.curso_ejemplo
     liga_sec = f"liga {sec['identificador']}" if sec["identificador"] else "su liga: por confirmar"
     nodos = [
-        paso("g1", "nrc", 0, "SCACRSE", "revisar tipos de horario", f"{curso}: teoría y club", icono="calendar"),
-        paso("g2", "nrc", 1, "SSASECT", "NRC teórico", f"liga {lg['principal']['identificador']} · con créditos"),
-        paso("g3", "nrc", 2, "SSASECT", "NRC del club", f"{liga_sec} · 0 créditos"),
-        paso("g4", "nrc", 3, "SSADETL", "unir las ligas", "conector en los dos NRC"),
-        paso("g5", "nrc", 4, "SFAREGS", "matricular los dos", "teórico + club"),
-        paso("g6", "nrc", 5, "Matriculado", "en el teórico y el club", ESTADO_TEXTO[lg["estado"]], "database", "success"),
+        paso("g1", "nrc", 0, "SCACRSE", "revisar tipos de horario", f"{curso}: TEO y PRA", icono="calendar"),
+        paso("g2", "nrc", 1, "SSASECT", "NRC teórico virtual", f"sección AT · liga {lg['principal']['identificador']} · cobro"),
+        paso("g3", "nrc", 2, "SSASECT", "NRCs prácticos", f"liga {sec['identificador']} · prácticas (dispensa)"),
+        paso("g4", "nrc", 3, "SSADETL", "unir las ligas", f"conector cruzado {lg['principal']['identificador']} ↔ {sec['identificador']}"),
+        paso("g5", "nrc", 4, "SFAREGS", "matricular los dos", "teórico + práctica juntos"),
+        paso("g6", "nrc", 5, "Matriculado", "en el teórico y la práctica", ESTADO_TEXTO[lg["estado"]], "database", "success"),
     ]
-    escenarios = {"dot": "rose", "title": "Escenarios de liga", "items": [
-        "Uno a muchos: con un teórico, el alumno elige uno de varios clubes",
-        "Muchos a muchos sin restricción: cualquier teórico con cualquier club",
-        "Muchos a muchos con restricción: cada teórico con su club",
-        "Si SOATERM tiene «Ligas» en Fatal, no deja matricular solo el teórico; el sobrepaso es «Enlaces» en SFAROVR",
+    escenarios = {"dot": "rose", "title": "Reglas de Ligas confirmadas", "items": [
+        "Curso principal: Virtual y Teórico (sección AT, aula SAUVIR, calificable=SÍ, dispensa=NO, liga TA)",
+        "Segundo curso: Presencial y Práctico (sección AC1, aula SPOSGR posgrado, calificable=NO, dispensa=SÍ, liga PA)",
+        "Resto de cursos prácticos: Virtuales (secciones AC2, AC3, aula SAUVIR, calificable=NO, dispensa=SÍ, liga PA)",
+        "Vinculación en SSADETL: Teórico lleva conector PA; Prácticos llevan conector TA (muchos a muchos con restricción)",
+        "Si SOATERM tiene «Ligas» en Fatal, el estudiante debe inscribir ambos simultáneamente en SFAREGS o Autoservicio",
     ]}
     probado = ["Todavía no se probó en TEST: ver el bloque 1 de la guía de pruebas del centro"] \
         if lg["estado"] != "validado" else [lg.get("evidencia", "Validado en TEST")]

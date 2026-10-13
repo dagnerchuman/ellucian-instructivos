@@ -49,18 +49,18 @@ Parte de periodo general: **IGE**.
 
 **Nota importante:** Los niveles I y II de Inglés duran **8 semanas** (I01 solo 6), y los niveles III duran **12 o 13 semanas**. Esto significa que un mismo grupo de Inglés puede tener NRCs con duraciones distintas en la misma parte de periodo.
 
-## Cursos conocidos (CONFIRMADOS — C11)
+## Cursos conocidos (CONFIRMADOS en TEST y Programación — C11, C60)
 
-| Nivel | Curso (nombre SEUSS) | Prerrequisito |
-|---|---|---|
-| **BASIC I** | — | Ninguno (entrada) |
-| **BASIC II** | — | BASIC I aprobado **o** Examen de suficiencia |
-| **BASIC III** | — | BASIC II aprobado (asumido) |
-| **INTERMEDIATE I** | — | BASIC III aprobado (asumido) |
-| **INTERMEDIATE II** | — | INTERMEDIATE I aprobado (asumido) |
-| **INTERMEDIATE III** | — | INTERMEDIATE II aprobado (asumido) |
+| Nivel | Código Catálogo | Título Oficial | HT / HP | Malla Curricular | Prerrequisito |
+|---|---|---|---|---|---|
+| **BASIC I** | `ESEP 02456` | Basic I | 4 HT / 3 HP | `MI03-01` | Ninguno (ingreso) |
+| **BASIC II** | `ESEP 02457` | Basic Ii | 4 HT / 3 HP | `MI03-01` | BASIC I aprobado o Suficiencia |
+| **BASIC III** | `ESEP 02458` | Basic Iii | 4 HT / 3 HP | `MI03-01` | BASIC II aprobado |
+| **INTERMEDIATE I** | `ESEP 02693` | Intermediate I | 4 HT / 3 HP | `MI03-02` | BASIC III aprobado |
+| **INTERMEDIATE II** | `ESEP 02721` | Intermediate Ii | 4 HT / 3 HP | `MI03-02` | INTERMEDIATE I aprobado |
+| **INTERMEDIATE III** | `ESEP 02997` | Intermediate Iii | 4 HT / 3 HP | `MI03-02` | INTERMEDIATE II aprobado |
 
-> Los códigos de materia y curso en el catálogo (`SCACRSE`) para Idiomas **no han sido verificados en TEST** todavía.
+> Modo de calificar oficial en catálogo SSASECT: **Modo `C` (Escala Centesimal)** (confirmado C60).
 
 ## Regla de prerrequisitos (CONFIRMADA — C11, R09)
 
@@ -72,19 +72,33 @@ En SEUSS, quien desaprueba BASIC I **NO puede pasar a BASIC II** salvo con exame
 4. **SFPPROJ:** la proyección con verificación de prerrequisitos **no ofrece** BASIC II si no hay BASIC I aprobado o examen.
 5. **SFAROVR:** un sobrepaso administrativo puede saltar la regla.
 
-## Ligas: NRC teórico + club de conversación (C52, R18, ADR-019)
-- Cada curso de Inglés tiene **dos NRC del mismo curso**: el **teórico** y el **club de conversación**. Se unen con una **liga** y el alumno los matricula juntos.
-- **SSASECT:** «Identificador de liga» en «Indicadores de clase». El teórico lleva `TE`; el del club se define según su tipo de horario (por confirmar, U27).
-- **SSADETL:** «Conector de liga» en «Correquisitos y ligas de sección»; en cada NRC va la liga del otro.
-- **Según el instructivo,** el club va con 0 créditos, sin calificación y con «Dispensa de colegiatura y cuotas». La USS debe confirmarlo (U27).
-- **SOATERM:** con «Ligas» en Fatal, Banner no deja matricular el teórico sin el club.
-- **Pendiente (U27):**
-  - el tipo de horario del club;
-  - si el club se califica o se cobra;
-  - cuántos clubes hay por teórico;
-  - si el club tiene otro docente;
-  - si aplica a todos los niveles.
-- La prueba está en el bloque 1 y el paso 1 del bloque 3 de `centros/idiomas/pruebas-test.md`.
+## Ligas: Teórico Virtual + 3 Opciones de Práctica (CONFIRMADO C60, R18, ADR-019)
+- Cada curso de Idiomas se programa mediante un esquema **Uno a Muchos**: 1 sección teórica principal ligada a 3 secciones prácticas.
+- **Teórico Principal (Sección `AT` · Virtual `SAUVIR`):**
+  - Horas: 4 créditos totales.
+  - Indicadores: **Calificable = Sí**, **Dispensa de colegiatura = No** (cobra la matrícula/cuota).
+  - En `SSASECT`: Identificador de liga = **`TA`**.
+  - En `SSADETL`: Conector de liga vinculado = **`PA`**.
+- **Prácticas Asociadas (`AC1` Presencial Posgrado / `AC2` y `AC3` Virtuales):**
+  - Horas: 0 créditos generados.
+  - Indicadores: **Calificable = No**, **Dispensa de colegiatura = Sí** (no duplica el cobro).
+  - En `SSASECT`: Identificador de liga = **`PA`**.
+  - En `SSADETL`: Conector de liga vinculado = **`TA`**.
+- **Comportamiento en Matrícula (`SFAREGS` y Autoservicio):**
+  - Con ligas en **Fatal** en `SOATERM`, el estudiante debe inscribir obligatoriamente el teórico `AT` junto a **una de las tres opciones de práctica** (`AC1`, `AC2` o `AC3`).
+  - Si intenta inscribir solo el teórico, Banner emite: `Error de enlace de sección: Requiere componente ligado (Link Error: PA Required)`.
+
+### NRCs reales probados en TEST (202656 · Parte I10)
+- **BASIC III (`ESEP 02458`):**
+  - Teórico `10010` (AT · Virtual SAUVIR): Lunes 18:00–20:30 · Dagner Chuman (`100582059`). Liga `TA` $\rightarrow$ `PA`.
+  - Práctica `10011` (AC1 · Presencial Posgrado A-31): Martes 20:00–23:20 · Jossymar Cabanillas (`S00912435`). Liga `PA` $\rightarrow$ `TA`.
+  - Práctica `10013` (AC2 · Virtual SAUVIR): Sábado 18:00–20:30 · Arnold Vaca (`S00912438`). Liga `PA` $\rightarrow$ `TA`.
+  - Práctica `10024` (AC3 · Virtual SAUVIR): Miércoles 08:00–11:20 · Willy Valverde (`S00912437`). Liga `PA` $\rightarrow$ `TA`.
+- **INTERMEDIATE I (`ESEP 02693`):**
+  - Teórico `10030` (AT · Virtual SAUVIR): Viernes 08:00–11:20 · Dagner Chuman (`100582059`). Liga `TA` $\rightarrow$ `PA`.
+  - Práctica `10031` (AC1 · Presencial Posgrado A-31): Jueves 18:00–20:30 · Maria Puelles (`100122229`). Liga `PA` $\rightarrow$ `TA`.
+  - Práctica `10032` (AC2 · Virtual SAUVIR): Domingo 14:00–17:20 · Arnold Vaca (`S00912438`). Liga `PA` $\rightarrow$ `TA`.
+  - Práctica `10033` (AC3 · Virtual SAUVIR): Sábado 14:00–17:20 · Arnold Vaca (`S00912438`). Liga `PA` $\rightarrow$ `TA`.
 
 ## Egresados (Script 05, C50)
 - El egresado **no se matricula en un curso**: se le activa la plataforma (fuera de Banner; nombre por confirmar, el usuario escribió «Alticia»).

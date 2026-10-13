@@ -67,6 +67,18 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **10011**: ESEP 02458, sección AC1, parte I10. Práctica Presencial · Dispensado de cobro · No calificable.
 - NRC **10013**: ESEP 02458, sección AC2, parte I10. Práctica Virtual · Dispensado de cobro · No calificable.
 - NRC **10024**: ESEP 02458, sección AC3, parte I10. Práctica Virtual · Cupo 40 · Modo C Centesimal · Dispensado de cobro.
+- NRC **10030**: ESEP 02693, sección AT, parte I10. Intermediate I Teórico Principal · 4 créditos.
+- NRC **10031**: ESEP 02693, sección AC1, parte I10. Intermediate I Práctica Presencial Posgrado.
+- NRC **10032**: ESEP 02693, sección AC2, parte I10. Intermediate I Práctica Virtual.
+- NRC **10033**: ESEP 02693, sección AC3, parte I10. Intermediate I Práctica Virtual.
+- NRC **10034**: ESEP 02721, sección AT, parte I10. Intermediate II Teórico Principal · 4 créditos.
+- NRC **10035**: ESEP 02721, sección AC1, parte I10. Intermediate II Práctica Presencial Posgrado.
+- NRC **10036**: ESEP 02721, sección AC2, parte I10. Intermediate II Práctica Virtual.
+- NRC **10037**: ESEP 02721, sección AC3, parte I10. Intermediate II Práctica Virtual.
+- NRC **10038**: ESEP 02997, sección AT, parte I10. Intermediate III Teórico Principal · 4 créditos.
+- NRC **10039**: ESEP 02997, sección AC1, parte I10. Intermediate III Práctica Presencial Posgrado.
+- NRC **10040**: ESEP 02997, sección AC2, parte I10. Intermediate III Práctica Virtual.
+- NRC **10041**: ESEP 02997, sección AC3, parte I10. Intermediate III Práctica Virtual.
 - NRC **10001**: ESEP 02456, sección AT, parte I10. Basic I Teórico.
 - NRC **10002**: ESEP 02456, sección AC1, parte I10. Basic I Práctico Presencial.
 

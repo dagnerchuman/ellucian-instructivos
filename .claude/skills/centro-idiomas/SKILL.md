@@ -99,6 +99,16 @@ En SEUSS, quien desaprueba BASIC I **NO puede pasar a BASIC II** salvo con exame
   - Práctica `10031` (AC1 · Presencial Posgrado A-31): Jueves 18:00–20:30 · Maria Puelles (`100122229`). Liga `PA` $\rightarrow$ `TA`.
   - Práctica `10032` (AC2 · Virtual SAUVIR): Domingo 14:00–17:20 · Arnold Vaca (`S00912438`). Liga `PA` $\rightarrow$ `TA`.
   - Práctica `10033` (AC3 · Virtual SAUVIR): Sábado 14:00–17:20 · Arnold Vaca (`S00912438`). Liga `PA` $\rightarrow$ `TA`.
+- **INTERMEDIATE II (`ESEP 02721`):**
+  - Teórico `10034` (AT · Virtual SAUVIR): Sábado 08:00–11:20 · Arnold Vaca (`S00912438`). Liga `TA` $\rightarrow$ `PA`.
+  - Práctica `10035` (AC1 · Presencial Posgrado A-41): Viernes 18:00–20:30 · Jossymar Cabanillas (`S00912435`). Liga `PA` $\rightarrow$ `TA`.
+  - Práctica `10036` (AC2 · Virtual SAUVIR): Miércoles 18:00–20:30 · Jossymar Cabanillas (`S00912435`). Liga `PA` $\rightarrow$ `TA`.
+  - Práctica `10037` (AC3 · Virtual SAUVIR): Jueves 08:00–11:20 · Willy Valverde (`S00912437`). Liga `PA` $\rightarrow$ `TA`.
+- **INTERMEDIATE III (`ESEP 02997`):**
+  - Teórico `10038` (AT · Virtual SAUVIR): Lunes 14:00–17:20 · Dagner Chuman (`100582059`). Liga `TA` $\rightarrow$ `PA`.
+  - Práctica `10039` (AC1 · Presencial Posgrado A-51): Sábado 08:00–11:20 · Rosa Ocampo (`100448074`). Liga `PA` $\rightarrow$ `TA`.
+  - Práctica `10040` (AC2 · Virtual SAUVIR): Domingo 08:00–11:20 · Arnold Vaca (`S00912438`). Liga `PA` $\rightarrow$ `TA`.
+  - Práctica `10041` (AC3 · Virtual SAUVIR): Viernes 14:00–17:30 · Jossymar Cabanillas (`S00912435`). Liga `PA` $\rightarrow$ `TA`.
 
 ## Egresados (Script 05, C50)
 - El egresado **no se matricula en un curso**: se le activa la plataforma (fuera de Banner; nombre por confirmar, el usuario escribió «Alticia»).

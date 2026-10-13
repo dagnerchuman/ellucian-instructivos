@@ -75,6 +75,7 @@ GUIA_CREAR_NRC_IDIOMAS = {
             {"campo": "Pestaña Correquisitos y Ligas", "valor": "Subpestaña «Ligas de sección»", "tipo": "Configuración", "detalle": "Ir al bloque inferior donde se define el conector vinculado para armar el bloque de matrícula obligatoria."},
             {"campo": "En NRC Teórico (10010 · TA)", "valor": "Conector vinculado: PA", "tipo": "Enlace TA→PA", "detalle": "El teórico con Identificador TA se enlaza con el conector de liga PA. Exige cualquiera de las prácticas asociadas."},
             {"campo": "En NRCs Prácticos (10011, 10013, 10024 · PA)", "valor": "Conector vinculado: TA", "tipo": "Enlace PA→TA", "detalle": "Cada práctica con Identificador PA se enlaza con el conector TA del curso teórico."},
+            {"campo": "Alcance de la Liga", "valor": "Estricto por Materia y Curso", "tipo": "Regla de Oro", "detalle": "REGLA CONFIRMADA: La liga solo actúa dentro de la misma materia y curso (ESEP 02458). Puedes reutilizar TA y PA en Basic I, Basic II, Intermedios, etc., sin cruces. Solo se usa TB/PB si dentro del mismo curso abres una segunda teoría (BT)."},
             {"campo": "¡CUARTO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) en cada NRC. En SFAREGS, Banner impedirá inscribir el teórico sin su práctica ligada."}
         ]
     },

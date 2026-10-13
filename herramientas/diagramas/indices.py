@@ -145,67 +145,535 @@ def ficha_centro(c):
 
 
 def galeria(ids):
-    def tarjetas(carpeta):
+    def tarjetas(carpeta, centro_id):
         t = []
         for numero, titulo, cap, base in diagramas_de(carpeta):
             b = html.escape(rel(base, CENTROS))
             cap_badge = f'<span class="cap">{html.escape(cap)}</span>' if cap else ""
             t.append(
-                f'<article class="card"><a class="thumb" href="{b}.html"><img loading="lazy" src="{b}.svg" alt="{html.escape(titulo)}"></a>'
-                f'<div class="meta"><span class="num">{numero}</span>{cap_badge}<a href="{b}.html">{html.escape(titulo)}</a></div>'
-                f'<div class="files"><a href="{b}.html">HTML</a><a href="{b}-claro.png">PNG claro</a>'
-                f'<a href="{b}-oscuro.png">PNG oscuro</a><a href="{b}.svg">SVG</a></div></article>')
+                f'<article class="card" data-center="{html.escape(centro_id)}" data-title="{html.escape(titulo.lower())}" data-cap="{html.escape(cap.lower())}" data-num="{numero}">'
+                f'<a class="thumb" href="{b}.html" title="Abrir diagrama interactivo"><img loading="lazy" src="{b}.svg" alt="{html.escape(titulo)}"></a>'
+                f'<div class="meta"><span class="num">{numero}</span>{cap_badge}<a href="{b}.html" class="title-link">{html.escape(titulo)}</a></div>'
+                f'<div class="files"><a href="{b}.html" class="file-btn primary">HTML interactivo</a><a href="{b}-claro.png" class="file-btn">PNG claro</a>'
+                f'<a href="{b}-oscuro.png" class="file-btn">PNG oscuro</a><a href="{b}.svg" class="file-btn">SVG</a></div></article>')
         return "\n".join(t)
 
-    secciones = [f'<section style="--c:#5C2193"><h2>Los tres centros</h2><div class="grid">{tarjetas(CENTROS / "comun")}</div></section>']
+    secciones = [
+        f'<section class="center-section" id="sec-comun" data-center="comun" style="--c:#5C2193">'
+        f'<div class="sec-header"><h2>Los tres centros</h2><span class="sec-badge">Transversal</span></div>'
+        f'<div class="grid">{tarjetas(CENTROS / "comun", "comun")}</div></section>'
+    ]
     for i in ids:
         c = Centro(i)
         secciones.append(
-            f'<section style="--c:{c.d["color"]}"><h2>{html.escape(c.nombre)}</h2>'
-            f'<p class="sub">{html.escape(c.subtitulo())} · <a href="{i}/README.md">ficha</a></p>'
-            f'<div class="grid">{tarjetas(CENTROS / i)}</div></section>')
+            f'<section class="center-section" id="sec-{i}" data-center="{i}" style="--c:{c.d["color"]}">'
+            f'<div class="sec-header"><div><h2>{html.escape(c.nombre)}</h2>'
+            f'<p class="sub">{html.escape(c.subtitulo())} · <a href="{i}/README.md">ficha técnica</a></p></div>'
+            f'<span class="sec-badge">{c.nivel} · {c.materia or "General"}</span></div>'
+            f'<div class="grid">{tarjetas(CENTROS / i, i)}</div></section>'
+        )
     autor = html.escape(Centro(ids[0]).autor)
     pagina = f"""<!DOCTYPE html>
 {AVISO}
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Diagramas de los Centros Empresariales</title>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diagramas de los Centros Empresariales · USS en Banner</title>
+<script>
+  (function () {{
+    try {{
+      var t = localStorage.getItem('archify-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    }} catch (_) {{}}
+  }})();
+</script>
 <style>
-:root {{ --bg:#f6f4fa; --fg:#1d1530; --muted:#5d5670; --card:#fff; --line:#e3ddef; --brand:#7030A0; }}
-@media (prefers-color-scheme: dark) {{ :root {{ --bg:#120d1c; --fg:#f1edf8; --muted:#b4abc7; --card:#1c1529; --line:#2f2642; --brand:#b98ae0; }} }}
-* {{ box-sizing:border-box; }}
-body {{ margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }}
-header {{ padding:28px 16px 8px; max-width:1200px; margin:auto; }}
-h1 {{ margin:0; font-size:26px; color:var(--brand); }}
-header p {{ margin:6px 0 0; color:var(--muted); }}
-main {{ max-width:1200px; margin:auto; padding:0 16px 40px; }}
-section {{ margin-top:28px; border-top:4px solid var(--c); padding-top:12px; }}
-h2 {{ margin:0; font-size:20px; color:var(--c); }}
-.sub {{ margin:4px 0 0; color:var(--muted); font-size:13px; }}
-a {{ color:inherit; }}
-.grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px; margin-top:14px; }}
-.card {{ background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.15s ease, box-shadow 0.15s ease; }}
-.card:hover {{ transform:translateY(-2px); box-shadow:0 6px 18px rgba(92,33,147,0.08); }}
-.thumb {{ display:block; aspect-ratio:16/10; overflow:hidden; background:#fff; border-bottom:1px solid var(--line); }}
-.thumb img {{ display:block; width:100%; height:100%; object-fit:contain; }}
-.meta {{ display:flex; flex-wrap:wrap; gap:6px 8px; align-items:center; padding:10px 12px 4px; font-weight:600; }}
-.meta a {{ text-decoration:none; width:100%; }}
-.meta a:hover {{ color:var(--brand); text-decoration:underline; }}
-.num {{ background:var(--c); color:#fff; border-radius:6px; padding:0 7px; font-size:12px; }}
-.cap {{ background:rgba(112,48,160,0.1); color:var(--c); border:1px solid rgba(112,48,160,0.22); border-radius:5px; padding:1px 6px; font-size:11px; font-weight:600; white-space:nowrap; }}
-@media (prefers-color-scheme: dark) {{
-  .cap {{ background:rgba(185,138,224,0.18); border-color:rgba(185,138,224,0.35); }}
+:root, [data-theme="dark"] {{
+  --bg: #0b0813;
+  --bg-card: #151022;
+  --bg-card-hover: #1c152d;
+  --fg: #f3f0f9;
+  --muted: #a39bb8;
+  --line: #29203d;
+  --brand: #b98ae0;
+  --brand-solid: #7030A0;
+  --thumb-bg: #090610;
+  --input-bg: #1c152b;
+  --btn-bg: #231b36;
+  --btn-hover: #32264d;
+  --header-bg: rgba(11, 8, 19, 0.85);
 }}
-.files {{ display:flex; flex-wrap:wrap; gap:6px 12px; padding:6px 12px 12px; font-size:13px; color:var(--muted); }}
-.files a {{ text-decoration:none; }}
-.files a:hover {{ text-decoration:underline; }}
-</style></head><body>
-<header><h1>Centros Empresariales en Banner: diagramas paso a paso</h1>
-<p>Idiomas, Computación y Emprendimiento · Universidad Señor de Sipán · Elaborado por: {autor}</p></header>
+
+[data-theme="light"] {{
+  --bg: #f8f6fb;
+  --bg-card: #ffffff;
+  --bg-card-hover: #ffffff;
+  --fg: #1a1426;
+  --muted: #645b7a;
+  --line: #e4ddf0;
+  --brand: #7030A0;
+  --brand-solid: #7030A0;
+  --thumb-bg: #fcfbfe;
+  --input-bg: #ffffff;
+  --btn-bg: #f0ecf7;
+  --btn-hover: #e3dced;
+  --header-bg: rgba(248, 246, 251, 0.9);
+}}
+
+* {{ box-sizing: border-box; }}
+body {{
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}}
+
+/* Header Principal Responsivo */
+.top-header {{
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  padding: 1rem 1.25rem 0.85rem;
+}}
+
+.header-container {{
+  max-width: 1400px;
+  margin: 0 auto;
+}}
+
+.header-main-row {{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+}}
+
+.title-wrap {{
+  flex: 1 1 20rem;
+  min-width: 0;
+}}
+
+h1 {{
+  margin: 0;
+  font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+  font-weight: 800;
+  color: var(--brand);
+  letter-spacing: -0.01em;
+}}
+
+.header-sub {{
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: clamp(0.75rem, 1.3vw, 0.875rem);
+  line-height: 1.45;
+}}
+
+.header-actions {{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}}
+
+.theme-toggle-btn {{
+  background: var(--btn-bg);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease;
+}}
+.theme-toggle-btn:hover {{
+  background: var(--btn-hover);
+  border-color: var(--brand);
+}}
+
+/* Barra de Filtros y Búsqueda */
+.controls-bar {{
+  margin-top: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+}}
+
+.filter-chips {{
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+  max-width: 100%;
+}}
+
+.filter-chip {{
+  background: var(--btn-bg);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  user-select: none;
+}}
+.filter-chip:hover {{
+  color: var(--fg);
+  border-color: var(--brand);
+}}
+.filter-chip.active {{
+  background: var(--brand-solid);
+  color: #ffffff;
+  border-color: var(--brand-solid);
+}}
+
+.search-box {{
+  position: relative;
+  flex: 1 1 16rem;
+  max-width: 26rem;
+}}
+.search-input {{
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.85rem 0.45rem 2.2rem;
+  font-size: 0.8125rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}}
+.search-input:focus {{
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(112, 48, 160, 0.2);
+}}
+.search-icon {{
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+  font-size: 0.85rem;
+}}
+
+/* Contenido Principal y Secciones */
+main {{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 4rem;
+}}
+
+.center-section {{
+  margin-top: 2rem;
+  border-top: 3px solid var(--c);
+  padding-top: 1.25rem;
+}}
+.center-section.hidden {{
+  display: none !important;
+}}
+
+.sec-header {{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}}
+.sec-header h2 {{
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  font-weight: 700;
+  color: var(--c);
+}}
+.sec-header .sub {{
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}}
+.sec-header .sub a {{
+  color: var(--c);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}}
+.sec-badge {{
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--c) 15%, transparent);
+  color: var(--c);
+  border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
+}}
+
+/* Cuadrícula de Tarjetas Responsiva */
+.grid {{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(285px, 100%), 1fr));
+  gap: 1.15rem;
+}}
+
+.card {{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}}
+.card:hover {{
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--c) 65%, var(--line));
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}}
+.card.hidden {{
+  display: none !important;
+}}
+
+.thumb {{
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--thumb-bg);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}}
+.thumb img {{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}}
+.card:hover .thumb img {{
+  transform: scale(1.025);
+}}
+
+.meta {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.65rem;
+  align-items: center;
+  padding: 0.85rem 1rem 0.4rem;
+}}
+
+.num {{
+  background: var(--c);
+  color: #ffffff;
+  border-radius: 0.4rem;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}}
+
+.cap {{
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  color: var(--c);
+  border: 1px solid color-mix(in srgb, var(--c) 28%, transparent);
+  border-radius: 0.4rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  white-space: nowrap;
+}}
+
+.title-link {{
+  text-decoration: none;
+  color: var(--fg);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.35;
+  width: 100%;
+  margin-top: 0.2rem;
+  transition: color 0.15s ease;
+}}
+.title-link:hover {{
+  color: var(--brand);
+  text-decoration: underline;
+}}
+
+.files {{
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  padding: 0.6rem 1rem 0.9rem;
+  border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}}
+
+.file-btn {{
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--btn-bg);
+  border: 1px solid var(--line);
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.4rem;
+  transition: all 0.15s ease;
+}}
+.file-btn:hover {{
+  color: var(--fg);
+  background: var(--btn-hover);
+  border-color: var(--brand);
+}}
+.file-btn.primary {{
+  background: color-mix(in srgb, var(--brand-solid) 20%, transparent);
+  color: var(--brand);
+  border-color: color-mix(in srgb, var(--brand-solid) 40%, transparent);
+}}
+.file-btn.primary:hover {{
+  background: var(--brand-solid);
+  color: #ffffff;
+}}
+
+#no-results {{
+  display: none;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted);
+}}
+#no-results.visible {{
+  display: block;
+}}
+</style>
+</head>
+<body>
+
+<header class="top-header">
+  <div class="header-container">
+    <div class="header-main-row">
+      <div class="title-wrap">
+        <h1>Centros Empresariales en Banner: diagramas paso a paso</h1>
+        <p class="header-sub">Idiomas, Computación y Emprendimiento · Universidad Señor de Sipán · Elaborado por: {autor}</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Alternar tema claro/oscuro">
+          <span id="theme-icon">🌓</span> <span id="theme-txt">Tema</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="filter-chips" role="tablist" aria-label="Filtrar por centro">
+        <button type="button" class="filter-chip active" data-filter="all">Todos (45)</button>
+        <button type="button" class="filter-chip" data-filter="comun">Los tres centros (1)</button>
+        <button type="button" class="filter-chip" data-filter="idiomas">Idiomas (16)</button>
+        <button type="button" class="filter-chip" data-filter="computacion">Computación (14)</button>
+        <button type="button" class="filter-chip" data-filter="emprendimiento">Emprendimiento (14)</button>
+      </div>
+
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="search" class="search-input" id="search-input" placeholder="Buscar por título, número, capacidad..." autocomplete="off">
+      </div>
+    </div>
+  </div>
+</header>
+
 <main>
-{chr(10).join(secciones)}
-</main></body></html>
+  <div id="no-results">
+    <h3>No se encontraron diagramas coincidentes</h3>
+    <p>Prueba con otros términos de búsqueda o selecciona otro centro.</p>
+  </div>
+  {chr(10).join(secciones)}
+</main>
+
+<script>
+(function() {{
+  var themeBtn = document.getElementById('theme-toggle');
+  var searchInput = document.getElementById('search-input');
+  var chips = document.querySelectorAll('.filter-chip');
+  var cards = document.querySelectorAll('.card');
+  var sections = document.querySelectorAll('.center-section');
+  var noResults = document.getElementById('no-results');
+
+  // Alternar tema
+  themeBtn.addEventListener('click', function() {{
+    var cur = document.documentElement.getAttribute('data-theme') || 'dark';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try {{ localStorage.setItem('archify-theme', next); }} catch (_) {{}}
+  }});
+
+  var currentFilter = 'all';
+
+  function aplicarFiltros() {{
+    var q = (searchInput.value || '').trim().toLowerCase();
+    var visibleTotal = 0;
+
+    sections.forEach(function(sec) {{
+      var centerId = sec.getAttribute('data-center');
+      var secMatchesCenter = (currentFilter === 'all' || currentFilter === centerId);
+      var visibleInSec = 0;
+
+      var secCards = sec.querySelectorAll('.card');
+      secCards.forEach(function(c) {{
+        var title = c.getAttribute('data-title') || '';
+        var cap = c.getAttribute('data-cap') || '';
+        var num = c.getAttribute('data-num') || '';
+        var matchesSearch = !q || title.indexOf(q) !== -1 || cap.indexOf(q) !== -1 || num === q;
+
+        if (secMatchesCenter && matchesSearch) {{
+          c.classList.remove('hidden');
+          visibleInSec++;
+          visibleTotal++;
+        }} else {{
+          c.classList.add('hidden');
+        }}
+      }});
+
+      if (visibleInSec === 0) {{
+        sec.classList.add('hidden');
+      }} else {{
+        sec.classList.remove('hidden');
+      }}
+    }});
+
+    if (visibleTotal === 0) {{
+      noResults.classList.add('visible');
+    }} else {{
+      noResults.classList.remove('visible');
+    }}
+  }}
+
+  chips.forEach(function(chip) {{
+    chip.addEventListener('click', function() {{
+      chips.forEach(function(c) {{ c.classList.remove('active'); }});
+      chip.classList.add('active');
+      currentFilter = chip.getAttribute('data-filter') || 'all';
+      aplicarFiltros();
+    }});
+  }});
+
+  searchInput.addEventListener('input', aplicarFiltros);
+}})();
+</script>
+</body>
+</html>
 """
     (CENTROS / "index.html").write_text(pagina, encoding="utf-8")
+
 
 
 def generar_indices():

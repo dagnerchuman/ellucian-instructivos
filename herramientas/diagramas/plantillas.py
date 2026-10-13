@@ -303,17 +303,17 @@ def recorrido(c):
 
 # --------------------------------------------------------------------------- 2
 def crear_nrc(c):
-    """SSASECT con sus tres guardados, entre la revisión del periodo y la del NRC."""
+    """SSASECT con sus cuatro guardados oficiales (Sección, Cupos, Horario/Docente y SSARRES) y auditoría SSASECQ."""
     n = c.nrc(c.nrc_ejemplo) if c.nrc_ejemplo else None
     cupo = f" · cupo {n['cupo'].split(' (')[0]}" if n and n.get("cupo") else ""
-    curso = "BASIC I" if c.id == "idiomas" else c.curso_ejemplo
+    nrc_num = c.nrc_ejemplo or "1026"
     nodos = [
-        paso("s1", "nrc", 0, "SOATERM", "revisar el periodo", f"{c.periodo_ejemplo} · parte {c.parte_ejemplo}", icono="calendar"),
-        paso("s2", "nrc", 1, "SCACRSE", "revisar el curso", curso),
-        paso("s3", "nrc", 2, "SSASECT", "crear el NRC", "1.er guardar" + (f" · NRC {c.nrc_ejemplo}" if c.nrc_ejemplo else "")),
-        paso("s4", "nrc", 3, "SSASECT", "fijar el cupo", "2.º guardar" + cupo),
-        paso("s5", "nrc", 4, "SSASECT", "horario y docente", "3.er guardar · principal 100 %"),
-        paso("s6", "nrc", 5, "SSASECQ", "revisar el NRC", "cupo real y restante", "database"),
+        paso("s1", "nrc", 0, "SSASECT", "bloque clave", f"{c.periodo_ejemplo} · ADD en blanco", icono="start"),
+        paso("s2", "nrc", 1, "SSASECT", "info de sección", f"1.er guardar · NRC {nrc_num}", icono="database"),
+        paso("s3", "nrc", 2, "SSASECT", "aforo de sección", "2.° guardar" + cupo, icono="success"),
+        paso("s4", "nrc", 3, "SSASECT", "horario y docente", "3.er guardar · SAUVIR y profesor", icono="clock"),
+        paso("s5", "nrc", 4, "SSARRES", "reserva de cupos", "4.° guardar · regla NULL y CCEE", tipo="security", icono="security"),
+        paso("s6", "nrc", 5, "SSASECQ", "publicar y auditar", "🎯 NRC activo y publicado", tipo="database", icono="success"),
     ]
     probado = {
         "computacion": [
@@ -331,28 +331,16 @@ def crear_nrc(c):
         "Al crear un NRC nuevo, campus, estatus y tipo de horario son obligatorios",
         "Para pasar al bloque del docente usa «Sección siguiente»; el clic directo da error",
     ]}
-    pasos_ssasect = {
-        "dot": "violet",
-        "title": "Guía Operativa SSASECT (Excel 1 · Instructivo 5.3)",
-        "items": [
-            "Paso 1 (Encabezado): Periodo lectivo (ej. 202656) y NRC en blanco. Clic en «Crear NRC» (indicador ADD temporal).",
-            "Paso 2 (Información de sección): Materia (ESEC / ENGL / ESGE), Curso (00650 / 00117), Sección (A / B), Parte de periodo (X01..X07 / I01..I12 / P01..P06), Campus S, Método VIR.",
-            "Paso 3 (Enrollment Details): Capacidad máxima (Maximum), reservas de cupo por programa en SSARRES.",
-            "Paso 4 (Meeting Times): Horario, días (L-M-V, M-J, S-D) y Aula virtual oficial (SAUVIR / SALA VIRT.).",
-            "Paso 5 (Faculty): Docente principal (ID institucional, ej. 100582059), 100 % de responsabilidad lectiva.",
-            "Paso 6 (Guardar y Publicar): Guardar (F10), obtención del NRC asignado y consulta de estado en SSASECQ.",
-        ],
-    }
     return flujo(
         c, 2, "crear-el-nrc",
         [{"id": "nrc", "label": "Programar el NRC"}],
         nodos,
         tarjetas(c, probado, [CITAS["periodo"], CITAS["catalogo"], CITAS["nrc"]],
-                 [errores, pasos_ssasect, tarjeta_terminos("NRC", "parte", "cupo")]),
+                 [errores, tarjeta_terminos("NRC", "parte", "cupo")]),
         fases=[
-            {"id": "f0", "label": "Antes", "fromCol": 0, "toCol": 1},
-            {"id": "f1", "label": "SSASECT: tres guardados", "fromCol": 2, "toCol": 4, "variant": "emphasis"},
-            {"id": "f2", "label": "Después", "fromCol": 5, "toCol": 5},
+            {"id": "f0", "label": "SSASECT: Bloque y Sección", "fromCol": 0, "toCol": 1},
+            {"id": "f1", "label": "SSASECT: Aforo, Horario y Docente", "fromCol": 2, "toCol": 3, "variant": "emphasis"},
+            {"id": "f2", "label": "SSARRES y Consulta Oficial", "fromCol": 4, "toCol": 5},
         ],
     )
 
@@ -378,24 +366,12 @@ def carga_lectiva(c):
         "Labor no educativa del docente en SIAASGN (pendiente)",
         "Análisis por contrato en SIACONA (pendiente; responsable: Pedro Martinto)",
     ]}
-    pasos_siaasgn = {
-        "dot": "violet",
-        "title": "Guía Operativa SIAASGN (Excel 1 y 2 · Instructivo 5.2)",
-        "items": [
-            "Paso 1 (Acceso a Carga): Acceso a SIAASGN con Periodo lectivo (202656) y docente 100582059 (Dagner Chuman).",
-            "Paso 2 (Auditoría de Secciones): Verificación de 4 NRCs asignados (1021, 1022, 1024 y 1025) en Computación y Emprendimiento.",
-            "Paso 3 (Horas Semanales): Cálculo automático de 9.6 horas de contacto semanales para el NRC 1021.",
-            "Paso 4 (Horas Totales): Cómputo de 120 horas lectivas totales programadas en el periodo académico.",
-            "Paso 5 (Asignación de FTE): Determinación de factor FTE 0.02 por dedicación académica.",
-            "Paso 6 (Consolidación Institucional): Reemplazo automático e integral de planillas Excel institucionales.",
-        ],
-    }
     return flujo(
         c, 3, "carga-lectiva",
         [{"id": "jefe", "label": "Jefe del centro"}, {"id": "vra", "label": "Vicerrectorado Académico"}],
         nodos,
         tarjetas(c, probado, [CITAS["docente"], CITAS["nrc"], CITAS["carga"], CITAS["contrato"]],
-                 [falta, pasos_siaasgn, tarjeta_terminos("carga lectiva", "NRC")]),
+                 [falta, tarjeta_terminos("carga lectiva", "NRC")]),
         fases=[
             {"id": "f0", "label": "En Banner", "fromCol": 0, "toCol": 2, "variant": "emphasis"},
             {"id": "f1", "label": "En la intranet", "fromCol": 3, "toCol": 4, "variant": "dashed"},
@@ -427,24 +403,12 @@ def persona_admision(c):
         f"Ya es alumno de Pregrado: se le agrega el programa del centro como segundo plan (Script 06, {ESTADO_TEXTO[c.script('06')['estado']]})",
         "Sirve igual para alumnos de la USS (Pregrado y Posgrado) y para externos",
     ]}
-    pasos_admision = {
-        "dot": "violet",
-        "title": "Guía Operativa GOAMTCH y SAAQUIK (Excel 1 · Instructivos 5.1 y 5.2)",
-        "items": [
-            "Paso 1 (GOAMTCH): Búsqueda de coincidencias con origen PERS_NATU (DNI, apellidos y nombres) para evitar duplicados.",
-            "Paso 2 (GOAMTCH): Botón «Crear nuevo» para generar ID institucional con prefijo S (ej. S00581081).",
-            "Paso 3 (GOAMTCH): Registro de dirección institucional PP, teléfono móvil MOV y correo personal PER1.",
-            "Paso 4 (SAAQUIK): Acceso con ID generado, Periodo lectivo (202656), Nivel C/I/M, Campus S y Escuela EM.",
-            "Paso 5 (SAAQUIK): Selección de programa (ej. CMEMC38) poblando Mayor ACXP, Depto EMCI y Estatus AS / INPROGRESS.",
-            "Paso 6 (SGASTDN): Confirmación de expediente académico activo y habilitado para inscripción de asignaturas.",
-        ],
-    }
     return flujo(
         c, 4, "persona-y-admision",
         [{"id": "asis", "label": "Asistente o especialista"}],
         nodos,
         tarjetas(c, probado, [CITAS["persona"], CITAS["admision"], CITAS["estudiante"], CITAS["egreso"]],
-                 [casos, pasos_admision, tarjeta_terminos("persona", "alumno")]),
+                 [casos, tarjeta_terminos("persona", "alumno")]),
         fases=[
             {"id": "f0", "label": "Persona", "fromCol": 0, "toCol": 1},
             {"id": "f1", "label": "Admisión", "fromCol": 2, "toCol": 4, "variant": "emphasis"},
@@ -468,24 +432,12 @@ def matricula(c):
         f"NRC lleno, error «Closed» (Script 15, {ESTADO_TEXTO[c.script('15')['estado']]})",
         "Mismo curso en otro NRC del periodo: «Duplicate Course with Section»",
     ] + (["BASIC II sin BASIC I: prerrequisito Fatal (Script 04)"] if c.prerrequisito_fatal else [])}
-    pasos_sfaregs = {
-        "dot": "violet",
-        "title": "Guía Operativa SFAREGS (Excel 1 · Instructivo 5.4)",
-        "items": [
-            "Paso 1 (Bloque Clave): Acceso a SFAREGS con Periodo lectivo (202656) e ID del alumno admitido.",
-            "Paso 2 (Plan de estudios): Clic en casilla de currícula (carga 1) y asignación de estatus elegible EL -> Guardar (F10).",
-            "Paso 3 (Información de curso): Ingreso del NRC asignado en la grilla de inscripción de asignaturas.",
-            "Paso 4 (Asignación código RE): Ingreso de código RE (Register) y guardado para formalizar la matrícula.",
-            "Paso 5 (Balance de cupos): Validación en SSASECT/SSASECQ de vacante consumida (Actual +1, Remaining -1).",
-            "Paso 6 (Cuentas y Asistencia): Auditoría en TSAAREV (tasación de cuota) y SFASLST (alta en lista de clase del docente).",
-        ],
-    }
     return flujo(
         c, 5, "matricula-en-el-nrc",
         [{"id": "asis", "label": "Asistente o especialista"}],
         nodos,
         tarjetas(c, evidencia(c, ["01", "02", "15", "16"]), [CITAS["matricula"], CITAS["retencion"], CITAS["estudiante"]],
-                 [bloqueos, pasos_sfaregs, tarjeta_terminos("matrícula", "retiro", "cupo", "retención")]),
+                 [bloqueos, tarjeta_terminos("matrícula", "retiro", "cupo", "retención")]),
         fases=[
             {"id": "f0", "label": "Antes", "fromCol": 0, "toCol": 0},
             {"id": "f1", "label": "SFAREGS", "fromCol": 1, "toCol": 2, "variant": "emphasis"},
@@ -513,25 +465,12 @@ def notas(c):
         "«No Substitute Grade»: la escala del nivel no tiene el modo del curso; agrégalo en SHAGRDE (U20)",
         "Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)",
     ]}
-    pasos_cierre = {
-        "dot": "violet",
-        "title": "Guía Operativa Calificaciones y Cierre (Excel 1 y 2 · Instructivo 7.1 y 8)",
-        "items": [
-            "Paso 1 (SHAGRDE / Catálogo): Verificación de escala vigesimal y homologación de Modo V a nivel curso y programa.",
-            "Paso 2 (SFASLST / Autoservicio): Registro de calificaciones docentes (≥11 aprueba, ≤10 reprueba, INH inhabilitado).",
-            "Paso 3 (SFASLST): Verificación de estatus previo de acta lectiva (columna Rolled en N).",
-            "Paso 4 (GJAPCTL): Despacho de proceso batch SHRROLL (Periodo 202656, NRC correspondiente, Modo U).",
-            "Paso 5 (GJIREVO): Auditoría técnica de bitácora .lis confirmando pase masivo a historia académica sin errores.",
-            "Paso 6 (SHATERM / SHACRSE): Confirmación de notas asentadas en historial definitivo («Rolled to Academic History»).",
-            "Paso 7 (SMARQCM / SMICRLT): Auditoría CAPP de cumplimiento curricular (reprobados segregados a «Cursos no usados»).",
-        ],
-    }
     return flujo(
         c, 6, "notas-y-pase-a-historia",
         [{"id": "ra", "label": "Registros Académicos"}, {"id": "doc", "label": "Docente"}],
         nodos,
         tarjetas(c, probado, [CITAS["escala"], CITAS["notas"], CITAS["cierre"], CITAS["capp"]],
-                 [leccion, pasos_cierre, tarjeta_terminos("pase a historia", "alumno")]),
+                 [leccion, tarjeta_terminos("pase a historia", "alumno")]),
         fases=[
             {"id": "f0", "label": "Preparar", "fromCol": 0, "toCol": 1},
             {"id": "f1", "label": "Dictar", "fromCol": 2, "toCol": 3, "variant": "emphasis"},

@@ -608,18 +608,6 @@
     },
     {
       "dot": "violet",
-      "title": "Guía Operativa SFAREGS (Excel 1 · Instructivo 5.4)",
-      "items": [
-        "Paso 1 (Bloque Clave): Acceso a SFAREGS con Periodo lectivo (202656) e ID del alumno admitido.",
-        "Paso 2 (Plan de estudios): Clic en casilla de currícula (carga 1) y asignación de estatus elegible EL -> Guardar (F10).",
-        "Paso 3 (Información de curso): Ingreso del NRC asignado en la grilla de inscripción de asignaturas.",
-        "Paso 4 (Asignación código RE): Ingreso de código RE (Register) y guardado para formalizar la matrícula.",
-        "Paso 5 (Balance de cupos): Validación en SSASECT/SSASECQ de vacante consumida (Actual +1, Remaining -1).",
-        "Paso 6 (Cuentas y Asistencia): Auditoría en TSAAREV (tasación de cuota) y SFASLST (alta en lista de clase del docente)."
-      ]
-    },
-    {
-      "dot": "violet",
       "title": "Términos",
       "items": [
         "matrícula: El alumno queda en el NRC con RE en SFAREGS. No se dice «inscripción».",

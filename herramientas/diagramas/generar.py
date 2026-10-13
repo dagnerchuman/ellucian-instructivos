@@ -31,6 +31,7 @@ sys.path.insert(0, str(AQUI))
 from centro import RAIZ, Centro, centros_disponibles  # noqa: E402
 import plantillas  # noqa: E402
 from indices import generar_indices  # noqa: E402
+from inyectar_modales import inyectar_en_html  # noqa: E402
 
 ARCHIFY = Path(os.environ.get("ARCHIFY_DIR", AQUI / ".archify" / "archify"))
 CLI = ARCHIFY / "bin" / "archify.mjs"
@@ -101,6 +102,8 @@ def generar(tipo, spec):
     (RAIZ / spec_rel).write_text(json.dumps(spec, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     ok, salida = compilar(tipo, spec_rel, html_rel)
     limpiar_recibos(carpeta, nombre)
+    if ok:
+        inyectar_en_html(RAIZ / html_rel, nombre)
     return ok, html_rel, salida
 
 

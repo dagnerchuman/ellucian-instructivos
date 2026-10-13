@@ -602,18 +602,6 @@
     },
     {
       "dot": "violet",
-      "title": "Guía Operativa GOAMTCH y SAAQUIK (Excel 1 · Instructivos 5.1 y 5.2)",
-      "items": [
-        "Paso 1 (GOAMTCH): Búsqueda de coincidencias con origen PERS_NATU (DNI, apellidos y nombres) para evitar duplicados.",
-        "Paso 2 (GOAMTCH): Botón «Crear nuevo» para generar ID institucional con prefijo S (ej. S00581081).",
-        "Paso 3 (GOAMTCH): Registro de dirección institucional PP, teléfono móvil MOV y correo personal PER1.",
-        "Paso 4 (SAAQUIK): Acceso con ID generado, Periodo lectivo (202656), Nivel C/I/M, Campus S y Escuela EM.",
-        "Paso 5 (SAAQUIK): Selección de programa (ej. CMEMC38) poblando Mayor ACXP, Depto EMCI y Estatus AS / INPROGRESS.",
-        "Paso 6 (SGASTDN): Confirmación de expediente académico activo y habilitado para inscripción de asignaturas."
-      ]
-    },
-    {
-      "dot": "violet",
       "title": "Términos",
       "items": [
         "persona: Registro en GOAMTCH, antes de admitirla. Al admitirla pasa a ser alumno.",

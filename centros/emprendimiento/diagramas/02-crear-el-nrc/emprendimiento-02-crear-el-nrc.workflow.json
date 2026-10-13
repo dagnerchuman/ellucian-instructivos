@@ -484,21 +484,21 @@
   "phases": [
     {
       "id": "f0",
-      "label": "Antes",
+      "label": "SSASECT: Bloque y Sección",
       "fromCol": 0,
       "toCol": 1
     },
     {
       "id": "f1",
-      "label": "SSASECT: tres guardados",
+      "label": "SSASECT: Aforo, Horario y Docente",
       "fromCol": 2,
-      "toCol": 4,
+      "toCol": 3,
       "variant": "emphasis"
     },
     {
       "id": "f2",
-      "label": "Después",
-      "fromCol": 5,
+      "label": "SSARRES y Consulta Oficial",
+      "fromCol": 4,
       "toCol": 5
     }
   ],
@@ -516,21 +516,22 @@
       "lane": "nrc",
       "col": 0,
       "type": "backend",
-      "label": "SOATERM",
-      "sublabel": "revisar el periodo",
+      "label": "SSASECT",
+      "sublabel": "bloque clave",
       "width": 150,
-      "tag": "202656 · parte P06",
-      "icon": "calendar"
+      "tag": "202656 · ADD en blanco",
+      "icon": "start"
     },
     {
       "id": "s2",
       "lane": "nrc",
       "col": 1,
       "type": "backend",
-      "label": "SCACRSE",
-      "sublabel": "revisar el curso",
+      "label": "SSASECT",
+      "sublabel": "info de sección",
       "width": 150,
-      "tag": "ESGE 00117"
+      "tag": "1.er guardar · NRC 1025",
+      "icon": "database"
     },
     {
       "id": "s3",
@@ -538,9 +539,10 @@
       "col": 2,
       "type": "backend",
       "label": "SSASECT",
-      "sublabel": "crear el NRC",
+      "sublabel": "aforo de sección",
       "width": 150,
-      "tag": "1.er guardar · NRC 1025"
+      "tag": "2.° guardar",
+      "icon": "success"
     },
     {
       "id": "s4",
@@ -548,19 +550,21 @@
       "col": 3,
       "type": "backend",
       "label": "SSASECT",
-      "sublabel": "fijar el cupo",
+      "sublabel": "horario y docente",
       "width": 150,
-      "tag": "2.º guardar"
+      "tag": "3.er guardar · SAUVIR y profesor",
+      "icon": "clock"
     },
     {
       "id": "s5",
       "lane": "nrc",
       "col": 4,
-      "type": "backend",
-      "label": "SSASECT",
-      "sublabel": "horario y docente",
+      "type": "security",
+      "label": "SSARRES",
+      "sublabel": "reserva de cupos",
       "width": 150,
-      "tag": "3.er guardar · principal 100 %"
+      "tag": "4.° guardar · regla NULL y CCEE",
+      "icon": "security"
     },
     {
       "id": "s6",
@@ -568,9 +572,10 @@
       "col": 5,
       "type": "database",
       "label": "SSASECQ",
-      "sublabel": "revisar el NRC",
+      "sublabel": "publicar y auditar",
       "width": 150,
-      "tag": "cupo real y restante"
+      "tag": "🎯 NRC activo y publicado",
+      "icon": "success"
     }
   ],
   "edges": [
@@ -622,18 +627,6 @@
         "«Sesión sin horas»: usa la misma sesión (01) en el horario y en el docente",
         "Al crear un NRC nuevo, campus, estatus y tipo de horario son obligatorios",
         "Para pasar al bloque del docente usa «Sección siguiente»; el clic directo da error"
-      ]
-    },
-    {
-      "dot": "violet",
-      "title": "Guía Operativa SSASECT (Excel 1 · Instructivo 5.3)",
-      "items": [
-        "Paso 1 (Encabezado): Periodo lectivo (ej. 202656) y NRC en blanco. Clic en «Crear NRC» (indicador ADD temporal).",
-        "Paso 2 (Información de sección): Materia (ESEC / ENGL / ESGE), Curso (00650 / 00117), Sección (A / B), Parte de periodo (X01..X07 / I01..I12 / P01..P06), Campus S, Método VIR.",
-        "Paso 3 (Enrollment Details): Capacidad máxima (Maximum), reservas de cupo por programa en SSARRES.",
-        "Paso 4 (Meeting Times): Horario, días (L-M-V, M-J, S-D) y Aula virtual oficial (SAUVIR / SALA VIRT.).",
-        "Paso 5 (Faculty): Docente principal (ID institucional, ej. 100582059), 100 % de responsabilidad lectiva.",
-        "Paso 6 (Guardar y Publicar): Guardar (F10), obtención del NRC asignado y consulta de estado en SSASECQ."
       ]
     },
     {

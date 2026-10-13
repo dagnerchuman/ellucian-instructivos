@@ -252,21 +252,40 @@ function initApp() {
   // TREE NAVIGATION & EXPLORER
   // =========================================================================
 
+  // Normaliza para buscar sin importar tildes ni mayúsculas: «matricula» encuentra «Matrícula».
+  function normalizar(texto) {
+    return (texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function coincide(texto, consulta) {
+    const t = normalizar(texto);
+    return consulta.split(/\s+/).filter(Boolean).every(palabra => t.includes(palabra));
+  }
+
   function renderTree(filterQuery = '') {
     elements.explorerTree.innerHTML = '';
-    const q = filterQuery.toLowerCase().trim();
+    const q = normalizar(filterQuery).trim();
 
     if (typeof APP_TREE === 'undefined' || !APP_TREE.children) {
       elements.explorerTree.innerHTML = '<div class="empty-desc" style="padding: 16px; color:#94a3b8;">Cargando instructivos...</div>';
       return;
     }
 
+    let encontrados = 0;
     APP_TREE.children.forEach(capNode => {
       const nodeEl = createTreeNode(capNode, q);
       if (nodeEl) {
         elements.explorerTree.appendChild(nodeEl);
+        encontrados++;
       }
     });
+
+    if (q && encontrados === 0) {
+      const vacio = document.createElement('div');
+      vacio.className = 'search-empty';
+      vacio.textContent = `Sin resultados para «${filterQuery.trim()}». Prueba con otra palabra o con el código de la página (por ejemplo, SSASECT).`;
+      elements.explorerTree.appendChild(vacio);
+    }
 
     updateActiveTreeItem(state.currentId);
   }
@@ -277,10 +296,9 @@ function initApp() {
 
     if (filterQuery) {
       if (isFile) {
-        const matchTitle = node.name.toLowerCase().includes(filterQuery);
         const pres = (typeof PRESENTATIONS !== 'undefined') ? PRESENTATIONS[node.id] : null;
-        const matchForms = pres && pres.forms && pres.forms.some(f => f.toLowerCase().includes(filterQuery));
-        if (!matchTitle && !matchForms) return null;
+        const texto = [node.name, ...((pres && pres.forms) || [])].join(' ');
+        if (!coincide(texto, filterQuery)) return null;
       } else if (isDir) {
         const matchedChildren = [];
         if (node.children) {
@@ -289,7 +307,7 @@ function initApp() {
             if (childNode) matchedChildren.push(childNode);
           });
         }
-        if (matchedChildren.length === 0 && !node.name.toLowerCase().includes(filterQuery)) {
+        if (matchedChildren.length === 0 && !coincide(node.name, filterQuery)) {
           return null;
         }
       }
@@ -668,11 +686,14 @@ function initApp() {
     if (elements.zoomLevelText) {
       elements.zoomLevelText.textContent = `${Math.round(zoom * 100)}%`;
     }
+    if (elements.btnZoomOut) {
+      elements.btnZoomOut.disabled = zoom <= 1.0;
+    }
     updateCursorState();
   }
 
   function setZoom(newZoom, pointerX = null, pointerY = null) {
-    const clamped = Math.max(0.5, Math.min(3.5, Math.round(newZoom * 100) / 100));
+    const clamped = Math.max(1.0, Math.min(3.5, Math.round(newZoom * 100) / 100)); // mínimo 100 %: más chico no se lee
     if (Math.abs(state.zoom - clamped) < 0.001) return;
 
     // En desktop al usar zoom (> 100%), cerrar automáticamente las miniaturas para máximo espacio

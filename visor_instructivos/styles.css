@@ -1182,3 +1182,107 @@ body {
     padding: 0 6px !important;
   }
 }
+/* ==========================================================================
+   AJUSTES RESPONSIVOS (v22): buscador, barra superior, barra inferior y celular
+   ========================================================================== */
+
+/* Buscador: el input ahora sí recibe sus estilos (.search-input) */
+.search-input {
+  height: 38px;
+  font-family: var(--font-sans);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.search-input::-webkit-search-cancel-button,
+.search-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  display: none;
+}
+.search-input::placeholder {
+  color: var(--text-subtle);
+}
+.search-clear {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+.search-clear:hover {
+  background: var(--bg-sidebar-hover);
+  color: var(--text-main);
+}
+.search-empty {
+  margin: 12px 10px;
+  padding: 12px 14px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.45;
+  background: var(--bg-surface-elevated);
+}
+
+/* La barra superior ya tiene «Pantalla completa»: en la inferior solo se ve dentro de la pantalla completa */
+#btn-footer-fullscreen {
+  display: none;
+}
+:fullscreen #btn-footer-fullscreen {
+  display: inline-flex;
+}
+
+/* Barra inferior centrada y sin cortes en escritorio */
+.footer-controls {
+  justify-content: center;
+}
+@media (max-width: 1500px) {
+  .actions-capsule .btn-label,
+  .actions-capsule #thumbs-label {
+    display: none;
+  }
+}
+@media (max-width: 1180px) {
+  .zoom-nav-capsule .btn-label {
+    display: none;
+  }
+}
+
+/* Celular y tablet */
+@media (max-width: 768px) {
+  /* 16 px evita que iPhone haga zoom al escribir */
+  .search-input {
+    font-size: 16px;
+    height: 42px;
+  }
+
+  /* Botón de pantalla completa: solo el ícono, sin texto desbordado */
+  .present-btn .btn-label {
+    display: none;
+  }
+
+  /* Flechas laterales fuera: tapaban la diapositiva. Se cambia deslizando o con la barra inferior */
+  .nav-arrow {
+    display: none !important;
+  }
+  .slide-canvas-wrapper {
+    padding: 10px 8px !important;
+  }
+
+  /* Barra inferior: solo lo esencial para que entre completa */
+  #btn-tool-hand,
+  #btn-zoom-fit,
+  .zoom-nav-capsule .footer-divider {
+    display: none !important;
+  }
+  .footer-controls {
+    justify-content: space-between;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 380px) {
+  #btn-zoom-out,
+  #btn-zoom-in {
+    display: none !important;
+  }
+}

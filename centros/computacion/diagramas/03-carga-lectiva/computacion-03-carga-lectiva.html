@@ -4972,6 +4972,55 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
   <div class="container">
     <!-- Header -->
+    <!-- === FLOW NAV TOP === -->
+    <nav class="flow-nav-top" aria-label="Navegación entre flujos">
+      <div class="flow-nav-left">
+        <a href="../../../index.html#sec-computacion" class="btn-flow-centros" title="Volver a la galería principal de Centros Empresariales">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Volver a Centros</span>
+        </a>
+        <span class="flow-nav-sep">/</span>
+        <span class="flow-nav-center-tag">
+          <span class="flow-center-dot" style="background:#10b981"></span>
+          Centro de Computación
+        </span>
+        <span class="flow-nav-sep">/</span>
+        <div class="flow-nav-select-wrap">
+          <select class="flow-nav-select" onchange="if(this.value) window.location.href=this.value" title="Cambiar a otro flujo del centro">
+            <option value="../01-recorrido-completo/computacion-01-recorrido-completo.html">01. Recorrido completo en Banner</option>
+          <option value="../02-crear-el-nrc/computacion-02-crear-el-nrc.html">02. Crear el NRC</option>
+          <option value="../03-carga-lectiva/computacion-03-carga-lectiva.html" selected="selected">03. Carga lectiva del docente (Actual)</option>
+          <option value="../04-persona-y-admision/computacion-04-persona-y-admision.html">04. Persona y admisión</option>
+          <option value="../05-matricula-en-el-nrc/computacion-05-matricula-en-el-nrc.html">05. Matrícula en el NRC</option>
+          <option value="../06-notas-y-pase-a-historia/computacion-06-notas-y-pase-a-historia.html">06. Notas y pase a historia</option>
+          <option value="../07-script-15-ampliacion-de-cupos-y-reservas/computacion-07-script-15-ampliacion-de-cupos-y-reservas.html">07. Script 15 · Ampliación de cupos y reservas</option>
+          <option value="../08-script-08-retiro-de-matricula-dd/computacion-08-script-08-retiro-de-matricula-dd.html">08. Script 08 · Retiro de matrícula (DD)</option>
+          <option value="../09-script-16-division-de-grupos-y-traslado/computacion-09-script-16-division-de-grupos-y-traslado.html">09. Script 16 · División de grupos y traslado</option>
+          <option value="../10-script-09-suspension-y-reactivacion/computacion-10-script-09-suspension-y-reactivacion.html">10. Script 09 · Suspensión y reactivación</option>
+          <option value="../11-script-03-matricula-por-convalidacion/computacion-11-script-03-matricula-por-convalidacion.html">11. Script 03 · Matrícula por convalidación</option>
+          <option value="../12-script-10-retorno-por-desaprobado/computacion-12-script-10-retorno-por-desaprobado.html">12. Script 10 · Retorno por desaprobado</option>
+          <option value="../13-script-12-cierre-de-periodo/computacion-13-script-12-cierre-de-periodo.html">13. Script 12 · Cierre de periodo</option>
+          <option value="../14-script-18-b-retenciones-y-bloqueo-de-matricula/computacion-14-script-18-b-retenciones-y-bloqueo-de-matricula.html">14. Script 18-B · Retenciones y bloqueo de matrícula</option>
+          </select>
+          <span class="flow-nav-select-arrow">▾</span>
+        </div>
+      </div>
+      <div class="flow-nav-right">
+        <a href="../02-crear-el-nrc/computacion-02-crear-el-nrc.html" class="flow-btn-top prev" title="Flujo anterior: Crear el NRC">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <span>Anterior</span>
+      </a>
+        <span class="flow-nav-counter">Flujo <strong>3</strong> de 14</span>
+        <a href="../04-persona-y-admision/computacion-04-persona-y-admision.html" class="flow-btn-top next primary" title="Siguiente flujo: Persona y admisión">
+        <span>Siguiente</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
+      </div>
+    </nav>
+    <!-- === /FLOW NAV TOP === -->
     <div class="header">
       <div class="header-row"
            data-preset-badge-signal-flow="FLUJO DE SEÑAL"
@@ -5349,14 +5398,53 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>Por confirmar</h3>
         </div>
         <ul>
-          <li>U02: ¿Los cursos tienen orden (uno exige aprobar otro) o son independientes?</li>
-          <li>U03: ¿Qué asistencia mínima se exige? El instructivo usa 70 % como ejemplo</li>
-          <li>U04: ¿Quién carga el plan de evaluación (SHAGCOM): Registros Académicos o el centro?</li>
           <li>U05: Nombres oficiales de los cursos y pesos de evaluación</li>
-          <li>U22: 202751 solo tiene X01 (y I01, P01). ¿Se agregan X02 y los demás grupos de verano 2027? ¿Con qué fechas?</li>
         </ul>
       </div>
     </div>
+    <!-- === FLOW NAV BOTTOM === -->
+    <nav class="flow-nav-bottom-section" aria-label="Paginación de flujos al pie">
+      <div class="flow-bottom-container">
+        <div class="flow-bottom-col prev-col">
+          <a href="../02-crear-el-nrc/computacion-02-crear-el-nrc.html" class="flow-bottom-card prev" title="Ir al flujo anterior: Crear el NRC">
+          <div class="flow-card-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>Flujo anterior</span>
+          </div>
+          <div class="flow-card-num-title">
+            <span class="flow-card-num">02</span>
+            <span class="flow-card-title">Crear el NRC</span>
+          </div>
+          <div class="flow-card-meta">Capacidades 1 y 5</div>
+        </a>
+        </div>
+        <div class="flow-bottom-col hub-col">
+          <a href="../../../index.html#sec-computacion" class="flow-bottom-hub-btn" title="Ver galería y todos los flujos de Centro de Computación">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Ver todos los flujos (Centro de Computación)</span>
+          </a>
+        </div>
+        <div class="flow-bottom-col next-col">
+          <a href="../04-persona-y-admision/computacion-04-persona-y-admision.html" class="flow-bottom-card next primary-accent" title="Avanzar al siguiente flujo: Persona y admisión">
+          <div class="flow-card-badge">
+            <span>Siguiente flujo</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="flow-card-num-title">
+            <span class="flow-card-num">04</span>
+            <span class="flow-card-title">Persona y admisión</span>
+          </div>
+          <div class="flow-card-meta">Capacidades 3, 4 y 5</div>
+        </a>
+        </div>
+      </div>
+    </nav>
+    <!-- === /FLOW NAV BOTTOM === -->
     <nav class="node-outline no-print" id="node-outline" hidden aria-labelledby="node-outline-title">
       <div class="node-outline-head">
         <strong id="node-outline-title">Índice de nodos</strong>
@@ -13712,9 +13800,331 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     });
   </script>
 
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
+
+/* --- 0. BARRAS DE NAVEGACIÓN Y PAGINACIÓN ENTRE FLUJOS --- */
+.flow-nav-top {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 0.65rem !important;
+  padding: 0.5rem 0.85rem !important;
+  margin-bottom: 1.25rem !important;
+  margin-right: 21.5rem !important;
+  background: var(--toolbar-bg, rgba(15, 23, 42, 0.75)) !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  border-radius: 0.75rem !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  font-size: 0.82rem !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18) !important;
+  position: relative !important;
+  z-index: 25 !important;
+}
+
+[data-theme="light"] .flow-nav-top {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(203, 213, 225, 0.8) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+@media (max-width: 900px) {
+  .flow-nav-top {
+    margin-right: 0 !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+.flow-nav-left {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+}
+
+.flow-nav-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+}
+
+.btn-flow-centros {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: 0.5rem !important;
+  background: var(--toolbar-bg, #1e293b) !important;
+  color: var(--text, #fff) !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+  text-decoration: none !important;
+  transition: all 0.18s ease !important;
+  cursor: pointer !important;
+}
+
+.btn-flow-centros:hover {
+  background: var(--toolbar-hover, #334155) !important;
+  border-color: #a78bfa !important;
+  color: #fff !important;
+  transform: translateX(-2px) !important;
+}
+
+.flow-nav-sep {
+  color: var(--text-dim, #64748b) !important;
+  opacity: 0.6 !important;
+  font-size: 0.75rem !important;
+}
+
+.flow-nav-center-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  font-weight: 600 !important;
+  color: var(--text, #fff) !important;
+  padding: 0.2rem 0.55rem !important;
+  border-radius: 0.4rem !important;
+  background: rgba(148, 163, 184, 0.1) !important;
+  font-size: 0.78rem !important;
+}
+
+.flow-center-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+.flow-nav-select-wrap {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.flow-nav-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: var(--toolbar-bg, #1e293b) !important;
+  color: var(--text, #fff) !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  border-radius: 0.5rem !important;
+  padding: 0.35rem 1.6rem 0.35rem 0.65rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  max-width: 250px !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  transition: border-color 0.18s ease !important;
+}
+
+.flow-nav-select:hover,
+.flow-nav-select:focus {
+  border-color: #a78bfa !important;
+}
+
+.flow-nav-select-arrow {
+  position: absolute !important;
+  right: 0.55rem !important;
+  pointer-events: none !important;
+  font-size: 0.75rem !important;
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.flow-btn-top {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  padding: 0.35rem 0.65rem !important;
+  border-radius: 0.5rem !important;
+  font-weight: 600 !important;
+  font-size: 0.78rem !important;
+  text-decoration: none !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  background: var(--toolbar-bg, #1e293b) !important;
+  color: var(--text, #fff) !important;
+  transition: all 0.18s ease !important;
+}
+
+.flow-btn-top:hover:not(.disabled) {
+  background: var(--toolbar-hover, #334155) !important;
+  border-color: #a78bfa !important;
+  transform: translateY(-1px) !important;
+}
+
+.flow-btn-top.primary {
+  background: #7030A0 !important;
+  border-color: #8b5cf6 !important;
+  color: #fff !important;
+}
+
+.flow-btn-top.primary:hover:not(.disabled) {
+  background: #5c2193 !important;
+  box-shadow: 0 2px 10px rgba(112, 48, 160, 0.4) !important;
+}
+
+.flow-btn-top.disabled {
+  opacity: 0.38 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+.flow-nav-counter {
+  font-size: 0.78rem !important;
+  color: var(--text-muted, #94a3b8) !important;
+  padding: 0 0.25rem !important;
+}
+
+.flow-nav-counter strong {
+  color: var(--text, #fff) !important;
+}
+
+/* --- BOTTOM NAV CARDS --- */
+.flow-nav-bottom-section {
+  margin-top: 2rem !important;
+  margin-bottom: 2.5rem !important;
+  padding-top: 1.5rem !important;
+  border-top: 1px dashed var(--panel-border, rgba(148, 163, 184, 0.2)) !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+}
+
+.flow-bottom-container {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  gap: 1.25rem !important;
+  align-items: stretch !important;
+}
+
+@media (max-width: 850px) {
+  .flow-bottom-container {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+  }
+}
+
+.flow-bottom-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+  padding: 1rem 1.25rem !important;
+  background: var(--panel, rgba(15, 23, 42, 0.6)) !important;
+  border: 1px solid var(--panel-border, #1e293b) !important;
+  border-radius: 0.85rem !important;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  color: var(--text, #fff) !important;
+  min-height: 90px !important;
+  justify-content: center !important;
+}
+
+.flow-bottom-card:hover:not(.placeholder) {
+  border-color: #a78bfa !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.flow-bottom-card.primary-accent {
+  background: linear-gradient(135deg, rgba(112, 48, 160, 0.18) 0%, rgba(15, 23, 42, 0.75) 100%) !important;
+  border-color: rgba(139, 92, 246, 0.45) !important;
+}
+
+[data-theme="light"] .flow-bottom-card.primary-accent {
+  background: linear-gradient(135deg, rgba(112, 48, 160, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%) !important;
+  border-color: rgba(112, 48, 160, 0.3) !important;
+}
+
+.flow-bottom-card.primary-accent:hover {
+  border-color: #a78bfa !important;
+  box-shadow: 0 8px 26px rgba(112, 48, 160, 0.35) !important;
+}
+
+.flow-bottom-card.placeholder {
+  opacity: 0.45 !important;
+  cursor: default !important;
+  border-style: dashed !important;
+}
+
+.flow-card-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #a78bfa !important;
+}
+
+.flow-bottom-card.prev .flow-card-badge {
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.flow-card-num-title {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 0.6rem !important;
+}
+
+.flow-card-num {
+  font-family: "JetBrains Mono", monospace !important;
+  font-weight: 800 !important;
+  font-size: 1.15rem !important;
+  color: #34d399 !important;
+}
+
+.flow-card-title {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: var(--text, #fff) !important;
+  line-height: 1.3 !important;
+}
+
+.flow-card-title.muted {
+  font-size: 0.85rem !important;
+  font-weight: normal !important;
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.flow-card-meta {
+  font-size: 0.74rem !important;
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.flow-bottom-hub-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  padding: 0.85rem 1.15rem !important;
+  border-radius: 0.75rem !important;
+  background: var(--toolbar-bg, #1e293b) !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  color: var(--text, #fff) !important;
+  font-weight: 600 !important;
+  font-size: 0.82rem !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
+}
+
+.flow-bottom-hub-btn:hover {
+  background: var(--toolbar-hover, #334155) !important;
+  border-color: #a78bfa !important;
+  transform: translateY(-2px) !important;
+}
 
 /* --- 1. HEADER & TOOLBAR RESPONSIVO --- */
 .header {
@@ -13835,7 +14245,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 @media (min-width: 1300px) {
   .cards {
-    /* 2 a 3 columnas equilibradas para evitar columnas angostas aplastadas */
     grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr)) !important;
   }
 }
@@ -13896,10 +14305,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   width: min(74rem, calc(100vw - 2rem)) !important;
   max-width: 76rem !important;
   height: auto !important;
-  min-height: min(30rem, 60vh) !important;
-  max-height: min(92vh, calc(100vh - 1.5rem)) !important;
+  min-height: min(30rem, 62vh) !important;
+  max-height: min(90vh, calc(100vh - 2rem)) !important;
   display: flex !important;
   flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
   overflow: hidden !important;
   border-radius: 1rem !important;
   box-shadow: 0 32px 90px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--frontend-stroke) !important;
@@ -13908,6 +14319,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   z-index: 95 !important;
   background: var(--panel, #0f172a) !important;
   margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Modo acoplado a la derecha en escritorio */
@@ -13918,8 +14330,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   top: 1.25rem !important;
   bottom: 1.25rem !important;
   transform: none !important;
-  width: min(44rem, calc(50vw - 1.5rem)) !important;
-  max-width: 46rem !important;
+  width: min(46rem, calc(52vw - 1.5rem)) !important;
+  max-width: 48rem !important;
   height: calc(100vh - 2.5rem) !important;
   max-height: calc(100vh - 2.5rem) !important;
 }
@@ -13931,11 +14343,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   top: auto !important;
   bottom: 1.5rem !important;
   transform: translateX(-50%) !important;
-  width: auto !important;
-  min-width: 22rem !important;
-  max-width: calc(100vw - 3rem) !important;
-  max-height: 3.2rem !important;
-  height: 3.2rem !important;
+  width: min(38rem, calc(100vw - 2rem)) !important;
+  min-width: 20rem !important;
+  max-width: calc(100vw - 2rem) !important;
+  min-height: 3.1rem !important;
+  max-height: 3.1rem !important;
+  height: 3.1rem !important;
   overflow: hidden !important;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--frontend-stroke) !important;
 }
@@ -13956,30 +14369,40 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   display: none !important;
 }
 
-/* Estructura del Head de Archify */
+/* Estructura del Head de Archify: columna de ancho 100% real */
 .focus-chip.tiene-guia .relationship-lens-head {
   display: flex !important;
   flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
   padding: 0 !important;
   margin: 0 !important;
   border: none !important;
   width: 100% !important;
+  max-width: 100% !important;
   height: 100% !important;
   max-height: 100% !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
   overflow: hidden !important;
   background: transparent !important;
+  box-sizing: border-box !important;
 }
 
-/* Barra superior unificada esbelta */
+/* Barra superior unificada de extremo a extremo */
 .guia-modal-topbar {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 0.45rem 1rem !important;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.98)) !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.18) !important;
+  flex-wrap: nowrap !important;
+  gap: 0.75rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0.6rem 1.15rem !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.94), rgba(15, 23, 42, 0.99)) !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22) !important;
   flex-shrink: 0 !important;
-  z-index: 10 !important;
+  z-index: 30 !important;
   user-select: none !important;
 }
 
@@ -13991,7 +14414,9 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
 .guia-modal-brand {
   display: flex !important;
   align-items: center !important;
-  gap: 0.55rem !important;
+  gap: 0.6rem !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
 }
 
 .guia-brand-badge {
@@ -13999,16 +14424,20 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
   font-weight: 800 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
-  padding: 0.18rem 0.5rem !important;
+  padding: 0.2rem 0.55rem !important;
   border-radius: 0.35rem !important;
   background: #4338ca !important;
   color: #ffffff !important;
+  flex-shrink: 0 !important;
 }
 
 .guia-brand-title {
-  font-size: 0.84rem !important;
+  font-size: 0.88rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 html:not([data-theme="dark"]) .guia-brand-title {
@@ -14018,23 +14447,27 @@ html:not([data-theme="dark"]) .guia-brand-title {
 .guia-topbar-actions {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
+  justify-content: flex-end !important;
+  gap: 0.4rem !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
 }
 
 .chip-btn-ctrl {
   background: rgba(148, 163, 184, 0.12) !important;
-  border: 1px solid rgba(148, 163, 184, 0.25) !important;
+  border: 1px solid rgba(148, 163, 184, 0.28) !important;
   color: var(--toolbar-text, #e2e8f0) !important;
   border-radius: 0.45rem !important;
-  padding: 0.22rem 0.55rem !important;
-  font-size: 0.7rem !important;
+  padding: 0.26rem 0.6rem !important;
+  font-size: 0.72rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.3rem !important;
+  gap: 0.32rem !important;
   transition: all 0.15s ease !important;
   line-height: 1.2 !important;
+  white-space: nowrap !important;
 }
 
 html:not([data-theme="dark"]) .chip-btn-ctrl {
@@ -14055,41 +14488,44 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
 }
 
 .chip-btn-close {
-  width: 1.7rem !important;
-  height: 1.7rem !important;
+  width: 1.75rem !important;
+  height: 1.75rem !important;
   border-radius: 50% !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
   line-height: 1 !important;
   padding: 0 !important;
-  background: rgba(239, 68, 68, 0.12) !important;
-  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  background: rgba(239, 68, 68, 0.14) !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
   color: #f87171 !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
-  margin-left: 0.25rem !important;
+  margin-left: 0.2rem !important;
+  flex-shrink: 0 !important;
 }
 
 .chip-btn-close:hover {
   background: #ef4444 !important;
   color: #ffffff !important;
   border-color: #ef4444 !important;
-  transform: scale(1.08) !important;
+  transform: scale(1.06) !important;
 }
 
-/* Cuerpo con scroll suave y padding compacto */
+/* Contenedor intermedio de Archify sin scroll propio para delegarlo al cuerpo */
 .focus-chip.tiene-guia .relationship-lens-copy {
   width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
   min-width: 0 !important;
+  min-height: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   flex: 1 1 auto !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 0.5rem 1rem 0 1rem !important;
-  scrollbar-width: thin !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
   position: relative !important;
 }
 
@@ -14103,6 +14539,7 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   display: none !important;
 }
 
+/* Tarjeta principal: divide en cuerpo con scroll (.guia-body-scroll) y footer fijo (.guia-footer-sticky) */
 .guia-operativa-card {
   margin: 0 !important;
   padding: 0 !important;
@@ -14110,7 +14547,23 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   background: transparent !important;
   display: flex !important;
   flex-direction: column !important;
+  justify-content: space-between !important;
   flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.guia-body-scroll {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 0.65rem 1.15rem 0.75rem 1.15rem !important;
+  box-sizing: border-box !important;
+  scrollbar-width: thin !important;
 }
 
 /* Stepper de Fases Interactivo Horizontal Compacto */
@@ -14118,8 +14571,8 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   overflow-x: auto !important;
   scrollbar-width: thin !important;
   -webkit-overflow-scrolling: touch !important;
-  padding: 0.1rem 0 0.4rem 0 !important;
-  margin-bottom: 0.45rem !important;
+  padding: 0.1rem 0 0.45rem 0 !important;
+  margin-bottom: 0.55rem !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.16) !important;
 }
 
@@ -14137,7 +14590,7 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   background: rgba(148, 163, 184, 0.1) !important;
   border: 1px solid rgba(148, 163, 184, 0.22) !important;
   color: var(--text-muted, #94a3b8) !important;
-  padding: 0.22rem 0.65rem !important;
+  padding: 0.24rem 0.68rem !important;
   border-radius: 999px !important;
   font-size: 0.72rem !important;
   font-weight: 600 !important;
@@ -14179,6 +14632,22 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   border-color: #a7f3d0 !important;
 }
 
+.guia-step-pill.locked {
+  opacity: 0.42 !important;
+  cursor: not-allowed !important;
+  background: rgba(148, 163, 184, 0.05) !important;
+  border: 1px dashed rgba(148, 163, 184, 0.28) !important;
+  color: var(--text-muted, #94a3b8) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+html:not([data-theme="dark"]) .guia-step-pill.locked {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #94a3b8 !important;
+}
+
 .pill-badge {
   width: 1.1rem !important;
   height: 1.1rem !important;
@@ -14196,6 +14665,12 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   color: #10b981 !important;
 }
 
+.guia-step-pill.locked .pill-badge {
+  background: rgba(148, 163, 184, 0.2) !important;
+  color: #94a3b8 !important;
+  font-size: 0.58rem !important;
+}
+
 .stepper-arrow {
   color: rgba(148, 163, 184, 0.4) !important;
   font-size: 0.8rem !important;
@@ -14207,6 +14682,10 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   color: #10b981 !important;
 }
 
+.stepper-arrow.locked {
+  opacity: 0.25 !important;
+}
+
 /* Barra de progreso integrada debajo del stepper */
 .guia-stepper-progress {
   width: 100% !important;
@@ -14214,7 +14693,7 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   background: rgba(148, 163, 184, 0.2) !important;
   border-radius: 2px !important;
   overflow: hidden !important;
-  margin-top: 0.35rem !important;
+  margin-top: 0.38rem !important;
 }
 
 .guia-progress-fill {
@@ -14228,13 +14707,14 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   background: rgba(148, 163, 184, 0.15) !important;
   border: 1px solid rgba(148, 163, 184, 0.3) !important;
   color: var(--toolbar-text, #f1f5f9) !important;
-  padding: 0.35rem 0.75rem !important;
-  border-radius: 0.45rem !important;
-  font-size: 0.74rem !important;
+  padding: 0.4rem 0.85rem !important;
+  border-radius: 0.48rem !important;
+  font-size: 0.75rem !important;
   font-weight: 700 !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 0.35rem !important;
   transition: all 0.15s ease !important;
   white-space: nowrap !important;
@@ -14266,7 +14746,7 @@ html:not([data-theme="dark"]) .guia-nav-btn.primary {
 }
 
 .guia-nav-btn:disabled {
-  opacity: 0.35 !important;
+  opacity: 0.38 !important;
   cursor: not-allowed !important;
   transform: none !important;
 }
@@ -14277,9 +14757,9 @@ html:not([data-theme="dark"]) .guia-nav-btn.primary {
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
-  gap: 0.45rem !important;
-  margin-bottom: 0.45rem !important;
-  padding: 0.35rem 0.75rem !important;
+  gap: 0.5rem !important;
+  margin-bottom: 0.55rem !important;
+  padding: 0.42rem 0.8rem !important;
   border-radius: 0.55rem !important;
   background: rgba(30, 41, 59, 0.45) !important;
   border: 1px solid rgba(148, 163, 184, 0.18) !important;
@@ -14293,15 +14773,15 @@ html:not([data-theme="dark"]) .guia-fase-hero {
 .guia-fase-main {
   display: flex !important;
   align-items: center !important;
-  gap: 0.5rem !important;
+  gap: 0.55rem !important;
   flex-wrap: wrap !important;
 }
 
 .guia-pantalla-pill {
   font-size: 0.72rem !important;
   font-weight: 800 !important;
-  padding: 0.18rem 0.5rem !important;
-  border-radius: 0.3rem !important;
+  padding: 0.2rem 0.55rem !important;
+  border-radius: 0.32rem !important;
   background: #0284c7 !important;
   color: #ffffff !important;
   letter-spacing: 0.03em !important;
@@ -14309,7 +14789,7 @@ html:not([data-theme="dark"]) .guia-fase-hero {
 
 .guia-fase-title {
   margin: 0 !important;
-  font-size: 0.86rem !important;
+  font-size: 0.88rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
 }
@@ -14324,7 +14804,7 @@ html:not([data-theme="dark"]) .guia-fase-title {
   gap: 0.35rem !important;
   font-size: 0.72rem !important;
   font-weight: 700 !important;
-  padding: 0.22rem 0.6rem !important;
+  padding: 0.22rem 0.65rem !important;
   border-radius: 0.4rem !important;
   background: rgba(16, 185, 129, 0.15) !important;
   border: 1px solid rgba(16, 185, 129, 0.35) !important;
@@ -14344,7 +14824,7 @@ html:not([data-theme="dark"]) .guia-hito-badge {
   border-radius: 0.55rem !important;
   border: 1px solid rgba(148, 163, 184, 0.18) !important;
   background: rgba(15, 23, 42, 0.45) !important;
-  margin-bottom: 0.45rem !important;
+  margin-bottom: 0.25rem !important;
 }
 
 html:not([data-theme="dark"]) .guia-tabla-wrap {
@@ -14366,14 +14846,78 @@ html:not([data-theme="dark"]) .guia-tabla-wrap {
   text-transform: uppercase !important;
   font-size: 0.64rem !important;
   letter-spacing: 0.04em !important;
-  padding: 0.45rem 0.75rem !important;
+  padding: 0.48rem 0.75rem !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.18) !important;
 }
 
-.guia-tabla th:nth-child(1), .guia-tabla td:nth-child(1) { width: 18% !important; }
-.guia-tabla th:nth-child(2), .guia-tabla td:nth-child(2) { width: 24% !important; }
-.guia-tabla th:nth-child(3), .guia-tabla td:nth-child(3) { width: 14% !important; }
-.guia-tabla th:nth-child(4), .guia-tabla td:nth-child(4) { width: 44% !important; }
+.guia-tabla th.th-num, .guia-tabla td.guia-td-num {
+  width: 3.2rem !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 0.45rem 0.25rem !important;
+}
+.guia-tabla th:nth-child(2), .guia-tabla td:nth-child(2) { width: 19% !important; }
+.guia-tabla th:nth-child(3), .guia-tabla td:nth-child(3) { width: 24% !important; }
+.guia-tabla th:nth-child(4), .guia-tabla td:nth-child(4) { width: 14% !important; }
+.guia-tabla th:nth-child(5), .guia-tabla td:nth-child(5) { width: 38% !important; }
+
+/* Botón de paso enumerado interactivo */
+.guia-check-btn {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  outline: none !important;
+}
+
+.guia-check-btn .num-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+  border-radius: 50% !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  background: rgba(148, 163, 184, 0.16) !important;
+  color: #cbd5e1 !important;
+  border: 1px solid rgba(148, 163, 184, 0.3) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+html:not([data-theme="dark"]) .guia-check-btn .num-badge {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.guia-check-btn:hover .num-badge {
+  background: rgba(56, 189, 248, 0.25) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+  transform: scale(1.1) !important;
+}
+
+/* Fila marcada como completada */
+.guia-fila-paso.completada {
+  background: rgba(16, 185, 129, 0.08) !important;
+}
+
+html:not([data-theme="dark"]) .guia-fila-paso.completada {
+  background: #f0fdf4 !important;
+}
+
+.guia-fila-paso.completada .guia-check-btn .num-badge {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  border-color: #059669 !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.45) !important;
+  transform: scale(1.05) !important;
+}
 
 html:not([data-theme="dark"]) .guia-tabla th {
   background: #f1f5f9 !important;
@@ -14382,7 +14926,7 @@ html:not([data-theme="dark"]) .guia-tabla th {
 }
 
 .guia-tabla td {
-  padding: 0.4rem 0.75rem !important;
+  padding: 0.45rem 0.75rem !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.12) !important;
   vertical-align: top !important;
 }
@@ -14407,7 +14951,7 @@ html:not([data-theme="dark"]) .guia-campo {
   font-weight: 600 !important;
   color: #38bdf8 !important;
   background: rgba(56, 189, 248, 0.12) !important;
-  padding: 0.14rem 0.45rem !important;
+  padding: 0.15rem 0.45rem !important;
   border-radius: 0.35rem !important;
   display: inline-block !important;
   word-break: break-word !important;
@@ -14448,7 +14992,7 @@ html:not([data-theme="dark"]) .guia-valor.valor-accion {
 .guia-tipo-tag {
   font-size: 0.62rem !important;
   font-weight: 600 !important;
-  padding: 0.12rem 0.4rem !important;
+  padding: 0.14rem 0.42rem !important;
   border-radius: 0.3rem !important;
   background: rgba(148, 163, 184, 0.15) !important;
   color: #cbd5e1 !important;
@@ -14477,31 +15021,30 @@ html:not([data-theme="dark"]) .guia-tipo-tag.critico {
   color: #94a3b8 !important;
   font-size: 0.72rem !important;
   word-break: break-word !important;
-  line-height: 1.45 !important;
+  line-height: 1.48 !important;
 }
 
 html:not([data-theme="dark"]) .guia-detalle {
   color: #334155 !important;
 }
 
-/* Sticky Footer Inferior Permanente Esbelto */
+/* Footer Inferior Permanente Anclado a la Base del Modal (Fuera del Scroll) */
 .guia-footer-sticky {
-  position: sticky !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
+  flex-shrink: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0.65rem 1.15rem !important;
   background: rgba(15, 23, 42, 0.96) !important;
-  padding: 0.55rem 1rem !important;
-  margin: 0.65rem -1rem 0 -1rem !important;
-  border-top: 1px solid rgba(148, 163, 184, 0.2) !important;
-  display: flex !important;
+  border-top: 1px solid rgba(148, 163, 184, 0.22) !important;
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
   align-items: center !important;
-  justify-content: space-between !important;
   gap: 0.75rem !important;
   z-index: 40 !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.35) !important;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.28) !important;
 }
 
 html:not([data-theme="dark"]) .guia-footer-sticky {
@@ -14511,17 +15054,58 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
 }
 
 .btn-pie-next {
-  min-width: 12rem !important;
-  justify-content: center !important;
-  font-size: 0.78rem !important;
-  padding: 0.42rem 1.1rem !important;
-  border-radius: 0.5rem !important;
+  min-width: 9rem !important;
+  max-width: 22rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  gap: 0.65rem !important;
+  padding: 0.38rem 0.85rem !important;
+  border-radius: 0.55rem !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+.btn-next-body {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  line-height: 1.22 !important;
+}
+
+.btn-next-kicker {
+  font-size: 0.64rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  opacity: 0.92 !important;
+  white-space: nowrap !important;
+}
+
+.btn-next-title {
+  font-size: 0.73rem !important;
+  font-weight: 600 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  opacity: 0.96 !important;
+}
+
+.btn-next-arrow {
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
 }
 
 .guia-pie-status {
   font-size: 0.74rem !important;
   color: var(--text-muted, #94a3b8) !important;
   font-weight: 600 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
 }
 
 html:not([data-theme="dark"]) .guia-pie-status {
@@ -14532,9 +15116,24 @@ html:not([data-theme="dark"]) .guia-pie-status {
   font-size: 0.78rem !important;
   font-weight: 700 !important;
   color: #34d399 !important;
+  text-align: right !important;
+  white-space: nowrap !important;
 }
 
-/* Modo móvil */
+html:not([data-theme="dark"]) .guia-pie-final {
+  color: #059669 !important;
+}
+
+/* Ajuste cuando el modal está acoplado a la derecha */
+.focus-chip.tiene-guia.docked-right .btn-pie-next {
+  max-width: 15rem !important;
+}
+
+.focus-chip.tiene-guia.docked-right .btn-next-title {
+  max-width: 8rem !important;
+}
+
+/* Modo móvil y tablets (< 768px) */
 @media (max-width: 768px) {
   .focus-chip,
   .focus-chip.tiene-guia {
@@ -14548,14 +15147,15 @@ html:not([data-theme="dark"]) .guia-pie-status {
     max-width: 100vw !important;
     height: 90vh !important;
     max-height: 90vh !important;
-    border-radius: 1.25rem 1.25rem 0 0 !important;
+    border-radius: 1.15rem 1.15rem 0 0 !important;
     box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--frontend-stroke) !important;
     margin: 0 !important;
     z-index: 100 !important;
   }
 
   .guia-modal-topbar {
-    padding: 0.45rem 0.75rem !important;
+    padding: 0.5rem 0.8rem !important;
+    gap: 0.45rem !important;
   }
 
   .guia-brand-title {
@@ -14572,23 +15172,43 @@ html:not([data-theme="dark"]) .guia-pie-status {
   }
 
   .chip-btn-ctrl {
-    padding: 0.2rem 0.4rem !important;
+    padding: 0.24rem 0.48rem !important;
   }
 
-  .focus-chip.tiene-guia .relationship-lens-copy {
-    padding: 0.5rem 0.75rem 0 0.75rem !important;
+  .guia-body-scroll {
+    padding: 0.55rem 0.8rem 0.65rem 0.8rem !important;
   }
 
   .guia-footer-sticky {
-    padding: 0.55rem 0.75rem !important;
-    margin: auto -0.75rem 0 -0.75rem !important;
+    padding: 0.55rem 0.8rem !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-areas:
+      "status status"
+      "prev next" !important;
+    gap: 0.42rem !important;
   }
 
-  .btn-pie-next {
-    min-width: auto !important;
-    flex: 1 !important;
-    font-size: 0.74rem !important;
-    padding: 0.42rem 0.65rem !important;
+  .guia-pie-status {
+    grid-area: status !important;
+    font-size: 0.7rem !important;
+  }
+
+  .btn-pie-prev {
+    grid-area: prev !important;
+    width: 100% !important;
+    font-size: 0.72rem !important;
+    padding: 0.4rem 0.5rem !important;
+  }
+
+  .btn-pie-next,
+  .guia-pie-final {
+    grid-area: next !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    font-size: 0.72rem !important;
+    padding: 0.4rem 0.6rem !important;
+    text-align: center !important;
   }
 
   .guia-campo {
@@ -14627,6 +15247,7 @@ html:not([data-theme="dark"]) .guia-pie-status {
   .guia-tabla td {
     padding: 0.18rem 0 !important;
     border-bottom: none !important;
+    width: 100% !important;
   }
 }
 
@@ -14634,9 +15255,20 @@ html:not([data-theme="dark"]) .guia-pie-status {
 <script>
 (function() {
   var GUIA_MAP = {"k1": {"fase": "Paso 1: Activación y Habilitación Docente", "pantalla": "SIAINST", "hito": "Docente activo en facultad y periodo", "instrucciones": [{"campo": "Formulario", "valor": "SIAINST", "tipo": "Acceso inicial", "detalle": "Ingresar ID del docente (ej. 100582059 Dagner Chuman) y verificar estatus en facultad."}, {"campo": "Pestaña Facultad", "valor": "Status: Activo", "tipo": "Obligatorio", "detalle": "Comprobar que el docente tenga permisos vigentes para dictado en el periodo lectivo."}, {"campo": "Contrato Docente", "valor": "ES (Especialista) / FC (Facilitador)", "tipo": "Régimen CCEE", "detalle": "Régimen docente confirmado: Especialista ES (48h/sem con funciones administrativas) o Facilitador FC (14 a 23h/sem)."}]}, "k2": {"fase": "Paso 2: Asignación al NRC", "pantalla": "SSASECT", "hito": "Docente principal asignado al 100%", "instrucciones": [{"campo": "Formulario", "valor": "SSASECT", "tipo": "Programación", "detalle": "En pestaña Horario e instructores, asignar ID con sesión 01 y 100% responsabilidad."}, {"campo": "Indicador Principal", "valor": "Casilla Principal ☑", "tipo": "Mandatorio", "detalle": "Marcar como instructor principal para emisión de actas oficiales."}, {"campo": "Sobrepaso de Horario", "valor": "Indicador de sobrepaso ☑", "tipo": "Contingencia", "detalle": "Si el docente tiene otro NRC a la misma hora, marcar sobrepaso para salvar el cruce."}]}, "k3": {"fase": "Paso 3: Auditoría de Carga Docente", "pantalla": "SIAASGN", "hito": "Horas y FTE computados automáticamente", "instrucciones": [{"campo": "Formulario", "valor": "SIAASGN", "tipo": "Auditoría", "detalle": "Consultar con Periodo 202656 e ID del docente (100582059 Dagner Chuman)."}, {"campo": "Secciones asignadas", "valor": "Carga consolidada del periodo", "tipo": "Consolidación", "detalle": "Auditoría de todas las secciones asignadas al docente en el periodo."}, {"campo": "Horas semanales", "valor": "Calculadas según factor SIATERM", "tipo": "Cálculo", "detalle": "Multiplicación de horas y factor de duración institucional de SIATERM."}, {"campo": "Horas acumuladas", "valor": "Cómputo total del periodo", "tipo": "Cálculo", "detalle": "Cómputo acumulado de la carga lectiva total del periodo."}, {"campo": "Asignación de FTE", "valor": "FTE generado automáticamente", "tipo": "Cálculo", "detalle": "Factor de dedicación académica generado automáticamente sustituyendo planillas Excel."}]}, "k4": {"fase": "Paso 4: Visto Bueno del Centro", "pantalla": "Intranet USS", "hito": "Oficio institucional tramitado", "instrucciones": [{"campo": "Trámite", "valor": "Oficio del Jefe de Centro", "tipo": "Administrativo", "detalle": "El jefe de centro valida la carga lectiva y genera oficio con asunto, detalle y adjunto en la intranet USS."}]}, "k5": {"fase": "Paso 5: Aprobación Oficial", "pantalla": "Resolución VRA", "hito": "Resolución de carga docente aprobada", "instrucciones": [{"campo": "Aprobación", "valor": "Resolución Vicerrectoral", "tipo": "Oficial", "detalle": "El Vicerrectorado Académico revisa y emite la resolución formal de aprobación de carga."}]}};
+  window.__SIGUIENTE_FLUJO = {"num": 4, "slug": "persona-y-admision", "titulo": "Persona y admisión", "cap": "Capacidades 3, 4 y 5", "url": "../04-persona-y-admision/computacion-04-persona-y-admision.html", "is_curr": false, "folder": "04-persona-y-admision", "filename": "computacion-04-persona-y-admision.html"};
+  window.__ANTERIOR_FLUJO = {"num": 2, "slug": "crear-el-nrc", "titulo": "Crear el NRC", "cap": "Capacidades 1 y 5", "url": "../02-crear-el-nrc/computacion-02-crear-el-nrc.html", "is_curr": false, "folder": "02-crear-el-nrc", "filename": "computacion-02-crear-el-nrc.html"};
+  window.__VOLVER_CENTROS_URL = "../../../index.html#sec-computacion";
+
+  window.__guiaMaxUnlocked = window.__guiaMaxUnlocked || 0;
+  window.__guiaChecks = window.__guiaChecks || {};
 
   window.irAPaso = function(targetNodeId) {
     if (!targetNodeId) return;
+    var stepKeys = Object.keys(GUIA_MAP);
+    var targetIdx = stepKeys.indexOf(targetNodeId);
+    if (targetIdx !== -1 && targetIdx > (window.__guiaMaxUnlocked || 0)) {
+      return;
+    }
     var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
     if (nodeElem) {
       nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
@@ -14654,9 +15286,30 @@ html:not([data-theme="dark"]) .guia-pie-status {
     var stepKeys = Object.keys(GUIA_MAP);
     var currentIndex = stepKeys.indexOf(currentId);
     if (currentIndex === -1) return;
+
+    // Al avanzar con Siguiente, marcar completadas todas las filas del paso actual
+    if (offset > 0 && currentId && GUIA_MAP[currentId]) {
+      window.__guiaChecks[currentId] = window.__guiaChecks[currentId] || {};
+      var curInst = GUIA_MAP[currentId].instrucciones || [];
+      for (var r = 0; r < curInst.length; r++) {
+        window.__guiaChecks[currentId][r] = true;
+      }
+    }
+
     var nextIndex = currentIndex + offset;
     if (nextIndex >= 0 && nextIndex < stepKeys.length) {
-      window.irAPaso(stepKeys[nextIndex]);
+      if (nextIndex > (window.__guiaMaxUnlocked || 0)) {
+        window.__guiaMaxUnlocked = nextIndex;
+      }
+      var targetNodeId = stepKeys[nextIndex];
+      var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
+      if (nodeElem) {
+        nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        try {
+          nodeElem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        } catch (_) {}
+        setTimeout(actualizarModalGuia, 40);
+      }
     }
   };
 
@@ -14670,9 +15323,14 @@ html:not([data-theme="dark"]) .guia-pie-status {
     var nextNode = hasNext ? stepKeys[currentIndex + 1] : null;
     var nextTitle = nextNode && GUIA_MAP[nextNode] ? (GUIA_MAP[nextNode].fase || GUIA_MAP[nextNode].pantalla || 'Paso siguiente') : '';
 
-    var html = '';
+    var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
+    if (currentIndex > maxUnlocked) {
+      window.__guiaMaxUnlocked = currentIndex;
+      maxUnlocked = currentIndex;
+    }
 
-    // 1. Stepper horizontal interactivo con todas las fases y barrita de progreso integrada
+    var html = '<div class="guia-body-scroll">';
+
     if (totalSteps > 1) {
       var progressPct = Math.round(((currentIndex + 1) / totalSteps) * 100);
       html += '<div class="guia-stepper-wrap">';
@@ -14681,21 +15339,33 @@ html:not([data-theme="dark"]) .guia-pie-status {
         var sInfo = GUIA_MAP[k];
         var isAct = (k === nodeId);
         var isPast = (idx < currentIndex);
+        var isLocked = (idx > maxUnlocked);
         var label = sInfo.fase ? sInfo.fase.replace(/^Paso\s*\d+:\s*/i, '') : (sInfo.pantalla || ('Paso ' + (idx + 1)));
 
         var pillClass = 'guia-step-pill';
         if (isAct) pillClass += ' active';
         else if (isPast) pillClass += ' past';
+        else if (isLocked) pillClass += ' locked';
 
-        var badgeTxt = isPast ? '✓' : (idx + 1);
+        var badgeTxt;
+        if (isPast) badgeTxt = '✓';
+        else if (isLocked) badgeTxt = '🔒 ' + (idx + 1);
+        else badgeTxt = (idx + 1);
 
-        html += '<button type="button" class="' + pillClass + '" data-ir-paso="' + escapeHtml(k) + '" title="Ir al paso ' + (idx + 1) + ': ' + escapeHtml(label) + '">';
-        html += '<span class="pill-badge">' + badgeTxt + '</span>';
-        html += '<span>' + escapeHtml(label) + '</span>';
-        html += '</button>';
+        if (isLocked) {
+          html += '<button type="button" class="' + pillClass + '" disabled title="Paso ' + (idx + 1) + ' bloqueado. Haz clic en Siguiente para avanzar.">';
+          html += '<span class="pill-badge">' + badgeTxt + '</span>';
+          html += '<span>' + escapeHtml(label) + '</span>';
+          html += '</button>';
+        } else {
+          html += '<button type="button" class="' + pillClass + '" data-ir-paso="' + escapeHtml(k) + '" title="Ir al paso ' + (idx + 1) + ': ' + escapeHtml(label) + '">';
+          html += '<span class="pill-badge">' + badgeTxt + '</span>';
+          html += '<span>' + escapeHtml(label) + '</span>';
+          html += '</button>';
+        }
 
         if (idx < totalSteps - 1) {
-          var arrowClass = 'stepper-arrow' + (isPast ? ' past' : '');
+          var arrowClass = 'stepper-arrow' + (isPast ? ' past' : (isLocked ? ' locked' : ''));
           html += '<span class="' + arrowClass + '">›</span>';
         }
       });
@@ -14704,7 +15374,6 @@ html:not([data-theme="dark"]) .guia-pie-status {
       html += '</div>';
     }
 
-    // 2. Hero de fase actual y pantalla Banner compacto
     html += '<div class="guia-fase-hero">';
     html += '<div class="guia-fase-main">';
     if (info.pantalla) {
@@ -14719,12 +15388,16 @@ html:not([data-theme="dark"]) .guia-pie-status {
     }
     html += '</div>';
 
-    // 3. Tabla de instrucciones operativas compacta con valores inteligentes
     if (info.instrucciones && info.instrucciones.length > 0) {
       html += '<div class="guia-tabla-wrap"><table class="guia-tabla">';
-      html += '<thead><tr><th>Campo / Acción</th><th>Valor / Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
+      html += '<thead><tr><th class="th-num">#</th><th>Campo / Acción</th><th>Valor / Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
       html += '<tbody>';
-      info.instrucciones.forEach(function(item) {
+      
+      var checks = (window.__guiaChecks && window.__guiaChecks[nodeId]) || {};
+
+      info.instrucciones.forEach(function(item, rIdx) {
+        var rowNum = rIdx + 1;
+        var isChecked = !!checks[rIdx];
         var isCritico = (item.tipo || '').toLowerCase().indexOf('crítico') !== -1 || (item.tipo || '').toLowerCase().indexOf('guardado') !== -1;
         var tagClass = isCritico ? 'guia-tipo-tag critico' : 'guia-tipo-tag';
         var valorTxt = item.valor || '';
@@ -14740,7 +15413,14 @@ html:not([data-theme="dark"]) .guia-pie-status {
           valorDisplay = '👆 ' + valorDisplay;
         }
 
-        html += '<tr>';
+        var rowClass = 'guia-fila-paso' + (isChecked ? ' completada' : '');
+
+        html += '<tr class="' + rowClass + '" data-row-idx="' + rIdx + '">';
+        html += '<td class="guia-td-num">';
+        html += '<button type="button" class="guia-check-btn" data-check-row="' + rIdx + '" title="Paso ' + rowNum + ': Clic para marcar/desmarcar como completado">';
+        html += '<span class="num-badge">' + (isChecked ? '✓' : rowNum) + '</span>';
+        html += '</button>';
+        html += '</td>';
         html += '<td class="guia-campo">' + escapeHtml(item.campo || '') + '</td>';
         html += '<td><span class="' + valClass + '">' + valorDisplay + '</span></td>';
         html += '<td><span class="' + tagClass + '">' + escapeHtml(item.tipo || '') + '</span></td>';
@@ -14750,16 +15430,43 @@ html:not([data-theme="dark"]) .guia-pie-status {
       html += '</tbody></table></div>';
     }
 
-    // 4. Sticky Footer inferior permanente esbelto
+    html += '</div>';
+
     if (totalSteps > 1) {
       var pct = Math.round(((currentIndex + 1) / totalSteps) * 100);
       html += '<div class="guia-footer-sticky">';
       html += '<button type="button" class="guia-nav-btn btn-pie-prev" ' + (hasPrev ? 'data-nav-paso="-1"' : 'disabled') + '>← Paso anterior</button>';
       html += '<div class="guia-pie-status">Paso ' + (currentIndex + 1) + ' de ' + totalSteps + ' · ' + pct + '% completado</div>';
       if (hasNext) {
-        html += '<button type="button" class="guia-nav-btn btn-pie-next primary" data-nav-paso="1">Siguiente: ' + escapeHtml(nextTitle) + ' →</button>';
+        var cleanNext = nextTitle.replace(/^Paso\s*\d+:\s*/i, '');
+        var nextStepNum = currentIndex + 2;
+        html += '<button type="button" class="guia-nav-btn btn-pie-next primary" data-nav-paso="1" title="Avanzar al Paso ' + nextStepNum + ': ' + escapeHtml(cleanNext) + '">';
+        html += '<span class="btn-next-body">';
+        html += '<span class="btn-next-kicker">Siguiente · Paso ' + nextStepNum + '</span>';
+        html += '<span class="btn-next-title">' + escapeHtml(cleanNext) + '</span>';
+        html += '</span>';
+        html += '<span class="btn-next-arrow">→</span>';
+        html += '</button>';
       } else {
-        html += '<span class="guia-pie-final">✓ Flujo completado con éxito</span>';
+        if (window.__SIGUIENTE_FLUJO && window.__SIGUIENTE_FLUJO.url) {
+          var sigNum = window.__SIGUIENTE_FLUJO.num;
+          var sigNumTxt = (sigNum < 10 ? '0' : '') + sigNum;
+          html += '<a href="' + escapeHtml(window.__SIGUIENTE_FLUJO.url) + '" class="guia-nav-btn btn-pie-next primary" style="text-decoration:none;" title="Pasar al flujo ' + sigNumTxt + ': ' + escapeHtml(window.__SIGUIENTE_FLUJO.titulo) + '">';
+          html += '<span class="btn-next-body">';
+          html += '<span class="btn-next-kicker">¡Paso final! Siguiente flujo →</span>';
+          html += '<span class="btn-next-title">' + sigNumTxt + '. ' + escapeHtml(window.__SIGUIENTE_FLUJO.titulo) + '</span>';
+          html += '</span>';
+          html += '<span class="btn-next-arrow">🚀</span>';
+          html += '</a>';
+        } else {
+          html += '<a href="' + escapeHtml(window.__VOLVER_CENTROS_URL || '#') + '" class="guia-nav-btn btn-pie-next" style="text-decoration:none;" title="Volver a la galería de Centros">';
+          html += '<span class="btn-next-body">';
+          html += '<span class="btn-next-kicker">✓ Fin del recorrido</span>';
+          html += '<span class="btn-next-title">Volver a Centros</span>';
+          html += '</span>';
+          html += '<span class="btn-next-arrow">🏛️</span>';
+          html += '</a>';
+        }
       }
       html += '</div>';
     }
@@ -14819,7 +15526,7 @@ html:not([data-theme="dark"]) .guia-pie-status {
       var idElem = document.getElementById('focus-id');
       var nodeId = (idElem ? idElem.textContent : '').trim();
       var base = window.location.href.split('#')[0];
-      var url = nodeId ? (base + '#' + encodeURIComponent(nodeId)) : base;
+      var url = nodeId ? (base + '#focus=' + encodeURIComponent(nodeId)) : base;
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(function() {
           var txt = topbar.querySelector('.btn-copy-txt');
@@ -14878,13 +15585,11 @@ html:not([data-theme="dark"]) .guia-pie-status {
     chip.classList.add('tiene-guia');
     card.innerHTML = renderGuiaHtml(info, nodeId);
 
-    // Reset de scroll al inicio del paso
-    var copyElem = chip.querySelector('.relationship-lens-copy');
-    if (copyElem) {
-      copyElem.scrollTop = 0;
+    var scrollBody = card.querySelector('.guia-body-scroll');
+    if (scrollBody) {
+      scrollBody.scrollTop = 0;
     }
 
-    // Centrar suavemente la píldora activa en el Stepper horizontal
     setTimeout(function() {
       var activePill = card.querySelector('.guia-step-pill.active');
       if (activePill) {
@@ -14921,6 +15626,20 @@ html:not([data-theme="dark"]) .guia-pie-status {
         return;
       }
 
+      var btnCheck = e.target.closest('[data-check-row]');
+      if (btnCheck) {
+        e.preventDefault();
+        e.stopPropagation();
+        var idElem = document.getElementById('focus-id');
+        var nodeId = (idElem ? idElem.textContent : '').trim();
+        var rowIdx = parseInt(btnCheck.getAttribute('data-check-row'), 10);
+        window.__guiaChecks = window.__guiaChecks || {};
+        window.__guiaChecks[nodeId] = window.__guiaChecks[nodeId] || {};
+        window.__guiaChecks[nodeId][rowIdx] = !window.__guiaChecks[nodeId][rowIdx];
+        actualizarModalGuia();
+        return;
+      }
+
       var node = e.target.closest('[data-node-id]');
       if (node) {
         setTimeout(actualizarModalGuia, 20);
@@ -14928,11 +15647,20 @@ html:not([data-theme="dark"]) .guia-pie-status {
       }
     });
 
-    // Atajos de teclado para navegación paso a paso
     document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+      if (e.altKey && e.key === 'ArrowRight' && window.__SIGUIENTE_FLUJO && window.__SIGUIENTE_FLUJO.url) {
+        e.preventDefault();
+        window.location.href = window.__SIGUIENTE_FLUJO.url;
+        return;
+      }
+      if (e.altKey && e.key === 'ArrowLeft' && window.__ANTERIOR_FLUJO && window.__ANTERIOR_FLUJO.url) {
+        e.preventDefault();
+        window.location.href = window.__ANTERIOR_FLUJO.url;
+        return;
+      }
       var chip = document.getElementById('focus-chip');
       if (!chip || chip.hidden || !chip.classList.contains('tiene-guia')) return;
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if (e.key === 'ArrowRight') {
         e.preventDefault();
         window.navegarPaso(1);

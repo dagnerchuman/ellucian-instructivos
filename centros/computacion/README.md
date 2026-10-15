@@ -39,6 +39,9 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - No rinde examen de suficiencia (C36)
 - Escala del nivel C en SHAGRDE con modo V: nota mínima 11 (U20 resuelta)
 - Los grupos duran 4, 6 u 8 semanas (X01–X07 en 2026)
+- Asistencia mínima obligatoria para aprobar: 70 % (C63)
+- Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)
+- Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)
 
 ## Grupos 2026 (4 a 8 semanas según el grupo)
 | Grupo | Periodo | Fechas | Semanas |
@@ -71,7 +74,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 08 | Retiro de matrícula (DD) | validado | S00581091 retirado con DD del NRC 1021; cupo liberado |
 | 09 | Suspensión y reactivación | validado | Bloqueo con estatus inactivo y reactivación a AS en SGASTDN |
 | 10 | Retorno por desaprobado | validado | S00581108 (nota 08): «No cumple» y curso no usado en CAPP |
-| 11 | Apertura de periodo | validado | 05/10: el periodo 202751 «2027-V Verano Idi.Com.Emp.» ya existía, con la parte X01 (12-ENE a 22-FEB-2027, 6 semanas). Se creó en SSASECT un NRC de prueba ESEC 00650 sección A en 202751/X01. Falta X02 en 202751 (U22) |
+| 11 | Apertura de periodo | validado | 05/10: el periodo 202751 «2027-V Verano Idi.Com.Emp.» ya existía, con la parte X01 (12-ENE a 22-FEB-2027, 6 semanas). Se creó en SSASECT un NRC de prueba ESEC 00650 sección A en 202751/X01. Partes de periodo se copian/gestionan en SOATERM (Instructivo 1.1.2, U22 resuelta) |
 | 12 | Cierre de periodo | validado | GJAPCTL: jobs SHRROLL 8113 y 8114 exitosos |
 | 13 | Procesamiento de calificaciones | validado | Notas 16, 10, 08 e INH en NRC 1021 y 1026 |
 | 14 | Cierre de curso | validado | Cierre y pase a historia con SHRROLL |
@@ -83,8 +86,4 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 18-C | Solicitud de servicio o queja | validado | 05/10: no existe un servicio de queja (17 servicios en SVVSRVC; U14). El mecanismo se validó con CER (Certificado): la solicitud se crea en el Autoservicio del alumno (100582059) y se atiende en SVASVPR (estatus, comentario interno y de respuesta). SVASVPR no deja crear solicitudes («Función inválida») |
 
 ## Por confirmar
-- **U02**: ¿Los cursos tienen orden (uno exige aprobar otro) o son independientes?
-- **U03**: ¿Qué asistencia mínima se exige? El instructivo usa 70 % como ejemplo
-- **U04**: ¿Quién carga el plan de evaluación (SHAGCOM): Registros Académicos o el centro?
 - **U05**: Nombres oficiales de los cursos y pesos de evaluación
-- **U22**: 202751 solo tiene X01 (y I01, P01). ¿Se agregan X02 y los demás grupos de verano 2027? ¿Con qué fechas?

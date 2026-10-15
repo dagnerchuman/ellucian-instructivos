@@ -8,9 +8,329 @@ import json
 import re
 from pathlib import Path
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
+from plantillas import TITULOS, CAPACIDADES
 
 CSS_MODAL = """
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
+
+/* --- 0. BARRAS DE NAVEGACIÓN Y PAGINACIÓN ENTRE FLUJOS --- */
+.flow-nav-top {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 0.65rem !important;
+  padding: 0.5rem 0.85rem !important;
+  margin-bottom: 1.25rem !important;
+  margin-right: 21.5rem !important;
+  background: var(--toolbar-bg, rgba(15, 23, 42, 0.75)) !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  border-radius: 0.75rem !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  font-size: 0.82rem !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18) !important;
+  position: relative !important;
+  z-index: 25 !important;
+}
+
+[data-theme="light"] .flow-nav-top {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(203, 213, 225, 0.8) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+@media (max-width: 900px) {
+  .flow-nav-top {
+    margin-right: 0 !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+.flow-nav-left {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+}
+
+.flow-nav-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+}
+
+.btn-flow-centros {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: 0.5rem !important;
+  background: var(--toolbar-bg, #1e293b) !important;
+  color: var(--text, #fff) !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+  text-decoration: none !important;
+  transition: all 0.18s ease !important;
+  cursor: pointer !important;
+}
+
+.btn-flow-centros:hover {
+  background: var(--toolbar-hover, #334155) !important;
+  border-color: #a78bfa !important;
+  color: #fff !important;
+  transform: translateX(-2px) !important;
+}
+
+.flow-nav-sep {
+  color: var(--text-dim, #64748b) !important;
+  opacity: 0.6 !important;
+  font-size: 0.75rem !important;
+}
+
+.flow-nav-center-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  font-weight: 600 !important;
+  color: var(--text, #fff) !important;
+  padding: 0.2rem 0.55rem !important;
+  border-radius: 0.4rem !important;
+  background: rgba(148, 163, 184, 0.1) !important;
+  font-size: 0.78rem !important;
+}
+
+.flow-center-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+.flow-nav-select-wrap {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.flow-nav-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: var(--toolbar-bg, #1e293b) !important;
+  color: var(--text, #fff) !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  border-radius: 0.5rem !important;
+  padding: 0.35rem 1.6rem 0.35rem 0.65rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  max-width: 250px !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  transition: border-color 0.18s ease !important;
+}
+
+.flow-nav-select:hover,
+.flow-nav-select:focus {
+  border-color: #a78bfa !important;
+}
+
+.flow-nav-select-arrow {
+  position: absolute !important;
+  right: 0.55rem !important;
+  pointer-events: none !important;
+  font-size: 0.75rem !important;
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.flow-btn-top {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  padding: 0.35rem 0.65rem !important;
+  border-radius: 0.5rem !important;
+  font-weight: 600 !important;
+  font-size: 0.78rem !important;
+  text-decoration: none !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  background: var(--toolbar-bg, #1e293b) !important;
+  color: var(--text, #fff) !important;
+  transition: all 0.18s ease !important;
+}
+
+.flow-btn-top:hover:not(.disabled) {
+  background: var(--toolbar-hover, #334155) !important;
+  border-color: #a78bfa !important;
+  transform: translateY(-1px) !important;
+}
+
+.flow-btn-top.primary {
+  background: #7030A0 !important;
+  border-color: #8b5cf6 !important;
+  color: #fff !important;
+}
+
+.flow-btn-top.primary:hover:not(.disabled) {
+  background: #5c2193 !important;
+  box-shadow: 0 2px 10px rgba(112, 48, 160, 0.4) !important;
+}
+
+.flow-btn-top.disabled {
+  opacity: 0.38 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+.flow-nav-counter {
+  font-size: 0.78rem !important;
+  color: var(--text-muted, #94a3b8) !important;
+  padding: 0 0.25rem !important;
+}
+
+.flow-nav-counter strong {
+  color: var(--text, #fff) !important;
+}
+
+/* --- BOTTOM NAV CARDS --- */
+.flow-nav-bottom-section {
+  margin-top: 2rem !important;
+  margin-bottom: 2.5rem !important;
+  padding-top: 1.5rem !important;
+  border-top: 1px dashed var(--panel-border, rgba(148, 163, 184, 0.2)) !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+}
+
+.flow-bottom-container {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  gap: 1.25rem !important;
+  align-items: stretch !important;
+}
+
+@media (max-width: 850px) {
+  .flow-bottom-container {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+  }
+}
+
+.flow-bottom-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+  padding: 1rem 1.25rem !important;
+  background: var(--panel, rgba(15, 23, 42, 0.6)) !important;
+  border: 1px solid var(--panel-border, #1e293b) !important;
+  border-radius: 0.85rem !important;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  color: var(--text, #fff) !important;
+  min-height: 90px !important;
+  justify-content: center !important;
+}
+
+.flow-bottom-card:hover:not(.placeholder) {
+  border-color: #a78bfa !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.flow-bottom-card.primary-accent {
+  background: linear-gradient(135deg, rgba(112, 48, 160, 0.18) 0%, rgba(15, 23, 42, 0.75) 100%) !important;
+  border-color: rgba(139, 92, 246, 0.45) !important;
+}
+
+[data-theme="light"] .flow-bottom-card.primary-accent {
+  background: linear-gradient(135deg, rgba(112, 48, 160, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%) !important;
+  border-color: rgba(112, 48, 160, 0.3) !important;
+}
+
+.flow-bottom-card.primary-accent:hover {
+  border-color: #a78bfa !important;
+  box-shadow: 0 8px 26px rgba(112, 48, 160, 0.35) !important;
+}
+
+.flow-bottom-card.placeholder {
+  opacity: 0.45 !important;
+  cursor: default !important;
+  border-style: dashed !important;
+}
+
+.flow-card-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #a78bfa !important;
+}
+
+.flow-bottom-card.prev .flow-card-badge {
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.flow-card-num-title {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 0.6rem !important;
+}
+
+.flow-card-num {
+  font-family: "JetBrains Mono", monospace !important;
+  font-weight: 800 !important;
+  font-size: 1.15rem !important;
+  color: #34d399 !important;
+}
+
+.flow-card-title {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: var(--text, #fff) !important;
+  line-height: 1.3 !important;
+}
+
+.flow-card-title.muted {
+  font-size: 0.85rem !important;
+  font-weight: normal !important;
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.flow-card-meta {
+  font-size: 0.74rem !important;
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.flow-bottom-hub-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  padding: 0.85rem 1.15rem !important;
+  border-radius: 0.75rem !important;
+  background: var(--toolbar-bg, #1e293b) !important;
+  border: 1px solid var(--panel-border, #334155) !important;
+  color: var(--text, #fff) !important;
+  font-weight: 600 !important;
+  font-size: 0.82rem !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
+}
+
+.flow-bottom-hub-btn:hover {
+  background: var(--toolbar-hover, #334155) !important;
+  border-color: #a78bfa !important;
+  transform: translateY(-2px) !important;
+}
 
 /* --- 1. HEADER & TOOLBAR RESPONSIVO --- */
 .header {
@@ -131,7 +451,6 @@ CSS_MODAL = """
 
 @media (min-width: 1300px) {
   .cards {
-    /* 2 a 3 columnas equilibradas para evitar columnas angostas aplastadas */
     grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr)) !important;
   }
 }
@@ -192,10 +511,12 @@ CSS_MODAL = """
   width: min(74rem, calc(100vw - 2rem)) !important;
   max-width: 76rem !important;
   height: auto !important;
-  min-height: min(30rem, 60vh) !important;
-  max-height: min(92vh, calc(100vh - 1.5rem)) !important;
+  min-height: min(30rem, 62vh) !important;
+  max-height: min(90vh, calc(100vh - 2rem)) !important;
   display: flex !important;
   flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
   overflow: hidden !important;
   border-radius: 1rem !important;
   box-shadow: 0 32px 90px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--frontend-stroke) !important;
@@ -204,6 +525,7 @@ CSS_MODAL = """
   z-index: 95 !important;
   background: var(--panel, #0f172a) !important;
   margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Modo acoplado a la derecha en escritorio */
@@ -214,8 +536,8 @@ CSS_MODAL = """
   top: 1.25rem !important;
   bottom: 1.25rem !important;
   transform: none !important;
-  width: min(44rem, calc(50vw - 1.5rem)) !important;
-  max-width: 46rem !important;
+  width: min(46rem, calc(52vw - 1.5rem)) !important;
+  max-width: 48rem !important;
   height: calc(100vh - 2.5rem) !important;
   max-height: calc(100vh - 2.5rem) !important;
 }
@@ -227,11 +549,12 @@ CSS_MODAL = """
   top: auto !important;
   bottom: 1.5rem !important;
   transform: translateX(-50%) !important;
-  width: auto !important;
-  min-width: 22rem !important;
-  max-width: calc(100vw - 3rem) !important;
-  max-height: 3.2rem !important;
-  height: 3.2rem !important;
+  width: min(38rem, calc(100vw - 2rem)) !important;
+  min-width: 20rem !important;
+  max-width: calc(100vw - 2rem) !important;
+  min-height: 3.1rem !important;
+  max-height: 3.1rem !important;
+  height: 3.1rem !important;
   overflow: hidden !important;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--frontend-stroke) !important;
 }
@@ -252,30 +575,40 @@ CSS_MODAL = """
   display: none !important;
 }
 
-/* Estructura del Head de Archify */
+/* Estructura del Head de Archify: columna de ancho 100% real */
 .focus-chip.tiene-guia .relationship-lens-head {
   display: flex !important;
   flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
   padding: 0 !important;
   margin: 0 !important;
   border: none !important;
   width: 100% !important;
+  max-width: 100% !important;
   height: 100% !important;
   max-height: 100% !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
   overflow: hidden !important;
   background: transparent !important;
+  box-sizing: border-box !important;
 }
 
-/* Barra superior unificada esbelta */
+/* Barra superior unificada de extremo a extremo */
 .guia-modal-topbar {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 0.45rem 1rem !important;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.98)) !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.18) !important;
+  flex-wrap: nowrap !important;
+  gap: 0.75rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0.6rem 1.15rem !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.94), rgba(15, 23, 42, 0.99)) !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22) !important;
   flex-shrink: 0 !important;
-  z-index: 10 !important;
+  z-index: 30 !important;
   user-select: none !important;
 }
 
@@ -287,7 +620,9 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
 .guia-modal-brand {
   display: flex !important;
   align-items: center !important;
-  gap: 0.55rem !important;
+  gap: 0.6rem !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
 }
 
 .guia-brand-badge {
@@ -295,16 +630,20 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
   font-weight: 800 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
-  padding: 0.18rem 0.5rem !important;
+  padding: 0.2rem 0.55rem !important;
   border-radius: 0.35rem !important;
   background: #4338ca !important;
   color: #ffffff !important;
+  flex-shrink: 0 !important;
 }
 
 .guia-brand-title {
-  font-size: 0.84rem !important;
+  font-size: 0.88rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 html:not([data-theme="dark"]) .guia-brand-title {
@@ -314,23 +653,27 @@ html:not([data-theme="dark"]) .guia-brand-title {
 .guia-topbar-actions {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
+  justify-content: flex-end !important;
+  gap: 0.4rem !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
 }
 
 .chip-btn-ctrl {
   background: rgba(148, 163, 184, 0.12) !important;
-  border: 1px solid rgba(148, 163, 184, 0.25) !important;
+  border: 1px solid rgba(148, 163, 184, 0.28) !important;
   color: var(--toolbar-text, #e2e8f0) !important;
   border-radius: 0.45rem !important;
-  padding: 0.22rem 0.55rem !important;
-  font-size: 0.7rem !important;
+  padding: 0.26rem 0.6rem !important;
+  font-size: 0.72rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.3rem !important;
+  gap: 0.32rem !important;
   transition: all 0.15s ease !important;
   line-height: 1.2 !important;
+  white-space: nowrap !important;
 }
 
 html:not([data-theme="dark"]) .chip-btn-ctrl {
@@ -351,41 +694,44 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
 }
 
 .chip-btn-close {
-  width: 1.7rem !important;
-  height: 1.7rem !important;
+  width: 1.75rem !important;
+  height: 1.75rem !important;
   border-radius: 50% !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
   line-height: 1 !important;
   padding: 0 !important;
-  background: rgba(239, 68, 68, 0.12) !important;
-  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  background: rgba(239, 68, 68, 0.14) !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
   color: #f87171 !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
-  margin-left: 0.25rem !important;
+  margin-left: 0.2rem !important;
+  flex-shrink: 0 !important;
 }
 
 .chip-btn-close:hover {
   background: #ef4444 !important;
   color: #ffffff !important;
   border-color: #ef4444 !important;
-  transform: scale(1.08) !important;
+  transform: scale(1.06) !important;
 }
 
-/* Cuerpo con scroll suave y padding compacto */
+/* Contenedor intermedio de Archify sin scroll propio para delegarlo al cuerpo */
 .focus-chip.tiene-guia .relationship-lens-copy {
   width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
   min-width: 0 !important;
+  min-height: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   flex: 1 1 auto !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 0.5rem 1rem 0 1rem !important;
-  scrollbar-width: thin !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
   position: relative !important;
 }
 
@@ -399,6 +745,7 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   display: none !important;
 }
 
+/* Tarjeta principal: divide en cuerpo con scroll (.guia-body-scroll) y footer fijo (.guia-footer-sticky) */
 .guia-operativa-card {
   margin: 0 !important;
   padding: 0 !important;
@@ -406,7 +753,23 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   background: transparent !important;
   display: flex !important;
   flex-direction: column !important;
+  justify-content: space-between !important;
   flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.guia-body-scroll {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 0.65rem 1.15rem 0.75rem 1.15rem !important;
+  box-sizing: border-box !important;
+  scrollbar-width: thin !important;
 }
 
 /* Stepper de Fases Interactivo Horizontal Compacto */
@@ -414,8 +777,8 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   overflow-x: auto !important;
   scrollbar-width: thin !important;
   -webkit-overflow-scrolling: touch !important;
-  padding: 0.1rem 0 0.4rem 0 !important;
-  margin-bottom: 0.45rem !important;
+  padding: 0.1rem 0 0.45rem 0 !important;
+  margin-bottom: 0.55rem !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.16) !important;
 }
 
@@ -433,7 +796,7 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   background: rgba(148, 163, 184, 0.1) !important;
   border: 1px solid rgba(148, 163, 184, 0.22) !important;
   color: var(--text-muted, #94a3b8) !important;
-  padding: 0.22rem 0.65rem !important;
+  padding: 0.24rem 0.68rem !important;
   border-radius: 999px !important;
   font-size: 0.72rem !important;
   font-weight: 600 !important;
@@ -475,6 +838,22 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   border-color: #a7f3d0 !important;
 }
 
+.guia-step-pill.locked {
+  opacity: 0.42 !important;
+  cursor: not-allowed !important;
+  background: rgba(148, 163, 184, 0.05) !important;
+  border: 1px dashed rgba(148, 163, 184, 0.28) !important;
+  color: var(--text-muted, #94a3b8) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+html:not([data-theme="dark"]) .guia-step-pill.locked {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #94a3b8 !important;
+}
+
 .pill-badge {
   width: 1.1rem !important;
   height: 1.1rem !important;
@@ -492,6 +871,12 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   color: #10b981 !important;
 }
 
+.guia-step-pill.locked .pill-badge {
+  background: rgba(148, 163, 184, 0.2) !important;
+  color: #94a3b8 !important;
+  font-size: 0.58rem !important;
+}
+
 .stepper-arrow {
   color: rgba(148, 163, 184, 0.4) !important;
   font-size: 0.8rem !important;
@@ -503,6 +888,10 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   color: #10b981 !important;
 }
 
+.stepper-arrow.locked {
+  opacity: 0.25 !important;
+}
+
 /* Barra de progreso integrada debajo del stepper */
 .guia-stepper-progress {
   width: 100% !important;
@@ -510,7 +899,7 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   background: rgba(148, 163, 184, 0.2) !important;
   border-radius: 2px !important;
   overflow: hidden !important;
-  margin-top: 0.35rem !important;
+  margin-top: 0.38rem !important;
 }
 
 .guia-progress-fill {
@@ -524,13 +913,14 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   background: rgba(148, 163, 184, 0.15) !important;
   border: 1px solid rgba(148, 163, 184, 0.3) !important;
   color: var(--toolbar-text, #f1f5f9) !important;
-  padding: 0.35rem 0.75rem !important;
-  border-radius: 0.45rem !important;
-  font-size: 0.74rem !important;
+  padding: 0.4rem 0.85rem !important;
+  border-radius: 0.48rem !important;
+  font-size: 0.75rem !important;
   font-weight: 700 !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 0.35rem !important;
   transition: all 0.15s ease !important;
   white-space: nowrap !important;
@@ -562,7 +952,7 @@ html:not([data-theme="dark"]) .guia-nav-btn.primary {
 }
 
 .guia-nav-btn:disabled {
-  opacity: 0.35 !important;
+  opacity: 0.38 !important;
   cursor: not-allowed !important;
   transform: none !important;
 }
@@ -573,9 +963,9 @@ html:not([data-theme="dark"]) .guia-nav-btn.primary {
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
-  gap: 0.45rem !important;
-  margin-bottom: 0.45rem !important;
-  padding: 0.35rem 0.75rem !important;
+  gap: 0.5rem !important;
+  margin-bottom: 0.55rem !important;
+  padding: 0.42rem 0.8rem !important;
   border-radius: 0.55rem !important;
   background: rgba(30, 41, 59, 0.45) !important;
   border: 1px solid rgba(148, 163, 184, 0.18) !important;
@@ -589,15 +979,15 @@ html:not([data-theme="dark"]) .guia-fase-hero {
 .guia-fase-main {
   display: flex !important;
   align-items: center !important;
-  gap: 0.5rem !important;
+  gap: 0.55rem !important;
   flex-wrap: wrap !important;
 }
 
 .guia-pantalla-pill {
   font-size: 0.72rem !important;
   font-weight: 800 !important;
-  padding: 0.18rem 0.5rem !important;
-  border-radius: 0.3rem !important;
+  padding: 0.2rem 0.55rem !important;
+  border-radius: 0.32rem !important;
   background: #0284c7 !important;
   color: #ffffff !important;
   letter-spacing: 0.03em !important;
@@ -605,7 +995,7 @@ html:not([data-theme="dark"]) .guia-fase-hero {
 
 .guia-fase-title {
   margin: 0 !important;
-  font-size: 0.86rem !important;
+  font-size: 0.88rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
 }
@@ -620,7 +1010,7 @@ html:not([data-theme="dark"]) .guia-fase-title {
   gap: 0.35rem !important;
   font-size: 0.72rem !important;
   font-weight: 700 !important;
-  padding: 0.22rem 0.6rem !important;
+  padding: 0.22rem 0.65rem !important;
   border-radius: 0.4rem !important;
   background: rgba(16, 185, 129, 0.15) !important;
   border: 1px solid rgba(16, 185, 129, 0.35) !important;
@@ -640,7 +1030,7 @@ html:not([data-theme="dark"]) .guia-hito-badge {
   border-radius: 0.55rem !important;
   border: 1px solid rgba(148, 163, 184, 0.18) !important;
   background: rgba(15, 23, 42, 0.45) !important;
-  margin-bottom: 0.45rem !important;
+  margin-bottom: 0.25rem !important;
 }
 
 html:not([data-theme="dark"]) .guia-tabla-wrap {
@@ -662,14 +1052,78 @@ html:not([data-theme="dark"]) .guia-tabla-wrap {
   text-transform: uppercase !important;
   font-size: 0.64rem !important;
   letter-spacing: 0.04em !important;
-  padding: 0.45rem 0.75rem !important;
+  padding: 0.48rem 0.75rem !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.18) !important;
 }
 
-.guia-tabla th:nth-child(1), .guia-tabla td:nth-child(1) { width: 18% !important; }
-.guia-tabla th:nth-child(2), .guia-tabla td:nth-child(2) { width: 24% !important; }
-.guia-tabla th:nth-child(3), .guia-tabla td:nth-child(3) { width: 14% !important; }
-.guia-tabla th:nth-child(4), .guia-tabla td:nth-child(4) { width: 44% !important; }
+.guia-tabla th.th-num, .guia-tabla td.guia-td-num {
+  width: 3.2rem !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 0.45rem 0.25rem !important;
+}
+.guia-tabla th:nth-child(2), .guia-tabla td:nth-child(2) { width: 19% !important; }
+.guia-tabla th:nth-child(3), .guia-tabla td:nth-child(3) { width: 24% !important; }
+.guia-tabla th:nth-child(4), .guia-tabla td:nth-child(4) { width: 14% !important; }
+.guia-tabla th:nth-child(5), .guia-tabla td:nth-child(5) { width: 38% !important; }
+
+/* Botón de paso enumerado interactivo */
+.guia-check-btn {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  outline: none !important;
+}
+
+.guia-check-btn .num-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+  border-radius: 50% !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  background: rgba(148, 163, 184, 0.16) !important;
+  color: #cbd5e1 !important;
+  border: 1px solid rgba(148, 163, 184, 0.3) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+html:not([data-theme="dark"]) .guia-check-btn .num-badge {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.guia-check-btn:hover .num-badge {
+  background: rgba(56, 189, 248, 0.25) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+  transform: scale(1.1) !important;
+}
+
+/* Fila marcada como completada */
+.guia-fila-paso.completada {
+  background: rgba(16, 185, 129, 0.08) !important;
+}
+
+html:not([data-theme="dark"]) .guia-fila-paso.completada {
+  background: #f0fdf4 !important;
+}
+
+.guia-fila-paso.completada .guia-check-btn .num-badge {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  border-color: #059669 !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.45) !important;
+  transform: scale(1.05) !important;
+}
 
 html:not([data-theme="dark"]) .guia-tabla th {
   background: #f1f5f9 !important;
@@ -678,7 +1132,7 @@ html:not([data-theme="dark"]) .guia-tabla th {
 }
 
 .guia-tabla td {
-  padding: 0.4rem 0.75rem !important;
+  padding: 0.45rem 0.75rem !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.12) !important;
   vertical-align: top !important;
 }
@@ -703,7 +1157,7 @@ html:not([data-theme="dark"]) .guia-campo {
   font-weight: 600 !important;
   color: #38bdf8 !important;
   background: rgba(56, 189, 248, 0.12) !important;
-  padding: 0.14rem 0.45rem !important;
+  padding: 0.15rem 0.45rem !important;
   border-radius: 0.35rem !important;
   display: inline-block !important;
   word-break: break-word !important;
@@ -744,7 +1198,7 @@ html:not([data-theme="dark"]) .guia-valor.valor-accion {
 .guia-tipo-tag {
   font-size: 0.62rem !important;
   font-weight: 600 !important;
-  padding: 0.12rem 0.4rem !important;
+  padding: 0.14rem 0.42rem !important;
   border-radius: 0.3rem !important;
   background: rgba(148, 163, 184, 0.15) !important;
   color: #cbd5e1 !important;
@@ -773,31 +1227,30 @@ html:not([data-theme="dark"]) .guia-tipo-tag.critico {
   color: #94a3b8 !important;
   font-size: 0.72rem !important;
   word-break: break-word !important;
-  line-height: 1.45 !important;
+  line-height: 1.48 !important;
 }
 
 html:not([data-theme="dark"]) .guia-detalle {
   color: #334155 !important;
 }
 
-/* Sticky Footer Inferior Permanente Esbelto */
+/* Footer Inferior Permanente Anclado a la Base del Modal (Fuera del Scroll) */
 .guia-footer-sticky {
-  position: sticky !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
+  flex-shrink: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0.65rem 1.15rem !important;
   background: rgba(15, 23, 42, 0.96) !important;
-  padding: 0.55rem 1rem !important;
-  margin: 0.65rem -1rem 0 -1rem !important;
-  border-top: 1px solid rgba(148, 163, 184, 0.2) !important;
-  display: flex !important;
+  border-top: 1px solid rgba(148, 163, 184, 0.22) !important;
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
   align-items: center !important;
-  justify-content: space-between !important;
   gap: 0.75rem !important;
   z-index: 40 !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.35) !important;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.28) !important;
 }
 
 html:not([data-theme="dark"]) .guia-footer-sticky {
@@ -807,17 +1260,58 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
 }
 
 .btn-pie-next {
-  min-width: 12rem !important;
-  justify-content: center !important;
-  font-size: 0.78rem !important;
-  padding: 0.42rem 1.1rem !important;
-  border-radius: 0.5rem !important;
+  min-width: 9rem !important;
+  max-width: 22rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  gap: 0.65rem !important;
+  padding: 0.38rem 0.85rem !important;
+  border-radius: 0.55rem !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+.btn-next-body {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  line-height: 1.22 !important;
+}
+
+.btn-next-kicker {
+  font-size: 0.64rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  opacity: 0.92 !important;
+  white-space: nowrap !important;
+}
+
+.btn-next-title {
+  font-size: 0.73rem !important;
+  font-weight: 600 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  opacity: 0.96 !important;
+}
+
+.btn-next-arrow {
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
 }
 
 .guia-pie-status {
   font-size: 0.74rem !important;
   color: var(--text-muted, #94a3b8) !important;
   font-weight: 600 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
 }
 
 html:not([data-theme="dark"]) .guia-pie-status {
@@ -828,9 +1322,24 @@ html:not([data-theme="dark"]) .guia-pie-status {
   font-size: 0.78rem !important;
   font-weight: 700 !important;
   color: #34d399 !important;
+  text-align: right !important;
+  white-space: nowrap !important;
 }
 
-/* Modo móvil */
+html:not([data-theme="dark"]) .guia-pie-final {
+  color: #059669 !important;
+}
+
+/* Ajuste cuando el modal está acoplado a la derecha */
+.focus-chip.tiene-guia.docked-right .btn-pie-next {
+  max-width: 15rem !important;
+}
+
+.focus-chip.tiene-guia.docked-right .btn-next-title {
+  max-width: 8rem !important;
+}
+
+/* Modo móvil y tablets (< 768px) */
 @media (max-width: 768px) {
   .focus-chip,
   .focus-chip.tiene-guia {
@@ -844,14 +1353,15 @@ html:not([data-theme="dark"]) .guia-pie-status {
     max-width: 100vw !important;
     height: 90vh !important;
     max-height: 90vh !important;
-    border-radius: 1.25rem 1.25rem 0 0 !important;
+    border-radius: 1.15rem 1.15rem 0 0 !important;
     box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--frontend-stroke) !important;
     margin: 0 !important;
     z-index: 100 !important;
   }
 
   .guia-modal-topbar {
-    padding: 0.45rem 0.75rem !important;
+    padding: 0.5rem 0.8rem !important;
+    gap: 0.45rem !important;
   }
 
   .guia-brand-title {
@@ -868,23 +1378,43 @@ html:not([data-theme="dark"]) .guia-pie-status {
   }
 
   .chip-btn-ctrl {
-    padding: 0.2rem 0.4rem !important;
+    padding: 0.24rem 0.48rem !important;
   }
 
-  .focus-chip.tiene-guia .relationship-lens-copy {
-    padding: 0.5rem 0.75rem 0 0.75rem !important;
+  .guia-body-scroll {
+    padding: 0.55rem 0.8rem 0.65rem 0.8rem !important;
   }
 
   .guia-footer-sticky {
-    padding: 0.55rem 0.75rem !important;
-    margin: auto -0.75rem 0 -0.75rem !important;
+    padding: 0.55rem 0.8rem !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-areas:
+      "status status"
+      "prev next" !important;
+    gap: 0.42rem !important;
   }
 
-  .btn-pie-next {
-    min-width: auto !important;
-    flex: 1 !important;
-    font-size: 0.74rem !important;
-    padding: 0.42rem 0.65rem !important;
+  .guia-pie-status {
+    grid-area: status !important;
+    font-size: 0.7rem !important;
+  }
+
+  .btn-pie-prev {
+    grid-area: prev !important;
+    width: 100% !important;
+    font-size: 0.72rem !important;
+    padding: 0.4rem 0.5rem !important;
+  }
+
+  .btn-pie-next,
+  .guia-pie-final {
+    grid-area: next !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    font-size: 0.72rem !important;
+    padding: 0.4rem 0.6rem !important;
+    text-align: center !important;
   }
 
   .guia-campo {
@@ -923,6 +1453,7 @@ html:not([data-theme="dark"]) .guia-pie-status {
   .guia-tabla td {
     padding: 0.18rem 0 !important;
     border-bottom: none !important;
+    width: 100% !important;
   }
 }
 """
@@ -934,9 +1465,20 @@ __CSS__
 <script>
 (function() {
   var GUIA_MAP = __GUIA_JSON__;
+  window.__SIGUIENTE_FLUJO = __SIGUIENTE_FLUJO_JSON__;
+  window.__ANTERIOR_FLUJO = __ANTERIOR_FLUJO_JSON__;
+  window.__VOLVER_CENTROS_URL = "__VOLVER_CENTROS_URL__";
+
+  window.__guiaMaxUnlocked = window.__guiaMaxUnlocked || 0;
+  window.__guiaChecks = window.__guiaChecks || {};
 
   window.irAPaso = function(targetNodeId) {
     if (!targetNodeId) return;
+    var stepKeys = Object.keys(GUIA_MAP);
+    var targetIdx = stepKeys.indexOf(targetNodeId);
+    if (targetIdx !== -1 && targetIdx > (window.__guiaMaxUnlocked || 0)) {
+      return;
+    }
     var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
     if (nodeElem) {
       nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
@@ -954,9 +1496,30 @@ __CSS__
     var stepKeys = Object.keys(GUIA_MAP);
     var currentIndex = stepKeys.indexOf(currentId);
     if (currentIndex === -1) return;
+
+    // Al avanzar con Siguiente, marcar completadas todas las filas del paso actual
+    if (offset > 0 && currentId && GUIA_MAP[currentId]) {
+      window.__guiaChecks[currentId] = window.__guiaChecks[currentId] || {};
+      var curInst = GUIA_MAP[currentId].instrucciones || [];
+      for (var r = 0; r < curInst.length; r++) {
+        window.__guiaChecks[currentId][r] = true;
+      }
+    }
+
     var nextIndex = currentIndex + offset;
     if (nextIndex >= 0 && nextIndex < stepKeys.length) {
-      window.irAPaso(stepKeys[nextIndex]);
+      if (nextIndex > (window.__guiaMaxUnlocked || 0)) {
+        window.__guiaMaxUnlocked = nextIndex;
+      }
+      var targetNodeId = stepKeys[nextIndex];
+      var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
+      if (nodeElem) {
+        nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        try {
+          nodeElem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        } catch (_) {}
+        setTimeout(actualizarModalGuia, 40);
+      }
     }
   };
 
@@ -970,9 +1533,14 @@ __CSS__
     var nextNode = hasNext ? stepKeys[currentIndex + 1] : null;
     var nextTitle = nextNode && GUIA_MAP[nextNode] ? (GUIA_MAP[nextNode].fase || GUIA_MAP[nextNode].pantalla || 'Paso siguiente') : '';
 
-    var html = '';
+    var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
+    if (currentIndex > maxUnlocked) {
+      window.__guiaMaxUnlocked = currentIndex;
+      maxUnlocked = currentIndex;
+    }
 
-    // 1. Stepper horizontal interactivo con todas las fases y barrita de progreso integrada
+    var html = '<div class="guia-body-scroll">';
+
     if (totalSteps > 1) {
       var progressPct = Math.round(((currentIndex + 1) / totalSteps) * 100);
       html += '<div class="guia-stepper-wrap">';
@@ -981,21 +1549,33 @@ __CSS__
         var sInfo = GUIA_MAP[k];
         var isAct = (k === nodeId);
         var isPast = (idx < currentIndex);
+        var isLocked = (idx > maxUnlocked);
         var label = sInfo.fase ? sInfo.fase.replace(/^Paso\s*\d+:\s*/i, '') : (sInfo.pantalla || ('Paso ' + (idx + 1)));
 
         var pillClass = 'guia-step-pill';
         if (isAct) pillClass += ' active';
         else if (isPast) pillClass += ' past';
+        else if (isLocked) pillClass += ' locked';
 
-        var badgeTxt = isPast ? '✓' : (idx + 1);
+        var badgeTxt;
+        if (isPast) badgeTxt = '✓';
+        else if (isLocked) badgeTxt = '🔒 ' + (idx + 1);
+        else badgeTxt = (idx + 1);
 
-        html += '<button type="button" class="' + pillClass + '" data-ir-paso="' + escapeHtml(k) + '" title="Ir al paso ' + (idx + 1) + ': ' + escapeHtml(label) + '">';
-        html += '<span class="pill-badge">' + badgeTxt + '</span>';
-        html += '<span>' + escapeHtml(label) + '</span>';
-        html += '</button>';
+        if (isLocked) {
+          html += '<button type="button" class="' + pillClass + '" disabled title="Paso ' + (idx + 1) + ' bloqueado. Haz clic en Siguiente para avanzar.">';
+          html += '<span class="pill-badge">' + badgeTxt + '</span>';
+          html += '<span>' + escapeHtml(label) + '</span>';
+          html += '</button>';
+        } else {
+          html += '<button type="button" class="' + pillClass + '" data-ir-paso="' + escapeHtml(k) + '" title="Ir al paso ' + (idx + 1) + ': ' + escapeHtml(label) + '">';
+          html += '<span class="pill-badge">' + badgeTxt + '</span>';
+          html += '<span>' + escapeHtml(label) + '</span>';
+          html += '</button>';
+        }
 
         if (idx < totalSteps - 1) {
-          var arrowClass = 'stepper-arrow' + (isPast ? ' past' : '');
+          var arrowClass = 'stepper-arrow' + (isPast ? ' past' : (isLocked ? ' locked' : ''));
           html += '<span class="' + arrowClass + '">›</span>';
         }
       });
@@ -1004,7 +1584,6 @@ __CSS__
       html += '</div>';
     }
 
-    // 2. Hero de fase actual y pantalla Banner compacto
     html += '<div class="guia-fase-hero">';
     html += '<div class="guia-fase-main">';
     if (info.pantalla) {
@@ -1019,12 +1598,16 @@ __CSS__
     }
     html += '</div>';
 
-    // 3. Tabla de instrucciones operativas compacta con valores inteligentes
     if (info.instrucciones && info.instrucciones.length > 0) {
       html += '<div class="guia-tabla-wrap"><table class="guia-tabla">';
-      html += '<thead><tr><th>Campo / Acción</th><th>Valor / Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
+      html += '<thead><tr><th class="th-num">#</th><th>Campo / Acción</th><th>Valor / Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
       html += '<tbody>';
-      info.instrucciones.forEach(function(item) {
+      
+      var checks = (window.__guiaChecks && window.__guiaChecks[nodeId]) || {};
+
+      info.instrucciones.forEach(function(item, rIdx) {
+        var rowNum = rIdx + 1;
+        var isChecked = !!checks[rIdx];
         var isCritico = (item.tipo || '').toLowerCase().indexOf('crítico') !== -1 || (item.tipo || '').toLowerCase().indexOf('guardado') !== -1;
         var tagClass = isCritico ? 'guia-tipo-tag critico' : 'guia-tipo-tag';
         var valorTxt = item.valor || '';
@@ -1040,7 +1623,14 @@ __CSS__
           valorDisplay = '👆 ' + valorDisplay;
         }
 
-        html += '<tr>';
+        var rowClass = 'guia-fila-paso' + (isChecked ? ' completada' : '');
+
+        html += '<tr class="' + rowClass + '" data-row-idx="' + rIdx + '">';
+        html += '<td class="guia-td-num">';
+        html += '<button type="button" class="guia-check-btn" data-check-row="' + rIdx + '" title="Paso ' + rowNum + ': Clic para marcar/desmarcar como completado">';
+        html += '<span class="num-badge">' + (isChecked ? '✓' : rowNum) + '</span>';
+        html += '</button>';
+        html += '</td>';
         html += '<td class="guia-campo">' + escapeHtml(item.campo || '') + '</td>';
         html += '<td><span class="' + valClass + '">' + valorDisplay + '</span></td>';
         html += '<td><span class="' + tagClass + '">' + escapeHtml(item.tipo || '') + '</span></td>';
@@ -1050,16 +1640,43 @@ __CSS__
       html += '</tbody></table></div>';
     }
 
-    // 4. Sticky Footer inferior permanente esbelto
+    html += '</div>';
+
     if (totalSteps > 1) {
       var pct = Math.round(((currentIndex + 1) / totalSteps) * 100);
       html += '<div class="guia-footer-sticky">';
       html += '<button type="button" class="guia-nav-btn btn-pie-prev" ' + (hasPrev ? 'data-nav-paso="-1"' : 'disabled') + '>← Paso anterior</button>';
       html += '<div class="guia-pie-status">Paso ' + (currentIndex + 1) + ' de ' + totalSteps + ' · ' + pct + '% completado</div>';
       if (hasNext) {
-        html += '<button type="button" class="guia-nav-btn btn-pie-next primary" data-nav-paso="1">Siguiente: ' + escapeHtml(nextTitle) + ' →</button>';
+        var cleanNext = nextTitle.replace(/^Paso\s*\d+:\s*/i, '');
+        var nextStepNum = currentIndex + 2;
+        html += '<button type="button" class="guia-nav-btn btn-pie-next primary" data-nav-paso="1" title="Avanzar al Paso ' + nextStepNum + ': ' + escapeHtml(cleanNext) + '">';
+        html += '<span class="btn-next-body">';
+        html += '<span class="btn-next-kicker">Siguiente · Paso ' + nextStepNum + '</span>';
+        html += '<span class="btn-next-title">' + escapeHtml(cleanNext) + '</span>';
+        html += '</span>';
+        html += '<span class="btn-next-arrow">→</span>';
+        html += '</button>';
       } else {
-        html += '<span class="guia-pie-final">✓ Flujo completado con éxito</span>';
+        if (window.__SIGUIENTE_FLUJO && window.__SIGUIENTE_FLUJO.url) {
+          var sigNum = window.__SIGUIENTE_FLUJO.num;
+          var sigNumTxt = (sigNum < 10 ? '0' : '') + sigNum;
+          html += '<a href="' + escapeHtml(window.__SIGUIENTE_FLUJO.url) + '" class="guia-nav-btn btn-pie-next primary" style="text-decoration:none;" title="Pasar al flujo ' + sigNumTxt + ': ' + escapeHtml(window.__SIGUIENTE_FLUJO.titulo) + '">';
+          html += '<span class="btn-next-body">';
+          html += '<span class="btn-next-kicker">¡Paso final! Siguiente flujo →</span>';
+          html += '<span class="btn-next-title">' + sigNumTxt + '. ' + escapeHtml(window.__SIGUIENTE_FLUJO.titulo) + '</span>';
+          html += '</span>';
+          html += '<span class="btn-next-arrow">🚀</span>';
+          html += '</a>';
+        } else {
+          html += '<a href="' + escapeHtml(window.__VOLVER_CENTROS_URL || '#') + '" class="guia-nav-btn btn-pie-next" style="text-decoration:none;" title="Volver a la galería de Centros">';
+          html += '<span class="btn-next-body">';
+          html += '<span class="btn-next-kicker">✓ Fin del recorrido</span>';
+          html += '<span class="btn-next-title">Volver a Centros</span>';
+          html += '</span>';
+          html += '<span class="btn-next-arrow">🏛️</span>';
+          html += '</a>';
+        }
       }
       html += '</div>';
     }
@@ -1119,7 +1736,7 @@ __CSS__
       var idElem = document.getElementById('focus-id');
       var nodeId = (idElem ? idElem.textContent : '').trim();
       var base = window.location.href.split('#')[0];
-      var url = nodeId ? (base + '#' + encodeURIComponent(nodeId)) : base;
+      var url = nodeId ? (base + '#focus=' + encodeURIComponent(nodeId)) : base;
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(function() {
           var txt = topbar.querySelector('.btn-copy-txt');
@@ -1178,13 +1795,11 @@ __CSS__
     chip.classList.add('tiene-guia');
     card.innerHTML = renderGuiaHtml(info, nodeId);
 
-    // Reset de scroll al inicio del paso
-    var copyElem = chip.querySelector('.relationship-lens-copy');
-    if (copyElem) {
-      copyElem.scrollTop = 0;
+    var scrollBody = card.querySelector('.guia-body-scroll');
+    if (scrollBody) {
+      scrollBody.scrollTop = 0;
     }
 
-    // Centrar suavemente la píldora activa en el Stepper horizontal
     setTimeout(function() {
       var activePill = card.querySelector('.guia-step-pill.active');
       if (activePill) {
@@ -1221,6 +1836,20 @@ __CSS__
         return;
       }
 
+      var btnCheck = e.target.closest('[data-check-row]');
+      if (btnCheck) {
+        e.preventDefault();
+        e.stopPropagation();
+        var idElem = document.getElementById('focus-id');
+        var nodeId = (idElem ? idElem.textContent : '').trim();
+        var rowIdx = parseInt(btnCheck.getAttribute('data-check-row'), 10);
+        window.__guiaChecks = window.__guiaChecks || {};
+        window.__guiaChecks[nodeId] = window.__guiaChecks[nodeId] || {};
+        window.__guiaChecks[nodeId][rowIdx] = !window.__guiaChecks[nodeId][rowIdx];
+        actualizarModalGuia();
+        return;
+      }
+
       var node = e.target.closest('[data-node-id]');
       if (node) {
         setTimeout(actualizarModalGuia, 20);
@@ -1228,11 +1857,20 @@ __CSS__
       }
     });
 
-    // Atajos de teclado para navegación paso a paso
     document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+      if (e.altKey && e.key === 'ArrowRight' && window.__SIGUIENTE_FLUJO && window.__SIGUIENTE_FLUJO.url) {
+        e.preventDefault();
+        window.location.href = window.__SIGUIENTE_FLUJO.url;
+        return;
+      }
+      if (e.altKey && e.key === 'ArrowLeft' && window.__ANTERIOR_FLUJO && window.__ANTERIOR_FLUJO.url) {
+        e.preventDefault();
+        window.location.href = window.__ANTERIOR_FLUJO.url;
+        return;
+      }
       var chip = document.getElementById('focus-chip');
       if (!chip || chip.hidden || !chip.classList.contains('tiene-guia')) return;
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if (e.key === 'ArrowRight') {
         e.preventDefault();
         window.navegarPaso(1);
@@ -1265,19 +1903,243 @@ def obtener_guia_para_slug(slug, id_centro=""):
     return None
 
 
+def construir_navegacion_flujos(ruta_html):
+    """Calcula la navegación anterior/siguiente y datos para la barra superior y pie."""
+    carpeta_diagrama = ruta_html.parent
+    carpeta_diagramas = carpeta_diagrama.parent
+
+    ruta_str = str(ruta_html).lower()
+    if "idiomas" in ruta_str:
+        id_centro = "idiomas"
+        nombre_centro = "Centro de Idiomas"
+        color_centro = "#8b5cf6"
+    elif "computacion" in ruta_str:
+        id_centro = "computacion"
+        nombre_centro = "Centro de Computación"
+        color_centro = "#10b981"
+    elif "emprendimiento" in ruta_str:
+        id_centro = "emprendimiento"
+        nombre_centro = "Centro de Emprendimiento"
+        color_centro = "#f59e0b"
+    else:
+        id_centro = "comun"
+        nombre_centro = "Centros Empresariales"
+        color_centro = "#7030A0"
+
+    url_centros = f"../../../index.html#sec-{id_centro}"
+
+    subs = sorted([
+        p for p in carpeta_diagramas.glob("[0-9][0-9]-*")
+        if p.is_dir() and next(p.glob("*.html"), None) is not None
+    ])
+
+    flujos = []
+    for s in subs:
+        html_file = next(s.glob("*.html"))
+        num = int(s.name[:2])
+        slug_s = s.name[3:]
+        titulo = TITULOS.get(slug_s, slug_s.replace("-", " ").capitalize())
+        cap = CAPACIDADES.get(slug_s, "")
+        rel_url = f"../{s.name}/{html_file.name}"
+        is_curr = (s.resolve() == carpeta_diagrama.resolve())
+        flujos.append({
+            "num": num,
+            "slug": slug_s,
+            "titulo": titulo,
+            "cap": cap,
+            "url": rel_url,
+            "is_curr": is_curr,
+            "folder": s.name,
+            "filename": html_file.name,
+        })
+
+    curr_idx = -1
+    for i, f in enumerate(flujos):
+        if f["is_curr"]:
+            curr_idx = i
+            break
+
+    if curr_idx == -1 and flujos:
+        curr_idx = 0
+
+    total_flujos = len(flujos)
+    flujo_actual = flujos[curr_idx] if curr_idx >= 0 else None
+    num_actual = curr_idx + 1
+    flujo_ant = flujos[curr_idx - 1] if curr_idx > 0 else None
+    flujo_sig = flujos[curr_idx + 1] if curr_idx < total_flujos - 1 else None
+
+    # Opciones para el select dropdown
+    options_html = []
+    for f in flujos:
+        selected = ' selected="selected"' if f["is_curr"] else ""
+        label = f"{f['num']:02d}. {f['titulo']}"
+        if f["is_curr"]:
+            label += " (Actual)"
+        options_html.append(f'<option value="{f["url"]}"{selected}>{label}</option>')
+    select_options = "\n          ".join(options_html)
+
+    # Botones top
+    if flujo_ant:
+        btn_prev_top = f'''<a href="{flujo_ant['url']}" class="flow-btn-top prev" title="Flujo anterior: {flujo_ant['titulo']}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <span>Anterior</span>
+      </a>'''
+    else:
+        btn_prev_top = '''<span class="flow-btn-top prev disabled" title="Primer flujo de este centro">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <span>Anterior</span>
+      </span>'''
+
+    if flujo_sig:
+        btn_next_top = f'''<a href="{flujo_sig['url']}" class="flow-btn-top next primary" title="Siguiente flujo: {flujo_sig['titulo']}">
+        <span>Siguiente</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>'''
+    else:
+        btn_next_top = '''<span class="flow-btn-top next disabled" title="Último flujo de este centro">
+        <span>Siguiente</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </span>'''
+
+    html_nav_top = f'''<!-- === FLOW NAV TOP === -->
+    <nav class="flow-nav-top" aria-label="Navegación entre flujos">
+      <div class="flow-nav-left">
+        <a href="{url_centros}" class="btn-flow-centros" title="Volver a la galería principal de Centros Empresariales">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Volver a Centros</span>
+        </a>
+        <span class="flow-nav-sep">/</span>
+        <span class="flow-nav-center-tag">
+          <span class="flow-center-dot" style="background:{color_centro}"></span>
+          {nombre_centro}
+        </span>
+        <span class="flow-nav-sep">/</span>
+        <div class="flow-nav-select-wrap">
+          <select class="flow-nav-select" onchange="if(this.value) window.location.href=this.value" title="Cambiar a otro flujo del centro">
+            {select_options}
+          </select>
+          <span class="flow-nav-select-arrow">▾</span>
+        </div>
+      </div>
+      <div class="flow-nav-right">
+        {btn_prev_top}
+        <span class="flow-nav-counter">Flujo <strong>{num_actual}</strong> de {total_flujos}</span>
+        {btn_next_top}
+      </div>
+    </nav>
+    <!-- === /FLOW NAV TOP === -->'''
+
+    # Tarjetas pie (Bottom)
+    if flujo_ant:
+        card_prev = f'''<a href="{flujo_ant['url']}" class="flow-bottom-card prev" title="Ir al flujo anterior: {flujo_ant['titulo']}">
+          <div class="flow-card-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>Flujo anterior</span>
+          </div>
+          <div class="flow-card-num-title">
+            <span class="flow-card-num">{flujo_ant['num']:02d}</span>
+            <span class="flow-card-title">{flujo_ant['titulo']}</span>
+          </div>
+          <div class="flow-card-meta">{flujo_ant['cap'] or 'Capacidades Banner'}</div>
+        </a>'''
+    else:
+        card_prev = '''<div class="flow-bottom-card prev placeholder">
+          <div class="flow-card-badge"><span>Inicio del recorrido</span></div>
+          <div class="flow-card-title muted">Este es el primer flujo del centro</div>
+        </div>'''
+
+    if flujo_sig:
+        card_next = f'''<a href="{flujo_sig['url']}" class="flow-bottom-card next primary-accent" title="Avanzar al siguiente flujo: {flujo_sig['titulo']}">
+          <div class="flow-card-badge">
+            <span>Siguiente flujo</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="flow-card-num-title">
+            <span class="flow-card-num">{flujo_sig['num']:02d}</span>
+            <span class="flow-card-title">{flujo_sig['titulo']}</span>
+          </div>
+          <div class="flow-card-meta">{flujo_sig['cap'] or 'Capacidades Banner'}</div>
+        </a>'''
+    else:
+        card_next = f'''<div class="flow-bottom-card next placeholder">
+          <div class="flow-card-badge"><span>Fin del recorrido</span></div>
+          <div class="flow-card-title muted">¡Completaste todos los flujos de {nombre_centro}!</div>
+        </div>'''
+
+    html_nav_bottom = f'''<!-- === FLOW NAV BOTTOM === -->
+    <nav class="flow-nav-bottom-section" aria-label="Paginación de flujos al pie">
+      <div class="flow-bottom-container">
+        <div class="flow-bottom-col prev-col">
+          {card_prev}
+        </div>
+        <div class="flow-bottom-col hub-col">
+          <a href="{url_centros}" class="flow-bottom-hub-btn" title="Ver galería y todos los flujos de {nombre_centro}">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Ver todos los flujos ({nombre_centro})</span>
+          </a>
+        </div>
+        <div class="flow-bottom-col next-col">
+          {card_next}
+        </div>
+      </div>
+    </nav>
+    <!-- === /FLOW NAV BOTTOM === -->'''
+
+    return {
+        "nav_top": html_nav_top,
+        "nav_bottom": html_nav_bottom,
+        "flujo_ant": flujo_ant,
+        "flujo_sig": flujo_sig,
+        "num_actual": num_actual,
+        "total_flujos": total_flujos,
+        "url_centros": url_centros,
+    }
+
+
 def inyectar_en_html(ruta_html, slug):
-    """Inyecta el CSS responsivo y JS de la guía operativa en el HTML generado."""
+    """Inyecta el CSS responsivo, navegación entre flujos y JS de la guía operativa en el HTML generado."""
     ruta_str = str(ruta_html).lower()
     id_centro = "idiomas" if "idiomas" in ruta_str else ("computacion" if "computacion" in ruta_str else ("emprendimiento" if "emprendimiento" in ruta_str else ""))
     guia = obtener_guia_para_slug(slug, id_centro) or {}
 
+    nav_data = construir_navegacion_flujos(ruta_html)
+
     contenido = ruta_html.read_text(encoding="utf-8")
     if "/* === DISEÑO RESPONSIVO" in contenido or "guia-operativa-card" in contenido:
-        # Ya está inyectado, limpiar versión anterior
         contenido = re.sub(r"<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?<\/script>", "", contenido, flags=re.DOTALL)
+    contenido = re.sub(r"\s*<!-- === FLOW NAV TOP === -->.*?<!-- === /FLOW NAV TOP === -->", "", contenido, flags=re.DOTALL)
+    contenido = re.sub(r"\s*<!-- === FLOW NAV BOTTOM === -->.*?<!-- === /FLOW NAV BOTTOM === -->", "", contenido, flags=re.DOTALL)
+
+    # Inyectar navegación superior antes de <div class="header">
+    if '<div class="header">' in contenido:
+        contenido = contenido.replace('<div class="header">', f'{nav_data["nav_top"]}\n    <div class="header">', 1)
+
+    # Inyectar navegación inferior antes de <nav class="node-outline
+    if '<nav class="node-outline' in contenido:
+        contenido = contenido.replace('<nav class="node-outline', f'{nav_data["nav_bottom"]}\n    <nav class="node-outline', 1)
+    elif '</div>\n  </div>' in contenido:
+        contenido = contenido.replace('</div>\n  </div>', f'{nav_data["nav_bottom"]}\n  </div>', 1)
 
     guia_json = json.dumps(guia, ensure_ascii=False)
-    bloque = JS_SCRIPT_TEMPLATE.replace("__CSS__", CSS_MODAL).replace("__GUIA_JSON__", guia_json)
+    sig_json = json.dumps(nav_data["flujo_sig"], ensure_ascii=False) if nav_data["flujo_sig"] else "null"
+    ant_json = json.dumps(nav_data["flujo_ant"], ensure_ascii=False) if nav_data["flujo_ant"] else "null"
+
+    bloque = (
+        JS_SCRIPT_TEMPLATE
+        .replace("__CSS__", CSS_MODAL)
+        .replace("__GUIA_JSON__", guia_json)
+        .replace("__SIGUIENTE_FLUJO_JSON__", sig_json)
+        .replace("__ANTERIOR_FLUJO_JSON__", ant_json)
+        .replace("__VOLVER_CENTROS_URL__", nav_data["url_centros"])
+    )
 
     if "</body>" in contenido:
         nuevo_contenido = contenido.replace("</body>", f"{bloque}\n</body>")
@@ -1287,3 +2149,19 @@ def inyectar_en_html(ruta_html, slug):
     ruta_html.write_text(nuevo_contenido, encoding="utf-8")
     return True
 
+
+def inyectar_todos():
+    """Inyecta guías y navegación en todos los archivos HTML existentes en centros/."""
+    raiz = Path(__file__).resolve().parent.parent.parent
+    centros_dir = raiz / "centros"
+    cont = 0
+    for html_file in sorted(centros_dir.glob("**/diagramas/**/*.html")):
+        slug = html_file.stem
+        if inyectar_en_html(html_file, slug):
+            cont += 1
+    print(f"Inyección completada en {cont} diagramas HTML.")
+    return cont
+
+
+if __name__ == "__main__":
+    inyectar_todos()

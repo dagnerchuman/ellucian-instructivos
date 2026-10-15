@@ -713,7 +713,10 @@
       "items": [
         "No rinde examen de suficiencia (C36)",
         "Escala del nivel C en SHAGRDE con modo V: nota mínima 11 (U20 resuelta)",
-        "Los grupos duran 4, 6 u 8 semanas (X01–X07 en 2026)"
+        "Los grupos duran 4, 6 u 8 semanas (X01–X07 en 2026)",
+        "Asistencia mínima obligatoria para aprobar: 70 % (C63)",
+        "Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)",
+        "Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)"
       ]
     },
     {
@@ -734,11 +737,7 @@
       "dot": "amber",
       "title": "Por confirmar",
       "items": [
-        "U02: ¿Los cursos tienen orden (uno exige aprobar otro) o son independientes?",
-        "U03: ¿Qué asistencia mínima se exige? El instructivo usa 70 % como ejemplo",
-        "U04: ¿Quién carga el plan de evaluación (SHAGCOM): Registros Académicos o el centro?",
-        "U05: Nombres oficiales de los cursos y pesos de evaluación",
-        "U22: 202751 solo tiene X01 (y I01, P01). ¿Se agregan X02 y los demás grupos de verano 2027? ¿Con qué fechas?"
+        "U05: Nombres oficiales de los cursos y pesos de evaluación"
       ]
     }
   ]

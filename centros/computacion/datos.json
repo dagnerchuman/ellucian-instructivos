@@ -243,7 +243,7 @@
     },
     "11": {
       "estado": "validado",
-      "evidencia": "05/10: el periodo 202751 «2027-V Verano Idi.Com.Emp.» ya existía, con la parte X01 (12-ENE a 22-FEB-2027, 6 semanas). Se creó en SSASECT un NRC de prueba ESEC 00650 sección A en 202751/X01. Falta X02 en 202751 (U22)"
+      "evidencia": "05/10: el periodo 202751 «2027-V Verano Idi.Com.Emp.» ya existía, con la parte X01 (12-ENE a 22-FEB-2027, 6 semanas). Se creó en SSASECT un NRC de prueba ESEC 00650 sección A en 202751/X01. Partes de periodo se copian/gestionan en SOATERM (Instructivo 1.1.2, U22 resuelta)"
     },
     "12": {
       "estado": "validado",
@@ -285,28 +285,15 @@
   "particularidades": [
     "No rinde examen de suficiencia (C36)",
     "Escala del nivel C en SHAGRDE con modo V: nota mínima 11 (U20 resuelta)",
-    "Los grupos duran 4, 6 u 8 semanas (X01–X07 en 2026)"
+    "Los grupos duran 4, 6 u 8 semanas (X01–X07 en 2026)",
+    "Asistencia mínima obligatoria para aprobar: 70 % (C63)",
+    "Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)",
+    "Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)"
   ],
   "dudas": [
     {
-      "id": "U02",
-      "texto": "¿Los cursos tienen orden (uno exige aprobar otro) o son independientes?"
-    },
-    {
-      "id": "U03",
-      "texto": "¿Qué asistencia mínima se exige? El instructivo usa 70 % como ejemplo"
-    },
-    {
-      "id": "U04",
-      "texto": "¿Quién carga el plan de evaluación (SHAGCOM): Registros Académicos o el centro?"
-    },
-    {
       "id": "U05",
       "texto": "Nombres oficiales de los cursos y pesos de evaluación"
-    },
-    {
-      "id": "U22",
-      "texto": "202751 solo tiene X01 (y I01, P01). ¿Se agregan X02 y los demás grupos de verano 2027? ¿Con qué fechas?"
     }
   ],
   "casuisticas": {

@@ -5018,6 +5018,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <span>Siguiente</span>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
+        <button type="button" class="flow-btn-top btn-toggle-present" id="btn-flow-present" title="Modo Presentación / Pantalla Completa (Atajo: F)" onclick="var b=document.getElementById('btn-present'); if(b) b.click();">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+          <span>Pantalla completa</span>
+        </button>
       </div>
     </nav>
     <!-- === /FLOW NAV TOP === -->
@@ -13808,9 +13812,84 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
+
+/* Modo Presentación: Ocultar barras de navegación y pie para pantalla completa limpia */
+html[data-present="true"] .flow-nav-top,
+html[data-present="true"] .flow-nav-bottom-section {
+  display: none !important;
+}
+
+html[data-present="true"]:not([data-embed="true"]) body {
+  padding: 0.25rem 0.75rem !important;
+}
+
+html[data-present="true"] .header {
+  margin-bottom: 0.15rem !important;
+  padding: 0 !important;
+}
+
+/* Asegurar que el botón de presentación de Archify muestre texto visible */
+.toolbar #btn-present {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+}
+
+.toolbar #present-label {
+  display: inline-block !important;
+  font-size: 0.72rem !important;
+}
 
 /* --- 0. BARRAS DE NAVEGACIÓN Y PAGINACIÓN ENTRE FLUJOS --- */
 /* CRÍTICO: Neutralizar la regla global `svg { min-width: min(900px, 100%); width: 100%; }` de Archify */
@@ -13839,18 +13918,18 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
-  gap: 0.65rem 1rem !important;
+  gap: 0.45rem 0.85rem !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  padding: 0.55rem 1rem !important;
-  margin: 0 0 1rem 0 !important;
+  padding: 0.32rem 0.85rem !important;
+  margin: 0 0 0.35rem 0 !important;
   background: var(--toolbar-bg, rgba(15, 23, 42, 0.82)) !important;
   border: 1px solid var(--panel-border, #334155) !important;
-  border-radius: 0.75rem !important;
+  border-radius: 0.65rem !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   font-family: system-ui, -apple-system, sans-serif !important;
-  font-size: 0.82rem !important;
+  font-size: 0.8rem !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18) !important;
   position: relative !important;
   z-index: 25 !important;
@@ -14031,6 +14110,21 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   pointer-events: none !important;
 }
 
+.flow-btn-top.btn-toggle-present {
+  background: var(--toolbar-bg, #1e293b) !important;
+  color: var(--text, #fff) !important;
+  border-color: var(--panel-border, #334155) !important;
+  cursor: pointer !important;
+  margin-left: 0.25rem !important;
+}
+
+.flow-btn-top.btn-toggle-present:hover {
+  background: #7030A0 !important;
+  border-color: #8b5cf6 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 10px rgba(112, 48, 160, 0.35) !important;
+}
+
 .flow-nav-counter {
   font-size: 0.78rem !important;
   color: var(--text-muted, #94a3b8) !important;
@@ -14179,26 +14273,37 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   transform: translateY(-2px) !important;
 }
 
-/* --- 1. HEADER DE LA PÁGINA & TOOLBAR INTEGRADOS Y RESPONSIVOS --- */
-.header {
+/* Reducción global de espaciado para que todo entre ordenado en una sola pantalla */
+body {
+  padding: 0.45rem 1.15rem 1.25rem 1.15rem !important;
+  --archify-page-top: 0.45rem !important;
+}
+
+body.has-guia-open {
+  padding: 0.45rem 1.15rem 1.25rem 1.15rem !important;
+  --archify-page-top: 0.45rem !important;
+  overflow: hidden !important;
+}
+
+/* --- 1. HEADER DE LA PÁGINA & TOOLBAR INTEGRADOS Y SIN SUPERPOSICIÓN --- */
+.header,
+html[data-present="true"] .header {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) auto !important;
   grid-template-areas:
     "title toolbar"
     "subtitle toolbar" !important;
   align-items: center !important;
-  column-gap: 1.25rem !important;
-  row-gap: 0.25rem !important;
-  padding-right: 0 !important;
-  margin-bottom: 1rem !important;
+  column-gap: 1.15rem !important;
+  row-gap: 0.15rem !important;
+  padding: 0 !important;
+  margin-bottom: 0.35rem !important;
   position: relative !important;
   width: 100% !important;
 }
 
-html[data-preset="signal-flow"] .header,
-html[data-preset="blueprint"] .header,
-html[data-preset="editorial"] .header {
-  padding-right: 0 !important;
+body.has-guia-open .header {
+  margin-bottom: 0.35rem !important;
 }
 
 .header-row {
@@ -14206,34 +14311,39 @@ html[data-preset="editorial"] .header {
   display: flex !important;
   justify-content: flex-start !important;
   align-items: center !important;
-  gap: 0.75rem !important;
+  gap: 0.65rem !important;
   min-width: 0 !important;
   margin-bottom: 0 !important;
 }
 
 .header h1 {
   margin: 0 !important;
-  font-size: clamp(1.15rem, 2.1vw, 1.55rem) !important;
-  line-height: 1.28 !important;
+  font-size: clamp(1.05rem, 1.8vw, 1.38rem) !important;
+  line-height: 1.25 !important;
   text-align: left !important;
   word-break: break-word !important;
+}
+
+body.has-guia-open .header h1 {
+  font-size: clamp(1.05rem, 1.8vw, 1.38rem) !important;
 }
 
 .subtitle {
   grid-area: subtitle !important;
   text-align: left !important;
-  font-size: clamp(0.72rem, 1.25vw, 0.82rem) !important;
-  line-height: 1.5 !important;
+  font-size: clamp(0.7rem, 1.1vw, 0.78rem) !important;
+  line-height: 1.35 !important;
   color: var(--text-muted) !important;
-  margin: 0 0 0 1.375rem !important;
+  margin: 0 0 0 1.25rem !important;
   max-width: 68rem !important;
 }
 
-/* El toolbar se mueve dentro de .header por JS o se posiciona limpio a la derecha */
+/* El toolbar vive dentro de la celda derecha del Grid de .header y jamás pisa el título */
 .header .toolbar,
+html[data-present="true"] .header .toolbar,
 body > .toolbar {
   grid-area: toolbar !important;
-  position: relative !important;
+  position: static !important;
   top: auto !important;
   right: auto !important;
   left: auto !important;
@@ -14243,16 +14353,16 @@ body > .toolbar {
   align-items: center !important;
   justify-content: flex-end !important;
   gap: 0.4rem !important;
-  align-self: start !important;
+  align-self: center !important;
 }
 
 @media (max-width: 960px) {
   body {
-    padding: 0.75rem !important;
+    padding: 0.6rem !important;
   }
   .flow-nav-top {
-    padding: 0.5rem 0.75rem !important;
-    margin-bottom: 0.75rem !important;
+    padding: 0.4rem 0.65rem !important;
+    margin-bottom: 0.5rem !important;
   }
   .flow-nav-left,
   .flow-nav-right {
@@ -14265,70 +14375,109 @@ body > .toolbar {
   .flow-nav-select {
     max-width: 100% !important;
   }
-  .header {
+  .header,
+  html[data-present="true"] .header {
     grid-template-columns: 1fr !important;
     grid-template-areas:
       "toolbar"
       "title"
       "subtitle" !important;
-    row-gap: 0.45rem !important;
+    row-gap: 0.35rem !important;
   }
   .header .toolbar,
   body > .toolbar {
     width: 100% !important;
     justify-content: flex-end !important;
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 0.2rem !important;
     overflow-x: auto !important;
-    padding-bottom: 0.2rem !important;
-    scrollbar-width: thin;
   }
   .subtitle {
     margin-left: 0 !important;
   }
-  .toolbar .preset-menu,
-  .toolbar .export-menu {
-    position: fixed !important;
-    top: auto !important;
-    bottom: 4.5rem !important;
-    left: 1rem !important;
-    right: 1rem !important;
-    width: auto !important;
-    max-width: none !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
-    z-index: 100 !important;
-  }
 }
 
-/* --- 2. CONTROLES DEL LIENZO (DIAGRAM-NAV) --- */
-.diagram-container {
+/* --- 2. CONTENEDOR Y LIENZO DEL DIAGRAMA BPM 100% ESTABLES Y RESPONSIVOS --- */
+/* Bloqueo total del contenedor general para evitar que Archify lo estreche al detectar scroll */
+.container,
+html .container,
+body .container,
+html[data-reader-narrow="true"] .container,
+html[data-reader-narrow="true"] body .container,
+body.has-guia-open .container {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.diagram-container,
+html[data-present="true"]:not([data-embed="true"]) .diagram-container {
   position: relative !important;
-  border-radius: 0.85rem !important;
+  border-radius: 0.75rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0.45rem 0.85rem 0.25rem 0.85rem !important;
+  overflow: visible !important;
 }
 
-@media (max-width: 800px) {
+body.has-guia-open .diagram-container {
+  padding: 0.45rem 0.85rem 0.25rem 0.85rem !important;
+}
+
+/* El SVG del flujo BPM mantiene SIEMPRE el 100% de ancho y su altura proporcional exacta */
+/* BLOQUEO CRÍTICO: NUNCA transform (zoom/pan), NUNCA clip-path (recorte), NUNCA encogerse */
+.diagram-container > svg,
+html .diagram-container > svg,
+body .diagram-container > svg,
+body.has-guia-open .diagram-container > svg,
+html[data-reader-narrow="true"] .diagram-container > svg,
+html[data-reader-narrow="true"] body .diagram-container > svg,
+html[data-present="true"] .diagram-container > svg,
+html[data-present="true"] body.has-guia-open .diagram-container > svg,
+.diagram-container svg[data-focus-active],
+.diagram-container svg[data-view-scale] {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  transform: none !important;
+  clip-path: none !important;
+  display: block !important;
+  margin: 0 auto !important;
+  flex: none !important;
+}
+
+/* Mantener todos los pasos del diagrama BPM claramente visibles cuando un paso está seleccionado */
+.diagram-container svg[data-focus-active] [data-node-id],
+.diagram-container svg[data-focus-active] [data-edge-from] {
+  opacity: 0.58 !important;
+}
+
+.diagram-container svg[data-focus-active] [data-focus-match] {
+  opacity: 0.9 !important;
+}
+
+.diagram-container svg[data-focus-active] [data-focus-selected] {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 10px var(--frontend-stroke)) !important;
+}
+
+/* Barra de herramientas inferior del lienzo (.diagram-nav) */
+html[data-present="true"] .diagram-nav {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
   .diagram-container {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
+    padding: 0.75rem !important;
   }
-}
-
-@media (max-width: 640px) {
-  .diagram-nav {
-    bottom: 0.5rem !important;
-    right: 0.5rem !important;
-    max-width: calc(100% - 1rem) !important;
-    overflow-x: auto !important;
-    gap: 0.25rem !important;
-    padding: 0.25rem !important;
-    background: var(--toolbar-bg) !important;
-    backdrop-filter: blur(12px) !important;
-    border-radius: 0.5rem !important;
-  }
-  .diagram-nav button {
-    min-width: 2.2rem !important;
-    height: 2.2rem !important;
-    padding: 0 0.35rem !important;
-    font-size: 0.7rem !important;
+  .diagram-container > svg {
+    min-width: 0 !important;
   }
 }
 
@@ -14337,7 +14486,13 @@ body > .toolbar {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr)) !important;
   gap: 1.15rem !important;
-  margin-top: 1.75rem !important;
+  margin-top: 1.5rem !important;
+}
+
+/* Ocultar en modo presentación para pantalla limpia */
+html[data-present="true"] .cards,
+html[data-present="true"] .flow-nav-bottom-section {
+  display: none !important;
 }
 
 @media (min-width: 1300px) {
@@ -14359,98 +14514,127 @@ body > .toolbar {
   border-radius: 0.75rem !important;
   background: var(--panel) !important;
   border: 1px solid var(--panel-border) !important;
-  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
 }
 
-.card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-}
+/* --- 4. GUÍA OPERATIVA PASO A PASO (.FOCUS-CHIP.TIENE-GUIA) --- */
 
-.card h3 {
-  font-size: 0.875rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.02em !important;
-}
-
-.card ul {
-  margin: 0.65rem 0 0 !important;
-  padding-left: 1.2rem !important;
-  font-size: 0.775rem !important;
-  line-height: 1.55 !important;
-  color: var(--text) !important;
-}
-
-.card li {
-  margin-bottom: 0.4rem !important;
-}
-
-.card li:last-child {
-  margin-bottom: 0 !important;
-}
-
-/* --- 4. MODAL / GUÍA OPERATIVA PASO A PASO (.FOCUS-CHIP) WIZARD DE ALTA GAMA --- */
-.focus-chip {
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease, max-height 0.25s ease !important;
-}
-
-/* Modal amplio y espacioso tipo Wizard centrado en pantalla con altura dinámica */
-.focus-chip.tiene-guia {
+/* MODO 1 (PANTALLA NORMAL): Ventana Modal Centrada Flotante con su mismo ancho amplio */
+html:not([data-present="true"]) .focus-chip.tiene-guia,
+html:not([data-present="true"]) .focus-chip.tiene-guia[hidden] {
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
-  width: min(74rem, calc(100vw - 2rem)) !important;
-  max-width: 76rem !important;
-  height: auto !important;
-  min-height: min(30rem, 62vh) !important;
-  max-height: min(90vh, calc(100vh - 2rem)) !important;
+  width: min(76rem, calc(100vw - 2.5rem)) !important;
+  max-width: 78rem !important;
+  height: min(84vh, 640px) !important;
+  max-height: 88vh !important;
+  min-height: 320px !important;
+  margin: 0 !important;
+  padding: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
   justify-content: flex-start !important;
   overflow: hidden !important;
-  border-radius: 1rem !important;
-  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--frontend-stroke) !important;
-  backdrop-filter: blur(25px) !important;
-  -webkit-backdrop-filter: blur(25px) !important;
-  z-index: 95 !important;
+  border-radius: 0.85rem !important;
+  border: 1.5px solid var(--frontend-stroke, #0891b2) !important;
+  box-shadow: 0 25px 80px -10px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.14) !important;
   background: var(--panel, #0f172a) !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  z-index: 99 !important;
+  box-sizing: border-box !important;
+  animation: modalGuiaFadeIn 0.16s ease-out !important;
 }
 
-/* Modo acoplado a la derecha en escritorio */
-.focus-chip.tiene-guia.docked-right {
+@keyframes modalGuiaFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -47%) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+html:not([data-theme="dark"]):not([data-present="true"]) .focus-chip.tiene-guia {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 25px 80px -10px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(15, 23, 42, 0.1) !important;
+}
+
+/* Telón de fondo (Backdrop) del Modal: SOLO en Pantalla Normal */
+.guia-modal-backdrop {
   position: fixed !important;
+  inset: 0 !important;
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(3px) !important;
+  -webkit-backdrop-filter: blur(3px) !important;
+  z-index: 97 !important;
+  display: none;
+  cursor: pointer;
+  animation: backdropFadeIn 0.16s ease-out !important;
+}
+
+.guia-modal-backdrop.active {
+  display: block !important;
+}
+
+html[data-present="true"] .guia-modal-backdrop,
+:fullscreen .guia-modal-backdrop {
+  display: none !important;
+}
+
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* MODO 2 (PANTALLA COMPLETA / PRESENTACIÓN): Tabla abajo del flujo BPM con scroll */
+html[data-present="true"] .focus-chip.tiene-guia,
+html[data-present="true"] .focus-chip.tiene-guia[hidden],
+:fullscreen .focus-chip.tiene-guia,
+:fullscreen .focus-chip.tiene-guia[hidden] {
+  position: relative !important;
   left: auto !important;
-  right: 1.25rem !important;
-  top: 1.25rem !important;
-  bottom: 1.25rem !important;
-  transform: none !important;
-  width: min(46rem, calc(52vw - 1.5rem)) !important;
-  max-width: 48rem !important;
-  height: calc(100vh - 2.5rem) !important;
-  max-height: calc(100vh - 2.5rem) !important;
-}
-
-/* Modo Minimizado (Píldora flotante inferior) */
-.focus-chip.tiene-guia.chip-minimized {
-  position: fixed !important;
-  left: 50% !important;
+  right: auto !important;
   top: auto !important;
-  bottom: 1.5rem !important;
-  transform: translateX(-50%) !important;
-  width: min(38rem, calc(100vw - 2rem)) !important;
-  min-width: 20rem !important;
-  max-width: calc(100vw - 2rem) !important;
-  min-height: 3.1rem !important;
-  max-height: 3.1rem !important;
-  height: 3.1rem !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: clamp(340px, calc(100vh - 240px), 560px) !important;
+  max-height: calc(100vh - 210px) !important;
+  min-height: 290px !important;
+  margin: 0.25rem 0 0 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
   overflow: hidden !important;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--frontend-stroke) !important;
+  border-radius: 0.75rem !important;
+  border: 1.5px solid var(--frontend-stroke, #0891b2) !important;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.22) !important;
+  background: var(--panel, #0f172a) !important;
+  z-index: 40 !important;
+  box-sizing: border-box !important;
+  animation: none !important;
 }
 
-/* Ocultar ruido técnico y elementos nativos de Archify */
+html[data-present="true"] body.has-guia-open .diagram-container {
+  height: auto !important;
+  max-height: none !important;
+  padding: 0.15rem 0.65rem 0.1rem 0.65rem !important;
+  overflow: visible !important;
+}
+
+html[data-present="true"]:not([data-theme="dark"]) .focus-chip.tiene-guia {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+}
+
+/* Ocultar elementos nativos de Archify que no pertenecen a la Guía Operativa */
 .focus-chip.tiene-guia .relationship-lens-eyebrow,
 .focus-chip.tiene-guia #focus-detail,
 .focus-chip.tiene-guia #focus-passport-meta,
@@ -14466,7 +14650,7 @@ body > .toolbar {
   display: none !important;
 }
 
-/* Estructura del Head de Archify: contenedor flexible para el cuerpo */
+/* Estructura interna de la Guía */
 .focus-chip.tiene-guia .relationship-lens-head {
   display: flex !important;
   flex-direction: column !important;
@@ -14477,26 +14661,29 @@ body > .toolbar {
   border: none !important;
   width: 100% !important;
   max-width: 100% !important;
-  flex: 1 1 auto !important;
+  flex: 1 1 0% !important;
+  height: calc(100% - 33px) !important;
+  max-height: calc(100% - 33px) !important;
   min-height: 0 !important;
   overflow: hidden !important;
   background: transparent !important;
-  box-sizing: border-box !important;
 }
 
-/* Barra superior del Modal (Topbar): Grid de 2 columnas (Izquierda título / Derecha acciones) */
+/* Barra superior de la Guía (Topbar) */
 .guia-modal-topbar {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) auto !important;
   align-items: center !important;
-  column-gap: 1rem !important;
+  column-gap: 0.75rem !important;
   width: 100% !important;
-  min-width: 100% !important;
   box-sizing: border-box !important;
-  padding: 0.65rem 1.15rem !important;
+  padding: 0.22rem 0.85rem !important;
+  height: 33px !important;
+  min-height: 33px !important;
+  max-height: 33px !important;
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.96), rgba(15, 23, 42, 0.99)) !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.24) !important;
-  flex: 0 0 auto !important;
+  flex: 0 0 33px !important;
   z-index: 35 !important;
   user-select: none !important;
 }
@@ -14509,25 +14696,25 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
 .guia-modal-brand {
   display: flex !important;
   align-items: center !important;
-  gap: 0.6rem !important;
+  gap: 0.55rem !important;
   min-width: 0 !important;
   overflow: hidden !important;
 }
 
 .guia-brand-badge {
-  font-size: 0.66rem !important;
+  font-size: 0.62rem !important;
   font-weight: 800 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
-  padding: 0.22rem 0.58rem !important;
-  border-radius: 0.35rem !important;
+  padding: 0.16rem 0.48rem !important;
+  border-radius: 0.32rem !important;
   background: #4338ca !important;
   color: #ffffff !important;
   flex-shrink: 0 !important;
 }
 
 .guia-brand-title {
-  font-size: 0.9rem !important;
+  font-size: 0.82rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
   white-space: nowrap !important;
@@ -14543,7 +14730,7 @@ html:not([data-theme="dark"]) .guia-brand-title {
   display: flex !important;
   align-items: center !important;
   justify-content: flex-end !important;
-  gap: 0.45rem !important;
+  gap: 0.4rem !important;
   flex-shrink: 0 !important;
   justify-self: end !important;
 }
@@ -14552,14 +14739,14 @@ html:not([data-theme="dark"]) .guia-brand-title {
   background: rgba(148, 163, 184, 0.14) !important;
   border: 1px solid rgba(148, 163, 184, 0.3) !important;
   color: var(--toolbar-text, #e2e8f0) !important;
-  border-radius: 0.45rem !important;
-  padding: 0.3rem 0.68rem !important;
-  font-size: 0.73rem !important;
+  border-radius: 0.42rem !important;
+  padding: 0.22rem 0.58rem !important;
+  font-size: 0.71rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
+  gap: 0.3rem !important;
   transition: all 0.15s ease !important;
   line-height: 1.2 !important;
   white-space: nowrap !important;
@@ -14583,13 +14770,13 @@ html:not([data-theme="dark"]) .focus-chip .guia-topbar-actions .chip-btn-ctrl:ho
 }
 
 .focus-chip .guia-topbar-actions .chip-btn-close {
-  width: 1.8rem !important;
-  height: 1.8rem !important;
+  width: 1.6rem !important;
+  height: 1.6rem !important;
   border-radius: 50% !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 0.95rem !important;
+  font-size: 0.88rem !important;
   line-height: 1 !important;
   padding: 0 !important;
   background: rgba(239, 68, 68, 0.14) !important;
@@ -14608,34 +14795,22 @@ html:not([data-theme="dark"]) .focus-chip .guia-topbar-actions .chip-btn-ctrl:ho
   transform: scale(1.06) !important;
 }
 
-/* Contenedor intermedio de Archify sin scroll propio para delegarlo al cuerpo */
 .focus-chip.tiene-guia .relationship-lens-copy {
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
   min-width: 0 !important;
   min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
-  flex: 1 1 auto !important;
+  flex: 1 1 0% !important;
   overflow: hidden !important;
   padding: 0 !important;
   margin: 0 !important;
-  position: relative !important;
 }
 
-.focus-chip.chip-minimized .guia-modal-topbar {
-  border-bottom: none !important;
-  cursor: pointer;
-}
-
-.focus-chip.chip-minimized .relationship-lens-head,
-.focus-chip.chip-minimized .relationship-lens-copy,
-.focus-chip.chip-minimized .guia-operativa-card {
-  display: none !important;
-}
-
-/* Tarjeta principal: divide en cuerpo con scroll (.guia-body-scroll) y footer fijo (.guia-footer-sticky) */
 .guia-operativa-card {
   margin: 0 !important;
   padding: 0 !important;
@@ -14644,51 +14819,58 @@ html:not([data-theme="dark"]) .focus-chip .guia-topbar-actions .chip-btn-ctrl:ho
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
-  flex: 1 1 auto !important;
+  flex: 1 1 0% !important;
   width: 100% !important;
   height: 100% !important;
+  max-height: 100% !important;
   min-height: 0 !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
 }
 
+/* Contenedor vertical de la guía: Stepper y Hero fijos, Tabla con scroll propio */
 .guia-body-scroll {
-  flex: 1 1 auto !important;
+  flex: 1 1 0% !important;
   min-height: 0 !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 0.65rem 1.15rem 0.75rem 1.15rem !important;
+  max-height: calc(100% - 36px) !important;
+  height: calc(100% - 36px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
+  padding: 0.28rem 0.75rem 0.2rem 0.75rem !important;
   box-sizing: border-box !important;
-  scrollbar-width: thin !important;
 }
 
-/* Stepper de Fases Interactivo Horizontal Compacto */
+/* Stepper de Fases Interactivo Horizontal */
 .guia-stepper-wrap {
   overflow-x: auto !important;
   scrollbar-width: thin !important;
   -webkit-overflow-scrolling: touch !important;
-  padding: 0.1rem 0 0.45rem 0 !important;
-  margin-bottom: 0.55rem !important;
+  padding: 0 0 0.2rem 0 !important;
+  margin-bottom: 0.22rem !important;
   border-bottom: 1px solid rgba(148, 163, 184, 0.16) !important;
+  flex: 0 0 auto !important;
 }
 
 .guia-stepper-track {
   display: flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
+  gap: 0.3rem !important;
   min-width: max-content !important;
 }
 
 .focus-chip .guia-step-pill {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
+  gap: 0.3rem !important;
   background: rgba(148, 163, 184, 0.1) !important;
   border: 1px solid rgba(148, 163, 184, 0.22) !important;
   color: var(--text-muted, #94a3b8) !important;
-  padding: 0.26rem 0.7rem !important;
+  padding: 0.18rem 0.58rem !important;
   border-radius: 999px !important;
-  font-size: 0.72rem !important;
+  font-size: 0.7rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   transition: all 0.18s ease !important;
@@ -14783,7 +14965,6 @@ html:not([data-theme="dark"]) .focus-chip .guia-step-pill.locked {
   opacity: 0.25 !important;
 }
 
-/* Barra de progreso integrada debajo del stepper */
 .guia-stepper-progress {
   width: 100% !important;
   height: 3px !important;
@@ -14854,12 +15035,13 @@ html:not([data-theme="dark"]) .focus-chip .guia-nav-btn.primary {
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
-  gap: 0.5rem !important;
-  margin-bottom: 0.55rem !important;
-  padding: 0.42rem 0.8rem !important;
-  border-radius: 0.55rem !important;
+  gap: 0.35rem !important;
+  margin-bottom: 0.2rem !important;
+  padding: 0.2rem 0.55rem !important;
+  border-radius: 0.45rem !important;
   background: rgba(30, 41, 59, 0.45) !important;
   border: 1px solid rgba(148, 163, 184, 0.18) !important;
+  flex: 0 0 auto !important;
 }
 
 html:not([data-theme="dark"]) .guia-fase-hero {
@@ -14870,15 +15052,15 @@ html:not([data-theme="dark"]) .guia-fase-hero {
 .guia-fase-main {
   display: flex !important;
   align-items: center !important;
-  gap: 0.55rem !important;
+  gap: 0.45rem !important;
   flex-wrap: wrap !important;
 }
 
 .guia-pantalla-pill {
-  font-size: 0.72rem !important;
+  font-size: 0.68rem !important;
   font-weight: 800 !important;
-  padding: 0.2rem 0.55rem !important;
-  border-radius: 0.32rem !important;
+  padding: 0.15rem 0.45rem !important;
+  border-radius: 0.3rem !important;
   background: #0284c7 !important;
   color: #ffffff !important;
   letter-spacing: 0.03em !important;
@@ -14886,7 +15068,7 @@ html:not([data-theme="dark"]) .guia-fase-hero {
 
 .guia-fase-title {
   margin: 0 !important;
-  font-size: 0.88rem !important;
+  font-size: 0.8rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
 }
@@ -14898,11 +15080,11 @@ html:not([data-theme="dark"]) .guia-fase-title {
 .guia-hito-badge {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
-  font-size: 0.72rem !important;
+  gap: 0.3rem !important;
+  font-size: 0.68rem !important;
   font-weight: 700 !important;
-  padding: 0.22rem 0.65rem !important;
-  border-radius: 0.4rem !important;
+  padding: 0.15rem 0.5rem !important;
+  border-radius: 0.32rem !important;
   background: rgba(16, 185, 129, 0.15) !important;
   border: 1px solid rgba(16, 185, 129, 0.35) !important;
   color: #34d399 !important;
@@ -14914,49 +15096,116 @@ html:not([data-theme="dark"]) .guia-hito-badge {
   border-color: #6ee7b7 !important;
 }
 
-/* Tabla 5 Columnas Densa y Optimizada */
+/* --- 5. TABLA DE 6 COLUMNAS CON SCROLL VERTICAL PROPIO Y THEAD STICKY --- */
 .guia-tabla-wrap {
   width: 100% !important;
+  flex: 1 1 0% !important;
+  min-height: 120px !important;
+  overflow-y: auto !important;
   overflow-x: auto !important;
-  border-radius: 0.55rem !important;
-  border: 1px solid rgba(148, 163, 184, 0.18) !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
   background: rgba(15, 23, 42, 0.45) !important;
-  margin-bottom: 0.25rem !important;
+  margin-bottom: 0.15rem !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: #0284c7 rgba(15, 23, 42, 0.45) !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.guia-tabla-wrap::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  width: 9px !important;
+  height: 8px !important;
+  display: block !important;
+}
+
+.guia-tabla-wrap::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.55) !important;
+  border-radius: 4px !important;
+}
+
+.guia-tabla-wrap::-webkit-scrollbar-thumb {
+  background: #0284c7 !important;
+  border-radius: 4px !important;
+  border: 2px solid rgba(15, 23, 42, 0.6) !important;
+  min-height: 36px !important;
+}
+
+.guia-tabla-wrap::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8 !important;
 }
 
 html:not([data-theme="dark"]) .guia-tabla-wrap {
   background: #ffffff !important;
   border-color: #cbd5e1 !important;
+  scrollbar-color: #0284c7 #f1f5f9 !important;
+}
+
+html:not([data-theme="dark"]) .guia-tabla-wrap::-webkit-scrollbar-track {
+  background: #f1f5f9 !important;
+}
+
+html:not([data-theme="dark"]) .guia-tabla-wrap::-webkit-scrollbar-thumb {
+  background: #0284c7 !important;
+  border-color: #ffffff !important;
 }
 
 .guia-tabla {
   width: 100% !important;
+  min-width: 44rem !important;
   border-collapse: collapse !important;
-  font-size: 0.74rem !important;
+  font-size: 0.72rem !important;
   text-align: left !important;
+  table-layout: fixed !important;
 }
 
-.guia-tabla th {
-  background: rgba(30, 41, 59, 0.8) !important;
+.guia-tabla thead th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 25 !important;
+  background: #1e293b !important;
   color: #94a3b8 !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
   font-size: 0.64rem !important;
   letter-spacing: 0.04em !important;
-  padding: 0.48rem 0.75rem !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.18) !important;
+  padding: 0.35rem 0.55rem !important;
+  border-bottom: 2px solid rgba(148, 163, 184, 0.32) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) !important;
+  white-space: nowrap !important;
 }
 
-.guia-tabla th.th-num, .guia-tabla td.guia-td-num {
-  width: 3.2rem !important;
-  text-align: center !important;
-  vertical-align: middle !important;
-  padding: 0.45rem 0.25rem !important;
+html:not([data-theme="dark"]) .guia-tabla thead th {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  border-bottom-color: #cbd5e1 !important;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.08) !important;
 }
-.guia-tabla th:nth-child(2), .guia-tabla td:nth-child(2) { width: 19% !important; }
-.guia-tabla th:nth-child(3), .guia-tabla td:nth-child(3) { width: 24% !important; }
-.guia-tabla th:nth-child(4), .guia-tabla td:nth-child(4) { width: 14% !important; }
-.guia-tabla th:nth-child(5), .guia-tabla td:nth-child(5) { width: 38% !important; }
+
+.guia-tabla td {
+  padding: 0.25rem 0.55rem !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12) !important;
+  vertical-align: middle !important;
+}
+
+.guia-tabla tr:last-child td {
+  border-bottom: none !important;
+}
+
+.guia-tabla th.th-num,
+.guia-tabla td.guia-td-num {
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  text-align: center !important;
+  padding: 0.25rem 0.2rem !important;
+}
+
+.guia-tabla th:nth-child(2), .guia-tabla td:nth-child(2) { width: 17% !important; min-width: 120px !important; }
+.guia-tabla th:nth-child(3), .guia-tabla td:nth-child(3) { width: 15% !important; min-width: 110px !important; }
+.guia-tabla th:nth-child(4), .guia-tabla td:nth-child(4) { width: 16% !important; min-width: 115px !important; }
+.guia-tabla th:nth-child(5), .guia-tabla td:nth-child(5) { width: 12% !important; min-width: 90px !important; }
+.guia-tabla th:nth-child(6), .guia-tabla td:nth-child(6) { width: 40% !important; min-width: 210px !important; }
 
 /* Botón de paso enumerado interactivo */
 .focus-chip .guia-check-btn {
@@ -14975,10 +15224,10 @@ html:not([data-theme="dark"]) .guia-tabla-wrap {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 1.55rem !important;
-  height: 1.55rem !important;
+  width: 1.45rem !important;
+  height: 1.45rem !important;
   border-radius: 50% !important;
-  font-size: 0.72rem !important;
+  font-size: 0.7rem !important;
   font-weight: 800 !important;
   background: rgba(148, 163, 184, 0.16) !important;
   color: #cbd5e1 !important;
@@ -15013,46 +15262,38 @@ html:not([data-theme="dark"]) .guia-fila-paso.completada {
   color: #ffffff !important;
   border-color: #059669 !important;
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.45) !important;
-  transform: scale(1.05) !important;
-}
-
-html:not([data-theme="dark"]) .guia-tabla th {
-  background: #f1f5f9 !important;
-  color: #475569 !important;
-  border-bottom-color: #cbd5e1 !important;
-}
-
-.guia-tabla td {
-  padding: 0.45rem 0.75rem !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.12) !important;
-  vertical-align: top !important;
-}
-
-.guia-tabla tr:last-child td {
-  border-bottom: none !important;
 }
 
 .guia-campo {
   font-weight: 700 !important;
   color: #f8fafc !important;
-  word-break: break-word !important;
+  font-size: 0.72rem !important;
+  line-height: 1.25 !important;
 }
 
 html:not([data-theme="dark"]) .guia-campo {
   color: #0f172a !important;
 }
 
-/* Valores inteligentes */
+/* Valores inteligentes: white-space nowrap para evitar cortar SSASECT o (Vacío) */
 .guia-valor {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   color: #38bdf8 !important;
-  background: rgba(56, 189, 248, 0.12) !important;
-  padding: 0.15rem 0.45rem !important;
+  background: rgba(56, 189, 248, 0.14) !important;
+  padding: 0.16rem 0.48rem !important;
   border-radius: 0.35rem !important;
-  display: inline-block !important;
-  word-break: break-word !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.28rem !important;
+  white-space: nowrap !important;
+  word-break: normal !important;
   font-size: 0.72rem !important;
+  line-height: 1.2 !important;
+}
+
+.guia-valor.valor-largo {
+  white-space: normal !important;
 }
 
 html:not([data-theme="dark"]) .guia-valor {
@@ -15064,7 +15305,6 @@ html:not([data-theme="dark"]) .guia-valor {
   background: rgba(245, 158, 11, 0.18) !important;
   color: #fbbf24 !important;
   border: 1px solid rgba(245, 158, 11, 0.45) !important;
-  font-weight: 700 !important;
 }
 
 html:not([data-theme="dark"]) .guia-valor.valor-vacio {
@@ -15077,13 +15317,38 @@ html:not([data-theme="dark"]) .guia-valor.valor-vacio {
   background: rgba(99, 102, 241, 0.2) !important;
   color: #a5b4fc !important;
   border: 1px solid rgba(99, 102, 241, 0.45) !important;
-  font-weight: 700 !important;
 }
 
 html:not([data-theme="dark"]) .guia-valor.valor-accion {
   background: #e0e7ff !important;
   color: #4338ca !important;
   border-color: #c7d2fe !important;
+}
+
+.guia-ejemplo {
+  font-size: 0.72rem !important;
+  line-height: 1.3 !important;
+  color: var(--text, #e2e8f0) !important;
+}
+
+html:not([data-theme="dark"]) .guia-ejemplo {
+  color: #334155 !important;
+}
+
+.ejemplo-badge {
+  display: inline-block !important;
+  background: rgba(148, 163, 184, 0.1) !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
+  padding: 0.14rem 0.45rem !important;
+  border-radius: 0.32rem !important;
+  font-size: 0.71rem !important;
+  line-height: 1.25 !important;
+}
+
+html:not([data-theme="dark"]) .ejemplo-badge {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
 }
 
 .guia-tipo-tag {
@@ -15116,50 +15381,50 @@ html:not([data-theme="dark"]) .guia-tipo-tag.critico {
 
 .guia-detalle {
   color: #94a3b8 !important;
-  font-size: 0.72rem !important;
-  word-break: break-word !important;
-  line-height: 1.48 !important;
+  font-size: 0.71rem !important;
+  line-height: 1.35 !important;
 }
 
 html:not([data-theme="dark"]) .guia-detalle {
   color: #334155 !important;
 }
 
-/* Footer Inferior Permanente Anclado a la Base del Modal (Fuera del Scroll) */
+/* Footer Inferior Permanente Anclado a la Base */
 .guia-footer-sticky {
-  flex: 0 0 auto !important;
+  flex: 0 0 36px !important;
   width: 100% !important;
   box-sizing: border-box !important;
   margin: 0 !important;
-  padding: 0.65rem 1.15rem !important;
-  background: rgba(15, 23, 42, 0.96) !important;
+  padding: 0.22rem 0.85rem !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  background: rgba(15, 23, 42, 0.98) !important;
   border-top: 1px solid rgba(148, 163, 184, 0.22) !important;
   display: grid !important;
   grid-template-columns: auto minmax(0, 1fr) auto !important;
   align-items: center !important;
-  gap: 0.75rem !important;
+  gap: 0.6rem !important;
   z-index: 40 !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.28) !important;
 }
 
 html:not([data-theme="dark"]) .guia-footer-sticky {
   background: rgba(255, 255, 255, 0.98) !important;
   border-top-color: #cbd5e1 !important;
-  box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.06) !important;
 }
 
 .focus-chip .btn-pie-next {
-  min-width: 9rem !important;
+  min-width: 8.5rem !important;
   max-width: 22rem !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   text-align: left !important;
-  gap: 0.65rem !important;
-  padding: 0.38rem 0.85rem !important;
-  border-radius: 0.55rem !important;
+  gap: 0.55rem !important;
+  padding: 0.26rem 0.75rem !important;
+  border-radius: 0.48rem !important;
   overflow: hidden !important;
   flex-shrink: 0 !important;
 }
@@ -15169,11 +15434,11 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
   flex-direction: column !important;
   min-width: 0 !important;
   overflow: hidden !important;
-  line-height: 1.22 !important;
+  line-height: 1.2 !important;
 }
 
 .btn-next-kicker {
-  font-size: 0.64rem !important;
+  font-size: 0.62rem !important;
   font-weight: 800 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase !important;
@@ -15182,7 +15447,7 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
 }
 
 .btn-next-title {
-  font-size: 0.73rem !important;
+  font-size: 0.71rem !important;
   font-weight: 600 !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -15191,14 +15456,14 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
 }
 
 .btn-next-arrow {
-  font-size: 1.05rem !important;
+  font-size: 0.95rem !important;
   font-weight: 800 !important;
   flex-shrink: 0 !important;
   line-height: 1 !important;
 }
 
 .guia-pie-status {
-  font-size: 0.74rem !important;
+  font-size: 0.72rem !important;
   color: var(--text-muted, #94a3b8) !important;
   font-weight: 600 !important;
   text-align: center !important;
@@ -15223,35 +15488,8 @@ html:not([data-theme="dark"]) .guia-pie-final {
   color: #059669 !important;
 }
 
-/* Ajuste cuando el modal está acoplado a la derecha */
-.focus-chip.tiene-guia.docked-right .btn-pie-next {
-  max-width: 15rem !important;
-}
-
-.focus-chip.tiene-guia.docked-right .btn-next-title {
-  max-width: 8rem !important;
-}
-
 /* Modo móvil y tablets (< 768px) */
 @media (max-width: 768px) {
-  .focus-chip,
-  .focus-chip.tiene-guia {
-    position: fixed !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    top: auto !important;
-    transform: none !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    height: 90vh !important;
-    max-height: 90vh !important;
-    border-radius: 1.15rem 1.15rem 0 0 !important;
-    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--frontend-stroke) !important;
-    margin: 0 !important;
-    z-index: 100 !important;
-  }
-
   .guia-modal-topbar {
     padding: 0.55rem 0.85rem !important;
     column-gap: 0.5rem !important;
@@ -15261,11 +15499,6 @@ html:not([data-theme="dark"]) .guia-pie-final {
     font-size: 0.78rem !important;
   }
 
-  .guia-topbar-actions .btn-dock {
-    display: none !important;
-  }
-
-  .btn-min-txt,
   .btn-copy-txt {
     display: none !important;
   }
@@ -15310,10 +15543,8 @@ html:not([data-theme="dark"]) .guia-pie-final {
     text-align: center !important;
   }
 
-  .guia-campo {
-    word-break: normal !important;
-    margin-bottom: 0.2rem !important;
-    font-size: 0.78rem !important;
+  .guia-tabla {
+    min-width: 0 !important;
   }
 
   .guia-tabla,
@@ -15361,13 +15592,57 @@ html:not([data-theme="dark"]) .guia-pie-final {
   window.__guiaMaxUnlocked = window.__guiaMaxUnlocked || 0;
   window.__guiaChecks = window.__guiaChecks || {};
 
-  // Integrar el .toolbar dentro de .header para que nunca choque con .flow-nav-top
+  // Integrar el .toolbar dentro de .header para que nunca choque con .flow-nav-top ni con h1
   function acomodarHeaderPagina() {
     var header = document.querySelector('.container > .header');
     var toolbar = document.querySelector('body > .toolbar');
     if (header && toolbar && toolbar.parentNode !== header) {
       header.appendChild(toolbar);
     }
+  }
+
+  function neutralizarCamaraArchify() {
+    if (window.Archify && window.Archify.view) {
+      window.Archify.view.reveal = function() {
+        mantenerFlujoCompleto();
+        return false;
+      };
+      if (typeof window.Archify.view.frameDesktop === 'function') {
+        window.Archify.view.frameDesktop = function() { return false; };
+      }
+    }
+  }
+
+  // Mantener el flujo BPM al 100% (sin zoom automático de Archify ni estrechamiento de contenedor)
+  function mantenerFlujoCompleto() {
+    neutralizarCamaraArchify();
+    if (window.Archify && window.Archify.view && typeof window.Archify.view.reset === 'function') {
+      try {
+        window.Archify.view.reset({ automatic: true });
+      } catch (_) {}
+    }
+
+    try {
+      document.documentElement.removeAttribute('data-reader-narrow');
+      document.documentElement.removeAttribute('data-reader-overflow');
+      document.documentElement.style.removeProperty('--archify-reader-width');
+      document.documentElement.style.removeProperty('--archify-diagram-max-width');
+    } catch (_) {}
+
+    var svg = document.querySelector('.diagram-container > svg');
+    if (svg) {
+      svg.style.setProperty('transform', 'none', 'important');
+      svg.style.setProperty('clip-path', 'none', 'important');
+      svg.removeAttribute('data-view-scale');
+    }
+  }
+
+  function estaEnPresentacion() {
+    return document.documentElement.getAttribute('data-present') === 'true' ||
+           !!document.fullscreenElement ||
+           !!document.webkitFullscreenElement ||
+           !!document.mozFullScreenElement ||
+           !!document.msFullscreenElement;
   }
 
   window.irAPaso = function(targetNodeId) {
@@ -15380,10 +15655,10 @@ html:not([data-theme="dark"]) .guia-pie-final {
     var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
     if (nodeElem) {
       nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-      try {
-        nodeElem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-      } catch (_) {}
-      setTimeout(actualizarModalGuia, 40);
+      setTimeout(function() {
+        mantenerFlujoCompleto();
+        actualizarModalGuia();
+      }, 30);
     }
   };
 
@@ -15413,13 +15688,49 @@ html:not([data-theme="dark"]) .guia-pie-final {
       var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
       if (nodeElem) {
         nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-        try {
-          nodeElem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-        } catch (_) {}
-        setTimeout(actualizarModalGuia, 40);
+        setTimeout(function() {
+          mantenerFlujoCompleto();
+          actualizarModalGuia();
+        }, 30);
       }
     }
   };
+
+  function desglosarValorYEjemplo(item) {
+    if (item.ejemplo !== undefined && item.ejemplo !== null && String(item.ejemplo).trim() !== '') {
+      return { valor: item.valor || '', ejemplo: item.ejemplo };
+    }
+    var raw = (item.valor || '').trim();
+    if (!raw) return { valor: '', ejemplo: '-' };
+
+    var rLower = raw.toLowerCase();
+    if (rLower.indexOf('dejar en blanco') !== -1 || rLower.indexOf('totalmente vacío') !== -1) {
+      return { valor: '(Vacío)', ejemplo: 'Dejar en blanco para nuevo' };
+    }
+    if (rLower === 'clic en «crear nrc»' || rLower.indexOf('crear nrc') !== -1) {
+      return { valor: 'Crear NRC', ejemplo: 'Clic en botón azul' };
+    }
+    if (rLower.indexOf('botón «guardar»') !== -1 || rLower.indexOf('f10') !== -1) {
+      return { valor: 'F10 (Guardar)', ejemplo: 'Presionar F10 o botón Guardar' };
+    }
+
+    var matchEj = raw.match(/^([^(]+?)\s*\((ej\.?|ejemplo:?)\s*([^)]+)\)$/i);
+    if (matchEj) {
+      return { valor: matchEj[1].trim(), ejemplo: matchEj[3].trim() };
+    }
+
+    var matchParen = raw.match(/^([^(]+?)\s*\((o\s+[^)]+)\)$/i);
+    if (matchParen) {
+      return { valor: matchParen[1].trim(), ejemplo: matchParen[2].trim() };
+    }
+
+    var matchSimpleParen = raw.match(/^([A-Za-z0-9_\-\s]{1,12})\s*\(([^)]+)\)$/);
+    if (matchSimpleParen && matchSimpleParen[2].length < 35) {
+      return { valor: matchSimpleParen[1].trim(), ejemplo: matchSimpleParen[2].trim() };
+    }
+
+    return { valor: raw, ejemplo: '-' };
+  }
 
   function renderGuiaHtml(info, nodeId) {
     if (!info) return '';
@@ -15498,7 +15809,7 @@ html:not([data-theme="dark"]) .guia-pie-final {
 
     if (info.instrucciones && info.instrucciones.length > 0) {
       html += '<div class="guia-tabla-wrap"><table class="guia-tabla">';
-      html += '<thead><tr><th class="th-num">#</th><th>Campo / Acción</th><th>Valor / Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
+      html += '<thead><tr><th class="th-num">#</th><th>Campo / Acción</th><th>Valor</th><th>Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
       html += '<tbody>';
       
       var checks = (window.__guiaChecks && window.__guiaChecks[nodeId]) || {};
@@ -15508,12 +15819,18 @@ html:not([data-theme="dark"]) .guia-pie-final {
         var isChecked = !!checks[rIdx];
         var isCritico = (item.tipo || '').toLowerCase().indexOf('crítico') !== -1 || (item.tipo || '').toLowerCase().indexOf('guardado') !== -1;
         var tagClass = isCritico ? 'guia-tipo-tag critico' : 'guia-tipo-tag';
-        var valorTxt = item.valor || '';
+        
+        var desglosado = desglosarValorYEjemplo(item);
+        var valorTxt = desglosado.valor || '';
+        var ejemploTxt = desglosado.ejemplo || '';
         var vLower = valorTxt.toLowerCase();
 
         var valClass = 'guia-valor';
+        if (valorTxt.length > 26) {
+          valClass += ' valor-largo';
+        }
         var valorDisplay = escapeHtml(valorTxt);
-        if (vLower.indexOf('blanco') !== -1) {
+        if (vLower.indexOf('vacío') !== -1 || vLower.indexOf('blanco') !== -1) {
           valClass += ' valor-vacio';
           valorDisplay = '⚠️ ' + valorDisplay;
         } else if (vLower.indexOf('clic') !== -1 || vLower.indexOf('guardar') !== -1 || vLower.indexOf('f10') !== -1) {
@@ -15531,6 +15848,7 @@ html:not([data-theme="dark"]) .guia-pie-final {
         html += '</td>';
         html += '<td class="guia-campo">' + escapeHtml(item.campo || '') + '</td>';
         html += '<td><span class="' + valClass + '">' + valorDisplay + '</span></td>';
+        html += '<td class="guia-ejemplo">' + (ejemploTxt && ejemploTxt !== '-' ? ('<span class="ejemplo-badge">' + escapeHtml(ejemploTxt) + '</span>') : '<span style="opacity:0.4;">—</span>') + '</td>';
         html += '<td><span class="' + tagClass + '">' + escapeHtml(item.tipo || '') + '</span></td>';
         html += '<td class="guia-detalle">' + escapeHtml(item.detalle || '') + '</td>';
         html += '</tr>';
@@ -15542,9 +15860,11 @@ html:not([data-theme="dark"]) .guia-pie-final {
 
     if (totalSteps > 1) {
       var pct = Math.round(((currentIndex + 1) / totalSteps) * 100);
+      var numFilas = (info.instrucciones && info.instrucciones.length) || 0;
+      var statusExtra = numFilas > 5 ? (' · ' + numFilas + ' pasos (scroll ↓)') : '';
       html += '<div class="guia-footer-sticky">';
       html += '<button type="button" class="guia-nav-btn btn-pie-prev" ' + (hasPrev ? 'data-nav-paso="-1"' : 'disabled') + '>← Paso anterior</button>';
-      html += '<div class="guia-pie-status">Paso ' + (currentIndex + 1) + ' de ' + totalSteps + ' · ' + pct + '% completado</div>';
+      html += '<div class="guia-pie-status">Paso ' + (currentIndex + 1) + ' de ' + totalSteps + ' (' + pct + '%)' + statusExtra + '</div>';
       if (hasNext) {
         var cleanNext = nextTitle.replace(/^Paso\s*\d+:\s*/i, '');
         var nextStepNum = currentIndex + 2;
@@ -15592,11 +15912,9 @@ html:not([data-theme="dark"]) .guia-pie-final {
   }
 
   function asegurarBarraControles(chip) {
-    // Insertar la barra como primer hijo directo de #focus-chip para ocupar el 100% real del ancho
     var topbar = chip.querySelector(':scope > .guia-modal-topbar');
     if (topbar) return;
 
-    // Si había una versión previa dentro de .relationship-lens-head, removerla
     var oldTopbar = chip.querySelector('.guia-modal-topbar');
     if (oldTopbar) oldTopbar.remove();
 
@@ -15607,28 +15925,11 @@ html:not([data-theme="dark"]) .guia-pie-final {
       '<span class="guia-brand-title">Guía Operativa Paso a Paso</span>' +
       '</div>' +
       '<div class="guia-topbar-actions">' +
-      '<button type="button" class="chip-btn-ctrl btn-dock" title="Alternar entre modal amplio centrado y panel lateral derecho">◨ <span class="btn-dock-txt">Acoplar lateral</span></button>' +
-      '<button type="button" class="chip-btn-ctrl btn-min" title="Minimizar a píldora flotante">─ <span class="btn-min-txt">Minimizar</span></button>' +
       '<button type="button" class="chip-btn-ctrl btn-copy" title="Copiar enlace directo a este paso">🔗 <span class="btn-copy-txt">Copiar enlace</span></button>' +
-      '<button type="button" class="chip-btn-close" title="Cerrar ventana">✕</button>' +
+      '<button type="button" class="chip-btn-close" title="Cerrar modal (Esc)">✕</button>' +
       '</div>';
 
     chip.insertBefore(topbar, chip.firstChild);
-
-    var btnDock = topbar.querySelector('.btn-dock');
-    btnDock.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var isDocked = chip.classList.toggle('docked-right');
-      chip.classList.remove('chip-minimized');
-      topbar.querySelector('.btn-dock-txt').textContent = isDocked ? 'Centrar amplio' : 'Acoplar lateral';
-    });
-
-    var btnMin = topbar.querySelector('.btn-min');
-    btnMin.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var isMin = chip.classList.toggle('chip-minimized');
-      topbar.querySelector('.btn-min-txt').textContent = isMin ? 'Expandir' : 'Minimizar';
-    });
 
     var btnCopy = topbar.querySelector('.btn-copy');
     btnCopy.addEventListener('click', function(e) {
@@ -15650,17 +15951,38 @@ html:not([data-theme="dark"]) .guia-pie-final {
     var btnClose = topbar.querySelector('.chip-btn-close');
     btnClose.addEventListener('click', function(e) {
       e.stopPropagation();
+      cerrarModalGuia();
+    });
+  }
+
+  function asegurarBackdrop() {
+    var b = document.getElementById('guia-modal-backdrop');
+    if (!b) {
+      b = document.createElement('div');
+      b.id = 'guia-modal-backdrop';
+      b.className = 'guia-modal-backdrop';
+      b.setAttribute('aria-hidden', 'true');
+      b.addEventListener('click', function(e) {
+        e.stopPropagation();
+        cerrarModalGuia();
+      });
+      document.body.appendChild(b);
+    }
+    return b;
+  }
+
+  function cerrarModalGuia() {
+    var chip = document.getElementById('focus-chip');
+    var b = document.getElementById('guia-modal-backdrop');
+    if (b) b.classList.remove('active');
+    document.body.classList.remove('has-guia-open');
+    if (chip) {
+      chip.classList.remove('tiene-guia');
       var clearBtn = document.getElementById('btn-focus-clear');
       if (clearBtn) clearBtn.click();
       else chip.hidden = true;
-    });
-
-    topbar.addEventListener('click', function(e) {
-      if (chip.classList.contains('chip-minimized') && !e.target.closest('button')) {
-        chip.classList.remove('chip-minimized');
-        topbar.querySelector('.btn-min-txt').textContent = 'Minimizar';
-      }
-    });
+    }
+    mantenerFlujoCompleto();
   }
 
   function actualizarModalGuia() {
@@ -15676,6 +15998,9 @@ html:not([data-theme="dark"]) .guia-pie-final {
     if (!nodeId || !GUIA_MAP[nodeId]) {
       if (card) card.remove();
       chip.classList.remove('tiene-guia');
+      var b = document.getElementById('guia-modal-backdrop');
+      if (b) b.classList.remove('active');
+      document.body.classList.remove('has-guia-open');
       return;
     }
 
@@ -15692,26 +16017,146 @@ html:not([data-theme="dark"]) .guia-pie-final {
       }
     }
 
+    chip.hidden = false;
+    chip.removeAttribute('hidden');
     chip.classList.add('tiene-guia');
+    chip.classList.remove('docked-right', 'floating-modal', 'chip-minimized');
+    chip.style.removeProperty('top');
+    chip.style.removeProperty('left');
+
+    var isPresent = estaEnPresentacion();
+    var b = asegurarBackdrop();
+    if (!isPresent) {
+      b.classList.add('active');
+    } else {
+      b.classList.remove('active');
+    }
+    document.body.classList.add('has-guia-open');
+
+    var titleElem = chip.querySelector('.guia-brand-title');
+    if (titleElem && info && info.titulo) {
+      titleElem.textContent = info.titulo;
+    }
+
     card.innerHTML = renderGuiaHtml(info, nodeId);
 
+    var tablaWrap = card.querySelector('.guia-tabla-wrap');
+    if (tablaWrap) {
+      tablaWrap.scrollTop = 0;
+    }
     var scrollBody = card.querySelector('.guia-body-scroll');
     if (scrollBody) {
       scrollBody.scrollTop = 0;
     }
 
     setTimeout(function() {
+      mantenerFlujoCompleto();
       var activePill = card.querySelector('.guia-step-pill.active');
       if (activePill) {
         try {
           activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         } catch (_) {}
       }
-    }, 60);
+    }, 50);
   }
 
   document.addEventListener('DOMContentLoaded', function() {
     acomodarHeaderPagina();
+
+    // Interceptar Archify.view.reveal para evitar que haga zoom y descoloque el flujo BPM
+    neutralizarCamaraArchify();
+
+    // Observador continuo para neutralizar estilos de cámara inline en el SVG
+    var svg = document.querySelector('.diagram-container > svg');
+    if (svg && window.MutationObserver) {
+      var svgObserver = new MutationObserver(function() {
+        if (svg.style.transform && svg.style.transform !== 'none') {
+          svg.style.setProperty('transform', 'none', 'important');
+        }
+        if (svg.style.clipPath && svg.style.clipPath !== 'none') {
+          svg.style.setProperty('clip-path', 'none', 'important');
+        }
+      });
+      svgObserver.observe(svg, { attributes: true, attributeFilter: ['style', 'data-view-scale'] });
+    }
+
+    // Observador para neutralizar el reductor de ancho adaptativo de Archify y detectar modo presentación
+    if (window.MutationObserver) {
+      var htmlObserver = new MutationObserver(function() {
+        if (estaEnPresentacion()) {
+          cerrarModalGuia();
+        }
+        if (document.documentElement.hasAttribute('data-reader-narrow')) {
+          document.documentElement.removeAttribute('data-reader-narrow');
+        }
+        if (document.documentElement.hasAttribute('data-reader-overflow')) {
+          document.documentElement.removeAttribute('data-reader-overflow');
+        }
+        if (document.documentElement.style.getPropertyValue('--archify-reader-width')) {
+          document.documentElement.style.removeProperty('--archify-reader-width');
+        }
+        if (document.documentElement.style.getPropertyValue('--archify-diagram-max-width')) {
+          document.documentElement.style.removeProperty('--archify-diagram-max-width');
+        }
+      });
+      htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-reader-narrow', 'data-reader-overflow', 'data-present', 'style'] });
+    }
+
+    var btnPresent = document.getElementById('btn-present');
+    function syncPresentButton() {
+      var isPresent = estaEnPresentacion();
+      var b = document.getElementById('guia-modal-backdrop');
+      if (b) {
+        if (isPresent) {
+          b.classList.remove('active');
+        } else {
+          var chip = document.getElementById('focus-chip');
+          if (chip && !chip.hidden && chip.classList.contains('tiene-guia')) {
+            b.classList.add('active');
+          }
+        }
+      }
+      var btnFlowPresent = document.getElementById('btn-flow-present');
+      if (btnFlowPresent) {
+        var txt = btnFlowPresent.querySelector('span');
+        if (txt) {
+          txt.textContent = isPresent ? 'Salir de pantalla completa' : 'Pantalla completa';
+        }
+      }
+    }
+    if (btnPresent) {
+      btnPresent.addEventListener('click', function() {
+        if (!document.fullscreenElement) {
+          if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(function(_) {});
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen().catch(function(_) {});
+          }
+        }
+        setTimeout(function() {
+          syncPresentButton();
+        }, 80);
+      });
+    }
+
+    document.addEventListener('fullscreenchange', function() {
+      if (!document.fullscreenElement && window.Archify && window.Archify.presentation) {
+        if (typeof window.Archify.presentation.exit === 'function') {
+          window.Archify.presentation.exit();
+        }
+      }
+      setTimeout(syncPresentButton, 60);
+    });
+
+    document.addEventListener('webkitfullscreenchange', function() {
+      setTimeout(syncPresentButton, 60);
+    });
+
+    window.addEventListener('resize', function() {
+      syncPresentButton();
+    });
 
     var target = document.getElementById('focus-id');
     if (target) {
@@ -15754,13 +16199,35 @@ html:not([data-theme="dark"]) .guia-pie-final {
 
       var node = e.target.closest('[data-node-id]');
       if (node) {
-        setTimeout(actualizarModalGuia, 20);
-        setTimeout(actualizarModalGuia, 120);
+        neutralizarCamaraArchify();
+        mantenerFlujoCompleto();
+        setTimeout(function() {
+          mantenerFlujoCompleto();
+          actualizarModalGuia();
+        }, 15);
+        setTimeout(function() {
+          mantenerFlujoCompleto();
+          actualizarModalGuia();
+        }, 70);
+        setTimeout(function() {
+          mantenerFlujoCompleto();
+        }, 200);
+        setTimeout(function() {
+          mantenerFlujoCompleto();
+        }, 450);
       }
     });
 
     document.addEventListener('keydown', function(e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+      if (e.key === 'Escape') {
+        var chip = document.getElementById('focus-chip');
+        if (chip && !chip.hidden && chip.classList.contains('tiene-guia')) {
+          e.preventDefault();
+          cerrarModalGuia();
+          return;
+        }
+      }
       if (e.altKey && e.key === 'ArrowRight' && window.__SIGUIENTE_FLUJO && window.__SIGUIENTE_FLUJO.url) {
         e.preventDefault();
         window.location.href = window.__SIGUIENTE_FLUJO.url;
@@ -15782,7 +16249,18 @@ html:not([data-theme="dark"]) .guia-pie-final {
       }
     });
 
+    mantenerFlujoCompleto();
     actualizarModalGuia();
+    if (window.location.hash && window.location.hash.indexOf('focus=') !== -1) {
+      setTimeout(function() {
+        actualizarModalGuia();
+        mantenerFlujoCompleto();
+      }, 70);
+      setTimeout(function() {
+        actualizarModalGuia();
+        mantenerFlujoCompleto();
+      }, 250);
+    }
   });
 })();
 </script>

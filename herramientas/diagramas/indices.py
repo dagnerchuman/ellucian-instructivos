@@ -657,16 +657,51 @@ main {{
     }}
   }}
 
+  function setFilter(filterId, updateUrl) {{
+    currentFilter = filterId || 'all';
+    chips.forEach(function(c) {{
+      if (c.getAttribute('data-filter') === currentFilter) {{
+        c.classList.add('active');
+      }} else {{
+        c.classList.remove('active');
+      }}
+    }});
+    aplicarFiltros();
+    if (updateUrl) {{
+      var newHash = (currentFilter === 'all') ? '' : '#sec-' + currentFilter;
+      if (window.location.hash !== newHash) {{
+        if (history.replaceState) {{
+          history.replaceState(null, '', window.location.pathname + (newHash ? newHash : ''));
+        }} else {{
+          window.location.hash = newHash;
+        }}
+      }}
+    }}
+  }}
+
+  function leerHash() {{
+    var h = (window.location.hash || '').replace('#', '');
+    if (h) {{
+      var targetCenter = h.replace('sec-', '');
+      var matchingChip = document.querySelector('.filter-chip[data-filter="' + targetCenter + '"]');
+      if (matchingChip) {{
+        setFilter(targetCenter, false);
+        return;
+      }}
+    }}
+    setFilter('all', false);
+  }}
+
   chips.forEach(function(chip) {{
     chip.addEventListener('click', function() {{
-      chips.forEach(function(c) {{ c.classList.remove('active'); }});
-      chip.classList.add('active');
-      currentFilter = chip.getAttribute('data-filter') || 'all';
-      aplicarFiltros();
+      var f = chip.getAttribute('data-filter') || 'all';
+      setFilter(f, true);
     }});
   }});
 
   searchInput.addEventListener('input', aplicarFiltros);
+  window.addEventListener('hashchange', leerHash);
+  leerHash();
 }})();
 </script>
 </body>

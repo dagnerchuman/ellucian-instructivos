@@ -13946,21 +13946,52 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
 
 /* --- 0. BARRAS DE NAVEGACIÓN Y PAGINACIÓN ENTRE FLUJOS --- */
+/* CRÍTICO: Neutralizar la regla global `svg { min-width: min(900px, 100%); width: 100%; }` de Archify */
+.flow-nav-top svg,
+.flow-nav-bottom-section svg {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  max-width: 14px !important;
+  display: inline-block !important;
+  flex: 0 0 14px !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.flow-bottom-hub-btn svg {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  max-width: 16px !important;
+  flex: 0 0 16px !important;
+}
+
 .flow-nav-top {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
-  gap: 0.65rem !important;
-  padding: 0.5rem 0.85rem !important;
-  margin-bottom: 1.25rem !important;
-  margin-right: 21.5rem !important;
-  background: var(--toolbar-bg, rgba(15, 23, 42, 0.75)) !important;
+  gap: 0.65rem 1rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0.55rem 1rem !important;
+  margin: 0 0 1rem 0 !important;
+  background: var(--toolbar-bg, rgba(15, 23, 42, 0.82)) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.75rem !important;
   backdrop-filter: blur(12px) !important;
@@ -13973,45 +14004,48 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 }
 
 [data-theme="light"] .flow-nav-top {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border-color: rgba(203, 213, 225, 0.8) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(203, 213, 225, 0.85) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
-}
-
-@media (max-width: 900px) {
-  .flow-nav-top {
-    margin-right: 0 !important;
-    margin-bottom: 0.75rem !important;
-  }
 }
 
 .flow-nav-left {
   display: flex !important;
   align-items: center !important;
   flex-wrap: wrap !important;
-  gap: 0.5rem !important;
+  gap: 0.55rem !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
 }
 
 .flow-nav-right {
   display: flex !important;
   align-items: center !important;
-  gap: 0.45rem !important;
+  justify-content: flex-end !important;
+  gap: 0.5rem !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
 }
 
 .btn-flow-centros {
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 0.45rem !important;
-  padding: 0.35rem 0.75rem !important;
+  padding: 0.36rem 0.78rem !important;
   border-radius: 0.5rem !important;
   background: var(--toolbar-bg, #1e293b) !important;
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   font-weight: 600 !important;
   font-size: 0.8rem !important;
+  line-height: 1.2 !important;
   text-decoration: none !important;
   transition: all 0.18s ease !important;
   cursor: pointer !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
 }
 
 .btn-flow-centros:hover {
@@ -14021,22 +14055,31 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   transform: translateX(-2px) !important;
 }
 
+[data-theme="light"] .btn-flow-centros:hover {
+  color: #0f172a !important;
+}
+
 .flow-nav-sep {
   color: var(--text-dim, #64748b) !important;
   opacity: 0.6 !important;
   font-size: 0.75rem !important;
+  user-select: none !important;
+  flex: 0 0 auto !important;
 }
 
 .flow-nav-center-tag {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.4rem !important;
+  gap: 0.42rem !important;
   font-weight: 600 !important;
   color: var(--text, #fff) !important;
-  padding: 0.2rem 0.55rem !important;
-  border-radius: 0.4rem !important;
-  background: rgba(148, 163, 184, 0.1) !important;
+  padding: 0.28rem 0.65rem !important;
+  border-radius: 0.45rem !important;
+  background: rgba(148, 163, 184, 0.12) !important;
   font-size: 0.78rem !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
 }
 
 .flow-center-dot {
@@ -14051,6 +14094,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
+  min-width: 190px !important;
+  max-width: 310px !important;
+  flex: 0 1 280px !important;
 }
 
 .flow-nav-select {
@@ -14060,12 +14106,13 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.35rem 1.6rem 0.35rem 0.65rem !important;
+  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
+  line-height: 1.2 !important;
   cursor: pointer !important;
   outline: none !important;
-  max-width: 250px !important;
+  width: 100% !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
   overflow: hidden !important;
@@ -14079,25 +14126,33 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 .flow-nav-select-arrow {
   position: absolute !important;
-  right: 0.55rem !important;
+  right: 0.6rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
   pointer-events: none !important;
   font-size: 0.75rem !important;
   color: var(--text-muted, #94a3b8) !important;
+  line-height: 1 !important;
 }
 
 .flow-btn-top {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
-  padding: 0.35rem 0.65rem !important;
+  justify-content: center !important;
+  gap: 0.38rem !important;
+  padding: 0.36rem 0.75rem !important;
   border-radius: 0.5rem !important;
   font-weight: 600 !important;
   font-size: 0.78rem !important;
+  line-height: 1.2 !important;
   text-decoration: none !important;
   border: 1px solid var(--panel-border, #334155) !important;
   background: var(--toolbar-bg, #1e293b) !important;
   color: var(--text, #fff) !important;
   transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
 }
 
 .flow-btn-top:hover:not(.disabled) {
@@ -14126,7 +14181,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 .flow-nav-counter {
   font-size: 0.78rem !important;
   color: var(--text-muted, #94a3b8) !important;
-  padding: 0 0.25rem !important;
+  padding: 0 0.3rem !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
 }
 
 .flow-nav-counter strong {
@@ -14269,67 +14326,111 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   transform: translateY(-2px) !important;
 }
 
-/* --- 1. HEADER & TOOLBAR RESPONSIVO --- */
+/* --- 1. HEADER DE LA PÁGINA & TOOLBAR INTEGRADOS Y RESPONSIVOS --- */
 .header {
-  padding-right: 22rem !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas:
+    "title toolbar"
+    "subtitle toolbar" !important;
+  align-items: center !important;
+  column-gap: 1.25rem !important;
+  row-gap: 0.25rem !important;
+  padding-right: 0 !important;
   margin-bottom: 1rem !important;
   position: relative !important;
+  width: 100% !important;
+}
+
+html[data-preset="signal-flow"] .header,
+html[data-preset="blueprint"] .header,
+html[data-preset="editorial"] .header {
+  padding-right: 0 !important;
 }
 
 .header-row {
+  grid-area: title !important;
   display: flex !important;
   justify-content: flex-start !important;
   align-items: center !important;
   gap: 0.75rem !important;
+  min-width: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .header h1 {
   margin: 0 !important;
-  font-size: clamp(1.15rem, 2.2vw, 1.6rem) !important;
-  line-height: 1.3 !important;
+  font-size: clamp(1.15rem, 2.1vw, 1.55rem) !important;
+  line-height: 1.28 !important;
   text-align: left !important;
   word-break: break-word !important;
 }
 
 .subtitle {
+  grid-area: subtitle !important;
   text-align: left !important;
-  font-size: clamp(0.72rem, 1.3vw, 0.82rem) !important;
-  line-height: 1.55 !important;
+  font-size: clamp(0.72rem, 1.25vw, 0.82rem) !important;
+  line-height: 1.5 !important;
   color: var(--text-muted) !important;
-  margin: 0.35rem 0 0 !important;
-  max-width: 58rem !important;
+  margin: 0 0 0 1.375rem !important;
+  max-width: 68rem !important;
 }
 
-.toolbar {
-  position: absolute !important;
-  top: 1.25rem !important;
-  right: 1.5rem !important;
+/* El toolbar se mueve dentro de .header por JS o se posiciona limpio a la derecha */
+.header .toolbar,
+body > .toolbar {
+  grid-area: toolbar !important;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
   left: auto !important;
   margin: 0 !important;
   z-index: 30 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
+  justify-content: flex-end !important;
+  gap: 0.4rem !important;
+  align-self: start !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   body {
     padding: 0.75rem !important;
   }
-  .header {
-    padding-right: 0 !important;
+  .flow-nav-top {
+    padding: 0.5rem 0.75rem !important;
+    margin-bottom: 0.75rem !important;
   }
-  .toolbar {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    left: auto !important;
+  .flow-nav-left,
+  .flow-nav-right {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+  .flow-nav-select-wrap {
+    flex: 1 1 180px !important;
+  }
+  .flow-nav-select {
+    max-width: 100% !important;
+  }
+  .header {
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "toolbar"
+      "title"
+      "subtitle" !important;
+    row-gap: 0.45rem !important;
+  }
+  .header .toolbar,
+  body > .toolbar {
     width: 100% !important;
     justify-content: flex-end !important;
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0.25rem !important;
     overflow-x: auto !important;
-    padding-bottom: 0.35rem !important;
+    padding-bottom: 0.2rem !important;
     scrollbar-width: thin;
+  }
+  .subtitle {
+    margin-left: 0 !important;
   }
   .toolbar .preset-menu,
   .toolbar .export-menu {
@@ -14453,7 +14554,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
-  justify-content: space-between !important;
+  justify-content: flex-start !important;
   overflow: hidden !important;
   border-radius: 1rem !important;
   box-shadow: 0 32px 90px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--frontend-stroke) !important;
@@ -14512,7 +14613,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   display: none !important;
 }
 
-/* Estructura del Head de Archify: columna de ancho 100% real */
+/* Estructura del Head de Archify: contenedor flexible para el cuerpo */
 .focus-chip.tiene-guia .relationship-lens-head {
   display: flex !important;
   flex-direction: column !important;
@@ -14523,8 +14624,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   border: none !important;
   width: 100% !important;
   max-width: 100% !important;
-  height: 100% !important;
-  max-height: 100% !important;
   flex: 1 1 auto !important;
   min-height: 0 !important;
   overflow: hidden !important;
@@ -14532,20 +14631,20 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   box-sizing: border-box !important;
 }
 
-/* Barra superior unificada de extremo a extremo */
+/* Barra superior del Modal (Topbar): Grid de 2 columnas (Izquierda título / Derecha acciones) */
 .guia-modal-topbar {
-  display: flex !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
   align-items: center !important;
-  justify-content: space-between !important;
-  flex-wrap: nowrap !important;
-  gap: 0.75rem !important;
+  column-gap: 1rem !important;
   width: 100% !important;
+  min-width: 100% !important;
   box-sizing: border-box !important;
-  padding: 0.6rem 1.15rem !important;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.94), rgba(15, 23, 42, 0.99)) !important;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.22) !important;
-  flex-shrink: 0 !important;
-  z-index: 30 !important;
+  padding: 0.65rem 1.15rem !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.96), rgba(15, 23, 42, 0.99)) !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.24) !important;
+  flex: 0 0 auto !important;
+  z-index: 35 !important;
   user-select: none !important;
 }
 
@@ -14559,7 +14658,7 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
   align-items: center !important;
   gap: 0.6rem !important;
   min-width: 0 !important;
-  flex: 1 1 auto !important;
+  overflow: hidden !important;
 }
 
 .guia-brand-badge {
@@ -14567,7 +14666,7 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
   font-weight: 800 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
-  padding: 0.2rem 0.55rem !important;
+  padding: 0.22rem 0.58rem !important;
   border-radius: 0.35rem !important;
   background: #4338ca !important;
   color: #ffffff !important;
@@ -14575,7 +14674,7 @@ html:not([data-theme="dark"]) .guia-modal-topbar {
 }
 
 .guia-brand-title {
-  font-size: 0.88rem !important;
+  font-size: 0.9rem !important;
   font-weight: 700 !important;
   color: var(--toolbar-text, #f8fafc) !important;
   white-space: nowrap !important;
@@ -14588,51 +14687,51 @@ html:not([data-theme="dark"]) .guia-brand-title {
 }
 
 .guia-topbar-actions {
-  display: inline-flex !important;
+  display: flex !important;
   align-items: center !important;
   justify-content: flex-end !important;
-  gap: 0.4rem !important;
+  gap: 0.45rem !important;
   flex-shrink: 0 !important;
-  margin-left: auto !important;
+  justify-self: end !important;
 }
 
-.chip-btn-ctrl {
-  background: rgba(148, 163, 184, 0.12) !important;
-  border: 1px solid rgba(148, 163, 184, 0.28) !important;
+.focus-chip .guia-topbar-actions .chip-btn-ctrl {
+  background: rgba(148, 163, 184, 0.14) !important;
+  border: 1px solid rgba(148, 163, 184, 0.3) !important;
   color: var(--toolbar-text, #e2e8f0) !important;
   border-radius: 0.45rem !important;
-  padding: 0.26rem 0.6rem !important;
-  font-size: 0.72rem !important;
+  padding: 0.3rem 0.68rem !important;
+  font-size: 0.73rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.32rem !important;
+  gap: 0.35rem !important;
   transition: all 0.15s ease !important;
   line-height: 1.2 !important;
   white-space: nowrap !important;
 }
 
-html:not([data-theme="dark"]) .chip-btn-ctrl {
+html:not([data-theme="dark"]) .focus-chip .guia-topbar-actions .chip-btn-ctrl {
   color: #334155 !important;
   background: #ffffff !important;
   border-color: #cbd5e1 !important;
 }
 
-.chip-btn-ctrl:hover {
-  background: rgba(148, 163, 184, 0.25) !important;
+.focus-chip .guia-topbar-actions .chip-btn-ctrl:hover {
+  background: rgba(148, 163, 184, 0.28) !important;
   color: #ffffff !important;
   border-color: var(--frontend-stroke) !important;
 }
 
-html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
+html:not([data-theme="dark"]) .focus-chip .guia-topbar-actions .chip-btn-ctrl:hover {
   background: #f1f5f9 !important;
   color: #0f172a !important;
 }
 
-.chip-btn-close {
-  width: 1.75rem !important;
-  height: 1.75rem !important;
+.focus-chip .guia-topbar-actions .chip-btn-close {
+  width: 1.8rem !important;
+  height: 1.8rem !important;
   border-radius: 50% !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -14645,11 +14744,11 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   color: #f87171 !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
-  margin-left: 0.2rem !important;
+  margin-left: 0.15rem !important;
   flex-shrink: 0 !important;
 }
 
-.chip-btn-close:hover {
+.focus-chip .guia-topbar-actions .chip-btn-close:hover {
   background: #ef4444 !important;
   color: #ffffff !important;
   border-color: #ef4444 !important;
@@ -14677,6 +14776,7 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   cursor: pointer;
 }
 
+.focus-chip.chip-minimized .relationship-lens-head,
 .focus-chip.chip-minimized .relationship-lens-copy,
 .focus-chip.chip-minimized .guia-operativa-card {
   display: none !important;
@@ -14726,14 +14826,14 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   min-width: max-content !important;
 }
 
-.guia-step-pill {
+.focus-chip .guia-step-pill {
   display: inline-flex !important;
   align-items: center !important;
   gap: 0.35rem !important;
   background: rgba(148, 163, 184, 0.1) !important;
   border: 1px solid rgba(148, 163, 184, 0.22) !important;
   color: var(--text-muted, #94a3b8) !important;
-  padding: 0.24rem 0.68rem !important;
+  padding: 0.26rem 0.7rem !important;
   border-radius: 999px !important;
   font-size: 0.72rem !important;
   font-weight: 600 !important;
@@ -14743,19 +14843,19 @@ html:not([data-theme="dark"]) .chip-btn-ctrl:hover {
   flex-shrink: 0 !important;
 }
 
-html:not([data-theme="dark"]) .guia-step-pill {
+html:not([data-theme="dark"]) .focus-chip .guia-step-pill {
   background: #f1f5f9 !important;
   border-color: #cbd5e1 !important;
   color: #64748b !important;
 }
 
-.guia-step-pill:hover {
+.focus-chip .guia-step-pill:hover {
   border-color: #38bdf8 !important;
   color: var(--toolbar-text, #f1f5f9) !important;
   background: rgba(56, 189, 248, 0.15) !important;
 }
 
-.guia-step-pill.active {
+.focus-chip .guia-step-pill.active {
   background: linear-gradient(135deg, #4338ca, #3b82f6) !important;
   border-color: #60a5fa !important;
   color: #ffffff !important;
@@ -14763,19 +14863,19 @@ html:not([data-theme="dark"]) .guia-step-pill {
   box-shadow: 0 3px 10px rgba(59, 130, 246, 0.35) !important;
 }
 
-.guia-step-pill.past {
+.focus-chip .guia-step-pill.past {
   background: rgba(16, 185, 129, 0.12) !important;
   border-color: rgba(16, 185, 129, 0.3) !important;
   color: #34d399 !important;
 }
 
-html:not([data-theme="dark"]) .guia-step-pill.past {
+html:not([data-theme="dark"]) .focus-chip .guia-step-pill.past {
   background: #ecfdf5 !important;
   color: #059669 !important;
   border-color: #a7f3d0 !important;
 }
 
-.guia-step-pill.locked {
+.focus-chip .guia-step-pill.locked {
   opacity: 0.42 !important;
   cursor: not-allowed !important;
   background: rgba(148, 163, 184, 0.05) !important;
@@ -14785,16 +14885,17 @@ html:not([data-theme="dark"]) .guia-step-pill.past {
   user-select: none !important;
 }
 
-html:not([data-theme="dark"]) .guia-step-pill.locked {
+html:not([data-theme="dark"]) .focus-chip .guia-step-pill.locked {
   background: #f8fafc !important;
   border-color: #cbd5e1 !important;
   color: #94a3b8 !important;
 }
 
 .pill-badge {
-  width: 1.1rem !important;
-  height: 1.1rem !important;
-  border-radius: 50% !important;
+  min-width: 1.15rem !important;
+  height: 1.15rem !important;
+  padding: 0 0.2rem !important;
+  border-radius: 999px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -14846,11 +14947,11 @@ html:not([data-theme="dark"]) .guia-step-pill.locked {
   transition: width 0.25s ease !important;
 }
 
-.guia-nav-btn {
+.focus-chip .guia-nav-btn {
   background: rgba(148, 163, 184, 0.15) !important;
   border: 1px solid rgba(148, 163, 184, 0.3) !important;
   color: var(--toolbar-text, #f1f5f9) !important;
-  padding: 0.4rem 0.85rem !important;
+  padding: 0.42rem 0.9rem !important;
   border-radius: 0.48rem !important;
   font-size: 0.75rem !important;
   font-weight: 700 !important;
@@ -14863,32 +14964,32 @@ html:not([data-theme="dark"]) .guia-step-pill.locked {
   white-space: nowrap !important;
 }
 
-html:not([data-theme="dark"]) .guia-nav-btn {
+html:not([data-theme="dark"]) .focus-chip .guia-nav-btn {
   color: #0f172a !important;
   background: #ffffff !important;
   border-color: #cbd5e1 !important;
 }
 
-.guia-nav-btn:hover:not(:disabled) {
+.focus-chip .guia-nav-btn:hover:not(:disabled) {
   background: rgba(148, 163, 184, 0.28) !important;
   border-color: var(--frontend-stroke) !important;
   transform: translateY(-1px) !important;
 }
 
-.guia-nav-btn.primary,
-html:not([data-theme="dark"]) .guia-nav-btn.primary {
+.focus-chip .guia-nav-btn.primary,
+html:not([data-theme="dark"]) .focus-chip .guia-nav-btn.primary {
   background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
   color: #ffffff !important;
   border-color: #3b82f6 !important;
   box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
 }
 
-.guia-nav-btn.primary:hover:not(:disabled) {
+.focus-chip .guia-nav-btn.primary:hover:not(:disabled) {
   background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
   border-color: #60a5fa !important;
 }
 
-.guia-nav-btn:disabled {
+.focus-chip .guia-nav-btn:disabled {
   opacity: 0.38 !important;
   cursor: not-allowed !important;
   transform: none !important;
@@ -14960,7 +15061,7 @@ html:not([data-theme="dark"]) .guia-hito-badge {
   border-color: #6ee7b7 !important;
 }
 
-/* Tabla 4 Columnas Densa y Optimizada */
+/* Tabla 5 Columnas Densa y Optimizada */
 .guia-tabla-wrap {
   width: 100% !important;
   overflow-x: auto !important;
@@ -15005,7 +15106,7 @@ html:not([data-theme="dark"]) .guia-tabla-wrap {
 .guia-tabla th:nth-child(5), .guia-tabla td:nth-child(5) { width: 38% !important; }
 
 /* Botón de paso enumerado interactivo */
-.guia-check-btn {
+.focus-chip .guia-check-btn {
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
@@ -15173,7 +15274,7 @@ html:not([data-theme="dark"]) .guia-detalle {
 
 /* Footer Inferior Permanente Anclado a la Base del Modal (Fuera del Scroll) */
 .guia-footer-sticky {
-  flex-shrink: 0 !important;
+  flex: 0 0 auto !important;
   width: 100% !important;
   box-sizing: border-box !important;
   margin: 0 !important;
@@ -15181,7 +15282,7 @@ html:not([data-theme="dark"]) .guia-detalle {
   background: rgba(15, 23, 42, 0.96) !important;
   border-top: 1px solid rgba(148, 163, 184, 0.22) !important;
   display: grid !important;
-  grid-template-columns: auto 1fr auto !important;
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
   align-items: center !important;
   gap: 0.75rem !important;
   z-index: 40 !important;
@@ -15196,7 +15297,7 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
   box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.06) !important;
 }
 
-.btn-pie-next {
+.focus-chip .btn-pie-next {
   min-width: 9rem !important;
   max-width: 22rem !important;
   display: inline-flex !important;
@@ -15249,6 +15350,8 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
   font-weight: 600 !important;
   text-align: center !important;
   white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 html:not([data-theme="dark"]) .guia-pie-status {
@@ -15297,8 +15400,8 @@ html:not([data-theme="dark"]) .guia-pie-final {
   }
 
   .guia-modal-topbar {
-    padding: 0.5rem 0.8rem !important;
-    gap: 0.45rem !important;
+    padding: 0.55rem 0.85rem !important;
+    column-gap: 0.5rem !important;
   }
 
   .guia-brand-title {
@@ -15314,8 +15417,8 @@ html:not([data-theme="dark"]) .guia-pie-final {
     display: none !important;
   }
 
-  .chip-btn-ctrl {
-    padding: 0.24rem 0.48rem !important;
+  .focus-chip .guia-topbar-actions .chip-btn-ctrl {
+    padding: 0.26rem 0.5rem !important;
   }
 
   .guia-body-scroll {
@@ -15336,21 +15439,21 @@ html:not([data-theme="dark"]) .guia-pie-final {
     font-size: 0.7rem !important;
   }
 
-  .btn-pie-prev {
+  .focus-chip .btn-pie-prev {
     grid-area: prev !important;
     width: 100% !important;
     font-size: 0.72rem !important;
-    padding: 0.4rem 0.5rem !important;
+    padding: 0.42rem 0.5rem !important;
   }
 
-  .btn-pie-next,
+  .focus-chip .btn-pie-next,
   .guia-pie-final {
     grid-area: next !important;
     min-width: 0 !important;
     max-width: 100% !important;
     width: 100% !important;
     font-size: 0.72rem !important;
-    padding: 0.4rem 0.6rem !important;
+    padding: 0.42rem 0.6rem !important;
     text-align: center !important;
   }
 
@@ -15404,6 +15507,15 @@ html:not([data-theme="dark"]) .guia-pie-final {
 
   window.__guiaMaxUnlocked = window.__guiaMaxUnlocked || 0;
   window.__guiaChecks = window.__guiaChecks || {};
+
+  // Integrar el .toolbar dentro de .header para que nunca choque con .flow-nav-top
+  function acomodarHeaderPagina() {
+    var header = document.querySelector('.container > .header');
+    var toolbar = document.querySelector('body > .toolbar');
+    if (header && toolbar && toolbar.parentNode !== header) {
+      header.appendChild(toolbar);
+    }
+  }
 
   window.irAPaso = function(targetNodeId) {
     if (!targetNodeId) return;
@@ -15627,11 +15739,13 @@ html:not([data-theme="dark"]) .guia-pie-final {
   }
 
   function asegurarBarraControles(chip) {
-    var head = chip.querySelector('.relationship-lens-head');
-    if (!head) return;
-
-    var topbar = head.querySelector('.guia-modal-topbar');
+    // Insertar la barra como primer hijo directo de #focus-chip para ocupar el 100% real del ancho
+    var topbar = chip.querySelector(':scope > .guia-modal-topbar');
     if (topbar) return;
+
+    // Si había una versión previa dentro de .relationship-lens-head, removerla
+    var oldTopbar = chip.querySelector('.guia-modal-topbar');
+    if (oldTopbar) oldTopbar.remove();
 
     topbar = document.createElement('div');
     topbar.className = 'guia-modal-topbar';
@@ -15646,7 +15760,7 @@ html:not([data-theme="dark"]) .guia-pie-final {
       '<button type="button" class="chip-btn-close" title="Cerrar ventana">✕</button>' +
       '</div>';
 
-    head.insertBefore(topbar, head.firstChild);
+    chip.insertBefore(topbar, chip.firstChild);
 
     var btnDock = topbar.querySelector('.btn-dock');
     btnDock.addEventListener('click', function(e) {
@@ -15744,6 +15858,8 @@ html:not([data-theme="dark"]) .guia-pie-final {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
+    acomodarHeaderPagina();
+
     var target = document.getElementById('focus-id');
     if (target) {
       var observer = new MutationObserver(actualizarModalGuia);

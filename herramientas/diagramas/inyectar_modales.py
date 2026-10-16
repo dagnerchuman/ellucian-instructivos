@@ -180,6 +180,12 @@ html[data-present="true"] .header {
   flex: 0 1 280px !important;
 }
 
+.flow-nav-select-wrap.flow-nav-select-center-wrap {
+  min-width: 195px !important;
+  max-width: 250px !important;
+  flex: 0 1 225px !important;
+}
+
 .flow-nav-select {
   appearance: none !important;
   -webkit-appearance: none !important;
@@ -203,6 +209,11 @@ html[data-present="true"] .header {
 .flow-nav-select:hover,
 .flow-nav-select:focus {
   border-color: #a78bfa !important;
+}
+
+.flow-nav-select.flow-nav-select-center {
+  padding-left: 1.65rem !important;
+  font-weight: 600 !important;
 }
 
 .flow-nav-select-arrow {
@@ -259,19 +270,43 @@ html[data-present="true"] .header {
   pointer-events: none !important;
 }
 
-.flow-btn-top.btn-toggle-present {
-  background: var(--toolbar-bg, #1e293b) !important;
-  color: var(--text, #fff) !important;
-  border-color: var(--panel-border, #334155) !important;
-  cursor: pointer !important;
-  margin-left: 0.25rem !important;
+.flow-btn-top .flow-btn-num {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 700 !important;
+  font-size: 0.72rem !important;
+  background: rgba(148, 163, 184, 0.22) !important;
+  padding: 0.08rem 0.34rem !important;
+  border-radius: 0.32rem !important;
+  line-height: 1.1 !important;
+  font-variant-numeric: tabular-nums !important;
 }
 
-.flow-btn-top.btn-toggle-present:hover {
-  background: #7030A0 !important;
-  border-color: #8b5cf6 !important;
+.flow-btn-top.primary .flow-btn-num {
+  background: rgba(255, 255, 255, 0.25) !important;
   color: #fff !important;
-  box-shadow: 0 2px 10px rgba(112, 48, 160, 0.35) !important;
+}
+
+.flow-btn-top .flow-btn-txt {
+  max-width: 180px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  font-weight: 500 !important;
+  font-size: 0.76rem !important;
+}
+
+@media (max-width: 1250px) {
+  .flow-btn-top .flow-btn-txt {
+    max-width: 110px !important;
+  }
+}
+
+@media (max-width: 950px) {
+  .flow-btn-top .flow-btn-txt {
+    display: none !important;
+  }
 }
 
 .flow-nav-counter {
@@ -1729,6 +1764,65 @@ html:not([data-theme="dark"]) .guia-pie-final {
     width: 100% !important;
   }
 }
+
+/* ==========================================================================
+   ÚLTIMO PASO/NODO BPM SELECCIONADO POR EL USUARIO
+   Se resalta de un color distintivo (ámbar/oro eléctrico) para que al salir
+   del modal el usuario reconozca de inmediato qué paso fue el último escogido.
+   ========================================================================== */
+g[data-ultimo-escogido="true"] {
+  opacity: 1 !important;
+  cursor: pointer !important;
+}
+
+g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
+  stroke: #f59e0b !important;
+  stroke-width: 3.5px !important;
+  stroke-dasharray: none !important;
+  fill: rgba(245, 158, 11, 0.22) !important;
+  filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.9)) !important;
+  transition: stroke 0.25s ease, fill 0.25s ease, filter 0.25s ease !important;
+  animation: pulsoUltimoEscogido 2.4s infinite ease-in-out !important;
+}
+
+@keyframes pulsoUltimoEscogido {
+  0%, 100% {
+    stroke: #f59e0b;
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.7));
+  }
+  50% {
+    stroke: #fbbf24;
+    filter: drop-shadow(0 0 18px rgba(251, 191, 36, 1)) drop-shadow(0 0 6px rgba(245, 158, 11, 0.85));
+  }
+}
+
+html[data-theme="light"] g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
+  stroke: #d97706 !important;
+  fill: rgba(245, 158, 11, 0.16) !important;
+  filter: drop-shadow(0 0 10px rgba(217, 119, 6, 0.75)) !important;
+}
+
+/* Ícono / sigil dentro del nodo escogido */
+g[data-ultimo-escogido="true"] .semantic-sigil circle,
+g[data-ultimo-escogido="true"] .semantic-sigil path,
+g[data-ultimo-escogido="true"] .sigil-fill {
+  stroke: #f59e0b !important;
+  fill: #f59e0b !important;
+}
+
+/* Textos dentro del nodo escogido */
+g[data-ultimo-escogido="true"] text.t-primary {
+  font-weight: 700 !important;
+}
+
+g[data-ultimo-escogido="true"] text[data-detail="fine"] {
+  fill: #fbbf24 !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"] {
+  fill: #b45309 !important;
+}
 """
 
 JS_SCRIPT_TEMPLATE = r"""
@@ -1744,6 +1838,31 @@ __CSS__
 
   window.__guiaMaxUnlocked = window.__guiaMaxUnlocked || 0;
   window.__guiaChecks = window.__guiaChecks || {};
+  window.__ultimoPasoEscogido = null;
+
+  // Marcar en el SVG del diagrama el último paso/nodo BPM escogido con un color distintivo persistente
+  function marcarUltimoPasoEnDiagrama(nodeId) {
+    if (!nodeId) return;
+    window.__ultimoPasoEscogido = nodeId;
+    try {
+      sessionStorage.setItem('archify_ultimo_paso_' + window.location.pathname, nodeId);
+    } catch (_) {}
+
+    var svg = document.querySelector('.diagram-container > svg') || document.querySelector('svg');
+    if (!svg) return;
+
+    var nodosPrevios = svg.querySelectorAll('[data-ultimo-escogido="true"]');
+    for (var i = 0; i < nodosPrevios.length; i++) {
+      if (nodosPrevios[i].getAttribute('data-node-id') !== nodeId) {
+        nodosPrevios[i].removeAttribute('data-ultimo-escogido');
+      }
+    }
+
+    var targetNode = svg.querySelector('[data-node-id="' + nodeId + '"]');
+    if (targetNode) {
+      targetNode.setAttribute('data-ultimo-escogido', 'true');
+    }
+  }
 
   // Integrar el .toolbar dentro de .header para que nunca choque con .flow-nav-top ni con h1
   function acomodarHeaderPagina() {
@@ -1800,6 +1919,7 @@ __CSS__
 
   window.irAPaso = function(targetNodeId) {
     if (!targetNodeId) return;
+    marcarUltimoPasoEnDiagrama(targetNodeId);
     var stepKeys = Object.keys(GUIA_MAP);
     var targetIdx = stepKeys.indexOf(targetNodeId);
     if (targetIdx !== -1 && targetIdx > (window.__guiaMaxUnlocked || 0)) {
@@ -1811,6 +1931,7 @@ __CSS__
       setTimeout(function() {
         mantenerFlujoCompleto();
         actualizarModalGuia();
+        marcarUltimoPasoEnDiagrama(targetNodeId);
       }, 30);
     }
   };
@@ -1838,12 +1959,14 @@ __CSS__
         window.__guiaMaxUnlocked = nextIndex;
       }
       var targetNodeId = stepKeys[nextIndex];
+      marcarUltimoPasoEnDiagrama(targetNodeId);
       var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
       if (nodeElem) {
         nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
         setTimeout(function() {
           mantenerFlujoCompleto();
           actualizarModalGuia();
+          marcarUltimoPasoEnDiagrama(targetNodeId);
         }, 30);
       }
     }
@@ -2136,6 +2259,17 @@ __CSS__
       else chip.hidden = true;
     }
     mantenerFlujoCompleto();
+
+    // Mantener seleccionado en el diagrama el último paso escogido con su color distintivo
+    if (window.__ultimoPasoEscogido) {
+      marcarUltimoPasoEnDiagrama(window.__ultimoPasoEscogido);
+      setTimeout(function() {
+        marcarUltimoPasoEnDiagrama(window.__ultimoPasoEscogido);
+      }, 40);
+      setTimeout(function() {
+        marcarUltimoPasoEnDiagrama(window.__ultimoPasoEscogido);
+      }, 140);
+    }
   }
 
   function actualizarModalGuia() {
@@ -2156,6 +2290,8 @@ __CSS__
       document.body.classList.remove('has-guia-open');
       return;
     }
+
+    marcarUltimoPasoEnDiagrama(nodeId);
 
     var info = GUIA_MAP[nodeId];
     if (!card) {
@@ -2269,13 +2405,6 @@ __CSS__
           }
         }
       }
-      var btnFlowPresent = document.getElementById('btn-flow-present');
-      if (btnFlowPresent) {
-        var txt = btnFlowPresent.querySelector('span');
-        if (txt) {
-          txt.textContent = isPresent ? 'Salir de pantalla completa' : 'Pantalla completa';
-        }
-      }
     }
     if (btnPresent) {
       btnPresent.addEventListener('click', function() {
@@ -2352,21 +2481,29 @@ __CSS__
 
       var node = e.target.closest('[data-node-id]');
       if (node) {
+        var nId = node.getAttribute('data-node-id');
+        if (nId) {
+          marcarUltimoPasoEnDiagrama(nId);
+        }
         neutralizarCamaraArchify();
         mantenerFlujoCompleto();
         setTimeout(function() {
           mantenerFlujoCompleto();
           actualizarModalGuia();
+          if (nId) marcarUltimoPasoEnDiagrama(nId);
         }, 15);
         setTimeout(function() {
           mantenerFlujoCompleto();
           actualizarModalGuia();
+          if (nId) marcarUltimoPasoEnDiagrama(nId);
         }, 70);
         setTimeout(function() {
           mantenerFlujoCompleto();
+          if (nId) marcarUltimoPasoEnDiagrama(nId);
         }, 200);
         setTimeout(function() {
           mantenerFlujoCompleto();
+          if (nId) marcarUltimoPasoEnDiagrama(nId);
         }, 450);
       }
     });
@@ -2403,15 +2540,38 @@ __CSS__
     });
 
     mantenerFlujoCompleto();
+
+    // Restaurar el último paso escogido previamente si existe en sessionStorage
+    var storedLast = null;
+    try {
+      storedLast = sessionStorage.getItem('archify_ultimo_paso_' + window.location.pathname);
+    } catch (_) {}
+    if (storedLast) {
+      marcarUltimoPasoEnDiagrama(storedLast);
+      setTimeout(function() {
+        marcarUltimoPasoEnDiagrama(storedLast);
+      }, 100);
+      setTimeout(function() {
+        marcarUltimoPasoEnDiagrama(storedLast);
+      }, 350);
+    }
+
     actualizarModalGuia();
     if (window.location.hash && window.location.hash.indexOf('focus=') !== -1) {
+      var matchFocus = window.location.hash.match(/focus=([^&]+)/);
+      if (matchFocus && matchFocus[1]) {
+        var hashNodeId = decodeURIComponent(matchFocus[1]);
+        marcarUltimoPasoEnDiagrama(hashNodeId);
+      }
       setTimeout(function() {
         actualizarModalGuia();
         mantenerFlujoCompleto();
+        if (hashNodeId) marcarUltimoPasoEnDiagrama(hashNodeId);
       }, 70);
       setTimeout(function() {
         actualizarModalGuia();
         mantenerFlujoCompleto();
+        if (hashNodeId) marcarUltimoPasoEnDiagrama(hashNodeId);
       }, 250);
     }
   });
@@ -2440,6 +2600,7 @@ def construir_navegacion_flujos(ruta_html):
     """Calcula la navegación anterior/siguiente y datos para la barra superior y pie."""
     carpeta_diagrama = ruta_html.parent
     carpeta_diagramas = carpeta_diagrama.parent
+    carpeta_centros = carpeta_diagramas.parent.parent
 
     ruta_str = str(ruta_html).lower()
     if "idiomas" in ruta_str:
@@ -2460,6 +2621,36 @@ def construir_navegacion_flujos(ruta_html):
         color_centro = "#7030A0"
 
     url_centros = f"../../../index.html#sec-{id_centro}"
+
+    # Construir opciones del selector de Centros (Idiomas, Computación, Emprendimiento, Común)
+    centros_lista = [
+        ("idiomas", "Centro de Idiomas", "#8b5cf6", "🟣"),
+        ("computacion", "Centro de Computación", "#10b981", "🟢"),
+        ("emprendimiento", "Centro de Emprendimiento", "#f59e0b", "🟠"),
+        ("comun", "Los tres centros (común)", "#7030A0", "🔄"),
+    ]
+    centros_options_html = []
+    for c_id, c_nom, c_col, c_ico in centros_lista:
+        is_c_curr = (c_id == id_centro)
+        sel_c = ' selected="selected"' if is_c_curr else ""
+        lbl_c = f"{c_ico} {c_nom}" + (" (Actual)" if is_c_curr else "")
+        if is_c_curr:
+            target_c_url = f"../{carpeta_diagrama.name}/{ruta_html.name}"
+        else:
+            c_diag_dir = carpeta_centros / c_id / "diagramas"
+            matching_dir = c_diag_dir / carpeta_diagrama.name
+            if matching_dir.is_dir() and next(matching_dir.glob("*.html"), None):
+                matching_html = next(matching_dir.glob("*.html")).name
+                target_c_url = f"../../../{c_id}/diagramas/{carpeta_diagrama.name}/{matching_html}"
+            else:
+                primeros = sorted([p for p in c_diag_dir.glob("[0-9][0-9]-*") if p.is_dir() and next(p.glob("*.html"), None)])
+                if primeros:
+                    primer_html = next(primeros[0].glob("*.html")).name
+                    target_c_url = f"../../../{c_id}/diagramas/{primeros[0].name}/{primer_html}"
+                else:
+                    target_c_url = f"../../../index.html#sec-{c_id}"
+        centros_options_html.append(f'<option value="{target_c_url}"{sel_c}>{lbl_c}</option>')
+    select_centros_options = "\n            ".join(centros_options_html)
 
     subs = sorted([
         p for p in carpeta_diagramas.glob("[0-9][0-9]-*")
@@ -2513,24 +2704,26 @@ def construir_navegacion_flujos(ruta_html):
 
     # Botones top
     if flujo_ant:
-        btn_prev_top = f'''<a href="{flujo_ant['url']}" class="flow-btn-top prev" title="Flujo anterior: {flujo_ant['titulo']}">
+        btn_prev_top = f'''<a href="{flujo_ant['url']}" class="flow-btn-top prev" title="Flujo anterior: {flujo_ant['num']:02d}. {flujo_ant['titulo']}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        <span>Anterior</span>
+        <span class="flow-btn-num">{flujo_ant['num']:02d}</span>
+        <span class="flow-btn-txt">{flujo_ant['titulo']}</span>
       </a>'''
     else:
         btn_prev_top = '''<span class="flow-btn-top prev disabled" title="Primer flujo de este centro">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        <span>Anterior</span>
+        <span class="flow-btn-txt">Inicio</span>
       </span>'''
 
     if flujo_sig:
-        btn_next_top = f'''<a href="{flujo_sig['url']}" class="flow-btn-top next primary" title="Siguiente flujo: {flujo_sig['titulo']}">
-        <span>Siguiente</span>
+        btn_next_top = f'''<a href="{flujo_sig['url']}" class="flow-btn-top next primary" title="Siguiente flujo: {flujo_sig['num']:02d}. {flujo_sig['titulo']}">
+        <span class="flow-btn-num">{flujo_sig['num']:02d}</span>
+        <span class="flow-btn-txt">{flujo_sig['titulo']}</span>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>'''
     else:
         btn_next_top = '''<span class="flow-btn-top next disabled" title="Último flujo de este centro">
-        <span>Siguiente</span>
+        <span class="flow-btn-txt">Fin</span>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </span>'''
 
@@ -2545,10 +2738,13 @@ def construir_navegacion_flujos(ruta_html):
           <span>Volver a Centros</span>
         </a>
         <span class="flow-nav-sep">/</span>
-        <span class="flow-nav-center-tag">
-          <span class="flow-center-dot" style="background:{color_centro}"></span>
-          {nombre_centro}
-        </span>
+        <div class="flow-nav-select-wrap flow-nav-select-center-wrap">
+          <span class="flow-center-dot" style="position:absolute; left:0.65rem; top:50%; transform:translateY(-50%); z-index:2; pointer-events:none; background:{color_centro};"></span>
+          <select class="flow-nav-select flow-nav-select-center" onchange="if(this.value) window.location.href=this.value" title="Cambiar a otro Centro Empresarial">
+            {select_centros_options}
+          </select>
+          <span class="flow-nav-select-arrow">▾</span>
+        </div>
         <span class="flow-nav-sep">/</span>
         <div class="flow-nav-select-wrap">
           <select class="flow-nav-select" onchange="if(this.value) window.location.href=this.value" title="Cambiar a otro flujo del centro">
@@ -2561,78 +2757,13 @@ def construir_navegacion_flujos(ruta_html):
         {btn_prev_top}
         <span class="flow-nav-counter">Flujo <strong>{num_actual}</strong> de {total_flujos}</span>
         {btn_next_top}
-        <button type="button" class="flow-btn-top btn-toggle-present" id="btn-flow-present" title="Modo Presentación / Pantalla Completa (Atajo: F)" onclick="var b=document.getElementById('btn-present'); if(b) b.click();">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-          <span>Pantalla completa</span>
-        </button>
       </div>
     </nav>
     <!-- === /FLOW NAV TOP === -->'''
 
-    # Tarjetas pie (Bottom)
-    if flujo_ant:
-        card_prev = f'''<a href="{flujo_ant['url']}" class="flow-bottom-card prev" title="Ir al flujo anterior: {flujo_ant['titulo']}">
-          <div class="flow-card-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            <span>Flujo anterior</span>
-          </div>
-          <div class="flow-card-num-title">
-            <span class="flow-card-num">{flujo_ant['num']:02d}</span>
-            <span class="flow-card-title">{flujo_ant['titulo']}</span>
-          </div>
-          <div class="flow-card-meta">{flujo_ant['cap'] or 'Capacidades Banner'}</div>
-        </a>'''
-    else:
-        card_prev = '''<div class="flow-bottom-card prev placeholder">
-          <div class="flow-card-badge"><span>Inicio del recorrido</span></div>
-          <div class="flow-card-title muted">Este es el primer flujo del centro</div>
-        </div>'''
-
-    if flujo_sig:
-        card_next = f'''<a href="{flujo_sig['url']}" class="flow-bottom-card next primary-accent" title="Avanzar al siguiente flujo: {flujo_sig['titulo']}">
-          <div class="flow-card-badge">
-            <span>Siguiente flujo</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </div>
-          <div class="flow-card-num-title">
-            <span class="flow-card-num">{flujo_sig['num']:02d}</span>
-            <span class="flow-card-title">{flujo_sig['titulo']}</span>
-          </div>
-          <div class="flow-card-meta">{flujo_sig['cap'] or 'Capacidades Banner'}</div>
-        </a>'''
-    else:
-        card_next = f'''<div class="flow-bottom-card next placeholder">
-          <div class="flow-card-badge"><span>Fin del recorrido</span></div>
-          <div class="flow-card-title muted">¡Completaste todos los flujos de {nombre_centro}!</div>
-        </div>'''
-
-    html_nav_bottom = f'''<!-- === FLOW NAV BOTTOM === -->
-    <nav class="flow-nav-bottom-section" aria-label="Paginación de flujos al pie">
-      <div class="flow-bottom-container">
-        <div class="flow-bottom-col prev-col">
-          {card_prev}
-        </div>
-        <div class="flow-bottom-col hub-col">
-          <a href="{url_centros}" class="flow-bottom-hub-btn" title="Ver galería y todos los flujos de {nombre_centro}">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="7" height="7"></rect>
-              <rect x="14" y="3" width="7" height="7"></rect>
-              <rect x="14" y="14" width="7" height="7"></rect>
-              <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
-            <span>Ver todos los flujos ({nombre_centro})</span>
-          </a>
-        </div>
-        <div class="flow-bottom-col next-col">
-          {card_next}
-        </div>
-      </div>
-    </nav>
-    <!-- === /FLOW NAV BOTTOM === -->'''
-
     return {
         "nav_top": html_nav_top,
-        "nav_bottom": html_nav_bottom,
+        "nav_bottom": "",
         "flujo_ant": flujo_ant,
         "flujo_sig": flujo_sig,
         "num_actual": num_actual,
@@ -2658,12 +2789,6 @@ def inyectar_en_html(ruta_html, slug):
     # Inyectar navegación superior antes de <div class="header">
     if '<div class="header">' in contenido:
         contenido = contenido.replace('<div class="header">', f'{nav_data["nav_top"]}\n    <div class="header">', 1)
-
-    # Inyectar navegación inferior antes de <nav class="node-outline
-    if '<nav class="node-outline' in contenido:
-        contenido = contenido.replace('<nav class="node-outline', f'{nav_data["nav_bottom"]}\n    <nav class="node-outline', 1)
-    elif '</div>\n  </div>' in contenido:
-        contenido = contenido.replace('</div>\n  </div>', f'{nav_data["nav_bottom"]}\n  </div>', 1)
 
     guia_json = json.dumps(guia, ensure_ascii=False)
     sig_json = json.dumps(nav_data["flujo_sig"], ensure_ascii=False) if nav_data["flujo_sig"] else "null"

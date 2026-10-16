@@ -1,3 +1,8 @@
+---
+trigger: always_on
+description: "Reglas de trabajo y modelo de los Centros Empresariales USS en Banner"
+---
+
 # Reglas de Trabajo: Centros Empresariales USS en Ellucian Banner
 
 ## 1. Identidad y Contexto

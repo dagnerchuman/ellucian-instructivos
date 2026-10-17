@@ -13782,6 +13782,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13948,15 +13954,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13966,10 +13972,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15600,7 +15606,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Egresados USS", "hito": "Egresado que requiere acreditar requisito de titulación mediante modalidad intensiva"}, "c1": {"fase": "Paso 1: Apertura de NRC Especial", "pantalla": "SSASECT", "hito": "Creación de sección especial con indicador de egresados y fechas específicas"}, "c2": {"fase": "Paso 2: Inscripción Administrativa", "pantalla": "SFAREGS", "hito": "Inscripción del alumno bajo arancel diferenciado para egresados"}, "c3": {"fase": "Paso 3: Evaluación y Plataforma", "pantalla": "Plataforma Externa", "hito": "Instrucción intensiva externa y reporte de calificación final obtenida"}, "c4": {"fase": "Paso 4: Cierre y Pase a Historia", "pantalla": "SFASLST → SHRROLL", "hito": "Asentamiento docente de notas y pase a historia para CAPP de titulación"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Requisito de egreso culminado y reconocido curricularmente"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: Requisito de Titulación para Egresados", "pantalla": "Egresados USS", "hito": "Egresado que requiere acreditar requisito de titulación mediante modalidad intensiva", "instrucciones": [{"campo": "Postulación Egresado", "valor": "Expediente de titulación", "ejemplo": "Requisito de idioma", "tipo": "Condición Inicial", "detalle": "Egresado de pregrado solicita cursado especial intensivo para acreditar competencia de grado."}]}, "c1": {"fase": "Paso 1: Apertura de NRC Especial en SSASECT", "pantalla": "SSASECT", "hito": "Creación de sección especial con indicador de egresados y fechas específicas", "instrucciones": [{"campo": "Programación Especial", "valor": "SSASECT · Periodo vigente", "ejemplo": "NRC intensivo egresados", "tipo": "Configuración", "detalle": "Crear sección especial en SSASECT con tarifa diferenciada y parte de periodo intensiva."}]}, "c2": {"fase": "Paso 2: Inscripción Administrativa en SFAREGS", "pantalla": "SFAREGS", "hito": "Inscripción del alumno bajo arancel diferenciado para egresados", "instrucciones": [{"campo": "Inscripción Backoffice", "valor": "SFAREGS · Código RE", "ejemplo": "Tarifa especial egresado", "tipo": "Obligatorio", "detalle": "Registrar la matrícula en SFAREGS asegurando la tasación de arancel de egresados."}]}, "c3": {"fase": "Paso 3: Evaluación y Plataforma Intensiva Externa", "pantalla": "Plataforma Externa", "hito": "Instrucción intensiva externa y reporte de calificación final obtenida", "instrucciones": [{"campo": "Dictado Intensivo", "valor": "Plataforma de Idiomas", "ejemplo": "Reporte de notas", "tipo": "Capacitación", "detalle": "El participante completa la instrucción intensiva y se emite la calificación oficial aprobatoria."}]}, "c4": {"fase": "Paso 4: Cierre y Pase a Historia (SHRROLL / CAPP)", "pantalla": "SFASLST → SHRROLL", "hito": "Asentamiento docente de notas y pase a historia para CAPP de titulación", "instrucciones": [{"campo": "Vaciado en SFASLST", "valor": "Nota final asentada", "ejemplo": "Pase SHRROLL", "tipo": "Hito Crítico", "detalle": "Registrar nota en SFASLST y ejecutar SHRROLL para transferir el requisito al expediente CAPP."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Requisito de egreso culminado y reconocido curricularmente", "instrucciones": [{"campo": "Acreditación Final", "valor": "CAPP de Titulación", "ejemplo": "Apto para grado", "tipo": "Resultado Oficial", "detalle": "El requisito de idioma queda marcado como CUMPLE en la auditoría de titulación del egresado."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 13, "slug": "script-10-retorno-por-desaprobado", "titulo": "Script 10 · Retorno por desaprobado", "cap": "Capacidad 7 y 8", "url": "../13-script-10-retorno-por-desaprobado/idiomas-13-script-10-retorno-por-desaprobado.html", "is_curr": false, "folder": "13-script-10-retorno-por-desaprobado", "filename": "idiomas-13-script-10-retorno-por-desaprobado.html"};
   window.__ANTERIOR_FLUJO = {"num": 11, "slug": "script-16-division-de-grupos-y-traslado", "titulo": "Script 16 · División de grupos y traslado", "cap": "Capacidad 5", "url": "../11-script-16-division-de-grupos-y-traslado/idiomas-11-script-16-division-de-grupos-y-traslado.html", "is_curr": false, "folder": "11-script-16-division-de-grupos-y-traslado", "filename": "idiomas-11-script-16-division-de-grupos-y-traslado.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-idiomas";

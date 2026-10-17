@@ -175,15 +175,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -193,10 +193,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -289,7 +289,7 @@ html[data-present="true"] .header {
 }
 
 .flow-btn-top .flow-btn-txt {
-  max-width: 180px !important;
+  max-width: 240px !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
@@ -299,7 +299,7 @@ html[data-present="true"] .header {
 
 @media (max-width: 1250px) {
   .flow-btn-top .flow-btn-txt {
-    max-width: 110px !important;
+    max-width: 150px !important;
   }
 }
 

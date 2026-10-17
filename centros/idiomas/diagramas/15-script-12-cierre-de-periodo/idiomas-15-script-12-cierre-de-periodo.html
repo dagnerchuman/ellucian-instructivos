@@ -13779,6 +13779,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13945,15 +13951,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13963,10 +13969,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15597,7 +15603,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Fin de Periodo", "hito": "Periodo 202656 culminado con notas finales listas en NRC 1026"}, "c1": {"fase": "Paso 1: Ingreso de Notas Finales", "pantalla": "SFASLST", "hito": "Captura de notas: S00581109 (16 V), S00581108 (08 V), S00581111 (INH V)"}, "c2": {"fase": "Paso 2: Diagnóstico y Resolución U20", "pantalla": "SHAGRDE", "hito": "Alineación de Modo V en catálogo y nivel C para resolver incompatibilidad con SHRROLL"}, "c3": {"fase": "Paso 3: Corrida Batch SHRROLL", "pantalla": "GJAPCTL", "hito": "Job 8114 exitoso con 100% de estudiantes rolados a la historia académica"}, "c4": {"fase": "Paso 4: Bloqueo Formal de Acta", "pantalla": "SFASLST / SHATERM", "hito": "Indicador Grade Roll Status = Y; acta cerrada impidiendo ediciones no autorizadas"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Cierre de actas y resolución institucional U20 validados al 100%"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: Ciclo Culminado con Calificaciones Listas", "pantalla": "Fin de Periodo", "hito": "Periodo 202656 culminado con notas finales listas en NRC 1026", "instrucciones": [{"campo": "Cierre de Actividades", "valor": "Periodo 202656 · NRC 1026", "ejemplo": "Docente titular asignado", "tipo": "Condición Inicial", "detalle": "Conclusión de clases lectivas con registro completo de evaluaciones finales por parte del docente."}]}, "c1": {"fase": "Paso 1: Ingreso de Notas Finales en SFASLST", "pantalla": "SFASLST", "hito": "Captura de notas: S00581109 (16), S00581108 (08), S00581111 (INH) con Rolled = N", "instrucciones": [{"campo": "Acceso a SFASLST", "valor": "SFASLST · Periodo 202656", "ejemplo": "NRC 1026", "tipo": "Obligatorio", "detalle": "Ingresar a la lista de clase para volcar las notas definitivas del grupo."}, {"campo": "Registro de Notas", "valor": "16 (Aprobado), 08 (Reprobado), INH", "ejemplo": "Modo V (Vigesimal)", "tipo": "Hito Crítico", "detalle": "Digitar notas vigesimales y código INH. Comprobar que la columna Rolled permanezca en N."}]}, "c2": {"fase": "Paso 2: Diagnóstico y Resolución de Incidencia U20 (SHAGRDE)", "pantalla": "SHAGRDE", "hito": "Alineación de Modo V en catálogo y nivel C para resolver incompatibilidad con SHRROLL", "instrucciones": [{"campo": "Diagnóstico U20", "valor": "Error «No Substitute Grade»", "ejemplo": "Incompatibilidad de modo", "tipo": "Diagnóstico Técnico", "detalle": "En TEST, el curso tenía Modo V en SCACRSE pero el nivel C en SHAGRDE no tenía Modo V configurado."}, {"campo": "Resolución U20", "valor": "SHAGRDE · Nivel C con Modo V", "ejemplo": "Notas 00 a 20", "tipo": "Hito Crítico", "detalle": "Incorporar Modo V a la escala del nivel C con nota aprobatoria 11, habilitando la corrida limpia de SHRROLL."}]}, "c3": {"fase": "Paso 3: Corrida Batch SHRROLL en GJAPCTL", "pantalla": "GJAPCTL", "hito": "Job 8114 exitoso con 100% de estudiantes rolados a la historia académica", "instrucciones": [{"campo": "Acceso a GJAPCTL", "valor": "GJAPCTL · Proceso SHRROLL", "ejemplo": "Pase masivo a historia", "tipo": "Procesamiento", "detalle": "Parametrizar y despachar el proceso batch SHRROLL para el periodo y NRC indicado."}, {"campo": "Bitácora en GJIREVO", "valor": "Job 8114 · Return Code: 0", "ejemplo": "Salida .lis sin abortos", "tipo": "Hito Crítico", "detalle": "Revisar en GJIREVO el archivo .lis confirmando que el 100% de los estudiantes fue rolado con éxito."}]}, "c4": {"fase": "Paso 4: Bloqueo Formal de Acta e Historia Permanente", "pantalla": "SFASLST / SHATERM", "hito": "Indicador Grade Roll Status = Y; acta cerrada impidiendo ediciones no autorizadas", "instrucciones": [{"campo": "Indicador de Rolado", "valor": "SFASLST · Rolled = Y", "ejemplo": "Casillas bloqueadas", "tipo": "Control de Calidad", "detalle": "Confirmar que las notas quedan congeladas, impidiendo cualquier edición extemporánea docente."}, {"campo": "Historial Académico", "valor": "SHATERM / SHACRSE", "ejemplo": "Récord permanente", "tipo": "Resultado", "detalle": "Las calificaciones pasan definitivamente a la historia académica y transcripts oficiales."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Cierre de actas y resolución institucional U20 validados al 100%", "instrucciones": [{"campo": "Cierre Institucional", "valor": "TEST USS 202656", "ejemplo": "Job 8114 exitoso", "tipo": "Resultado Oficial", "detalle": "Actas oficialmente cerradas y roladas con trazabilidad completa de aprobación y reprobación."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 16, "slug": "script-18-b-retenciones-y-bloqueo-de-matricula", "titulo": "Script 18-B · Retenciones y bloqueo de matrícula", "cap": "Capacidad 4 y 5", "url": "../16-script-18-b-retenciones-y-bloqueo-de-matricula/idiomas-16-script-18-b-retenciones-y-bloqueo-de-matricula.html", "is_curr": false, "folder": "16-script-18-b-retenciones-y-bloqueo-de-matricula", "filename": "idiomas-16-script-18-b-retenciones-y-bloqueo-de-matricula.html"};
   window.__ANTERIOR_FLUJO = {"num": 14, "slug": "script-03-matricula-por-convalidacion", "titulo": "Script 03 · Matrícula por convalidación", "cap": "Capacidad 3", "url": "../14-script-03-matricula-por-convalidacion/idiomas-14-script-03-matricula-por-convalidacion.html", "is_curr": false, "folder": "14-script-03-matricula-por-convalidacion", "filename": "idiomas-14-script-03-matricula-por-convalidacion.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-idiomas";

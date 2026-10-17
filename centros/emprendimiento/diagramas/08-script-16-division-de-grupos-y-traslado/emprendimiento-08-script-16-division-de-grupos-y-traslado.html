@@ -13776,6 +13776,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13942,15 +13948,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13960,10 +13966,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15594,7 +15600,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Reubicación Horaria", "hito": "Estudiante matriculado en NRC 1026 (Sec. D) solicita traslado a NRC 1021 (Sec. B)"}, "c1": {"fase": "Paso 1: Verificación de Origen y Destino", "pantalla": "SFAREGS → SSASECT", "hito": "Comprobar matrícula activa en origen y disponibilidad de cupo en la sección destino"}, "c2": {"fase": "Paso 2: Ajuste de Reserva de Cupo", "pantalla": "SSARRES", "hito": "Ampliación de cupo reservado de CMEMC38 de 1 a 2 vacantes en sección destino"}, "c3": {"fase": "Paso 3: Transacción Simultánea", "pantalla": "SFAREGS", "hito": "Guardar en un solo paso: NRC 1026 con código DD y NRC 1021 con código RE"}, "c4": {"fase": "Paso 4: Auditoría de Lista y Cobros", "pantalla": "SFASLST / TSAAREV", "hito": "Aparición en nueva lista oficial; vacante origen liberada y sin cobro duplicado"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Traslado entre secciones paralelas validado al 100%"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: Solicitud de Reubicación de Horario", "pantalla": "SFAREGS", "hito": "Estudiante matriculado en NRC 1026 solicita traslado a sección paralela 1021", "instrucciones": [{"campo": "Matrícula en Origen", "valor": "ID S00581109 · NRC 1026", "ejemplo": "Sec. D activa (RE)", "tipo": "Condición Inicial", "detalle": "El alumno cursa regularmente la materia en la sección de origen pero requiere cambio horario."}, {"campo": "Sección de Destino", "valor": "NRC 1021 (Sec. B)", "ejemplo": "Horario alterno", "tipo": "Control Inicial", "detalle": "Identificar el NRC paralelo de destino en el mismo periodo lectivo 202656."}]}, "c1": {"fase": "Paso 1: Verificación de Origen y Destino", "pantalla": "SFAREGS → SSASECT", "hito": "Comprobación de matrícula vigente en origen y disponibilidad en destino", "instrucciones": [{"campo": "Consulta SFAREGS", "valor": "Periodo 202656 · ID S00581109", "ejemplo": "Verificar NRC 1026", "tipo": "Obligatorio", "detalle": "Confirmar que el alumno se encuentre admitido y activo en el programa del centro."}, {"campo": "Aforo en Destino", "valor": "SSASECT · NRC 1021", "ejemplo": "Enrollment Details", "tipo": "Control", "detalle": "Comprobar el aforo general y la configuración de reservas de la sección receptora."}]}, "c2": {"fase": "Paso 2: Ajuste de Reserva de Cupo en SSARRES", "pantalla": "SSARRES", "hito": "Ampliación de cupo reservado de programa CMEMC38 de 1 a 2 vacantes", "instrucciones": [{"campo": "Acceso a Reservas", "valor": "SSARRES · Menú Relacionados", "ejemplo": "NRC 1021 destino", "tipo": "Configuración", "detalle": "Navegar a SSARRES con Periodo 202656 y NRC 1021 en la pestaña Lugares Reservados."}, {"campo": "Ampliación de Cupo", "valor": "Programa CMEMC38: 1 → 2 vacantes", "ejemplo": "Ajuste de cuota", "tipo": "Hito Crítico", "detalle": "Incrementar a 2 vacantes reservadas para evitar el error fatal *ERROR* Reserve Closed al matricular."}, {"campo": "Guardar Reserva", "valor": "Botón Guardar (F10)", "ejemplo": "Reserva confirmada", "tipo": "Mandatorio", "detalle": "Presionar F10 para asentar la disponibilidad de cupo para el alumno trasladado."}]}, "c3": {"fase": "Paso 3: Transacción Simultánea de Traslado (DD + RE)", "pantalla": "SFAREGS", "hito": "Retiro simultáneo de origen (DD) e inscripción en destino (RE) en un solo F10", "instrucciones": [{"campo": "Baja en Origen", "valor": "Fila NRC 1026: Código DD", "ejemplo": "Drop en sección D", "tipo": "Obligatorio", "detalle": "En la fila del curso origen asignar el código DD para liberar la vacante previa."}, {"campo": "Alta en Destino", "valor": "Nueva fila: NRC 1021 · Código RE", "ejemplo": "Alta en sección B", "tipo": "Obligatorio", "detalle": "En una nueva línea digitar el NRC destino 1021 con código de estatus RE."}, {"campo": "Guardado Atómico", "valor": "Botón Guardar (F10)", "ejemplo": "Transacción atómica", "tipo": "Hito Crítico", "detalle": "Presionar F10 para procesar simultáneamente ambas operaciones en un solo movimiento atómico."}]}, "c4": {"fase": "Paso 4: Auditoría de Lista Docente y Cobros", "pantalla": "SFASLST / TSAAREV", "hito": "Aparición oficial en sección B, vacante origen liberada y sin cobro duplicado", "instrucciones": [{"campo": "Lista Docente Destino", "valor": "SFASLST · NRC 1021", "ejemplo": "Roster actualizado", "tipo": "Verificación", "detalle": "Comprobar que el alumno figure activo en el roster del nuevo NRC con estatus RE."}, {"campo": "Control Financiero", "valor": "TSAAREV · Cuenta Corriente", "ejemplo": "Sin duplicidad", "tipo": "Financiero", "detalle": "Verificar que la tasación mantenga un único cargo arancelario sin duplicar cuotas de matrícula."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Traslado entre secciones paralelas validado al 100%", "instrucciones": [{"campo": "Validación en TEST", "valor": "TEST USS 202656", "ejemplo": "S00581109 trasladado", "tipo": "Resultado Oficial", "detalle": "Reubicación exitosa: vacante origen restituida en 1026 y alumno matriculado en 1021."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 9, "slug": "script-15-ampliacion-de-cupos-y-reservas", "titulo": "Script 15 · Ampliación de cupos y reservas", "cap": "Capacidad 5", "url": "../09-script-15-ampliacion-de-cupos-y-reservas/emprendimiento-09-script-15-ampliacion-de-cupos-y-reservas.html", "is_curr": false, "folder": "09-script-15-ampliacion-de-cupos-y-reservas", "filename": "emprendimiento-09-script-15-ampliacion-de-cupos-y-reservas.html"};
   window.__ANTERIOR_FLUJO = {"num": 7, "slug": "script-01-matricula-regular", "titulo": "Script 01 · Matrícula regular", "cap": "Capacidad 5", "url": "../07-script-01-matricula-regular/emprendimiento-07-script-01-matricula-regular.html", "is_curr": false, "folder": "07-script-01-matricula-regular", "filename": "emprendimiento-07-script-01-matricula-regular.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-emprendimiento";

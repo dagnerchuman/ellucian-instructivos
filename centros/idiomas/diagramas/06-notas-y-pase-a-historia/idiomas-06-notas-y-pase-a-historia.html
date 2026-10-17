@@ -13812,6 +13812,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13978,15 +13984,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13996,10 +14002,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15630,7 +15636,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"n1": {"fase": "Paso 1: Verificación de Escala y Modo", "pantalla": "SHAGRDE", "hito": "Modo C (Escala Centesimal) / Modo V configurado", "instrucciones": [{"campo": "Formulario", "valor": "SHAGRDE", "tipo": "Catálogo", "detalle": "Verificar que el nivel del centro tenga configurado Modo C (Escala Centesimal) / Modo V con sus notas aprobatorias y de pase a historia."}]}, "n2": {"fase": "Paso 2: Plan de Evaluación", "pantalla": "SHAGCOM", "hito": "Pesos y componentes evaluativos", "instrucciones": [{"campo": "Formulario", "valor": "SHAGCOM", "tipo": "Configuración", "detalle": "Revisar componentes y ponderaciones de evaluación institucional."}]}, "n3": {"fase": "Paso 3: Registro de Asistencia e Inhabilitados", "pantalla": "SFASLST / Web", "hito": "Inhabilitados marcados con código INH", "instrucciones": [{"campo": "Asistencia", "valor": "Código INH", "tipo": "Control", "detalle": "Estudiantes con inasistencia excesiva son registrados como INH con nota 00."}]}, "n4": {"fase": "Paso 4: Registro de Calificaciones Finales", "pantalla": "SFASLST / Web", "hito": "Calificaciones docentes registradas", "instrucciones": [{"campo": "Ingreso de notas", "valor": "Nota final según escala oficial", "tipo": "Docencia", "detalle": "Aprobado: nota aprobatoria; Desaprobado: reprobado o INH. Columna Rolled permanece en N."}]}, "n5": {"fase": "Paso 5: Cierre Batch y Pase a Historia", "pantalla": "GJAPCTL (SHRROLL)", "hito": "Pase a historia completado (Rolled = Y)", "instrucciones": [{"campo": "Proceso batch", "valor": "SHRROLL", "tipo": "Procesamiento", "detalle": "Ejecutar proceso SHRROLL con periodo y NRC. Revisar bitácora .lis en GJIREVO sin abortos."}, {"campo": "Historial académico", "valor": "SHATERM / SHACRSE", "tipo": "Resultado", "detalle": "Verificar que las notas muestren estatus «Rolled to Academic History»."}]}, "n6": {"fase": "Paso 6: Auditoría Curricular CAPP", "pantalla": "SMARQCM / SMICRLT", "hito": "Créditos otorgados o cursos no usados", "instrucciones": [{"campo": "Auditoría CAPP", "valor": "SMICRLT", "tipo": "Auditoría", "detalle": "Aprobados acreditan créditos del plan; desaprobados van a «Cursos no usados»."}]}};
+  var GUIA_MAP = {"n1": {"fase": "Paso 1: Verificación de Escala y Modo (SHAGRDE)", "pantalla": "SHAGRDE", "hito": "Modo C (Escala Centesimal) o Modo V (Vigesimal) configurado con nota mínima aprobatoria", "instrucciones": [{"campo": "Formulario de Escala", "valor": "SHAGRDE", "ejemplo": "Definición de notas", "tipo": "Catálogo base", "detalle": "Acceder a SHAGRDE para revisar la escala de calificaciones asociada al nivel del centro."}, {"campo": "Nivel y Modo", "valor": "Nivel I · Modo C (Escala Centesimal) o Modo V (Vigesimal)", "ejemplo": "Modo V / C", "tipo": "Obligatorio", "detalle": "Confirmar que el nivel tenga habilitado el modo de calificación que hereda la asignatura en SCACRSE."}, {"campo": "Alineación U20 (Crítico)", "valor": "Mismo modo en curso y nivel", "ejemplo": "Resuelto U20", "tipo": "Hito Crítico", "detalle": "CRÍTICO: Si el curso tiene Modo V en SCACRSE, el nivel debe incluir Modo V en SHAGRDE para evitar el error «No Substitute Grade» en SHRROLL."}, {"campo": "Nota Mínima Aprobatoria", "valor": "11 (o 70 en centesimal)", "ejemplo": "Nota ≥ 11 aprueba", "tipo": "Regla Académica", "detalle": "Notas iguales o mayores al umbral aprueban; notas inferiores o código INH reprueban."}]}, "n2": {"fase": "Paso 2: Plan de Evaluación (SHAGCOM)", "pantalla": "SHAGCOM", "hito": "Componentes y pesos ponderados aprobados", "instrucciones": [{"campo": "Formulario de Ponderación", "valor": "SHAGCOM", "ejemplo": "Componentes de evaluación", "tipo": "Configuración", "detalle": "Consultar componentes evaluativos con Periodo lectivo y NRC correspondiente."}, {"campo": "Estructura de Evaluación", "valor": "Evaluación Continua + Examen", "ejemplo": "Pesos oficiales", "tipo": "Obligatorio", "detalle": "Verificar componentes parametrizados por Registros Académicos según resolución institucional."}, {"campo": "Ponderación Total", "valor": "Suma de pesos = 100%", "ejemplo": "100.00%", "tipo": "Control Académico", "detalle": "Confirmar que la suma de porcentajes equivalga exactamente al 100% de la nota final del ciclo."}]}, "n3": {"fase": "Paso 3: Registro de Asistencia e Inhabilitados (SFASLST / Web)", "pantalla": "SFASLST / Web", "hito": "Inasistencias registradas y código INH asignado", "instrucciones": [{"campo": "Plataforma de Registro", "valor": "Autoservicio Docente / SFASLST", "ejemplo": "Portal Web USS", "tipo": "Docencia", "detalle": "El docente ingresa al portal de Autoservicio durante el dictado del ciclo académico."}, {"campo": "Supervisión de Asistencia", "valor": "Asistencia mínima: 70%", "ejemplo": "Inasistencia > 30%", "tipo": "Regla Institucional", "detalle": "Comprobar porcentaje de asistencia de cada alumno matriculado en la sección."}, {"campo": "Código de Inhabilitado", "valor": "Código INH", "ejemplo": "Nota 00 automática", "tipo": "Hito Crítico", "detalle": "Participantes que sobrepasan el límite de faltas son registrados como INH, computando nota 00 reprobatoria."}]}, "n4": {"fase": "Paso 4: Registro de Calificaciones Finales (SFASLST / Web)", "pantalla": "SFASLST / Web", "hito": "Calificaciones docentes completas con Rolled = N", "instrucciones": [{"campo": "Ingreso de Notas", "valor": "Lista de Calificaciones", "ejemplo": "SFASLST / Autoservicio", "tipo": "Docencia", "detalle": "Docente registra las notas finales obtenidas por los estudiantes regulares."}, {"campo": "Escala y Valores", "valor": "Valores numéricos oficiales", "ejemplo": "16, 14, 08, INH", "tipo": "Obligatorio", "detalle": "Ingresar notas dentro del rango autorizado (00 a 20 vigesimal o 00 a 100 centesimal)."}, {"campo": "Estado Pre-Cierre", "valor": "Indicador Rolled = N", "ejemplo": "Pendiente de pase", "tipo": "Control", "detalle": "Comprobar que todas las notas estén digitadas y la columna Rolled permanezca en N antes de la corrida batch."}]}, "n5": {"fase": "Paso 5: Cierre Batch y Pase a Historia (GJAPCTL / SHRROLL)", "pantalla": "GJAPCTL", "hito": "Proceso SHRROLL ejecutado y Rolled = Y definitivo", "instrucciones": [{"campo": "Formulario Batch", "valor": "GJAPCTL", "ejemplo": "Despacho de procesos", "tipo": "Procesamiento", "detalle": "Acceder a GJAPCTL y colocar en Proceso: SHRROLL (Pase a historia académica)."}, {"campo": "Parámetros del Job", "valor": "Periodo 202656 · NRC", "ejemplo": "Job 8113 / 8114", "tipo": "Mandatorio", "detalle": "Configurar parámetros de corrida con periodo lectivo y sección a procesar."}, {"campo": "Auditoría de Bitácora", "valor": "Salida .lis en GJIREVO", "ejemplo": "Return Code: 0", "tipo": "Hito Crítico", "detalle": "Comprobar en GJIREVO que el reporte .lis finalice con 100% de estudiantes rolados y 0 abortos."}, {"campo": "Bloqueo de Actas", "valor": "Rolled changed from N to Y", "ejemplo": "Acta cerrada", "tipo": "Resultado", "detalle": "En SFASLST y SHATERM el estado pasa a Rolled = Y. Las notas quedan blindadas contra modificaciones."}]}, "n6": {"fase": "Paso 6: Auditoría Curricular CAPP (SMARQCM / SMICRLT)", "pantalla": "SMARQCM", "hito": "Créditos otorgados o cursos no usados y retorno obligatorio", "instrucciones": [{"campo": "Solicitud CAPP", "valor": "SMARQCM", "ejemplo": "Programa IMEMI03", "tipo": "Auditoría curricular", "detalle": "Ejecutar auditoría de cumplimiento contra la malla oficial del programa del centro."}, {"campo": "Asignaturas Aprobadas", "valor": "Nota ≥ 11 · Cumple requisito", "ejemplo": "Créditos acreditados", "tipo": "Aprobación", "detalle": "Los cursos aprobados computan créditos en el área curricular y avanzan en la ruta de aprendizaje."}, {"campo": "Segregación Reprobados", "valor": "Nota ≤ 10 o INH → Cursos no usados", "ejemplo": "SMICRLT", "tipo": "Hito Crítico", "detalle": "Las asignaturas reprobadas son enviadas a «Cursos no usados» con 0 créditos, emitiendo dictamen NO CUMPLE y obligando al estudiante a recursar (Script 10)."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 7, "slug": "ligas-teorico-y-club", "titulo": "Ligas: NRC teórico + club de conversación", "cap": "Capacidad 5", "url": "../07-ligas-teorico-y-club/idiomas-07-ligas-teorico-y-club.html", "is_curr": false, "folder": "07-ligas-teorico-y-club", "filename": "idiomas-07-ligas-teorico-y-club.html"};
   window.__ANTERIOR_FLUJO = {"num": 5, "slug": "matricula-en-el-nrc", "titulo": "Matrícula en el NRC", "cap": "Capacidades 5 y 11", "url": "../05-matricula-en-el-nrc/idiomas-05-matricula-en-el-nrc.html", "is_curr": false, "folder": "05-matricula-en-el-nrc", "filename": "idiomas-05-matricula-en-el-nrc.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-idiomas";

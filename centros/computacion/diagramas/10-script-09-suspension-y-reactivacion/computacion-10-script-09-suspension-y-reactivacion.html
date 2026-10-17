@@ -13773,6 +13773,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13939,15 +13945,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13957,10 +13963,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15591,7 +15597,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Expediente Alumno", "hito": "Estudiante con estatus académico inactivo (S00581109 con Status IS)"}, "c1": {"fase": "Paso 1: Intento de Inscripción IS", "pantalla": "SFAREGS", "hito": "El motor de inscripción bloquea cualquier alta de NRC por condición inactiva"}, "c2": {"fase": "Paso 2: Alerta de Restricción", "pantalla": "SFAREGS", "hito": "Emisión de mensaje de notificación indicando estatus no elegible"}, "c3": {"fase": "Paso 3: Reactivación Académica", "pantalla": "SGASTDN", "hito": "Modificación de estatus general a Activo (AS) en pestaña Curricula y guardado"}, "c4": {"fase": "Paso 4: Matrícula Reanudada", "pantalla": "SFAREGS", "hito": "Captura de NRC habilitada; registro exitoso con código RE y asignación de cupo"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Restitución de derechos de matrícula validada al 100%"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: Estudiante con Estatus Inactivo Suspendido (IS)", "pantalla": "SGASTDN", "hito": "Expediente con estatus académico inactivo (IS) que impide la matrícula", "instrucciones": [{"campo": "Expediente del Alumno", "valor": "SGASTDN · ID S00581109", "ejemplo": "Pestaña Curricula", "tipo": "Condición Inicial", "detalle": "Estudiante registra estatus IS (Inactivo por Suspensión) en el registro general de permanencia."}]}, "c1": {"fase": "Paso 1: Intento de Inscripción con Estatus IS", "pantalla": "SFAREGS", "hito": "Intento de captura de NRC en el periodo lectivo con condición inactiva", "instrucciones": [{"campo": "Acceso a SFAREGS", "valor": "Periodo 202656 · ID S00581109", "ejemplo": "Intento de matrícula", "tipo": "Obligatorio", "detalle": "Ingresar a SFAREGS e intentar registrar un NRC para el ciclo vigente."}, {"campo": "Captura de Curso", "valor": "NRC oficial · Código RE", "ejemplo": "Código RE", "tipo": "Acción", "detalle": "Digitar el NRC e intentar guardar con F10."}]}, "c2": {"fase": "Paso 2: Alerta de Restricción Bloqueante", "pantalla": "SFAREGS", "hito": "El motor de reglas bloquea el alta por estatus no elegible para inscripción", "instrucciones": [{"campo": "Notificación del Motor", "valor": "*ERROR* Student Status Prohibits Registration", "ejemplo": "Bloqueo por IS", "tipo": "Bloqueo Fatal", "detalle": "Banner detiene la operación e impide asignar vacantes a alumnos que no cuenten con estatus activo AS."}]}, "c3": {"fase": "Paso 3: Reactivación Académica en SGASTDN", "pantalla": "SGASTDN", "hito": "Actualización de estatus general de permanencia a Activo (AS) en Curricula", "instrucciones": [{"campo": "Gestión Curricular", "valor": "SGASTDN · Periodo 202656", "ejemplo": "ID S00581109", "tipo": "Obligatorio", "detalle": "Ingresar a SGASTDN para actualizar el expediente de permanencia del alumno."}, {"campo": "Modificación de Estatus", "valor": "Status General: AS (Activo)", "ejemplo": "Reactivación formal", "tipo": "Hito Crítico", "detalle": "Crear nuevo registro de ciclo cambiando Status IS por AS y presionar Guardar (F10)."}]}, "c4": {"fase": "Paso 4: Matrícula Reanudada y Aprobada", "pantalla": "SFAREGS", "hito": "Habilitación de captura de NRC con código RE y asignación de cupo exitosa", "instrucciones": [{"campo": "Reingreso a SFAREGS", "valor": "SFAREGS · ID S00581109", "ejemplo": "Periodo 202656", "tipo": "Obligatorio", "detalle": "Regresar a SFAREGS; autorizar plan con estatus EL y digitar el NRC con código RE."}, {"campo": "Confirmación de Matrícula", "valor": "F10 · Guardado exitoso", "ejemplo": "Estimación procesada", "tipo": "Hito Crítico", "detalle": "Banner aprueba la matrícula de inmediato, descuenta la vacante y genera la orden de cobro."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Restitución de derechos de matrícula validada al 100%", "instrucciones": [{"campo": "Récord Académico", "valor": "TEST USS 202656", "ejemplo": "S00581109 activo AS", "tipo": "Resultado Oficial", "detalle": "Estudiante restituido en sus derechos y matriculado regularmente en la lista docente."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 11, "slug": "script-03-matricula-por-convalidacion", "titulo": "Script 03 · Matrícula por convalidación", "cap": "Capacidad 3", "url": "../11-script-03-matricula-por-convalidacion/computacion-11-script-03-matricula-por-convalidacion.html", "is_curr": false, "folder": "11-script-03-matricula-por-convalidacion", "filename": "computacion-11-script-03-matricula-por-convalidacion.html"};
   window.__ANTERIOR_FLUJO = {"num": 9, "slug": "script-16-division-de-grupos-y-traslado", "titulo": "Script 16 · División de grupos y traslado", "cap": "Capacidad 5", "url": "../09-script-16-division-de-grupos-y-traslado/computacion-09-script-16-division-de-grupos-y-traslado.html", "is_curr": false, "folder": "09-script-16-division-de-grupos-y-traslado", "filename": "computacion-09-script-16-division-de-grupos-y-traslado.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-computacion";

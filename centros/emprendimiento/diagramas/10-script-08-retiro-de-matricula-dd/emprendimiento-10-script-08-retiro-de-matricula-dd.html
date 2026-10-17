@@ -13774,6 +13774,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13940,15 +13946,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13958,10 +13964,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15592,7 +15598,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Matrícula Activa", "hito": "Alumno solicita retiro regular dentro del plazo (S00581091 en NRC 1021)"}, "c1": {"fase": "Paso 1: Consulta de Inscripción", "pantalla": "SFAREGS", "hito": "Acceso al formulario con Periodo 202656 e ID del estudiante matriculado"}, "c2": {"fase": "Paso 2: Asignación de Código DD", "pantalla": "SFAREGS", "hito": "Ingreso del código Drop/Delete (DD) en el registro del curso NRC 1021"}, "c3": {"fase": "Paso 3: Recálculo Financiero", "pantalla": "SFAREGS", "hito": "Transacción procesada con «Estimación de cuota procesada» y ajuste de cobros"}, "c4": {"fase": "Paso 4: Liberación de Cupo en Vivo", "pantalla": "SSASECT / SSASECQ", "hito": "Aforo actualizado automáticamente: Actual disminuye de 2 a 1 y Remaining suma 1"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Retiro procesado al 100% y vacante liberada de inmediato"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: Alumno con Matrícula Regular Activa", "pantalla": "SFAREGS", "hito": "Estudiante matriculado en NRC 1021 solicita retiro dentro del plazo", "instrucciones": [{"campo": "Expediente Activo", "valor": "SFAREGS · Periodo 202656", "ejemplo": "ID S00581091", "tipo": "Condición Inicial", "detalle": "Estudiante matriculado con código RE en NRC 1021 (ESEC 00650 Sec. B)."}, {"campo": "Estado de Aforo", "valor": "SSASECT · NRC 1021", "ejemplo": "Actual: 2 · Remaining: 0", "tipo": "Control Inicial", "detalle": "Comprobar que la sección tiene cupos ocupados antes de procesar el retiro formal."}]}, "c1": {"fase": "Paso 1: Consulta de Inscripción en SFAREGS", "pantalla": "SFAREGS", "hito": "Acceso al registro del estudiante y localización de la asignatura", "instrucciones": [{"campo": "Acceso a SFAREGS", "valor": "Periodo 202656 · ID S00581091", "ejemplo": "Módulo de inscripción", "tipo": "Obligatorio", "detalle": "Ingresar a SFAREGS con el documento del estudiante y presionar botón «Ir»."}, {"campo": "Localización de Curso", "valor": "Bloque Course Registration", "ejemplo": "Fila NRC 1021", "tipo": "Navegación", "detalle": "Ubicar en la lista de asignaturas inscritas la fila correspondiente al curso a retirar."}]}, "c2": {"fase": "Paso 2: Asignación de Código de Retiro DD", "pantalla": "SFAREGS", "hito": "Código Drop/Delete (DD) asignado en el registro del curso", "instrucciones": [{"campo": "Campo de Estatus", "valor": "Status Code", "ejemplo": "Sustituir código RE", "tipo": "Obligatorio", "detalle": "En la columna Status Code del NRC 1021, seleccionar o digitar el código DD (Drop/Delete)."}, {"campo": "Orden de Retiro", "valor": "DD (Drop/Delete)", "ejemplo": "Retiro regular", "tipo": "Mandatorio", "detalle": "El código DD ordena la eliminación formal del curso en el expediente del ciclo."}, {"campo": "Ejecución de Guardado", "valor": "Botón Guardar (F10)", "ejemplo": "F10 presionado", "tipo": "Hito Crítico", "detalle": "Presionar F10 para procesar la baja de la matrícula en la base de datos de Banner."}]}, "c3": {"fase": "Paso 3: Recálculo Financiero Automático", "pantalla": "SFAREGS / TSAAREV", "hito": "Transacción procesada con Estimación de cuota y recálculo de aranceles", "instrucciones": [{"campo": "Mensaje del Sistema", "valor": "Estimación de cuota procesada", "ejemplo": "Notificación verde", "tipo": "Financiero", "detalle": "Banner confirma la desafectación del curso y ajusta los aranceles correspondientes."}, {"campo": "Auditoría de Cuenta", "valor": "TSAAREV · Cuenta Alumno", "ejemplo": "Saldo actualizado", "tipo": "Control Cobranzas", "detalle": "Verificar en TSAAREV que no subsistan cargos de matrícula indebidos tras el retiro en fecha."}]}, "c4": {"fase": "Paso 4: Liberación Automática de Vacante en Vivo", "pantalla": "SSASECT", "hito": "Aforo actualizado instantáneamente: Actual 2 → 1 y Remaining 0 → 1", "instrucciones": [{"campo": "Consulta de Vacantes", "valor": "SSASECT · Periodo 202656", "ejemplo": "NRC 1021", "tipo": "Verificación en Vivo", "detalle": "Consultar SSASECT para el NRC 1021 y verificar la actualización inmediata de aforo."}, {"campo": "Balance de Cupo", "valor": "Actual: 1 · Remaining: 1", "ejemplo": "1 vacante disponible", "tipo": "Hito Crítico", "detalle": "El contador Actual disminuye en 1 y Remaining suma 1 automáticamente sin intervención manual."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Retiro completado al 100% y vacante disponible para nuevos alumnos", "instrucciones": [{"campo": "Exclusión de Lista", "valor": "SFASLST · Roster docente", "ejemplo": "Excluido de nómina", "tipo": "Resultado Oficial", "detalle": "El estudiante ya no figura en la lista de clase oficial del docente y la vacante queda liberada."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 11, "slug": "script-13-procesamiento-de-calificaciones", "titulo": "Script 13 · Procesamiento de calificaciones", "cap": "Capacidad 7", "url": "../11-script-13-procesamiento-de-calificaciones/emprendimiento-11-script-13-procesamiento-de-calificaciones.html", "is_curr": false, "folder": "11-script-13-procesamiento-de-calificaciones", "filename": "emprendimiento-11-script-13-procesamiento-de-calificaciones.html"};
   window.__ANTERIOR_FLUJO = {"num": 9, "slug": "script-15-ampliacion-de-cupos-y-reservas", "titulo": "Script 15 · Ampliación de cupos y reservas", "cap": "Capacidad 5", "url": "../09-script-15-ampliacion-de-cupos-y-reservas/emprendimiento-09-script-15-ampliacion-de-cupos-y-reservas.html", "is_curr": false, "folder": "09-script-15-ampliacion-de-cupos-y-reservas", "filename": "emprendimiento-09-script-15-ampliacion-de-cupos-y-reservas.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-emprendimiento";

@@ -13774,6 +13774,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13940,15 +13946,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13958,10 +13964,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15592,7 +15598,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Evaluación Continua", "hito": "Docente finaliza el ciclo y dispone de las calificaciones finales de la sección"}, "c1": {"fase": "Paso 1: Verificación de Escala", "pantalla": "SHAGRDE", "hito": "Modo V con escala vigesimal (00-20) y nota aprobatoria mínima 11"}, "c2": {"fase": "Paso 2: Registro en Lista de Clase", "pantalla": "SFASLST", "hito": "Captura de calificaciones y asignación de código INH a participantes inhabilitados"}, "c3": {"fase": "Paso 3: Auditoría Previa a Rolado", "pantalla": "SFASLST", "hito": "Comprobación de columna Rolled en estado N antes del proceso batch"}, "c4": {"fase": "Paso 4: Pase Oficial a Historia", "pantalla": "GJAPCTL (SHRROLL)", "hito": "Ejecución de SHRROLL transfiriendo las notas a la historia académica definitiva"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Procesamiento de calificaciones validado al 100%"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: Culminación de Evaluaciones Continuas", "pantalla": "Evaluación Continua", "hito": "Docente finaliza el ciclo y dispone de las calificaciones finales de la sección", "instrucciones": [{"campo": "Fin de Evaluaciones", "valor": "Periodo lectivo · NRC asignado", "ejemplo": "Docente titular", "tipo": "Condición Inicial", "detalle": "Se completan las tareas, prácticas y evaluaciones programadas en el sílabo."}]}, "c1": {"fase": "Paso 1: Verificación de Escala en SHAGRDE", "pantalla": "SHAGRDE", "hito": "Modo V con escala vigesimal (00-20) y nota aprobatoria mínima 11", "instrucciones": [{"campo": "Escala Oficial", "valor": "SHAGRDE · Nivel M / C / I", "ejemplo": "Modo V (00 a 20)", "tipo": "Catálogo", "detalle": "Confirmar que la escala contemple notas numéricas y nota mínima de pase 11."}]}, "c2": {"fase": "Paso 2: Registro en Lista de Clase (SFASLST)", "pantalla": "SFASLST", "hito": "Captura de calificaciones y asignación de código INH a participantes inhabilitados", "instrucciones": [{"campo": "Vaciado de Notas", "valor": "SFASLST / Autoservicio", "ejemplo": "Calificaciones finales", "tipo": "Hito Crítico", "detalle": "Ingresar notas de 00 a 20 y código INH para alumnos con inasistencia excesiva."}]}, "c3": {"fase": "Paso 3: Auditoría Previa a Rolado (Rolled = N)", "pantalla": "SFASLST", "hito": "Comprobación de columna Rolled en estado N antes del proceso batch", "instrucciones": [{"campo": "Control Pre-Cierre", "valor": "Rolled = N en todas las filas", "ejemplo": "Nómina completa", "tipo": "Control", "detalle": "Verificar que ningún alumno quede con casilla en blanco antes de ejecutar el pase batch."}]}, "c4": {"fase": "Paso 4: Pase Oficial a Historia en GJAPCTL (SHRROLL)", "pantalla": "GJAPCTL (SHRROLL)", "hito": "Ejecución de SHRROLL transfiriendo las notas a la historia académica definitiva", "instrucciones": [{"campo": "Corrida SHRROLL", "valor": "GJAPCTL · Periodo y NRC", "ejemplo": "Proceso batch", "tipo": "Hito Crítico", "detalle": "Despachar SHRROLL; comprobar en GJIREVO que el reporte finalice sin errores de escala."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Procesamiento de calificaciones validado al 100%", "instrucciones": [{"campo": "Historial Permanente", "valor": "SHATERM / SFASLST", "ejemplo": "Rolled = Y", "tipo": "Resultado Oficial", "detalle": "Actas formalmente congeladas y notas roladas a la historia académica del participante."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 12, "slug": "script-03-matricula-por-convalidacion", "titulo": "Script 03 · Matrícula por convalidación", "cap": "Capacidad 3", "url": "../12-script-03-matricula-por-convalidacion/emprendimiento-12-script-03-matricula-por-convalidacion.html", "is_curr": false, "folder": "12-script-03-matricula-por-convalidacion", "filename": "emprendimiento-12-script-03-matricula-por-convalidacion.html"};
   window.__ANTERIOR_FLUJO = {"num": 10, "slug": "script-08-retiro-de-matricula-dd", "titulo": "Script 08 · Retiro de matrícula (DD)", "cap": "Capacidad 5", "url": "../10-script-08-retiro-de-matricula-dd/emprendimiento-10-script-08-retiro-de-matricula-dd.html", "is_curr": false, "folder": "10-script-08-retiro-de-matricula-dd", "filename": "emprendimiento-10-script-08-retiro-de-matricula-dd.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-emprendimiento";

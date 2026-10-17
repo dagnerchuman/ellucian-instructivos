@@ -13777,6 +13777,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13943,15 +13949,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13961,10 +13967,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15595,7 +15601,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Idiomas USS", "hito": "Estudiante con dominio previo que busca exonerar BASIC I para cursar BASIC II"}, "c1": {"fase": "Paso 1: Registro de Calificación", "pantalla": "SOATEST", "hito": "Ingreso de código de prueba U01 con puntaje aprobatorio del estudiante"}, "c2": {"fase": "Paso 2: Validación de Prerrequisito", "pantalla": "SCAPREQ", "hito": "El motor de reglas valida el examen como prerrequisito equivalente de BASIC I"}, "c3": {"fase": "Paso 3: Matrícula Directa en BASIC II", "pantalla": "SFAREGS", "hito": "Inscripción en NRC de BASIC II permitida sin error fatal de prerrequisito"}, "c4": {"fase": "Paso 4: Asignación de Vacante", "pantalla": "SFAREGS", "hito": "Guardado con código RE y consumo regular de cupo en la sección"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Matrícula por suficiencia validada y habilitada al 100%"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: Solicitud de Suficiencia", "pantalla": "Idiomas USS", "hito": "Estudiante con dominio previo que busca exonerar BASIC I para cursar BASIC II", "instrucciones": [{"campo": "Postulación", "valor": "ID S00... · Centro de Idiomas", "ejemplo": "Examen de suficiencia", "tipo": "Condición Inicial", "detalle": "Postulante rinde evaluación institucional para acreditar dominio previo del idioma inglés."}]}, "c1": {"fase": "Paso 1: Registro de Calificación en SOATEST", "pantalla": "SOATEST", "hito": "Ingreso de código de prueba U01 con puntaje aprobatorio del estudiante", "instrucciones": [{"campo": "Acceso a SOATEST", "valor": "SOATEST · ID Alumno", "ejemplo": "Módulo de pruebas", "tipo": "Obligatorio", "detalle": "Ingresar a SOATEST para asentar el resultado oficial del examen de suficiencia."}, {"campo": "Código de Evaluación", "valor": "Test Code: U01 · Score aprobatorio", "ejemplo": "Nota de suficiencia", "tipo": "Hito Crítico", "detalle": "Registrar código de prueba U01 y puntaje aprobatorio. Guardar con F10."}]}, "c2": {"fase": "Paso 2: Validación de Prerrequisito en SCAPREQ", "pantalla": "SCAPREQ", "hito": "El motor de reglas valida el examen como prerrequisito equivalente de BASIC I", "instrucciones": [{"campo": "Regla Curricular", "valor": "SCAPREQ · Prerrequisitos", "ejemplo": "Equivalencia a BASIC I", "tipo": "Motor de Reglas", "detalle": "El motor de catálogo reconoce la prueba U01 como habilitante equivalente del curso previo."}]}, "c3": {"fase": "Paso 3: Matrícula Directa en BASIC II en SFAREGS", "pantalla": "SFAREGS", "hito": "Inscripción en NRC de BASIC II permitida sin error fatal de prerrequisito", "instrucciones": [{"campo": "Inscripción SFAREGS", "valor": "NRC de BASIC II (02457)", "ejemplo": "Sin error Fatal", "tipo": "Hito Crítico", "detalle": "SFAREGS valida el prerrequisito superado y permite capturar el NRC avanzado sin bloqueos."}]}, "c4": {"fase": "Paso 4: Asignación de Vacante y Confirmación", "pantalla": "SFAREGS", "hito": "Guardado con código RE y consumo regular de cupo en la sección", "instrucciones": [{"campo": "Guardado Oficial", "valor": "F10 · Estatus RE guardado", "ejemplo": "Estimación procesada", "tipo": "Matrícula Exitosa", "detalle": "Presionar F10 para formalizar la matrícula en el segundo nivel del idioma."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Matrícula por suficiencia validada y habilitada al 100%", "instrucciones": [{"campo": "Validación TEST", "valor": "TEST USS 202656", "ejemplo": "Suficiencia acreditada", "tipo": "Resultado Oficial", "detalle": "Exoneración y salto de nivel completado conforme a la normativa de la escuela EM."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 9, "slug": "script-15-ampliacion-de-cupos-y-reservas", "titulo": "Script 15 · Ampliación de cupos y reservas", "cap": "Capacidad 5", "url": "../09-script-15-ampliacion-de-cupos-y-reservas/idiomas-09-script-15-ampliacion-de-cupos-y-reservas.html", "is_curr": false, "folder": "09-script-15-ampliacion-de-cupos-y-reservas", "filename": "idiomas-09-script-15-ampliacion-de-cupos-y-reservas.html"};
   window.__ANTERIOR_FLUJO = {"num": 7, "slug": "ligas-teorico-y-club", "titulo": "Ligas: NRC teórico + club de conversación", "cap": "Capacidad 5", "url": "../07-ligas-teorico-y-club/idiomas-07-ligas-teorico-y-club.html", "is_curr": false, "folder": "07-ligas-teorico-y-club", "filename": "idiomas-07-ligas-teorico-y-club.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-idiomas";

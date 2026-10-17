@@ -13776,6 +13776,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13942,15 +13948,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13960,10 +13966,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15594,7 +15600,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Aforo Reducido", "hito": "Sección con cupo inicial de 1 sola vacante (NRC 1026 en SSASECT)"}, "c1": {"fase": "Paso 1: Capacidad Inicial Saturada", "pantalla": "SSASECT → SFAREGS", "hito": "Alumno 1 (S00581091) se inscribe con RE ocupando el único cupo disponible"}, "c2": {"fase": "Paso 2: Intento y Bloqueo de Alumno 2", "pantalla": "SFAREGS", "hito": "Alumno 2 (S00582045) intenta inscribirse y el sistema emite error fatal Closed Section"}, "c3": {"fase": "Paso 3: Ampliación de Aforo", "pantalla": "SSASECT", "hito": "En bloque Enrollment, la capacidad máxima se amplía de 1 a 4 vacantes (Remaining: 3)"}, "c4": {"fase": "Paso 4: Matrícula Exitosa y Balance", "pantalla": "SFAREGS → SSASECT", "hito": "Alumno 2 se inscribe con RE satisfactoriamente; balance final: Actual 2, Remaining 2"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Ampliación de cupos y control de sobrecupo validados al 100%"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: NRC con Aforo Restringido", "pantalla": "SSASECT", "hito": "Sección creada con aforo restrictivo de 1 solo cupo", "instrucciones": [{"campo": "Formulario de Sección", "valor": "SSASECT", "ejemplo": "Gestión de NRC", "tipo": "Acceso inicial", "detalle": "Ingresar a SSASECT con Periodo 202656 y NRC 1026 (ESEC 00650 Computación Sec. D)."}, {"campo": "Verificación de Aforo", "valor": "Pestaña Enrollment Details", "ejemplo": "Maximum: 1 · Actual: 0", "tipo": "Control Inicial", "detalle": "Comprobar que el aforo esté configurado con Maximum = 1 y Remaining = 1 vacante libre para la prueba."}]}, "c1": {"fase": "Paso 1: Capacidad Inicial Saturada (Alumno 1)", "pantalla": "SFAREGS", "hito": "Alumno 1 se inscribe con RE ocupando el único cupo disponible", "instrucciones": [{"campo": "Acceso a Inscripción", "valor": "SFAREGS", "ejemplo": "Periodo 202656", "tipo": "Obligatorio", "detalle": "Ingresar a SFAREGS con el ID del Alumno 1 (S00581091)."}, {"campo": "Captura de NRC", "valor": "NRC 1026 · Código RE", "ejemplo": "Inscripción regular", "tipo": "Mandatorio", "detalle": "Digitar NRC 1026 en bloque Course Registration con estatus RE y presionar Guardar (F10)."}, {"campo": "Saturación de Vacante", "valor": "Actual: 1 · Remaining: 0", "ejemplo": "Cupo agotado", "tipo": "Hito Crítico", "detalle": "La vacante queda totalmente ocupada por el Alumno 1; el contador Remaining desciende a 0."}]}, "c2": {"fase": "Paso 2: Intento de Sobrecupo y Bloqueo Fatal (Alumno 2)", "pantalla": "SFAREGS", "hito": "Banner emite error fatal Closed Section impidiendo el sobrecupo", "instrucciones": [{"campo": "Acceso Alumno 2", "valor": "SFAREGS", "ejemplo": "ID S00582045", "tipo": "Obligatorio", "detalle": "Ingresar a SFAREGS con el segundo participante postulante al mismo grupo."}, {"campo": "Intento de Alta", "valor": "NRC 1026 · Código RE", "ejemplo": "Intento de captura", "tipo": "Mandatorio", "detalle": "Digitar NRC 1026 con código RE y presionar Guardar (F10)."}, {"campo": "Error Fatal de Banner", "valor": "*ERROR* Closed Section", "ejemplo": "Alerta bloqueante roja", "tipo": "Bloqueo Fatal", "detalle": "El motor de reglas de Banner rechaza la matrícula e impide guardar la transacción por falta de cupo."}]}, "c3": {"fase": "Paso 3: Ampliación de Aforo en SSASECT", "pantalla": "SSASECT", "hito": "Capacidad máxima ampliada de 1 a 4 vacantes autorizadas", "instrucciones": [{"campo": "Gestión de Aforo", "valor": "SSASECT · Enrollment Details", "ejemplo": "NRC 1026", "tipo": "Configuración", "detalle": "Regresar a SSASECT con Periodo 202656 y NRC 1026 en la pestaña de ingreso de sección."}, {"campo": "Ampliación de Vacantes", "valor": "Maximum: 4 · Projected: 4", "ejemplo": "Aumento a 4 vacantes", "tipo": "Hito Crítico", "detalle": "Modificar el campo Maximum de 1 a 4 vacantes autorizadas y presionar Guardar (F10)."}, {"campo": "Recálculo Automático", "valor": "Remaining: 3 vacantes libres", "ejemplo": "Cálculo en vivo", "tipo": "Control", "detalle": "Banner recalcula en vivo: Remaining = Maximum (4) - Actual (1) = 3 vacantes disponibles."}]}, "c4": {"fase": "Paso 4: Matrícula Exitosa y Balance Final", "pantalla": "SFAREGS", "hito": "Alumno 2 matriculado satisfactoriamente con balance Actual 2, Remaining 2", "instrucciones": [{"campo": "Reintento de Inscripción", "valor": "SFAREGS · ID S00582045", "ejemplo": "Alumno 2 habilitado", "tipo": "Obligatorio", "detalle": "Volver a SFAREGS con el Alumno 2 y reintentar la inscripción en el NRC 1026 con código RE."}, {"campo": "Aceptación de Matrícula", "valor": "F10 · Código RE guardado", "ejemplo": "Estimación procesada", "tipo": "Hito Crítico", "detalle": "Banner procesa la matrícula sin ningún error; emite confirmación de liquidación de cuota."}, {"campo": "Auditoría de Balance", "valor": "Actual: 2 · Remaining: 2", "ejemplo": "SSASECT / SSARRES", "tipo": "Verificación", "detalle": "Consultar SSASECT: 2 alumnos inscritos regularmente y 2 vacantes aún libres en la sección."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Ampliación de cupos y control de sobrecupo validados al 100%", "instrucciones": [{"campo": "Récord en TEST", "valor": "experience-test.elluciancloud.com", "ejemplo": "NRC 1026 Computación", "tipo": "Resultado Oficial", "detalle": "Casuística validada: el sistema protege el aforo físico y permite ampliaciones controladas sin duplicidades."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 10, "slug": "script-08-retiro-de-matricula-dd", "titulo": "Script 08 · Retiro de matrícula (DD)", "cap": "Capacidad 5", "url": "../10-script-08-retiro-de-matricula-dd/emprendimiento-10-script-08-retiro-de-matricula-dd.html", "is_curr": false, "folder": "10-script-08-retiro-de-matricula-dd", "filename": "emprendimiento-10-script-08-retiro-de-matricula-dd.html"};
   window.__ANTERIOR_FLUJO = {"num": 8, "slug": "script-16-division-de-grupos-y-traslado", "titulo": "Script 16 · División de grupos y traslado", "cap": "Capacidad 5", "url": "../08-script-16-division-de-grupos-y-traslado/emprendimiento-08-script-16-division-de-grupos-y-traslado.html", "is_curr": false, "folder": "08-script-16-division-de-grupos-y-traslado", "filename": "emprendimiento-08-script-16-division-de-grupos-y-traslado.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-emprendimiento";

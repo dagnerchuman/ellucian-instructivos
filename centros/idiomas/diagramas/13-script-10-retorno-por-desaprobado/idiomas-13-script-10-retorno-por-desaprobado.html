@@ -13779,6 +13779,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
+
+
+
+
+
+
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13945,15 +13951,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13963,10 +13969,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15597,7 +15603,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"c0": {"fase": "Condición Previa", "pantalla": "Historia Académica", "hito": "Estudiante con calificación reprobatoria rolada (S00581108 nota 08 en ESEC 00650)"}, "c1": {"fase": "Paso 1: Solicitud de Auditoría CAPP", "pantalla": "SMARQCM", "hito": "Generación de evaluación curricular contra la malla del programa CMEMC38"}, "c2": {"fase": "Paso 2: Regla de Calificación Mínima", "pantalla": "SMIPOUT", "hito": "Validación de nota mínima aprobatoria (Nota ≥ 11); la nota 08 es rechazada"}, "c3": {"fase": "Paso 3: Segregación a Cursos No Usados", "pantalla": "SMICRLT", "hito": "La asignatura reprobada es enviada al bloque de cursos no usados (0 créditos)"}, "c4": {"fase": "Paso 4: Dictamen y Retorno Obligatorio", "pantalla": "SMARQCM / SMIPOUT", "hito": "Dictamen oficial «NO CUMPLE» (0/4 cursos); bloqueo de avance y retorno obligatorio"}, "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Bloqueo por desaprobado y auditoría CAPP validados al 100%"}};
+  var GUIA_MAP = {"c0": {"fase": "Condición Previa: Calificación Desaprobatoria Rolada a Historia", "pantalla": "SHATERM", "hito": "Estudiante con nota final 08 rolada a historia en curso ESEC 00650", "instrucciones": [{"campo": "Historial del Estudiante", "valor": "SHATERM · ID S00581108", "ejemplo": "Nota 08 Vigesimal", "tipo": "Condición Inicial", "detalle": "Estudiante registra calificación 08 (menor a la mínima aprobatoria 11) en su récord académico."}]}, "c1": {"fase": "Paso 1: Solicitud de Auditoría CAPP (SMARQCM)", "pantalla": "SMARQCM", "hito": "Generación de evaluación curricular contra la malla del programa CMEMC38", "instrucciones": [{"campo": "Acceso a SMARQCM", "valor": "SMARQCM · ID S00581108", "ejemplo": "Programa CMEMC38", "tipo": "Obligatorio", "detalle": "Ingresar a SMARQCM para correr la auditoría de cumplimiento del plan de estudios."}, {"campo": "Generar Evaluación", "valor": "Ejecutar evaluación global", "ejemplo": "Malla CCEE", "tipo": "Hito Crítico", "detalle": "Solicitar la auditoría integral para evaluar el avance de requisitos del estudiante."}]}, "c2": {"fase": "Paso 2: Evaluación de Regla de Calificación Mínima (SMIPOUT)", "pantalla": "SMIPOUT", "hito": "Validación de regla institucional (Nota ≥ 11); la nota 08 es rechazada", "instrucciones": [{"campo": "Motor de Reglas", "valor": "SMIPOUT · Umbral de Nota", "ejemplo": "Nota mínima: 11", "tipo": "Control Académico", "detalle": "El motor compara la calificación del estudiante (08) contra el umbral de aprobación institucional."}, {"campo": "Rechazo de Asignatura", "valor": "Nota 08 < 11 → RECHAZADA", "ejemplo": "Sin créditos", "tipo": "Hito Crítico", "detalle": "La nota no alcanza el mínimo aprobatorio; el curso queda desestimado para otorgar créditos."}]}, "c3": {"fase": "Paso 3: Segregación a Cursos No Usados (SMICRLT)", "pantalla": "SMICRLT", "hito": "Asignatura reprobada enviada al bloque de Cursos No Usados con 0 créditos", "instrucciones": [{"campo": "Módulo SMICRLT", "valor": "SMICRLT · Auditoría CAPP", "ejemplo": "Bloque Cursos no usados", "tipo": "Segregación CAPP", "detalle": "Banner desplaza la asignatura desaprobada al bloque de cursos reprobados/no computables."}, {"campo": "Cómputo de Avance", "valor": "0.000 créditos acumulados", "ejemplo": "0 de 4 aprobados", "tipo": "Hito Crítico", "detalle": "El cómputo de avance curricular refleja 0 créditos otorgados por la asignatura reprobada."}]}, "c4": {"fase": "Paso 4: Dictamen Oficial y Retorno Obligatorio (SMARQCM)", "pantalla": "SMARQCM", "hito": "Dictamen NO CUMPLE (0/4 cursos); bloqueo de avance y retorno obligatorio a cursar", "instrucciones": [{"campo": "Dictamen CAPP", "valor": "Dictamen Oficial: NO CUMPLE", "ejemplo": "Área curricular incompleta", "tipo": "Hito Crítico", "detalle": "El informe consolidado concluye que el estudiante no cumple con las exigencias curriculares."}, {"campo": "Retorno Obligatorio", "valor": "Exigencia de recursado", "ejemplo": "Rematriculación requerida", "tipo": "Regla Institucional", "detalle": "El participante queda bloqueado para trámites de egreso debiendo volver a matricularse en el curso."}]}, "cr": {"fase": "Resultado Validado en Banner TEST", "pantalla": "TEST USS", "hito": "Bloqueo por desaprobado y auditoría CAPP validados al 100%", "instrucciones": [{"campo": "Trazabilidad CAPP", "valor": "TEST USS 202656", "ejemplo": "S00581108 no cumple", "tipo": "Resultado Oficial", "detalle": "El sistema previene la acreditación indebida de alumnos reprobados garantizando rigor académico."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 14, "slug": "script-03-matricula-por-convalidacion", "titulo": "Script 03 · Matrícula por convalidación", "cap": "Capacidad 3", "url": "../14-script-03-matricula-por-convalidacion/idiomas-14-script-03-matricula-por-convalidacion.html", "is_curr": false, "folder": "14-script-03-matricula-por-convalidacion", "filename": "idiomas-14-script-03-matricula-por-convalidacion.html"};
   window.__ANTERIOR_FLUJO = {"num": 12, "slug": "script-05-curso-especial-para-egresados", "titulo": "Script 05 · Curso especial para egresados", "cap": "Capacidad 5 y 8", "url": "../12-script-05-curso-especial-para-egresados/idiomas-12-script-05-curso-especial-para-egresados.html", "is_curr": false, "folder": "12-script-05-curso-especial-para-egresados", "filename": "idiomas-12-script-05-curso-especial-para-egresados.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-idiomas";

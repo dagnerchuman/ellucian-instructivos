@@ -308,12 +308,12 @@ def crear_nrc(c):
     cupo = f" · cupo {n['cupo'].split(' (')[0]}" if n and n.get("cupo") else ""
     nrc_num = c.nrc_ejemplo or "1026"
     nodos = [
-        paso("s1", "nrc", 0, "SSASECT", "bloque clave", f"{c.periodo_ejemplo} · ADD en blanco", icono="start"),
-        paso("s2", "nrc", 1, "SSASECT", "info de sección", f"1.er guardar · NRC {nrc_num}", icono="database"),
-        paso("s3", "nrc", 2, "SSASECT", "aforo de sección", "2.° guardar" + cupo, icono="success"),
-        paso("s4", "nrc", 3, "SSASECT", "horario y docente", "3.er guardar · SAUVIR y profesor", icono="clock"),
-        paso("s5", "nrc", 4, "SSARRES", "reserva de cupos", "4.° guardar · regla NULL y CCEE", tipo="security", icono="security"),
-        paso("s6", "nrc", 5, "SSASECQ", "publicar y auditar", "🎯 NRC activo y publicado", tipo="database", icono="success"),
+        paso("s1", "nrc", 0, "SSASECT", "1. bloque clave", f"{c.periodo_ejemplo} · ADD en blanco", icono="start"),
+        paso("s2", "nrc", 1, "SSASECT", "2. info de sección (1.er guardar)", f"NRC {nrc_num}", icono="database"),
+        paso("s3", "nrc", 2, "SSASECT", "3. aforo de sección (2.° guardar)", cupo.lstrip(" · ") or "cupos", icono="success"),
+        paso("s4", "nrc", 3, "SSASECT", "4. horario y docente (3.er guardar)", "SAUVIR y profesor", icono="clock"),
+        paso("s5", "nrc", 4, "SSARRES", "5. reserva de cupos (4.° guardar)", "regla NULL y CCEE", tipo="backend", icono="security"),
+        paso("s6", "nrc", 5, "SSASECQ", "6. publicar y auditar", "🎯 NRC activo y publicado", tipo="database", icono="success"),
     ]
     probado = {
         "computacion": [

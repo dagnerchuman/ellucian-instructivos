@@ -13774,15 +13774,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
 
-
-
-
-
-
-
-
-
-
 <style>
 
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -13949,15 +13940,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 190px !important;
-  max-width: 310px !important;
-  flex: 0 1 280px !important;
+  min-width: 220px !important;
+  max-width: 440px !important;
+  flex: 1 1 320px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 195px !important;
-  max-width: 250px !important;
-  flex: 0 1 225px !important;
+  min-width: 215px !important;
+  max-width: 265px !important;
+  flex: 0 1 240px !important;
 }
 
 .flow-nav-select {
@@ -13967,10 +13958,10 @@ html[data-present="true"] .header {
   color: var(--text, #fff) !important;
   border: 1px solid var(--panel-border, #334155) !important;
   border-radius: 0.5rem !important;
-  padding: 0.36rem 1.85rem 0.36rem 0.7rem !important;
+  padding: 0.38rem 1.85rem 0.38rem 0.75rem !important;
   font-size: 0.8rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   cursor: pointer !important;
   outline: none !important;
   width: 100% !important;
@@ -15601,7 +15592,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 </style>
 <script>
 (function() {
-  var GUIA_MAP = {"i1": {"fase": "Paso 1: Consulta Previa de Vacantes", "pantalla": "SSASECQ", "hito": "Verificación de cupo disponible", "instrucciones": [{"campo": "Formulario", "valor": "SSASECQ", "tipo": "Consulta", "detalle": "Ingresar periodo 202656, materia y NRC para comprobar vacantes en Remaining."}]}, "i2": {"fase": "Paso 2: Autorización Curricular", "pantalla": "SFAREGS", "hito": "Plan autorizado con estatus elegible (EL)", "instrucciones": [{"campo": "Formulario", "valor": "SFAREGS", "tipo": "Bloque Clave", "detalle": "Ingresar Periodo 202656 e ID del alumno admitido. Clic en «Ir»."}, {"campo": "Currícula", "valor": "Clic en casilla de plan (carga 1)", "tipo": "Mandatorio", "detalle": "Asignar estatus elegible EL y Guardar (F10) para desbloquear inscripción de cursos."}]}, "i3": {"fase": "Paso 3: Inscripción en el NRC", "pantalla": "SFAREGS", "hito": "Inscripción regular (código RE)", "instrucciones": [{"campo": "Información de curso", "valor": "NRC oficial de Computación (ej. 10018 / 1026)", "tipo": "Obligatorio", "detalle": "En bloque Course Registration, digitar el o los NRCs según corresponda (en Idiomas ingresar Teórico + Práctico juntos por regla de ligas)."}, {"campo": "Código de estatus", "valor": "RE (Web / Backoffice Registered)", "tipo": "Mandatorio", "detalle": "Digitar RE y presionar Guardar (F10). Mensaje: Estimación de cuota procesada."}]}, "i4": {"fase": "Paso 4: Auditoría Financiera", "pantalla": "TSAAREV", "hito": "Cargos y cuotas aplicados correctamente", "instrucciones": [{"campo": "Formulario", "valor": "TSAAREV", "tipo": "Cobranzas", "detalle": "Consultar cuenta corriente del alumno para verificar la tasación automática del curso."}]}, "i5": {"fase": "Paso 5: Lista Oficial de Clase", "pantalla": "SFASLST", "hito": "Alumno matriculado en lista del docente", "instrucciones": [{"campo": "Formulario", "valor": "SFASLST", "tipo": "Verificación", "detalle": "Abrir lista de clase con periodo y NRC; confirmar que el alumno figure como matriculado."}]}};
+  var GUIA_MAP = {"i1": {"fase": "Paso 1: Consulta Previa de Vacantes (SSASECQ)", "pantalla": "SSASECQ", "hito": "Auditoría de cupos y verificación de vacantes libres", "instrucciones": [{"campo": "Formulario de Consulta", "valor": "SSASECQ", "ejemplo": "Búsqueda de NRCs", "tipo": "Acceso inicial", "detalle": "Escribir SSASECQ en la barra de búsqueda de Banner y presionar Enter."}, {"campo": "Periodo Académico", "valor": "202656", "ejemplo": "Semestre 2026-II", "tipo": "Obligatorio", "detalle": "Digitar periodo lectivo vigente (202651: verano, 202654: sem I, 202656: sem II)."}, {"campo": "Materia y Curso", "valor": "ESEC · 00678 (Word) / 00679 (Excel)", "ejemplo": "Materia ESEC", "tipo": "Filtro", "detalle": "Filtrar por materia y curso para auditar la oferta de secciones programadas."}, {"campo": "Auditoría de Cupos", "valor": "Columna Remaining > 0", "tipo": "Control Crítico", "ejemplo": "Remaining: 40 vacantes", "detalle": "Comprobar que existan vacantes libres en Remaining. Si Remaining = 0, la sección está llena (Script 15)."}]}, "i2": {"fase": "Paso 2: Autorización Curricular (SFAREGS)", "pantalla": "SFAREGS", "hito": "Plan autorizado con estatus elegible (EL)", "instrucciones": [{"campo": "Formulario de Matrícula", "valor": "SFAREGS", "ejemplo": "Registro de cursos", "tipo": "Acceso clave", "detalle": "Escribir SFAREGS y presionar Enter para acceder al módulo de inscripción."}, {"campo": "Periodo e ID Alumno", "valor": "202656 · ID institucional", "ejemplo": "S00581081 / S00581091", "tipo": "Obligatorio", "detalle": "Ingresar periodo lectivo y el ID del estudiante admitido con prefijo S. Clic en botón «Ir»."}, {"campo": "Bloque Currícula", "valor": "Programa: CMEMC38", "ejemplo": "Malla del centro", "tipo": "Verificación", "detalle": "Confirmar que figure el programa académico asignado en SAAQUIK sin retenciones."}, {"campo": "Estatus Elegible (EL)", "valor": "Asignar código EL", "ejemplo": "Casilla Currícula", "tipo": "Mandatorio", "detalle": "Marcar la casilla del plan de estudios, cambiar estatus a EL (Elegible) y presionar Guardar (F10) para desbloquear la captura de cursos."}]}, "i3": {"fase": "Paso 3: Inscripción en el NRC (SFAREGS)", "pantalla": "SFAREGS", "hito": "Inscripción regular confirmada (código RE)", "instrucciones": [{"campo": "Bloque de Cursos", "valor": "Course Registration", "ejemplo": "Subformulario de cursos", "tipo": "Navegación", "detalle": "Desplazarse al bloque inferior de inscripción de asignaturas en SFAREGS."}, {"campo": "Número de NRC", "valor": "NRC oficial de Computación (ej. 10018 / 10019 / 1026)", "ejemplo": "NRC 10018 / 10010", "tipo": "Obligatorio", "detalle": "Digitar el NRC asignado (en Idiomas digitar Teórico + Práctico juntos por regla de ligas obligatorias)."}, {"campo": "Código de Inscripción", "valor": "RE (Registered)", "ejemplo": "Código RE", "tipo": "Mandatorio", "detalle": "Ingresar código RE (inscripción regular por backoffice o autoservicio web)."}, {"campo": "Guardado Oficial", "valor": "Botón Guardar (F10)", "ejemplo": "Estimación procesada", "tipo": "Hito Crítico", "detalle": "Presionar F10. Banner valida prerrequisitos y emite el mensaje «Estimación de cuota procesada»."}, {"campo": "Descuento de Vacante", "valor": "Remaining -1 · Actual +1", "ejemplo": "Actualizado en vivo", "tipo": "Control Automático", "detalle": "El motor de SSASECT descuenta automáticamente 1 vacante en la sección inscrita."}]}, "i4": {"fase": "Paso 4: Auditoría Financiera (TSAAREV)", "pantalla": "TSAAREV", "hito": "Tasación de aranceles y cuenta corriente aplicada", "instrucciones": [{"campo": "Formulario de Finanzas", "valor": "TSAAREV", "ejemplo": "Cuentas de alumnos", "tipo": "Acceso cobranzas", "detalle": "Ingresar a TSAAREV con el ID del estudiante para verificar la liquidación de cobro."}, {"campo": "Transacciones del Periodo", "valor": "Periodo 202656", "ejemplo": "Detalle de cargos", "tipo": "Obligatorio", "detalle": "Comprobar que figuren cargadas las cuotas de colegiatura correspondientes a los créditos de la asignatura."}, {"campo": "Regla de Dispensa (Idiomas)", "valor": "Solo cobra NRC Teórico (TA)", "ejemplo": "Práctica PA: 0.00 cr", "tipo": "Regla Financiera", "detalle": "En Idiomas, comprobar que las secciones de práctica (AC1, AC2, AC3) tienen dispensa activa y no duplican el cobro."}]}, "i5": {"fase": "Paso 5: Lista Oficial de Clase (SFASLST)", "pantalla": "SFASLST", "hito": "Estudiante matriculado en lista oficial del docente", "instrucciones": [{"campo": "Formulario de Lista", "valor": "SFASLST", "ejemplo": "Roster docente", "tipo": "Verificación final", "detalle": "Abrir SFASLST ingresando el Periodo lectivo y el NRC matriculado."}, {"campo": "Estatus en Lista", "valor": "Status: RE (Registrado)", "ejemplo": "Récord confirmado", "tipo": "Control de Calidad", "detalle": "Confirmar que el estudiante figure en la nómina oficial docente listo para registro de asistencia y notas."}, {"campo": "Habilitación Autoservicio", "valor": "Visible para el docente", "ejemplo": "Portal Web USS", "tipo": "Disponibilidad", "detalle": "El alumno queda visible de inmediato en la plataforma de Autoservicio del profesor titular asignado."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 6, "slug": "notas-y-pase-a-historia", "titulo": "Notas y pase a historia", "cap": "Capacidades 7 y 8", "url": "../06-notas-y-pase-a-historia/computacion-06-notas-y-pase-a-historia.html", "is_curr": false, "folder": "06-notas-y-pase-a-historia", "filename": "computacion-06-notas-y-pase-a-historia.html"};
   window.__ANTERIOR_FLUJO = {"num": 4, "slug": "persona-y-admision", "titulo": "Persona y admisión", "cap": "Capacidades 3, 4 y 5", "url": "../04-persona-y-admision/computacion-04-persona-y-admision.html", "is_curr": false, "folder": "04-persona-y-admision", "filename": "computacion-04-persona-y-admision.html"};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-computacion";

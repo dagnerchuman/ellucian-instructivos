@@ -32,9 +32,9 @@ GUIA_CREAR_NRC_IDIOMAS = {
             {"campo": "Campus", "valor": "S (Sede de Chiclayo)", "tipo": "Obligatorio", "detalle": "Digitar S o elegir de lista. Corresponde al campus operativo del centro."},
             {"campo": "Estatus", "valor": "A (Activo)", "tipo": "Mandatorio", "detalle": "Seleccionar 'Activo'; indispensable para permitir la posterior matrícula."},
             {"campo": "Tipo de horario", "valor": "TEO (Teórico para AT) / PRA (Práctico para AC1-AC3)", "tipo": "Obligatorio", "detalle": "TEO para el NRC principal teórico; PRA para las secciones prácticas ligadas."},
-            {"campo": "Modo de calificar", "valor": "C (Escala Centesimal)", "tipo": "Obligatorio", "detalle": "CONFIRMADO EN TEST: Modo C (Escala Centesimal) en catálogo de SSASECT para ESEP 02458."},
+            {"campo": "Modo de calificar", "valor": "C (Escala Centesimal 00 a 100)", "tipo": "Obligatorio", "detalle": "CONFIRMADO EN TEST: Modo C (Escala Centesimal 00 a 100) en catálogo de SSASECT para ESEP 02458 (nota aprobatoria ≥ 70)."},
             {"campo": "Parte de periodo", "valor": "I10 (05-OCT-2026 a 31-DIC-2026 · 13 semanas)", "tipo": "Obligatorio", "detalle": "En «Clase tradicional»: digitar I10 (o grupos I01 a I12 en 2026). Fechas de inicio/fin se calculan automáticamente."},
-            {"campo": "Ligas y Cobro", "valor": "AT: TA (con cobro) | AC1-AC3: PA (dispensado)", "tipo": "Regla Crítica", "detalle": "En Indicadores de clase: Para AT marcar Calificable ☑ y desmarcar Dispensa ☐ con Liga TA. Para AC1-AC3 desmarcar Calificable ☐ y marcar Dispensa ☑ con Liga PA."},
+            {"campo": "Ligas y Cobro", "valor": "AT: TA (con cobro) | AC1-AC3: PA (dispensado)", "tipo": "Regla Crítica", "detalle": "¡SOLO EN IDIOMAS SE USAN LIGAS! En Indicadores de clase: Para AT (Teórico Virtual) marcar Calificable ☑ y desmarcar Dispensa ☐ con Liga TA. Para AC1 (Práctico Presencial en Posgrado) y AC2/AC3 (Prácticos Virtuales) desmarcar Calificable ☐ y marcar Dispensa ☑ con Liga PA."},
             {"campo": "¡PRIMER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña. El ADD cambia al NRC oficial generado (ej. 10024, 10010, 10001)."}
         ]
     },
@@ -113,8 +113,9 @@ GUIA_CREAR_NRC_COMPUTACION = {
             {"campo": "Campus", "valor": "S (Sede Chiclayo)", "tipo": "Obligatorio", "detalle": "Digitar S o elegir de lista. Corresponde al campus operativo del centro."},
             {"campo": "Estatus", "valor": "A (Activo)", "tipo": "Mandatorio", "detalle": "Seleccionar 'Activo'; indispensable para permitir la posterior matrícula."},
             {"campo": "Tipo de horario", "valor": "TEO (Teórico)", "tipo": "Obligatorio", "detalle": "Digitar TEO o derivado del catálogo. El método educativo hereda VIRT."},
-            {"campo": "Modo de calificar", "valor": "V (Vigesimal 00 a 20)", "tipo": "Obligatorio", "detalle": "Digitar V (Vigesimal regular). Nota mínima aprobatoria 11 (resuelto U20 en SHAGRDE)."},
+            {"campo": "Modo de calificar", "valor": "V (Vigesimal 00 a 20)", "tipo": "Obligatorio", "detalle": "Digitar V (Vigesimal regular 00 a 20). Nota mínima aprobatoria 11 (resuelto U20 en SHAGRDE)."},
             {"campo": "Parte de periodo", "valor": "X06 / X07 (grupos X01 a X07 en 2026)", "tipo": "Obligatorio", "detalle": "En «Clase tradicional»: digitar X06 o X07. Fechas inicio/fin se calculan solas."},
+            {"campo": "Ligas", "valor": "(Sin ligas)", "tipo": "Regla", "detalle": "En Computación NO se configuran ligas. El curso se inscribe con su NRC único en sección A con cobro regular."},
             {"campo": "¡PRIMER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña. El ADD cambia al NRC oficial (ej. 10018, 10019, 1026)."}
         ]
     },
@@ -181,14 +182,15 @@ GUIA_CREAR_NRC_EMPRENDIMIENTO = {
         "hito": "⭐ ¡PRIMER GUARDADO! (NRC generado)",
         "instrucciones": [
             {"campo": "Materia", "valor": "ESGE (Estudios Generales - Emprendimiento)", "tipo": "Obligatorio", "detalle": "CONFIRMADO: Escribir ESGE en mayúsculas y presionar Tab (materia oficial del Centro de Emprendimiento)."},
-            {"campo": "Número de curso", "valor": "00117 (Emprendimiento)", "tipo": "Obligatorio", "detalle": "Digitar número de curso y presionar Tab. El campo Título autocompleta desde el catálogo."},
-            {"campo": "Sección", "valor": "A (o correlativo: B, C...)", "tipo": "Obligatorio", "detalle": "Asignar letra única para la sección del periodo (ej. Sección A en NRC 1025)."},
+            {"campo": "Número de curso", "valor": "00117 (Emprendimiento I) / 00118 (II) / 00119 (III)", "tipo": "Obligatorio", "detalle": "Digitar número de curso oficial (00117, 00118 o 00119) y presionar Tab. El campo Título autocompleta desde el catálogo."},
+            {"campo": "Sección", "valor": "A (o correlativo: B, C...)", "tipo": "Obligatorio", "detalle": "Asignar letra única para la sección del periodo (ej. Sección A en NRC 10007, 10012, 10014)."},
             {"campo": "Campus", "valor": "S (Sede Chiclayo)", "tipo": "Obligatorio", "detalle": "Digitar S o elegir de lista. Campus operativo del centro."},
             {"campo": "Estatus", "valor": "A (Activo)", "tipo": "Mandatorio", "detalle": "Seleccionar 'Activo'; indispensable para permitir la posterior matrícula."},
             {"campo": "Tipo de horario", "valor": "TEO (Teórico)", "tipo": "Obligatorio", "detalle": "Digitar TEO o derivado del catálogo."},
-            {"campo": "Modo de calificar", "valor": "V (Vigesimal)", "tipo": "Obligatorio", "detalle": "Digitar V según plan curricular institucional."},
-            {"campo": "Parte de periodo", "valor": "P01 a P06 (duración fija de 10 semanas)", "tipo": "Obligatorio", "detalle": "En «Clase tradicional»: digitar grupo P01 a P06. Todos los grupos de Emprendimiento duran 10 semanas fijas (P02 y P03 se superponen)."},
-            {"campo": "¡PRIMER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña. El ADD cambia al NRC oficial (ej. 1025)."}
+            {"campo": "Modo de calificar", "valor": "V (Vigesimal 00 a 20)", "tipo": "Obligatorio", "detalle": "Digitar V (Vigesimal regular 00 a 20). Nota mínima aprobatoria 11 según plan curricular institucional."},
+            {"campo": "Parte de periodo", "valor": "P01 a P06 (duración fija de 10 semanas)", "tipo": "Obligatorio", "detalle": "En «Clase tradicional»: digitar grupo P01 a P06 (ej. P06). Todos los grupos de Emprendimiento duran 10 semanas fijas (P02 y P03 se superponen)."},
+            {"campo": "Ligas", "valor": "(Sin ligas)", "tipo": "Regla", "detalle": "En Emprendimiento NO se configuran ligas. El curso se inscribe con su NRC único en sección A con cobro regular."},
+            {"campo": "¡PRIMER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "MANDATORIO: Guardar (F10) aquí antes de cambiar de pestaña. El ADD cambia al NRC oficial (ej. 10007, 10012, 10014, 1025)."}
         ]
     },
     "s3": {

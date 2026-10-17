@@ -42,9 +42,28 @@
   "cursos_conocidos": [
     "ESEC 00650 Ofimática Word 365",
     "ESEC 00678 OFIMÁTICA WORD 365 (NRC 10018 · Sec A)",
-    "ESEC 00679 OFIMÁTICA EXCEL 365 (NRC 10019 · Sec A)"
+    "ESEC 00679 OFIMÁTICA EXCEL 365 (NRC 10019 · Sec A)",
+    "ESEC 00680 DISEÑO CON CANVA (NRC 10020 · Sec A)",
+    "ESEC 00682 MICROSOFT EXCEL ASOCIADO (NRC 10021 · Sec A)",
+    "ESEC 00691 ANÁLISIS DE DATOS CON SPSS (NRC 10022 · Sec A)",
+    "ESEC 00694 BASE DE DATOS CIENTÍFICOS Y VIGILANCIA TECNOLÓGICA (NRC 10023 · Sec A)",
+    "ESEC 00696 TALLER DE CERTIFICACIÓN INTERNACIONAL AUTOCAD (NRC 10025 · Sec A)",
+    "ESEC 00697 TALLER DE CERTIFICACIÓN INTERNACIONAL WORD (NRC 10026 · Sec A)",
+    "ESEC 00698 TALLER DE CERTIFICACIÓN INTERNACIONAL EXCEL (NRC 10027 · Sec A)",
+    "ESEC 00699 TALLER DE CERTIFICACIÓN INTERNACIONAL W365 (NRC 10028 · Sec A)",
+    "ESEC 00700 TALLER DE CERTIFICACIÓN INTERNACIONAL E365 (NRC 10029 · Sec A)"
   ],
-  "cursos_nota": "Cursos confirmados en TEST y en la hoja oficial de programación de NRCs (13/10/2026). HT: 1, HP: 1, Lib_Area MC38-01.",
+  "cursos_nota": "Cursos confirmados en TEST y en la hoja oficial de programación de NRCs (17/10/2026). HT: 1, HP: 1, Lib_Area MC38-01.",
+  "escala_calificacion": {
+    "modo": "V",
+    "tipo": "Vigesimal",
+    "rango": "00 a 20",
+    "aprobatoria": 11
+  },
+  "ligas": {
+    "aplica": false,
+    "nota": "En Computación no se usan ligas; la sección es única A con cobro regular."
+  },
   "parte_general": "CGE",
   "partes_2026": [
     {

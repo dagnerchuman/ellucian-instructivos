@@ -9,23 +9,51 @@
     "nombre": "Emprendimiento",
     "fuente": "C18"
   },
-  "programa": null,
-  "mayor": null,
-  "departamento": null,
+  "programa": {
+    "codigo": "MMEMM01",
+    "nombre": "Acreditación Emprendimiento",
+    "fuente": "Hoja oficial de NRCs 202656 (17/10/2026)"
+  },
+  "mayor": {
+    "codigo": "MM01-01",
+    "nombre": "Área Curricular Emprendimiento",
+    "fuente": "Hoja oficial de NRCs 202656 (17/10/2026)"
+  },
+  "departamento": {
+    "codigo": "EMEM",
+    "nombre": "Jefatura Centro de Emprendimiento",
+    "fuente": "Hoja oficial de NRCs 202656 (17/10/2026)"
+  },
   "materia": {
     "codigo": "ESGE",
     "nombre": "Cursos de Emprendimiento"
   },
-  "capp": null,
+  "capp": {
+    "codigo": "MM01-01",
+    "nombre": "Reglas curriculares MM01-01 (I), MM01-02 (II), MM01-03 (III)",
+    "fuente": "Hoja oficial de NRCs 202656 (17/10/2026)"
+  },
   "curso_ejemplo": {
     "materia": "ESGE",
     "numero": "00117",
-    "titulo": null
+    "titulo": "Emprendimiento I"
   },
   "cursos_conocidos": [
-    "ESGE 00117 (nombre por confirmar)"
+    "EMPRENDIMIENTO I (ESGE 00117 · HT 1, HP 2 · MM01-01 · NRC 10007)",
+    "EMPRENDIMIENTO II (ESGE 00118 · HT 1, HP 2 · MM01-02 · NRC 10012)",
+    "EMPRENDIMIENTO III (ESGE 00119 · HT 1, HP 2 · MM01-03 · NRC 10014)"
   ],
-  "cursos_nota": "El cronograma solo dice «TODOS»; los nombres oficiales no se conocen (U05).",
+  "cursos_nota": "Cursos confirmados en la hoja oficial de programación de NRCs (17/10/2026). HT: 1, HP: 2. Escala Vigesimal (V). Sin ligas.",
+  "escala_calificacion": {
+    "modo": "V",
+    "tipo": "Vigesimal",
+    "rango": "00 a 20",
+    "aprobatoria": 11
+  },
+  "ligas": {
+    "aplica": false,
+    "nota": "En Emprendimiento no se usan ligas; la sección es única A con cobro regular."
+  },
   "parte_general": "EGE",
   "partes_2026": [
     {

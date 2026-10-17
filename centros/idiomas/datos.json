@@ -45,9 +45,25 @@
     "BASIC III (ESEP 02458 · HT 4, HP 3 · MI03-01)",
     "INTERMEDIATE I (ESEP 02693 · HT 4, HP 3 · MI03-02)",
     "INTERMEDIATE II (ESEP 02721 · HT 4, HP 3 · MI03-02)",
-    "INTERMEDIATE III (ESEP 02997 · HT 4, HP 3 · MI03-02)"
+    "INTERMEDIATE III (ESEP 02997 · HT 4, HP 3 · MI03-02)",
+    "PORTUGUES POST GRADO (ESEP 04776 · HT 4, HP 3 · MI18-01 · Programa IMEMI18 · NRC 10015 AT / 10017 AC1)"
   ],
-  "cursos_nota": "Cursos y códigos del catálogo SCACRSE confirmados en la hoja oficial de programación de NRCs (13/10/2026). HT: 4, HP: 3.",
+  "cursos_nota": "Cursos y códigos del catálogo SCACRSE confirmados en la hoja oficial de programación de NRCs (17/10/2026). HT: 4, HP: 3.",
+  "escala_calificacion": {
+    "modo": "C",
+    "tipo": "Centesimal",
+    "rango": "00 a 100",
+    "aprobatoria": 70
+  },
+  "ligas": {
+    "aplica": true,
+    "exclusivo": "Solo en Idiomas se usan Ligas (TA para teoría, PA para práctica).",
+    "estructura": {
+      "teoria": "Sección AT · Virtual (SAUVIR) · Cobra: SÍ · Calificable: SÍ · Dispensa: NO · Liga: TA",
+      "practica_1": "Sección AC1 · Presencial (Pabellón Posgrado SPOSGR) · Cobra: NO · Calificable: NO · Dispensa: SÍ · Liga: PA",
+      "practicas_siguientes": "Secciones AC2, AC3... · Virtuales (SAUVIR) · Cobra: NO · Calificable: NO · Dispensa: SÍ · Liga: PA"
+    }
+  },
   "parte_general": "IGE",
   "partes_2026": [
     {

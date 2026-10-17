@@ -1,14 +1,31 @@
 """Inyecta guías operativas interactivas directamente en el modal (Pasaporte semántico) de los diagramas Archify.
 
-Al hacer clic sobre cualquier nodo del flujo en el navegador, el contenedor `#focus-chip`
+Al hacer clic sobre cualquier nodo del flujo en el navegador, el contenedor 
 despliega la ficha operativa completa en Vista Dividida (Flujo BPM arriba + Guía abajo al 100% de ancho)
 o en modo flotante/lateral, manteniendo siempre visible y responsivo el diagrama BPM.
 """
+# ======================= BLOQUE 1: imports y constantes (reemplaza las 5 primeras líneas de import) =======================
+import html
 import json
 import re
 from pathlib import Path
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
-from plantillas import TITULOS, CAPACIDADES
+from plantillas import TITULOS, CAPACIDADES, guia_casuistica_de
+
+# "plantillas": la guía de las casuísticas sale de plantillas.py (CASOS + EXTRA_CASOS) y pisa a GUIAS_SCRIPTS.
+# "curada": manda GUIAS_SCRIPTS y solo se generan los nodos que le falten.
+PRIORIDAD_CASUISTICAS = "plantillas"
+SIN_GUIA_ESPERADO = ("tres-centros", "recorrido-completo")
+ADVERTENCIAS = []
+
+CENTROS_NAV = [
+    ("idiomas", "Centro de Idiomas", "#8b5cf6"),
+    ("computacion", "Centro de Computación", "#10b981"),
+    ("emprendimiento", "Centro de Emprendimiento", "#f59e0b"),
+    ("comun", "Los tres centros (común)", "#7030A0"),
+]
+RE_SCRIPT = re.compile(r"script-(\d{2}(?:-[a-z])?)-", re.I)
+RE_PREFIJO = re.compile(r"^[a-z]+-\d{2}-")
 
 CSS_MODAL = """
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
@@ -639,16 +656,210 @@ html[data-present="true"] body.has-guia-open .diagram-container > svg,
 /* Mantener todos los pasos del diagrama BPM claramente visibles cuando un paso está seleccionado */
 .diagram-container svg[data-focus-active] [data-node-id],
 .diagram-container svg[data-focus-active] [data-edge-from] {
-  opacity: 0.58 !important;
+  opacity: 0.65 !important;
 }
 
 .diagram-container svg[data-focus-active] [data-focus-match] {
-  opacity: 0.9 !important;
+  opacity: 0.95 !important;
 }
 
 .diagram-container svg[data-focus-active] [data-focus-selected] {
   opacity: 1 !important;
   filter: drop-shadow(0 0 10px var(--frontend-stroke)) !important;
+}
+
+/* Detalle técnico y tag inferior ([data-detail="fine"]) siempre visible por defecto en todos los nodos */
+.diagram-container svg [data-detail="fine"],
+.diagram-container svg [data-detail="context"],
+.diagram-container svg [data-detail],
+svg [data-detail="fine"],
+svg [data-detail="context"],
+svg [data-detail] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.diagram-container svg [data-detail="fine"] {
+  font-weight: 600 !important;
+}
+
+.diagram-container svg [data-detail-anchor],
+svg [data-detail-anchor] {
+  transform: none !important;
+}
+
+.diagram-container svg[data-focus-active] [data-node-id] [data-detail="fine"],
+.diagram-container svg[data-focus-active] [data-node-id] [data-detail="context"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* ==========================================================================
+   ESTADOS DE PROGRESO DEL FLUJO BPM (STEPPER / COMPLETADO VS PENDIENTE)
+   Solo se colorean los pasos ya realizados/desbloqueados; por defecto solo el primero.
+   ========================================================================== */
+
+/* Nodos PENDIENTES (aún no alcanzados): sin color de fondo, borde discontinuo neutro */
+.diagram-container svg g[data-step-state="pending"] > rect:not(.c-mask),
+svg g[data-step-state="pending"] > rect:not(.c-mask),
+g[data-step-state="pending"] > rect:not(.c-mask) {
+  fill: rgba(30, 41, 59, 0.45) !important;
+  stroke: #475569 !important;
+  stroke-width: 1.3px !important;
+  stroke-dasharray: 5, 4 !important;
+  filter: none !important;
+  transition: all 0.25s ease !important;
+}
+
+html[data-theme="light"] .diagram-container svg g[data-step-state="pending"] > rect:not(.c-mask),
+html[data-theme="light"] svg g[data-step-state="pending"] > rect:not(.c-mask),
+html[data-theme="light"] g[data-step-state="pending"] > rect:not(.c-mask) {
+  fill: #f8fafc !important;
+  stroke: #cbd5e1 !important;
+  stroke-width: 1.3px !important;
+  stroke-dasharray: 5, 4 !important;
+  filter: none !important;
+}
+
+/* Sigil / ícono en gris neutro en pendientes */
+g[data-step-state="pending"] .semantic-sigil,
+g[data-step-state="pending"] .semantic-sigil circle,
+g[data-step-state="pending"] .semantic-sigil path,
+g[data-step-state="pending"] .semantic-sigil ellipse,
+g[data-step-state="pending"] .semantic-sigil rect {
+  stroke: #64748b !important;
+  fill: none !important;
+  color: #64748b !important;
+  opacity: 0.65 !important;
+}
+
+g[data-step-state="pending"] .sigil-fill {
+  fill: #64748b !important;
+}
+
+html[data-theme="light"] g[data-step-state="pending"] .semantic-sigil,
+html[data-theme="light"] g[data-step-state="pending"] .semantic-sigil circle,
+html[data-theme="light"] g[data-step-state="pending"] .semantic-sigil path,
+html[data-theme="light"] g[data-step-state="pending"] .semantic-sigil ellipse,
+html[data-theme="light"] g[data-step-state="pending"] .semantic-sigil rect {
+  stroke: #94a3b8 !important;
+  fill: none !important;
+  color: #94a3b8 !important;
+  opacity: 0.75 !important;
+}
+
+html[data-theme="light"] g[data-step-state="pending"] .sigil-fill {
+  fill: #94a3b8 !important;
+}
+
+/* Textos de nodos pendientes en gris neutro legible (sin colores verdes/rojos/morados) */
+g[data-step-state="pending"] text.t-primary,
+g[data-step-state="pending"] text[data-node-label] {
+  fill: #94a3b8 !important;
+  font-weight: 600 !important;
+  opacity: 0.8 !important;
+}
+
+html[data-theme="light"] g[data-step-state="pending"] text.t-primary,
+html[data-theme="light"] g[data-step-state="pending"] text[data-node-label] {
+  fill: #475569 !important;
+  font-weight: 600 !important;
+  opacity: 0.85 !important;
+}
+
+g[data-step-state="pending"] text.t-muted,
+g[data-step-state="pending"] text[data-detail="context"] {
+  fill: #64748b !important;
+  opacity: 0.65 !important;
+}
+
+html[data-theme="light"] g[data-step-state="pending"] text.t-muted,
+html[data-theme="light"] g[data-step-state="pending"] text[data-detail="context"] {
+  fill: #64748b !important;
+  opacity: 0.75 !important;
+}
+
+/* El tercer renglón (detalle técnico) en pendientes es visible pero neutro */
+g[data-step-state="pending"] text[data-detail="fine"],
+g[data-step-state="pending"] text[class*="t-"] {
+  fill: #64748b !important;
+  font-weight: 500 !important;
+  opacity: 0.6 !important;
+}
+
+html[data-theme="light"] g[data-step-state="pending"] text[data-detail="fine"],
+html[data-theme="light"] g[data-step-state="pending"] text[class*="t-"] {
+  fill: #64748b !important;
+  font-weight: 500 !important;
+  opacity: 0.75 !important;
+}
+
+/* Hover en nodos pendientes */
+g[data-step-state="pending"]:hover > rect:not(.c-mask) {
+  stroke: #94a3b8 !important;
+  stroke-dasharray: none !important;
+  fill: rgba(148, 163, 184, 0.12) !important;
+}
+
+html[data-theme="light"] g[data-step-state="pending"]:hover > rect:not(.c-mask) {
+  stroke: #94a3b8 !important;
+  stroke-dasharray: none !important;
+  fill: #f1f5f9 !important;
+}
+
+/* Nodos COMPLETADOS (ya hechos): conservan sus fondos y bordes de color nativos bien definidos */
+g[data-step-state="completed"] > rect:not(.c-mask) {
+  stroke-width: 2.2px !important;
+  stroke-dasharray: none !important;
+  transition: all 0.25s ease !important;
+}
+
+/* Nodo ACTUAL (donde se quedaron): COLOREADO y resaltado con pulso ámbar / oro */
+g[data-step-state="current"] > rect:not(.c-mask),
+g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
+  stroke: #f59e0b !important;
+  stroke-width: 3.5px !important;
+  stroke-dasharray: none !important;
+  fill: rgba(245, 158, 11, 0.22) !important;
+  filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.9)) !important;
+  animation: pulsoUltimoEscogido 2.4s infinite ease-in-out !important;
+}
+
+html[data-theme="light"] g[data-step-state="current"] > rect:not(.c-mask),
+html[data-theme="light"] g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
+  stroke: #d97706 !important;
+  fill: rgba(245, 158, 11, 0.16) !important;
+  filter: drop-shadow(0 0 10px rgba(217, 119, 6, 0.75)) !important;
+}
+
+/* Nodos completados y actual siempre con opacidad plena */
+.diagram-container svg[data-focus-active] g[data-step-state="completed"],
+.diagram-container svg[data-focus-active] g[data-step-state="current"],
+g[data-step-state="completed"],
+g[data-step-state="current"] {
+  opacity: 1 !important;
+}
+
+/* Flechas conectoras hacia pasos pendientes: atenuadas en gris */
+path[data-step-edge="pending"] {
+  stroke: #475569 !important;
+  stroke-dasharray: 4, 3 !important;
+  opacity: 0.45 !important;
+}
+
+html[data-theme="light"] path[data-step-edge="pending"] {
+  stroke: #94a3b8 !important;
+  stroke-dasharray: 4, 3 !important;
+  opacity: 0.65 !important;
+}
+
+/* Flechas entre pasos completados/activos: bien coloreadas y continuas */
+path[data-step-edge="completed"] {
+  stroke: #10b981 !important;
+  stroke-dasharray: none !important;
+  opacity: 1 !important;
+  stroke-width: 2px !important;
 }
 
 /* Barra de herramientas inferior del lienzo (.diagram-nav) */
@@ -1240,6 +1451,59 @@ html:not([data-theme="dark"]) .guia-fase-hero {
   flex-wrap: wrap !important;
 }
 
+.guia-fase-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  flex-wrap: wrap !important;
+}
+
+.btn-toggle-validar-todos {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.28rem !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  padding: 0.16rem 0.52rem !important;
+  border-radius: 0.32rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.28) !important;
+  background: rgba(148, 163, 184, 0.12) !important;
+  color: var(--toolbar-text, #e2e8f0) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  white-space: nowrap !important;
+}
+
+.btn-toggle-validar-todos:hover {
+  background: rgba(148, 163, 184, 0.25) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+}
+
+html:not([data-theme="dark"]) .btn-toggle-validar-todos {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+html:not([data-theme="dark"]) .btn-toggle-validar-todos:hover {
+  background: #e2e8f0 !important;
+  color: #0284c7 !important;
+  border-color: #0284c7 !important;
+}
+
+.btn-toggle-validar-todos.todos-completos {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  color: #34d399 !important;
+}
+
+html:not([data-theme="dark"]) .btn-toggle-validar-todos.todos-completos {
+  background: #d1fae5 !important;
+  border-color: #6ee7b7 !important;
+  color: #065f46 !important;
+}
+
 .guia-pantalla-pill {
   font-size: 0.68rem !important;
   font-weight: 800 !important;
@@ -1432,6 +1696,20 @@ html:not([data-theme="dark"]) .guia-check-btn .num-badge {
   transform: scale(1.1) !important;
 }
 
+/* Fila interactiva de la tabla de pasos */
+.guia-fila-paso {
+  cursor: pointer !important;
+  transition: background-color 0.15s ease, outline 0.15s ease !important;
+}
+
+.guia-fila-paso:hover {
+  background: rgba(56, 189, 248, 0.07) !important;
+}
+
+html:not([data-theme="dark"]) .guia-fila-paso:hover {
+  background: #f1f5f9 !important;
+}
+
 /* Fila marcada como completada */
 .guia-fila-paso.completada {
   background: rgba(16, 185, 129, 0.08) !important;
@@ -1441,11 +1719,33 @@ html:not([data-theme="dark"]) .guia-fila-paso.completada {
   background: #f0fdf4 !important;
 }
 
+.guia-fila-paso.completada:hover {
+  background: rgba(16, 185, 129, 0.14) !important;
+}
+
+html:not([data-theme="dark"]) .guia-fila-paso.completada:hover {
+  background: #e2fbf0 !important;
+}
+
 .guia-fila-paso.completada .guia-check-btn .num-badge {
   background: #10b981 !important;
   color: #ffffff !important;
   border-color: #059669 !important;
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.45) !important;
+}
+
+/* Atención de filas pendientes cuando se solicita seguir validando */
+@keyframes pulsoPendiente {
+  0% { background-color: rgba(245, 158, 11, 0.4); transform: scale(1); }
+  25% { transform: scale(1.006); }
+  50% { background-color: rgba(245, 158, 11, 0.55); }
+  100% { background-color: rgba(245, 158, 11, 0.12); transform: scale(1); }
+}
+
+tr.guia-fila-paso.pendiente-atencion {
+  animation: pulsoPendiente 0.75s ease-in-out !important;
+  outline: 2px solid #f59e0b !important;
+  outline-offset: -2px !important;
 }
 
 .guia-campo {
@@ -1600,43 +1900,32 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
 }
 
 .focus-chip .btn-pie-next {
-  min-width: 8.5rem !important;
-  max-width: 22rem !important;
+  min-width: 6.8rem !important;
   display: inline-flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
-  text-align: left !important;
-  gap: 0.55rem !important;
-  padding: 0.26rem 0.75rem !important;
+  justify-content: center !important;
+  gap: 0.45rem !important;
+  padding: 0.38rem 1.05rem !important;
   border-radius: 0.48rem !important;
-  overflow: hidden !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
   flex-shrink: 0 !important;
-}
-
-.btn-next-body {
-  display: flex !important;
-  flex-direction: column !important;
-  min-width: 0 !important;
-  overflow: hidden !important;
-  line-height: 1.2 !important;
-}
-
-.btn-next-kicker {
-  font-size: 0.62rem !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.04em !important;
-  text-transform: uppercase !important;
-  opacity: 0.92 !important;
   white-space: nowrap !important;
+  text-decoration: none !important;
 }
 
-.btn-next-title {
-  font-size: 0.71rem !important;
+.focus-chip .btn-pie-prev {
+  min-width: 6.5rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.38rem !important;
+  padding: 0.38rem 0.95rem !important;
+  border-radius: 0.48rem !important;
+  font-size: 0.78rem !important;
   font-weight: 600 !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+  flex-shrink: 0 !important;
   white-space: nowrap !important;
-  opacity: 0.96 !important;
 }
 
 .btn-next-arrow {
@@ -1644,6 +1933,148 @@ html:not([data-theme="dark"]) .guia-footer-sticky {
   font-weight: 800 !important;
   flex-shrink: 0 !important;
   line-height: 1 !important;
+}
+
+/* Modal de confirmación de validación de pasos */
+.guia-confirm-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 100 !important;
+  background: rgba(15, 23, 42, 0.72) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+  border-radius: 0.75rem !important;
+  animation: fadeInModal 0.15s ease-out !important;
+}
+
+.guia-confirm-overlay[hidden] {
+  display: none !important;
+}
+
+.guia-confirm-modal {
+  background: #1e293b !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  max-width: 25rem !important;
+  width: 100% !important;
+  padding: 1.15rem 1.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+}
+
+html:not([data-theme="dark"]) .guia-confirm-modal {
+  background: #ffffff !important;
+  border-color: rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.guia-confirm-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.55rem !important;
+}
+
+.guia-confirm-icon {
+  font-size: 1.35rem !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+}
+
+.guia-confirm-title {
+  margin: 0 !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #f8fafc !important;
+}
+
+html:not([data-theme="dark"]) .guia-confirm-title {
+  color: #0f172a !important;
+}
+
+.guia-confirm-body {
+  font-size: 0.82rem !important;
+  color: #cbd5e1 !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+html:not([data-theme="dark"]) .guia-confirm-body {
+  color: #475569 !important;
+}
+
+.guia-confirm-body strong {
+  color: #f59e0b !important;
+  font-weight: 700 !important;
+}
+
+.guia-confirm-question {
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  color: #e2e8f0 !important;
+  margin: 0 !important;
+}
+
+html:not([data-theme="dark"]) .guia-confirm-question {
+  color: #1e293b !important;
+}
+
+.guia-confirm-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 0.55rem !important;
+  margin-top: 0.35rem !important;
+}
+
+.btn-confirm-seguir {
+  padding: 0.42rem 0.9rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border-radius: 0.42rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f1f5f9 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-confirm-seguir:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+html:not([data-theme="dark"]) .btn-confirm-seguir {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+html:not([data-theme="dark"]) .btn-confirm-seguir:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.btn-confirm-pasar {
+  padding: 0.42rem 1rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  border-radius: 0.42rem !important;
+  border: none !important;
+  background: #f59e0b !important;
+  color: #0f172a !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-confirm-pasar:hover {
+  background: #d97706 !important;
+  color: #ffffff !important;
 }
 
 .guia-pie-status {
@@ -1825,6 +2256,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 }
 """
 
+
 JS_SCRIPT_TEMPLATE = r"""
 <style>
 __CSS__
@@ -1840,29 +2272,130 @@ __CSS__
   window.__guiaChecks = window.__guiaChecks || {};
   window.__ultimoPasoEscogido = null;
 
-  // Marcar en el SVG del diagrama el último paso/nodo BPM escogido con un color distintivo persistente
-  function marcarUltimoPasoEnDiagrama(nodeId) {
-    if (!nodeId) return;
-    window.__ultimoPasoEscogido = nodeId;
-    try {
-      sessionStorage.setItem('archify_ultimo_paso_' + window.location.pathname, nodeId);
-    } catch (_) {}
+  // Obtener la lista ordenada de ids de nodos del flujo actual
+  function obtenerIdsNodosDiagrama() {
+    var svg = document.querySelector('.diagram-container > svg') || document.querySelector('svg');
+    if (!svg) return [];
+    var nodes = svg.querySelectorAll('g[data-node-id]');
+    var ids = [];
+    for (var i = 0; i < nodes.length; i++) {
+      var nId = nodes[i].getAttribute('data-node-id');
+      if (nId && ids.indexOf(nId) === -1) {
+        ids.push(nId);
+      }
+    }
+    return ids;
+  }
 
+  // Claves de almacenamiento para progreso persistente
+  function obtenerStorageKeys() {
+    var path = window.location.pathname || 'default';
+    return {
+      current: 'archify_paso_actual_' + path,
+      max: 'archify_paso_max_' + path,
+      legacy: 'archify_ultimo_paso_' + path
+    };
+  }
+
+  // Marcar en el SVG qué pasos están completados (coloreados), cuál es el actual (destacado) y cuáles están pendientes (sin colorear)
+  function actualizarProgresoDiagrama(nodeIdForzado) {
     var svg = document.querySelector('.diagram-container > svg') || document.querySelector('svg');
     if (!svg) return;
 
-    var nodosPrevios = svg.querySelectorAll('[data-ultimo-escogido="true"]');
-    for (var i = 0; i < nodosPrevios.length; i++) {
-      if (nodosPrevios[i].getAttribute('data-node-id') !== nodeId) {
-        nodosPrevios[i].removeAttribute('data-ultimo-escogido');
+    var nodeIds = obtenerIdsNodosDiagrama();
+    if (!nodeIds.length) return;
+
+    var keys = obtenerStorageKeys();
+    var currentId = nodeIdForzado;
+
+    if (!currentId) {
+      try {
+        currentId = localStorage.getItem(keys.current) || sessionStorage.getItem(keys.legacy);
+      } catch (_) {}
+    }
+
+    // Por defecto colorear el primer paso si el usuario entra por primera vez
+    if (!currentId || nodeIds.indexOf(currentId) === -1) {
+      currentId = nodeIds[0];
+    }
+
+    var currIdx = nodeIds.indexOf(currentId);
+    if (currIdx === -1) currIdx = 0;
+
+    var maxIdx = 0;
+    try {
+      var rawMax = localStorage.getItem(keys.max);
+      maxIdx = rawMax !== null ? parseInt(rawMax, 10) : 0;
+    } catch (_) {}
+    if (isNaN(maxIdx) || maxIdx < currIdx) {
+      maxIdx = currIdx;
+    }
+
+    // Guardar para que al volver sepan dónde se quedaron
+    try {
+      localStorage.setItem(keys.current, currentId);
+      localStorage.setItem(keys.max, String(maxIdx));
+      sessionStorage.setItem(keys.legacy, currentId);
+    } catch (_) {}
+
+    window.__ultimoPasoEscogido = currentId;
+    window.__guiaMaxUnlocked = Math.max(window.__guiaMaxUnlocked || 0, maxIdx);
+
+    // Asignar data-step-state a cada nodo:
+    // - index === currIdx: current (resaltado ámbar)
+    // - index <= maxIdx: completed (coloreado nativo)
+    // - index > maxIdx: pending (sin color, gris neutro discontinuo)
+    for (var i = 0; i < nodeIds.length; i++) {
+      var nId = nodeIds[i];
+      var gNode = svg.querySelector('g[data-node-id="' + nId + '"]');
+      if (!gNode) continue;
+
+      if (i === currIdx) {
+        gNode.setAttribute('data-step-state', 'current');
+        gNode.setAttribute('data-ultimo-escogido', 'true');
+      } else if (i <= maxIdx) {
+        gNode.setAttribute('data-step-state', 'completed');
+        gNode.removeAttribute('data-ultimo-escogido');
+      } else {
+        gNode.setAttribute('data-step-state', 'pending');
+        gNode.removeAttribute('data-ultimo-escogido');
       }
     }
 
-    var targetNode = svg.querySelector('[data-node-id="' + nodeId + '"]');
-    if (targetNode) {
-      targetNode.setAttribute('data-ultimo-escogido', 'true');
+    // Asignar data-step-edge a las flechas: completed (verde continuo) vs pending (gris discontinuo)
+    var edgePaths = svg.querySelectorAll('path[data-edge-from][data-edge-to]');
+    for (var e = 0; e < edgePaths.length; e++) {
+      var edge = edgePaths[e];
+      var toId = edge.getAttribute('data-edge-to');
+      var toIdx = nodeIds.indexOf(toId);
+      if (toIdx !== -1 && toIdx <= maxIdx) {
+        edge.setAttribute('data-step-edge', 'completed');
+      } else {
+        edge.setAttribute('data-step-edge', 'pending');
+      }
     }
   }
+
+  function marcarUltimoPasoEnDiagrama(nodeId) {
+    if (!nodeId) return;
+    actualizarProgresoDiagrama(nodeId);
+  }
+
+  window.reiniciarProgresoDiagrama = function() {
+    var keys = obtenerStorageKeys();
+    try {
+      localStorage.removeItem(keys.current);
+      localStorage.removeItem(keys.max);
+      sessionStorage.removeItem(keys.legacy);
+    } catch (_) {}
+    window.__guiaMaxUnlocked = 0;
+    var nodeIds = obtenerIdsNodosDiagrama();
+    if (nodeIds.length) {
+      window.irAPaso(nodeIds[0]);
+    } else {
+      actualizarProgresoDiagrama();
+    }
+  };
 
   // Integrar el .toolbar dentro de .header para que nunca choque con .flow-nav-top ni con h1
   function acomodarHeaderPagina() {
@@ -1917,56 +2450,199 @@ __CSS__
            !!document.msFullscreenElement;
   }
 
-  window.irAPaso = function(targetNodeId) {
-    if (!targetNodeId) return;
-    marcarUltimoPasoEnDiagrama(targetNodeId);
-    var stepKeys = Object.keys(GUIA_MAP);
-    var targetIdx = stepKeys.indexOf(targetNodeId);
-    if (targetIdx !== -1 && targetIdx > (window.__guiaMaxUnlocked || 0)) {
-      return;
+  function obtenerEstadoValidacionPaso(nodeId) {
+    if (!nodeId || !GUIA_MAP[nodeId]) return { total: 0, checked: 0, pendientes: 0, completo: true };
+    var inst = GUIA_MAP[nodeId].instrucciones || [];
+    var total = inst.length;
+    if (total === 0) return { total: 0, checked: 0, pendientes: 0, completo: true };
+    var checks = (window.__guiaChecks && window.__guiaChecks[nodeId]) || {};
+    var checked = 0;
+    for (var i = 0; i < total; i++) {
+      if (checks[i]) checked++;
     }
+    return {
+      total: total,
+      checked: checked,
+      pendientes: total - checked,
+      completo: checked === total
+    };
+  }
+
+  function asegurarOverlayConfirmacion(chip) {
+    var overlay = chip.querySelector(':scope > .guia-confirm-overlay');
+    if (overlay) return overlay;
+
+    var oldOverlay = chip.querySelector('.guia-confirm-overlay');
+    if (oldOverlay) oldOverlay.remove();
+
+    overlay = document.createElement('div');
+    overlay.className = 'guia-confirm-overlay';
+    overlay.hidden = true;
+    overlay.setAttribute('hidden', '');
+    overlay.innerHTML = '<div class="guia-confirm-modal" role="dialog" aria-modal="true">' +
+      '<div class="guia-confirm-header">' +
+      '<span class="guia-confirm-icon">⚠️</span>' +
+      '<h4 class="guia-confirm-title">Validación de pasos</h4>' +
+      '</div>' +
+      '<p class="guia-confirm-body">' +
+      'Aún tienes <strong id="guia-confirm-pendientes">0</strong> pasos sin marcar en esta etapa.' +
+      '</p>' +
+      '<p class="guia-confirm-question">¿Deseas pasar sin validar los pasos o quedarte para seguir validando?</p>' +
+      '<div class="guia-confirm-actions">' +
+      '<button type="button" class="btn-confirm-seguir" id="btn-confirm-seguir">Seguir validando</button>' +
+      '<button type="button" class="btn-confirm-pasar" id="btn-confirm-pasar">Pasar sin validar →</button>' +
+      '</div>' +
+      '</div>';
+
+    chip.appendChild(overlay);
+
+    var btnSeguir = overlay.querySelector('#btn-confirm-seguir');
+    if (btnSeguir) {
+      btnSeguir.addEventListener('click', function(e) {
+        e.stopPropagation();
+        cerrarModalConfirmacionValidacion();
+        resaltarFilasPendientes();
+      });
+    }
+
+    var btnPasar = overlay.querySelector('#btn-confirm-pasar');
+    if (btnPasar) {
+      btnPasar.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var callback = window.__confirmValidationCallback;
+        cerrarModalConfirmacionValidacion();
+        if (typeof callback === 'function') {
+          callback();
+        }
+      });
+    }
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        e.stopPropagation();
+        cerrarModalConfirmacionValidacion();
+        resaltarFilasPendientes();
+      }
+    });
+
+    return overlay;
+  }
+
+  function mostrarModalConfirmacionValidacion(pendientes, total, onConfirmPasar) {
+    var chip = document.getElementById('focus-chip');
+    if (!chip) return;
+    var overlay = asegurarOverlayConfirmacion(chip);
+    var pElem = overlay.querySelector('#guia-confirm-pendientes');
+    if (pElem) {
+      pElem.textContent = pendientes + (total ? (' de ' + total) : '');
+    }
+    window.__confirmValidationCallback = onConfirmPasar;
+    overlay.hidden = false;
+    overlay.removeAttribute('hidden');
+    var btnSeguir = overlay.querySelector('#btn-confirm-seguir');
+    if (btnSeguir) btnSeguir.focus();
+  }
+
+  function cerrarModalConfirmacionValidacion() {
+    var chip = document.getElementById('focus-chip');
+    if (!chip) return;
+    var overlay = chip.querySelector('.guia-confirm-overlay');
+    if (overlay) {
+      overlay.hidden = true;
+      overlay.setAttribute('hidden', '');
+    }
+    window.__confirmValidationCallback = null;
+  }
+
+  function resaltarFilasPendientes() {
+    var rows = document.querySelectorAll('.guia-fila-paso:not(.completada)');
+    rows.forEach(function(row) {
+      row.classList.remove('pendiente-atencion');
+      void row.offsetWidth;
+      row.classList.add('pendiente-atencion');
+    });
+    if (rows.length > 0) {
+      try {
+        rows[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (_) {}
+    }
+  }
+
+  function toggleValidarTodosPaso(nodeId) {
+    if (!nodeId || !GUIA_MAP[nodeId]) return;
+    var inst = GUIA_MAP[nodeId].instrucciones || [];
+    if (!inst.length) return;
+    window.__guiaChecks = window.__guiaChecks || {};
+    window.__guiaChecks[nodeId] = window.__guiaChecks[nodeId] || {};
+    var val = obtenerEstadoValidacionPaso(nodeId);
+    var nuevoEstado = !val.completo;
+    for (var r = 0; r < inst.length; r++) {
+      window.__guiaChecks[nodeId][r] = nuevoEstado;
+    }
+    actualizarModalGuia();
+  }
+
+  window.irAPaso = function(targetNodeId, forzarSinValidar) {
+    if (!targetNodeId) return;
+    var idElem = document.getElementById('focus-id');
+    var currentId = idElem ? (idElem.textContent || '').trim() : '';
+    var nodeIds = obtenerIdsNodosDiagrama();
+    if (!nodeIds.length) nodeIds = Object.keys(GUIA_MAP);
+    var currentIndex = nodeIds.indexOf(currentId);
+    var targetIndex = nodeIds.indexOf(targetNodeId);
+
+    if (targetIndex > currentIndex && !forzarSinValidar) {
+      var val = obtenerEstadoValidacionPaso(currentId);
+      if (!val.completo) {
+        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function() {
+          window.irAPaso(targetNodeId, true);
+        });
+        return;
+      }
+    }
+
+    actualizarProgresoDiagrama(targetNodeId);
     var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
     if (nodeElem) {
       nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
       setTimeout(function() {
         mantenerFlujoCompleto();
         actualizarModalGuia();
-        marcarUltimoPasoEnDiagrama(targetNodeId);
+        actualizarProgresoDiagrama(targetNodeId);
       }, 30);
     }
   };
 
-  window.navegarPaso = function(offset) {
+  window.navegarPaso = function(offset, forzarSinValidar) {
     var idElem = document.getElementById('focus-id');
     if (!idElem) return;
     var currentId = (idElem.textContent || '').trim();
-    var stepKeys = Object.keys(GUIA_MAP);
-    var currentIndex = stepKeys.indexOf(currentId);
+    var nodeIds = obtenerIdsNodosDiagrama();
+    if (!nodeIds.length) nodeIds = Object.keys(GUIA_MAP);
+    var currentIndex = nodeIds.indexOf(currentId);
     if (currentIndex === -1) return;
 
-    // Al avanzar con Siguiente, marcar completadas todas las filas del paso actual
-    if (offset > 0 && currentId && GUIA_MAP[currentId]) {
-      window.__guiaChecks[currentId] = window.__guiaChecks[currentId] || {};
-      var curInst = GUIA_MAP[currentId].instrucciones || [];
-      for (var r = 0; r < curInst.length; r++) {
-        window.__guiaChecks[currentId][r] = true;
+    if (offset > 0 && !forzarSinValidar) {
+      var val = obtenerEstadoValidacionPaso(currentId);
+      if (!val.completo) {
+        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function() {
+          window.navegarPaso(offset, true);
+        });
+        return;
       }
     }
 
     var nextIndex = currentIndex + offset;
-    if (nextIndex >= 0 && nextIndex < stepKeys.length) {
-      if (nextIndex > (window.__guiaMaxUnlocked || 0)) {
-        window.__guiaMaxUnlocked = nextIndex;
-      }
-      var targetNodeId = stepKeys[nextIndex];
-      marcarUltimoPasoEnDiagrama(targetNodeId);
+    if (nextIndex >= 0 && nextIndex < nodeIds.length) {
+      var targetNodeId = nodeIds[nextIndex];
+      actualizarProgresoDiagrama(targetNodeId);
       var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
       if (nodeElem) {
         nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
         setTimeout(function() {
           mantenerFlujoCompleto();
           actualizarModalGuia();
-          marcarUltimoPasoEnDiagrama(targetNodeId);
+          actualizarProgresoDiagrama(targetNodeId);
         }, 30);
       }
     }
@@ -2078,9 +2754,19 @@ __CSS__
       html += '<h3 class="guia-fase-title">' + escapeHtml(info.fase) + '</h3>';
     }
     html += '</div>';
+
+    html += '<div class="guia-fase-actions">';
+    if (info.instrucciones && info.instrucciones.length > 0) {
+      var valPaso = obtenerEstadoValidacionPaso(nodeId);
+      var toggleBtnClass = 'btn-toggle-validar-todos' + (valPaso.completo ? ' todos-completos' : '');
+      var toggleBtnTxt = valPaso.completo ? '↺ Desmarcar todos' : '☑ Validar todo';
+      var toggleBtnTitle = valPaso.completo ? 'Desmarcar todos los pasos de esta etapa' : 'Marcar todos los pasos de esta etapa como completados';
+      html += '<button type="button" class="' + toggleBtnClass + '" data-toggle-todos="' + escapeHtml(nodeId) + '" title="' + toggleBtnTitle + '">' + toggleBtnTxt + '</button>';
+    }
     if (info.hito) {
       html += '<div class="guia-hito-badge">🎯 ' + escapeHtml(info.hito) + '</div>';
     }
+    html += '</div>';
     html += '</div>';
 
     if (info.instrucciones && info.instrucciones.length > 0) {
@@ -2137,38 +2823,25 @@ __CSS__
     if (totalSteps > 1) {
       var pct = Math.round(((currentIndex + 1) / totalSteps) * 100);
       var numFilas = (info.instrucciones && info.instrucciones.length) || 0;
-      var statusExtra = numFilas > 5 ? (' · ' + numFilas + ' pasos (scroll ↓)') : '';
+      var statusExtra = numFilas > 5 ? (' · ' + numFilas + ' pasos') : '';
       html += '<div class="guia-footer-sticky">';
-      html += '<button type="button" class="guia-nav-btn btn-pie-prev" ' + (hasPrev ? 'data-nav-paso="-1"' : 'disabled') + '>← Paso anterior</button>';
+      html += '<button type="button" class="guia-nav-btn btn-pie-prev" ' + (hasPrev ? 'data-nav-paso="-1"' : 'disabled') + ' title="Volver al paso anterior">← Anterior</button>';
       html += '<div class="guia-pie-status">Paso ' + (currentIndex + 1) + ' de ' + totalSteps + ' (' + pct + '%)' + statusExtra + '</div>';
       if (hasNext) {
-        var cleanNext = nextTitle.replace(/^Paso\s*\d+:\s*/i, '');
-        var nextStepNum = currentIndex + 2;
-        html += '<button type="button" class="guia-nav-btn btn-pie-next primary" data-nav-paso="1" title="Avanzar al Paso ' + nextStepNum + ': ' + escapeHtml(cleanNext) + '">';
-        html += '<span class="btn-next-body">';
-        html += '<span class="btn-next-kicker">Siguiente · Paso ' + nextStepNum + '</span>';
-        html += '<span class="btn-next-title">' + escapeHtml(cleanNext) + '</span>';
-        html += '</span>';
+        html += '<button type="button" class="guia-nav-btn btn-pie-next primary" data-nav-paso="1" title="Avanzar al siguiente paso">';
+        html += '<span>Siguiente</span>';
         html += '<span class="btn-next-arrow">→</span>';
         html += '</button>';
       } else {
         if (window.__SIGUIENTE_FLUJO && window.__SIGUIENTE_FLUJO.url) {
-          var sigNum = window.__SIGUIENTE_FLUJO.num;
-          var sigNumTxt = (sigNum < 10 ? '0' : '') + sigNum;
-          html += '<a href="' + escapeHtml(window.__SIGUIENTE_FLUJO.url) + '" class="guia-nav-btn btn-pie-next primary" style="text-decoration:none;" title="Pasar al flujo ' + sigNumTxt + ': ' + escapeHtml(window.__SIGUIENTE_FLUJO.titulo) + '">';
-          html += '<span class="btn-next-body">';
-          html += '<span class="btn-next-kicker">¡Paso final! Siguiente flujo →</span>';
-          html += '<span class="btn-next-title">' + sigNumTxt + '. ' + escapeHtml(window.__SIGUIENTE_FLUJO.titulo) + '</span>';
-          html += '</span>';
-          html += '<span class="btn-next-arrow">🚀</span>';
+          html += '<a href="' + escapeHtml(window.__SIGUIENTE_FLUJO.url) + '" class="guia-nav-btn btn-pie-next primary" style="text-decoration:none;" title="Pasar al siguiente flujo">';
+          html += '<span>Siguiente flujo</span>';
+          html += '<span class="btn-next-arrow">→</span>';
           html += '</a>';
         } else {
           html += '<a href="' + escapeHtml(window.__VOLVER_CENTROS_URL || '#') + '" class="guia-nav-btn btn-pie-next" style="text-decoration:none;" title="Volver a la galería de Centros">';
-          html += '<span class="btn-next-body">';
-          html += '<span class="btn-next-kicker">✓ Fin del recorrido</span>';
-          html += '<span class="btn-next-title">Volver a Centros</span>';
-          html += '</span>';
-          html += '<span class="btn-next-arrow">🏛️</span>';
+          html += '<span>Finalizar</span>';
+          html += '<span class="btn-next-arrow">✓</span>';
           html += '</a>';
         }
       }
@@ -2201,11 +2874,20 @@ __CSS__
       '<span class="guia-brand-title">Guía Operativa Paso a Paso</span>' +
       '</div>' +
       '<div class="guia-topbar-actions">' +
+      '<button type="button" class="chip-btn-ctrl btn-reset-progreso" title="Reiniciar progreso del flujo al Paso 1">↺ <span class="btn-reset-txt">Reiniciar</span></button>' +
       '<button type="button" class="chip-btn-ctrl btn-copy" title="Copiar enlace directo a este paso">🔗 <span class="btn-copy-txt">Copiar enlace</span></button>' +
       '<button type="button" class="chip-btn-close" title="Cerrar modal (Esc)">✕</button>' +
       '</div>';
 
     chip.insertBefore(topbar, chip.firstChild);
+
+    var btnReset = topbar.querySelector('.btn-reset-progreso');
+    if (btnReset) {
+      btnReset.addEventListener('click', function(e) {
+        e.stopPropagation();
+        window.reiniciarProgresoDiagrama();
+      });
+    }
 
     var btnCopy = topbar.querySelector('.btn-copy');
     btnCopy.addEventListener('click', function(e) {
@@ -2248,6 +2930,7 @@ __CSS__
   }
 
   function cerrarModalGuia() {
+    cerrarModalConfirmacionValidacion();
     var chip = document.getElementById('focus-chip');
     var b = document.getElementById('guia-modal-backdrop');
     if (b) b.classList.remove('active');
@@ -2278,6 +2961,7 @@ __CSS__
     if (!chip || !idElem) return;
 
     asegurarBarraControles(chip);
+    asegurarOverlayConfirmacion(chip);
 
     var nodeId = (idElem.textContent || '').trim();
     var card = document.getElementById('guia-operativa-box');
@@ -2294,6 +2978,8 @@ __CSS__
     marcarUltimoPasoEnDiagrama(nodeId);
 
     var info = GUIA_MAP[nodeId];
+    var prevScroll = 0;
+    var prevBodyScroll = 0;
     if (!card) {
       card = document.createElement('div');
       card.id = 'guia-operativa-box';
@@ -2304,6 +2990,11 @@ __CSS__
       } else {
         chip.appendChild(card);
       }
+    } else {
+      var oldWrap = card.querySelector('.guia-tabla-wrap');
+      if (oldWrap) prevScroll = oldWrap.scrollTop;
+      var oldBody = card.querySelector('.guia-body-scroll');
+      if (oldBody) prevBodyScroll = oldBody.scrollTop;
     }
 
     chip.hidden = false;
@@ -2330,12 +3021,12 @@ __CSS__
     card.innerHTML = renderGuiaHtml(info, nodeId);
 
     var tablaWrap = card.querySelector('.guia-tabla-wrap');
-    if (tablaWrap) {
-      tablaWrap.scrollTop = 0;
+    if (tablaWrap && prevScroll > 0) {
+      tablaWrap.scrollTop = prevScroll;
     }
     var scrollBody = card.querySelector('.guia-body-scroll');
-    if (scrollBody) {
-      scrollBody.scrollTop = 0;
+    if (scrollBody && prevBodyScroll > 0) {
+      scrollBody.scrollTop = prevBodyScroll;
     }
 
     setTimeout(function() {
@@ -2351,6 +3042,12 @@ __CSS__
 
   document.addEventListener('DOMContentLoaded', function() {
     acomodarHeaderPagina();
+
+    // Forzar nivel de detalle completo (full) para que los textos inferiores (data-detail="fine") se muestren en todos los nodos
+    var dc = document.querySelector('.diagram-container');
+    if (dc) {
+      dc.setAttribute('data-detail-level', 'full');
+    }
 
     // Interceptar Archify.view.reveal para evitar que haga zoom y descoloque el flujo BPM
     neutralizarCamaraArchify();
@@ -2465,6 +3162,15 @@ __CSS__
         return;
       }
 
+      var btnToggleTodos = e.target.closest('[data-toggle-todos]');
+      if (btnToggleTodos) {
+        e.preventDefault();
+        e.stopPropagation();
+        var nId = btnToggleTodos.getAttribute('data-toggle-todos');
+        toggleValidarTodosPaso(nId);
+        return;
+      }
+
       var btnCheck = e.target.closest('[data-check-row]');
       if (btnCheck) {
         e.preventDefault();
@@ -2472,6 +3178,18 @@ __CSS__
         var idElem = document.getElementById('focus-id');
         var nodeId = (idElem ? idElem.textContent : '').trim();
         var rowIdx = parseInt(btnCheck.getAttribute('data-check-row'), 10);
+        window.__guiaChecks = window.__guiaChecks || {};
+        window.__guiaChecks[nodeId] = window.__guiaChecks[nodeId] || {};
+        window.__guiaChecks[nodeId][rowIdx] = !window.__guiaChecks[nodeId][rowIdx];
+        actualizarModalGuia();
+        return;
+      }
+
+      var trPaso = e.target.closest('tr.guia-fila-paso');
+      if (trPaso && !e.target.closest('button, a, input')) {
+        var rowIdx = parseInt(trPaso.getAttribute('data-row-idx'), 10);
+        var idElem = document.getElementById('focus-id');
+        var nodeId = (idElem ? idElem.textContent : '').trim();
         window.__guiaChecks = window.__guiaChecks || {};
         window.__guiaChecks[nodeId] = window.__guiaChecks[nodeId] || {};
         window.__guiaChecks[nodeId][rowIdx] = !window.__guiaChecks[nodeId][rowIdx];
@@ -2512,10 +3230,19 @@ __CSS__
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
       if (e.key === 'Escape') {
         var chip = document.getElementById('focus-chip');
-        if (chip && !chip.hidden && chip.classList.contains('tiene-guia')) {
-          e.preventDefault();
-          cerrarModalGuia();
-          return;
+        if (chip) {
+          var confirmOverlay = chip.querySelector('.guia-confirm-overlay');
+          if (confirmOverlay && !confirmOverlay.hidden) {
+            e.preventDefault();
+            cerrarModalConfirmacionValidacion();
+            resaltarFilasPendientes();
+            return;
+          }
+          if (!chip.hidden && chip.classList.contains('tiene-guia')) {
+            e.preventDefault();
+            cerrarModalGuia();
+            return;
+          }
         }
       }
       if (e.altKey && e.key === 'ArrowRight' && window.__SIGUIENTE_FLUJO && window.__SIGUIENTE_FLUJO.url) {
@@ -2541,20 +3268,10 @@ __CSS__
 
     mantenerFlujoCompleto();
 
-    // Restaurar el último paso escogido previamente si existe en sessionStorage
-    var storedLast = null;
-    try {
-      storedLast = sessionStorage.getItem('archify_ultimo_paso_' + window.location.pathname);
-    } catch (_) {}
-    if (storedLast) {
-      marcarUltimoPasoEnDiagrama(storedLast);
-      setTimeout(function() {
-        marcarUltimoPasoEnDiagrama(storedLast);
-      }, 100);
-      setTimeout(function() {
-        marcarUltimoPasoEnDiagrama(storedLast);
-      }, 350);
-    }
+    // Inicializar el progreso: colorear el actual/completados y dejar pendientes los no alcanzados
+    actualizarProgresoDiagrama();
+    setTimeout(actualizarProgresoDiagrama, 60);
+    setTimeout(actualizarProgresoDiagrama, 250);
 
     actualizarModalGuia();
     if (window.location.hash && window.location.hash.indexOf('focus=') !== -1) {
@@ -2580,248 +3297,311 @@ __CSS__
 """
 
 
-def obtener_guia_para_slug(slug, id_centro=""):
-    """Devuelve el diccionario de nodos y pasos para el slug dado y el centro."""
-    guia = obtener_guia(slug, id_centro)
-    if guia:
-        return guia
+# ======================= BLOQUE 2: resolución de la guía (reemplaza obtener_guia_para_slug) =======================
+def detectar_script(slug):
+    """'computacion-09-script-18-b-tiene-deuda' → '18-B' (antes fallaba: buscaba 'script-18-B' en minúsculas)."""
+    m = RE_SCRIPT.search(slug)
+    return m.group(1).upper() if m else None
+
+
+def ids_nodos_en_html(contenido):
+    """Ids de los nodos del SVG, en orden. Llamar DESPUÉS de quitar la inyección previa: el JS también
+    contiene la cadena data-node-id=" y contaminaría la lista."""
+    ids = []
+    for m in re.finditer(r'<g\b[^>]*\bdata-node-id="([^"]+)"', contenido):
+        if m.group(1) not in ids:
+            ids.append(m.group(1))
+    return ids
+
+
+def _guia_curada(slug, id_centro, sid):
+    try:
+        g = obtener_guia(slug, id_centro)
+    except Exception:
+        g = None
+    if g:
+        return g
+    if sid:
+        for k, v in GUIAS_SCRIPTS.items():
+            if str(k).upper() == sid:
+                return v
+        return None
+    limpio = RE_PREFIJO.sub("", slug)  # quita "<centro>-NN-"
+    if limpio in GUIAS_BASE:
+        return GUIAS_BASE[limpio]
     if slug in GUIAS_BASE:
         return GUIAS_BASE[slug]
     for k, v in GUIAS_BASE.items():
-        if k in slug:
+        if k in limpio:
             return v
-    for s_id, s_map in GUIAS_SCRIPTS.items():
-        if f"script-{s_id}" in slug or f"script_{s_id}" in slug:
-            return s_map
     return None
 
 
+def _normalizar(info):
+    """Garantiza campo, tipo y detalle en cada fila (la tabla siempre pinta 6 columnas).
+    No toca 'ejemplo': si falta, el JS lo deduce de 'valor'."""
+    out = dict(info)
+    filas = []
+    for it in out.get("instrucciones") or []:
+        f = dict(it)
+        for k, defecto in (("campo", "—"), ("tipo", "Acción"), ("detalle", "—")):
+            if not f.get(k):
+                f[k] = defecto
+        f.setdefault("valor", "")
+        filas.append(f)
+    out["instrucciones"] = filas
+    return out
+
+
+def _validar_y_ordenar(guia, ids_nodos, slug):
+    """Deja solo nodos que existen en el SVG y los ordena como el recorrido (c0, c1… cr). Así el botón
+    «Siguiente» nunca apunta a un paso sin nodo y el stepper no se queda trabado."""
+    if not ids_nodos:
+        return {k: _normalizar(v) for k, v in guia.items()}
+    fuera = [k for k in guia if k not in ids_nodos]
+    if fuera:
+        ADVERTENCIAS.append(f"{slug}: nodos de la guía que no existen en el diagrama (se descartan): {fuera}")
+    validas = [k for k in guia if k in ids_nodos]
+    if guia and not validas:
+        ADVERTENCIAS.append(f"{slug}: ningún nodo de la guía coincide con el diagrama; ids del diagrama: {ids_nodos}")
+    elif validas:
+        faltan = [n for n in ids_nodos if n not in guia]
+        if faltan:
+            ADVERTENCIAS.append(f"{slug}: nodos del diagrama sin guía: {faltan}")
+    elif not any(s in slug for s in SIN_GUIA_ESPERADO):
+        ADVERTENCIAS.append(f"{slug}: sin guía operativa; se verá el pasaporte nativo de Archify")
+
+    def orden(k):
+        m = re.search(r"(\d+)$", k)
+        return (int(m.group(1)) if m else 10 ** 6, ids_nodos.index(k))
+
+    return {k: _normalizar(guia[k]) for k in sorted(validas, key=orden)}
+
+
+def obtener_guia_para_slug(slug, id_centro="", ids_nodos=None):
+    """Guía {id_de_nodo: ficha} del flujo, validada contra los nodos reales del SVG."""
+    sid = detectar_script(slug)
+    guia = dict(_guia_curada(slug, id_centro, sid) or {})
+    if sid:  # casuísticas: se completan (o se imponen) desde plantillas.py
+        generada = guia_casuistica_de(id_centro, sid)
+        for nid, info in generada.items():
+            curada = guia.get(nid)
+            if PRIORIDAD_CASUISTICAS == "plantillas" or not (curada and curada.get("instrucciones")):
+                guia[nid] = info
+    return _validar_y_ordenar(guia, ids_nodos, slug)
+
+
+# ======================= BLOQUE 3: navegación (reemplaza construir_navegacion_flujos) =======================
+def _listar_flujos(carpeta_diagramas):
+    flujos = []
+    if not carpeta_diagramas.is_dir():
+        return flujos
+    for s in sorted(p for p in carpeta_diagramas.glob("[0-9][0-9]-*") if p.is_dir()):
+        htmls = sorted(s.glob("*.html"))
+        if htmls:
+            flujos.append((s, htmls[0]))
+    return flujos
+
+
+def _destino_en_centro(c_id, carpeta_actual, carpeta_centros):
+    """Mismo flujo (por slug, no por número) en otro centro; si no existe, su primer flujo; si no, el índice.
+    Antes se comparaba la carpeta completa «NN-slug» y, al cambiar la numeración (p. ej. por Ligas),
+    caía siempre en el primer flujo: de ahí los saltos raros."""
+    flujos = _listar_flujos(carpeta_centros / c_id / "diagramas")
+    slug_actual = carpeta_actual.name[3:]
+    for s, h in flujos:
+        if s.name[3:] == slug_actual:
+            return f"../../../{c_id}/diagramas/{s.name}/{h.name}"
+    if flujos:
+        s, h = flujos[0]
+        return f"../../../{c_id}/diagramas/{s.name}/{h.name}"
+    return f"../../../index.html#sec-{c_id}"
+
+
+def _html_nav_bottom(flujo_ant, flujo_sig, url_centros):
+    def tarjeta(f, clase, etiqueta):
+        if not f:
+            texto = "Primer flujo del centro" if clase == "prev" else "Último flujo del centro"
+            return (f'<div class="flow-bottom-card {clase} placeholder"><span class="flow-card-badge">{etiqueta}</span>'
+                    f'<span class="flow-card-title muted">{texto}</span></div>')
+        acento = " primary-accent" if clase == "next" else ""
+        meta = f'<span class="flow-card-meta">{html.escape(f["cap"])}</span>' if f["cap"] else ""
+        titulo = html.escape(f["titulo"])
+        return (f'<a href="{html.escape(f["url"])}" class="flow-bottom-card {clase}{acento}" title="{f["num"]:02d}. {titulo}">'
+                f'<span class="flow-card-badge">{etiqueta}</span>'
+                f'<span class="flow-card-num-title"><span class="flow-card-num">{f["num"]:02d}</span>'
+                f'<span class="flow-card-title">{titulo}</span></span>{meta}</a>')
+
+    return ('<!-- === FLOW NAV BOTTOM === -->\n'
+            '<section class="flow-nav-bottom-section" aria-label="Navegación entre flujos">\n'
+            '  <div class="flow-bottom-container">\n'
+            f'    {tarjeta(flujo_ant, "prev", "← Flujo anterior")}\n'
+            f'    <a href="{url_centros}" class="flow-bottom-hub-btn" title="Volver a la galería de Centros">🏛️ Volver a Centros</a>\n'
+            f'    {tarjeta(flujo_sig, "next", "Flujo siguiente →")}\n'
+            '  </div>\n'
+            '</section>\n'
+            '<!-- === /FLOW NAV BOTTOM === -->')
+
+
 def construir_navegacion_flujos(ruta_html):
-    """Calcula la navegación anterior/siguiente y datos para la barra superior y pie."""
+    """Barra superior, tarjetas inferiores y datos de anterior/siguiente.
+    Ruta esperada: centros/<centro>/diagramas/NN-slug/<archivo>.html"""
     carpeta_diagrama = ruta_html.parent
-    carpeta_diagramas = carpeta_diagrama.parent
-    carpeta_centros = carpeta_diagramas.parent.parent
-
-    ruta_str = str(ruta_html).lower()
-    if "idiomas" in ruta_str:
-        id_centro = "idiomas"
-        nombre_centro = "Centro de Idiomas"
-        color_centro = "#8b5cf6"
-    elif "computacion" in ruta_str:
-        id_centro = "computacion"
-        nombre_centro = "Centro de Computación"
-        color_centro = "#10b981"
-    elif "emprendimiento" in ruta_str:
-        id_centro = "emprendimiento"
-        nombre_centro = "Centro de Emprendimiento"
-        color_centro = "#f59e0b"
-    else:
-        id_centro = "comun"
-        nombre_centro = "Centros Empresariales"
-        color_centro = "#7030A0"
-
+    carpeta_centros = ruta_html.parents[3]
+    nombre = ruta_html.parents[2].name
+    nombres = {c[0]: c for c in CENTROS_NAV}
+    id_centro = nombre if nombre in nombres else "comun"
+    _, nombre_centro, color_centro = nombres[id_centro]
     url_centros = f"../../../index.html#sec-{id_centro}"
 
-    # Construir opciones del selector de Centros (Idiomas, Computación, Emprendimiento, Común)
-    centros_lista = [
-        ("idiomas", "Centro de Idiomas", "#8b5cf6", "🟣"),
-        ("computacion", "Centro de Computación", "#10b981", "🟢"),
-        ("emprendimiento", "Centro de Emprendimiento", "#f59e0b", "🟠"),
-        ("comun", "Los tres centros (común)", "#7030A0", "🔄"),
-    ]
-    centros_options_html = []
-    for c_id, c_nom, c_col, c_ico in centros_lista:
-        is_c_curr = (c_id == id_centro)
-        sel_c = ' selected="selected"' if is_c_curr else ""
-        lbl_c = f"{c_ico} {c_nom}" + (" (Actual)" if is_c_curr else "")
-        if is_c_curr:
-            target_c_url = f"../{carpeta_diagrama.name}/{ruta_html.name}"
+    opciones_centros = []
+    for c_id, c_nom, _ in CENTROS_NAV:
+        if c_id == id_centro:
+            destino = f"../{carpeta_diagrama.name}/{ruta_html.name}"
         else:
-            c_diag_dir = carpeta_centros / c_id / "diagramas"
-            matching_dir = c_diag_dir / carpeta_diagrama.name
-            if matching_dir.is_dir() and next(matching_dir.glob("*.html"), None):
-                matching_html = next(matching_dir.glob("*.html")).name
-                target_c_url = f"../../../{c_id}/diagramas/{carpeta_diagrama.name}/{matching_html}"
-            else:
-                primeros = sorted([p for p in c_diag_dir.glob("[0-9][0-9]-*") if p.is_dir() and next(p.glob("*.html"), None)])
-                if primeros:
-                    primer_html = next(primeros[0].glob("*.html")).name
-                    target_c_url = f"../../../{c_id}/diagramas/{primeros[0].name}/{primer_html}"
-                else:
-                    target_c_url = f"../../../index.html#sec-{c_id}"
-        centros_options_html.append(f'<option value="{target_c_url}"{sel_c}>{lbl_c}</option>')
-    select_centros_options = "\n            ".join(centros_options_html)
-
-    subs = sorted([
-        p for p in carpeta_diagramas.glob("[0-9][0-9]-*")
-        if p.is_dir() and next(p.glob("*.html"), None) is not None
-    ])
+            destino = _destino_en_centro(c_id, carpeta_diagrama, carpeta_centros)
+        sel = ' selected="selected"' if c_id == id_centro else ""
+        opciones_centros.append(f'<option value="{destino}"{sel}>{html.escape(c_nom)}</option>')
+    select_centros = "\n            ".join(opciones_centros)
 
     flujos = []
-    for s in subs:
-        html_file = next(s.glob("*.html"))
-        num = int(s.name[:2])
+    for s, h in _listar_flujos(carpeta_diagrama.parent):
         slug_s = s.name[3:]
-        titulo = TITULOS.get(slug_s, slug_s.replace("-", " ").capitalize())
-        cap = CAPACIDADES.get(slug_s, "")
-        rel_url = f"../{s.name}/{html_file.name}"
-        is_curr = (s.resolve() == carpeta_diagrama.resolve())
         flujos.append({
-            "num": num,
-            "slug": slug_s,
-            "titulo": titulo,
-            "cap": cap,
-            "url": rel_url,
-            "is_curr": is_curr,
-            "folder": s.name,
-            "filename": html_file.name,
+            "num": int(s.name[:2]), "slug": slug_s,
+            "titulo": TITULOS.get(slug_s, slug_s.replace("-", " ").capitalize()),
+            "cap": CAPACIDADES.get(slug_s, ""),
+            "url": f"../{s.name}/{h.name}",
+            "is_curr": s.resolve() == carpeta_diagrama.resolve(),
         })
-
-    curr_idx = -1
-    for i, f in enumerate(flujos):
-        if f["is_curr"]:
-            curr_idx = i
-            break
-
-    if curr_idx == -1 and flujos:
-        curr_idx = 0
-
-    total_flujos = len(flujos)
-    flujo_actual = flujos[curr_idx] if curr_idx >= 0 else None
-    num_actual = curr_idx + 1
+    curr_idx = next((i for i, f in enumerate(flujos) if f["is_curr"]), 0)
+    total = len(flujos)
     flujo_ant = flujos[curr_idx - 1] if curr_idx > 0 else None
-    flujo_sig = flujos[curr_idx + 1] if curr_idx < total_flujos - 1 else None
+    flujo_sig = flujos[curr_idx + 1] if curr_idx < total - 1 else None
 
-    # Opciones para el select dropdown
-    options_html = []
+    opciones_flujos = []
     for f in flujos:
-        selected = ' selected="selected"' if f["is_curr"] else ""
-        label = f"{f['num']:02d}. {f['titulo']}"
-        if f["is_curr"]:
-            label += " (Actual)"
-        options_html.append(f'<option value="{f["url"]}"{selected}>{label}</option>')
-    select_options = "\n          ".join(options_html)
+        sel = ' selected="selected"' if f["is_curr"] else ""
+        opciones_flujos.append(f'<option value="{f["url"]}"{sel}>{f["num"]:02d}. {html.escape(f["titulo"])}</option>')
+    select_flujos = "\n          ".join(opciones_flujos)
 
-    # Botones top
+    chevron_izq = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>'
+    chevron_der = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>'
     if flujo_ant:
-        btn_prev_top = f'''<a href="{flujo_ant['url']}" class="flow-btn-top prev" title="Flujo anterior: {flujo_ant['num']:02d}. {flujo_ant['titulo']}">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        <span class="flow-btn-num">{flujo_ant['num']:02d}</span>
-        <span class="flow-btn-txt">{flujo_ant['titulo']}</span>
-      </a>'''
+        t = html.escape(flujo_ant["titulo"])
+        btn_prev = (f'<a href="{flujo_ant["url"]}" class="flow-btn-top prev" title="Flujo anterior: {flujo_ant["num"]:02d}. {t}">'
+                    f'{chevron_izq}<span class="flow-btn-num">{flujo_ant["num"]:02d}</span><span class="flow-btn-txt">{t}</span></a>')
     else:
-        btn_prev_top = '''<span class="flow-btn-top prev disabled" title="Primer flujo de este centro">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        <span class="flow-btn-txt">Inicio</span>
-      </span>'''
-
+        btn_prev = (f'<span class="flow-btn-top prev disabled" title="Primer flujo de este centro">{chevron_izq}'
+                    '<span class="flow-btn-txt">Inicio</span></span>')
     if flujo_sig:
-        btn_next_top = f'''<a href="{flujo_sig['url']}" class="flow-btn-top next primary" title="Siguiente flujo: {flujo_sig['num']:02d}. {flujo_sig['titulo']}">
-        <span class="flow-btn-num">{flujo_sig['num']:02d}</span>
-        <span class="flow-btn-txt">{flujo_sig['titulo']}</span>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </a>'''
+        t = html.escape(flujo_sig["titulo"])
+        btn_next = (f'<a href="{flujo_sig["url"]}" class="flow-btn-top next primary" title="Siguiente flujo: {flujo_sig["num"]:02d}. {t}">'
+                    f'<span class="flow-btn-num">{flujo_sig["num"]:02d}</span><span class="flow-btn-txt">{t}</span>{chevron_der}</a>')
     else:
-        btn_next_top = '''<span class="flow-btn-top next disabled" title="Último flujo de este centro">
-        <span class="flow-btn-txt">Fin</span>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </span>'''
+        btn_next = ('<span class="flow-btn-top next disabled" title="Último flujo de este centro">'
+                    f'<span class="flow-btn-txt">Fin</span>{chevron_der}</span>')
 
-    html_nav_top = f'''<!-- === FLOW NAV TOP === -->
+    nav_top = f'''<!-- === FLOW NAV TOP === -->
     <nav class="flow-nav-top" aria-label="Navegación entre flujos">
       <div class="flow-nav-left">
         <a href="{url_centros}" class="btn-flow-centros" title="Volver a la galería principal de Centros Empresariales">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           <span>Volver a Centros</span>
         </a>
         <span class="flow-nav-sep">/</span>
         <div class="flow-nav-select-wrap flow-nav-select-center-wrap">
           <span class="flow-center-dot" style="position:absolute; left:0.65rem; top:50%; transform:translateY(-50%); z-index:2; pointer-events:none; background:{color_centro};"></span>
           <select class="flow-nav-select flow-nav-select-center" onchange="if(this.value) window.location.href=this.value" title="Cambiar a otro Centro Empresarial">
-            {select_centros_options}
+            {select_centros}
           </select>
           <span class="flow-nav-select-arrow">▾</span>
         </div>
         <span class="flow-nav-sep">/</span>
         <div class="flow-nav-select-wrap">
           <select class="flow-nav-select" onchange="if(this.value) window.location.href=this.value" title="Cambiar a otro flujo del centro">
-            {select_options}
+            {select_flujos}
           </select>
           <span class="flow-nav-select-arrow">▾</span>
         </div>
       </div>
       <div class="flow-nav-right">
-        {btn_prev_top}
-        <span class="flow-nav-counter">Flujo <strong>{num_actual}</strong> de {total_flujos}</span>
-        {btn_next_top}
+        {btn_prev}
+        <span class="flow-nav-counter">Flujo <strong>{curr_idx + 1}</strong> de {total}</span>
+        {btn_next}
       </div>
     </nav>
     <!-- === /FLOW NAV TOP === -->'''
 
     return {
-        "nav_top": html_nav_top,
-        "nav_bottom": "",
+        "nav_top": nav_top,
+        "nav_bottom": _html_nav_bottom(flujo_ant, flujo_sig, url_centros),
         "flujo_ant": flujo_ant,
         "flujo_sig": flujo_sig,
-        "num_actual": num_actual,
-        "total_flujos": total_flujos,
         "url_centros": url_centros,
     }
 
 
+# ======================= BLOQUE 4: inyección (reemplaza inyectar_en_html e inyectar_todos) =======================
+def _limpiar_inyeccion_previa(contenido):
+    contenido = re.sub(r"\s*<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?</script>", "", contenido, flags=re.DOTALL)
+    for marca in ("FLOW NAV TOP", "FLOW NAV BOTTOM"):
+        contenido = re.sub(rf"\s*<!-- === {marca} === -->.*?<!-- === /{marca} === -->", "", contenido, flags=re.DOTALL)
+    # Limpiar cualquier residuo previo en etiquetas de nodos o flechas
+    contenido = re.sub(r'\s+data-step-state="[^"]*"', '', contenido)
+    contenido = re.sub(r'\s+data-ultimo-escogido="[^"]*"', '', contenido)
+    contenido = re.sub(r'\s+data-step-edge="[^"]*"', '', contenido)
+    return contenido
+
+
+def _json_seguro(obj):
+    """JSON para incrustar en <script>: «</» se escapa para que un texto no cierre el script."""
+    return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
+
+
 def inyectar_en_html(ruta_html, slug):
-    """Inyecta el CSS responsivo, navegación entre flujos y JS de la guía operativa en el HTML generado."""
-    ruta_str = str(ruta_html).lower()
-    id_centro = "idiomas" if "idiomas" in ruta_str else ("computacion" if "computacion" in ruta_str else ("emprendimiento" if "emprendimiento" in ruta_str else ""))
-    guia = obtener_guia_para_slug(slug, id_centro) or {}
+    """Inyecta CSS, navegación superior/inferior y la guía operativa; se puede ejecutar varias veces."""
+    nombre = ruta_html.parents[2].name
+    id_centro = nombre if nombre in ("idiomas", "computacion", "emprendimiento") else ""
+    nav = construir_navegacion_flujos(ruta_html)
 
-    nav_data = construir_navegacion_flujos(ruta_html)
+    contenido = _limpiar_inyeccion_previa(ruta_html.read_text(encoding="utf-8"))
+    nodo_ids = ids_nodos_en_html(contenido)
+    guia = obtener_guia_para_slug(slug, id_centro, nodo_ids)
 
-    contenido = ruta_html.read_text(encoding="utf-8")
-    if "/* === DISEÑO RESPONSIVO" in contenido or "guia-operativa-card" in contenido:
-        contenido = re.sub(r"<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?<\/script>", "", contenido, flags=re.DOTALL)
-    contenido = re.sub(r"\s*<!-- === FLOW NAV TOP === -->.*?<!-- === /FLOW NAV TOP === -->", "", contenido, flags=re.DOTALL)
-    contenido = re.sub(r"\s*<!-- === FLOW NAV BOTTOM === -->.*?<!-- === /FLOW NAV BOTTOM === -->", "", contenido, flags=re.DOTALL)
-
-    # Inyectar navegación superior antes de <div class="header">
-    if '<div class="header">' in contenido:
-        contenido = contenido.replace('<div class="header">', f'{nav_data["nav_top"]}\n    <div class="header">', 1)
-
-    guia_json = json.dumps(guia, ensure_ascii=False)
-    sig_json = json.dumps(nav_data["flujo_sig"], ensure_ascii=False) if nav_data["flujo_sig"] else "null"
-    ant_json = json.dumps(nav_data["flujo_ant"], ensure_ascii=False) if nav_data["flujo_ant"] else "null"
+    if re.search(r'<div class="header"', contenido):
+        contenido = re.sub(r'(<div class="header"[^>]*>)', lambda m: nav["nav_top"] + "\n    " + m.group(1), contenido, count=1)
+    else:
+        ADVERTENCIAS.append(f"{slug}: no se encontró <div class=\"header\">; no se inyectó la barra superior")
 
     bloque = (
         JS_SCRIPT_TEMPLATE
         .replace("__CSS__", CSS_MODAL)
-        .replace("__GUIA_JSON__", guia_json)
-        .replace("__SIGUIENTE_FLUJO_JSON__", sig_json)
-        .replace("__ANTERIOR_FLUJO_JSON__", ant_json)
-        .replace("__VOLVER_CENTROS_URL__", nav_data["url_centros"])
+        .replace("__GUIA_JSON__", _json_seguro(guia))
+        .replace("__SIGUIENTE_FLUJO_JSON__", _json_seguro(nav["flujo_sig"]))
+        .replace("__ANTERIOR_FLUJO_JSON__", _json_seguro(nav["flujo_ant"]))
+        .replace("__VOLVER_CENTROS_URL__", nav["url_centros"])
     )
+    extra = nav["nav_bottom"] + "\n" + bloque
+    i = contenido.rfind("</body>")
+    contenido = contenido[:i] + extra + "\n" + contenido[i:] if i != -1 else contenido + "\n" + extra
 
-    if "</body>" in contenido:
-        nuevo_contenido = contenido.replace("</body>", f"{bloque}\n</body>")
-    else:
-        nuevo_contenido = contenido + "\n" + bloque
-
-    ruta_html.write_text(nuevo_contenido, encoding="utf-8")
+    ruta_html.write_text(contenido, encoding="utf-8")
     return True
 
 
 def inyectar_todos():
-    """Inyecta guías y navegación en todos los archivos HTML existentes en centros/."""
     raiz = Path(__file__).resolve().parent.parent.parent
-    centros_dir = raiz / "centros"
     cont = 0
-    for html_file in sorted(centros_dir.glob("**/diagramas/**/*.html")):
-        slug = html_file.stem
-        if inyectar_en_html(html_file, slug):
+    ADVERTENCIAS.clear()
+    for html_file in sorted((raiz / "centros").glob("**/diagramas/**/*.html")):
+        if inyectar_en_html(html_file, html_file.stem):
             cont += 1
     print(f"Inyección completada en {cont} diagramas HTML.")
+    if ADVERTENCIAS:
+        print(f"\n⚠ {len(ADVERTENCIAS)} advertencias de guías:")
+        for a in ADVERTENCIAS:
+            print("  -", a)
     return cont
 
 

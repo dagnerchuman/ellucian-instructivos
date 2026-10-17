@@ -22,7 +22,7 @@ Reglas de Archify que estas plantillas respetan (las valida `finalize`):
 import re
 import unicodedata
 
-from centro import leer_json, CENTROS
+from centro import leer_json, CENTROS, Centro
 
 # --------------------------------------------------------------------------- términos
 TERMINOS = {
@@ -780,6 +780,25 @@ def casuistica(c, numero, id_script):
         title_override=f"{c.nombre} · {cap} · Script {id_script} · {c.nombre_script(id_script)}" if cap else None,
         subtitle_override=c.subtitulo(cap_det) if cap_det else None,
     )
+
+
+def guia_casuistica_de(id_centro, sid):
+    """Guía operativa de un script para un centro, construida desde CASOS y EXTRA_CASOS."""
+    from guias_operativas import construir_guia
+    c = Centro(id_centro) if id_centro in ("idiomas", "computacion", "emprendimiento") else Centro("computacion")
+    id_script = sid
+    if id_script not in CASOS:
+        for k in CASOS:
+            if k.upper() == str(sid).upper():
+                id_script = k
+                break
+    if id_script not in CASOS:
+        return {}
+    (sit, sit_sub), pasos, (res, res_sub), _ = caso(c, id_script)
+    extra = EXTRA_CASOS.get(id_script) or {}
+    items = extra.get("items", []) if isinstance(extra, dict) else (extra if isinstance(extra, list) else [extra])
+    titulo = f"Script {id_script} · {TITULOS.get(slug_script(id_script), id_script)}"
+    return construir_guia((sit, sit_sub), pasos, (res, res_sub), items, titulo)
 
 
 def casuisticas_de(c, inicio=7):

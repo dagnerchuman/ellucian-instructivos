@@ -1,0 +1,608 @@
+/* ==============================================================================
+   HYPERFRAMES VIDEO STYLES · UNIVERSIDAD SEÑOR DE SIPÁN (USS)
+   Paleta: Morados USS (#7030A0, #5C2193), Verdes (#4EA72E, #92D050)
+   Resolución: 1920 x 1080 Full HD
+   ============================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  --bg-deep: #0b0813;
+  --bg-surface: rgba(21, 16, 34, 0.75);
+  --bg-card: rgba(30, 24, 48, 0.65);
+  --border-subtle: rgba(148, 163, 184, 0.15);
+  --border-purple: rgba(139, 92, 246, 0.4);
+  --border-green: rgba(78, 167, 46, 0.4);
+  
+  --uss-purple: #8b5cf6;
+  --uss-purple-deep: #5C2193;
+  --uss-green: #4EA72E;
+  --uss-green-bright: #92D050;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* El root de HyperFrames recibe width: 100% y height: 100% */
+#root {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+/* --- FONDO AMBIENTAL --- */
+.video-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bg-glow {
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.18;
+}
+
+.bg-glow.purple {
+  top: -200px;
+  right: -100px;
+  background: var(--uss-purple-deep);
+}
+
+.bg-glow.green {
+  bottom: -200px;
+  left: -100px;
+  background: var(--uss-green);
+  opacity: 0.12;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.6;
+}
+
+/* --- HEADER PERMANENTE --- */
+.video-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  padding: 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(11, 8, 19, 0.85);
+  backdrop-filter: blur(20px);
+  z-index: 100;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.uss-badge {
+  background: linear-gradient(135deg, #7030A0, #5C2193);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 1rem;
+  border-radius: 0.65rem;
+  box-shadow: 0 4px 16px rgba(112, 48, 160, 0.4);
+}
+
+.brand-title {
+  display: block;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.brand-sub {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.header-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tag-badge {
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.tag-badge.centro-idiomas {
+  background: rgba(139, 92, 246, 0.15);
+  color: #c4b5fd;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+}
+
+.tag-badge.periodo {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+}
+
+/* --- CLIPS CONTENEDORES --- */
+.clip {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 80px;
+}
+
+/* --- ESCENA 1: INTRO --- */
+.intro-container {
+  max-width: 1400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.intro-pill {
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+  background: rgba(78, 167, 46, 0.18);
+  border: 1px solid rgba(78, 167, 46, 0.45);
+  color: #86efac;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.intro-title {
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.highlight-purple {
+  color: var(--uss-purple);
+  text-shadow: 0 0 35px rgba(139, 92, 246, 0.45);
+}
+
+.intro-desc {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  max-width: 900px;
+  line-height: 1.5;
+}
+
+.intro-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 1.5rem;
+}
+
+.mini-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.25rem;
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+}
+
+.mini-card-icon {
+  font-size: 2.2rem;
+}
+
+.mini-card strong {
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.mini-card span {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* --- ESCENAS GENERALES --- */
+.scene-container {
+  width: 100%;
+  max-width: 1560px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.scene-header-step {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.step-num {
+  font-size: 2.5rem;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  color: var(--uss-purple);
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid var(--border-purple);
+  width: 76px;
+  height: 76px;
+  border-radius: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-info h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.step-info p {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* --- MOCKUP WINDOW BANNER --- */
+.banner-window {
+  background: rgba(15, 12, 24, 0.95);
+  border: 1px solid var(--border-purple);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65);
+}
+
+.window-titlebar {
+  background: rgba(25, 20, 38, 0.9);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.window-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.window-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.window-dots span:nth-child(1) { background: #ef4444; }
+.window-dots span:nth-child(2) { background: #f59e0b; }
+.window-dots span:nth-child(3) { background: #10b981; }
+
+.window-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  font-family: var(--font-mono);
+}
+
+.window-status {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.15);
+  padding: 0.25rem 0.65rem;
+  border-radius: 0.4rem;
+}
+
+.window-body {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.banner-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.form-field {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.85rem;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+}
+
+.field-val {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #fff;
+}
+
+.field-val.blank {
+  color: #f59e0b;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.field-val.highlight {
+  color: #c4b5fd;
+}
+
+.banner-action-pill {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  padding: 0.85rem 1.5rem;
+  border-radius: 0.75rem;
+  font-size: 1.1rem;
+  color: #e2e8f0;
+}
+
+.action-icon {
+  font-size: 1.4rem;
+}
+
+/* --- ESCENA 3: LIGAS TA Y PA --- */
+.ligas-comparison {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
+
+.liga-card {
+  background: var(--bg-card);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+}
+
+.liga-card.teorica {
+  border: 1px solid var(--border-purple);
+}
+
+.liga-card.practica {
+  border: 1px solid var(--border-green);
+}
+
+.card-badge {
+  align-self: flex-start;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.85rem;
+  border-radius: 0.5rem;
+}
+
+.liga-card.teorica .card-badge {
+  background: rgba(139, 92, 246, 0.2);
+  color: #c4b5fd;
+}
+
+.liga-card.practica .card-badge {
+  background: rgba(78, 167, 46, 0.2);
+  color: #86efac;
+}
+
+.liga-card h3 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.liga-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  font-size: 1.15rem;
+  color: var(--text-muted);
+}
+
+.liga-card ul strong {
+  color: #e2e8f0;
+}
+
+.tag-liga {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.4rem;
+  background: rgba(139, 92, 246, 0.25);
+  color: #ddd6fe;
+  border: 1px solid rgba(139, 92, 246, 0.5);
+}
+
+.tag-liga.green {
+  background: rgba(78, 167, 46, 0.25);
+  color: #bbf7d0;
+  border-color: rgba(78, 167, 46, 0.5);
+}
+
+.liga-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.connector-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7030A0, #4EA72E);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 0 25px rgba(112, 48, 160, 0.5);
+}
+
+.liga-connector span {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #a78bfa;
+}
+
+/* --- ESCENA 4: CIERRE Y CRÉDITOS --- */
+.outro-container {
+  max-width: 1200px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.success-icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(78, 167, 46, 0.2);
+  border: 2px solid var(--uss-green);
+  color: var(--uss-green-bright);
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 35px rgba(78, 167, 46, 0.35);
+}
+
+.outro-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.outro-desc {
+  font-size: 1.35rem;
+  color: var(--text-muted);
+  max-width: 850px;
+}
+
+.outro-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 950px;
+  margin-top: 1rem;
+}
+
+.meta-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.meta-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.meta-val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.video-footer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+.video-footer span:last-child {
+  font-weight: 600;
+  color: var(--text-muted);
+}

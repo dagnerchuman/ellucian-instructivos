@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <template>
+    <style>
+      #root {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 80px;
+      }
+      .scene-container {
+        width: 100%;
+        max-width: 1560px;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .scene-header-step {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .step-num {
+        font-size: 2.5rem;
+        font-weight: 900;
+        font-family: monospace;
+        color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.12);
+        border: 1px solid rgba(139, 92, 246, 0.4);
+        width: 76px;
+        height: 76px;
+        border-radius: 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .step-info h2 { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1.2; }
+      .step-info p { font-size: 1.15rem; color: #94a3b8; margin-top: 0.25rem; }
+      .banner-window {
+        background: rgba(15, 12, 24, 0.95);
+        border: 1px solid rgba(139, 92, 246, 0.4);
+        border-radius: 1.25rem;
+        overflow: hidden;
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65);
+      }
+      .window-titlebar {
+        background: rgba(25, 20, 38, 0.9);
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      }
+      .window-dots { display: flex; gap: 0.5rem; }
+      .window-dots span { width: 12px; height: 12px; border-radius: 50%; }
+      .window-dots span:nth-child(1) { background: #ef4444; }
+      .window-dots span:nth-child(2) { background: #f59e0b; }
+      .window-dots span:nth-child(3) { background: #10b981; }
+      .window-name { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; font-family: monospace; }
+      .window-status { font-size: 0.8rem; font-weight: 700; color: #4ade80; background: rgba(34, 197, 94, 0.15); padding: 0.25rem 0.65rem; border-radius: 0.4rem; }
+      .window-body { padding: 2.5rem; display: flex; flex-direction: column; gap: 2rem; }
+      .banner-form-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+      .form-field {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        border-radius: 0.85rem;
+        padding: 1rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .form-field label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; }
+      .field-val { font-size: 1.35rem; font-weight: 700; font-family: monospace; color: #fff; }
+      .field-val.blank { color: #f59e0b; font-style: italic; font-size: 1.1rem; }
+      .field-val.highlight { color: #c4b5fd; }
+      .banner-action-pill {
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: rgba(139, 92, 246, 0.15);
+        border: 1px solid rgba(139, 92, 246, 0.4);
+        padding: 0.85rem 1.5rem;
+        border-radius: 0.75rem;
+        font-size: 1.1rem;
+        color: #e2e8f0;
+      }
+      .action-icon { font-size: 1.4rem; }
+    </style>
+
+    <div data-hf-id="hf-rv5e" id="root" data-composition-id="scene-ssasect" data-width="1920" data-height="1080">
+      <div data-hf-id="hf-zfhq" class="scene-container">
+        <div data-hf-id="hf-hle1" class="scene-header-step">
+          <span data-hf-id="hf-hqo3" class="step-num">01</span>
+          <div data-hf-id="hf-lypj" class="step-info">
+            <h2 data-hf-id="hf-1cwx">Página SSASECT: Bloque Clave e Información del Curso</h2>
+            <p data-hf-id="hf-uduw">Acceder con Periodo <strong data-hf-id="hf-1xoj">202656</strong> y dejar NRC en blanco para nuevo registro.</p>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-25ez" class="banner-window">
+          <div data-hf-id="hf-zwhw" class="window-titlebar">
+            <div data-hf-id="hf-hvbh" class="window-dots"><span data-hf-id="hf-uckh"></span><span data-hf-id="hf-l73p"></span><span data-hf-id="hf-me0s"></span></div>
+            <div data-hf-id="hf-8k2s" class="window-name">Ellucian Banner Student · SSASECT (Programar NRC)</div>
+            <div data-hf-id="hf-70q0" class="window-status">TEST · Conectado</div>
+          </div>
+          <div data-hf-id="hf-2rdl" class="window-body">
+            <div data-hf-id="hf-c0jq" class="banner-form-grid">
+              <div data-hf-id="hf-zfbq" class="form-field f-periodo">
+                <label data-hf-id="hf-fujt">Periodo</label>
+                <div data-hf-id="hf-da9z" class="field-val">202656</div>
+              </div>
+              <div data-hf-id="hf-vp3n" class="form-field f-nrc">
+                <label data-hf-id="hf-5kti">NRC</label>
+                <div data-hf-id="hf-0hji" class="field-val blank">ADD (En blanco)</div>
+              </div>
+              <div data-hf-id="hf-ml1h" class="form-field f-materia">
+                <label data-hf-id="hf-bm7o">Materia</label>
+                <div data-hf-id="hf-qxij" class="field-val highlight">ESEP</div>
+              </div>
+              <div data-hf-id="hf-8q4s" class="form-field f-curso">
+                <label data-hf-id="hf-4w7z">Curso</label>
+                <div data-hf-id="hf-m7hr" class="field-val highlight">02456</div>
+              </div>
+              <div data-hf-id="hf-9hrg" class="form-field f-seccion">
+                <label data-hf-id="hf-e8zn">Sección</label>
+                <div data-hf-id="hf-6rjf" class="field-val highlight">AT</div>
+              </div>
+              <div data-hf-id="hf-ml3n" class="form-field f-campus">
+                <label data-hf-id="hf-2e4o">Campus</label>
+                <div data-hf-id="hf-umr2" class="field-val">S (Chiclayo)</div>
+              </div>
+              <div data-hf-id="hf-kim0" class="form-field f-parte">
+                <label data-hf-id="hf-ho9o">Parte de Periodo</label>
+                <div data-hf-id="hf-0g2k" class="field-val">I10</div>
+              </div>
+            </div>
+            
+            <div data-hf-id="hf-rosv" class="banner-action-pill">
+              <span data-hf-id="hf-9krg" class="action-icon">💾</span>
+              <span data-hf-id="hf-ofeh">Presionar <strong data-hf-id="hf-fnot">F10</strong> (Guardar) → Banner asigna NRC institucional</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#root .scene-header-step", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, 0.2);
+        tl.fromTo("#root .banner-window", { opacity: 0, y: 60, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power3.out" }, 0.5);
+        tl.fromTo("#root .form-field", { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: "power2.out" }, 1.0);
+        tl.fromTo("#root .banner-action-pill", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.6)" }, 2.8);
+        tl.to("#root .scene-container", { opacity: 0, scale: 0.96, duration: 0.6, ease: "power2.in" }, 6.4);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["scene-ssasect"] = tl;
+      })();
+    </script>
+  </template>
+</body>
+</html>

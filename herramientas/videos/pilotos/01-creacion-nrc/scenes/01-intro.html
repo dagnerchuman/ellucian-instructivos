@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <template>
+    <style>
+      #root {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 80px;
+      }
+      .intro-container {
+        max-width: 1400px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .intro-pill {
+        padding: 0.4rem 1.2rem;
+        border-radius: 9999px;
+        background: rgba(78, 167, 46, 0.18);
+        border: 1px solid rgba(78, 167, 46, 0.45);
+        color: #86efac;
+        font-size: 0.95rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+      .intro-title {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: #fff;
+      }
+      .highlight-purple {
+        color: #8b5cf6;
+        text-shadow: 0 0 35px rgba(139, 92, 246, 0.45);
+      }
+      .intro-desc {
+        font-size: 1.4rem;
+        color: #94a3b8;
+        max-width: 900px;
+        line-height: 1.5;
+      }
+      .intro-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 1100px;
+        margin-top: 1.5rem;
+      }
+      .mini-card {
+        background: rgba(30, 24, 48, 0.65);
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        border-radius: 1.25rem;
+        padding: 1.75rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+      }
+      .mini-card-icon { font-size: 2.2rem; }
+      .mini-card strong { font-size: 1.15rem; color: #fff; }
+      .mini-card span { font-size: 0.95rem; color: #94a3b8; font-family: monospace; }
+    </style>
+
+    <div data-hf-id="hf-2ak6" id="root" data-composition-id="scene-intro" data-width="1920" data-height="1080">
+      <div data-hf-id="hf-1r6o" class="intro-container">
+        <div data-hf-id="hf-jd3c" class="intro-pill">GUÍA OPERATIVA OFICIAL</div>
+        <h1 data-hf-id="hf-2isy" class="intro-title">Paso 1: Creación de NRC en <span data-hf-id="hf-vkwk" class="highlight-purple">SSASECT</span></h1>
+        <p data-hf-id="hf-n5ul" class="intro-desc">Configuración paso a paso para el <strong data-hf-id="hf-jnmi">Centro de Idiomas</strong>: ligas teórica (TA) y práctica (PA).</p>
+        
+        <div data-hf-id="hf-w8f0" class="intro-cards">
+          <div data-hf-id="hf-sk2k" class="mini-card">
+            <span data-hf-id="hf-3gtw" class="mini-card-icon">📚</span>
+            <strong data-hf-id="hf-9jse">Materia ESEP</strong>
+            <span data-hf-id="hf-fpty">BASIC I · 02456</span>
+          </div>
+          <div data-hf-id="hf-oi38" class="mini-card">
+            <span data-hf-id="hf-maqv" class="mini-card-icon">💻</span>
+            <strong data-hf-id="hf-eccg">Modalidad Virtual</strong>
+            <span data-hf-id="hf-xn93">Sección AT (Teoría)</span>
+          </div>
+          <div data-hf-id="hf-nb65" class="mini-card">
+            <span data-hf-id="hf-v277" class="mini-card-icon">🔗</span>
+            <strong data-hf-id="hf-lfyj">Ligas de Enlace</strong>
+            <span data-hf-id="hf-ebll">TA (Teoría) + PA (Práctica)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#root .intro-pill", { opacity: 0, y: -25 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0.2);
+        tl.fromTo("#root .intro-title", { opacity: 0, scale: 0.95, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: "power4.out" }, 0.5);
+        tl.fromTo("#root .intro-desc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 1.0);
+        tl.fromTo("#root .mini-card", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.18, ease: "back.out(1.4)" }, 1.4);
+        tl.to("#root .intro-container", { opacity: 0, y: -40, duration: 0.6, ease: "power2.in" }, 5.4);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["scene-intro"] = tl;
+      })();
+    </script>
+  </template>
+</body>
+</html>

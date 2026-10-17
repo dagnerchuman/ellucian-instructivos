@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <template>
+    <style>
+      #root {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 80px;
+      }
+      .scene-container {
+        width: 100%;
+        max-width: 1560px;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .scene-header-step {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .step-num {
+        font-size: 2.5rem;
+        font-weight: 900;
+        font-family: monospace;
+        color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.12);
+        border: 1px solid rgba(139, 92, 246, 0.4);
+        width: 76px;
+        height: 76px;
+        border-radius: 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .step-info h2 { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1.2; }
+      .step-info p { font-size: 1.15rem; color: #94a3b8; margin-top: 0.25rem; }
+      .ligas-comparison {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 2.5rem;
+        margin-top: 1rem;
+      }
+      .liga-card {
+        background: rgba(30, 24, 48, 0.65);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+      }
+      .liga-card.teorica { border: 1px solid rgba(139, 92, 246, 0.4); }
+      .liga-card.practica { border: 1px solid rgba(78, 167, 46, 0.4); }
+      .card-badge {
+        align-self: flex-start;
+        font-size: 0.85rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        padding: 0.4rem 0.85rem;
+        border-radius: 0.5rem;
+      }
+      .liga-card.teorica .card-badge { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+      .liga-card.practica .card-badge { background: rgba(78, 167, 46, 0.2); color: #86efac; }
+      .liga-card h3 { font-size: 1.75rem; font-weight: 800; color: #fff; }
+      .liga-card ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        font-size: 1.15rem;
+        color: #94a3b8;
+      }
+      .liga-card ul strong { color: #e2e8f0; }
+      .tag-liga {
+        font-family: monospace;
+        font-weight: 800;
+        padding: 0.2rem 0.6rem;
+        border-radius: 0.4rem;
+        background: rgba(139, 92, 246, 0.25);
+        color: #ddd6fe;
+        border: 1px solid rgba(139, 92, 246, 0.5);
+      }
+      .tag-liga.green {
+        background: rgba(78, 167, 46, 0.25);
+        color: #bbf7d0;
+        border-color: rgba(78, 167, 46, 0.5);
+      }
+      .liga-connector {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .connector-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #7030A0, #4EA72E);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        box-shadow: 0 0 25px rgba(112, 48, 160, 0.5);
+      }
+      .liga-connector span {
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        color: #a78bfa;
+      }
+    </style>
+
+    <div data-hf-id="hf-ewnk" id="root" data-composition-id="scene-ligas" data-width="1920" data-height="1080">
+      <div data-hf-id="hf-zfhq" class="scene-container">
+        <div data-hf-id="hf-hle1" class="scene-header-step">
+          <span data-hf-id="hf-hcd2" class="step-num">02</span>
+          <div data-hf-id="hf-lypj" class="step-info">
+            <h2 data-hf-id="hf-rrgg">Regla Exclusiva de Idiomas: Ligas de Enlace (Link Connector)</h2>
+            <p data-hf-id="hf-fxhq">El estudiante debe inscribir obligatoriamente la teoría y la práctica en conjunto.</p>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-5amq" class="ligas-comparison">
+          <div data-hf-id="hf-i5f3" class="liga-card teorica">
+            <div data-hf-id="hf-8xxt" class="card-badge">NRC 1 · TEORÍA</div>
+            <h3 data-hf-id="hf-y2oj">Sección AT (Virtual)</h3>
+            <ul data-hf-id="hf-ovcc">
+              <li data-hf-id="hf-qrh6"><strong data-hf-id="hf-f8ft">Materia:</strong> ESEP 02456</li>
+              <li data-hf-id="hf-a4s6"><strong data-hf-id="hf-7sm9">Conector de Liga:</strong> <span data-hf-id="hf-rugi" class="tag-liga">TA</span></li>
+              <li data-hf-id="hf-94ld"><strong data-hf-id="hf-pfsh">Calificable:</strong> Sí (Genera nota)</li>
+              <li data-hf-id="hf-w55w"><strong data-hf-id="hf-5msr">Aula:</strong> SAUVIR (Virtual)</li>
+            </ul>
+          </div>
+
+          <div data-hf-id="hf-50pr" class="liga-connector">
+            <div data-hf-id="hf-i939" class="connector-icon">🔗</div>
+            <span data-hf-id="hf-wxkd">VINCULADOS</span>
+          </div>
+
+          <div data-hf-id="hf-1osf" class="liga-card practica">
+            <div data-hf-id="hf-m7ar" class="card-badge">NRC 2 · PRÁCTICA</div>
+            <h3 data-hf-id="hf-ogai">Sección AC1 (Presencial)</h3>
+            <ul data-hf-id="hf-kqbo">
+              <li data-hf-id="hf-l0ou"><strong data-hf-id="hf-vj9p">Materia:</strong> ESEP 02456</li>
+              <li data-hf-id="hf-9x5m"><strong data-hf-id="hf-qoj9">Conector de Liga:</strong> <span data-hf-id="hf-5k7v" class="tag-liga green">PA</span></li>
+              <li data-hf-id="hf-li2h"><strong data-hf-id="hf-1det">Calificable:</strong> No (Asociado a TA)</li>
+              <li data-hf-id="hf-jczp"><strong data-hf-id="hf-ipor">Aula:</strong> Campus Chiclayo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#root .scene-header-step", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, 0.2);
+        tl.fromTo("#root .liga-card.teorica", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.9, ease: "power3.out" }, 0.5);
+        tl.fromTo("#root .liga-connector", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.8, ease: "elastic.out(1, 0.6)" }, 0.9);
+        tl.fromTo("#root .liga-card.practica", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.9, ease: "power3.out" }, 1.3);
+        tl.to("#root .scene-container", { opacity: 0, y: -40, duration: 0.6, ease: "power2.in" }, 5.4);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["scene-ligas"] = tl;
+      })();
+    </script>
+  </template>
+</body>
+</html>

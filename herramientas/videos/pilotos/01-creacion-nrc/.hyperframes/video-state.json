@@ -1,0 +1,259 @@
+{
+  "version": 1,
+  "historyId": "f29a9f21-2abd-48d0-8356-ba5f6fa39262",
+  "currentRevision": "38234716-ad27-445c-9174-2fdd0dedbc1c",
+  "pendingChanges": false,
+  "files": {
+    "animacion.js": {
+      "hash": "044297bdd4e27aa008bb77dc69430f8ac5a1df259afebf143fd28e3bf22d597c",
+      "content": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/04/044297bdd4e27aa008bb77dc69430f8ac5a1df259afebf143fd28e3bf22d597c"
+    },
+    "index.html": {
+      "hash": "c0fd7c02e9592e1c6d7ab36f2115ace35ff0ed02013244f5a02dc4c5269d7e78",
+      "content": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/c0/c0fd7c02e9592e1c6d7ab36f2115ace35ff0ed02013244f5a02dc4c5269d7e78"
+    },
+    "scenes/01-intro.html": {
+      "hash": "50e1cc4cf17527903eb843221915ed7d4627047a641f41ac148875941c3535aa",
+      "content": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/50/50e1cc4cf17527903eb843221915ed7d4627047a641f41ac148875941c3535aa"
+    },
+    "scenes/02-ssasect.html": {
+      "hash": "3ec79ef178518f6b6e953fbbd812f056b8f2ad90102a007d27de9b832173beae",
+      "content": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/3e/3ec79ef178518f6b6e953fbbd812f056b8f2ad90102a007d27de9b832173beae"
+    },
+    "scenes/03-ligas.html": {
+      "hash": "4ae785547ab154d9a31e8dce777748ab31a85328ea1555f8d28c60d7062df130",
+      "content": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/4a/4ae785547ab154d9a31e8dce777748ab31a85328ea1555f8d28c60d7062df130"
+    },
+    "scenes/04-cierre.html": {
+      "hash": "07b4b0b7178b583cd4c04d9c88a42191bdfb7db6bad2cfccaad3ecffa2c88469",
+      "content": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/07/07b4b0b7178b583cd4c04d9c88a42191bdfb7db6bad2cfccaad3ecffa2c88469"
+    },
+    "styles.css": {
+      "hash": "04152369ce9fd281527b930fb614a60e5fbad11adb18e79ecd422d0fea794731",
+      "content": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/04/04152369ce9fd281527b930fb614a60e5fbad11adb18e79ecd422d0fea794731"
+    }
+  },
+  "revisions": {
+    "38234716-ad27-445c-9174-2fdd0dedbc1c": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792256187016,
+      "endedAt": 1792256187021,
+      "files": {
+        "scenes/02-ssasect.html": {
+          "before": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/af/af49f0e75ae530dab8bb35eed5f16bee879bb84e7829faaaadeb8db0179f636b",
+          "after": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/3e/3ec79ef178518f6b6e953fbbd812f056b8f2ad90102a007d27de9b832173beae"
+        },
+        "scenes/04-cierre.html": {
+          "before": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/da/dab00642195f0e5a9164ac696f7ebedde2530dc60fba18b977e9f109615e4d61",
+          "after": "/Users/dagnerchumanlluen/.cache/hyperframes/history/f29a9f21-2abd-48d0-8356-ba5f6fa39262/blobs/07/07b4b0b7178b583cd4c04d9c88a42191bdfb7db6bad2cfccaad3ecffa2c88469"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "38234716-ad27-445c-9174-2fdd0dedbc1c",
+      "id": "2b775991-9412-4476-a8b8-aac8c85a2210"
+    },
+    "revisions": {
+      "38234716-ad27-445c-9174-2fdd0dedbc1c": [
+        {
+          "id": "2b775991-9412-4476-a8b8-aac8c85a2210",
+          "scope": "project",
+          "report": "/Users/dagnerchumanlluen/Downloads/ellucian - instructivos/herramientas/videos/pilotos/01-creacion-nrc/.hyperframes/artifacts/checks/2b775991-9412-4476-a8b8-aac8c85a2210.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792256193352,
+          "contentHash": "9abe5c467e887047a71b48a475363287307b0c5cf3ae18e68f4561c8245f6801",
+          "revision": "38234716-ad27-445c-9174-2fdd0dedbc1c",
+          "inputFingerprint": "8f5257c108ec1dadfb87f177b4aecb046960bf65abed6f77a06789ea1adef2ed",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "5fea0e17-3384-4f25-a823-cb5badfdd5b6",
+        "scope": "project",
+        "report": "/Users/dagnerchumanlluen/Downloads/ellucian - instructivos/herramientas/videos/pilotos/01-creacion-nrc/.hyperframes/artifacts/checks/5fea0e17-3384-4f25-a823-cb5badfdd5b6.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792256052680,
+        "contentHash": "8e63a18ef4d337e7ad5f1380950758b73e43cd6e6775e99dce84367782ac17ba",
+        "revision": null,
+        "inputFingerprint": "91d12e17b77248e1cce96d94d9ef60a323321d79d5b015870ff4b5c33ff9bb1f",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      },
+      {
+        "id": "2db88de2-6b6d-42e0-bde9-d3b2ca6cfb72",
+        "scope": "project",
+        "report": "/Users/dagnerchumanlluen/Downloads/ellucian - instructivos/herramientas/videos/pilotos/01-creacion-nrc/.hyperframes/artifacts/checks/2db88de2-6b6d-42e0-bde9-d3b2ca6cfb72.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792256109011,
+        "contentHash": "8e63a18ef4d337e7ad5f1380950758b73e43cd6e6775e99dce84367782ac17ba",
+        "revision": null,
+        "inputFingerprint": "91d12e17b77248e1cce96d94d9ef60a323321d79d5b015870ff4b5c33ff9bb1f",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": {
+      "revision": null,
+      "id": "ce8591e3-e1d3-4419-83dc-1ee095b850b5-4"
+    },
+    "revisions": {},
+    "unversioned": [
+      {
+        "scope": "full",
+        "id": "ce8591e3-e1d3-4419-83dc-1ee095b850b5-0",
+        "image": "/Users/dagnerchumanlluen/Downloads/ellucian - instructivos/herramientas/videos/pilotos/01-creacion-nrc/snapshots/frame-00-at-3s.png",
+        "time": 3,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792256230572,
+        "contentHash": "10b08b05afeceea9f6af87c9cb8e0cc4c7431d7b526daa11043a73661ed88f65",
+        "revision": null,
+        "inputFingerprint": "8f5257c108ec1dadfb87f177b4aecb046960bf65abed6f77a06789ea1adef2ed",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "ce8591e3-e1d3-4419-83dc-1ee095b850b5-1",
+        "image": "/Users/dagnerchumanlluen/Downloads/ellucian - instructivos/herramientas/videos/pilotos/01-creacion-nrc/snapshots/frame-01-at-9.5s.png",
+        "time": 9.5,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792256230572,
+        "contentHash": "1ce46b72352e10fbd4b4c071f90e11c3ea6584549f65420ac75f61b41b30e004",
+        "revision": null,
+        "inputFingerprint": "8f5257c108ec1dadfb87f177b4aecb046960bf65abed6f77a06789ea1adef2ed",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "ce8591e3-e1d3-4419-83dc-1ee095b850b5-2",
+        "image": "/Users/dagnerchumanlluen/Downloads/ellucian - instructivos/herramientas/videos/pilotos/01-creacion-nrc/snapshots/frame-02-at-16s.png",
+        "time": 16,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792256230573,
+        "contentHash": "2e448bbe99c4da6b716741bc22adf7c85f68539ef2a3539254535dc0bcc54d36",
+        "revision": null,
+        "inputFingerprint": "8f5257c108ec1dadfb87f177b4aecb046960bf65abed6f77a06789ea1adef2ed",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "ce8591e3-e1d3-4419-83dc-1ee095b850b5-3",
+        "image": "/Users/dagnerchumanlluen/Downloads/ellucian - instructivos/herramientas/videos/pilotos/01-creacion-nrc/snapshots/frame-03-at-21.5s.png",
+        "time": 21.5,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792256230573,
+        "contentHash": "b19d9fd637dc8053f47b81263ce5963fa0bc572b95ad0667ab22d871f20fa5d9",
+        "revision": null,
+        "inputFingerprint": "8f5257c108ec1dadfb87f177b4aecb046960bf65abed6f77a06789ea1adef2ed",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "ce8591e3-e1d3-4419-83dc-1ee095b850b5-4",
+        "image": "/Users/dagnerchumanlluen/Downloads/ellucian - instructivos/herramientas/videos/pilotos/01-creacion-nrc/snapshots/frame-04-at-23.28s.png",
+        "time": 23.28,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792256230573,
+        "contentHash": "b8c7ee5fbfad485619461847ec8cf3bd61ae4cf37f4a83a7115504b7962ef561",
+        "revision": null,
+        "inputFingerprint": "8f5257c108ec1dadfb87f177b4aecb046960bf65abed6f77a06789ea1adef2ed",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      }
+    ]
+  }
+}

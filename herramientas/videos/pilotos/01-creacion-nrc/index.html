@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>USS · Banner Student: Creación de NRC en Idiomas (HyperFrames)</title>
+  <!-- GSAP Core para HyperFrames -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Root de HyperFrames: Composición Principal Modular a 24 segundos -->
+  <div data-hf-id="hf-mtqn" id="root" data-composition-id="nrc-idiomas" data-width="1920" data-height="1080" data-duration="24">
+    
+    <!-- Fondo Ambiental con Partículas y Gradiente USS -->
+    <div data-hf-id="hf-mcvz" class="video-bg">
+      <div data-hf-id="hf-gu4t" class="bg-glow purple"></div>
+      <div data-hf-id="hf-mw1w" class="bg-glow green"></div>
+      <div data-hf-id="hf-yqqm" class="bg-grid"></div>
+    </div>
+
+    <!-- Header Permanente Superior -->
+    <header data-hf-id="hf-beu9" class="video-header">
+      <div data-hf-id="hf-0kwn" class="header-brand">
+        <div data-hf-id="hf-o4xe" class="uss-badge">USS</div>
+        <div data-hf-id="hf-czi5" class="brand-text">
+          <span data-hf-id="hf-xbjb" class="brand-title">UNIVERSIDAD SEÑOR DE SIPÁN</span>
+          <span data-hf-id="hf-mju4" class="brand-sub">Centros Empresariales · Banner Student</span>
+        </div>
+      </div>
+      <div data-hf-id="hf-engb" class="header-tags">
+        <span data-hf-id="hf-7gd1" class="tag-badge centro-idiomas">Centro de Idiomas</span>
+        <span data-hf-id="hf-qbhc" class="tag-badge periodo">Periodo 202656</span>
+      </div>
+    </header>
+
+    <!-- Sub-Composición 1: Introducción y Contexto (0s - 6s) -->
+    <div data-hf-id="hf-fot7"
+      id="slot-intro"
+      class="clip"
+      data-composition-id="scene-intro"
+      data-composition-src="scenes/01-intro.html"
+      data-start="0"
+      data-duration="6"
+      data-track-index="1"
+      data-width="1920"
+      data-height="1080"
+    ></div>
+
+    <!-- Sub-Composición 2: Programación en SSASECT (6s - 13s) -->
+    <div data-hf-id="hf-04yl"
+      id="slot-ssasect"
+      class="clip"
+      data-composition-id="scene-ssasect"
+      data-composition-src="scenes/02-ssasect.html"
+      data-start="6"
+      data-duration="7"
+      data-track-index="1"
+      data-width="1920"
+      data-height="1080"
+    ></div>
+
+    <!-- Sub-Composición 3: Configuración de Ligas TA y PA (13s - 19s) -->
+    <div data-hf-id="hf-9qrt"
+      id="slot-ligas"
+      class="clip"
+      data-composition-id="scene-ligas"
+      data-composition-src="scenes/03-ligas.html"
+      data-start="13"
+      data-duration="6"
+      data-track-index="1"
+      data-width="1920"
+      data-height="1080"
+    ></div>
+
+    <!-- Sub-Composición 4: Cierre y Auditoría en SSASECQ (19s - 24s) -->
+    <div data-hf-id="hf-3y7p"
+      id="slot-cierre"
+      class="clip"
+      data-composition-id="scene-cierre"
+      data-composition-src="scenes/04-cierre.html"
+      data-start="19"
+      data-duration="5"
+      data-track-index="1"
+      data-width="1920"
+      data-height="1080"
+    ></div>
+
+  </div>
+
+  <script>
+    (function() {
+      // Timeline maestro pausado del host
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["nrc-idiomas"] = tl;
+    })();
+  </script>
+</body>
+</html>

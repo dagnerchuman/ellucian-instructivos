@@ -24,11 +24,19 @@ IGNORAR = {"__pycache__", ".DS_Store"}
 
 
 def archivos(base):
-    return {
-        p.relative_to(base)
-        for p in base.rglob("*")
-        if p.is_file() and not IGNORAR.intersection(p.relative_to(base).parts)
-    }
+    res = set()
+    for p in base.iterdir():
+        if p.is_symlink() and p.is_dir():
+            for sub in p.rglob("*"):
+                if sub.is_file() and not IGNORAR.intersection(sub.relative_to(base).parts):
+                    res.add(sub.relative_to(base))
+        elif p.is_dir():
+            for sub in p.rglob("*"):
+                if sub.is_file() and not IGNORAR.intersection(sub.relative_to(base).parts):
+                    res.add(sub.relative_to(base))
+        elif p.is_file() and not IGNORAR.intersection(p.relative_to(base).parts):
+            res.add(p.relative_to(base))
+    return res
 
 
 def diferencias(a, b):
@@ -39,7 +47,10 @@ def diferencias(a, b):
 
 def copiar(origen, destino):
     destino.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(origen, destino)
+    try:
+        shutil.copy2(origen, destino)
+    except shutil.SameFileError:
+        pass
 
 
 def espejo(origen, destino):

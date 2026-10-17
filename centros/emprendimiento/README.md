@@ -28,9 +28,9 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | Escuela | `EM` | Centros Empresariales |
 | Campus | `S` | Sede Chiclayo |
 | Grado | `000000` | No otorga grado |
-| Programa | por confirmar |  |
-| Mayor | por confirmar |  |
-| Departamento | por confirmar |  |
+| Programa | `MMEMM01` | Acreditación Emprendimiento |
+| Mayor | `MM01-01` | Área Curricular Emprendimiento |
+| Departamento | `EMEM` | Jefatura Centro de Emprendimiento |
 | Materia | `ESGE` | Cursos de Emprendimiento |
 | Escala de notas | escala por confirmar |  |
 | Parte general | `EGE` | grupos P01–P06 en 2026 |

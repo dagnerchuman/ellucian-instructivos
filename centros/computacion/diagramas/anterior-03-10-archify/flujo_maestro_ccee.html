@@ -14924,7 +14924,6 @@
       }
     });
   </script>
-
 <!-- === FLOW NAV BOTTOM === -->
 <section class="flow-nav-bottom-section" aria-label="Navegación entre flujos">
   <div class="flow-bottom-container">
@@ -14934,9 +14933,7 @@
   </div>
 </section>
 <!-- === /FLOW NAV BOTTOM === -->
-
 <style>
-
 /* === DISEÑO RESPONSIVO Y GUÍA OPERATIVA (PASAPORTE SEMÁNTICO) === */
 
 /* Modo Presentación: Ocultar barras de navegación y pie para pantalla completa limpia */
@@ -14992,7 +14989,7 @@ html[data-present="true"] .header {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   gap: 0.45rem 0.85rem !important;
   width: 100% !important;
   box-sizing: border-box !important;
@@ -15019,10 +15016,11 @@ html[data-present="true"] .header {
 .flow-nav-left {
   display: flex !important;
   align-items: center !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   gap: 0.55rem !important;
   min-width: 0 !important;
   flex: 1 1 auto !important;
+  overflow: hidden !important;
 }
 
 .flow-nav-right {
@@ -15101,15 +15099,15 @@ html[data-present="true"] .header {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
-  min-width: 220px !important;
-  max-width: 440px !important;
-  flex: 1 1 320px !important;
+  min-width: 140px !important;
+  max-width: 340px !important;
+  flex: 0 1 280px !important;
 }
 
 .flow-nav-select-wrap.flow-nav-select-center-wrap {
-  min-width: 215px !important;
-  max-width: 265px !important;
-  flex: 0 1 240px !important;
+  min-width: 175px !important;
+  max-width: 240px !important;
+  flex: 0 1 210px !important;
 }
 
 .flow-nav-select {
@@ -17164,6 +17162,205 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
   fill: #b45309 !important;
 }
 
+/* === CONTROLES DE SESIÓN EN LA TOOLBAR (REANUDAR ÚLTIMO Y REINICIAR FLUJO) === */
+.toolbar-session-group {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+  margin-right: 0.4rem !important;
+}
+
+.toolbar button.btn-tb-reset,
+.toolbar button.btn-tb-resume {
+  position: relative !important;
+  isolation: isolate !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0.38rem 0.68rem !important;
+  border-radius: 0.5625rem !important;
+  font-family: inherit !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  transition: all 0.15s ease !important;
+  min-height: 2.2rem !important;
+  color: var(--text-muted, #94a3b8) !important;
+}
+
+.toolbar button.btn-tb-reset:hover {
+  color: #f87171 !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+}
+
+.toolbar button.btn-tb-resume {
+  color: #fbbf24 !important;
+  background: rgba(245, 158, 11, 0.14) !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2) !important;
+  animation: pulseResume 2.4s infinite !important;
+}
+
+.toolbar button.btn-tb-resume:hover {
+  background: rgba(245, 158, 11, 0.28) !important;
+  color: #ffffff !important;
+  border-color: #fbbf24 !important;
+}
+
+[data-theme="light"] .toolbar button.btn-tb-reset:hover {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+[data-theme="light"] .toolbar button.btn-tb-resume {
+  background: #fef3c7 !important;
+  color: #b45309 !important;
+  border-color: #f59e0b !important;
+}
+
+[data-theme="light"] .toolbar button.btn-tb-resume:hover {
+  background: #fde68a !important;
+  color: #92400e !important;
+}
+
+/* Compatibilidad si se usa fuera de toolbar */
+.flow-nav-session-ctrl {
+  display: none !important;
+}
+
+@keyframes pulseResume {
+  0%, 100% { box-shadow: 0 0 0 rgba(245, 158, 11, 0); }
+  50% { box-shadow: 0 0 14px rgba(245, 158, 11, 0.4); }
+}
+
+.btn-flow-reset {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  padding: 0.34rem 0.68rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 0.76rem !important;
+  font-weight: 600 !important;
+  background: rgba(148, 163, 184, 0.12) !important;
+  color: var(--text-dim, #94a3b8) !important;
+  border: 1px solid rgba(148, 163, 184, 0.25) !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+}
+
+.btn-flow-reset:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+[data-theme="light"] .btn-flow-reset {
+  background: #f1f5f9 !important;
+  color: #64748b !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .btn-flow-reset:hover {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  border-color: #fca5a5 !important;
+}
+
+/* Banner de revisión anterior en el modal */
+.guia-banner-revision {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 0.6rem !important;
+  padding: 0.45rem 0.85rem !important;
+  margin-bottom: 0.65rem !important;
+  border-radius: 0.55rem !important;
+  background: rgba(245, 158, 11, 0.12) !important;
+  border: 1px solid rgba(245, 158, 11, 0.38) !important;
+  font-size: 0.78rem !important;
+  color: #fbbf24 !important;
+}
+
+[data-theme="light"] .guia-banner-revision {
+  background: #fef3c7 !important;
+  border-color: #f59e0b !important;
+  color: #92400e !important;
+}
+
+.guia-banner-revision .banner-rev-info {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  line-height: 1.35 !important;
+}
+
+.btn-banner-ir-ultimo {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  padding: 0.32rem 0.82rem !important;
+  border-radius: 0.45rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  background: #f59e0b !important;
+  color: #0f172a !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  white-space: nowrap !important;
+}
+
+.btn-banner-ir-ultimo:hover {
+  background: #fbbf24 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35) !important;
+}
+
+/* Botón en el footer sticky para saltar al último alcanzado */
+.btn-pie-resume {
+  background: rgba(245, 158, 11, 0.18) !important;
+  border: 1px solid rgba(245, 158, 11, 0.5) !important;
+  color: #fbbf24 !important;
+  font-size: 0.76rem !important;
+  font-weight: 700 !important;
+  padding: 0.36rem 0.75rem !important;
+  border-radius: 0.45rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  white-space: nowrap !important;
+}
+
+.btn-pie-resume:hover {
+  background: rgba(245, 158, 11, 0.32) !important;
+  border-color: #fbbf24 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .btn-pie-resume {
+  background: #fef3c7 !important;
+  border-color: #f59e0b !important;
+  color: #b45309 !important;
+}
+
+/* Overlay global de confirmación de reinicio */
+.guia-reset-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}
+
+
 </style>
 <script>
 (function() {
@@ -17212,30 +17409,35 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
     var keys = obtenerStorageKeys();
     var currentId = nodeIdForzado;
 
+    var maxIdx = 0;
+    try {
+      var rawMax = localStorage.getItem(keys.max);
+      maxIdx = rawMax !== null ? parseInt(rawMax, 10) : 0;
+    } catch (_) {}
+    if (isNaN(maxIdx) || maxIdx < 0) maxIdx = 0;
+    if (maxIdx >= nodeIds.length) maxIdx = nodeIds.length - 1;
+
     if (!currentId) {
       try {
         currentId = localStorage.getItem(keys.current) || sessionStorage.getItem(keys.legacy);
       } catch (_) {}
     }
 
-    // Por defecto colorear el primer paso si el usuario entra por primera vez
+    // Si no hay currentId guardado o es inválido:
+    // Mantenerse en el último paso alcanzado si ya había progreso (maxIdx > 0),
+    // o en el primer paso si es la primera visita.
     if (!currentId || nodeIds.indexOf(currentId) === -1) {
-      currentId = nodeIds[0];
+      currentId = (maxIdx > 0 && maxIdx < nodeIds.length) ? nodeIds[maxIdx] : nodeIds[0];
     }
 
     var currIdx = nodeIds.indexOf(currentId);
     if (currIdx === -1) currIdx = 0;
 
-    var maxIdx = 0;
-    try {
-      var rawMax = localStorage.getItem(keys.max);
-      maxIdx = rawMax !== null ? parseInt(rawMax, 10) : 0;
-    } catch (_) {}
-    if (isNaN(maxIdx) || maxIdx < currIdx) {
+    if (currIdx > maxIdx) {
       maxIdx = currIdx;
     }
 
-    // Guardar para que al volver sepan dónde se quedaron
+    // Guardar para que al volver sepan exactamente dónde se quedaron
     try {
       localStorage.setItem(keys.current, currentId);
       localStorage.setItem(keys.max, String(maxIdx));
@@ -17247,7 +17449,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 
     // Asignar data-step-state a cada nodo:
     // - index === currIdx: current (resaltado ámbar)
-    // - index <= maxIdx: completed (coloreado nativo)
+    // - index <= maxIdx && index !== currIdx: completed (coloreado nativo verde)
     // - index > maxIdx: pending (sin color, gris neutro discontinuo)
     for (var i = 0; i < nodeIds.length; i++) {
       var nId = nodeIds[i];
@@ -17278,11 +17480,137 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
         edge.setAttribute('data-step-edge', 'pending');
       }
     }
+
+    actualizarControlesSesion(currIdx, maxIdx, nodeIds);
+  }
+
+  function actualizarControlesSesion(currIdx, maxIdx, nodeIds) {
+    if (!nodeIds || !nodeIds.length) return;
+    
+    // Si quedó un contenedor anterior en flow-nav-top, removerlo para limpiar el header
+    var oldNavCtrl = document.querySelector('.flow-nav-top .flow-nav-session-ctrl');
+    if (oldNavCtrl) oldNavCtrl.remove();
+
+    var toolbar = document.querySelector('.toolbar');
+    if (!toolbar) return;
+
+    var ctrlWrap = toolbar.querySelector('.toolbar-session-group');
+    if (!ctrlWrap) {
+      ctrlWrap = document.createElement('div');
+      ctrlWrap.className = 'toolbar-group toolbar-session-group';
+      toolbar.insertBefore(ctrlWrap, toolbar.firstChild);
+    }
+
+    var isReviewingPast = (currIdx < maxIdx);
+    var targetMaxId = nodeIds[maxIdx];
+    var maxTitle = (GUIA_MAP[targetMaxId] && (GUIA_MAP[targetMaxId].fase || GUIA_MAP[targetMaxId].pantalla)) || ('Paso ' + (maxIdx + 1));
+
+    var resumeHtml = '';
+    if (isReviewingPast) {
+      resumeHtml = '<button type="button" class="btn-tb-resume" data-ir-paso="' + escapeHtml(targetMaxId) + '" title="Volver al último paso alcanzado: ' + escapeHtml(maxTitle) + '">' +
+        '<span class="tb-resume-icon">⏩</span> <span class="tb-resume-txt">Ir al último (Paso ' + (maxIdx + 1) + ')</span>' +
+        '</button>';
+    }
+
+    var resetHtml = '<button type="button" class="btn-tb-reset" id="btn-flow-reset-top" title="Reiniciar progreso del flujo al Paso 1">' +
+      '<span class="tb-reset-icon">↺</span> <span class="tb-reset-txt">Reiniciar</span>' +
+      '</button>';
+
+    ctrlWrap.innerHTML = resumeHtml + resetHtml;
+
+    var btnReset = ctrlWrap.querySelector('#btn-flow-reset-top');
+    if (btnReset) {
+      btnReset.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.confirmarReinicioProgreso();
+      });
+    }
+
+    var btnResume = ctrlWrap.querySelector('.btn-tb-resume');
+    if (btnResume) {
+      btnResume.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.irAPaso(targetMaxId, true);
+      });
+    }
   }
 
   function marcarUltimoPasoEnDiagrama(nodeId) {
     if (!nodeId) return;
     actualizarProgresoDiagrama(nodeId);
+  }
+
+  function asegurarOverlayReinicio() {
+    var overlay = document.getElementById('guia-reset-overlay');
+    if (overlay) return overlay;
+
+    overlay = document.createElement('div');
+    overlay.id = 'guia-reset-overlay';
+    overlay.className = 'guia-confirm-overlay guia-reset-overlay';
+    overlay.hidden = true;
+    overlay.setAttribute('hidden', '');
+    overlay.innerHTML = '<div class="guia-confirm-modal" role="dialog" aria-modal="true">' +
+      '<div class="guia-confirm-header">' +
+      '<span class="guia-confirm-icon" style="color:#ef4444;">↺</span>' +
+      '<h4 class="guia-confirm-title">Reiniciar progreso del flujo</h4>' +
+      '</div>' +
+      '<p class="guia-confirm-body">' +
+      '¿Deseas <strong>limpiar todo el progreso</strong> de este flujo y comenzar de nuevo desde el <strong>Paso 1</strong>?' +
+      '</p>' +
+      '<p class="guia-confirm-sub" style="font-size:0.75rem; color:#94a3b8; margin:0;">' +
+      'Se desmarcarán los pasos completados y las validaciones guardadas.' +
+      '</p>' +
+      '<div class="guia-confirm-actions">' +
+      '<button type="button" class="btn-confirm-seguir" id="btn-cancel-reset">Cancelar</button>' +
+      '<button type="button" class="btn-confirm-pasar btn-danger-reset" id="btn-accept-reset" style="background:#ef4444 !important; border-color:#dc2626 !important; color:#fff !important;">Sí, reiniciar todo</button>' +
+      '</div>' +
+      '</div>';
+
+    document.body.appendChild(overlay);
+
+    var btnCancel = overlay.querySelector('#btn-cancel-reset');
+    if (btnCancel) {
+      btnCancel.addEventListener('click', function(e) {
+        e.stopPropagation();
+        cerrarModalConfirmacionReinicio();
+      });
+    }
+
+    var btnAccept = overlay.querySelector('#btn-accept-reset');
+    if (btnAccept) {
+      btnAccept.addEventListener('click', function(e) {
+        e.stopPropagation();
+        cerrarModalConfirmacionReinicio();
+        window.reiniciarProgresoDiagrama();
+      });
+    }
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+        e.stopPropagation();
+        cerrarModalConfirmacionReinicio();
+      }
+    });
+
+    return overlay;
+  }
+
+  window.confirmarReinicioProgreso = function() {
+    var overlay = asegurarOverlayReinicio();
+    overlay.hidden = false;
+    overlay.removeAttribute('hidden');
+    var btnCancel = overlay.querySelector('#btn-cancel-reset');
+    if (btnCancel) btnCancel.focus();
+  };
+
+  function cerrarModalConfirmacionReinicio() {
+    var overlay = document.getElementById('guia-reset-overlay');
+    if (overlay) {
+      overlay.hidden = true;
+      overlay.setAttribute('hidden', '');
+    }
   }
 
   window.reiniciarProgresoDiagrama = function() {
@@ -17293,9 +17621,10 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
       sessionStorage.removeItem(keys.legacy);
     } catch (_) {}
     window.__guiaMaxUnlocked = 0;
+    window.__guiaChecks = {};
     var nodeIds = obtenerIdsNodosDiagrama();
     if (nodeIds.length) {
-      window.irAPaso(nodeIds[0]);
+      window.irAPaso(nodeIds[0], true);
     } else {
       actualizarProgresoDiagrama();
     }
@@ -17495,7 +17824,9 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
     var currentIndex = nodeIds.indexOf(currentId);
     var targetIndex = nodeIds.indexOf(targetNodeId);
 
-    if (targetIndex > currentIndex && !forzarSinValidar) {
+    var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
+    // Solo validar si se intenta avanzar a un paso NUEVO que no ha sido desbloqueado todavía
+    if (targetIndex > currentIndex && targetIndex > maxUnlocked && !forzarSinValidar) {
       var val = obtenerEstadoValidacionPaso(currentId);
       if (!val.completo) {
         mostrarModalConfirmacionValidacion(val.pendientes, val.total, function() {
@@ -17526,7 +17857,8 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
     var currentIndex = nodeIds.indexOf(currentId);
     if (currentIndex === -1) return;
 
-    if (offset > 0 && !forzarSinValidar) {
+    var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
+    if (offset > 0 && (currentIndex + offset) > maxUnlocked && !forzarSinValidar) {
       var val = obtenerEstadoValidacionPaso(currentId);
       if (!val.completo) {
         mostrarModalConfirmacionValidacion(val.pendientes, val.total, function() {
@@ -17673,6 +18005,21 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
     html += '</div>';
     html += '</div>';
 
+    if (currentIndex < maxUnlocked) {
+      var targetMaxId = stepKeys[maxUnlocked];
+      var sInfoMax = GUIA_MAP[targetMaxId];
+      var maxLabel = sInfoMax ? (sInfoMax.fase || sInfoMax.pantalla || ('Paso ' + (maxUnlocked + 1))) : ('Paso ' + (maxUnlocked + 1));
+      html += '<div class="guia-banner-revision">';
+      html += '<div class="banner-rev-info">';
+      html += '<span class="banner-rev-icon">👀</span>';
+      html += '<span>Estás revisando el <strong>Paso ' + (currentIndex + 1) + '</strong>. Tu avance guardado está en el <strong>Paso ' + (maxUnlocked + 1) + '</strong> (' + escapeHtml(maxLabel) + ').</span>';
+      html += '</div>';
+      html += '<button type="button" class="btn-banner-ir-ultimo" data-ir-paso="' + escapeHtml(targetMaxId) + '" title="Volver al último paso desbloqueado">';
+      html += '<span>Continuar en Paso ' + (maxUnlocked + 1) + '</span> ⏩';
+      html += '</button>';
+      html += '</div>';
+    }
+
     if (info.instrucciones && info.instrucciones.length > 0) {
       html += '<div class="guia-tabla-wrap"><table class="guia-tabla">';
       html += '<thead><tr><th class="th-num">#</th><th>Campo / Acción</th><th>Valor</th><th>Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
@@ -17731,6 +18078,14 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
       html += '<div class="guia-footer-sticky">';
       html += '<button type="button" class="guia-nav-btn btn-pie-prev" ' + (hasPrev ? 'data-nav-paso="-1"' : 'disabled') + ' title="Volver al paso anterior">← Anterior</button>';
       html += '<div class="guia-pie-status">Paso ' + (currentIndex + 1) + ' de ' + totalSteps + ' (' + pct + '%)' + statusExtra + '</div>';
+      
+      html += '<div class="guia-pie-right-actions" style="display:inline-flex; align-items:center; gap:0.45rem;">';
+      if (currentIndex < maxUnlocked) {
+        var targetMaxId = stepKeys[maxUnlocked];
+        html += '<button type="button" class="btn-pie-resume" data-ir-paso="' + escapeHtml(targetMaxId) + '" title="Volver al último paso alcanzado">';
+        html += '<span>Paso ' + (maxUnlocked + 1) + '</span> <span class="resume-arrow">⏩</span>';
+        html += '</button>';
+      }
       if (hasNext) {
         html += '<button type="button" class="guia-nav-btn btn-pie-next primary" data-nav-paso="1" title="Avanzar al siguiente paso">';
         html += '<span>Siguiente</span>';
@@ -17749,6 +18104,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
           html += '</a>';
         }
       }
+      html += '</div>';
       html += '</div>';
     }
 
@@ -17789,7 +18145,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
     if (btnReset) {
       btnReset.addEventListener('click', function(e) {
         e.stopPropagation();
-        window.reiniciarProgresoDiagrama();
+        window.confirmarReinicioProgreso();
       });
     }
 
@@ -18197,7 +18553,7 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
     }
   });
 })();
-</script>
 
+</script>
 </body>
 </html>

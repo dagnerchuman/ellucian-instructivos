@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- Diagramas generados automáticamente. No editar a mano: modificar plantillas.py o datos.json y ejecutar herramientas/diagramas/generar.py -->
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diagramas de los Centros Empresariales · USS en Banner</title>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('archify-theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    } catch (_) {}
+  })();
+</script>
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body>
+
+<header class="top-header">
+  <div class="header-container">
+    <div class="header-main-row">
+      <div class="title-wrap">
+        <h1>Centros Empresariales en Banner: diagramas paso a paso</h1>
+        <p class="header-sub">Idiomas, Computación y Emprendimiento · Universidad Señor de Sipán · Elaborado por: {autor}</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Alternar tema claro/oscuro">
+          <span id="theme-icon">🌓</span> <span id="theme-txt">Tema</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="filter-chips" role="tablist" aria-label="Filtrar por centro">
+        <button type="button" class="filter-chip active" data-filter="all">Todos (45)</button>
+        <button type="button" class="filter-chip" data-filter="comun">Los tres centros (1)</button>
+        <button type="button" class="filter-chip" data-filter="idiomas">Idiomas (16)</button>
+        <button type="button" class="filter-chip" data-filter="computacion">Computación (14)</button>
+        <button type="button" class="filter-chip" data-filter="emprendimiento">Emprendimiento (14)</button>
+      </div>
+
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="search" class="search-input" id="search-input" placeholder="Buscar por título, número, capacidad..." autocomplete="off">
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="no-results">
+    <h3>No se encontraron diagramas coincidentes</h3>
+    <p>Prueba con otros términos de búsqueda o selecciona otro centro.</p>
+  </div>
+  {secciones}
+</main>
+
+<script>
+/*__JS__*/
+</script>
+</body>
+</html>

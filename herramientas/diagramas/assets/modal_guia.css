@@ -513,7 +513,7 @@ body.has-guia-open .header h1 {
 /* El toolbar vive dentro de la celda derecha del Grid de .header y jamás pisa el título */
 .header .toolbar,
 html[data-present="true"] .header .toolbar,
-body > .toolbar {
+body>.toolbar {
   grid-area: toolbar !important;
   position: static !important;
   top: auto !important;
@@ -532,21 +532,26 @@ body > .toolbar {
   body {
     padding: 0.6rem !important;
   }
+
   .flow-nav-top {
     padding: 0.4rem 0.65rem !important;
     margin-bottom: 0.5rem !important;
   }
+
   .flow-nav-left,
   .flow-nav-right {
     width: 100% !important;
     justify-content: space-between !important;
   }
+
   .flow-nav-select-wrap {
     flex: 1 1 180px !important;
   }
+
   .flow-nav-select {
     max-width: 100% !important;
   }
+
   .header,
   html[data-present="true"] .header {
     grid-template-columns: 1fr !important;
@@ -556,20 +561,21 @@ body > .toolbar {
       "subtitle" !important;
     row-gap: 0.35rem !important;
   }
+
   .header .toolbar,
-  body > .toolbar {
+  body>.toolbar {
     width: 100% !important;
     justify-content: flex-end !important;
     margin-bottom: 0.2rem !important;
     overflow-x: auto !important;
   }
+
   .subtitle {
     margin-left: 0 !important;
   }
 }
 
 /* --- 2. CONTENEDOR Y LIENZO DEL DIAGRAMA BPM 100% ESTABLES Y RESPONSIVOS --- */
-/* Bloqueo total del contenedor general para evitar que Archify lo estreche al detectar scroll */
 .container,
 html .container,
 body .container,
@@ -599,16 +605,15 @@ body.has-guia-open .diagram-container {
   padding: 0.45rem 0.85rem 0.25rem 0.85rem !important;
 }
 
-/* El SVG del flujo BPM mantiene SIEMPRE el 100% de ancho y su altura proporcional exacta */
-/* BLOQUEO CRÍTICO: NUNCA transform (zoom/pan), NUNCA clip-path (recorte), NUNCA encogerse */
-.diagram-container > svg,
-html .diagram-container > svg,
-body .diagram-container > svg,
-body.has-guia-open .diagram-container > svg,
-html[data-reader-narrow="true"] .diagram-container > svg,
-html[data-reader-narrow="true"] body .diagram-container > svg,
-html[data-present="true"] .diagram-container > svg,
-html[data-present="true"] body.has-guia-open .diagram-container > svg,
+/* El SVG del flujo BPM mantiene el ancho y se adapta de forma fluida */
+.diagram-container>svg,
+html .diagram-container>svg,
+body .diagram-container>svg,
+body.has-guia-open .diagram-container>svg,
+html[data-reader-narrow="true"] .diagram-container>svg,
+html[data-reader-narrow="true"] body .diagram-container>svg,
+html[data-present="true"] .diagram-container>svg,
+html[data-present="true"] body.has-guia-open .diagram-container>svg,
 .diagram-container svg[data-focus-active],
 .diagram-container svg[data-view-scale] {
   width: 100% !important;
@@ -622,6 +627,17 @@ html[data-present="true"] body.has-guia-open .diagram-container > svg,
   display: block !important;
   margin: 0 auto !important;
   flex: none !important;
+  transition: max-width 0.3s ease, transform 0.3s ease !important;
+}
+
+/* Reajuste dinámico y compresión de viewBox para ocultar espacio vacío derecho */
+.diagram-container>svg.ocultar-posteriores {
+  width: 65% !important;
+  min-width: 65% !important;
+  max-width: 65% !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  transform: none !important;
 }
 
 /* Mantener todos los pasos del diagrama BPM claramente visibles cuando un paso está seleccionado */
@@ -672,9 +688,9 @@ svg [data-detail-anchor] {
    ========================================================================== */
 
 /* Nodos PENDIENTES (aún no alcanzados): sin color de fondo, borde discontinuo neutro */
-.diagram-container svg g[data-step-state="pending"] > rect:not(.c-mask),
-svg g[data-step-state="pending"] > rect:not(.c-mask),
-g[data-step-state="pending"] > rect:not(.c-mask) {
+.diagram-container svg g[data-step-state="pending"]>rect:not(.c-mask),
+svg g[data-step-state="pending"]>rect:not(.c-mask),
+g[data-step-state="pending"]>rect:not(.c-mask) {
   fill: rgba(30, 41, 59, 0.45) !important;
   stroke: #475569 !important;
   stroke-width: 1.3px !important;
@@ -683,9 +699,9 @@ g[data-step-state="pending"] > rect:not(.c-mask) {
   transition: all 0.25s ease !important;
 }
 
-html[data-theme="light"] .diagram-container svg g[data-step-state="pending"] > rect:not(.c-mask),
-html[data-theme="light"] svg g[data-step-state="pending"] > rect:not(.c-mask),
-html[data-theme="light"] g[data-step-state="pending"] > rect:not(.c-mask) {
+html[data-theme="light"] .diagram-container svg g[data-step-state="pending"]>rect:not(.c-mask),
+html[data-theme="light"] svg g[data-step-state="pending"]>rect:not(.c-mask),
+html[data-theme="light"] g[data-step-state="pending"]>rect:not(.c-mask) {
   fill: #f8fafc !important;
   stroke: #cbd5e1 !important;
   stroke-width: 1.3px !important;
@@ -767,28 +783,28 @@ html[data-theme="light"] g[data-step-state="pending"] text[class*="t-"] {
 }
 
 /* Hover en nodos pendientes */
-g[data-step-state="pending"]:hover > rect:not(.c-mask) {
+g[data-step-state="pending"]:hover>rect:not(.c-mask) {
   stroke: #94a3b8 !important;
   stroke-dasharray: none !important;
   fill: rgba(148, 163, 184, 0.12) !important;
 }
 
-html[data-theme="light"] g[data-step-state="pending"]:hover > rect:not(.c-mask) {
+html[data-theme="light"] g[data-step-state="pending"]:hover>rect:not(.c-mask) {
   stroke: #94a3b8 !important;
   stroke-dasharray: none !important;
   fill: #f1f5f9 !important;
 }
 
 /* Nodos COMPLETADOS (ya hechos): conservan sus fondos y bordes de color nativos bien definidos */
-g[data-step-state="completed"] > rect:not(.c-mask) {
+g[data-step-state="completed"]>rect:not(.c-mask) {
   stroke-width: 2.2px !important;
   stroke-dasharray: none !important;
   transition: all 0.25s ease !important;
 }
 
 /* Nodo ACTUAL (donde se quedaron): COLOREADO y resaltado con pulso ámbar / oro */
-g[data-step-state="current"] > rect:not(.c-mask),
-g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
+g[data-step-state="current"]>rect:not(.c-mask),
+g[data-ultimo-escogido="true"]>rect:not(.c-mask) {
   stroke: #f59e0b !important;
   stroke-width: 3.5px !important;
   stroke-dasharray: none !important;
@@ -797,8 +813,8 @@ g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
   animation: pulsoUltimoEscogido 2.4s infinite ease-in-out !important;
 }
 
-html[data-theme="light"] g[data-step-state="current"] > rect:not(.c-mask),
-html[data-theme="light"] g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
+html[data-theme="light"] g[data-step-state="current"]>rect:not(.c-mask),
+html[data-theme="light"] g[data-ultimo-escogido="true"]>rect:not(.c-mask) {
   stroke: #d97706 !important;
   fill: rgba(245, 158, 11, 0.16) !important;
   filter: drop-shadow(0 0 10px rgba(217, 119, 6, 0.75)) !important;
@@ -833,6 +849,135 @@ path[data-step-edge="completed"] {
   stroke-width: 2px !important;
 }
 
+/* ==========================================================================
+   PASOS FINALES DE CREAR EL NRC OCULTOS POR DEFECTO
+   Por defecto se muestran los pasos 1 a 4. Los pasos 5 y 6 (horario/docente
+   y consulta oficial) quedan ocultos en el flujo y se despliegan a demanda.
+   ========================================================================== */
+
+/* Ocultar los nodos 5 y 6 cuando están contraídos, mostrando en su lugar el contenedor placeholder */
+svg[data-ocultar-posteriores="true"] g[data-node-id="s5"],
+svg[data-ocultar-posteriores="true"] g[data-node-id="s6"],
+svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s4-s5"],
+svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s5-s6"],
+svg[data-ocultar-posteriores="true"] path[data-edge-to="s5"],
+svg[data-ocultar-posteriores="true"] path[data-edge-to="s6"],
+svg[data-ocultar-posteriores="true"] .phase-posterior-header {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.25s ease, visibility 0.25s ease !important;
+}
+
+/* Transición suave al revelar */
+g[data-node-id="s5"],
+g[data-node-id="s6"],
+path[data-edge-id="e-s4-s5"],
+path[data-edge-id="e-s5-s6"],
+.phase-posterior-header {
+  transition: opacity 0.25s ease, visibility 0.25s ease !important;
+}
+
+/* Botón en el toolbar para alternar pasos posteriores */
+.btn-tb-toggle-post {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 0.375rem;
+  color: #a78bfa;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-tb-toggle-post:hover {
+  background: rgba(139, 92, 246, 0.22);
+  border-color: rgba(139, 92, 246, 0.5);
+  color: #c4b5fd;
+}
+
+html[data-theme="light"] .btn-tb-toggle-post {
+  background: #f5f3ff;
+  border-color: #ddd6fe;
+  color: #6d28d9;
+}
+
+html[data-theme="light"] .btn-tb-toggle-post:hover {
+  background: #ede9fe;
+  border-color: #c4b5fd;
+  color: #5b21b6;
+}
+
+/* Placeholder SVG para pasos posteriores en Crear el NRC */
+g.placeholder-pasos-posteriores {
+  display: none;
+}
+
+svg[data-ocultar-posteriores="true"] g.placeholder-pasos-posteriores {
+  display: inline !important;
+  cursor: pointer !important;
+}
+
+g.placeholder-pasos-posteriores rect {
+  fill: rgba(30, 41, 59, 0.45) !important;
+  stroke: #64748b !important;
+  stroke-width: 1.4px !important;
+  stroke-dasharray: 6, 5 !important;
+  transition: all 0.22s ease !important;
+}
+
+g.placeholder-pasos-posteriores:hover rect {
+  fill: rgba(139, 92, 246, 0.12) !important;
+  stroke: #8b5cf6 !important;
+  stroke-dasharray: none !important;
+}
+
+g.placeholder-pasos-posteriores text.placeholder-title {
+  fill: #c4b5fd !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+g.placeholder-pasos-posteriores text.placeholder-sub {
+  fill: #94a3b8 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+g.placeholder-pasos-posteriores:hover text.placeholder-title {
+  fill: #a78bfa !important;
+}
+
+html[data-theme="light"] g.placeholder-pasos-posteriores rect {
+  fill: #f8fafc !important;
+  stroke: #94a3b8 !important;
+}
+
+html[data-theme="light"] g.placeholder-pasos-posteriores:hover rect {
+  fill: #f5f3ff !important;
+  stroke: #7c3aed !important;
+}
+
+html[data-theme="light"] g.placeholder-pasos-posteriores text.placeholder-title {
+  fill: #6d28d9 !important;
+}
+
+html[data-theme="light"] g.placeholder-pasos-posteriores text.placeholder-sub {
+  fill: #64748b !important;
+}
+
+html[data-theme="light"] g.placeholder-pasos-posteriores:hover text.placeholder-title {
+  fill: #5b21b6 !important;
+}
+
+/* Indicador visual en la leyenda de que hay pasos desplegables */
+g[data-legend-kind] {
+  cursor: pointer !important;
+}
+
 /* Barra de herramientas inferior del lienzo (.diagram-nav) */
 html[data-present="true"] .diagram-nav {
   display: none !important;
@@ -842,7 +987,8 @@ html[data-present="true"] .diagram-nav {
   .diagram-container {
     padding: 0.75rem !important;
   }
-  .diagram-container > svg {
+
+  .diagram-container>svg {
     min-width: 0 !important;
   }
 }
@@ -917,6 +1063,7 @@ html:not([data-present="true"]) .focus-chip.tiene-guia[hidden] {
     opacity: 0;
     transform: translate(-50%, -47%) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
@@ -952,8 +1099,13 @@ html[data-present="true"] .guia-modal-backdrop,
 }
 
 @keyframes backdropFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* MODO 2 (PANTALLA COMPLETA / PRESENTACIÓN): Tabla abajo del flujo BPM con scroll */
@@ -1012,7 +1164,7 @@ html[data-present="true"]:not([data-theme="dark"]) .focus-chip.tiene-guia {
 .focus-chip.tiene-guia .relationship-lens-drag-handle,
 .focus-chip.tiene-guia #relationship-lens-title,
 .focus-chip.tiene-guia #focus-summary,
-.focus-chip.tiene-guia > .relationship-lens-head > .relationship-lens-actions {
+.focus-chip.tiene-guia>.relationship-lens-head>.relationship-lens-actions {
   display: none !important;
 }
 
@@ -1620,11 +1772,35 @@ html:not([data-theme="dark"]) .guia-tabla thead th {
   padding: 0.25rem 0.2rem !important;
 }
 
-.guia-tabla th:nth-child(2), .guia-tabla td:nth-child(2) { width: 17% !important; min-width: 120px !important; }
-.guia-tabla th:nth-child(3), .guia-tabla td:nth-child(3) { width: 15% !important; min-width: 110px !important; }
-.guia-tabla th:nth-child(4), .guia-tabla td:nth-child(4) { width: 16% !important; min-width: 115px !important; }
-.guia-tabla th:nth-child(5), .guia-tabla td:nth-child(5) { width: 12% !important; min-width: 90px !important; }
-.guia-tabla th:nth-child(6), .guia-tabla td:nth-child(6) { width: 40% !important; min-width: 210px !important; }
+.guia-tabla th:nth-child(2),
+.guia-tabla td:nth-child(2) {
+  width: 17% !important;
+  min-width: 120px !important;
+}
+
+.guia-tabla th:nth-child(3),
+.guia-tabla td:nth-child(3) {
+  width: 15% !important;
+  min-width: 110px !important;
+}
+
+.guia-tabla th:nth-child(4),
+.guia-tabla td:nth-child(4) {
+  width: 16% !important;
+  min-width: 115px !important;
+}
+
+.guia-tabla th:nth-child(5),
+.guia-tabla td:nth-child(5) {
+  width: 12% !important;
+  min-width: 90px !important;
+}
+
+.guia-tabla th:nth-child(6),
+.guia-tabla td:nth-child(6) {
+  width: 40% !important;
+  min-width: 210px !important;
+}
 
 /* Botón de paso enumerado interactivo */
 .focus-chip .guia-check-btn {
@@ -1707,10 +1883,23 @@ html:not([data-theme="dark"]) .guia-fila-paso.completada:hover {
 
 /* Atención de filas pendientes cuando se solicita seguir validando */
 @keyframes pulsoPendiente {
-  0% { background-color: rgba(245, 158, 11, 0.4); transform: scale(1); }
-  25% { transform: scale(1.006); }
-  50% { background-color: rgba(245, 158, 11, 0.55); }
-  100% { background-color: rgba(245, 158, 11, 0.12); transform: scale(1); }
+  0% {
+    background-color: rgba(245, 158, 11, 0.4);
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.006);
+  }
+
+  50% {
+    background-color: rgba(245, 158, 11, 0.55);
+  }
+
+  100% {
+    background-color: rgba(245, 158, 11, 0.12);
+    transform: scale(1);
+  }
 }
 
 tr.guia-fila-paso.pendiente-atencion {
@@ -2177,7 +2366,7 @@ g[data-ultimo-escogido="true"] {
   cursor: pointer !important;
 }
 
-g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
+g[data-ultimo-escogido="true"]>rect:not(.c-mask) {
   stroke: #f59e0b !important;
   stroke-width: 3.5px !important;
   stroke-dasharray: none !important;
@@ -2188,17 +2377,20 @@ g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
 }
 
 @keyframes pulsoUltimoEscogido {
-  0%, 100% {
+
+  0%,
+  100% {
     stroke: #f59e0b;
     filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.7));
   }
+
   50% {
     stroke: #fbbf24;
     filter: drop-shadow(0 0 18px rgba(251, 191, 36, 1)) drop-shadow(0 0 6px rgba(245, 158, 11, 0.85));
   }
 }
 
-html[data-theme="light"] g[data-ultimo-escogido="true"] > rect:not(.c-mask) {
+html[data-theme="light"] g[data-ultimo-escogido="true"]>rect:not(.c-mask) {
   stroke: #d97706 !important;
   fill: rgba(245, 158, 11, 0.16) !important;
   filter: drop-shadow(0 0 10px rgba(217, 119, 6, 0.75)) !important;
@@ -2296,8 +2488,15 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
 }
 
 @keyframes pulseResume {
-  0%, 100% { box-shadow: 0 0 0 rgba(245, 158, 11, 0); }
-  50% { box-shadow: 0 0 14px rgba(245, 158, 11, 0.4); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(245, 158, 11, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
+  }
 }
 
 .btn-flow-reset {
@@ -2424,3 +2623,16 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
   -webkit-backdrop-filter: blur(6px) !important;
 }
 
+/* Reajuste dinámico del contenedor cuando los pasos 5 y 6 están ocultos */
+.diagram-container>svg.ocultar-posteriores {
+  max-width: 68% !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+@media (max-width: 1100px) {
+  .diagram-container>svg.ocultar-posteriores {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

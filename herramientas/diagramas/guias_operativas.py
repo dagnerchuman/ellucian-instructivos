@@ -6,7 +6,7 @@ al hacer clic sobre cualquier nodo del flujo en el navegador, adaptadas de forma
 """
 
 # ===========================================================================
-# 1. CREACIÓN DE NRC (SSASECT / SSARRES / SSASECQ) - POR CENTRO
+# 1. CREACIÓN DE NRC (SSASECT / SSASECQ) - POR CENTRO
 # ===========================================================================
 
 GUIA_CREAR_NRC_IDIOMAS = {
@@ -120,37 +120,40 @@ GUIA_CREAR_NRC_COMPUTACION = {
         ]
     },
     "s3": {
-        "fase": "Paso 3: Aforo de sección",
+        "fase": "Paso 3: Definir el cupo",
         "pantalla": "SSASECT",
-        "hito": "⭐ ¡SEGUNDO GUARDADO! (Cupos confirmados)",
+        "hito": "⭐ ¡SEGUNDO GUARDADO! (Cupo proyectado)",
         "instrucciones": [
             {"campo": "Pestaña Ingreso de sección", "valor": "Clic en pestaña 2", "tipo": "Navegación", "detalle": "Ir a «Información de ingreso de sección» (Enrollment Details)."},
-            {"campo": "Máximo (Cupos del aula)", "valor": "40 (o aforo aula: 25, 30)", "tipo": "Obligatorio", "detalle": "Ingresar cantidad autorizada de vacantes para el NRC."},
-            {"campo": "¡SEGUNDO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) para fijar el cupo. El contador Restante se actualiza automáticamente al aforo."}
+            {"campo": "Detalles de ingreso", "valor": "Subpestaña «Detalles de ingreso»", "tipo": "Navegación", "detalle": "Ubicar el campo «Proyectado» dentro de la información de ingreso de sección."},
+            {"campo": "Proyectado", "valor": "40", "tipo": "Obligatorio", "detalle": "Escribir el total proyectado de vacantes del NRC. Para el ejemplo de esta guía: 40."},
+            {"campo": "¡SEGUNDO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) para registrar el cupo proyectado antes de configurar reservas."}
         ]
     },
     "s4": {
-        "fase": "Paso 4: Horario, Aula y Docente",
+        "fase": "Paso 4: Lugares reservados",
         "pantalla": "SSASECT",
-        "hito": "⭐ ¡TERCER GUARDADO! (Horario y Docente)",
+        "hito": "⭐ ¡TERCER GUARDADO! (Reservas activas)",
+        "instrucciones": [
+            {"campo": "Subpestaña Lugares reservados", "valor": "SSASECT → Información de ingreso de sección", "tipo": "Navegación", "detalle": "Abrir la subpestaña «Lugares reservados». No se configura en SSARRES: ese formulario es para restricciones de matrícula."},
+            {"campo": "Regla nula", "valor": "Máximo reservado: 0", "tipo": "Regla base", "detalle": "Conservar la fila sin criterio y dejar su Máximo reservado en 0 cuando toda la capacidad se reserva mediante la regla específica."},
+            {"campo": "Añadir regla", "valor": "Botón +", "tipo": "Acción", "detalle": "Presionar + para añadir una fila de reserva y elegir el criterio requerido: nivel, campus, escuela, grado, programa, tipo o código de campo de estudio, departamento, currículos, clase, atributo, cohorte, período de admisión o período de matrícula."},
+            {"campo": "Ejemplo de criterio", "valor": "Programa: CMEMC38", "tipo": "Ejemplo Computación", "detalle": "Si la reserva es exclusiva para Computación, seleccionar Programa y CMEMC38. También se puede reservar por los demás criterios disponibles en esta pantalla."},
+            {"campo": "Máximo reservado", "valor": "40", "tipo": "Obligatorio", "detalle": "En la fila añadida escribir el máximo reservado. Para el ejemplo: 40; Total reservado y Restante se actualizan a 40."},
+            {"campo": "¡TERCER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) las reglas de reserva antes de continuar con horario y docente."}
+        ]
+    },
+    "s5": {
+        "fase": "Paso 5: Horario, Aula y Docente",
+        "pantalla": "SSASECT",
+        "hito": "⭐ ¡CUARTO GUARDADO! (Horario y Docente)",
         "instrucciones": [
             {"campo": "Pestaña Horario y reunión", "valor": "Clic en pestaña 3", "tipo": "Navegación", "detalle": "Ir a «Instructor y horas de reunión»."},
             {"campo": "Horario (Días y Horas)", "valor": "Tipo CLAS | Formato 24h", "tipo": "Obligatorio", "detalle": "Ejemplo: Martes 08:00 AM – 09:40 AM (Word) o Miércoles 07:40 PM – 09:20 PM (Excel)."},
             {"campo": "Ubicación (Edificio y Aula)", "valor": "Edificio SAUVIR | Salón SALA VIRT.", "tipo": "Obligatorio", "detalle": "Usar SAUVIR / SALA VIRT. (aula virtual oficial). Previene el *ERROR* Conflicto de salón."},
             {"campo": "Consistencia de Sesión", "valor": "Indicador de sesión: 01", "tipo": "Regla Crítica", "detalle": "REGLA DE ORO: El indicador de sesión de HORARIO debe ser idéntico al de INSTRUCTOR (ambos 01)."},
             {"campo": "Docente Principal", "valor": "ID 100582059 (Dagner Chuman) | Principal ☑ | 100%", "tipo": "Obligatorio", "detalle": "Digitar ID institucional, marcar Principal y colocar 100% responsabilidad."},
-            {"campo": "¡TERCER GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). Mensaje verde: ✓ Saved successfully. NRC listo con horario y profesor."}
-        ]
-    },
-    "s5": {
-        "fase": "Paso 5: Reserva de cupos (SSARRES)",
-        "pantalla": "SSARRES",
-        "hito": "⭐ ¡CUARTO GUARDADO! (Reservas activas)",
-        "instrucciones": [
-            {"campo": "Lugares Reservados", "valor": "Menú Relacionado → SSARRES", "tipo": "Navegación", "detalle": "Subpestaña «Lugares reservados» para blindar cupos por tipo de participante."},
-            {"campo": "Regla Nula (Cupo General)", "valor": "Regla NULL | Cupo: 1", "tipo": "Mandatorio institucional", "detalle": "OBLIGATORIA: La fila con clave nula no se borra; asegura cupo general."},
-            {"campo": "Regla por Programa CCEE", "valor": "Programa: CMEMC38 (Lib_Area MC38-01, Depto EMCI)", "tipo": "Condicional CCEE", "detalle": "Presionar +, seleccionar PROGRAMA y código CMEMC38 para reservar cupo exclusivo de Computación."},
-            {"campo": "¡CUARTO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar reservas (F10). Previene el error fatal de inscripción *ERROR* Reserve Closed."}
+            {"campo": "¡CUARTO GUARDADO!", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). Mensaje verde: ✓ Saved successfully. NRC listo con horario y profesor."}
         ]
     },
     "s6": {
@@ -627,7 +630,7 @@ GUIAS_SCRIPTS = {
     "16": {
         "c0": {"fase": "Condición Previa", "pantalla": "Reubicación Horaria", "hito": "Estudiante matriculado en NRC 1026 (Sec. D) solicita traslado a NRC 1021 (Sec. B)"},
         "c1": {"fase": "Paso 1: Verificación de Origen y Destino", "pantalla": "SFAREGS → SSASECT", "hito": "Comprobar matrícula activa en origen y disponibilidad de cupo en la sección destino"},
-        "c2": {"fase": "Paso 2: Ajuste de Reserva de Cupo", "pantalla": "SSARRES", "hito": "Ampliación de cupo reservado de CMEMC38 de 1 a 2 vacantes en sección destino"},
+        "c2": {"fase": "Paso 2: Ajuste de Reserva de Cupo", "pantalla": "SSASECT > Lugares reservados", "hito": "Ajustar la regla de reserva de CMEMC38 y su Máximo reservado en la sección destino"},
         "c3": {"fase": "Paso 3: Transacción Simultánea", "pantalla": "SFAREGS", "hito": "Guardar en un solo paso: NRC 1026 con código DD y NRC 1021 con código RE"},
         "c4": {"fase": "Paso 4: Auditoría de Lista y Cobros", "pantalla": "SFASLST / TSAAREV", "hito": "Aparición en nueva lista oficial; vacante origen liberada y sin cobro duplicado"},
         "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Traslado entre secciones paralelas validado al 100%"}

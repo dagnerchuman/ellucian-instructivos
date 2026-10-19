@@ -303,17 +303,17 @@ def recorrido(c):
 
 # --------------------------------------------------------------------------- 2
 def crear_nrc(c):
-    """SSASECT con sus cuatro guardados oficiales (Sección, Cupos, Horario/Docente y SSARRES) y auditoría SSASECQ."""
+    """SSASECT: sección, cupo, lugares reservados y horario/docente; auditoría en SSASECQ."""
     n = c.nrc(c.nrc_ejemplo) if c.nrc_ejemplo else None
     cupo = f" · cupo {n['cupo'].split(' (')[0]}" if n and n.get("cupo") else ""
     nrc_num = c.nrc_ejemplo or "1026"
     nodos = [
-        paso("s1", "nrc", 0, "SSASECT", "1. bloque clave", f"{c.periodo_ejemplo} · ADD en blanco", icono="start"),
-        paso("s2", "nrc", 1, "SSASECT", "2. info de sección (1.er guardar)", f"NRC {nrc_num}", icono="database"),
-        paso("s3", "nrc", 2, "SSASECT", "3. aforo de sección (2.° guardar)", cupo.lstrip(" · ") or "cupos", icono="success"),
-        paso("s4", "nrc", 3, "SSASECT", "4. horario y docente (3.er guardar)", "SAUVIR y profesor", icono="clock"),
-        paso("s5", "nrc", 4, "SSARRES", "5. reserva de cupos (4.° guardar)", "regla NULL y CCEE", tipo="backend", icono="security"),
-        paso("s6", "nrc", 5, "SSASECQ", "6. publicar y auditar", "🎯 NRC activo y publicado", tipo="database", icono="success"),
+        paso("s1", "nrc", 0, "SSASECT", "bloque clave", f"{c.periodo_ejemplo} · ADD en blanco", icono="start"),
+        paso("s2", "nrc", 1, "SSASECT", "info de sección", f"1.er guardar · NRC {nrc_num}", icono="database"),
+        paso("s3", "nrc", 2, "SSASECT", "definir el cupo", "Proyectado (ej. 40)", icono="success"),
+        paso("s4", "nrc", 3, "SSASECT", "reservar cupos", "Lugares reservados · botón +", tipo="security", icono="security"),
+        paso("s5", "nrc", 4, "SSASECT", "horario y docente", "guardar · SAUVIR y profesor", icono="clock"),
+        paso("s6", "nrc", 5, "SSASECQ", "publicar y auditar", "NRC activo y publicado", tipo="database", icono="success"),
     ]
     probado = {
         "computacion": [
@@ -331,16 +331,23 @@ def crear_nrc(c):
         "Al crear un NRC nuevo, campus, estatus y tipo de horario son obligatorios",
         "Para pasar al bloque del docente usa «Sección siguiente»; el clic directo da error",
     ]}
+    reservas = {"dot": "violet", "title": "Cupos reservados: dónde y cómo", "items": [
+        "En SSASECT > Información de ingreso de sección > Detalles de ingreso: escribir el cupo total en Proyectado (ejemplo: 40)",
+        "En SSASECT > Lugares reservados: conservar la regla nula; usar + para una fila con criterio y Máximo reservado (ejemplo: 40)",
+        "La fila puede filtrar por nivel, campus, escuela, grado, programa, campo de estudio, departamento, currículo, clase, atributo, cohorte o periodos",
+        "SSARRES no reserva cupos: restringe quién puede matricularse en el NRC",
+        "Para un alumno identificado se usa un sobrepaso de capacidad en SFAROVR/SFASRPO; no es una reserva previa",
+    ]}
     return flujo(
         c, 2, "crear-el-nrc",
         [{"id": "nrc", "label": "Programar el NRC"}],
         nodos,
         tarjetas(c, probado, [CITAS["periodo"], CITAS["catalogo"], CITAS["nrc"]],
-                 [errores, tarjeta_terminos("NRC", "parte", "cupo")]),
+                 [reservas, errores, tarjeta_terminos("NRC", "parte", "cupo")]),
         fases=[
             {"id": "f0", "label": "SSASECT: Bloque y Sección", "fromCol": 0, "toCol": 1},
-            {"id": "f1", "label": "SSASECT: Aforo, Horario y Docente", "fromCol": 2, "toCol": 3, "variant": "emphasis"},
-            {"id": "f2", "label": "SSARRES y Consulta Oficial", "fromCol": 4, "toCol": 5},
+            {"id": "f1", "label": "SSASECT: Cupo, Reserva, Horario y Docente", "fromCol": 2, "toCol": 4, "variant": "emphasis"},
+            {"id": "f2", "label": "Consulta oficial", "fromCol": 5, "toCol": 5},
         ],
     )
 
@@ -543,7 +550,7 @@ CASOS = {
            ("Aforo ampliado", "vacantes disponibles"), "nrc"),
     "16": (("Traslado de grupo", "reubicación de sección"),
            [("SFAREGS", "matrícula origen", "NRC 1026 (Sec. D) activo"),
-            ("SSARRES", "ampliar reserva", "reserva CMEMC38: 1 → 2 vacantes"),
+            ("SSASECT", "ampliar reserva", "Lugares reservados: CMEMC38 1 → 2"),
             ("SFAREGS", "traslado simultáneo", "NRC 1026: DD · NRC 1021: RE"),
             ("SFASLST", "auditoría lista clase", "alta en lista de nueva sección")],
            ("Traslado exitoso", "vacante origen liberada"), "matricula"),
@@ -681,7 +688,7 @@ EXTRA_CASOS = {
             "Paso 04 (SFAREGS): Emisión de Error Fatal — Notificación explícita de «Closed Section» bloqueando inscripción.",
             "Paso 05 (SSASECT): Ampliación de Aforo — Bloque Enrollment: Maximum 1 → 4 vacantes, recalculando Remaining a 3.",
             "Paso 06 (SFAREGS): Reintento de Inscripción (Alumno 2) — ID: S00582045, código RE, inscripción regular permitida.",
-            "Paso 07 (SSASECT / SSARRES): Auditoría Final de Balance — NRC 1026: Actual 2, Remaining 2; gestión de reservas por programa.",
+            "Paso 07 (SSASECT): Auditoría Final de Balance — NRC 1026: Actual 2, Remaining 2; revisión de cupo y lugares reservados.",
         ],
     },
     "16": {
@@ -691,7 +698,7 @@ EXTRA_CASOS = {
             "Paso 01 (SFAREGS): Verificación de Matrícula Origen — ID: S00581109, Periodo: 202656, NRC 1026 (Sec. D) activo.",
             "Paso 02 (SSASECT): Verificación de Cupo Destino — NRC 1021 (Sec. B), bloque Enrollment Information.",
             "Paso 03 (SFAREGS): Intento de Traslado y Alerta — NRC 1026 con DD y NRC 1021 con RE, alerta de reserva de cupo.",
-            "Paso 04 (SSARRES): Ajuste de Reserva de Cupo — Ampliación de reserva CMEMC38 de 1 a 2 vacantes para permitir reubicación.",
+            "Paso 04 (SSASECT): Ajuste de Reserva de Cupo — En Lugares reservados, ampliar CMEMC38 de 1 a 2 para permitir reubicación.",
             "Paso 05 (SFAREGS): Ejecución Exitosa de Traslado — Transacción simultánea: retiro de origen (DD) e inscripción en destino (RE).",
             "Paso 06 (SFASLST): Auditoría de Lista de Clase — Aparición oficial en el roster de la sección B con aforo actualizado.",
             "Paso 07 (SFAREGS / TSAAREV): Validación de Récord y Finanzas — Sin duplicidad de cargos ni afectación de créditos acumulados.",

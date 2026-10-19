@@ -42,6 +42,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - Asistencia mínima obligatoria para aprobar: 70 % (C63)
 - Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)
 - Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)
+- Cupos reservados: se configuran en SSASECT > Información de ingreso de sección > Lugares reservados; SSARRES solo restringe la matrícula (C66)
 
 ## Grupos 2026 (4 a 8 semanas según el grupo)
 | Grupo | Periodo | Fechas | Semanas |

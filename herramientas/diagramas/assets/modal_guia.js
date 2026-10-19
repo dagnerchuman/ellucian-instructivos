@@ -1,4 +1,4 @@
-(function() {
+(function () {
   var GUIA_MAP = __GUIA_JSON__;
   window.__SIGUIENTE_FLUJO = __SIGUIENTE_FLUJO_JSON__;
   window.__ANTERIOR_FLUJO = __ANTERIOR_FLUJO_JSON__;
@@ -29,11 +29,176 @@
     return {
       current: 'archify_paso_actual_' + path,
       max: 'archify_paso_max_' + path,
-      legacy: 'archify_ultimo_paso_' + path
+      legacy: 'archify_ultimo_paso_' + path,
+      path: path
     };
   }
 
-  // Marcar en el SVG qué pasos están completados (coloreados), cuál es el actual (destacado) y cuáles están pendientes (sin colorear)
+  // Detección de si estamos en el diagrama 2: Crear el NRC (en cualquier centro)
+  function esFlujoCrearNrc() {
+    var p = (window.location.pathname || '').toLowerCase();
+    return p.indexOf('02-crear-el-nrc') !== -1 || p.indexOf('crear-el-nrc') !== -1;
+  }
+
+  // Estado de visibilidad de los pasos finales (horario/docente y consulta) en Crear el NRC.
+  function estanPasosPosterioresVisibles() {
+    if (!esFlujoCrearNrc()) return true;
+    var keys = obtenerStorageKeys();
+    var val = localStorage.getItem('archify_mostrar_posteriores_' + keys.current);
+    if (val === 'true') return true;
+    if (val === 'false') return false;
+    // Por defecto ocultos (false), a menos que el usuario ya haya alcanzado s5 o s6 (maxIdx >= 4)
+    var maxIdx = -1;
+    try {
+      var raw = localStorage.getItem(keys.max);
+      if (raw !== null) maxIdx = parseInt(raw, 10);
+    } catch (_) { }
+    return maxIdx >= 4;
+  }
+
+  function setPasosPosterioresVisibles(visible) {
+    if (!esFlujoCrearNrc()) return;
+    var keys = obtenerStorageKeys();
+    try {
+      localStorage.setItem('archify_mostrar_posteriores_' + keys.current, visible ? 'true' : 'false');
+    } catch (_) { }
+    aplicarVisibilidadPasosPosteriores(visible);
+  }
+
+  function marcarEncabezadoFasePosterior(svg) {
+    if (!svg) return;
+    var texts = svg.querySelectorAll('text');
+    for (var i = 0; i < texts.length; i++) {
+      var t = texts[i];
+      if (t.textContent && t.textContent.indexOf('Consulta oficial') !== -1) {
+        t.classList.add('phase-posterior-header');
+        var mask = t.previousElementSibling;
+        if (mask && mask.tagName && mask.tagName.toLowerCase() === 'rect') {
+          mask.classList.add('phase-posterior-header');
+          var line = mask.previousElementSibling;
+          if (line && line.tagName && line.tagName.toLowerCase() === 'line') {
+            line.classList.add('phase-posterior-header');
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  function aplicarVisibilidadPasosPosteriores(visible) {
+    var svg = document.querySelector('.diagram-container > svg') || document.querySelector('svg');
+    if (!svg) return;
+
+    if (!esFlujoCrearNrc()) {
+      svg.removeAttribute('data-ocultar-posteriores');
+      svg.classList.remove('ocultar-posteriores');
+      return;
+    }
+
+    if (visible === undefined) {
+      visible = estanPasosPosterioresVisibles();
+    }
+
+    if (!visible) {
+      svg.setAttribute('data-ocultar-posteriores', 'true');
+    } else {
+      svg.removeAttribute('data-ocultar-posteriores');
+    }
+    svg.classList.remove('ocultar-posteriores');
+
+    marcarEncabezadoFasePosterior(svg);
+    asegurarPlaceholderPosterioresSvg(svg);
+    actualizarBotonesAlternanciaPosteriores(visible);
+  }
+
+  function asegurarPlaceholderPosterioresSvg(svg) {
+    if (!svg || !esFlujoCrearNrc()) return;
+    var existing = svg.querySelector('#placeholder-posteriores-svg');
+    if (existing) return existing;
+
+    var ns = "http://www.w3.org/2000/svg";
+    var g = document.createElementNS(ns, "g");
+    g.id = "placeholder-posteriores-svg";
+    g.setAttribute("class", "placeholder-pasos-posteriores");
+    g.setAttribute("tabindex", "0");
+    g.setAttribute("role", "button");
+    g.setAttribute("aria-label", "Desplegar pasos posteriores: horario y consulta oficial");
+
+    var rect = document.createElementNS(ns, "rect");
+    rect.setAttribute("x", "760");
+    rect.setAttribute("y", "86");
+    rect.setAttribute("width", "328");
+    rect.setAttribute("height", "68");
+    rect.setAttribute("rx", "6");
+    g.appendChild(rect);
+
+    var textTitle = document.createElementNS(ns, "text");
+    textTitle.setAttribute("x", "924");
+    textTitle.setAttribute("y", "116");
+    textTitle.setAttribute("class", "placeholder-title");
+    textTitle.setAttribute("text-anchor", "middle");
+    textTitle.setAttribute("font-size", "10");
+    textTitle.setAttribute("font-weight", "600");
+    textTitle.textContent = "➕ Pasos 5 y 6: horario y consulta";
+    g.appendChild(textTitle);
+
+    var textSub = document.createElementNS(ns, "text");
+    textSub.setAttribute("x", "924");
+    textSub.setAttribute("y", "136");
+    textSub.setAttribute("class", "placeholder-sub");
+    textSub.setAttribute("text-anchor", "middle");
+    textSub.setAttribute("font-size", "7.5");
+    textSub.setAttribute("font-weight", "500");
+    textSub.textContent = "Clic para ver · Horario/docente y consulta oficial";
+    g.appendChild(textSub);
+
+    svg.appendChild(g);
+
+    g.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      setPasosPosterioresVisibles(true);
+      actualizarProgresoDiagrama();
+    });
+
+    return g;
+  }
+
+  function actualizarBotonesAlternanciaPosteriores(visible) {
+    if (!esFlujoCrearNrc()) return;
+
+    // 1. Botón en la toolbar superior
+    var toolbar = document.querySelector('.toolbar .toolbar-session-group');
+    if (toolbar) {
+      var btnPost = toolbar.querySelector('#btn-toggle-post-crear-nrc');
+      if (!btnPost) {
+        btnPost = document.createElement('button');
+        btnPost.type = 'button';
+        btnPost.id = 'btn-toggle-post-crear-nrc';
+        btnPost.className = 'btn-tb-toggle-post';
+        toolbar.appendChild(btnPost);
+        btnPost.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var vis = estanPasosPosterioresVisibles();
+          setPasosPosterioresVisibles(!vis);
+          actualizarProgresoDiagrama();
+        });
+      }
+      btnPost.innerHTML = visible
+        ? '<span class="tb-post-icon">👁️</span> <span class="tb-post-txt">Ocultar pasos 5 y 6</span>'
+        : '<span class="tb-post-icon">👁️</span> <span class="tb-post-txt">Pasos 5 y 6 (Horario y consulta)</span>';
+      btnPost.title = visible
+        ? 'Ocultar horario/docente y consulta oficial'
+        : 'Mostrar horario/docente y consulta oficial en el diagrama';
+    }
+
+    // Limpiar badge anterior si existía
+    var oldBadge = document.getElementById('badge-posteriores-canvas');
+    if (oldBadge) oldBadge.remove();
+  }
+
+  // Marcar en el SVG qué pasos están completados, cuál es el actual y cuáles están pendientes (despintados)
   function actualizarProgresoDiagrama(nodeIdForzado) {
     var svg = document.querySelector('.diagram-container > svg') || document.querySelector('svg');
     if (!svg) return;
@@ -44,25 +209,48 @@
     var keys = obtenerStorageKeys();
     var currentId = nodeIdForzado;
 
-    var maxIdx = 0;
+    var rawMax = null;
+    var rawCurrent = null;
     try {
-      var rawMax = localStorage.getItem(keys.max);
-      maxIdx = rawMax !== null ? parseInt(rawMax, 10) : 0;
-    } catch (_) {}
+      rawMax = localStorage.getItem(keys.max);
+      rawCurrent = localStorage.getItem(keys.current) || sessionStorage.getItem(keys.legacy);
+    } catch (_) { }
+
+    if (!currentId) {
+      currentId = rawCurrent;
+    }
+
+    // Si se reinició o no hay ningún progreso guardado, DESPINTAR TODO (todo en 'pending')
+    if (!currentId && rawMax === null) {
+      window.__ultimoPasoEscogido = null;
+      window.__guiaMaxUnlocked = 0;
+
+      for (var i = 0; i < nodeIds.length; i++) {
+        var gNode = svg.querySelector('g[data-node-id="' + nodeIds[i] + '"]');
+        if (!gNode) continue;
+        gNode.setAttribute('data-step-state', 'pending');
+        gNode.removeAttribute('data-ultimo-escogido');
+        gNode.removeAttribute('data-focus-selected');
+        gNode.removeAttribute('data-focus-match');
+      }
+
+      var edgePaths = svg.querySelectorAll('path[data-edge-from][data-edge-to]');
+      for (var e = 0; e < edgePaths.length; e++) {
+        edgePaths[e].setAttribute('data-step-edge', 'pending');
+      }
+
+      svg.removeAttribute('data-focus-active');
+      actualizarControlesSesion(-1, -1, nodeIds);
+      aplicarVisibilidadPasosPosteriores();
+      return;
+    }
+
+    var maxIdx = rawMax !== null ? parseInt(rawMax, 10) : 0;
     if (isNaN(maxIdx) || maxIdx < 0) maxIdx = 0;
     if (maxIdx >= nodeIds.length) maxIdx = nodeIds.length - 1;
 
-    if (!currentId) {
-      try {
-        currentId = localStorage.getItem(keys.current) || sessionStorage.getItem(keys.legacy);
-      } catch (_) {}
-    }
-
-    // Si no hay currentId guardado o es inválido:
-    // Mantenerse en el último paso alcanzado si ya había progreso (maxIdx > 0),
-    // o en el primer paso si es la primera visita.
     if (!currentId || nodeIds.indexOf(currentId) === -1) {
-      currentId = (maxIdx > 0 && maxIdx < nodeIds.length) ? nodeIds[maxIdx] : nodeIds[0];
+      currentId = nodeIds[maxIdx] || nodeIds[0];
     }
 
     var currIdx = nodeIds.indexOf(currentId);
@@ -72,41 +260,35 @@
       maxIdx = currIdx;
     }
 
-    // Guardar para que al volver sepan exactamente dónde se quedaron
     try {
       localStorage.setItem(keys.current, currentId);
       localStorage.setItem(keys.max, String(maxIdx));
       sessionStorage.setItem(keys.legacy, currentId);
-    } catch (_) {}
+    } catch (_) { }
 
     window.__ultimoPasoEscogido = currentId;
     window.__guiaMaxUnlocked = Math.max(window.__guiaMaxUnlocked || 0, maxIdx);
 
-    // Asignar data-step-state a cada nodo:
-    // - index === currIdx: current (resaltado ámbar)
-    // - index <= maxIdx && index !== currIdx: completed (coloreado nativo verde)
-    // - index > maxIdx: pending (sin color, gris neutro discontinuo)
-    for (var i = 0; i < nodeIds.length; i++) {
-      var nId = nodeIds[i];
-      var gNode = svg.querySelector('g[data-node-id="' + nId + '"]');
-      if (!gNode) continue;
+    for (var j = 0; j < nodeIds.length; j++) {
+      var nId = nodeIds[j];
+      var gNodeAct = svg.querySelector('g[data-node-id="' + nId + '"]');
+      if (!gNodeAct) continue;
 
-      if (i === currIdx) {
-        gNode.setAttribute('data-step-state', 'current');
-        gNode.setAttribute('data-ultimo-escogido', 'true');
-      } else if (i <= maxIdx) {
-        gNode.setAttribute('data-step-state', 'completed');
-        gNode.removeAttribute('data-ultimo-escogido');
+      if (j === currIdx) {
+        gNodeAct.setAttribute('data-step-state', 'current');
+        gNodeAct.setAttribute('data-ultimo-escogido', 'true');
+      } else if (j <= maxIdx) {
+        gNodeAct.setAttribute('data-step-state', 'completed');
+        gNodeAct.removeAttribute('data-ultimo-escogido');
       } else {
-        gNode.setAttribute('data-step-state', 'pending');
-        gNode.removeAttribute('data-ultimo-escogido');
+        gNodeAct.setAttribute('data-step-state', 'pending');
+        gNodeAct.removeAttribute('data-ultimo-escogido');
       }
     }
 
-    // Asignar data-step-edge a las flechas: completed (verde continuo) vs pending (gris discontinuo)
-    var edgePaths = svg.querySelectorAll('path[data-edge-from][data-edge-to]');
-    for (var e = 0; e < edgePaths.length; e++) {
-      var edge = edgePaths[e];
+    var edges = svg.querySelectorAll('path[data-edge-from][data-edge-to]');
+    for (var k = 0; k < edges.length; k++) {
+      var edge = edges[k];
       var toId = edge.getAttribute('data-edge-to');
       var toIdx = nodeIds.indexOf(toId);
       if (toIdx !== -1 && toIdx <= maxIdx) {
@@ -117,11 +299,12 @@
     }
 
     actualizarControlesSesion(currIdx, maxIdx, nodeIds);
+    aplicarVisibilidadPasosPosteriores();
   }
 
   function actualizarControlesSesion(currIdx, maxIdx, nodeIds) {
     if (!nodeIds || !nodeIds.length) return;
-    
+
     // Si quedó un contenedor anterior en flow-nav-top, removerlo para limpiar el header
     var oldNavCtrl = document.querySelector('.flow-nav-top .flow-nav-session-ctrl');
     if (oldNavCtrl) oldNavCtrl.remove();
@@ -155,7 +338,7 @@
 
     var btnReset = ctrlWrap.querySelector('#btn-flow-reset-top');
     if (btnReset) {
-      btnReset.addEventListener('click', function(e) {
+      btnReset.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         window.confirmarReinicioProgreso();
@@ -164,7 +347,7 @@
 
     var btnResume = ctrlWrap.querySelector('.btn-tb-resume');
     if (btnResume) {
-      btnResume.addEventListener('click', function(e) {
+      btnResume.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         window.irAPaso(targetMaxId, true);
@@ -207,7 +390,7 @@
 
     var btnCancel = overlay.querySelector('#btn-cancel-reset');
     if (btnCancel) {
-      btnCancel.addEventListener('click', function(e) {
+      btnCancel.addEventListener('click', function (e) {
         e.stopPropagation();
         cerrarModalConfirmacionReinicio();
       });
@@ -215,14 +398,14 @@
 
     var btnAccept = overlay.querySelector('#btn-accept-reset');
     if (btnAccept) {
-      btnAccept.addEventListener('click', function(e) {
+      btnAccept.addEventListener('click', function (e) {
         e.stopPropagation();
         cerrarModalConfirmacionReinicio();
         window.reiniciarProgresoDiagrama();
       });
     }
 
-    overlay.addEventListener('click', function(e) {
+    overlay.addEventListener('click', function (e) {
       if (e.target === overlay) {
         e.stopPropagation();
         cerrarModalConfirmacionReinicio();
@@ -232,7 +415,7 @@
     return overlay;
   }
 
-  window.confirmarReinicioProgreso = function() {
+  window.confirmarReinicioProgreso = function () {
     var overlay = asegurarOverlayReinicio();
     overlay.hidden = false;
     overlay.removeAttribute('hidden');
@@ -248,21 +431,46 @@
     }
   }
 
-  window.reiniciarProgresoDiagrama = function() {
+  window.reiniciarProgresoDiagrama = function () {
     var keys = obtenerStorageKeys();
     try {
       localStorage.removeItem(keys.current);
       localStorage.removeItem(keys.max);
+      localStorage.removeItem('archify_mostrar_posteriores_' + keys.current);
       sessionStorage.removeItem(keys.legacy);
-    } catch (_) {}
+    } catch (_) { }
+
+    // 1. Limpiar variables de estado en memoria
     window.__guiaMaxUnlocked = 0;
     window.__guiaChecks = {};
-    var nodeIds = obtenerIdsNodosDiagrama();
-    if (nodeIds.length) {
-      window.irAPaso(nodeIds[0], true);
-    } else {
-      actualizarProgresoDiagrama();
+    window.__ultimoPasoEscogido = null;
+
+    // 2. Cerrar el modal si estaba abierto y limpiar el foco de Archify SIN hacer clic en el Paso 1
+    cerrarModalConfirmacionValidacion();
+    var chip = document.getElementById('focus-chip');
+    var b = document.getElementById('guia-modal-backdrop');
+    if (b) b.classList.remove('active');
+    document.body.classList.remove('has-guia-open');
+
+    if (chip) {
+      chip.classList.remove('tiene-guia');
+      var clearBtn = document.getElementById('btn-focus-clear');
+      if (clearBtn) clearBtn.click();
+      chip.hidden = true;
+      chip.setAttribute('hidden', '');
     }
+
+    var idElem = document.getElementById('focus-id');
+    if (idElem) idElem.textContent = '';
+
+    // 3. Si estamos en Crear el NRC, volver a ocultar los 2 pasos posteriores (s5 y s6)
+    if (esFlujoCrearNrc()) {
+      setPasosPosterioresVisibles(false);
+    }
+
+    // 4. Despintar todos los nodos y flechas del diagrama sin abrir ningún modal
+    actualizarProgresoDiagrama(null);
+    mantenerFlujoCompleto();
   };
 
   // Integrar el .toolbar dentro de .header para que nunca choque con .flow-nav-top ni con h1
@@ -276,12 +484,12 @@
 
   function neutralizarCamaraArchify() {
     if (window.Archify && window.Archify.view) {
-      window.Archify.view.reveal = function() {
+      window.Archify.view.reveal = function () {
         mantenerFlujoCompleto();
         return false;
       };
       if (typeof window.Archify.view.frameDesktop === 'function') {
-        window.Archify.view.frameDesktop = function() { return false; };
+        window.Archify.view.frameDesktop = function () { return false; };
       }
     }
   }
@@ -292,7 +500,7 @@
     if (window.Archify && window.Archify.view && typeof window.Archify.view.reset === 'function') {
       try {
         window.Archify.view.reset({ automatic: true });
-      } catch (_) {}
+      } catch (_) { }
     }
 
     try {
@@ -300,7 +508,7 @@
       document.documentElement.removeAttribute('data-reader-overflow');
       document.documentElement.style.removeProperty('--archify-reader-width');
       document.documentElement.style.removeProperty('--archify-diagram-max-width');
-    } catch (_) {}
+    } catch (_) { }
 
     var svg = document.querySelector('.diagram-container > svg');
     if (svg) {
@@ -312,10 +520,10 @@
 
   function estaEnPresentacion() {
     return document.documentElement.getAttribute('data-present') === 'true' ||
-           !!document.fullscreenElement ||
-           !!document.webkitFullscreenElement ||
-           !!document.mozFullScreenElement ||
-           !!document.msFullscreenElement;
+      !!document.fullscreenElement ||
+      !!document.webkitFullscreenElement ||
+      !!document.mozFullScreenElement ||
+      !!document.msFullscreenElement;
   }
 
   function obtenerEstadoValidacionPaso(nodeId) {
@@ -366,7 +574,7 @@
 
     var btnSeguir = overlay.querySelector('#btn-confirm-seguir');
     if (btnSeguir) {
-      btnSeguir.addEventListener('click', function(e) {
+      btnSeguir.addEventListener('click', function (e) {
         e.stopPropagation();
         cerrarModalConfirmacionValidacion();
         resaltarFilasPendientes();
@@ -375,7 +583,7 @@
 
     var btnPasar = overlay.querySelector('#btn-confirm-pasar');
     if (btnPasar) {
-      btnPasar.addEventListener('click', function(e) {
+      btnPasar.addEventListener('click', function (e) {
         e.stopPropagation();
         var callback = window.__confirmValidationCallback;
         cerrarModalConfirmacionValidacion();
@@ -385,7 +593,7 @@
       });
     }
 
-    overlay.addEventListener('click', function(e) {
+    overlay.addEventListener('click', function (e) {
       if (e.target === overlay) {
         e.stopPropagation();
         cerrarModalConfirmacionValidacion();
@@ -424,7 +632,7 @@
 
   function resaltarFilasPendientes() {
     var rows = document.querySelectorAll('.guia-fila-paso:not(.completada)');
-    rows.forEach(function(row) {
+    rows.forEach(function (row) {
       row.classList.remove('pendiente-atencion');
       void row.offsetWidth;
       row.classList.add('pendiente-atencion');
@@ -432,7 +640,7 @@
     if (rows.length > 0) {
       try {
         rows[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } catch (_) {}
+      } catch (_) { }
     }
   }
 
@@ -450,7 +658,7 @@
     actualizarModalGuia();
   }
 
-  window.irAPaso = function(targetNodeId, forzarSinValidar) {
+  window.irAPaso = function (targetNodeId, forzarSinValidar) {
     if (!targetNodeId) return;
     var idElem = document.getElementById('focus-id');
     var currentId = idElem ? (idElem.textContent || '').trim() : '';
@@ -459,12 +667,17 @@
     var currentIndex = nodeIds.indexOf(currentId);
     var targetIndex = nodeIds.indexOf(targetNodeId);
 
+    // Revelar automáticamente pasos posteriores si el objetivo es s5 o s6 en Crear el NRC
+    if (esFlujoCrearNrc() && (targetNodeId === 's5' || targetNodeId === 's6')) {
+      setPasosPosterioresVisibles(true);
+    }
+
     var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
     // Solo validar si se intenta avanzar a un paso NUEVO que no ha sido desbloqueado todavía
     if (targetIndex > currentIndex && targetIndex > maxUnlocked && !forzarSinValidar) {
       var val = obtenerEstadoValidacionPaso(currentId);
       if (!val.completo) {
-        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function() {
+        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function () {
           window.irAPaso(targetNodeId, true);
         });
         return;
@@ -475,7 +688,7 @@
     var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
     if (nodeElem) {
       nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-      setTimeout(function() {
+      setTimeout(function () {
         mantenerFlujoCompleto();
         actualizarModalGuia();
         actualizarProgresoDiagrama(targetNodeId);
@@ -483,7 +696,7 @@
     }
   };
 
-  window.navegarPaso = function(offset, forzarSinValidar) {
+  window.navegarPaso = function (offset, forzarSinValidar) {
     var idElem = document.getElementById('focus-id');
     if (!idElem) return;
     var currentId = (idElem.textContent || '').trim();
@@ -492,11 +705,16 @@
     var currentIndex = nodeIds.indexOf(currentId);
     if (currentIndex === -1) return;
 
+    // Al avanzar desde s4 en Crear el NRC, revelar los pasos posteriores
+    if (offset > 0 && currentId === 's4' && esFlujoCrearNrc()) {
+      setPasosPosterioresVisibles(true);
+    }
+
     var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
     if (offset > 0 && (currentIndex + offset) > maxUnlocked && !forzarSinValidar) {
       var val = obtenerEstadoValidacionPaso(currentId);
       if (!val.completo) {
-        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function() {
+        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function () {
           window.navegarPaso(offset, true);
         });
         return;
@@ -510,7 +728,7 @@
       var nodeElem = document.querySelector('[data-node-id="' + targetNodeId + '"]');
       if (nodeElem) {
         nodeElem.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-        setTimeout(function() {
+        setTimeout(function () {
           mantenerFlujoCompleto();
           actualizarModalGuia();
           actualizarProgresoDiagrama(targetNodeId);
@@ -577,7 +795,7 @@
       var progressPct = Math.round(((currentIndex + 1) / totalSteps) * 100);
       html += '<div class="guia-stepper-wrap">';
       html += '<div class="guia-stepper-track" role="tablist" aria-label="Fases del flujo">';
-      stepKeys.forEach(function(k, idx) {
+      stepKeys.forEach(function (k, idx) {
         var sInfo = GUIA_MAP[k];
         var isAct = (k === nodeId);
         var isPast = (idx < currentIndex);
@@ -659,15 +877,15 @@
       html += '<div class="guia-tabla-wrap"><table class="guia-tabla">';
       html += '<thead><tr><th class="th-num">#</th><th>Campo / Acción</th><th>Valor</th><th>Ejemplo</th><th>Tipo</th><th>Detalle Operativo</th></tr></thead>';
       html += '<tbody>';
-      
+
       var checks = (window.__guiaChecks && window.__guiaChecks[nodeId]) || {};
 
-      info.instrucciones.forEach(function(item, rIdx) {
+      info.instrucciones.forEach(function (item, rIdx) {
         var rowNum = rIdx + 1;
         var isChecked = !!checks[rIdx];
         var isCritico = (item.tipo || '').toLowerCase().indexOf('crítico') !== -1 || (item.tipo || '').toLowerCase().indexOf('guardado') !== -1;
         var tagClass = isCritico ? 'guia-tipo-tag critico' : 'guia-tipo-tag';
-        
+
         var desglosado = desglosarValorYEjemplo(item);
         var valorTxt = desglosado.valor || '';
         var ejemploTxt = desglosado.ejemplo || '';
@@ -713,7 +931,7 @@
       html += '<div class="guia-footer-sticky">';
       html += '<button type="button" class="guia-nav-btn btn-pie-prev" ' + (hasPrev ? 'data-nav-paso="-1"' : 'disabled') + ' title="Volver al paso anterior">← Anterior</button>';
       html += '<div class="guia-pie-status">Paso ' + (currentIndex + 1) + ' de ' + totalSteps + ' (' + pct + '%)' + statusExtra + '</div>';
-      
+
       html += '<div class="guia-pie-right-actions" style="display:inline-flex; align-items:center; gap:0.45rem;">';
       if (currentIndex < maxUnlocked) {
         var targetMaxId = stepKeys[maxUnlocked];
@@ -722,8 +940,12 @@
         html += '</button>';
       }
       if (hasNext) {
+        var btnNextTxt = 'Siguiente';
+        if (nodeId === 's4' && esFlujoCrearNrc()) {
+          btnNextTxt = 'Horario y consulta';
+        }
         html += '<button type="button" class="guia-nav-btn btn-pie-next primary" data-nav-paso="1" title="Avanzar al siguiente paso">';
-        html += '<span>Siguiente</span>';
+        html += '<span>' + escapeHtml(btnNextTxt) + '</span>';
         html += '<span class="btn-next-arrow">→</span>';
         html += '</button>';
       } else {
@@ -778,31 +1000,31 @@
 
     var btnReset = topbar.querySelector('.btn-reset-progreso');
     if (btnReset) {
-      btnReset.addEventListener('click', function(e) {
+      btnReset.addEventListener('click', function (e) {
         e.stopPropagation();
         window.confirmarReinicioProgreso();
       });
     }
 
     var btnCopy = topbar.querySelector('.btn-copy');
-    btnCopy.addEventListener('click', function(e) {
+    btnCopy.addEventListener('click', function (e) {
       e.stopPropagation();
       var idElem = document.getElementById('focus-id');
       var nodeId = (idElem ? idElem.textContent : '').trim();
       var base = window.location.href.split('#')[0];
       var url = nodeId ? (base + '#focus=' + encodeURIComponent(nodeId)) : base;
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function() {
+        navigator.clipboard.writeText(url).then(function () {
           var txt = topbar.querySelector('.btn-copy-txt');
           var orig = txt.textContent;
           txt.textContent = '¡Copiado!';
-          setTimeout(function() { txt.textContent = orig; }, 1600);
+          setTimeout(function () { txt.textContent = orig; }, 1600);
         });
       }
     });
 
     var btnClose = topbar.querySelector('.chip-btn-close');
-    btnClose.addEventListener('click', function(e) {
+    btnClose.addEventListener('click', function (e) {
       e.stopPropagation();
       cerrarModalGuia();
     });
@@ -815,7 +1037,7 @@
       b.id = 'guia-modal-backdrop';
       b.className = 'guia-modal-backdrop';
       b.setAttribute('aria-hidden', 'true');
-      b.addEventListener('click', function(e) {
+      b.addEventListener('click', function (e) {
         e.stopPropagation();
         cerrarModalGuia();
       });
@@ -841,10 +1063,10 @@
     // Mantener seleccionado en el diagrama el último paso escogido con su color distintivo
     if (window.__ultimoPasoEscogido) {
       marcarUltimoPasoEnDiagrama(window.__ultimoPasoEscogido);
-      setTimeout(function() {
+      setTimeout(function () {
         marcarUltimoPasoEnDiagrama(window.__ultimoPasoEscogido);
       }, 40);
-      setTimeout(function() {
+      setTimeout(function () {
         marcarUltimoPasoEnDiagrama(window.__ultimoPasoEscogido);
       }, 140);
     }
@@ -924,18 +1146,18 @@
       scrollBody.scrollTop = prevBodyScroll;
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
       mantenerFlujoCompleto();
       var activePill = card.querySelector('.guia-step-pill.active');
       if (activePill) {
         try {
           activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        } catch (_) {}
+        } catch (_) { }
       }
     }, 50);
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     acomodarHeaderPagina();
 
     // Forzar nivel de detalle completo (full) para que los textos inferiores (data-detail="fine") se muestren en todos los nodos
@@ -950,7 +1172,7 @@
     // Observador continuo para neutralizar estilos de cámara inline en el SVG
     var svg = document.querySelector('.diagram-container > svg');
     if (svg && window.MutationObserver) {
-      var svgObserver = new MutationObserver(function() {
+      var svgObserver = new MutationObserver(function () {
         if (svg.style.transform && svg.style.transform !== 'none') {
           svg.style.setProperty('transform', 'none', 'important');
         }
@@ -963,7 +1185,7 @@
 
     // Observador para neutralizar el reductor de ancho adaptativo de Archify y detectar modo presentación
     if (window.MutationObserver) {
-      var htmlObserver = new MutationObserver(function() {
+      var htmlObserver = new MutationObserver(function () {
         if (estaEnPresentacion()) {
           cerrarModalGuia();
         }
@@ -999,23 +1221,23 @@
       }
     }
     if (btnPresent) {
-      btnPresent.addEventListener('click', function() {
+      btnPresent.addEventListener('click', function () {
         if (!document.fullscreenElement) {
           if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen().catch(function(_) {});
+            document.documentElement.requestFullscreen().catch(function (_) { });
           }
         } else {
           if (document.exitFullscreen) {
-            document.exitFullscreen().catch(function(_) {});
+            document.exitFullscreen().catch(function (_) { });
           }
         }
-        setTimeout(function() {
+        setTimeout(function () {
           syncPresentButton();
         }, 80);
       });
     }
 
-    document.addEventListener('fullscreenchange', function() {
+    document.addEventListener('fullscreenchange', function () {
       if (!document.fullscreenElement && window.Archify && window.Archify.presentation) {
         if (typeof window.Archify.presentation.exit === 'function') {
           window.Archify.presentation.exit();
@@ -1024,11 +1246,11 @@
       setTimeout(syncPresentButton, 60);
     });
 
-    document.addEventListener('webkitfullscreenchange', function() {
+    document.addEventListener('webkitfullscreenchange', function () {
       setTimeout(syncPresentButton, 60);
     });
 
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
       syncPresentButton();
     });
 
@@ -1038,7 +1260,40 @@
       observer.observe(target, { childList: true, characterData: true, subtree: true });
     }
 
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
+      var btnTogglePost = e.target.closest('#btn-toggle-post-crear-nrc, #badge-posteriores-canvas');
+      if (btnTogglePost) {
+        e.preventDefault();
+        e.stopPropagation();
+        var vis = estanPasosPosterioresVisibles();
+        setPasosPosterioresVisibles(!vis);
+        actualizarProgresoDiagrama();
+        return;
+      }
+
+      var legendEntry = e.target.closest('[data-legend-kind]');
+      if (legendEntry && esFlujoCrearNrc()) {
+        var kind = legendEntry.getAttribute('data-legend-kind');
+        if (kind === 'security') {
+          e.preventDefault();
+          e.stopPropagation();
+          setPasosPosterioresVisibles(true);
+          window.irAPaso('s5', true);
+          return;
+        } else if (kind === 'database') {
+          e.preventDefault();
+          e.stopPropagation();
+          setPasosPosterioresVisibles(true);
+          window.irAPaso('s6', true);
+          return;
+        } else if (kind === 'backend') {
+          e.preventDefault();
+          e.stopPropagation();
+          window.irAPaso('s1', true);
+          return;
+        }
+      }
+
       var btnIr = e.target.closest('[data-ir-paso]');
       if (btnIr) {
         e.preventDefault();
@@ -1100,28 +1355,28 @@
         }
         neutralizarCamaraArchify();
         mantenerFlujoCompleto();
-        setTimeout(function() {
+        setTimeout(function () {
           mantenerFlujoCompleto();
           actualizarModalGuia();
           if (nId) marcarUltimoPasoEnDiagrama(nId);
         }, 15);
-        setTimeout(function() {
+        setTimeout(function () {
           mantenerFlujoCompleto();
           actualizarModalGuia();
           if (nId) marcarUltimoPasoEnDiagrama(nId);
         }, 70);
-        setTimeout(function() {
+        setTimeout(function () {
           mantenerFlujoCompleto();
           if (nId) marcarUltimoPasoEnDiagrama(nId);
         }, 200);
-        setTimeout(function() {
+        setTimeout(function () {
           mantenerFlujoCompleto();
           if (nId) marcarUltimoPasoEnDiagrama(nId);
         }, 450);
       }
     });
 
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
       if (e.key === 'Escape') {
         var chip = document.getElementById('focus-chip');
@@ -1175,12 +1430,12 @@
         var hashNodeId = decodeURIComponent(matchFocus[1]);
         marcarUltimoPasoEnDiagrama(hashNodeId);
       }
-      setTimeout(function() {
+      setTimeout(function () {
         actualizarModalGuia();
         mantenerFlujoCompleto();
         if (hashNodeId) marcarUltimoPasoEnDiagrama(hashNodeId);
       }, 70);
-      setTimeout(function() {
+      setTimeout(function () {
         actualizarModalGuia();
         mantenerFlujoCompleto();
         if (hashNodeId) marcarUltimoPasoEnDiagrama(hashNodeId);

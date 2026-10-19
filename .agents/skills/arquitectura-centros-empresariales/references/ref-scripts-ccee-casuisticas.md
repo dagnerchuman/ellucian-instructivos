@@ -33,7 +33,7 @@ Este documento define el catálogo de los **18 scripts operativos y casuísticas
 
 * **Completados y validados:**
   * **Script 01 (Matrícula regular):** Validado al 100% con los estudiantes `S00581081` y `S00581091` en NRC `1021` (periodo `202656`).
-  * **Script 15 (Gestión de cupos y reservas):** Probado y validado en SSASECT (`SSARRES`), resolviendo errores de cupo nulo y logrando ocupación de 2/2.
+  * **Script 15 (Gestión de cupos y reservas):** Probado y validado en SSASECT, en «Detalles de ingreso» y «Lugares reservados», resolviendo errores de cupo nulo y logrando ocupación de 2/2.
   * **Script 06 (Doble programa pregrado / centros):** Probado al admitir al alumno con Study Path 2/4 en `202656`.
   * **Script 13 (Procesamiento de calificaciones):** Probado y validado en `SFASLST` registrando notas aprobatorias (16) y desaprobatorias (10) para el NRC `1021`.
   * **Script 08 (Eliminación / Retiro de matrícula):** Validado al 100% en `SFAREGS` aplicando estatus `DD` al estudiante `S00581091` en NRC `1021`, auditando en `SSASECT` la liberación automática de vacante (`Actual` de 2 a 1, `Remaining` de 0 a 1).
@@ -43,7 +43,7 @@ Este documento define el catálogo de los **18 scripts operativos y casuísticas
   * **Script 12 / 14 (Cierre de actas y pase a historia con SHRROLL):** Validado al 100% en `GJAPCTL` (Jobs 8113 y 8114 exitosos) tras resolver la incidencia **`U20`** agregando el Modo **`V`** a las notas de Nivel `C` en `SHAGRDE`. Cierre definitivo y actas completadas.
   * **Script 03 (Matrícula por convalidación externa):** Validado al 100% con la estudiante `S00581111` (*Ana Rojas Vera*), convalidando curso externo `IST150` en `SHATRNS` y pasando a historia académica con registro de grado en `SHRROLL` (Job 8113).
   * **Script 10 (Retorno obligatorio tras desaprobado):** Validado al 100% en CAPP individual (`SMARQCM` → `SMICRLT` / `SMIPOUT`) con `S00581108` (*Carlos Torres Mendoza*, nota 08): Requerimientos y Áreas en «No cumple», créditos ganados 0/4 y curso `ESEC 00650` catalogado como «Curso no usado» (reprobado).
-  * **Script 16 (División de grupos / Traslado de sección):** Validado al 100% en `SFAREGS` trasladando a María Ramírez (`S00581109`) de NRC 1026 (`DD`) a NRC 1021 (`RE`), resolviendo `Reserve Closed` ampliando cupo CMEMC38 en `SSARRES` (`SSASECT`) y confirmada en lista `SFASLST`.
+  * **Script 16 (División de grupos / Traslado de sección):** Validado al 100% en `SFAREGS` trasladando a María Ramírez (`S00581109`) de NRC 1026 (`DD`) a NRC 1021 (`RE`), resolviendo `Reserve Closed` ampliando el cupo CMEMC38 en «Lugares reservados» de `SSASECT` y confirmada en lista `SFASLST`.
   * **Script 09 (Suspensión y reactivación de matrícula):** Validado al 100% comprobando bloqueo fatal de inscripción bajo estatus inactivo (`IS`/`SU`) y restitución inmediata de elegibilidad académica al reactivar como activo (`AS`) en `SGASTDN` / `SFAREGS`.
 
 * **Próximos scripts pendientes (Para siguientes sesiones):**

@@ -307,7 +307,8 @@
     "Los grupos duran 4, 6 u 8 semanas (X01–X07 en 2026)",
     "Asistencia mínima obligatoria para aprobar: 70 % (C63)",
     "Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)",
-    "Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)"
+    "Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)",
+    "Cupos reservados: se configuran en SSASECT > Información de ingreso de sección > Lugares reservados; SSARRES solo restringe la matrícula (C66)"
   ],
   "dudas": [
     {

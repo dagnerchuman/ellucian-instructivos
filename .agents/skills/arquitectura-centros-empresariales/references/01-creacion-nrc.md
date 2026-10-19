@@ -40,13 +40,13 @@ En TEST existe **202656** (el usuario lo usó).
      - Con tipo **Teoría**: casilla **Calificable** marcada, horas de cobro incluidas y **sin** marcar «Dispensa de colegiatura y cuotas».
      - Las horas crédito **no son** las horas por semana: esas se calculan después con el horario y el factor de SIATERM.
     - **GUARDAR:** «ADD» pasa a ser el número de NRC (diap. 26). **Crítico:** No intentar cambiar de pestaña antes de presionar Guardar, o Banner bloqueará con `*ERROR* Debe guardar antes de salir de la información de sección`. Aprobación especial debe quedar vacía.
-3. **Pestaña «Información de ingreso de sección»:** cupo máximo (diap. 27). Presionar Guardar (2do guardado). Si hay lugares reservados, primero va la regla «nula» y luego las demás (diap. 28).
+3. **Pestaña «Información de ingreso de sección»:** en «Detalles de ingreso», escribir el cupo total en **Proyectado** (por ejemplo, 40; diap. 27). En «Lugares reservados», conservar la regla «nula» y pulsar `+` para agregar una fila por cada criterio; allí se escribe el **Máximo reservado** (por ejemplo, 40; diap. 28). Guardar. La reserva se configura en **SSASECT**, no en SSARRES.
 4. **Pestaña «Instructor y horas de reunión»:**
    - Fechas de reunión (diap. 29): tipo CLAS, hora de inicio y fin en 24 h, días, sesión 01.
    - Créditos y ubicación (diap. 30): horas por semana automáticas; edificio y salón oficial virtual de campus S: **`SAUVIR`** y **`SALA VIRT.`**. Si se usa un salón físico con cruce, ingresar `O` en la casilla `Indicador de sobrepaso` para resolver `*ERROR* Conflicto de salón`.
    - Instructor (6.2.1, diap. 11 a 19): ID o SIAFAVL, casilla Principal, % de responsabilidad (100%) y sesión (100%). **Regla de oro:** El `Indicador de sesión` de HORARIO debe coincidir idénticamente con el de INSTRUCTOR (ambos `01` o ambos `1`), de lo contrario arroja `*ERROR* Sesión no tiene horas de reunión definidas`. Si el docente tiene cruce, marcar la casilla `Indicador de sobrepaso` de la grilla de instructor.
    - Presionar Guardar (3er guardado).
-5. **Al final (menú relacionado):** SSADETL, SSAPREQ (prerrequisitos heredados), SSARRES. Verificar o buscar el NRC en **SSASECQ** (ver [ref-busqueda-nrc.md](ref-busqueda-nrc.md)).
+5. **Al final (menú relacionado):** SSADETL, SSAPREQ (prerrequisitos heredados) y SSARRES. **SSARRES no reserva cupos:** sirve para incluir o excluir quién puede matricularse en el NRC mediante restricciones. Verificar o buscar el NRC en **SSASECQ** (ver [ref-busqueda-nrc.md](ref-busqueda-nrc.md)).
 
 ## Datos reales vistos en TEST (capturas del 28/09, 29/09 y 02/10/2026)
 - **Catálogo:** **ESEC 00650 «Ofimática Word 365»**. ESEC = «ESTUDIOS ESPECÍFICOS», escuela **EM**, vigente de 000000 a 999999. Existe también **ESEP 00650**, escuela **CE**. No se sabe qué son EM y CE (duda U18).

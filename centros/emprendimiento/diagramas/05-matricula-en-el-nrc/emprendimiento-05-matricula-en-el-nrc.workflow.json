@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Emprendimiento · 5. Matrícula en el NRC (Capacidades 5 y 11)",
-    "subtitle": "Capacidad 5.4 (Inscripción) y 11.1 (Cobranzas) · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Emprendimiento · 5. Script 01 · Matrícula en el NRC (Capacidades 5 y 11)",
+    "subtitle": "Capacidad 5.4 (Inscripción) y 11.1 (Cobranzas) · Nivel M · Programa MMEMM01 · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",

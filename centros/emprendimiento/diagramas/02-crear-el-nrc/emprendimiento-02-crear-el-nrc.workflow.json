@@ -490,15 +490,15 @@
     },
     {
       "id": "f1",
-      "label": "SSASECT: Aforo, Horario y Docente",
+      "label": "SSASECT: Cupo, Reserva, Horario y Docente",
       "fromCol": 2,
-      "toCol": 3,
+      "toCol": 4,
       "variant": "emphasis"
     },
     {
       "id": "f2",
-      "label": "SSARRES y Consulta Oficial",
-      "fromCol": 4,
+      "label": "Consulta oficial",
+      "fromCol": 5,
       "toCol": 5
     }
   ],
@@ -539,32 +539,32 @@
       "col": 2,
       "type": "backend",
       "label": "SSASECT",
-      "sublabel": "aforo de sección",
+      "sublabel": "definir el cupo",
       "width": 150,
-      "tag": "2.° guardar",
+      "tag": "Proyectado (ej. 40)",
       "icon": "success"
     },
     {
       "id": "s4",
       "lane": "nrc",
       "col": 3,
-      "type": "backend",
+      "type": "security",
       "label": "SSASECT",
-      "sublabel": "horario y docente",
+      "sublabel": "reservar cupos",
       "width": 150,
-      "tag": "3.er guardar · SAUVIR y profesor",
-      "icon": "clock"
+      "tag": "Lugares reservados · botón +",
+      "icon": "security"
     },
     {
       "id": "s5",
       "lane": "nrc",
       "col": 4,
-      "type": "security",
-      "label": "SSARRES",
-      "sublabel": "reserva de cupos",
+      "type": "backend",
+      "label": "SSASECT",
+      "sublabel": "horario y docente",
       "width": 150,
-      "tag": "4.° guardar · regla NULL y CCEE",
-      "icon": "security"
+      "tag": "guardar · SAUVIR y profesor",
+      "icon": "clock"
     },
     {
       "id": "s6",
@@ -574,7 +574,7 @@
       "label": "SSASECQ",
       "sublabel": "publicar y auditar",
       "width": 150,
-      "tag": "🎯 NRC activo y publicado",
+      "tag": "NRC activo y publicado",
       "icon": "success"
     }
   ],
@@ -616,6 +616,17 @@
       "title": "Probado en TEST",
       "items": [
         "NRC 1025: ESGE 00117, sección A, con el docente en la sesión 02 (no principal)"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Cupos reservados: dónde y cómo",
+      "items": [
+        "En SSASECT > Información de ingreso de sección > Detalles de ingreso: escribir el cupo total en Proyectado (ejemplo: 40)",
+        "En SSASECT > Lugares reservados: conservar la regla nula; usar + para una fila con criterio y Máximo reservado (ejemplo: 40)",
+        "La fila puede filtrar por nivel, campus, escuela, grado, programa, campo de estudio, departamento, currículo, clase, atributo, cohorte o periodos",
+        "SSARRES no reserva cupos: restringe quién puede matricularse en el NRC",
+        "Para un alumno identificado se usa un sobrepaso de capacidad en SFAROVR/SFASRPO; no es una reserva previa"
       ]
     },
     {

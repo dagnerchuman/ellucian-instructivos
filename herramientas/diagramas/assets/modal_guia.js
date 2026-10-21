@@ -47,13 +47,14 @@
     var val = localStorage.getItem('archify_mostrar_posteriores_' + keys.current);
     if (val === 'true') return true;
     if (val === 'false') return false;
-    // Por defecto ocultos (false), a menos que el usuario ya haya alcanzado s5 o s6 (maxIdx >= 4)
+    // Por defecto visibles: el diagrama es una guía completa y la exportación debe
+    // incluir los seis pasos. La preferencia explícita del usuario aún puede ocultarlos.
     var maxIdx = -1;
     try {
       var raw = localStorage.getItem(keys.max);
       if (raw !== null) maxIdx = parseInt(raw, 10);
     } catch (_) { }
-    return maxIdx >= 4;
+    return true;
   }
 
   function setPasosPosterioresVisibles(visible) {
@@ -107,7 +108,15 @@
     svg.classList.remove('ocultar-posteriores');
 
     marcarEncabezadoFasePosterior(svg);
-    asegurarPlaceholderPosterioresSvg(svg);
+    // El placeholder solo existe mientras los pasos estén contraídos. Si queda
+    // en el SVG al exportarlo, la exportación no hereda su CSS y lo dibuja como
+    // un rectángulo negro sobre los pasos 5 y 6.
+    var placeholder = svg.querySelector('#placeholder-posteriores-svg');
+    if (visible) {
+      if (placeholder) placeholder.remove();
+    } else {
+      asegurarPlaceholderPosterioresSvg(svg);
+    }
     actualizarBotonesAlternanciaPosteriores(visible);
   }
 
@@ -480,6 +489,27 @@
     if (header && toolbar && toolbar.parentNode !== header) {
       header.appendChild(toolbar);
     }
+  }
+
+  // En móvil, los flujos anchos se leen desplazando el lienzo, no reduciendo
+  // sus nodos hasta que el texto sea ilegible. El aviso desaparece después del
+  // primer desplazamiento horizontal y no afecta la versión de escritorio.
+  function prepararLecturaTactil() {
+    var lienzo = document.querySelector('.diagram-container[data-wide-diagram="true"]');
+    if (!lienzo || lienzo.querySelector('.mobile-flow-hint')) return;
+
+    lienzo.setAttribute('tabindex', '0');
+    lienzo.setAttribute('aria-label', 'Flujo interactivo. En pantalla móvil, desliza horizontalmente para recorrer todos los pasos.');
+
+    var aviso = document.createElement('span');
+    aviso.className = 'mobile-flow-hint';
+    aviso.setAttribute('aria-hidden', 'true');
+    aviso.textContent = '← Desliza el flujo →';
+    lienzo.appendChild(aviso);
+
+    lienzo.addEventListener('scroll', function () {
+      if (lienzo.scrollLeft > 12) aviso.classList.add('is-hidden');
+    }, { passive: true });
   }
 
   function neutralizarCamaraArchify() {
@@ -1159,6 +1189,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     acomodarHeaderPagina();
+    prepararLecturaTactil();
 
     // Forzar nivel de detalle completo (full) para que los textos inferiores (data-detail="fine") se muestren en todos los nodos
     var dc = document.querySelector('.diagram-container');

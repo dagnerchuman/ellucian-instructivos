@@ -402,6 +402,21 @@ svg[data-preset="editorial"][data-animation="trace"] [data-animate="node"] { ani
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.48; transform: scale(0.78); }
 }
+[data-theme="light"] .flow-nav-top { background: rgba(255, 255, 255, 0.94) !important; border-color: rgba(203, 213, 225, 0.85) !important; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 10px !important; }
+[data-theme="light"] .btn-flow-centros:hover { color: rgb(15, 23, 42) !important; }
+[data-theme="light"] .flow-bottom-card.primary-accent { background: linear-gradient(135deg, rgba(112, 48, 160, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%) !important; border-color: rgba(112, 48, 160, 0.3) !important; }
+.diagram-container svg [data-detail="fine"], .diagram-container svg [data-detail="context"], .diagram-container svg [data-detail], svg [data-detail="fine"], svg [data-detail="context"], svg [data-detail] { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+.diagram-container svg [data-detail-anchor], svg [data-detail-anchor] { transform: none !important; }
+.diagram-container svg g[data-step-state="pending"] &gt; rect:not(.c-mask), svg g[data-step-state="pending"] &gt; rect:not(.c-mask), g[data-step-state="pending"] &gt; rect:not(.c-mask) { fill: rgba(30, 41, 59, 0.45) !important; stroke: rgb(71, 85, 105) !important; stroke-width: 1.3px !important; stroke-dasharray: 5, 4 !important; filter: none !important; transition: 0.25s !important; }
+svg[data-ocultar-posteriores="true"] g[data-node-id="s5"], svg[data-ocultar-posteriores="true"] g[data-node-id="s6"], svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s4-s5"], svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s5-s6"], svg[data-ocultar-posteriores="true"] path[data-edge-to="s5"], svg[data-ocultar-posteriores="true"] path[data-edge-to="s6"], svg[data-ocultar-posteriores="true"] .phase-posterior-header { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity 0.25s, visibility 0.25s !important; }
+svg[data-ocultar-posteriores="true"] g.placeholder-pasos-posteriores { display: inline !important; cursor: pointer !important; }
+[data-theme="light"] .toolbar button.btn-tb-reset:hover { background: rgb(254, 226, 226) !important; color: rgb(220, 38, 38) !important; }
+[data-theme="light"] .toolbar button.btn-tb-resume { background: rgb(254, 243, 199) !important; color: rgb(180, 83, 9) !important; border-color: rgb(245, 158, 11) !important; }
+[data-theme="light"] .toolbar button.btn-tb-resume:hover { background: rgb(253, 230, 138) !important; color: rgb(146, 64, 14) !important; }
+[data-theme="light"] .btn-flow-reset { background: rgb(241, 245, 249) !important; color: rgb(100, 116, 139) !important; border-color: rgb(203, 213, 225) !important; }
+[data-theme="light"] .btn-flow-reset:hover { background: rgb(254, 226, 226) !important; color: rgb(220, 38, 38) !important; border-color: rgb(252, 165, 165) !important; }
+[data-theme="light"] .guia-banner-revision { background: rgb(254, 243, 199) !important; border-color: rgb(245, 158, 11) !important; color: rgb(146, 64, 14) !important; }
+[data-theme="light"] .btn-pie-resume { background: rgb(254, 243, 199) !important; border-color: rgb(245, 158, 11) !important; color: rgb(180, 83, 9) !important; }
 :root, svg { --bg: #020617; --grid: #1e293b; --canvas-dot: rgba(148, 163, 184, 0.16); --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
 @media (prefers-color-scheme: light) { :root, svg { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5; --text: #111827; --text-muted: #5b6474; --text-dim: #9aa3b2; --text-faint: #6b7280; --panel: #ffffff; --panel-border: #e5e7eb; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; } }
 svg[data-theme="light"] { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5; --text: #111827; --text-muted: #5b6474; --text-dim: #9aa3b2; --text-faint: #6b7280; --panel: #ffffff; --panel-border: #e5e7eb; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; }
@@ -571,7 +586,7 @@ rect.c-bg-rect { fill: var(--bg); }
         </g>
 
         <!-- Participants -->
-        <g id="node-alumno" data-node-id="alumno" data-node-label="Alumno" tabindex="0" role="button" aria-label="Enfocar Alumno, USS o externo, Participante de secuencia" aria-pressed="false" data-node-kind="external" data-node-sublabel="USS o externo" data-node-context="Participante de secuencia">
+        <g id="node-alumno" data-node-id="alumno" data-node-label="Alumno" tabindex="0" role="button" aria-label="Enfocar Alumno, USS o externo, Participante de secuencia" aria-pressed="false" data-node-kind="external" data-node-sublabel="USS o externo" data-node-context="Participante de secuencia" data-step-state="pending">
           <title>Alumno · USS o externo · Participante de secuencia</title>
           <rect x="62" y="72" width="113" height="60" rx="6" class="c-mask"/>
           <rect x="62" y="72" width="113" height="60" rx="6" class="c-external" data-animate="node" style="--step:0" stroke-width="1.5"/>
@@ -582,7 +597,7 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="118.5" y="122" class="t-muted" font-size="7" text-anchor="middle">USS o externo</text>
         </g>
 
-        <g id="node-asistente" data-node-id="asistente" data-node-label="Asistente" tabindex="0" role="button" aria-label="Enfocar Asistente, o especialista, Participante de secuencia" aria-pressed="false" data-node-kind="backend" data-node-sublabel="o especialista" data-node-context="Participante de secuencia">
+        <g id="node-asistente" data-node-id="asistente" data-node-label="Asistente" tabindex="0" role="button" aria-label="Enfocar Asistente, o especialista, Participante de secuencia" aria-pressed="false" data-node-kind="backend" data-node-sublabel="o especialista" data-node-context="Participante de secuencia" data-step-state="pending">
           <title>Asistente · o especialista · Participante de secuencia</title>
           <rect x="206.16666666666663" y="72" width="113" height="60" rx="6" class="c-mask"/>
           <rect x="206.16666666666663" y="72" width="113" height="60" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
@@ -593,7 +608,7 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="262.66666666666663" y="122" class="t-muted" font-size="7" text-anchor="middle">o especialista</text>
         </g>
 
-        <g id="node-jefe" data-node-id="jefe" data-node-label="Jefe del centro" tabindex="0" role="button" aria-label="Enfocar Jefe del centro, Informática, Participante de secuencia" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Informática" data-node-context="Participante de secuencia">
+        <g id="node-jefe" data-node-id="jefe" data-node-label="Jefe del centro" tabindex="0" role="button" aria-label="Enfocar Jefe del centro, Informática, Participante de secuencia" aria-pressed="false" data-node-kind="backend" data-node-sublabel="Informática" data-node-context="Participante de secuencia" data-step-state="pending">
           <title>Jefe del centro · Informática · Participante de secuencia</title>
           <rect x="350.3333333333333" y="72" width="113" height="60" rx="6" class="c-mask"/>
           <rect x="350.3333333333333" y="72" width="113" height="60" rx="6" class="c-backend" data-animate="node" style="--step:2" stroke-width="1.5"/>
@@ -604,7 +619,7 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="406.8333333333333" y="122" class="t-muted" font-size="7" text-anchor="middle">Informática</text>
         </g>
 
-        <g id="node-banner" data-node-id="banner" data-node-label="Banner" tabindex="0" role="button" aria-label="Enfocar Banner, TEST · 202656, Participante de secuencia" aria-pressed="false" data-node-kind="database" data-node-sublabel="TEST · 202656" data-node-context="Participante de secuencia">
+        <g id="node-banner" data-node-id="banner" data-node-label="Banner" tabindex="0" role="button" aria-label="Enfocar Banner, TEST · 202656, Participante de secuencia" aria-pressed="false" data-node-kind="database" data-node-sublabel="TEST · 202656" data-node-context="Participante de secuencia" data-step-state="pending">
           <title>Banner · TEST · 202656 · Participante de secuencia</title>
           <rect x="494.5" y="72" width="113" height="60" rx="6" class="c-mask"/>
           <rect x="494.5" y="72" width="113" height="60" rx="6" class="c-database" data-animate="node" style="--step:3" stroke-width="1.5"/>
@@ -616,7 +631,7 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="551" y="122" class="t-muted" font-size="7" text-anchor="middle">TEST · 202656</text>
         </g>
 
-        <g id="node-docente" data-node-id="docente" data-node-label="Docente" tabindex="0" role="button" aria-label="Enfocar Docente, autoservicio, Participante de secuencia" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="autoservicio" data-node-context="Participante de secuencia">
+        <g id="node-docente" data-node-id="docente" data-node-label="Docente" tabindex="0" role="button" aria-label="Enfocar Docente, autoservicio, Participante de secuencia" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="autoservicio" data-node-context="Participante de secuencia" data-step-state="pending">
           <title>Docente · autoservicio · Participante de secuencia</title>
           <rect x="638.6666666666666" y="72" width="113" height="60" rx="6" class="c-mask"/>
           <rect x="638.6666666666666" y="72" width="113" height="60" rx="6" class="c-frontend" data-animate="node" style="--step:4" stroke-width="1.5"/>
@@ -627,7 +642,7 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="695.1666666666666" y="122" class="t-muted" font-size="7" text-anchor="middle">autoservicio</text>
         </g>
 
-        <g id="node-registros" data-node-id="registros" data-node-label="Registros" tabindex="0" role="button" aria-label="Enfocar Registros, Académicos, Participante de secuencia" aria-pressed="false" data-node-kind="messagebus" data-node-sublabel="Académicos" data-node-context="Participante de secuencia">
+        <g id="node-registros" data-node-id="registros" data-node-label="Registros" tabindex="0" role="button" aria-label="Enfocar Registros, Académicos, Participante de secuencia" aria-pressed="false" data-node-kind="messagebus" data-node-sublabel="Académicos" data-node-context="Participante de secuencia" data-step-state="pending">
           <title>Registros · Académicos · Participante de secuencia</title>
           <rect x="782.8333333333333" y="72" width="113" height="60" rx="6" class="c-mask"/>
           <rect x="782.8333333333333" y="72" width="113" height="60" rx="6" class="c-messagebus" data-animate="node" style="--step:5" stroke-width="1.5"/>
@@ -641,7 +656,7 @@ rect.c-bg-rect { fill: var(--bg); }
           <text x="839.3333333333333" y="122" class="t-muted" font-size="7" text-anchor="middle">Académicos</text>
         </g>
 
-        <g id="node-vra" data-node-id="vra" data-node-label="Vicerrectorado" tabindex="0" role="button" aria-label="Enfocar Vicerrectorado, Académico, Participante de secuencia" aria-pressed="false" data-node-kind="external" data-node-sublabel="Académico" data-node-context="Participante de secuencia">
+        <g id="node-vra" data-node-id="vra" data-node-label="Vicerrectorado" tabindex="0" role="button" aria-label="Enfocar Vicerrectorado, Académico, Participante de secuencia" aria-pressed="false" data-node-kind="external" data-node-sublabel="Académico" data-node-context="Participante de secuencia" data-step-state="pending">
           <title>Vicerrectorado · Académico · Participante de secuencia</title>
           <rect x="927" y="72" width="113" height="60" rx="6" class="c-mask"/>
           <rect x="927" y="72" width="113" height="60" rx="6" class="c-external" data-animate="node" style="--step:6" stroke-width="1.5"/>

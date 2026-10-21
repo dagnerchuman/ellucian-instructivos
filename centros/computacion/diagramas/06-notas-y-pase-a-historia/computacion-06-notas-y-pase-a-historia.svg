@@ -402,13 +402,28 @@ svg[data-preset="editorial"][data-animation="trace"] [data-animate="node"] { ani
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.48; transform: scale(0.78); }
 }
+[data-theme="light"] .flow-nav-top { background: rgba(255, 255, 255, 0.94) !important; border-color: rgba(203, 213, 225, 0.85) !important; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 10px !important; }
+[data-theme="light"] .btn-flow-centros:hover { color: rgb(15, 23, 42) !important; }
+[data-theme="light"] .flow-bottom-card.primary-accent { background: linear-gradient(135deg, rgba(112, 48, 160, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%) !important; border-color: rgba(112, 48, 160, 0.3) !important; }
+.diagram-container svg [data-detail="fine"], .diagram-container svg [data-detail="context"], .diagram-container svg [data-detail], svg [data-detail="fine"], svg [data-detail="context"], svg [data-detail] { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+.diagram-container svg [data-detail-anchor], svg [data-detail-anchor] { transform: none !important; }
+.diagram-container svg g[data-step-state="pending"] &gt; rect:not(.c-mask), svg g[data-step-state="pending"] &gt; rect:not(.c-mask), g[data-step-state="pending"] &gt; rect:not(.c-mask) { fill: rgba(30, 41, 59, 0.45) !important; stroke: rgb(71, 85, 105) !important; stroke-width: 1.3px !important; stroke-dasharray: 5, 4 !important; filter: none !important; transition: 0.25s !important; }
+svg[data-ocultar-posteriores="true"] g[data-node-id="s5"], svg[data-ocultar-posteriores="true"] g[data-node-id="s6"], svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s4-s5"], svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s5-s6"], svg[data-ocultar-posteriores="true"] path[data-edge-to="s5"], svg[data-ocultar-posteriores="true"] path[data-edge-to="s6"], svg[data-ocultar-posteriores="true"] .phase-posterior-header { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity 0.25s, visibility 0.25s !important; }
+svg[data-ocultar-posteriores="true"] g.placeholder-pasos-posteriores { display: inline !important; cursor: pointer !important; }
+[data-theme="light"] .toolbar button.btn-tb-reset:hover { background: rgb(254, 226, 226) !important; color: rgb(220, 38, 38) !important; }
+[data-theme="light"] .toolbar button.btn-tb-resume { background: rgb(254, 243, 199) !important; color: rgb(180, 83, 9) !important; border-color: rgb(245, 158, 11) !important; }
+[data-theme="light"] .toolbar button.btn-tb-resume:hover { background: rgb(253, 230, 138) !important; color: rgb(146, 64, 14) !important; }
+[data-theme="light"] .btn-flow-reset { background: rgb(241, 245, 249) !important; color: rgb(100, 116, 139) !important; border-color: rgb(203, 213, 225) !important; }
+[data-theme="light"] .btn-flow-reset:hover { background: rgb(254, 226, 226) !important; color: rgb(220, 38, 38) !important; border-color: rgb(252, 165, 165) !important; }
+[data-theme="light"] .guia-banner-revision { background: rgb(254, 243, 199) !important; border-color: rgb(245, 158, 11) !important; color: rgb(146, 64, 14) !important; }
+[data-theme="light"] .btn-pie-resume { background: rgb(254, 243, 199) !important; border-color: rgb(245, 158, 11) !important; color: rgb(180, 83, 9) !important; }
 :root, svg { --bg: #020617; --grid: #1e293b; --canvas-dot: rgba(148, 163, 184, 0.16); --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
 @media (prefers-color-scheme: light) { :root, svg { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5; --text: #111827; --text-muted: #5b6474; --text-dim: #9aa3b2; --text-faint: #6b7280; --panel: #ffffff; --panel-border: #e5e7eb; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; } }
 svg[data-theme="light"] { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5; --text: #111827; --text-muted: #5b6474; --text-dim: #9aa3b2; --text-faint: #6b7280; --panel: #ffffff; --panel-border: #e5e7eb; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; }
 svg[data-theme="dark"] { --bg: #020617; --grid: #1e293b; --canvas-dot: rgba(148, 163, 184, 0.16); --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
 rect.c-bg-rect { fill: var(--bg); }
 </style><rect x="0" y="0" width="996" height="408" class="c-bg-rect"/>
-        <title id="archify-diagram-title">Centro de Computación · 6. Notas y pase a historia (Capacidades 7 y 8)</title>
+        <title id="archify-diagram-title">Centro de Computación · 6. Scripts 13 y 14 · Notas y pase a historia (Capacidades 7 y 8)</title>
         <desc id="archify-diagram-description">Capacidad 7.1 (Calificaciones) y 8 (CAPP) · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</desc>
         <!-- Definitions -->
         <defs>
@@ -454,14 +469,14 @@ rect.c-bg-rect { fill: var(--bg); }
 
 
         <!-- Edge paths -->
-        <path data-edge-from="n1" data-edge-to="n2" data-edge-key="0" data-edge-id="e-n1-n2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,120;226,120" d="M 198 120 L 226 120" class="a-emphasis" data-animate="edge" style="--step:0" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="n2" data-edge-to="n3" data-edge-key="1" data-edge-id="e-n2-n3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="301,154;301,246;346,246" d="M 301 154 L 301 246 L 346 246" class="a-emphasis" data-animate="edge" style="--step:1" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="n3" data-edge-to="n4" data-edge-key="2" data-edge-id="e-n3-n4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="496,246;524,246" d="M 496 246 L 524 246" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="n4" data-edge-to="n5" data-edge-key="3" data-edge-id="e-n4-n5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="599,212;599,120;644,120" d="M 599 212 L 599 120 L 644 120" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="n5" data-edge-to="n6" data-edge-key="4" data-edge-id="e-n5-n6" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="794,120;822,120" d="M 794 120 L 822 120" class="a-emphasis" data-animate="edge" style="--step:4" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="n1" data-edge-to="n2" data-edge-key="0" data-edge-id="e-n1-n2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,120;226,120" d="M 198 120 L 226 120" class="a-emphasis" data-animate="edge" style="--step:0" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
+        <path data-edge-from="n2" data-edge-to="n3" data-edge-key="1" data-edge-id="e-n2-n3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="301,154;301,246;346,246" d="M 301 154 L 301 246 L 346 246" class="a-emphasis" data-animate="edge" style="--step:1" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
+        <path data-edge-from="n3" data-edge-to="n4" data-edge-key="2" data-edge-id="e-n3-n4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="496,246;524,246" d="M 496 246 L 524 246" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
+        <path data-edge-from="n4" data-edge-to="n5" data-edge-key="3" data-edge-id="e-n4-n5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="599,212;599,120;644,120" d="M 599 212 L 599 120 L 644 120" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
+        <path data-edge-from="n5" data-edge-to="n6" data-edge-key="4" data-edge-id="e-n5-n6" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="794,120;822,120" d="M 794 120 L 822 120" class="a-emphasis" data-animate="edge" style="--step:4" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
 
         <!-- Nodes -->
-        <g id="node-n1" data-node-id="n1" data-node-label="SHAGRDE" tabindex="0" role="button" aria-label="Enfocar SHAGRDE, revisar la escala, Registros Académicos › Preparar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="revisar la escala" data-node-tag="nivel C · modo V" data-node-context="Registros Académicos › Preparar">
+        <g id="node-n1" data-node-id="n1" data-node-label="SHAGRDE" tabindex="0" role="button" aria-label="Enfocar SHAGRDE, revisar la escala, Registros Académicos › Preparar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="revisar la escala" data-node-tag="nivel C · modo V" data-node-context="Registros Académicos › Preparar" data-step-state="pending">
           <title>SHAGRDE · revisar la escala · Registros Académicos › Preparar · nivel C · modo V</title>
           <rect x="48" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="48" y="86" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:0" stroke-width="1.5"/>
@@ -473,7 +488,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="123" y="142" class="t-backend" font-size="7" text-anchor="middle">nivel C · modo V</text>
         </g>
 
-        <g id="node-n2" data-node-id="n2" data-node-label="SHAGCOM" tabindex="0" role="button" aria-label="Enfocar SHAGCOM, plan de evaluación, Registros Académicos › Preparar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="plan de evaluación" data-node-tag="componentes y pesos" data-node-context="Registros Académicos › Preparar">
+        <g id="node-n2" data-node-id="n2" data-node-label="SHAGCOM" tabindex="0" role="button" aria-label="Enfocar SHAGCOM, plan de evaluación, Registros Académicos › Preparar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="plan de evaluación" data-node-tag="componentes y pesos" data-node-context="Registros Académicos › Preparar" data-step-state="pending">
           <title>SHAGCOM · plan de evaluación · Registros Académicos › Preparar · componentes y pesos</title>
           <rect x="226" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="226" y="86" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
@@ -485,7 +500,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="301" y="142" class="t-backend" font-size="7" text-anchor="middle">componentes y pesos</text>
         </g>
 
-        <g id="node-n5" data-node-id="n5" data-node-label="SHRROLL" tabindex="0" role="button" aria-label="Enfocar SHRROLL, pase a historia, Registros Académicos › Cerrar" aria-pressed="false" data-node-kind="messagebus" data-node-sublabel="pase a historia" data-node-tag="notas a la historia" data-node-context="Registros Académicos › Cerrar">
+        <g id="node-n5" data-node-id="n5" data-node-label="SHRROLL" tabindex="0" role="button" aria-label="Enfocar SHRROLL, pase a historia, Registros Académicos › Cerrar" aria-pressed="false" data-node-kind="messagebus" data-node-sublabel="pase a historia" data-node-tag="notas a la historia" data-node-context="Registros Académicos › Cerrar" data-step-state="pending">
           <title>SHRROLL · pase a historia · Registros Académicos › Cerrar · notas a la historia</title>
           <rect x="644" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="644" y="86" width="150" height="68" rx="6" class="c-messagebus" data-animate="node" style="--step:4" stroke-width="1.5"/>
@@ -500,7 +515,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="719" y="142" class="t-messagebus" font-size="7" text-anchor="middle">notas a la historia</text>
         </g>
 
-        <g id="node-n6" data-node-id="n6" data-node-label="SMICRLT" tabindex="0" role="button" aria-label="Enfocar SMICRLT, revisar el avance, Registros Académicos › Cerrar" aria-pressed="false" data-node-kind="database" data-node-sublabel="revisar el avance" data-node-tag="CAPP: cumple o no" data-node-context="Registros Académicos › Cerrar">
+        <g id="node-n6" data-node-id="n6" data-node-label="SMICRLT" tabindex="0" role="button" aria-label="Enfocar SMICRLT, revisar el avance, Registros Académicos › Cerrar" aria-pressed="false" data-node-kind="database" data-node-sublabel="revisar el avance" data-node-tag="CAPP: cumple o no" data-node-context="Registros Académicos › Cerrar" data-step-state="pending">
           <title>SMICRLT · revisar el avance · Registros Académicos › Cerrar · CAPP: cumple o no</title>
           <rect x="822" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="822" y="86" width="150" height="68" rx="6" class="c-database" data-animate="node" style="--step:5" stroke-width="1.5"/>
@@ -513,7 +528,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="897" y="142" class="t-database" font-size="7" text-anchor="middle">CAPP: cumple o no</text>
         </g>
 
-        <g id="node-n3" data-node-id="n3" data-node-label="Autoservicio" tabindex="0" role="button" aria-label="Enfocar Autoservicio, registrar asistencia, Docente › Dictar" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="registrar asistencia" data-node-tag="poca asistencia: INH" data-node-context="Docente › Dictar">
+        <g id="node-n3" data-node-id="n3" data-node-label="Autoservicio" tabindex="0" role="button" aria-label="Enfocar Autoservicio, registrar asistencia, Docente › Dictar" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="registrar asistencia" data-node-tag="poca asistencia: INH" data-node-context="Docente › Dictar" data-step-state="pending">
           <title>Autoservicio · registrar asistencia · Docente › Dictar · poca asistencia: INH</title>
           <rect x="346" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="346" y="212" width="150" height="68" rx="6" class="c-frontend" data-animate="node" style="--step:2" stroke-width="1.5"/>
@@ -528,7 +543,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="421" y="268" class="t-frontend" font-size="7" text-anchor="middle">poca asistencia: INH</text>
         </g>
 
-        <g id="node-n4" data-node-id="n4" data-node-label="Autoservicio" tabindex="0" role="button" aria-label="Enfocar Autoservicio, registrar notas, Docente › Dictar" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="registrar notas" data-node-tag="aprueba con 11" data-node-context="Docente › Dictar">
+        <g id="node-n4" data-node-id="n4" data-node-label="Autoservicio" tabindex="0" role="button" aria-label="Enfocar Autoservicio, registrar notas, Docente › Dictar" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="registrar notas" data-node-tag="aprueba con 11" data-node-context="Docente › Dictar" data-step-state="pending">
           <title>Autoservicio · registrar notas · Docente › Dictar · aprueba con 11</title>
           <rect x="524" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="524" y="212" width="150" height="68" rx="6" class="c-frontend" data-animate="node" style="--step:3" stroke-width="1.5"/>

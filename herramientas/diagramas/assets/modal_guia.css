@@ -2636,3 +2636,67 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
     max-width: 100% !important;
   }
 }
+
+/* Lectura táctil del flujo
+   Un diagrama BPM no debe reducir sus nodos hasta volverlos ilegibles en un
+   teléfono. En pantallas estrechas se conserva una escala de lectura y el
+   lienzo se desplaza horizontalmente; los controles continúan anclados al
+   visor mediante la lógica nativa de Archify. */
+.mobile-flow-hint {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .diagram-container[data-wide-diagram="true"] {
+    --archify-mobile-flow-width: 880px;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    padding: 0.65rem 0.65rem 4.35rem !important;
+  }
+
+  .diagram-container[data-wide-diagram="true"] > svg {
+    width: var(--archify-mobile-flow-width) !important;
+    min-width: var(--archify-mobile-flow-width) !important;
+    max-width: none !important;
+  }
+
+  .diagram-container[data-wide-diagram="true"] .mobile-flow-hint {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 16;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: max-content;
+    max-width: calc(100% - 0.35rem);
+    margin: 0;
+    padding: 0.22rem 0.45rem;
+    border: 1px solid color-mix(in srgb, var(--panel-border) 80%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--panel) 90%, transparent);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+    color: var(--text-muted);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 0.625rem;
+    font-weight: 650;
+    letter-spacing: 0.01em;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  .diagram-container[data-wide-diagram="true"] .mobile-flow-hint.is-hidden {
+    opacity: 0;
+    transform: translateY(-0.2rem);
+  }
+}
+
+@media (max-width: 359px) {
+  .diagram-container[data-wide-diagram="true"] {
+    --archify-mobile-flow-width: 800px;
+  }
+}

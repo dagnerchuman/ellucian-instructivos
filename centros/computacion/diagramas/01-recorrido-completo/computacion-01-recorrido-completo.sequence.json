@@ -681,7 +681,7 @@
       "dot": "violet",
       "title": "Qué hace cada paso",
       "items": [
-        "1. SOATERM: abre el periodo 202656 y la parte X07",
+        "1. SOATERM: crea periodo en STVTERM, valida malla y abre parte X07",
         "2. SSASECT: crea el NRC y asigna al docente (NRC 1026)",
         "3. SIAASGN: revisa la carga lectiva del docente",
         "4. Oficio: envía la carga con su visto bueno por la intranet",
@@ -716,7 +716,8 @@
         "Los grupos duran 4, 6 u 8 semanas (X01–X07 en 2026)",
         "Asistencia mínima obligatoria para aprobar: 70 % (C63)",
         "Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)",
-        "Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)"
+        "Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)",
+        "Cupos reservados: se configuran en SSASECT > Información de ingreso de sección > Lugares reservados; SSARRES solo restringe la matrícula (C66)"
       ]
     },
     {

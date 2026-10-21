@@ -170,6 +170,10 @@
       "estado": "por probar",
       "evidencia": "Partes P01–P06 en un periodo nuevo"
     },
+    "11-B": {
+      "estado": "validado",
+      "evidencia": "Programa MMEMM01 con Major MM01-01 y reglas MM01-01 a 03 en TEST (17/10/2026)"
+    },
     "12": {
       "estado": "por probar",
       "evidencia": "SHRROLL con la escala del nivel M"
@@ -232,6 +236,8 @@
   ],
   "casuisticas": {
     "matricula": [
+      "11",
+      "11-B",
       "01",
       "16",
       "15",

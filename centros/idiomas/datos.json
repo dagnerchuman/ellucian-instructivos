@@ -462,6 +462,10 @@
       "estado": "por probar",
       "evidencia": "Partes I01–I12 en un periodo nuevo"
     },
+    "11-B": {
+      "estado": "validado",
+      "evidencia": "Programa IMEMI03 con Major MI03-01 y reglas curriculares Básicos/Intermedios en TEST (13/10/2026)"
+    },
     "12": {
       "estado": "por probar",
       "evidencia": "SHRROLL con escala del nivel I"
@@ -530,6 +534,8 @@
   ],
   "casuisticas": {
     "matricula": [
+      "11",
+      "11-B",
       "04",
       "15",
       "08",

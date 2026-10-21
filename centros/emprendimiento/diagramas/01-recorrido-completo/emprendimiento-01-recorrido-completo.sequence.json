@@ -3,7 +3,7 @@
   "diagram_type": "sequence",
   "meta": {
     "title": "Centro de Emprendimiento · 1. Recorrido completo en Banner (Capacidades 1 a 8)",
-    "subtitle": "Capacidades 1 a 8 · Ciclo integral en Banner · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "subtitle": "Capacidades 1 a 8 · Ciclo integral en Banner · Nivel M · Programa MMEMM01 · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -681,14 +681,14 @@
       "dot": "violet",
       "title": "Qué hace cada paso",
       "items": [
-        "1. SOATERM: abre el periodo 202656 y la parte P06",
+        "1. SOATERM: crea periodo en STVTERM, valida malla y abre parte P06",
         "2. SSASECT: crea el NRC y asigna al docente (NRC 1025)",
         "3. SIAASGN: revisa la carga lectiva del docente",
         "4. Oficio: envía la carga con su visto bueno por la intranet",
         "5. Resolución: el Vicerrector aprueba la carga lectiva",
         "6. Solicitud: el alumno pide el curso (USS o externo)",
         "7. GOAMTCH: busca o crea a la persona",
-        "8. SAAQUIK: admite al alumno en el programa por confirmar",
+        "8. SAAQUIK: admite al alumno en el programa MMEMM01",
         "9. SFAREGS: matricula al alumno en el NRC (RE)",
         "10. TSAAREV: el alumno recibe el cobro en su cuenta",
         "11. Autoservicio: el docente registra asistencia y notas",

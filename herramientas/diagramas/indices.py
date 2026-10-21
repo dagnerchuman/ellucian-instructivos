@@ -38,7 +38,14 @@ def rel(ruta, desde):
 
 def enlaces_md(base, desde):
     b = rel(base, desde)
-    return f"[HTML]({b}.html) · [PNG claro]({b}-claro.png) · [PNG oscuro]({b}-oscuro.png) · [SVG]({b}.svg)"
+    partes = [f"[HTML]({b}.html)"]
+    if (base.parent / f"{base.name}-claro.png").exists():
+        partes.append(f"[PNG claro]({b}-claro.png)")
+    if (base.parent / f"{base.name}-oscuro.png").exists():
+        partes.append(f"[PNG oscuro]({b}-oscuro.png)")
+    if (base.parent / f"{base.name}.svg").exists():
+        partes.append(f"[SVG]({b}.svg)")
+    return " · ".join(partes)
 
 
 def tabla_diagramas(carpeta, desde):

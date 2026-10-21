@@ -155,6 +155,19 @@
       ]
     },
     {
+      "id": "11-B",
+      "nombre": "Diseño de mallas y programas",
+      "capacidad": "Capacidad 1",
+      "capacidad_nombre": "Capacidad 1.1 y 1.2 · Programas, Major y Mallas (SMAPROG, STVMAJR)",
+      "paginas": [
+        "STVMAJR",
+        "SMAPRLE",
+        "SOACURR",
+        "SMAAREA",
+        "SMAPROG"
+      ]
+    },
+    {
       "id": "12",
       "nombre": "Cierre de periodo",
       "capacidad": "Capacidad 7",

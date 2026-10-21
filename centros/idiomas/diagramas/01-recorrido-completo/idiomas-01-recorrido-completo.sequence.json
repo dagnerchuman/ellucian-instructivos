@@ -681,7 +681,7 @@
       "dot": "violet",
       "title": "Qué hace cada paso",
       "items": [
-        "1. SOATERM: abre el periodo 202656 y la parte I10",
+        "1. SOATERM: crea periodo en STVTERM, valida malla y abre parte I10",
         "2. SSASECT: crea el NRC y asigna al docente (NRC 10024)",
         "3. SIAASGN: revisa la carga lectiva del docente",
         "4. Oficio: envía la carga con su visto bueno por la intranet",

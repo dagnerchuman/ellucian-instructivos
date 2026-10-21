@@ -49,6 +49,7 @@ ESTADO_TEXTO = {
 
 CITAS = {
     "periodo": "Periodo y partes: instructivos 1.1.1 y 1.1.2",
+    "mallas": "Programas y mallas: instructivos 1.1.3 (STVMAJR, SOACURR) y 1.2.1 (SMAPROG, SMAAREA)",
     "catalogo": "Catálogo y prerrequisitos: instructivos 1.1.4 (SCACRSE) y 1.1.5 (SCAPREQ)",
     "nrc": "NRC en SSASECT: instructivo 5.3, diap. 19 a 32",
     "docente": "Docente en SIAINST: instructivo 5.2 Información de docentes, diap. 16 a 20",
@@ -108,10 +109,10 @@ TITULOS = {
     "tres-centros": "El mismo flujo en los tres centros",
     "recorrido-completo": "Recorrido completo en Banner",
     "crear-el-nrc": "Crear el NRC",
-    "carga-lectiva": "Carga lectiva del docente",
+    "carga-lectiva": "Script 18-A · Carga lectiva del docente",
     "persona-y-admision": "Persona y admisión",
-    "matricula-en-el-nrc": "Matrícula en el NRC",
-    "notas-y-pase-a-historia": "Notas y pase a historia",
+    "matricula-en-el-nrc": "Script 01 · Matrícula en el NRC",
+    "notas-y-pase-a-historia": "Scripts 13 y 14 · Notas y pase a historia",
     "ligas-teorico-y-club": "Ligas: NRC teórico + club de conversación",
     **{slug_script(i): f"Script {i} · {n}" for i, n in CATALOGO.items()},
 }
@@ -229,7 +230,7 @@ def recorrido(c):
     ]
     tramos = [
         ("Preparar", [
-            ("registros", "banner", "SOATERM", "emphasis", f"abre el periodo {c.periodo_ejemplo} y la parte {c.parte_ejemplo}"),
+            ("registros", "banner", "SOATERM", "emphasis", f"crea periodo en STVTERM, valida malla y abre parte {c.parte_ejemplo}"),
             ("jefe", "banner", "SSASECT", "emphasis", f"crea el NRC y asigna al docente ({dato_nrc(c)})"),
             ("jefe", "banner", "SIAASGN", "emphasis", "revisa la carga lectiva del docente"),
             ("jefe", "vra", "Oficio", "default", "envía la carga con su visto bueno por la intranet"),
@@ -530,6 +531,18 @@ CASOS = {
             ("SMICRLT", "segregación cursos", "ESEC 00650 a «Cursos no usados»"),
             ("SMARQCM", "dictamen NO CUMPLE", "retorno obligatorio a cursar")],
            ("Curso no usado", "repite la asignatura"), "capp"),
+    "11": (("Apertura de periodo", "nuevo ciclo lectivo"),
+           [("STVTERM", "crear periodo base", "año 202656 · fechas oficiales"),
+            ("STVPTRM", "partes de periodo", "subperiodos (ej. X01, I01, P01)"),
+            ("SOATERM", "control de periodo", "secuencia NRC (10001) y reglas"),
+            ("SIATERM", "duración académica", "factor minutos por hora")],
+           ("Periodo habilitado", "listo para programar NRCs"), "periodo"),
+    "11-B": (("Diseño curricular", "carrera, programa y malla"),
+             [("STVMAJR", "código de carrera", "carrera / major según centro"),
+              ("SMAPRLE", "código de programa", "nivel, escuela EM y grado"),
+              ("SOACURR", "regla de currículo", "vincular programa + campus + major"),
+              ("SMAPROG", "malla del programa", "anexar áreas SMAAREA y créditos")],
+             ("Malla aprobada", "lista para admisión y CAPP"), "mallas"),
     "12": (("Fin de periodo", "calificaciones listas"),
            [("SFASLST", "ingreso de notas", "S00581109 (16), S00581108 (08), INH"),
             ("SHAGRDE", "alineación modo V", "diagnóstico y resolución U20"),
@@ -566,6 +579,30 @@ CASOS = {
               ("TSAAREV", "regularización caja", "pago en caja institucional"),
               ("SFAREGS", "matrícula exitosa", "código RE · cupo asignado")],
              ("Bloqueo fatal garantizado", "hasta regularizar"), "retencion"),
+    "02": (("Cupo lleno", "NRC saturado (2/2 vacantes)"),
+           [("SFAROVR", "reglas de sobrepaso", "regla CAPACIDAD en periodo"),
+            ("SFASRPO", "autorizar sobrepaso", "permiso alumno S00581110"),
+            ("SFAREGS", "matrícula con permiso", "código RE sobrecupo"),
+            ("SSASECT", "cupo excedido", "Actual 3 / Max 2 vacantes")],
+           ("Inscrito con sobrepaso", "cupo superado con permiso"), "matricula"),
+    "06": (("Doble programa", "Pregrado + Centros en paralelo"),
+           [("SGASTDN", "currícula primaria", "orden 1 (Pregrado activo)"),
+            ("SGASTDN", "currícula secundaria", "orden 2 (CMEMC38 Centros)"),
+            ("SFAREGS", "elegibilidad de planes", "autorización estatus EL"),
+            ("SFAREGS", "inscripción cruzada", "NRC carrera + NRC centros")],
+           ("Doble programa activo", "trazabilidad independiente"), "estudiante"),
+    "07": (("Triple programa", "Pregrado + Idiomas + Computación"),
+           [("SGASTDN", "alta curricular triple", "3 expedientes simultáneos"),
+            ("SGASTDN", "niveles académicos", "Nivel 1 + Nivel I + Nivel C"),
+            ("SFAREGS", "habilitar transacciones", "código EL en 3 programas"),
+            ("SFAREGS", "matrícula multiescuela", "NRCs por centro y pregrado")],
+           ("3 programas vigentes", "sin conflicto curricular"), "estudiante"),
+    "17": (("Conflicto horario", "mismo bloque y docente"),
+           [("SSASECT", "horario sección A", "NRC 1021 · L-M 08:00–12:00"),
+            ("SSASECT", "asignar a sección B", "NRC 1026 mismo bloque docente"),
+            ("SSASECT", "alerta de conflicto", "alerta cruce horario instructor"),
+            ("SSASECT", "crear sobrepaso", "Indicador de sobrepaso docente")],
+           ("Conflicto resuelto", "docente con sobrepaso"), "nrc"),
 }
 
 EXTRA_CASOS = {
@@ -654,6 +691,30 @@ EXTRA_CASOS = {
             "Paso 07 (SMARQCM): Auditoría Final y Dictamen CAPP — Reporte consolidado confirmando rechazo de créditos y plan incompleto.",
         ],
     },
+    "11": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Capacidad 1.1 · Instructivos 1.1.1 y 1.1.2)",
+        "items": [
+            "Paso 01 (STVACYR / STVTRMT): Tablas Previas — Validación del año académico institucional y tipo de periodo (Semestral, Verano).",
+            "Paso 02 (STVTERM): Periodo Base — Código alfanumérico (ej. 202656), descripción, fechas de inicio/fin y fechas de alojamiento obligatorias.",
+            "Paso 03 (STVPTRM): Catálogo de Partes — Creación de subperiodos con descripción institucional (ej. X01-X07, I01-I12, P01-P06).",
+            "Paso 04 (SOATERM): Control de Periodo — Secuencia inicial de NRCs (ej. 10001), activar inscripción (Permitir) y casillas de prerrequisitos En Progreso.",
+            "Paso 05 (SOATERM): Partes de Periodo — Configuración de cada subperiodo con fechas exactas, semanas de duración y fecha de censo 1 obligatoria.",
+            "Paso 06 (SIATERM): Factor de Duración — Asignación de minutos por hora académica para el cálculo lectivo del periodo.",
+        ],
+    },
+    "11-B": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Capacidad 1.1 y 1.2 · Instructivos 1.1.3 y 1.2.1)",
+        "items": [
+            "Paso 01 (STVMAJR): Código de Carrera / Major — Creación del Major institucional y activación de la casilla Carrera.",
+            "Paso 02 (SMAPRLE): Definición de Programa — Código del programa (12 caracteres), nivel académico, grado 000000 y escuela EM.",
+            "Paso 03 (SOACURR): Regla Curricular — Vinculación del programa con Campus S, periodo de inicio, Major de STVMAJR y departamento institucional.",
+            "Paso 04 (SMAALIB): Biblioteca de Áreas — Definición del código de área curricular con casilla Cumplimiento activada para auditoría CAPP.",
+            "Paso 05 (SMAAREA): Requerimientos de Área — Reglas de asignaturas del catálogo (SCACRSE), condiciones y nota mínima aprobatoria (Modo V, 11).",
+            "Paso 06 (SMAPROG): Malla Oficial del Programa — Requerimientos generales, créditos totales requeridos y anexo formal de áreas curriculares.",
+        ],
+    },
     "12": {
         "dot": "violet",
         "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 7.1 y 8)",
@@ -730,6 +791,50 @@ EXTRA_CASOS = {
             "Paso 07 (SFAREGS): Inscripción Exitosa — Confirmación de matrícula con estatus RE y asignación de vacante.",
         ],
     },
+    "02": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 5.4)",
+        "items": [
+            "Paso 01 (SFAROVR): Verificación de Regla — Habilitación de sobrepaso CAPACIDAD en periodo 202656.",
+            "Paso 02 (SSASECT): Confirmación de Aforo Lleno — NRC 1021 con Maximum 2 y Actual 2 (Remaining 0).",
+            "Paso 03 (SFASRPO): Otorgamiento de Permiso — Ingreso del ID S00581110 y selección de sobrepaso CAPACIDAD.",
+            "Paso 04 (SFAREGS): Matrícula Especial — Captura de NRC 1021 con código RE sin rechazo de Closed Section.",
+            "Paso 05 (SSASECT / SFASLST): Auditoría Final — Actual 3/2 vacantes y alumno registrado en lista de clase.",
+        ],
+    },
+    "06": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 4.1 y 5.4)",
+        "items": [
+            "Paso 01 (SGASTDN): Expediente Pregrado — Verificación de currícula primaria (Orden 1, nivel Pregrado).",
+            "Paso 02 (SGASTDN): Anexo de Programa Centros — Inserción de currícula secundaria (Orden 2, nivel C, programa CMEMC38).",
+            "Paso 03 (SFAREGS): Selección de Plan — Alternancia de planes en bloque Curricula marcando ambos con estatus EL.",
+            "Paso 04 (SFAREGS): Inscripción Multiescuela — Registro independiente de asignatura de carrera y módulo de centros.",
+            "Paso 05 (SHATERM / CAPP): Trazabilidad de Avance — Los créditos y notas tributan al historial del programa respectivo.",
+        ],
+    },
+    "07": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 4.1 y 5.4)",
+        "items": [
+            "Paso 01 (SGASTDN): Alta Curricular Triple — Expediente del alumno S00581091 con tres planes activos: Pregrado, Idiomas y Computación.",
+            "Paso 02 (SGASTDN): Validación de Niveles — Nivel 1 (Pregrado), Nivel I (Idiomas) y Nivel C (Computación) con grado 000000.",
+            "Paso 03 (SFAREGS): Habilitación Transaccional — Autorización curricular EL en los tres programas académicos.",
+            "Paso 04 (SFAREGS): Inscripción de NRCs — Alta secuencial de NRCs de cada centro sin conflicto de incompatibilidad.",
+            "Paso 05 (SFASLST / CAPP): Auditoría de Listas — Presencia en las actas de cada escuela con auditoría independiente.",
+        ],
+    },
+    "17": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Excel TEST · Capacidad 5.3)",
+        "items": [
+            "Paso 01 (SSASECT): Horario Sección Origen — Programación del NRC 1021 con bloque Lunes y Miércoles 08:00–12:00, docente 100582059.",
+            "Paso 02 (SSASECT): Asignación a Sección Destino — Apertura de NRC 1026 en el mismo horario e ingreso del mismo docente.",
+            "Paso 03 (SSASECT): Detección de Conflicto — Banner emite alerta: «ERROR: Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso?».",
+            "Paso 04 (SSASECT): Autorización de Sobrepaso — Aceptación con OK, marcando automáticamente el «Indicador de sobrepaso».",
+            "Paso 05 (SIAASGN): Auditoría de Carga — Verificación de horas simultáneas asignadas al docente sin duplicidad de FTE.",
+        ],
+    },
 }
 
 
@@ -756,6 +861,21 @@ def caso(c, id_script):
                  ("SFAREGS", "traslado simultáneo", "DD en origen · RE en destino"),
                  ("SFASLST", "auditoría lista", "alta en nueva sección")],
                 ("En el nuevo NRC", "lista actualizada"), "matricula")
+    if id_script == "11":
+        return (("Apertura periodo", f"ciclo {c.periodo_ejemplo}"),
+                [("STVTERM", "crear periodo base", f"{c.periodo_ejemplo} · fechas oficiales"),
+                 ("STVPTRM", "partes de periodo", f"subperiodos {c.partes}"),
+                 ("SOATERM", "control de periodo", "secuencia NRC y reglas"),
+                 ("SIATERM", "duración académica", "hora académica")],
+                ("Periodo activo", "listo para programar NRCs"), "periodo")
+    if id_script == "11-B":
+        area = c.d.get("capp", {}).get("area") or c.d.get("capp", {}).get("codigo") or "malla base"
+        return (("Diseño curricular", f"programa {c.programa}"),
+                [("STVMAJR", "código de carrera", f"Major {c.d['mayor']['codigo']}"),
+                 ("SMAPRLE", "código de programa", f"Programa {c.programa} · nivel {c.nivel}"),
+                 ("SOACURR", "regla de currículo", f"Campus S · {c.d['departamento']['codigo']}"),
+                 ("SMAPROG", "malla del programa", f"Área {area} · regla CAPP")],
+                ("Malla aprobada", "lista para admisión y CAPP"), "mallas")
     sit, pasos, res, cita = CASOS[id_script]
     if id_script == "13" and c.d["escala"]:
         res = (res[0], f"aprueba con {c.d['escala']['nota_minima']}")
@@ -863,7 +983,7 @@ DIAGRAMAS_BASE = [
 
 def diagramas_de(c):
     """[(número, slug, función(c))]: los 6 flujos base, los propios del centro y una casuística por diagrama."""
-    propios = [(7, "ligas-teorico-y-club", lambda c: ligas(c, 7))] if c.d.get("ligas") else []
+    propios = [(7, "ligas-teorico-y-club", lambda c: ligas(c, 7))] if c.d.get("ligas") and c.d["ligas"].get("secundaria") else []
     return DIAGRAMAS_BASE + propios + casuisticas_de(c, 7 + len(propios))
 
 

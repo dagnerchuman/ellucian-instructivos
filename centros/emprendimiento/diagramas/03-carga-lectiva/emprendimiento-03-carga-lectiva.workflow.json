@@ -2,8 +2,8 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Emprendimiento · 3. Carga lectiva del docente (Capacidad 5)",
-    "subtitle": "Capacidad 5.2 · Carga de trabajo docente · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "title": "Centro de Emprendimiento · 3. Script 18-A · Carga lectiva del docente (Capacidad 5)",
+    "subtitle": "Capacidad 5.2 · Carga de trabajo docente · Nivel M · Programa MMEMM01 · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",

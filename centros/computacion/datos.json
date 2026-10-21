@@ -264,6 +264,10 @@
       "estado": "validado",
       "evidencia": "05/10: el periodo 202751 «2027-V Verano Idi.Com.Emp.» ya existía, con la parte X01 (12-ENE a 22-FEB-2027, 6 semanas). Se creó en SSASECT un NRC de prueba ESEC 00650 sección A en 202751/X01. Partes de periodo se copian/gestionan en SOATERM (Instructivo 1.1.2, U22 resuelta)"
     },
+    "11-B": {
+      "estado": "validado",
+      "evidencia": "Malla CMEMC38 (regla ECOM-01, área MC38-01) con Major ACXP configurada en TEST (U19/U20 resueltas)"
+    },
     "12": {
       "estado": "validado",
       "evidencia": "GJAPCTL: jobs SHRROLL 8113 y 8114 exitosos"
@@ -318,10 +322,14 @@
   ],
   "casuisticas": {
     "matricula": [
+      "11",
+      "11-B",
       "15",
+      "02",
       "08",
       "16",
-      "09"
+      "09",
+      "06"
     ],
     "notas": [
       "03",

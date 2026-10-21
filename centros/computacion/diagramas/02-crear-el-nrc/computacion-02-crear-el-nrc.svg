@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 1112 282" data-layout-contract="readable-v2" role="img" lang="es" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" style="width: 1112px; height: 282px; min-width: 0px;" data-ocultar-posteriores="true" width="1112" height="282" xmlns="http://www.w3.org/2000/svg"><style>
+<svg viewBox="0 0 1112 282" data-layout-contract="readable-v2" role="img" lang="es" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" style="width: 1112px; height: 282px; min-width: 0px;" width="1112" height="282" xmlns="http://www.w3.org/2000/svg"><style>
 /*
 JetBrains Mono variable WOFF2 subsets from Google Fonts service revision v24.
 These fixed bytes are shared by the viewer and its SVG/raster exports.
@@ -573,4 +573,4 @@ rect.c-bg-rect { fill: var(--bg); }
             <text x="308" y="202" class="t-muted" font-size="7.5" font-weight="500">Banner: se consulta</text>
           </g>
         </g>
-      <g id="placeholder-posteriores-svg" class="placeholder-pasos-posteriores" tabindex="0" role="button" aria-label="Desplegar pasos posteriores: horario y consulta oficial"><rect x="760" y="86" width="328" height="68" rx="6"/><text x="924" y="116" class="placeholder-title" text-anchor="middle" font-size="10" font-weight="600">➕ Pasos 5 y 6: horario y consulta</text><text x="924" y="136" class="placeholder-sub" text-anchor="middle" font-size="7.5" font-weight="500">Clic para ver · Horario/docente y consulta oficial</text></g></svg>
+      </svg>

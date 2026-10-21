@@ -3,7 +3,7 @@
   "diagram_type": "workflow",
   "meta": {
     "title": "Centro de Emprendimiento · 4. Persona y admisión (Capacidades 3, 4 y 5)",
-    "subtitle": "Capacidad 5.1 (Persona) y 3.2 (Admisión) · Nivel M · Programa por confirmar · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
+    "subtitle": "Capacidad 5.1 (Persona) y 3.2 (Admisión) · Nivel M · Programa MMEMM01 · Materia ESGE · Partes P01–P06 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
       "page.title": "{title} · Diagrama",
@@ -544,7 +544,7 @@
       "label": "SAAQUIK",
       "sublabel": "elegir el programa",
       "width": 150,
-      "tag": "programa por confirmar"
+      "tag": "programa MMEMM01"
     },
     {
       "id": "a5",
@@ -554,7 +554,7 @@
       "label": "SGASTDN",
       "sublabel": "revisar al alumno",
       "width": 150,
-      "tag": "estatus AS"
+      "tag": "estatus AS · mayor MM01-01"
     }
   ],
   "edges": [

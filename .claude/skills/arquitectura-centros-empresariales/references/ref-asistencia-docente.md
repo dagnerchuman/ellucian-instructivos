@@ -5,7 +5,7 @@
 - El componente lleva peso **0.00**, la casilla **Debe Pasar** y una escala propia de asistencia. La nota aprobatoria de esa escala debe corresponder al porcentaje mínimo de asistencia requerido para aprobar el curso. *(instructivos 7.1.0 Usar Componente Asistencia, diap. 29; 7.1.4, diap. 55)*
 - En Computación, el mínimo confirmado es **70 % de asistencia** (C63); se mantiene separado de la nota mínima aprobatoria **11** del modo vigesimal `V` (ADR-009).
 - `ATTRGRD` es la configuración del componente dentro del libro de calificaciones; no es el nombre de la opción que abre el control diario de asistencia.
-- En la prueba del NRC `10026` de Computación (periodo `202656`), el usuario confirma como correcta la configuración indicada: peso `0.00`, **Debe aprobar** y una escala propia de asistencia correspondiente al `70 %`, distinta de la escala regular `VIG_11` (C94). La confirmación de los valores no demuestra que se hayan guardado ni que el comportamiento haya sido validado en TEST; el Script 19 sigue por probar.
+- En el NRC `10026` de Computación (periodo `202656`), el usuario confirma que completó y validó en TEST el flujo `SHAEGBC` → `SHAGCOM` (C95). La fila `ATTRGRD` usa peso `0.00`, **Debe aprobar** y escala propia de asistencia correspondiente al `70 %`, distinta de `VIG_11`, que se mantiene como escala regular.
 
 ## Docente: ingresar y revisar la asistencia diaria
 - Desde la página de inicio de **Faculty (Autoservicio Docente)**, el menú ofrece **Control de asistencia del docente**. *(instructivo 10.4.2.4.5 Configuración de Autoservicio, diap. 12)*

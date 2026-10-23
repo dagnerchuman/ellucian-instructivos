@@ -312,8 +312,8 @@
       "evidencia": "05/10: no existe un servicio de queja (17 servicios en SVVSRVC; U14). El mecanismo se validó con CER (Certificado): la solicitud se crea en el Autoservicio del alumno (100582059) y se atiende en SVASVPR (estatus, comentario interno y de respuesta). SVASVPR no deja crear solicitudes («Función inválida»)"
     },
     "19": {
-      "estado": "por probar",
-      "evidencia": "En curso en TEST: periodo 202656, NRC 10026 (ESEC 00697, X06). El usuario confirma que la configuración indicada de ATTRGRD es correcta: peso 0.00, Debe aprobar y escala propia de asistencia para 70 %, con VIG_11 como escala regular. Falta confirmar el guardado y el resultado."
+      "estado": "validado",
+      "evidencia": "23/10/2026: el usuario confirma que completó y validó en TEST el flujo SHAEGBC → SHAGCOM para el periodo 202656, NRC 10026 (ESEC 00697, X06). Configuración de ATTRGRD confirmada: peso 0.00, Debe aprobar, escala propia de asistencia para 70 %, separada de VIG_11 como escala regular. C95."
     }
   },
   "particularidades": [

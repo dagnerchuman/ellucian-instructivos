@@ -103,12 +103,12 @@ Parte de periodo general: **CGE**.
 | **18-A** | Auditoría de carga docente | `SIAASGN` | ✅ Validado | Docente DCHUMAN con 4 NRCs (horas semanales, contacto y FTE nativos). |
 | **18-B** | Retenciones y bloqueo fatal | `SOAHOLD` / `STVHLDD` | ✅ Validado | Retención TT bloqueando matrícula en SFAREGS (*ERROR*). |
 | **18-C** | Solicitud de servicio / queja | Autoservicio → `SVASVPR` | ✅ **Validado (05/10)** | Mecanismo validado con `CER` (Certificado): el alumno (100582059) crea la solicitud en el Autoservicio y se atiende en `SVASVPR` (estatus, comentario interno y comentario de respuesta). `SVASVPR` no deja crear solicitudes (*«Función inválida»*). **No existe un servicio de queja**: hay 17 en SVVSRVC, todos de carpetas, certificado y constancia (U14). |
-| **19** | Calendario de calificaciones y componente `ATTRGRD` | `SHAEGBC` → `SHAGCOM` | ⏳ **Por probar** | En curso en TEST: periodo 202656, NRC 10026 (`ESEC 00697`, X06). El usuario confirma que los valores indicados para `ATTRGRD` son correctos: peso 0.00, **Debe aprobar** y escala propia de asistencia para 70 %, separada de `VIG_11` (escala regular). Falta confirmar guardado y resultado. Nota mínima del curso: 11. |
+| **19** | Calendario de calificaciones y componente `ATTRGRD` | `SHAEGBC` → `SHAGCOM` | ✅ **Validado (23/10)** | El usuario confirma que completó y validó en TEST el flujo para el periodo 202656, NRC 10026 (`ESEC 00697`, X06). `ATTRGRD`: peso 0.00, **Debe aprobar** y escala de asistencia del 70 %, separada de `VIG_11`. Nota mínima regular del curso: 11 (C95). |
 
 ---
 
 ## ▶️ Dónde quedamos (05/10/2026)
-- **18 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07; Script 19 sigue por probar.
+- **19 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07.
 - **Faltan 05 y 07:**
   1. Script 05: en Idiomas el egresado no lleva el curso (C50, ADR-012). ¿Computación trabaja igual? (U24)
   2. Script 07: ya no hay que esperar a la USS. Se cierra en el **bloque 2 de `centros/idiomas/pruebas-test.md`**, al agregar el programa de Idiomas a `S00581091`.

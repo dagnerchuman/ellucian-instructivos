@@ -522,10 +522,10 @@
       "lane": "caso",
       "col": 3,
       "type": "database",
-      "label": "Criterios objetivo",
+      "label": "Criterios confirmados",
       "sublabel": "nota ≥11 · asistencia ≥70%",
       "width": 170,
-      "tag": "por probar en TEST",
+      "tag": "validado en TEST",
       "icon": "success"
     }
   ],
@@ -554,7 +554,7 @@
       "dot": "emerald",
       "title": "Probado en TEST",
       "items": [
-        "Por probar en test: En curso en TEST: periodo 202656, NRC 10026 (ESEC 00697, X06). El usuario confirma que la configuración indicada de ATTRGRD es correcta: peso 0.00, Debe aprobar y escala propia de asistencia para 70 %, con VIG_11 como escala regular. Falta confirmar el guardado y el resultado."
+        "23/10/2026: el usuario confirma que completó y validó en TEST el flujo SHAEGBC → SHAGCOM para el periodo 202656, NRC 10026 (ESEC 00697, X06). Configuración de ATTRGRD confirmada: peso 0.00, Debe aprobar, escala propia de asistencia para 70 %, separada de VIG_11 como escala regular. C95."
       ]
     },
     {
@@ -565,7 +565,7 @@
         "SHAGCOM (Plan de evaluación): ejemplo TEST, periodo 202656, NRC 10026, materia ESEC, curso 00697, parte X06.",
         "Agregar ATTRGRD con peso 0.00, marcar Debe Pasar y seleccionar la escala propia de asistencia que corresponda al mínimo institucional de 70 %.",
         "En Computación, mantener el modo V con nota mínima aprobatoria 11. Son dos criterios: nota ≥11 y asistencia ≥70 %.",
-        "Estado del ejemplo: por probar. No marcarlo validado hasta confirmar guardado del calendario y del componente, y verificar el resultado en TEST."
+        "Computación, NRC 10026: Script 19 validado en TEST por confirmación del usuario (C95)."
       ]
     },
     {

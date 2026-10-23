@@ -69,7 +69,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **10019**: ESEC 00679, sección A, parte X06. OFIMÁTICA EXCEL 365 (Hoja oficial 202656).
 - NRC **10026**: ESEC 00697, sección A, parte X06. Ejemplo actual de configuración de asistencia y ATTRGRD (capturas TEST 23/10/2026).
 
-## Scripts de prueba (18 validado · 2 pendiente · 1 no aplica · 1 por probar)
+## Scripts de prueba (19 validado · 2 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |
 |---|---|---|---|
 | 01 | Matrícula regular | validado | NRC 1021 (S00581081, S00581091) y NRC 1026 (S00581108, S00581109) |
@@ -93,7 +93,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 18-A | Auditoría de carga docente | validado | SIAASGN: docente 100582059 con 4 NRC, horas y FTE |
 | 18-B | Retenciones y bloqueo de matrícula | validado | Retención TT bloquea la inscripción en SFAREGS |
 | 18-C | Solicitud de servicio o queja | validado | 05/10: no existe un servicio de queja (17 servicios en SVVSRVC; U14). El mecanismo se validó con CER (Certificado): la solicitud se crea en el Autoservicio del alumno (100582059) y se atiende en SVASVPR (estatus, comentario interno y de respuesta). SVASVPR no deja crear solicitudes («Función inválida») |
-| 19 | Calendario de calificaciones y componente ATTRGRD | por probar | En curso en TEST: periodo 202656, NRC 10026 (ESEC 00697, X06). El usuario confirma que la configuración indicada de ATTRGRD es correcta: peso 0.00, Debe aprobar y escala propia de asistencia para 70 %, con VIG_11 como escala regular. Falta confirmar el guardado y el resultado. |
+| 19 | Calendario de calificaciones y componente ATTRGRD | validado | 23/10/2026: el usuario confirma que completó y validó en TEST el flujo SHAEGBC → SHAGCOM para el periodo 202656, NRC 10026 (ESEC 00697, X06). Configuración de ATTRGRD confirmada: peso 0.00, Debe aprobar, escala propia de asistencia para 70 %, separada de VIG_11 como escala regular. C95. |
 
 ## Por confirmar
 - **U05**: Nombres oficiales de los cursos y pesos de evaluación

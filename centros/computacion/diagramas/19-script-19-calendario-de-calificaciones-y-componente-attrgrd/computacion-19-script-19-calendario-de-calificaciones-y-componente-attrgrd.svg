@@ -521,17 +521,17 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="529" y="142" class="t-backend" font-size="7" text-anchor="middle">NRC 10026 · ESEC 00697 · X06</text>
         </g>
 
-        <g id="node-cr" data-node-id="cr" data-node-label="Criterios objetivo" tabindex="0" role="button" aria-label="Enfocar Criterios objetivo, nota ≥11 · asistencia ≥70%, Capacidad 7 · Situación → pasos → resultado" aria-pressed="false" data-node-kind="database" data-node-sublabel="nota ≥11 · asistencia ≥70%" data-node-tag="por probar en TEST" data-node-context="Capacidad 7 · Situación → pasos → resultado" data-step-state="pending">
-          <title>Criterios objetivo · nota ≥11 · asistencia ≥70% · Capacidad 7 · Situación → pasos → resultado · por probar en TEST</title>
+        <g id="node-cr" data-node-id="cr" data-node-label="Criterios confirmados" tabindex="0" role="button" aria-label="Enfocar Criterios confirmados, nota ≥11 · asistencia ≥70%, Capacidad 7 · Situación → pasos → resultado" aria-pressed="false" data-node-kind="database" data-node-sublabel="nota ≥11 · asistencia ≥70%" data-node-tag="validado en TEST" data-node-context="Capacidad 7 · Situación → pasos → resultado" data-step-state="pending">
+          <title>Criterios confirmados · nota ≥11 · asistencia ≥70% · Capacidad 7 · Situación → pasos → resultado · validado en TEST</title>
           <rect x="642" y="86" width="170" height="68" rx="6" class="c-mask"/>
           <rect x="642" y="86" width="170" height="68" rx="6" class="c-database" data-animate="node" style="--step:3" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="success" class="semantic-sigil s-database" transform="translate(648 92) scale(0.6875)">
             <circle cx="8" cy="8" r="5.3"/>
             <path d="m5.2 8 1.8 1.8 3.8-4"/>
           </g>
-          <text data-node-label="" x="727" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Criterios objetivo</text>
+          <text data-node-label="" x="730.3" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Criterios confirmados</text>
           <text x="727" y="124" class="t-muted" font-size="8" text-anchor="middle">nota ≥11 · asistencia ≥70%</text>
-        <text x="727" y="142" class="t-database" font-size="7" text-anchor="middle">por probar en TEST</text>
+        <text x="727" y="142" class="t-database" font-size="7" text-anchor="middle">validado en TEST</text>
         </g>
 
         <!-- Edge labels -->

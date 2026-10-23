@@ -468,10 +468,12 @@ def notas(c):
     nrc = c.nrc("10026") if c.id == "computacion" else None
     nrc_tag = f"NRC {nrc['nrc']}" if nrc else "plan del NRC"
     calendario_tag = f"periodo {c.periodo_ejemplo} · fechas"
+    asist_validada = c.id == "computacion" and c.d.get("scripts", {}).get("19", {}).get("estado") == "validado"
     nodos = [
         paso("n1", "ra", 0, "SHAGRDE", "revisar la escala", escala),
         paso("n2", "ra", 1, "SHAEGBC", "abrir calendario", calendario_tag),
-        paso("n3", "ra", 2, "SHAGCOM", f"asignar plan · {nrc_tag}", "ATTRGRD · peso 0 · Debe Pasar"),
+        paso("n3", "ra", 2, "SHAGCOM", f"asignar plan · {nrc_tag}",
+             "ATTRGRD · peso 0 · Debe Pasar" if not asist_validada else "ATTRGRD · TEST validado"),
         paso("n4", "doc", 3, "Autoservicio", "registrar asistencia y notas",
              f"{asistencia_tag} · {nota_tag}", "frontend"),
         paso("n5", "ra", 4, "SHRROLL", "pase a historia", "notas a la historia", "messagebus"),
@@ -618,7 +620,7 @@ CASOS = {
     "19": (("Asistencia y notas", "preparar el libro del NRC"),
            [("SHAEGBC", "calendario del periodo", "202656 · fechas autorizadas"),
             ("SHAGCOM", "asignar ATTRGRD", "NRC 10026 · ESEC 00697 · X06")],
-           ("Criterios objetivo", "nota ≥11 · asistencia ≥70%"), "asistencia_componente"),
+           ("Criterios confirmados", "nota ≥11 · asistencia ≥70%"), "asistencia_componente"),
 }
 
 EXTRA_CASOS = {
@@ -859,7 +861,7 @@ EXTRA_CASOS = {
             "SHAGCOM (Plan de evaluación): ejemplo TEST, periodo 202656, NRC 10026, materia ESEC, curso 00697, parte X06.",
             "Agregar ATTRGRD con peso 0.00, marcar Debe Pasar y seleccionar la escala propia de asistencia que corresponda al mínimo institucional de 70 %.",
             "En Computación, mantener el modo V con nota mínima aprobatoria 11. Son dos criterios: nota ≥11 y asistencia ≥70 %.",
-            "Estado del ejemplo: por probar. No marcarlo validado hasta confirmar guardado del calendario y del componente, y verificar el resultado en TEST.",
+            "Computación, NRC 10026: Script 19 validado en TEST por confirmación del usuario (C95).",
         ],
     },
 }

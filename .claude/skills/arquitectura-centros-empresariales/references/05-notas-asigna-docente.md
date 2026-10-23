@@ -2,6 +2,8 @@
 
 Esta guía documenta el procedimiento y los requisitos para la asignación de docentes a los NRCs de los Centros Empresariales (Idiomas, Computación y Emprendimiento), el cálculo de su carga horaria, el registro de notas y asistencia por Autoservicio, y el posterior pase a historia académica.
 
+> **Orden de Banner:** sigue la secuencia de pasos y campos documentada para cada pantalla de este flujo. No adelantes campos ni extrapoles a una pantalla el orden de otra; si falta el orden obligatorio, indícalo como pendiente de confirmar.
+
 ---
 
 ## 1. Estado Actual en Pruebas TEST

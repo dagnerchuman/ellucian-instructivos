@@ -28,6 +28,9 @@
         <p class="header-sub">Idiomas, Computación y Emprendimiento · Universidad Señor de Sipán · Elaborado por: {autor}</p>
       </div>
       <div class="header-actions">
+        <button type="button" class="ai-fab-header-btn" onclick="var b=document.getElementById('ai-fab-btn');if(b)b.click();" title="Consultar al Asistente IA de Centros Empresariales">
+          <span class="ai-fab-sparkle">✨</span> <span>Asistente IA</span>
+        </button>
         <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Alternar tema claro/oscuro">
           <span id="theme-icon">🌓</span> <span id="theme-txt">Tema</span>
         </button>
@@ -59,8 +62,11 @@
   {secciones}
 </main>
 
-<script>
-/*__JS__*/
-</script>
+{asistente_ia_html}
+
+  <!--__KNOWLEDGE_SCRIPT__-->
+  <script>
+  /*__JS__*/
+  </script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 
 Procedimiento oficial probado y validado en el ambiente **TEST de la USS** (29/09/2026) para admitir a un participante y dejarlo listo para matrícula.
 
+> **Orden de Banner:** sigue los pasos y el orden de campos descritos para SAAQUIK. No adelantes campos ni cambies la secuencia; el orden de otra página, como SFAREGS, no se aplica automáticamente aquí.
+
 ---
 
 ## 1. Bloque Clave (Encabezado)

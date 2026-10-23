@@ -717,6 +717,7 @@
         "Asistencia mínima obligatoria para aprobar: 70 % (C63)",
         "Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)",
         "Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)",
+        "Costos y modalidades (C67): Cursos 1 al 4 a S/ 420 (Regular 3 meses, Intensivo 2 meses, Súper Intensivo 1 mes); Taller de certificación a S/ 340 (1 mes fijo en todas las modalidades). Elección terminal: Curso 4 o Taller de certificación",
         "Cupos reservados: se configuran en SSASECT > Información de ingreso de sección > Lugares reservados; SSARRES solo restringe la matrícula (C66)"
       ]
     },

@@ -7,6 +7,7 @@ o en modo flotante/lateral, manteniendo siempre visible y responsivo el diagrama
 # ======================= BLOQUE 1: imports y constantes (reemplaza las 5 primeras líneas de import) =======================
 import html
 import json
+import os
 import re
 from pathlib import Path
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
@@ -41,12 +42,21 @@ def _cargar_asset(nombre: str) -> str:
 
 CSS_MODAL = _cargar_asset("modal_guia.css")
 _JS_LOGIC = _cargar_asset("modal_guia.js")
+CSS_AI = _cargar_asset("asistente_ia.css")
+_JS_AI = _cargar_asset("asistente_ia.js")
+HTML_AI = _cargar_asset("asistente_ia_snippet.html")
 
 JS_SCRIPT_TEMPLATE = f"""<style>
+/* ASISTENTE CCEE: bloque generado */
 __CSS__
+
+{CSS_AI}
 </style>
+{HTML_AI}
+<script src="__KNOWLEDGE_SCRIPT__"></script>
 <script>
 {_JS_LOGIC}
+{_JS_AI}
 </script>"""
 
 # ======================= BLOQUE 2: resolución de la guía (reemplaza obtener_guia_para_slug) =======================
@@ -296,9 +306,26 @@ def construir_navegacion_flujos(ruta_html):
 
 # ======================= BLOQUE 4: inyección (reemplaza inyectar_en_html e inyectar_todos) =======================
 def _limpiar_inyeccion_previa(contenido):
+    contenido = re.sub(
+        r"\s*<!-- === ASISTENTE CCEE INTEGRADO START === -->.*?<!-- === ASISTENTE CCEE INTEGRADO END === -->",
+        "",
+        contenido,
+        flags=re.DOTALL,
+    )
+    contenido = re.sub(
+        r"\s*<script\b(?![^>]*\bsrc=)[^>]*>(?:(?!</script>).)*?"
+        r"ASISTENTE IA CENTROS EMPRESARIALES USS · BASE LOCAL \+ GROQ"
+        r"(?:(?!</script>).)*?</script>",
+        "",
+        contenido,
+        flags=re.DOTALL,
+    )
     contenido = re.sub(r"\s*<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?</script>", "", contenido, flags=re.DOTALL)
+    contenido = re.sub(r'\s*<style>(?:(?!</style>).)*?ASISTENTE IA CENTROS EMPRESARIALES USS · DISEÑO ULTRA-PREMIUM(?:(?!</style>).)*?</style>', "", contenido, flags=re.DOTALL)
+    contenido = re.sub(r'\s*<script src="[^"]*asistente_conocimiento\.js"></script>', "", contenido)
     for marca in ("FLOW NAV TOP", "FLOW NAV BOTTOM"):
         contenido = re.sub(rf"\s*<!-- === {marca} === -->.*?<!-- === /{marca} === -->", "", contenido, flags=re.DOTALL)
+    contenido = re.sub(r"\s*<!-- === ASISTENTE IA CENTROS EMPRESARIALES USS.*?<!-- === /ASISTENTE IA CENTROS EMPRESARIALES USS === -->", "", contenido, flags=re.DOTALL)
     # Limpiar cualquier residuo previo en etiquetas de nodos o flechas
     contenido = re.sub(r'\s+data-step-state="[^"]*"', '', contenido)
     contenido = re.sub(r'\s+data-ultimo-escogido="[^"]*"', '', contenido)
@@ -320,6 +347,10 @@ def inyectar_en_html(ruta_html, slug):
     contenido = _limpiar_inyeccion_previa(ruta_html.read_text(encoding="utf-8"))
     nodo_ids = ids_nodos_en_html(contenido)
     guia = obtener_guia_para_slug(slug, id_centro, nodo_ids)
+    conocimiento_script = os.path.relpath(
+        ASSETS_DIR / "asistente_conocimiento.js",
+        ruta_html.parent,
+    ).replace(os.sep, "/")
 
     if re.search(r'<div class="header"', contenido):
         contenido = re.sub(r'(<div class="header"[^>]*>)', lambda m: nav["nav_top"] + "\n    " + m.group(1), contenido, count=1)
@@ -327,12 +358,15 @@ def inyectar_en_html(ruta_html, slug):
         ADVERTENCIAS.append(f"{slug}: no se encontró <div class=\"header\">; no se inyectó la barra superior")
 
     bloque = (
-        JS_SCRIPT_TEMPLATE
+        "<!-- === ASISTENTE CCEE INTEGRADO START === -->\n"
+        + JS_SCRIPT_TEMPLATE
         .replace("__CSS__", CSS_MODAL)
+        .replace("__KNOWLEDGE_SCRIPT__", html.escape(conocimiento_script, quote=True))
         .replace("__GUIA_JSON__", _json_seguro(guia))
         .replace("__SIGUIENTE_FLUJO_JSON__", _json_seguro(nav["flujo_sig"]))
         .replace("__ANTERIOR_FLUJO_JSON__", _json_seguro(nav["flujo_ant"]))
         .replace("__VOLVER_CENTROS_URL__", nav["url_centros"])
+        + "\n<!-- === ASISTENTE CCEE INTEGRADO END === -->"
     )
     extra = nav["nav_bottom"] + "\n" + bloque
     i = contenido.rfind("</body>")

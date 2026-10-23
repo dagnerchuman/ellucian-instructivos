@@ -587,7 +587,7 @@
       "col": 5,
       "type": "database",
       "label": "En TEST",
-      "sublabel": "1 de 21 scripts",
+      "sublabel": "2 de 22 scripts",
       "width": 150,
       "tag": "validados",
       "icon": "success"
@@ -649,7 +649,7 @@
       "col": 5,
       "type": "database",
       "label": "En TEST",
-      "sublabel": "18 de 20 scripts",
+      "sublabel": "18 de 21 scripts",
       "width": 150,
       "tag": "validados",
       "icon": "success"
@@ -711,7 +711,7 @@
       "col": 5,
       "type": "database",
       "label": "En TEST",
-      "sublabel": "2 de 21 scripts",
+      "sublabel": "2 de 22 scripts",
       "width": 150,
       "tag": "validados",
       "icon": "success"

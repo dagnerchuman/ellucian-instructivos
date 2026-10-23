@@ -54,5 +54,6 @@ Memoria compartida de las personas y los agentes (Claude Code, Antigravity u otr
 | [ADR-018](decisiones/ADR-018-base-de-conocimiento.md) | El conocimiento del proyecto vive como código, y los ADR aceptados son restricciones | aceptado |
 | [ADR-019](decisiones/ADR-019-ligas-ingles.md) | En Inglés, el NRC teórico y el club de conversación van unidos por una liga | aceptado |
 | [ADR-020](decisiones/ADR-020-carga-por-contrato.md) | La carga de los docentes de Centros se mediría por contrato (SIAFLCT y SIACONA) | propuesto |
+| [ADR-021](decisiones/ADR-021-asistente-conocimiento-local-y-modo-seguro.md) | El asistente responde con conocimiento local y bloquea pantallas sin evidencia | aceptado |
 
 Para una decisión nueva, copia [`decisiones/plantilla-adr.md`](decisiones/plantilla-adr.md).

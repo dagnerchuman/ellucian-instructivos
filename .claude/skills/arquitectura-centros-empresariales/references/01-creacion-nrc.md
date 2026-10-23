@@ -2,6 +2,8 @@
 
 El usuario creó su primer NRC en **TEST** (`experience-test.elluciancloud.com/ussipantest`, SSASECT 9.3.43) guiado paso a paso con capturas. Instructivo principal: **5.3 «Registrar la oferta horaria de los cursos»** (capacidad 5). Docente y salón: **6.2.1** (capacidad 6).
 
+> **Orden de Banner:** sigue los pasos y el orden de campos descritos para cada pantalla. No adelantes campos ni cambies la secuencia; si un orden no está documentado, confírmalo antes de indicarlo.
+
 ## El NRC no es lo primero: orden
 0. **Códigos base:** STVPTRM (partes de periodo), STVACYR, STVTRMT. *(1.1.1)*
 1. **Periodo:** STVTERM y SOATERM, con fechas, partes de periodo habilitadas para programar (5.3, diap. 16), número inicial de NRC (5.3, diap. 15) y fechas web. Feriados en SSAEXCL.

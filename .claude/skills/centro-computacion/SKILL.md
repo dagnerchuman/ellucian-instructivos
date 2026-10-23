@@ -9,8 +9,8 @@ description: Arquitectura específica del Centro de Computación (Informática) 
 > Para la arquitectura general de los tres centros, ver `arquitectura-centros-empresariales`.
 >
 > **Carpeta del centro:** `centros/computacion/`
-> - `datos.json` es la **fuente única** de los datos de esta página (códigos, grupos, NRC, personas de TEST, estado de los 18 scripts y dudas). Si un dato cambia, cámbialo allí y en esta skill, y regenera los diagramas.
-> - `diagramas/` tiene 14 diagramas paso a paso en HTML interactivo, PNG claro y oscuro, y SVG: recorrido, crear el NRC, carga lectiva, persona y admisión, matrícula en el NRC, notas y pase a historia, y una casuística por diagrama. Ver la skill `workflow-diagramas-archify`.
+> - `datos.json` es la **fuente única** de los datos de esta página (códigos, grupos, NRC, personas de TEST, estado de los scripts y dudas). Si un dato cambia, cámbialo allí y en esta skill, y regenera los diagramas.
+> - `diagramas/` tiene los flujos paso a paso en HTML interactivo, PNG claro y oscuro, y SVG: seis flujos base y una casuística por diagrama. Ver la skill `workflow-diagramas-archify`.
 
 ## Identificadores en Banner
 
@@ -79,7 +79,7 @@ Parte de periodo general: **CGE**.
 | **S00581111** | ANA ROJAS VERA | Creada en GOAMTCH | Casuística Convalidación Externa (SHATRNS) |
 | **100582059** | Dagner Chuman (DCHUMAN) | Usuario institucional / docente | 18-A, autoservicio, docente principal |
 
-## Matriz de los 18 Scripts de Computación (Estado al 02/10/2026)
+## Matriz de Scripts de Computación (actualizada al 23/10/2026)
 
 | # | Script / Casuística | Páginas Banner | Estado | Evidencia en TEST |
 |---|---|---|---|---|
@@ -103,11 +103,12 @@ Parte de periodo general: **CGE**.
 | **18-A** | Auditoría de carga docente | `SIAASGN` | ✅ Validado | Docente DCHUMAN con 4 NRCs (horas semanales, contacto y FTE nativos). |
 | **18-B** | Retenciones y bloqueo fatal | `SOAHOLD` / `STVHLDD` | ✅ Validado | Retención TT bloqueando matrícula en SFAREGS (*ERROR*). |
 | **18-C** | Solicitud de servicio / queja | Autoservicio → `SVASVPR` | ✅ **Validado (05/10)** | Mecanismo validado con `CER` (Certificado): el alumno (100582059) crea la solicitud en el Autoservicio y se atiende en `SVASVPR` (estatus, comentario interno y comentario de respuesta). `SVASVPR` no deja crear solicitudes (*«Función inválida»*). **No existe un servicio de queja**: hay 17 en SVVSRVC, todos de carpetas, certificado y constancia (U14). |
+| **19** | Calendario de calificaciones y componente `ATTRGRD` | `SHAEGBC` → `SHAGCOM` | ⏳ **Por probar** | En curso en TEST: periodo 202656, NRC 10026 (`ESEC 00697`, X06). El usuario confirma que los valores indicados para `ATTRGRD` son correctos: peso 0.00, **Debe aprobar** y escala propia de asistencia para 70 %, separada de `VIG_11` (escala regular). Falta confirmar guardado y resultado. Nota mínima del curso: 11. |
 
 ---
 
 ## ▶️ Dónde quedamos (05/10/2026)
-- **17 de 19 scripts validados** (el 04 no aplica). Hoy se cerraron: 17, 02, 18-C y 11.
+- **18 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07; Script 19 sigue por probar.
 - **Faltan 05 y 07:**
   1. Script 05: en Idiomas el egresado no lleva el curso (C50, ADR-012). ¿Computación trabaja igual? (U24)
   2. Script 07: ya no hay que esperar a la USS. Se cierra en el **bloque 2 de `centros/idiomas/pruebas-test.md`**, al agregar el programa de Idiomas a `S00581091`.

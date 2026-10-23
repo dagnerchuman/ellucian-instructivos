@@ -2,7 +2,7 @@
 
 | Herramienta | Para qué | Uso |
 |---|---|---|
-| `diagramas/` | Genera los diagramas paso a paso de cada centro (HTML interactivo, PNG claro y oscuro, SVG) a partir de `centros/<centro>/datos.json` | `bash herramientas/diagramas/instalar_archify.sh` y luego `python3 herramientas/diagramas/generar.py` |
+| `diagramas/` | Genera los diagramas paso a paso, la galería y la base local del Asistente IA (HTML, PNG, SVG y conocimiento recuperable) | `bash herramientas/diagramas/instalar_archify.sh` y luego `python3 herramientas/diagramas/generar.py` |
 | `validar_conocimiento.py` | Revisa la base de conocimiento: enlaces, ADR, manifest, `datos.json`, espejo de skills y datos sensibles | `python3 herramientas/validar_conocimiento.py` (`--estricto` cuenta los avisos como error) |
 | `sincronizar_skills.py` | Mantiene iguales `.claude/skills` (Claude Code) y `.agents/skills` (Antigravity) | `--check` revisa · `--desde claude` o `--desde agents` copia en espejo |
 
@@ -10,6 +10,7 @@
 | Archivo | Qué hace |
 |---|---|
 | `generar.py` | Orquesta todo: escribe la especificación, la valida y compila con `archify finalize`, exporta las imágenes y arma los índices |
+| `generar_conocimiento_asistente.py` | Genera el índice local del asistente desde el registro, datos de los centros, referencias operativas y ADR aceptados; no usa red ni contiene claves |
 | `plantillas.py` | Los 14 diagramas por centro (6 flujos y una casuística por diagrama) y el comparativo. Reglas: un solo flujo, un código por paso y el glosario `TERMINOS` |
 | `centro.py` | Lee `datos.json` y arma los textos cortos. Un `null` se muestra como «por confirmar» |
 | `indices.py` | `centros/README.md`, `centros/index.html` y la ficha `README.md` de cada centro |

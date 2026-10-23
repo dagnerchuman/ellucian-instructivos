@@ -114,7 +114,7 @@
     "modo": "V",
     "nombre": "Vigesimal regular",
     "nota_minima": 11,
-    "inhabilitado": "INH por inasistencia (70 % es el ejemplo del instructivo; mínimo real por confirmar, U03)",
+    "inhabilitado": "INH por inasistencia inferior al 70 % (C63)",
     "fuente": "C27, C35 (U20 resuelta)"
   },
   "examen_suficiencia": {
@@ -176,6 +176,13 @@
       "horario": "Miércoles 07:40 PM – 09:20 PM",
       "aula": "SAUVIR / SALA-VIRT",
       "uso": "OFIMÁTICA EXCEL 365 (Hoja oficial 202656)"
+    },
+    {
+      "nrc": "10026",
+      "curso": "ESEC 00697",
+      "seccion": "A",
+      "parte": "X06",
+      "uso": "Ejemplo actual de configuración de asistencia y ATTRGRD (capturas TEST 23/10/2026)"
     }
   ],
   "nrc_ejemplo": "1026",
@@ -303,6 +310,10 @@
     "18-C": {
       "estado": "validado",
       "evidencia": "05/10: no existe un servicio de queja (17 servicios en SVVSRVC; U14). El mecanismo se validó con CER (Certificado): la solicitud se crea en el Autoservicio del alumno (100582059) y se atiende en SVASVPR (estatus, comentario interno y de respuesta). SVASVPR no deja crear solicitudes («Función inválida»)"
+    },
+    "19": {
+      "estado": "por probar",
+      "evidencia": "En curso en TEST: periodo 202656, NRC 10026 (ESEC 00697, X06). El usuario confirma que la configuración indicada de ATTRGRD es correcta: peso 0.00, Debe aprobar y escala propia de asistencia para 70 %, con VIG_11 como escala regular. Falta confirmar el guardado y el resultado."
     }
   },
   "particularidades": [
@@ -312,6 +323,7 @@
     "Asistencia mínima obligatoria para aprobar: 70 % (C63)",
     "Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)",
     "Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)",
+    "Costos y modalidades (C67): Cursos 1 al 4 a S/ 420 (Regular 3 meses, Intensivo 2 meses, Súper Intensivo 1 mes); Taller de certificación a S/ 340 (1 mes fijo en todas las modalidades). Elección terminal: Curso 4 o Taller de certificación",
     "Cupos reservados: se configuran en SSASECT > Información de ingreso de sección > Lugares reservados; SSARRES solo restringe la matrícula (C66)"
   ],
   "dudas": [
@@ -335,7 +347,8 @@
       "03",
       "10",
       "12",
-      "18-B"
+      "18-B",
+      "19"
     ],
     "_leeme": "Scripts que tienen su propio diagrama de casuística (del n.º 7 en adelante), en este orden."
   }

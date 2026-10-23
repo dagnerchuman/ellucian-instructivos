@@ -46,7 +46,8 @@
     "INTERMEDIATE I (ESEP 02693 · HT 4, HP 3 · MI03-02)",
     "INTERMEDIATE II (ESEP 02721 · HT 4, HP 3 · MI03-02)",
     "INTERMEDIATE III (ESEP 02997 · HT 4, HP 3 · MI03-02)",
-    "PORTUGUES POST GRADO (ESEP 04776 · HT 4, HP 3 · MI18-01 · Programa IMEMI18 · NRC 10015 AT / 10017 AC1)"
+    "PORTUGUES POST GRADO (ESEP 04776 · HT 4, HP 3 · MI18-01 · Programa IMEMI18 · NRC 10015 AT / 10017 AC1)",
+    "BEGINNERS I (ESEP 04821 · Periodo 202754 · NRC 10005 · Cuotas X032 y X228 · C70)"
   ],
   "cursos_nota": "Cursos y códigos del catálogo SCACRSE confirmados en la hoja oficial de programación de NRCs (17/10/2026). HT: 4, HP: 3.",
   "escala_calificacion": {
@@ -409,18 +410,75 @@
       "liga": "PA",
       "modalidad": "Presencial Práctico",
       "uso": "Basic I Práctico Presencial"
+    },
+    {
+      "nrc": "10001 (202754)",
+      "curso": "ESEP 02456",
+      "seccion": "10",
+      "parte": "IGE",
+      "cupo": null,
+      "docente": null,
+      "horario": "TEO (Teórico)",
+      "aula": null,
+      "liga": "Configurada en SSADETL",
+      "modalidad": "Semipresencial (SEMI)",
+      "uso": "Basic I periodo 202754 (2027-I) con cuotas en SCADETL: X032 S/ 420 y X228 S/ 80 para programa IMEMI05 (C68)"
+    },
+    {
+      "nrc": "10005 (202754)",
+      "curso": "ESEP 04821",
+      "seccion": "A",
+      "parte": "IGE",
+      "cupo": "20",
+      "docente": "Carlos Francisco Aguilar Cubas",
+      "horario": "Viernes 08:00 AM – 12:00 PM (1 crédito)",
+      "aula": "Virtual (SAUVIR / SALA-VIRT)",
+      "liga": null,
+      "modalidad": "Beginners I (Teórico)",
+      "cuotas_ssadetl": [
+        "X032 (Basic I · S/ 420.00 FLAT)",
+        "X228 (Lic. Inglés Ci · S/ 80.00 FLAT)"
+      ],
+      "regla_curriculo": "Nivel I, Campus S (diferenciado por campus; en blanco aplica a todos los campus)",
+      "estatus_inscripcion": "RW (Registrado por la Web / Autoservicio Alumnos)",
+      "alumno_inscrito": "S00912438 (Arnold Vaca)",
+      "auditoria_sfaregq": "Validado en SFAREGQ con estatus RW",
+      "estado_tsaarev": "Cargos liquidados con éxito tras SFRFASC: X032 S/ 420.00 y X228 S/ 80.00 (Total S/ 500.00, C75)",
+      "uso": "Beginners I periodo 202754 matriculado por Autoservicio y tasado masivamente en TSAAREV/TSADETL (C70-C75)"
     }
   ],
   "nrc_ejemplo": "10024",
   "periodo_ejemplo": "202656",
   "parte_ejemplo": "I10",
-  "personas_test": [],
-  "persona_ejemplo": null,
-  "docente_test": null,
+  "personas_test": [
+    {
+      "id": "S00912438",
+      "nombre": "Arnold Vaca",
+      "origen": "Estudiante probado en Banner TEST (Medicina Humana y Acreditación Inglés IMEMI03)",
+      "matriculas": [
+        {
+          "periodo": "202754",
+          "nrc": "10005",
+          "curso": "ESEP 04821 Beginners I",
+          "seccion": "A",
+          "estatus": "RW (Registrado por la Web / Autoservicio Alumnos)",
+          "creditos": 1.0,
+          "consulta_sfaregq": "Confirmado en SFAREGQ con estatus RW",
+          "estado_tsaarev": "Cargos liquidados con éxito tras SFRFASC: X032 S/ 420.00 y X228 S/ 80.00 (Total saldo consulta S/ 500.00, C75)"
+        }
+      ]
+    }
+  ],
+  "persona_ejemplo": "S00912438",
+  "docente_test": {
+    "id": "100582059",
+    "usuario": "DCHUMAN",
+    "nombre": "Dagner Anibal Chuman Lluen"
+  },
   "scripts": {
     "01": {
-      "estado": "por probar",
-      "evidencia": "Primer NRC de Idiomas en TEST"
+      "estado": "validado",
+      "evidencia": "Matrícula por Autoservicio Alumnos en TEST: selección de plan 2-Programa Acreditación Inglés, pestaña Proyecciones, NRC 10005 Beginners I agregado con botón Enviar (C71)"
     },
     "02": {
       "estado": "por probar",
@@ -501,6 +559,10 @@
     "18-C": {
       "estado": "por probar",
       "evidencia": "Solicitud o queja"
+    },
+    "19": {
+      "estado": "pendiente",
+      "evidencia": "Pendiente de probar el calendario de calificaciones y el componente ATTRGRD para Idiomas"
     }
   },
   "particularidades": [
@@ -508,7 +570,22 @@
     "Examen de suficiencia en SOATEST: permite saltar el nivel (C11, R03)",
     "Cada curso tiene un NRC teórico y un NRC de club de conversación unidos por liga (C52, R18)",
     "Los niveles III duran 12 o 13 semanas; los demás, 8",
-    "Egresados: no llevan el curso; nota de la plataforma, pasada a mano a Banner en un solo NRC (C50)"
+    "Egresados: no llevan el curso; nota de la plataforma, pasada a mano a Banner en un solo NRC (C50)",
+    "Cuotas en SCADETL y programa IMEMI05 (C68): Códigos de cuota X032 (Basic I · S/ 420.00 FLAT) y X228 (Lic. Inglés Ci · S/ 80.00 FLAT) configurados en SCADETL (SCRFEES) para Nivel I, Campus S, Programa IMEMI05. En periodo 202754 se programó NRC 10001 (Basic I, Sec. 10, parte IGE Semipresencial) vinculado en SSADETL",
+    "Costos y duraciones oficiales (C69): Basic I-II e Intermedio I-II duran 2 meses (Enseñanza S/ 420 + Licencia S/ 80 = Total S/ 500); Basic III e Intermedio III duran 3 meses (Enseñanza S/ 560 + Licencia S/ 80 = Total S/ 640). Licencia digital X228 fija en S/ 80 en todos los niveles",
+    "Reglas de cuotas por campus en SSADETL y Beginners I (C70): Si se especifica el Campus (ej. S) en Reglas del currículo del alumno, la cuota es diferenciada para ese campus; si se deja en blanco, la cuota aplica por igual a todos los campus en general que se inscriban al NRC (probado en NRC 10005 Beginners I). En TSAAREV se comprobó que en 202754 no hay cargos aún generados",
+    "Matrícula por Autoservicio Alumnos (C71, U06 resuelta): Alumnos con doble programa seleccionan su plan del centro (2-Programa Acreditación Inglés-S-Sede de Chiclayo) en el periodo 202754, acceden a la pestaña Proyecciones (SFPPROJ), agregan el NRC proyectado y confirman con Enviar (Inscrito por autoservicio)",
+    "Estatus RW en SFAREGQ y Tasación en TSAAREV (C72): La matrícula por Autoservicio Alumnos genera automáticamente el estatus RW (Registered via Web) en la base de datos, visible de inmediato en la pantalla de auditoría SFAREGQ. En TSAAREV no aparecen cargos en 202754 debido a que las cuotas de SCADETL/SSADETL requieren ejecutar el proceso de Estimación de Cuotas de Inscripción (Registration Fee Assessment / SFARGFE) o la activación de fechas de tasación web en SOATERM",
+    "Estimación Masiva y Selección de Población (C73): Para generar los cargos en TSAAREV de forma masiva se aísla la población en GLAEXTR (manual o por reglas SQL en GLRSLCT o CSV en GJRPSIM) y se ejecuta el proceso SFRFASC (Estimación de cuota por lotes) en GJAPCTL para el periodo (202754), impactando las cuentas corrientes con los códigos X032 y X228",
+    "Parametrización Oficial de SFRFASC (C74): Configuración de los 19 parámetros en GJAPCTL para Centros: Periodo 202754, Aplicación AR, Selección CHECKS, Creador SAISUSR, Usuario FHERRERA, Estatus %, Regla de estimación R (SFARGFE), Crear registros contables Y (TBRACCD) y Modo de ejecución U (Update en firme)",
+    "Liquidación en TSAAREV, TSADETL y Cuotas (C75): Se liquidaron exitosamente las cuotas X228 (S/ 80) y X032 (S/ 420) con saldo de consulta S/ 500.00 en TSAAREV (periodo) y TSADETL (histórico acumulado). En la tasación inicial no se aplican cargos de descuento al contado ni recargos diferidos porque se desconoce la modalidad de pago; al momento que el alumno formaliza si paga en 1, 2, 3, 4 cuotas o diferido se activa el plan de pagos o descuento correspondiente",
+    "Plan de Pagos I1 en TSAISTC y TSAAREV (C76): Configurado en TEST el plan I1 (Idio 1 cuota Dif) con código PPLP (cancela deuda original), PPLC (monto principal en cronograma) y cargo por servicio A171 con recargo del 5% automático. Las pruebas de impacto en la cuenta corriente se evidencian en TSAAREV y TSAISTL",
+    "Exclusión de Descuentos por Categorías y Catálogo STVRATE (C77): En Centros Empresariales NO aplican descuentos ni exenciones por categorías socioeconómicas (TSQEXPT/TSAEXPT son exclusivas de Pregrado y Posgrado). El único beneficio aplicable en Centros es el Descuento de Pago al Contado. Los códigos oficiales de planes de cuotas se encuentran en STVRATE (CUO01 contado, CUO02..CUO06, CUO1D y CUOD3..CUOD5 diferidos)",
+    "Asignación de Plan de Cuotas en SAAADMS (C78): En Solicitud de admisión SAAADMS (pestaña Datos de cuotas, envío de correo, retiro), en el campo Tarifa de cuota de solicitud se asocia el código del plan de pago pactado (ej. CUO04 Plan de pago - 4 Cuotas del catálogo STVRATE) con opción Cuota de solicitud en Ninguno. Esto vincula formalmente el cronograma de cuotas al alumno para la tasación en cuentas corrientes",
+    "Planes de Pagos Automáticos TSAISTA y TSAISTR (C79): En TSAISTA se vincula la tarifa CUO03 (Plan de pago - 3 Cuotas) al plan I3 (Idio 3 cuotas) para el periodo 202754 con indicador I (Incluir). En TSAISTR se define el método Porcentaje de pagos en 3 vencimientos: 04-MAY (33.33%), 04-JUN (33.33%) y 04-JUL-2027 (33.34%) sumando 100%, afectando al código de detalle de enseñanza X032 (Basic I · S/ 420.00) y dejando la licencia X228 fuera del fraccionamiento",
+    "Ejecución Batch TSPISTA y Desglose en TSAISTP (C80): En GJAPCTL se ejecuta el proceso batch TSPISTA (Job 7691) con periodo 202754, plan I3 y selección CHECKS. El reporte tspista_7691.lis en GJIREVO confirma la asignación a Arnold Vaca (S00912438). En TSAISTL queda autorizado el plan activo y en TSAISTP se genera el calendario exacto de 3 cuotas PPLC: 139.99 el 04-MAY, 139.99 el 04-JUN y 140.02 el 04-JUL-2027, totalizando S/ 420.00 de enseñanza X032. En TSAAREV se mantiene X228 (S/ 80.00) de contado",
+    "Flexibilidad de Cuotas en TSAISTR (C81): En TSAISTR (método Porcentaje de pagos) Banner permite configurar 2 o más cuotas en el mismo mes (ej. quincena y fin de mes), sin restricción de separación mensual fija (instructivo 11.1.3, diap. 27). Esto es vital para las modalidades Intensivas (2 meses) o Super Intensivas (1 mes) de los Centros Empresariales, reflejando en TSAAREV cada cuota PPLC con fecha de vigencia y saldo independiente",
+    "Validaciones del Equipo en Chat de Coordinación (C82): Liliana Ocampo y Diana Carolina confirmaron que IMEMI03 es el programa vigente oficial de Idiomas (IMEMI05 es histórico no activo). La inscripción en Banner registra al alumno automáticamente sin condicionar al pago previo. La selección de cuotas por el alumno entrará por un GAP de Finanzas, y para pago inmediato web se requiere activar la estimación en línea en SOATERM"
   ],
   "dudas": [
     {
@@ -530,6 +607,10 @@
     {
       "id": "U24",
       "texto": "Egresados: con un solo NRC, ¿cómo se pone la misma nota en BASIC I, II…? ¿En qué página (SFASLST, SHATCKN, SOATEST)? ¿Cómo se llama la plataforma y qué servicio cobra el costo distinto?"
+    },
+    {
+      "id": "U29",
+      "texto": "¿Un estudiante que eligió una modalidad de pago (ej. 3 cuotas) para su primer curso (ej. I04), puede cambiar su modalidad de pago si inicia un segundo curso en otra parte de periodo dentro del mismo semestre (ej. I05)? (Sandra Valdiviezo, 22/10/2026)"
     }
   ],
   "casuisticas": {

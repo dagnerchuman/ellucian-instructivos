@@ -24,6 +24,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 16 | Capacidad 7 y 8 | Script 10 · Retorno por desaprobado | [HTML](diagramas/16-script-10-retorno-por-desaprobado/computacion-16-script-10-retorno-por-desaprobado.html) · [PNG claro](diagramas/16-script-10-retorno-por-desaprobado/computacion-16-script-10-retorno-por-desaprobado-claro.png) · [PNG oscuro](diagramas/16-script-10-retorno-por-desaprobado/computacion-16-script-10-retorno-por-desaprobado-oscuro.png) · [SVG](diagramas/16-script-10-retorno-por-desaprobado/computacion-16-script-10-retorno-por-desaprobado.svg) |
 | 17 | Capacidad 7 | Script 12 · Cierre de periodo | [HTML](diagramas/17-script-12-cierre-de-periodo/computacion-17-script-12-cierre-de-periodo.html) · [PNG claro](diagramas/17-script-12-cierre-de-periodo/computacion-17-script-12-cierre-de-periodo-claro.png) · [PNG oscuro](diagramas/17-script-12-cierre-de-periodo/computacion-17-script-12-cierre-de-periodo-oscuro.png) · [SVG](diagramas/17-script-12-cierre-de-periodo/computacion-17-script-12-cierre-de-periodo.svg) |
 | 18 | Capacidad 4 y 5 | Script 18-B · Retenciones y bloqueo de matrícula | [HTML](diagramas/18-script-18-b-retenciones-y-bloqueo-de-matricula/computacion-18-script-18-b-retenciones-y-bloqueo-de-matricula.html) · [PNG claro](diagramas/18-script-18-b-retenciones-y-bloqueo-de-matricula/computacion-18-script-18-b-retenciones-y-bloqueo-de-matricula-claro.png) · [PNG oscuro](diagramas/18-script-18-b-retenciones-y-bloqueo-de-matricula/computacion-18-script-18-b-retenciones-y-bloqueo-de-matricula-oscuro.png) · [SVG](diagramas/18-script-18-b-retenciones-y-bloqueo-de-matricula/computacion-18-script-18-b-retenciones-y-bloqueo-de-matricula.svg) |
+| 19 | Capacidad 7 | Script 19 · Calendario de calificaciones y componente ATTRGRD | [HTML](diagramas/19-script-19-calendario-de-calificaciones-y-componente-attrgrd/computacion-19-script-19-calendario-de-calificaciones-y-componente-attrgrd.html) · [PNG claro](diagramas/19-script-19-calendario-de-calificaciones-y-componente-attrgrd/computacion-19-script-19-calendario-de-calificaciones-y-componente-attrgrd-claro.png) · [PNG oscuro](diagramas/19-script-19-calendario-de-calificaciones-y-componente-attrgrd/computacion-19-script-19-calendario-de-calificaciones-y-componente-attrgrd-oscuro.png) · [SVG](diagramas/19-script-19-calendario-de-calificaciones-y-componente-attrgrd/computacion-19-script-19-calendario-de-calificaciones-y-componente-attrgrd.svg) |
 
 ## Códigos en Banner
 | Concepto | Código | Nota |
@@ -46,6 +47,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - Asistencia mínima obligatoria para aprobar: 70 % (C63)
 - Plan de evaluación en SHAGCOM lo carga Registros Académicos (C64)
 - Ruta de Aprendizaje: 4 cursos obligatorios o 3 obligatorios + 1 taller de certificación (antigua: Computación I -> II -> III secuencial) (C62)
+- Costos y modalidades (C67): Cursos 1 al 4 a S/ 420 (Regular 3 meses, Intensivo 2 meses, Súper Intensivo 1 mes); Taller de certificación a S/ 340 (1 mes fijo en todas las modalidades). Elección terminal: Curso 4 o Taller de certificación
 - Cupos reservados: se configuran en SSASECT > Información de ingreso de sección > Lugares reservados; SSARRES solo restringe la matrícula (C66)
 
 ## Grupos 2026 (4 a 8 semanas según el grupo)
@@ -65,8 +67,9 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **1026**: ESEC 00650, sección D, parte X07. Casuísticas CCEE.
 - NRC **10018**: ESEC 00678, sección A, parte X06. OFIMÁTICA WORD 365 (Hoja oficial 202656).
 - NRC **10019**: ESEC 00679, sección A, parte X06. OFIMÁTICA EXCEL 365 (Hoja oficial 202656).
+- NRC **10026**: ESEC 00697, sección A, parte X06. Ejemplo actual de configuración de asistencia y ATTRGRD (capturas TEST 23/10/2026).
 
-## Scripts de prueba (18 validado · 2 pendiente · 1 no aplica)
+## Scripts de prueba (18 validado · 2 pendiente · 1 no aplica · 1 por probar)
 | Script | Nombre | Estado | Evidencia o pendiente |
 |---|---|---|---|
 | 01 | Matrícula regular | validado | NRC 1021 (S00581081, S00581091) y NRC 1026 (S00581108, S00581109) |
@@ -90,6 +93,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 18-A | Auditoría de carga docente | validado | SIAASGN: docente 100582059 con 4 NRC, horas y FTE |
 | 18-B | Retenciones y bloqueo de matrícula | validado | Retención TT bloquea la inscripción en SFAREGS |
 | 18-C | Solicitud de servicio o queja | validado | 05/10: no existe un servicio de queja (17 servicios en SVVSRVC; U14). El mecanismo se validó con CER (Certificado): la solicitud se crea en el Autoservicio del alumno (100582059) y se atiende en SVASVPR (estatus, comentario interno y de respuesta). SVASVPR no deja crear solicitudes («Función inválida») |
+| 19 | Calendario de calificaciones y componente ATTRGRD | por probar | En curso en TEST: periodo 202656, NRC 10026 (ESEC 00697, X06). El usuario confirma que la configuración indicada de ATTRGRD es correcta: peso 0.00, Debe aprobar y escala propia de asistencia para 70 %, con VIG_11 como escala regular. Falta confirmar el guardado y el resultado. |
 
 ## Por confirmar
 - **U05**: Nombres oficiales de los cursos y pesos de evaluación

@@ -62,6 +62,8 @@ CITAS = {
     "retencion": "Retenciones: instructivos 5.2.1 y 5.2.2 (SOAHOLD)",
     "escala": "Escalas y modos: instructivo 7.1.3, diap. 16 (SHAGRDE)",
     "notas": "Plan de evaluación y notas: instructivos 7.1.4 (SHAGCOM) y 7.1.6 (SFASLST)",
+    "calendario": "Calendario de ingreso de calificaciones: instructivo 7.1.4, diap. 40–43 (SHAEGBC)",
+    "asistencia_componente": "Componente ATTRGRD: instructivo 7.1.0, diap. 29–30; 7.1.4, diap. 55",
     "cierre": "Pase a historia: instructivo 7.1.9 (SHRROLL)",
     "capp": "CAPP: instructivo 7.2.4, diap. 30 a 55",
     "convalidacion": "Convalidación y homologación: capacidad 3.3.1, diap. 33 a 36 (SHATRNS) y diap. 47 a 56 (SHATFAC)",
@@ -456,15 +458,22 @@ def matricula(c):
 
 # --------------------------------------------------------------------------- 6
 def notas(c):
-    """SHAGRDE → SHAGCOM → Autoservicio (docente) → SHRROLL → SMICRLT."""
+    """SHAGRDE → SHAEGBC → SHAGCOM → Autoservicio → SHRROLL → SMICRLT."""
     e = c.d["escala"]
-    escala = f"nivel {c.nivel} · modo {e['modo']}" if e else f"nivel {c.nivel}: por confirmar"
-    aprueba = f"aprueba con {e['nota_minima']}" if e else "nota mínima por confirmar"
+    escala = f"modo {e['modo']} · mínimo {e['nota_minima']}" if e else "escala por confirmar"
+    aprueba = f"nota mínima {e['nota_minima']}" if e else "nota mínima por confirmar"
+    asistencia = c.comun.get("asistencia_minima_porcentaje", {}).get("valor")
+    asistencia_tag = f"{asistencia}% asist." if asistencia is not None else "asist. por confirmar"
+    nota_tag = f"nota ≥{e['nota_minima']}" if e else "nota pendiente"
+    nrc = c.nrc("10026") if c.id == "computacion" else None
+    nrc_tag = f"NRC {nrc['nrc']}" if nrc else "plan del NRC"
+    calendario_tag = f"periodo {c.periodo_ejemplo} · fechas"
     nodos = [
         paso("n1", "ra", 0, "SHAGRDE", "revisar la escala", escala),
-        paso("n2", "ra", 1, "SHAGCOM", "plan de evaluación", "componentes y pesos"),
-        paso("n3", "doc", 2, "Autoservicio", "registrar asistencia", "poca asistencia: INH", "frontend"),
-        paso("n4", "doc", 3, "Autoservicio", "registrar notas", aprueba, "frontend"),
+        paso("n2", "ra", 1, "SHAEGBC", "abrir calendario", calendario_tag),
+        paso("n3", "ra", 2, "SHAGCOM", f"asignar plan · {nrc_tag}", "ATTRGRD · peso 0 · Debe Pasar"),
+        paso("n4", "doc", 3, "Autoservicio", "registrar asistencia y notas",
+             f"{asistencia_tag} · {nota_tag}", "frontend"),
         paso("n5", "ra", 4, "SHRROLL", "pase a historia", "notas a la historia", "messagebus"),
         paso("n6", "ra", 5, "SMICRLT", "revisar el avance", "CAPP: cumple o no", "database"),
     ]
@@ -472,16 +481,19 @@ def notas(c):
     leccion = {"dot": "rose", "title": "Si falla el pase a historia", "items": [
         "«No Substitute Grade»: la escala del nivel no tiene el modo del curso; agrégalo en SHAGRDE (U20)",
         "Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)",
+        "Computación: nota mínima 11 y asistencia mínima 70 %; por debajo de 70 % corresponde INH (C27, C63)",
+        "El registro de asistencia en Faculty está documentado, pero todavía no se ha validado en TEST (C89)",
     ]}
     return flujo(
         c, 6, "notas-y-pase-a-historia",
         [{"id": "ra", "label": "Registros Académicos"}, {"id": "doc", "label": "Docente"}],
         nodos,
-        tarjetas(c, probado, [CITAS["escala"], CITAS["notas"], CITAS["cierre"], CITAS["capp"]],
+        tarjetas(c, probado, [CITAS["escala"], CITAS["calendario"], CITAS["notas"],
+                              CITAS["asistencia_componente"], CITAS["cierre"], CITAS["capp"]],
                  [leccion, tarjeta_terminos("pase a historia", "alumno")]),
         fases=[
-            {"id": "f0", "label": "Preparar", "fromCol": 0, "toCol": 1},
-            {"id": "f1", "label": "Dictar", "fromCol": 2, "toCol": 3, "variant": "emphasis"},
+            {"id": "f0", "label": "Preparar", "fromCol": 0, "toCol": 2},
+            {"id": "f1", "label": "Dictar", "fromCol": 3, "toCol": 3, "variant": "emphasis"},
             {"id": "f2", "label": "Cerrar", "fromCol": 4, "toCol": 5, "variant": "dashed"},
         ],
     )
@@ -603,6 +615,10 @@ CASOS = {
             ("SSASECT", "alerta de conflicto", "alerta cruce horario instructor"),
             ("SSASECT", "crear sobrepaso", "Indicador de sobrepaso docente")],
            ("Conflicto resuelto", "docente con sobrepaso"), "nrc"),
+    "19": (("Asistencia y notas", "preparar el libro del NRC"),
+           [("SHAEGBC", "calendario del periodo", "202656 · fechas autorizadas"),
+            ("SHAGCOM", "asignar ATTRGRD", "NRC 10026 · ESEC 00697 · X06")],
+           ("Criterios objetivo", "nota ≥11 · asistencia ≥70%"), "asistencia_componente"),
 }
 
 EXTRA_CASOS = {
@@ -833,6 +849,17 @@ EXTRA_CASOS = {
             "Paso 03 (SSASECT): Detección de Conflicto — Banner emite alerta: «ERROR: Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso?».",
             "Paso 04 (SSASECT): Autorización de Sobrepaso — Aceptación con OK, marcando automáticamente el «Indicador de sobrepaso».",
             "Paso 05 (SIAASGN): Auditoría de Carga — Verificación de horas simultáneas asignadas al docente sin duplicidad de FTE.",
+        ],
+    },
+    "19": {
+        "dot": "violet",
+        "title": "Script 19 · Configurar calificaciones y asistencia (TEST)",
+        "items": [
+            "SHAEGBC (Calendario): para 202656, definir y guardar las fechas de apertura y corte autorizadas. No inventar fechas ni dar por requerido el corte final sin confirmación.",
+            "SHAGCOM (Plan de evaluación): ejemplo TEST, periodo 202656, NRC 10026, materia ESEC, curso 00697, parte X06.",
+            "Agregar ATTRGRD con peso 0.00, marcar Debe Pasar y seleccionar la escala propia de asistencia que corresponda al mínimo institucional de 70 %.",
+            "En Computación, mantener el modo V con nota mínima aprobatoria 11. Son dos criterios: nota ≥11 y asistencia ≥70 %.",
+            "Estado del ejemplo: por probar. No marcarlo validado hasta confirmar guardado del calendario y del componente, y verificar el resultado en TEST.",
         ],
     },
 }

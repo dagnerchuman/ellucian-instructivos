@@ -30,8 +30,6 @@ sys.path.insert(0, str(AQUI))
 
 from centro import RAIZ, Centro, centros_disponibles  # noqa: E402
 import plantillas  # noqa: E402
-from indices import generar_indices  # noqa: E402
-from inyectar_modales import inyectar_en_html  # noqa: E402
 
 ARCHIFY = Path(os.environ.get("ARCHIFY_DIR", AQUI / ".archify" / "archify"))
 CLI = ARCHIFY / "bin" / "archify.mjs"
@@ -93,6 +91,8 @@ def limpiar_obsoletos(id_centro, numeros_slugs):
 
 
 def generar(tipo, spec):
+    from inyectar_modales import inyectar_en_html
+
     html_rel = spec["meta"]["output"]
     carpeta_rel, archivo = html_rel.rsplit("/", 1)
     nombre = archivo[: -len(".html")]
@@ -117,6 +117,13 @@ def main():
 
     if not CLI.exists():
         sys.exit(f"No encuentro Archify en {ARCHIFY}. Ejecuta: bash herramientas/diagramas/instalar_archify.sh")
+
+    subprocess.run(
+        [sys.executable, str(AQUI / "generar_conocimiento_asistente.py")],
+        cwd=RAIZ,
+        check=True,
+    )
+    from indices import generar_indices
 
     tr = traducciones()
     pedidos = args.centros or [*centros_disponibles(), "comun"]

@@ -364,3 +364,34 @@ main {
 #no-results.visible {
   display: block;
 }
+
+/* Botón Header Asistente IA */
+.ai-fab-header-btn {
+  background: linear-gradient(135deg, #4a1572 0%, #7030A0 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  box-shadow: 0 4px 12px rgba(112, 48, 160, 0.35);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ai-fab-header-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(112, 48, 160, 0.5);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+.ai-fab-sparkle {
+  color: #f7d54e;
+  display: inline-block;
+  animation: ai-fab-sparkle 3s infinite ease-in-out;
+}
+@keyframes ai-fab-sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.25) rotate(15deg); }
+}

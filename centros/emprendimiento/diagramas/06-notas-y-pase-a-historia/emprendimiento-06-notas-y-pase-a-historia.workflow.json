@@ -490,12 +490,12 @@
       "id": "f0",
       "label": "Preparar",
       "fromCol": 0,
-      "toCol": 1
+      "toCol": 2
     },
     {
       "id": "f1",
       "label": "Dictar",
-      "fromCol": 2,
+      "fromCol": 3,
       "toCol": 3,
       "variant": "emphasis"
     },
@@ -524,27 +524,27 @@
       "label": "SHAGRDE",
       "sublabel": "revisar la escala",
       "width": 150,
-      "tag": "nivel M: por confirmar"
+      "tag": "escala por confirmar"
     },
     {
       "id": "n2",
       "lane": "ra",
       "col": 1,
       "type": "backend",
-      "label": "SHAGCOM",
-      "sublabel": "plan de evaluación",
+      "label": "SHAEGBC",
+      "sublabel": "abrir calendario",
       "width": 150,
-      "tag": "componentes y pesos"
+      "tag": "calendario del periodo"
     },
     {
       "id": "n3",
-      "lane": "doc",
+      "lane": "ra",
       "col": 2,
-      "type": "frontend",
-      "label": "Autoservicio",
-      "sublabel": "registrar asistencia",
+      "type": "backend",
+      "label": "SHAGCOM",
+      "sublabel": "asignar plan del NRC",
       "width": 150,
-      "tag": "poca asistencia: INH"
+      "tag": "ATTRGRD · peso 0 · Debe Pasar"
     },
     {
       "id": "n4",
@@ -552,9 +552,9 @@
       "col": 3,
       "type": "frontend",
       "label": "Autoservicio",
-      "sublabel": "registrar notas",
+      "sublabel": "registrar asistencia y notas",
       "width": 150,
-      "tag": "nota mínima por confirmar"
+      "tag": "70% asist. · nota pendiente"
     },
     {
       "id": "n5",
@@ -622,7 +622,9 @@
       "title": "Si falla el pase a historia",
       "items": [
         "«No Substitute Grade»: la escala del nivel no tiene el modo del curso; agrégalo en SHAGRDE (U20)",
-        "Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)"
+        "Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)",
+        "Computación: nota mínima 11 y asistencia mínima 70 %; por debajo de 70 % corresponde INH (C27, C63)",
+        "El registro de asistencia en Faculty está documentado, pero todavía no se ha validado en TEST (C89)"
       ]
     },
     {
@@ -638,7 +640,9 @@
       "title": "En Ellucian (instructivos)",
       "items": [
         "Escalas y modos: instructivo 7.1.3, diap. 16 (SHAGRDE)",
+        "Calendario de ingreso de calificaciones: instructivo 7.1.4, diap. 40–43 (SHAEGBC)",
         "Plan de evaluación y notas: instructivos 7.1.4 (SHAGCOM) y 7.1.6 (SFASLST)",
+        "Componente ATTRGRD: instructivo 7.1.0, diap. 29–30; 7.1.4, diap. 55",
         "Pase a historia: instructivo 7.1.9 (SHRROLL)",
         "CAPP: instructivo 7.2.4, diap. 30 a 55"
       ]

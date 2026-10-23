@@ -34,7 +34,7 @@
     {
       "id": "datos-comunes",
       "ruta": "centros/comun/datos.json",
-      "que": "Escuela, campus, grado, periodos y catálogo de scripts de prueba",
+      "que": "Escuela, campus, grado, periodos, mínimo común de asistencia y catálogo de scripts de prueba",
       "adr": "ADR-002"
     },
     {
@@ -83,6 +83,23 @@
         "centros/index.html"
       ],
       "adr": "ADR-003"
+    },
+    {
+      "id": "base-asistente",
+      "comando": "python3 herramientas/diagramas/generar_conocimiento_asistente.py",
+      "entradas": [
+        ".claude/skills/preguntas-y-dudas-centros/registro.md",
+        ".claude/skills/arquitectura-centros-empresariales/references",
+        "centros/comun/datos.json",
+        "centros/idiomas/datos.json",
+        "centros/computacion/datos.json",
+        "centros/emprendimiento/datos.json",
+        "conocimiento/decisiones"
+      ],
+      "salidas": [
+        "herramientas/diagramas/assets/asistente_conocimiento.js"
+      ],
+      "adr": "ADR-021"
     },
     {
       "id": "espejo-skills",

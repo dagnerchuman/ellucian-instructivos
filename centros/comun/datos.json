@@ -42,9 +42,19 @@
       "seuss": "2027-0",
       "nombre": "Verano 2027",
       "grupos_que_empiezan": "enero a marzo 2027"
+    },
+    {
+      "codigo": "202754",
+      "seuss": "2027-I",
+      "nombre": "Semestre 2027-I",
+      "grupos_que_empiezan": "abril a agosto 2027"
     }
   ],
   "regla_periodo": "Año + 5 (Centros) + secuencia: 1 verano, 4 semestre I, 6 semestre II. El periodo lo decide la fecha de inicio del grupo, no la de fin.",
+  "asistencia_minima_porcentaje": {
+    "valor": 70,
+    "fuente": "C63"
+  },
   "scripts": [
     {
       "id": "01",
@@ -253,6 +263,16 @@
       "capacidad_nombre": "Capacidad 4.3 y 10 · Solicitudes de servicio estudiantiles (SVASVPR)",
       "paginas": [
         "SVASVPR"
+      ]
+    },
+    {
+      "id": "19",
+      "nombre": "Calendario de calificaciones y componente ATTRGRD",
+      "capacidad": "Capacidad 7",
+      "capacidad_nombre": "Capacidad 7.1 · Calendario SHAEGBC y plan de evaluación SHAGCOM",
+      "paginas": [
+        "SHAEGBC",
+        "SHAGCOM"
       ]
     }
   ],

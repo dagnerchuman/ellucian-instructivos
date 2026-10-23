@@ -209,6 +209,10 @@
     "18-C": {
       "estado": "por probar",
       "evidencia": "Solicitud o queja"
+    },
+    "19": {
+      "estado": "pendiente",
+      "evidencia": "Pendiente de probar el calendario de calificaciones y el componente ATTRGRD para Emprendimiento"
     }
   },
   "particularidades": [

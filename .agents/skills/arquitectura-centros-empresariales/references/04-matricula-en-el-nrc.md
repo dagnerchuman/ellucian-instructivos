@@ -2,6 +2,8 @@
 
 Procedimiento oficial probado y validado en el ambiente **TEST de la USS** (29/09/2026) para inscribir a un estudiante en un NRC mediante backoffice en Banner.
 
+> **Orden obligatorio de Banner:** conserva el orden de campos de cada pantalla y no adelantes datos dependientes. En el encabezado de SFAREGS, el periodo se ingresa primero, luego el ID del alumno y al final el plan de estudios.
+
 ---
 
 ## 1. Acceso a la página
@@ -13,8 +15,11 @@ Procedimiento oficial probado y validado en el ambiente **TEST de la USS** (29/0
 ## 2. Bloque Clave (Encabezado)
 1. **Periodo:** Ingresar el periodo académico (ej. `202656`).
 2. **ID:** Ingresar el ID oficial del estudiante (ej. `S00581081`).
-3. **Plan de estudios:** Hacer clic dentro de la casilla (o presionar `•••`) para que se cargue el número **`1`** correspondiente a su programa.
+3. **Plan de estudios, al final:** completar este campo después del periodo y del ID. Si se ingresa antes, puede aparecer un error como «no existe la tabla o vista» u otro error.
+   - No asumir que el plan siempre es `1`; elegir el que corresponda al alumno y esté disponible.
 4. Presionar el botón azul **«Ir»** (arriba a la derecha).
+
+**Orden obligatorio del encabezado:** periodo → ID del alumno → plan de estudios. El periodo es el primer dato requerido.
 
 ---
 

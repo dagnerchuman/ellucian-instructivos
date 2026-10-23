@@ -80,6 +80,7 @@ El flujo completo de 7 fases y 17 pasos está en [references/00-flujo-de-inicio-
 |---|---|
 | Flujo de inicio a fin: fases, pasos, responsables y páginas | [references/00-flujo-de-inicio-a-fin.md](references/00-flujo-de-inicio-a-fin.md) |
 | Matrícula por autoservicio del estudiante | [references/ref-autoservicio-matricula.md](references/ref-autoservicio-matricula.md) |
+| Registro de asistencia docente y búsqueda administrativa en TEST | [references/ref-registro-asistencia-docente.md](references/ref-registro-asistencia-docente.md), [references/ref-busqueda-asistencia-banner.md](references/ref-busqueda-asistencia-banner.md) |
 | Periodos, partes de periodo y cronograma 2026 de los tres centros | [references/ref-periodos-y-cronograma.md](references/ref-periodos-y-cronograma.md) |
 | Qué dice Ellucian sobre horas, docentes, notas, asistencia y egreso | [references/ref-reglas-ellucian.md](references/ref-reglas-ellucian.md) |
 | Directorio de páginas de Banner por proceso y número de instructivo | [references/ref-paginas-banner.md](references/ref-paginas-banner.md) |
@@ -100,6 +101,7 @@ Cita siempre así: «instructivo 5.2 Carga de trabajo docente, diap. 12». El n�
 ## Cómo ayudar mientras el usuario trabaja en Banner
 - Suele mandar **capturas de la pantalla** y preguntar «¿qué pongo aquí?».
 - Responde corto, **campo por campo**, en el orden de la pantalla. Cita la diapositiva del instructivo y di qué hacer si algo no aparece.
+- **Orden obligatorio de Banner:** en cualquier flujo o guía, respeta la secuencia de campos y pasos documentada para esa pantalla; no reordenes campos ni adelantes uno del que dependan los anteriores. Si la secuencia no está documentada, no la inventes: indica qué orden falta confirmar. Los órdenes son propios de cada pantalla y no se extrapolan entre páginas. En `SFAREGS`, el encabezado sí tiene orden confirmado: periodo → ID del alumno → plan de estudios.
 - Si no conoces un código de la USS (campus, escuela, programa), dilo y explica cómo buscarlo con «•••». No lo inventes.
 
 ## Reglas de trabajo

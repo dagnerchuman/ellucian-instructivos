@@ -39,7 +39,11 @@ Este workflow guía y audita la ejecución de pruebas en el ambiente **TEST de E
 
 ### D. Enseñanza-Aprendizaje y Cierre
 - [ ] Configurar plan de evaluación en **SHAGCOM** (componentes y pesos).
-- [ ] Registrar notas y asistencia por autoservicio docente.
+- [ ] Si **SHAGCOM** muestra «Debe configurar los controles del libro de calificaciones en SHAEGBC», buscar **SHAEGBC**, ingresar el periodo, pulsar **Ir**, y configurar fecha abierta/fecha de corte autorizadas antes de volver a SHAGCOM. No inventar fechas. (Instructivo 7.1.4, diap. 40–43.)
+- [ ] **Script 19 — Computación:** en el ejemplo de TEST 202656 / NRC 10026 (ESEC 00697, X06), validar el calendario en **SHAEGBC** y luego el componente `ATTRGRD` en **SHAGCOM** (peso 0.00, **Debe Pasar**, escala propia de asistencia). Aplican nota mínima 11 y asistencia mínima 70 %; no marcar validado hasta confirmar el guardado y la escala. (Instructivos 7.1.0, diap. 29–30; 7.1.4, diap. 40–43 y 55; C27, C63.)
+- [ ] **Asistencia docente:** desde **Banner Search Card** con perfil **Super Role Admin**, buscar `SOAATMT` (reglas por NRC/sesión), `SOAATRK` (reglas por periodo/parte/curso/NRC) y `ENTERATTEND` (proceso de acceso a Autoservicio). Son términos respaldados por el instructivo, pero su disponibilidad en TEST debe comprobarse; no guardar cambios sin verificar periodo y NRC.
+- [ ] Probar la ruta **Faculty > Ingreso de asistencia** solo cuando se muestren secciones disponibles. En la observación actual de TEST, Faculty Grading da error y la lista de asistencia aparece sin NRC; no registrar esa ruta como validada.
+- [ ] Cuando el acceso esté habilitado, registrar notas y asistencia por autoservicio docente.
 - [ ] Probar impacto de inasistencia: estudiante con < 70% de asistencia debe recibir nota INH (desaprobado) vía componente ATTRGRD.
 - [ ] Ejecutar pase a historia académica con **SHRROLL**.
 - [ ] Ejecutar CAPP masivo con **SMRBCMP** para verificar actualización del estatus del alumno.

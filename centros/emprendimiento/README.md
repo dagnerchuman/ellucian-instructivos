@@ -55,7 +55,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 ## NRC en TEST
 - NRC **1025**: ESGE 00117, sección A. Solo carga docente: sesión 02, no principal (1,98 h/sem, 19,8 h, FTE 0,04).
 
-## Scripts de prueba (18 por probar · 2 validado · 1 por definir)
+## Scripts de prueba (18 por probar · 2 validado · 1 por definir · 1 pendiente)
 | Script | Nombre | Estado | Evidencia o pendiente |
 |---|---|---|---|
 | 01 | Matrícula regular | por probar | Matrícula con un programa de nivel M |
@@ -79,6 +79,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | 18-A | Auditoría de carga docente | validado | NRC 1025 aparece en la carga del docente (SIAASGN) |
 | 18-B | Retenciones y bloqueo de matrícula | por probar | Retención que bloquea la matrícula |
 | 18-C | Solicitud de servicio o queja | por probar | Solicitud o queja |
+| 19 | Calendario de calificaciones y componente ATTRGRD | pendiente | Pendiente de probar el calendario de calificaciones y el componente ATTRGRD para Emprendimiento |
 
 ## Por confirmar
 - **U02**: ¿Los cursos tienen orden o son independientes?

@@ -2,6 +2,8 @@
 
 Esta guía documenta el procedimiento probado y validado en el ambiente **TEST de la USS** (29/09/2026) para registrar a una persona natural nueva y generar su ID oficial de Banner.
 
+> **Orden de Banner:** sigue los pasos y el orden de campos descritos para GOAMTCH. No adelantes campos ni cambies la secuencia; si un orden no está documentado, confírmalo antes de indicarlo.
+
 ---
 
 ## 1. Acceso a la página

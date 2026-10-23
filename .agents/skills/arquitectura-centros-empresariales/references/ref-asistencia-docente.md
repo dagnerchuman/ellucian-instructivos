@@ -6,6 +6,8 @@
 - En Computación, el mínimo confirmado es **70 % de asistencia** (C63); se mantiene separado de la nota mínima aprobatoria **11** del modo vigesimal `V` (ADR-009).
 - `ATTRGRD` es la configuración del componente dentro del libro de calificaciones; no es el nombre de la opción que abre el control diario de asistencia.
 - En el NRC `10026` de Computación (periodo `202656`), el usuario confirma que completó y validó en TEST el flujo `SHAEGBC` → `SHAGCOM` (C95). La fila `ATTRGRD` usa peso `0.00`, **Debe aprobar** y escala propia de asistencia correspondiente al `70 %`, distinta de `VIG_11`, que se mantiene como escala regular.
+- En el bloque superior de SHAGCOM, «Escala de calificación» es la escala **que predominará** en los componentes; cada componente puede usar otra, por ejemplo la de asistencia. *(7.1.4, diap. 44 y 49)* En el NRC `10044` quedó `AST_70` arriba, aunque cuatro de los cinco componentes usan `VIG_11` (C98).
+- El Autoservicio docente solo lista los NRC que el docente tiene asignados, **con plan de evaluación y con alumnos inscritos**. *(7.1.4, diap. 58 y 63)*
 
 ## Docente: ingresar y revisar la asistencia diaria
 - Desde la página de inicio de **Faculty (Autoservicio Docente)**, el menú ofrece **Control de asistencia del docente**. *(instructivo 10.4.2.4.5 Configuración de Autoservicio, diap. 12)*

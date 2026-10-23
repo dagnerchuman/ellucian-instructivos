@@ -109,6 +109,7 @@ Parte de periodo general: **CGE**.
 
 ## ▶️ Siguiente (23/10/2026): Diseño Web desde la creación del NRC
 - **NRC 10044 creado (C97)**: sección A, X06, sesión M, VIRT, modo V y cupo 40, en SAUVIR / SALA-VIRT con el sobrepaso `O`. Falta asignar el docente en la grilla Instructor.
+- **Plan en SHAGCOM cargado (C98)**: TA1 0.15 · TA2 0.15 · PA 0.40 · EF 0.30 (VIG_11) + ATTRGRD 0.00, Debe aprobar, AST_70; peso final 1.00. Revisar la escala superior (quedó AST_70; según 7.1.4 diap. 44 va la predominante). Siguiente: docente confirmado y alumno matriculado, porque el Autoservicio solo lista NRC con plan y con inscritos (7.1.4, diap. 58).
 - La hoja oficial 202656 tiene la fila **ESEC 00684 «Diseño Web»** (X06, sección A, HT 1, HP 1, cobra SÍ, código docente 100582059, SAUVIR SALA-VIRT), pero **sin NRC, nombre del docente ni horario**.
 - Docente: Dagner Chuman (100582059). Horario propuesto por estar libre en la hoja: **jueves 08:00–09:40** (alternativa: martes 10:30–12:10). Por confirmar.
 - Orden: SSASECT (crear NRC) → SHAEGBC (ya configurado para 202656) → SHAGCOM con el plan del sílabo (C96).

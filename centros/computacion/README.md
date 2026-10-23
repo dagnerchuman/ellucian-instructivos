@@ -68,7 +68,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **10018**: ESEC 00678, sección A, parte X06. OFIMÁTICA WORD 365 (Hoja oficial 202656).
 - NRC **10019**: ESEC 00679, sección A, parte X06. OFIMÁTICA EXCEL 365 (Hoja oficial 202656).
 - NRC **10026**: ESEC 00697, sección A, parte X06. Ejemplo actual de configuración de asistencia y ATTRGRD (capturas TEST 23/10/2026).
-- NRC **10044**: ESEC 00684, sección A, parte X06. DISEÑO WEB, creado en SSASECT el 23/10 (C97): sesión M, método VIRT, modo V, X06. Plan en SHAGCOM (C98): TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 (aprobatoria 55 de 100) y ATTRGRD 0.00, Debe aprobar, AST_70 (aprobatoria 70). Faltan: confirmar el docente 100582059, revisar la escala superior (AST_70) y matricular alumnos.
+- NRC **10044**: ESEC 00684, sección A, parte X06. DISEÑO WEB (C96–C102): creado en SSASECT (sesión M, VIRT, modo V, X06); plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70). Alumno de prueba: 100582059 (plan de estudios 4, CMEMC44), RE. Regla de asistencia en SOAATRK; Pasar lista en Faculty con 86 %. Notas por componente en Faculty en curso.
 
 ## Scripts de prueba (19 validado · 2 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |

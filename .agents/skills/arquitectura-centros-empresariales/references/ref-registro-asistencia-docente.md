@@ -14,6 +14,8 @@
 - Si `SHAGCOM` muestra el error «Debe configurar los controles del libro de calificaciones en SHAEGBC», configura primero el calendario de calificaciones en **`SHAEGBC`**: periodo → **Ir** → fecha abierta y fecha de corte institucionales → guardar; luego regresa a `SHAGCOM`. *(instructivo 7.1.4, diap. 40–43)*
 
 ## Estado de validación
+**Actualización 23/10/2026 (C101, C102):** con una regla en **`SOAATRK`** para el NRC 10044 (202656, X06, ESEC 00684; Desplegar clase, unidad Presente/Ausente, Control de asistencia, del 07-SEP al 31-OCT-2026), el NRC ya aparece en **Faculty › Control de asistencia › Lista de cursos › Pasar lista** y Banner calcula el porcentaje. **Captura de calificaciones › Libro de calificaciones › Componentes** también abre el NRC. Sin la regla de SOAATRK, la lista de asistencia sale vacía. Lo que sigue es la observación anterior:
+
 El instructivo documenta el procedimiento de Faculty, pero en la prueba actual de la USS la tarjeta **Faculty Grading** mostró error y **Ingreso de asistencia** abrió una lista sin NRC disponibles. Por tanto, no guiar al usuario a esa tarjeta como solución actualmente operativa ni afirmar que la asistencia está disponible para el NRC consultado.
 
 La ruta administrativa de búsqueda y los términos validados para el estado actual de TEST están en [ref-busqueda-asistencia-banner.md](ref-busqueda-asistencia-banner.md). No alterar reglas existentes ni guardar cambios hasta confirmar que se está en el periodo/NRC correcto y entender el alcance.

@@ -191,9 +191,9 @@
       "seccion": "A",
       "parte": "X06",
       "docente": "100582059 (Dagner Chuman)",
-      "horario": "Propuesto: jueves 08:00 AM – 09:40 AM (por confirmar en «Fechas de reunión»)",
+      "horario": "Jueves por la tarde (cambiado para evitar el cruce con el 10042; hora exacta por anotar)",
       "aula": "SAUVIR / SALA-VIRT",
-      "uso": "DISEÑO WEB, creado en SSASECT el 23/10 (C97): sesión M, método VIRT, modo V, X06. Plan en SHAGCOM (C98): TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 (aprobatoria 55 de 100) y ATTRGRD 0.00, Debe aprobar, AST_70 (aprobatoria 70). Faltan: confirmar el docente 100582059, revisar la escala superior (AST_70) y matricular alumnos",
+      "uso": "DISEÑO WEB (C96–C102): creado en SSASECT (sesión M, VIRT, modo V, X06); plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70). Alumno de prueba: 100582059 (plan de estudios 4, CMEMC44), RE. Regla de asistencia en SOAATRK; Pasar lista en Faculty con 86 %. Notas por componente en Faculty en curso",
       "cupo": "40"
     }
   ],

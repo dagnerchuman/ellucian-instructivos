@@ -107,6 +107,12 @@ Parte de periodo general: **CGE**.
 
 ---
 
+## ▶️ Siguiente (23/10/2026): Diseño Web desde la creación del NRC
+- La hoja oficial 202656 tiene la fila **ESEC 00684 «Diseño Web»** (X06, sección A, HT 1, HP 1, cobra SÍ, código docente 100582059, SAUVIR SALA-VIRT), pero **sin NRC, nombre del docente ni horario**.
+- Docente: Dagner Chuman (100582059). Horario propuesto por estar libre en la hoja: **jueves 08:00–09:40** (alternativa: martes 10:30–12:10). Por confirmar.
+- Orden: SSASECT (crear NRC) → SHAEGBC (ya configurado para 202656) → SHAGCOM con el plan del sílabo (C96).
+- Plan del sílabo (sección 8): TA1 15 %, TA2 15 %, Participación en aula 40 %, Examen final 30 % = 100 %, más `ATTRGRD` con peso 0.00. Antes de cargar, resolver U30: examen final 20 % o 30 %, asistencia 80 % o 70 %, y TA1 repetido en la semana 12.
+
 ## ▶️ Dónde quedamos (05/10/2026)
 - **19 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07.
 - **Faltan 05 y 07:**

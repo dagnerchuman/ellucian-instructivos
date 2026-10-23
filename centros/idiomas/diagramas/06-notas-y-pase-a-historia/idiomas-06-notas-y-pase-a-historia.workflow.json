@@ -534,7 +534,7 @@
       "label": "SHAEGBC",
       "sublabel": "abrir calendario",
       "width": 150,
-      "tag": "calendario del periodo"
+      "tag": "periodo 202656 · fechas"
     },
     {
       "id": "n3",
@@ -542,7 +542,7 @@
       "col": 2,
       "type": "backend",
       "label": "SHAGCOM",
-      "sublabel": "asignar plan del NRC",
+      "sublabel": "asignar plan · plan del NRC",
       "width": 150,
       "tag": "ATTRGRD · peso 0 · Debe Pasar"
     },

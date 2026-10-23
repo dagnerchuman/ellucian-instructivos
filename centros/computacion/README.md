@@ -68,6 +68,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **10018**: ESEC 00678, sección A, parte X06. OFIMÁTICA WORD 365 (Hoja oficial 202656).
 - NRC **10019**: ESEC 00679, sección A, parte X06. OFIMÁTICA EXCEL 365 (Hoja oficial 202656).
 - NRC **10026**: ESEC 00697, sección A, parte X06. Ejemplo actual de configuración de asistencia y ATTRGRD (capturas TEST 23/10/2026).
+- NRC **por crear**: ESEC 00684, sección A, parte X06. DISEÑO WEB: la hoja oficial 202656 no tiene NRC, docente ni horario. Se crea en SSASECT y luego se carga en SHAGCOM el plan del sílabo (C96, U30).
 
 ## Scripts de prueba (19 validado · 2 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |

@@ -45,7 +45,7 @@
     "ESEC 00679 OFIMÁTICA EXCEL 365 (NRC 10019 · Sec A)",
     "ESEC 00680 DISEÑO CON CANVA (NRC 10020 · Sec A)",
     "ESEC 00682 MICROSOFT EXCEL ASOCIADO (NRC 10021 · Sec A)",
-    "ESEC 00684 DISEÑO WEB (sin NRC en la hoja oficial · Sec A · por crear)",
+    "ESEC 00684 DISEÑO WEB (NRC 10044 · Sec A)",
     "ESEC 00691 ANÁLISIS DE DATOS CON SPSS (NRC 10022 · Sec A)",
     "ESEC 00694 BASE DE DATOS CIENTÍFICOS Y VIGILANCIA TECNOLÓGICA (NRC 10023 · Sec A)",
     "ESEC 00696 TALLER DE CERTIFICACIÓN INTERNACIONAL AUTOCAD (NRC 10025 · Sec A)",
@@ -186,14 +186,15 @@
       "uso": "Ejemplo actual de configuración de asistencia y ATTRGRD (capturas TEST 23/10/2026)"
     },
     {
-      "nrc": "por crear",
+      "nrc": "10044",
       "curso": "ESEC 00684",
       "seccion": "A",
       "parte": "X06",
       "docente": "100582059 (Dagner Chuman)",
-      "horario": "Propuesto: jueves 08:00 AM – 09:40 AM (por confirmar)",
+      "horario": "Propuesto: jueves 08:00 AM – 09:40 AM (por confirmar en «Fechas de reunión»)",
       "aula": "SAUVIR / SALA-VIRT",
-      "uso": "DISEÑO WEB: la hoja oficial 202656 no tiene NRC, docente ni horario. Se crea en SSASECT y luego se carga en SHAGCOM el plan del sílabo (C96, U30)"
+      "uso": "DISEÑO WEB, creado en SSASECT el 23/10 (C97): sesión M, método VIRT, modo V, X06. Falta el docente 100582059 en la grilla Instructor y, después, el plan del sílabo en SHAGCOM (C96, U30)",
+      "cupo": "40"
     }
   ],
   "nrc_ejemplo": "1026",

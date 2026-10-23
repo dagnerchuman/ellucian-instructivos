@@ -119,9 +119,9 @@ Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuari
 | 4 | Matrícula | `SFAREGS` | ✅ | Plan 4 en `EL` y NRC 10044 en RE. «Estimación de cuota procesada» |
 | 5 | Regla de asistencia | `SOAATRK` | ✅ | **Va primero**: 202656, X06, ESEC 00684, NRC 10044, Desplegar clase, Presente/Ausente, Control de asistencia, del 07-SEP al 31-OCT-2026 (C101) |
 | 6 | Pasar lista | Faculty › Control de asistencia | ✅ | 86 % (ausente el jueves 22-OCT) (C101) |
-| 7 | Notas por componente | Faculty › Libro de calificaciones › Componentes | ⏳ | TA1 guardado: 85 de 100 → **17**, visible en el Autoservicio del alumno (C102, C103). Faltan TA2, PA y EF |
-| 8 | Asistencia a `ATTRGRD` | Envío desde el control de asistencia (7.1.0) | ⏳ | **No pasa sola**: `ATTRGRD` aparece en Componentes con 1 calificación restante. Revisar `GORICCR`, `GORRSQL` y `STVGCHG` (U32). Para la prueba se puede ingresar a mano |
-| 9 | Nota final | Calificaciones compuestas → Calificaciones finales | ⏳ | El alumno ve «Calificación no disponible» hasta que se completen los componentes y la nota final |
+| 7 | Notas por componente | Faculty › Libro de calificaciones › Componentes | ✅ | TA1, TA2, PA y EF con 85 de 100 (→ 17), visibles en el Autoservicio del alumno (C102, C103, C105) |
+| 8 | Asistencia a `ATTRGRD` | Envío desde el control de asistencia (7.1.0) | ⚠️ | `ATTRGRD` = **43**, el mismo % de Pasar lista (C105). Por confirmar si llegó sola o se ingresó a mano. GORICCR en Y, GORRSQL activa y STVGCHG con CA (C104, U32) |
+| 9 | Nota final | Calificaciones compuestas → Calificaciones finales | 🟡 | **Calificaciones compuestas: porcentaje final 85, calificación final INH** (razón «Composite Calculation»): «Debe aprobar» de `ATTRGRD` funciona (C105). Falta pasarla a Calificaciones finales |
 | 10 | Pase a historia | `SHRROLL` | ⏳ | Después de la nota final |
 
 ## ▶️ Dónde quedamos (05/10/2026)

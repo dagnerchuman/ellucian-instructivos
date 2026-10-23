@@ -45,9 +45,10 @@ Este workflow guía y audita la ejecución de pruebas en el ambiente **TEST de E
 - [ ] **Asistencia docente (referencia):** desde **Banner Search Card** con perfil **Super Role Admin**, buscar `SOAATMT` (reglas por NRC/sesión), `SOAATRK` (reglas por periodo/parte/curso/NRC) y `ENTERATTEND` (proceso de acceso a Autoservicio). Son términos respaldados por el instructivo, pero su disponibilidad en TEST debe comprobarse; no guardar cambios sin verificar periodo y NRC.
 - [x] **Faculty › Control de asistencia › Pasar lista** funciona con el NRC 10044 una vez creada la regla en SOAATRK (C101): calcula el porcentaje (86 %).
 - [x] **Faculty › Captura de calificaciones › Libro de calificaciones › Componentes** abre el NRC 10044 y guarda notas: TA1 85 de 100 → **17**, visible en el Autoservicio del alumno › Ver calificaciones › Componentes (C102, C103).
-- [ ] Completar TA2, PA y EF y revisar «Calificaciones compuestas».
+- [x] Completar TA2, PA y EF y revisar «Calificaciones compuestas»: con los cuatro en 85 y `ATTRGRD` en 43, porcentaje final 85 y **calificación final INH** (C105).
+- [ ] Pasar la nota compuesta a **Calificaciones finales**, verla en `SFASLST` y rolar con `SHRROLL`. Opcional: `ATTRGRD` en 70 o más con razón de cambio → la final debe salir 17.
 - [ ] **`ATTRGRD`:** el porcentaje de Pasar lista **no pasa solo** al libro (C103). Revisar en `GORICCR` (ATTENDANCE_TRACKING / ENABLE.GRADEBOOK.UPDATE), `GORRSQL` (ATTR_UPDATE_GRADEBOOK validada y activa) y `STVGCHG` (razón con atributo CA) (U32; 7.1.0, diap. 11–26). Mientras tanto, ingresarlo a mano en Componentes para probar «Debe aprobar»: con 70 o más aprueba; con menos, INH.
-- [ ] Probar impacto de inasistencia: estudiante con < 70% de asistencia debe recibir nota INH (desaprobado) vía componente ATTRGRD.
+- [x] Probar impacto de inasistencia: con `ATTRGRD` 43 (< 70 %), la calificación compuesta del NRC 10044 salió **INH** aunque los componentes daban 85 (C105).
 - [ ] Ejecutar pase a historia académica con **SHRROLL**.
 - [ ] Ejecutar CAPP masivo con **SMRBCMP** para verificar actualización del estatus del alumno.
 

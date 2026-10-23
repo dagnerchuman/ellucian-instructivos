@@ -66,6 +66,7 @@ Parte de periodo general: **CGE**.
 | **1021** | ESEC 00650 | B | X07 | 2 | Dagner Chuman (100582059) | Validado: matrícula, notas, retiro |
 | **1024** | ESEC 00650 | C | — | — | Dagner Chuman (100582059) | Activo (auditado en SIAASGN) |
 | **1026** | ESEC 00650 | D | X07 | 4 | Dagner Chuman (100582059) | Script 15 validado (aforo 1 a 4). 2 inscritos: S00581109 y S00581108 |
+| **10044** | ESEC 00684 «Diseño Web» | A | X06 | 40 | Dagner Chuman (100582059) | Flujo completo en curso (C96–C103). Alumno inscrito: 100582059 (plan 4, CMEMC44) |
 
 ## Alumnos creados / usados en TEST
 
@@ -77,7 +78,7 @@ Parte de periodo general: **CGE**.
 | **S00581109** | MARIA RAMIREZ GARCIA | Admitida CMEMC38 / Matriculada 1026 | 01, 15 (inscrita en NRC 1026 - Casuística Aprueba) |
 | **S00581110** | JUAN FLORES CASTILLO | Creado en GOAMTCH | Casuística Inhabilitado (INH) |
 | **S00581111** | ANA ROJAS VERA | Creada en GOAMTCH | Casuística Convalidación Externa (SHATRNS) |
-| **100582059** | Dagner Chuman (DCHUMAN) | Usuario institucional / docente | 18-A, autoservicio, docente principal |
+| **100582059** | Dagner Chuman (DCHUMAN) | Usuario institucional / docente; además alumno del NRC 10044 (plan de estudios 4, `CMEMC44`) | 18-A, autoservicio, docente principal, flujo de Diseño Web (C99–C103) |
 
 ## Matriz de Scripts de Computación (actualizada al 23/10/2026)
 
@@ -107,13 +108,21 @@ Parte de periodo general: **CGE**.
 
 ---
 
-## ▶️ Siguiente (23/10/2026): Diseño Web desde la creación del NRC
-- **NRC 10044 creado (C97)**: sección A, X06, sesión M, VIRT, modo V y cupo 40, en SAUVIR / SALA-VIRT con el sobrepaso `O`. Falta asignar el docente en la grilla Instructor.
-- **Plan en SHAGCOM cargado (C98)**: TA1 0.15 · TA2 0.15 · PA 0.40 · EF 0.30 (VIG_11) + ATTRGRD 0.00, Debe aprobar, AST_70; peso final 1.00. Revisar la escala superior (quedó AST_70; según 7.1.4 diap. 44 va la predominante). Siguiente: docente confirmado y alumno matriculado, porque el Autoservicio solo lista NRC con plan y con inscritos (7.1.4, diap. 58).
-- La hoja oficial 202656 tiene la fila **ESEC 00684 «Diseño Web»** (X06, sección A, HT 1, HP 1, cobra SÍ, código docente 100582059, SAUVIR SALA-VIRT), pero **sin NRC, nombre del docente ni horario**.
-- Docente: Dagner Chuman (100582059). Horario propuesto por estar libre en la hoja: **jueves 08:00–09:40** (alternativa: martes 10:30–12:10). Por confirmar.
-- Orden: SSASECT (crear NRC) → SHAEGBC (ya configurado para 202656) → SHAGCOM con el plan del sílabo (C96).
-- Plan del sílabo (sección 8): TA1 15 %, TA2 15 %, Participación en aula 40 %, Examen final 30 % = 100 %, más `ATTRGRD` con peso 0.00. Antes de cargar, resolver U30: examen final 20 % o 30 %, asistencia 80 % o 70 %, y TA1 repetido en la semana 12.
+## ▶️ Flujo completo en curso: Diseño Web, NRC 10044 (23/10/2026)
+Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuario como docente **y** alumno (C96–C103).
+
+| # | Paso | Página | Estado | Evidencia |
+|---|---|---|---|---|
+| 1 | Crear NRC | `SSASECT` | ✅ | NRC **10044**: ESEC 00684 «Diseño Web», A, X06, sesión M, VIRT, modo V, cupo 40 (Proyectado antes de «Lugares reservados»). SAUVIR / SALA-VIRT con `O` en «Indicador de sobrepaso» (C97). Horario cambiado a jueves por la tarde por el cruce con el 10042 |
+| 2 | Plan de evaluación | `SHAGCOM` | ✅ | TA1 0.15 · TA2 0.15 · PA 0.40 · EF 0.30 con `VIG_11` (aprobatoria 55 de 100) + `ATTRGRD` 0.00, Debe aprobar, `AST_70` (aprobatoria 70). Peso final 1.00 (C98). Por revisar: el bloque superior quedó en `AST_70` |
+| 3 | Programa del alumno | `SFAREGS › Currículos` | ✅ | A `100582059` se le agregó con `+`, programa y Tab el plan de estudios 4: `CMEMC44` «Acreditación Computación XP 07», nivel C (C100; U31: ¿CMEMC44 o CMEMC38?) |
+| 4 | Matrícula | `SFAREGS` | ✅ | Plan 4 en `EL` y NRC 10044 en RE. «Estimación de cuota procesada» |
+| 5 | Regla de asistencia | `SOAATRK` | ✅ | **Va primero**: 202656, X06, ESEC 00684, NRC 10044, Desplegar clase, Presente/Ausente, Control de asistencia, del 07-SEP al 31-OCT-2026 (C101) |
+| 6 | Pasar lista | Faculty › Control de asistencia | ✅ | 86 % (ausente el jueves 22-OCT) (C101) |
+| 7 | Notas por componente | Faculty › Libro de calificaciones › Componentes | ⏳ | TA1 guardado: 85 de 100 → **17**, visible en el Autoservicio del alumno (C102, C103). Faltan TA2, PA y EF |
+| 8 | Asistencia a `ATTRGRD` | Envío desde el control de asistencia (7.1.0) | ⏳ | **No pasa sola**: `ATTRGRD` aparece en Componentes con 1 calificación restante. Revisar `GORICCR`, `GORRSQL` y `STVGCHG` (U32). Para la prueba se puede ingresar a mano |
+| 9 | Nota final | Calificaciones compuestas → Calificaciones finales | ⏳ | El alumno ve «Calificación no disponible» hasta que se completen los componentes y la nota final |
+| 10 | Pase a historia | `SHRROLL` | ⏳ | Después de la nota final |
 
 ## ▶️ Dónde quedamos (05/10/2026)
 - **19 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07.

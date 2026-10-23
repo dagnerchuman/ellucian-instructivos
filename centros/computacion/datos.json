@@ -193,7 +193,7 @@
       "docente": "100582059 (Dagner Chuman)",
       "horario": "Jueves por la tarde (cambiado para evitar el cruce con el 10042; hora exacta por anotar)",
       "aula": "SAUVIR / SALA-VIRT",
-      "uso": "DISEÑO WEB (C96–C102): creado en SSASECT (sesión M, VIRT, modo V, X06); plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70). Alumno de prueba: 100582059 (plan de estudios 4, CMEMC44), RE. Regla de asistencia en SOAATRK; Pasar lista en Faculty con 86 %. Notas por componente en Faculty en curso",
+      "uso": "DISEÑO WEB, flujo completo (C96–C103): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista con 86 %; TA1 = 17 (85/100), visible para el alumno. Pendiente: TA2, PA, EF, ATTRGRD (no pasa solo, U32), nota final y SHRROLL",
       "cupo": "40"
     }
   ],
@@ -230,6 +230,11 @@
       "id": "S00581111",
       "nombre": "Ana Rojas Vera",
       "caso": "Convalidación externa IST150 (nota 16)"
+    },
+    {
+      "id": "100582059",
+      "nombre": "Dagner Chuman (docente y alumno de prueba)",
+      "caso": "Alumno del NRC 10044 con plan de estudios 4 (CMEMC44), agregado en SFAREGS › Currículos; también es el docente principal del NRC (C99–C103)"
     }
   ],
   "persona_ejemplo": "S00581108",

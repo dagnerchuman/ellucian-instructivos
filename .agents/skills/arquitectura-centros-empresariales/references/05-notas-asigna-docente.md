@@ -16,6 +16,15 @@ Esta guía documenta el procedimiento y los requisitos para la asignación de do
 
 ---
 
+## 1-B. Flujo probado en TEST (NRC 10044, Diseño Web, 23/10/2026)
+1. **SSASECT:** crear el NRC. Proyectado va antes de «Lugares reservados»; con el aula virtual, `O` en «Indicador de sobrepaso» del horario; docente principal al 100 % (C97).
+2. **SHAEGBC → SHAGCOM:** calendario del periodo y plan de evaluación del sílabo. `ATTRGRD` va con peso 0, Debe aprobar y su escala de asistencia (C98).
+3. **SFAREGS:** el alumno necesita un currículo del nivel del curso. Se puede agregar en la pestaña **Currículos** (`+`, programa, Tab, Guardar) y luego autorizar ese plan de estudios con `EL` antes de inscribir el NRC (C100).
+4. **SOAATRK:** regla de control de asistencia para el periodo, la parte, el curso o el NRC. **Sin ella, el NRC no aparece en el control de asistencia de Faculty** (C101).
+5. **Faculty › Control de asistencia › Pasar lista:** marcas presente/ausente en fechas pasadas; Banner calcula el porcentaje (C101).
+6. **Faculty › Captura de calificaciones › Libro de calificaciones › Componentes:** puntaje sobre 100 → Banner propone la nota vigesimal (85 → 17); guardar con «Captura Original - OE». El alumno lo ve en **Autoservicio › Ver calificaciones › Componentes** (C102, C103).
+7. **ATTRGRD:** el porcentaje de asistencia no pasa solo; depende del envío del docente y de la configuración de TI (GORICCR, GORRSQL, STVGCHG; U32).
+
 ## 2. Flujo Completo Paso a Paso
 
 ### Paso 1: Habilitación del Docente en SIAINST

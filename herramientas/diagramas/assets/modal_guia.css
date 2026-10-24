@@ -2935,7 +2935,35 @@ html:not([data-theme="dark"]) .gdv-pasos {
   font-size: 0.72rem;
   font-weight: 700;
 }
-.gdv-hecho .gdv-badge { background: #8b5cf6; }
+.gdv-item {
+  display: grid;
+  grid-template-columns: 1.1rem 1fr;
+  gap: 0.45rem;
+  align-items: start;
+}
+.gdv-marca {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-top: 0.18rem;
+  border-radius: 999px;
+  border: 2px solid #8b5cf6;
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.gdv-hecho .gdv-marca {
+  background: #8b5cf6;
+  color: #ffffff;
+}
+.gdv-hecho > span:last-child { opacity: 0.7; }
+.gdv-aviso {
+  margin: 0.55rem 0 0;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
 .gdv-nota {
   padding-left: 2rem;
   opacity: 0.8;

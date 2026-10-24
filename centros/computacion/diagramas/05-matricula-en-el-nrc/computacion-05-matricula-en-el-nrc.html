@@ -16715,7 +16715,35 @@ html:not([data-theme="dark"]) .gdv-pasos {
   font-size: 0.72rem;
   font-weight: 700;
 }
-.gdv-hecho .gdv-badge { background: #8b5cf6; }
+.gdv-item {
+  display: grid;
+  grid-template-columns: 1.1rem 1fr;
+  gap: 0.45rem;
+  align-items: start;
+}
+.gdv-marca {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-top: 0.18rem;
+  border-radius: 999px;
+  border: 2px solid #8b5cf6;
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.gdv-hecho .gdv-marca {
+  background: #8b5cf6;
+  color: #ffffff;
+}
+.gdv-hecho > span:last-child { opacity: 0.7; }
+.gdv-aviso {
+  margin: 0.55rem 0 0;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
 .gdv-nota {
   padding-left: 2rem;
   opacity: 0.8;
@@ -18776,13 +18804,14 @@ button.ai-fab:active,
     var filas = (info && info.instrucciones) || [];
     if (filas.length) {
       var checks = (window.__guiaChecks && window.__guiaChecks[paso]) || {};
-      html += '<section class="gdv-bloque"><h4>Su guía · ' + escapeHtml((info.fase || '').replace(/^Paso\s*\d+:\s*/i, '')) + '</h4><ol class="gdv-lista">';
+      // Sin números: los números verdes de la imagen son los del instructivo y no deben confundirse con la guía.
+      html += '<section class="gdv-bloque"><h4>Su guía · ' + escapeHtml((info.fase || '').replace(/^Paso\s*\d+:\s*/i, '')) + '</h4><ul class="gdv-lista gdv-guia">';
       filas.forEach(function (f, i) {
         var hecho = !!checks[i];
-        html += '<li class="gdv-num' + (hecho ? ' gdv-hecho' : '') + '"><span class="gdv-badge">' + (hecho ? '✓' : (i + 1)) + '</span>' +
+        html += '<li class="gdv-item' + (hecho ? ' gdv-hecho' : '') + '"><span class="gdv-marca" aria-label="' + (hecho ? 'Validado' : 'Pendiente') + '">' + (hecho ? '✓' : '') + '</span>' +
           '<span><strong>' + escapeHtml(f.campo || '') + '</strong>' + (f.valor ? ': ' + escapeHtml(f.valor) : '') + '</span></li>';
       });
-      html += '</ol></section>';
+      html += '</ul><p class="gdv-aviso">Los números verdes de la imagen son los del instructivo.</p></section>';
     }
 
     // El texto ya se lee en la imagen: queda plegado y solo se abre si se pide.

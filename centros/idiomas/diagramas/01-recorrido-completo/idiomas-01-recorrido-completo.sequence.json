@@ -691,8 +691,8 @@
         "8. SAAQUIK: admite al alumno en el programa IMEMI03",
         "9. SFAREGS: matricula al alumno en el NRC (RE)",
         "10. TSAAREV: el alumno recibe el cobro en su cuenta",
-        "11. Autoservicio: el docente registra asistencia y notas",
-        "12. SHRROLL: pase a historia de las notas",
+        "11. Autoservicio: el docente pasa lista y registra las notas en el libro; Registros carga antes el plan (SHAGCOM) y la regla de asistencia (SOAATRK)",
+        "12. SHRROLL: revisa la nota final en SFASLST y hace el pase a historia",
         "13. SMICRLT: el alumno ve su avance en CAPP"
       ]
     },

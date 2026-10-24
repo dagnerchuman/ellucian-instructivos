@@ -614,22 +614,24 @@
     }
   ],
   "casuisticas": {
-    "matricula": [
+    "_leeme": "Scripts con diagrama propio (del n.º 7 u 8 en adelante), agrupados por fase del proceso y en el orden en que ocurren: abrir el periodo, matrícula, notas y cierre.",
+    "periodo": [
       "11",
-      "11-B",
+      "11-B"
+    ],
+    "matricula": [
+      "03",
       "04",
       "15",
+      "18-B",
+      "16",
       "08",
-      "16"
+      "05"
     ],
     "notas": [
-      "05",
       "10",
-      "03",
-      "12",
-      "18-B"
-    ],
-    "_leeme": "Scripts que tienen su propio diagrama de casuística (del n.º 7 en adelante), en este orden."
+      "12"
+    ]
   },
   "ligas": {
     "estado": "validado",

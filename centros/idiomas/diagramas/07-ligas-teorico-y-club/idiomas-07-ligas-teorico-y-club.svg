@@ -402,6 +402,43 @@ svg[data-preset="editorial"][data-animation="trace"] [data-animate="node"] { ani
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.48; transform: scale(0.78); }
 }
+[data-theme="light"] .flow-nav-top { background: rgba(255, 255, 255, 0.94) !important; border-color: rgba(203, 213, 225, 0.85) !important; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 10px !important; }
+[data-theme="light"] .btn-flow-centros:hover { color: rgb(15, 23, 42) !important; }
+[data-theme="light"] .flow-bottom-card.primary-accent { background: linear-gradient(135deg, rgba(112, 48, 160, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%) !important; border-color: rgba(112, 48, 160, 0.3) !important; }
+.diagram-container svg [data-detail="fine"], .diagram-container svg [data-detail="context"], .diagram-container svg [data-detail], svg [data-detail="fine"], svg [data-detail="context"], svg [data-detail] { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+.diagram-container svg [data-detail-anchor], svg [data-detail-anchor] { transform: none !important; }
+.diagram-container svg g[data-step-state="pending"] &gt; rect:not(.c-mask), svg g[data-step-state="pending"] &gt; rect:not(.c-mask), g[data-step-state="pending"] &gt; rect:not(.c-mask) { fill: rgba(30, 41, 59, 0.45) !important; stroke: rgb(71, 85, 105) !important; stroke-width: 1.3px !important; stroke-dasharray: 5, 4 !important; filter: none !important; transition: 0.25s !important; }
+svg[data-ocultar-posteriores="true"] g[data-node-id="s5"], svg[data-ocultar-posteriores="true"] g[data-node-id="s6"], svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s4-s5"], svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s5-s6"], svg[data-ocultar-posteriores="true"] path[data-edge-to="s5"], svg[data-ocultar-posteriores="true"] path[data-edge-to="s6"], svg[data-ocultar-posteriores="true"] .phase-posterior-header { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity 0.25s, visibility 0.25s !important; }
+svg[data-ocultar-posteriores="true"] g.placeholder-pasos-posteriores { display: inline !important; cursor: pointer !important; }
+[data-theme="light"] .toolbar button.btn-tb-reset:hover { background: rgb(254, 226, 226) !important; color: rgb(220, 38, 38) !important; }
+[data-theme="light"] .toolbar button.btn-tb-resume { background: rgb(254, 243, 199) !important; color: rgb(180, 83, 9) !important; border-color: rgb(245, 158, 11) !important; }
+[data-theme="light"] .toolbar button.btn-tb-resume:hover { background: rgb(253, 230, 138) !important; color: rgb(146, 64, 14) !important; }
+[data-theme="light"] .btn-flow-reset { background: rgb(241, 245, 249) !important; color: rgb(100, 116, 139) !important; border-color: rgb(203, 213, 225) !important; }
+[data-theme="light"] .btn-flow-reset:hover { background: rgb(254, 226, 226) !important; color: rgb(220, 38, 38) !important; border-color: rgb(252, 165, 165) !important; }
+[data-theme="light"] .guia-banner-revision { background: rgb(254, 243, 199) !important; border-color: rgb(245, 158, 11) !important; color: rgb(146, 64, 14) !important; }
+[data-theme="light"] .btn-pie-resume { background: rgb(254, 243, 199) !important; border-color: rgb(245, 158, 11) !important; color: rgb(180, 83, 9) !important; }
+[data-theme="light"] .ai-drawer { background: rgb(255, 255, 255); color: rgb(26, 20, 38); border-left-color: rgba(112, 48, 160, 0.15); box-shadow: rgba(112, 48, 160, 0.15) -10px 0px 35px; }
+[data-theme="light"] .ai-drawer-header { background: rgba(255, 255, 255, 0.9); border-bottom-color: rgb(228, 221, 240); }
+[data-theme="light"] .ai-brand-badge { background: rgba(112, 48, 160, 0.1); color: rgb(112, 48, 160); border-color: rgba(112, 48, 160, 0.25); }
+[data-theme="light"] .ai-title { color: rgb(26, 20, 38); }
+[data-theme="light"] .ai-subtitle { color: rgb(100, 91, 122); }
+[data-theme="light"] .ai-action-btn { background: rgb(240, 236, 247); border-color: rgb(228, 221, 240); color: rgb(100, 91, 122); }
+[data-theme="light"] .ai-action-btn:hover { background: rgb(227, 220, 237); color: rgb(26, 20, 38); border-color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-engine-bar { background: rgb(250, 248, 253); border-bottom-color: rgb(237, 231, 245); }
+[data-theme="light"] .ai-engine-select { background: rgb(255, 255, 255); border-color: rgb(220, 212, 234); color: rgb(26, 20, 38); }
+[data-theme="light"] .ai-chat-msg.bot .ai-msg-card { background: rgb(247, 245, 250); border-color: rgb(228, 221, 240); color: rgb(26, 20, 38); }
+[data-theme="light"] .ai-msg-header { border-bottom-color: rgba(112, 48, 160, 0.1); }
+[data-theme="light"] .ai-msg-author { color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-msg-tag { background: rgba(112, 48, 160, 0.1); color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-pill-screen { background: rgba(112, 48, 160, 0.08); color: rgb(112, 48, 160); border-color: rgba(112, 48, 160, 0.25); }
+[data-theme="light"] .ai-suggested-box { background: rgb(250, 248, 253); border-color: rgb(220, 212, 234); }
+[data-theme="light"] .ai-chip { background: rgb(255, 255, 255); border-color: rgb(228, 221, 240); color: rgb(43, 34, 61); }
+[data-theme="light"] .ai-chip:hover { background: rgba(112, 48, 160, 0.08); border-color: rgb(112, 48, 160); color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-chat-dock { background: rgba(255, 255, 255, 0.94); border-top-color: rgb(228, 221, 240); }
+[data-theme="light"] .ai-input-wrapper { background: rgb(255, 255, 255); border-color: rgb(220, 212, 234); }
+[data-theme="light"] .ai-input-wrapper:focus-within { border-color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-input-area { color: rgb(26, 20, 38); }
+[data-theme="light"] .ai-dock-btn.mic { background: rgb(240, 236, 247); color: rgb(100, 91, 122); }
 :root, svg { --bg: #020617; --grid: #1e293b; --canvas-dot: rgba(148, 163, 184, 0.16); --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
 @media (prefers-color-scheme: light) { :root, svg { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5; --text: #111827; --text-muted: #5b6474; --text-dim: #9aa3b2; --text-faint: #6b7280; --panel: #ffffff; --panel-border: #e5e7eb; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; } }
 svg[data-theme="light"] { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5; --text: #111827; --text-muted: #5b6474; --text-dim: #9aa3b2; --text-faint: #6b7280; --panel: #ffffff; --panel-border: #e5e7eb; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; }
@@ -409,7 +446,7 @@ svg[data-theme="dark"] { --bg: #020617; --grid: #1e293b; --canvas-dot: rgba(148,
 rect.c-bg-rect { fill: var(--bg); }
 </style><rect x="0" y="0" width="1112" height="282" class="c-bg-rect"/>
         <title id="archify-diagram-title">Centro de Idiomas · 7. Ligas: NRC teórico + club de conversación (Capacidad 5)</title>
-        <desc id="archify-diagram-description">Capacidad 5.3 · Crear Ligas (SSADETL) · Nivel I · Programa por confirmar · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</desc>
+        <desc id="archify-diagram-description">Capacidad 5.3 · Crear Ligas (SSADETL) · Nivel I · Programa IMEMI03 · Materia ESEP · Partes I01–I12 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</desc>
         <!-- Definitions -->
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -451,15 +488,15 @@ rect.c-bg-rect { fill: var(--bg); }
 
 
         <!-- Edge paths -->
-        <path data-edge-from="g1" data-edge-to="g2" data-edge-key="0" data-edge-id="e-g1-g2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,120;226,120" d="M 198 120 L 226 120" class="a-emphasis" data-animate="edge" style="--step:0" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="g2" data-edge-to="g3" data-edge-key="1" data-edge-id="e-g2-g3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="376,120;404,120" d="M 376 120 L 404 120" class="a-emphasis" data-animate="edge" style="--step:1" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="g3" data-edge-to="g4" data-edge-key="2" data-edge-id="e-g3-g4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="554,120;582,120" d="M 554 120 L 582 120" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="g4" data-edge-to="g5" data-edge-key="3" data-edge-id="e-g4-g5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="732,120;760,120" d="M 732 120 L 760 120" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="g5" data-edge-to="g6" data-edge-key="4" data-edge-id="e-g5-g6" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="910,120;938,120" d="M 910 120 L 938 120" class="a-emphasis" data-animate="edge" style="--step:4" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="g1" data-edge-to="g2" data-edge-key="0" data-edge-id="e-g1-g2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,120;226,120" d="M 198 120 L 226 120" class="a-emphasis" data-animate="edge" style="--step:0" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
+        <path data-edge-from="g2" data-edge-to="g3" data-edge-key="1" data-edge-id="e-g2-g3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="376,120;404,120" d="M 376 120 L 404 120" class="a-emphasis" data-animate="edge" style="--step:1" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
+        <path data-edge-from="g3" data-edge-to="g4" data-edge-key="2" data-edge-id="e-g3-g4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="554,120;582,120" d="M 554 120 L 582 120" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
+        <path data-edge-from="g4" data-edge-to="g5" data-edge-key="3" data-edge-id="e-g4-g5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="732,120;760,120" d="M 732 120 L 760 120" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
+        <path data-edge-from="g5" data-edge-to="g6" data-edge-key="4" data-edge-id="e-g5-g6" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="910,120;938,120" d="M 910 120 L 938 120" class="a-emphasis" data-animate="edge" style="--step:4" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
 
         <!-- Nodes -->
-        <g id="node-g1" data-node-id="g1" data-node-label="SCACRSE" tabindex="0" role="button" aria-label="Enfocar SCACRSE, revisar tipos de horario, Programar y matricular con liga › Catálogo" aria-pressed="false" data-node-kind="backend" data-node-sublabel="revisar tipos de horario" data-node-tag="BASIC I: teoría y club" data-node-context="Programar y matricular con liga › Catálogo">
-          <title>SCACRSE · revisar tipos de horario · Programar y matricular con liga › Catálogo · BASIC I: teoría y club</title>
+        <g id="node-g1" data-node-id="g1" data-node-label="SCACRSE" tabindex="0" role="button" aria-label="Enfocar SCACRSE, revisar tipos de horario, Programar y matricular con liga › Catálogo" aria-pressed="false" data-node-kind="backend" data-node-sublabel="revisar tipos de horario" data-node-tag="BASIC I: TEO y PRA" data-node-context="Programar y matricular con liga › Catálogo" data-step-state="pending">
+          <title>SCACRSE · revisar tipos de horario · Programar y matricular con liga › Catálogo · BASIC I: TEO y PRA</title>
           <rect x="48" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="48" y="86" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:0" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="calendar" class="semantic-sigil s-backend" transform="translate(54 92) scale(0.6875)">
@@ -467,35 +504,35 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="123" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SCACRSE</text>
           <text x="123" y="124" class="t-muted" font-size="8" text-anchor="middle">revisar tipos de horario</text>
-        <text x="123" y="142" class="t-backend" font-size="7" text-anchor="middle">BASIC I: teoría y club</text>
+        <text x="123" y="142" class="t-backend" font-size="7" text-anchor="middle">BASIC I: TEO y PRA</text>
         </g>
 
-        <g id="node-g2" data-node-id="g2" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, NRC teórico, Programar y matricular con liga › Programar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="NRC teórico" data-node-tag="liga TE · con créditos" data-node-context="Programar y matricular con liga › Programar">
-          <title>SSASECT · NRC teórico · Programar y matricular con liga › Programar · liga TE · con créditos</title>
+        <g id="node-g2" data-node-id="g2" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, NRC teórico virtual, Programar y matricular con liga › Programar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="NRC teórico virtual" data-node-tag="sección AT · liga TA · cobro" data-node-context="Programar y matricular con liga › Programar" data-step-state="pending">
+          <title>SSASECT · NRC teórico virtual · Programar y matricular con liga › Programar · sección AT · liga TA · cobro</title>
           <rect x="226" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="226" y="86" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(232 92) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" x="301" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SSASECT</text>
-          <text x="301" y="124" class="t-muted" font-size="8" text-anchor="middle">NRC teórico</text>
-        <text x="301" y="142" class="t-backend" font-size="7" text-anchor="middle">liga TE · con créditos</text>
+          <text x="301" y="124" class="t-muted" font-size="8" text-anchor="middle">NRC teórico virtual</text>
+        <text x="301" y="142" class="t-backend" font-size="7" text-anchor="middle">sección AT · liga TA · cobro</text>
         </g>
 
-        <g id="node-g3" data-node-id="g3" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, NRC del club, Programar y matricular con liga › Programar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="NRC del club" data-node-tag="su liga: por confirmar · 0 créditos" data-node-context="Programar y matricular con liga › Programar">
-          <title>SSASECT · NRC del club · Programar y matricular con liga › Programar · su liga: por confirmar · 0 créditos</title>
+        <g id="node-g3" data-node-id="g3" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, NRCs prácticos, Programar y matricular con liga › Programar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="NRCs prácticos" data-node-tag="liga PA · prácticas (dispensa)" data-node-context="Programar y matricular con liga › Programar" data-step-state="pending">
+          <title>SSASECT · NRCs prácticos · Programar y matricular con liga › Programar · liga PA · prácticas (dispensa)</title>
           <rect x="404" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="404" y="86" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:2" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(410 92) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" x="479" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SSASECT</text>
-          <text x="479" y="124" class="t-muted" font-size="8" text-anchor="middle">NRC del club</text>
-        <text x="479" y="142" class="t-backend" font-size="6.7" text-anchor="middle">su liga: por confirmar · 0 créditos</text>
+          <text x="479" y="124" class="t-muted" font-size="8" text-anchor="middle">NRCs prácticos</text>
+        <text x="479" y="142" class="t-backend" font-size="7" text-anchor="middle">liga PA · prácticas (dispensa)</text>
         </g>
 
-        <g id="node-g4" data-node-id="g4" data-node-label="SSADETL" tabindex="0" role="button" aria-label="Enfocar SSADETL, unir las ligas, Programar y matricular con liga › Programar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="unir las ligas" data-node-tag="conector en los dos NRC" data-node-context="Programar y matricular con liga › Programar">
-          <title>SSADETL · unir las ligas · Programar y matricular con liga › Programar · conector en los dos NRC</title>
+        <g id="node-g4" data-node-id="g4" data-node-label="SSADETL" tabindex="0" role="button" aria-label="Enfocar SSADETL, unir las ligas, Programar y matricular con liga › Programar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="unir las ligas" data-node-tag="conector cruzado TA ↔ PA" data-node-context="Programar y matricular con liga › Programar" data-step-state="pending">
+          <title>SSADETL · unir las ligas · Programar y matricular con liga › Programar · conector cruzado TA ↔ PA</title>
           <rect x="582" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="582" y="86" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:3" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(588 92) scale(0.6875)">
@@ -503,11 +540,11 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="657" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SSADETL</text>
           <text x="657" y="124" class="t-muted" font-size="8" text-anchor="middle">unir las ligas</text>
-        <text x="657" y="142" class="t-backend" font-size="7" text-anchor="middle">conector en los dos NRC</text>
+        <text x="657" y="142" class="t-backend" font-size="7" text-anchor="middle">conector cruzado TA ↔ PA</text>
         </g>
 
-        <g id="node-g5" data-node-id="g5" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, matricular los dos, Programar y matricular con liga › Matricular" aria-pressed="false" data-node-kind="backend" data-node-sublabel="matricular los dos" data-node-tag="teórico + club" data-node-context="Programar y matricular con liga › Matricular">
-          <title>SFAREGS · matricular los dos · Programar y matricular con liga › Matricular · teórico + club</title>
+        <g id="node-g5" data-node-id="g5" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, matricular los dos, Programar y matricular con liga › Matricular" aria-pressed="false" data-node-kind="backend" data-node-sublabel="matricular los dos" data-node-tag="teórico + práctica juntos" data-node-context="Programar y matricular con liga › Matricular" data-step-state="pending">
+          <title>SFAREGS · matricular los dos · Programar y matricular con liga › Matricular · teórico + práctica juntos</title>
           <rect x="760" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="760" y="86" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:4" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(766 92) scale(0.6875)">
@@ -515,11 +552,11 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="835" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SFAREGS</text>
           <text x="835" y="124" class="t-muted" font-size="8" text-anchor="middle">matricular los dos</text>
-        <text x="835" y="142" class="t-backend" font-size="7" text-anchor="middle">teórico + club</text>
+        <text x="835" y="142" class="t-backend" font-size="7" text-anchor="middle">teórico + práctica juntos</text>
         </g>
 
-        <g id="node-g6" data-node-id="g6" data-node-label="Matriculado" tabindex="0" role="button" aria-label="Enfocar Matriculado, en el teórico y el club, Programar y matricular con liga › Matricular" aria-pressed="false" data-node-kind="database" data-node-sublabel="en el teórico y el club" data-node-tag="por probar en TEST" data-node-context="Programar y matricular con liga › Matricular">
-          <title>Matriculado · en el teórico y el club · Programar y matricular con liga › Matricular · por probar en TEST</title>
+        <g id="node-g6" data-node-id="g6" data-node-label="Matriculado" tabindex="0" role="button" aria-label="Enfocar Matriculado, en el teórico y la práctica, Programar y matricular con liga › Matricular" aria-pressed="false" data-node-kind="database" data-node-sublabel="en el teórico y la práctica" data-node-tag="validado en TEST" data-node-context="Programar y matricular con liga › Matricular" data-step-state="pending">
+          <title>Matriculado · en el teórico y la práctica · Programar y matricular con liga › Matricular · validado en TEST</title>
           <rect x="938" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="938" y="86" width="150" height="68" rx="6" class="c-database" data-animate="node" style="--step:5" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="success" class="semantic-sigil s-database" transform="translate(944 92) scale(0.6875)">
@@ -527,8 +564,8 @@ rect.c-bg-rect { fill: var(--bg); }
             <path d="m5.2 8 1.8 1.8 3.8-4"/>
           </g>
           <text data-node-label="" x="1013" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Matriculado</text>
-          <text x="1013" y="124" class="t-muted" font-size="8" text-anchor="middle">en el teórico y el club</text>
-        <text x="1013" y="142" class="t-database" font-size="7" text-anchor="middle">por probar en TEST</text>
+          <text x="1013" y="124" class="t-muted" font-size="8" text-anchor="middle">en el teórico y la práctica</text>
+        <text x="1013" y="142" class="t-database" font-size="7" text-anchor="middle">validado en TEST</text>
         </g>
 
         <!-- Edge labels -->

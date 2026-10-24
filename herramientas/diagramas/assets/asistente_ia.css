@@ -617,6 +617,28 @@ button.ai-fab:active,
   margin-bottom: 0.35rem;
 }
 
+.ai-msg-card .ai-msg-heading {
+  margin: 0.85rem 0 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: inherit;
+  opacity: 0.92;
+}
+
+.ai-msg-card .ai-msg-heading:first-of-type {
+  margin-top: 0.35rem;
+}
+
+.ai-msg-card .ai-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8em;
+  padding: 0.05rem 0.3rem;
+  border-radius: 0.3rem;
+  background: rgba(127, 127, 127, 0.14);
+  word-break: break-all;
+}
+
 .ai-pill-screen {
   background: rgba(185, 138, 224, 0.18);
   color: #d8b4fe;

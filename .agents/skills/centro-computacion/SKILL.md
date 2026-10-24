@@ -108,7 +108,7 @@ Parte de periodo general: **CGE**.
 
 ---
 
-## ▶️ Flujo completo en curso: Diseño Web, NRC 10044 (23/10/2026)
+## ✅ Flujo completo validado: Diseño Web, NRC 10044 (23–24/10/2026)
 Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuario como docente **y** alumno (C96–C103).
 
 | # | Paso | Página | Estado | Evidencia |
@@ -121,7 +121,7 @@ Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuari
 | 6 | Pasar lista | Faculty › Control de asistencia | ✅ | 86 % (ausente el jueves 22-OCT) (C101) |
 | 7 | Notas por componente | Faculty › Libro de calificaciones › Componentes | ✅ | TA1, TA2, PA y EF con 85 de 100 (→ 17), visibles en el Autoservicio del alumno (C102, C103, C105) |
 | 8 | Asistencia a `ATTRGRD` | Envío desde el control de asistencia (7.1.0) | ⚠️ | `ATTRGRD` = **43**, el mismo % de Pasar lista (C105). Por confirmar si llegó sola o se ingresó a mano. GORICCR en Y, GORRSQL activa y STVGCHG con CA (C104, U32) |
-| 9 | Nota final | Calificaciones compuestas → Calificaciones finales | 🟡 | **Calificaciones compuestas: porcentaje final 85, calificación final INH** (razón «Composite Calculation»): «Debe aprobar» de `ATTRGRD` funciona (C105). Falta pasarla a Calificaciones finales |
+| 9 | Nota final | Calificaciones compuestas → `SFASLST` | ✅ | Compuesta: porcentaje 85 y **INH** (C105). «Calificaciones finales» no pide nada: la nota pasa sola al backoffice y **SFASLST muestra INH** (C106, C107) |
 | 10 | Pase a historia | `SHRROLL` | ⏳ | Después de la nota final |
 
 ## ▶️ Dónde quedamos (05/10/2026)

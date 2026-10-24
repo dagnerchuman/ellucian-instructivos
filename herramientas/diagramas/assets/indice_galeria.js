@@ -17,13 +17,9 @@
   // Inicializar conteos reales de los chips según las tarjetas en el DOM
   chips.forEach(function(chip) {
     var filter = chip.getAttribute('data-filter');
-    if (filter === 'all') {
-      chip.textContent = 'Todos (' + cards.length + ')';
-    } else {
-      var count = document.querySelectorAll('.card[data-center="' + filter + '"]').length;
-      var label = filter === 'comun' ? 'Los tres centros' : (filter.charAt(0).toUpperCase() + filter.slice(1));
-      chip.textContent = label + ' (' + count + ')';
-    }
+    var label = chip.textContent.trim();
+    var count = filter === 'all' ? cards.length : document.querySelectorAll('.card[data-center="' + filter + '"]').length;
+    chip.textContent = label + ' (' + count + ')';
   });
 
   var currentFilter = 'all';
@@ -51,6 +47,11 @@
         } else {
           c.classList.add('hidden');
         }
+      });
+
+      sec.querySelectorAll('.phase-group').forEach(function(grupo) {
+        var visibles = grupo.querySelectorAll('.card:not(.hidden)').length;
+        grupo.classList.toggle('hidden', visibles === 0);
       });
 
       if (visibleInSec === 0) {

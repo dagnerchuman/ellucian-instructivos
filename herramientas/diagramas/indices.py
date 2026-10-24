@@ -8,7 +8,7 @@ import html
 from pathlib import Path
 
 from centro import CENTROS, POR_CONFIRMAR, Centro, centros_disponibles
-from plantillas import TITULOS, CAPACIDADES
+from plantillas import TITULOS, CAPACIDADES, FASES_CASUISTICAS, slug_script
 ASSETS_DIR = Path(__file__).resolve().parent / "assets"
 TEMPLATE_GALERIA = (ASSETS_DIR / "indice_galeria.html").read_text(encoding="utf-8")
 CSS_GALERIA = (ASSETS_DIR / "indice_galeria.css").read_text(encoding="utf-8")
@@ -36,6 +36,24 @@ def diagramas_de(carpeta):
     return salida
 
 
+FASE_BASE = "Flujos base"
+
+
+def fases_de(carpeta, centro_id=None):
+    """[(fase, [diagramas])] en el orden del proceso: flujos base, abrir el periodo, matrícula, notas y cierre."""
+    diags = diagramas_de(carpeta)
+    if not centro_id or centro_id == "comun":
+        return [(None, diags)]
+    c = Centro(centro_id)
+    fase_por_slug = {slug_script(i): nombre for clave, nombre in FASES_CASUISTICAS
+                     for i in c.d["casuisticas"].get(clave, [])}
+    grupos = {}
+    for item in diags:
+        grupos.setdefault(fase_por_slug.get(item[3].parent.name[3:], FASE_BASE), []).append(item)
+    orden = [FASE_BASE] + [nombre for _, nombre in FASES_CASUISTICAS]
+    return [(f, grupos[f]) for f in orden if f in grupos]
+
+
 def rel(ruta, desde):
     return ruta.relative_to(desde).as_posix()
 
@@ -52,11 +70,12 @@ def enlaces_md(base, desde):
     return " · ".join(partes)
 
 
-def tabla_diagramas(carpeta, desde):
-    filas = ["| N.º | Capacidad Banner | Diagrama | Archivos |", "|---|---|---|---|"]
-    for numero, titulo, cap, base in diagramas_de(carpeta):
-        cap_txt = cap if cap else "General"
-        filas.append(f"| {numero} | {cap_txt} | {titulo} | {enlaces_md(base, desde)} |")
+def tabla_diagramas(carpeta, desde, centro_id=None):
+    filas = ["| N.º | Fase | Capacidad Banner | Diagrama | Archivos |", "|---|---|---|---|---|"]
+    for fase, diags in fases_de(carpeta, centro_id):
+        for numero, titulo, cap, base in diags:
+            cap_txt = cap if cap else "General"
+            filas.append(f"| {numero} | {fase or 'Comparativo'} | {cap_txt} | {titulo} | {enlaces_md(base, desde)} |")
     return "\n".join(filas)
 
 
@@ -83,7 +102,7 @@ def readme_general(ids):
     for i in ids:
         c = Centro(i)
         partes += ["", f"## {c.nombre}", f"Ficha del centro: [`{i}/README.md`]({i}/README.md) · datos: [`{i}/datos.json`]({i}/datos.json)", "",
-                   tabla_diagramas(CENTROS / i, CENTROS)]
+                   tabla_diagramas(CENTROS / i, CENTROS, i)]
     partes += ["", "## Cómo regenerarlos", "```bash",
                "bash herramientas/diagramas/instalar_archify.sh",
                "python3 herramientas/diagramas/generar.py", "```",
@@ -135,7 +154,7 @@ def ficha_centro(c):
         "",
         *([f"**Guía de pruebas en TEST:** [`pruebas-test.md`](pruebas-test.md)", ""] if (carpeta / "pruebas-test.md").exists() else []),
         "## Diagramas paso a paso",
-        tabla_diagramas(carpeta, carpeta),
+        tabla_diagramas(carpeta, carpeta, c.id),
         "",
         "## Códigos en Banner",
         *ids_tabla,
@@ -160,23 +179,33 @@ def ficha_centro(c):
 
 
 def galeria(ids):
+    def tarjeta(numero, titulo, cap, base, centro_id):
+        b = html.escape(rel(base, CENTROS))
+        cap_badge = f'<span class="cap">{html.escape(cap)}</span>' if cap else ""
+        return (
+            f'<article class="card" data-center="{html.escape(centro_id)}" data-title="{html.escape(titulo.lower())}" data-cap="{html.escape(cap.lower())}" data-num="{numero}">'
+            f'<a class="thumb" href="{b}.html" title="Abrir diagrama interactivo"><img loading="lazy" src="{b}.svg" alt="{html.escape(titulo)}"></a>'
+            f'<div class="meta"><span class="num">{numero}</span>{cap_badge}<a href="{b}.html" class="title-link">{html.escape(titulo)}</a></div>'
+            f'<div class="files"><a href="{b}.html" class="file-btn primary">HTML interactivo</a><a href="{b}-claro.png" class="file-btn">PNG claro</a>'
+            f'<a href="{b}-oscuro.png" class="file-btn">PNG oscuro</a><a href="{b}.svg" class="file-btn">SVG</a></div></article>')
+
     def tarjetas(carpeta, centro_id):
-        t = []
-        for numero, titulo, cap, base in diagramas_de(carpeta):
-            b = html.escape(rel(base, CENTROS))
-            cap_badge = f'<span class="cap">{html.escape(cap)}</span>' if cap else ""
-            t.append(
-                f'<article class="card" data-center="{html.escape(centro_id)}" data-title="{html.escape(titulo.lower())}" data-cap="{html.escape(cap.lower())}" data-num="{numero}">'
-                f'<a class="thumb" href="{b}.html" title="Abrir diagrama interactivo"><img loading="lazy" src="{b}.svg" alt="{html.escape(titulo)}"></a>'
-                f'<div class="meta"><span class="num">{numero}</span>{cap_badge}<a href="{b}.html" class="title-link">{html.escape(titulo)}</a></div>'
-                f'<div class="files"><a href="{b}.html" class="file-btn primary">HTML interactivo</a><a href="{b}-claro.png" class="file-btn">PNG claro</a>'
-                f'<a href="{b}-oscuro.png" class="file-btn">PNG oscuro</a><a href="{b}.svg" class="file-btn">SVG</a></div></article>')
-        return "\n".join(t)
+        bloques = []
+        for fase, diags in fases_de(carpeta, centro_id):
+            grid = '<div class="grid">' + "\n".join(tarjeta(*d, centro_id) for d in diags) + '</div>'
+            if fase is None:
+                bloques.append(grid)
+            else:
+                n = len(diags)
+                bloques.append(
+                    f'<div class="phase-group"><h3 class="phase-title">{html.escape(fase)}'
+                    f'<span class="phase-count">{n} {"diagrama" if n == 1 else "diagramas"}</span></h3>{grid}</div>')
+        return "\n".join(bloques)
 
     secciones = [
         f'<section class="center-section" id="sec-comun" data-center="comun" style="--c:#5C2193">'
         f'<div class="sec-header"><h2>Los tres centros</h2><span class="sec-badge">Transversal</span></div>'
-        f'<div class="grid">{tarjetas(CENTROS / "comun", "comun")}</div></section>'
+        f'{tarjetas(CENTROS / "comun", "comun")}</section>'
     ]
     for i in ids:
         c = Centro(i)
@@ -185,7 +214,7 @@ def galeria(ids):
             f'<div class="sec-header"><div><h2>{html.escape(c.nombre)}</h2>'
             f'<p class="sub">{html.escape(c.subtitulo())} · <a href="{i}/README.md">ficha técnica</a></p></div>'
             f'<span class="sec-badge">{c.nivel} · {c.materia or "General"}</span></div>'
-            f'<div class="grid">{tarjetas(CENTROS / i, i)}</div></section>'
+            f'{tarjetas(CENTROS / i, i)}</section>'
         )
 
     autor = html.escape(Centro(ids[0]).autor)

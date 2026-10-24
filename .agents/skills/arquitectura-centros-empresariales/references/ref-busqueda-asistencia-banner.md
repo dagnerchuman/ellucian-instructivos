@@ -1,8 +1,8 @@
 # Buscar la configuración de asistencia con perfil administrativo
 
 ## Estado observado en TEST
-- En las capturas del usuario, **Faculty Grading** mostró error y el enlace **Ingreso de asistencia** abrió una lista que indica que no hay secciones disponibles. No recomendar esas tarjetas como ruta operativa mientras siga ese estado.
-- El usuario indica que por ahora continuará desde **Banner Search Card** con perfil **Super Role Admin**.
+- Antes del 23/10, **Faculty Grading** daba error y la lista de asistencia salía sin secciones (C89). **Causa encontrada:** faltaba la regla de control de asistencia en **`SOAATRK`**. Con la regla del NRC 10044, el NRC aparece en **Pasar lista** y en el **Libro de calificaciones** (C101, C102).
+- La **Banner Search Card** con perfil **Super Role Admin** sigue sirviendo para revisar la configuración.
 
 ## Términos documentados para buscar
 Buscar uno por uno en la tarjeta **Banner Search Card**:
@@ -23,4 +23,4 @@ También se pueden probar las frases **“Control de asistencia”**, **“Atten
 ## Límite
 Los términos identifican configuraciones diferentes: `SHAEGBC` es calendario de ingreso de calificaciones; `SOAATMT`/`SOAATRK` son reglas de control de asistencia; `ENTERATTEND` es acceso al proceso de Autoservicio. Encontrar una página no demuestra que el registro diario esté habilitado ni que un NRC aparezca en Faculty. Buscar sin guardar cambios; antes de editar fechas o reglas, confirmar el periodo, NRC y los valores aprobados por la institución.
 
-La ruta Faculty descrita por Ellucian sí documenta **Ingreso de asistencia → NRC/sesión → Pasar lista → marcar presentes/ausentes** *(instructivo 10.4.2.4.5, diap. 16; 7.1.1, diap. 44–48)*, pero la prueba actual del usuario no muestra secciones disponibles. Mantener separados el procedimiento documentado y el estado real observado en TEST.
+La ruta Faculty descrita por Ellucian sí documenta **Ingreso de asistencia → NRC/sesión → Pasar lista → marcar presentes/ausentes** *(instructivo 10.4.2.4.5, diap. 16; 7.1.1, diap. 44–48)*, y en TEST funciona una vez creada la regla en `SOAATRK` (C101). En la USS la opción se llama **Control de asistencia › Lista de cursos › Pasar lista**.

@@ -482,27 +482,27 @@
     },
     {
       "id": "doc",
-      "label": "Docente"
+      "label": "Docente (Autoservicio)"
     }
   ],
   "phases": [
     {
       "id": "f0",
-      "label": "Preparar",
+      "label": "Preparar el NRC",
       "fromCol": 0,
       "toCol": 2
     },
     {
       "id": "f1",
-      "label": "Dictar",
+      "label": "Dictar y calificar",
       "fromCol": 3,
-      "toCol": 3,
+      "toCol": 4,
       "variant": "emphasis"
     },
     {
       "id": "f2",
       "label": "Cerrar",
-      "fromCol": 4,
+      "fromCol": 5,
       "toCol": 5,
       "variant": "dashed"
     }
@@ -513,7 +513,8 @@
     "n3",
     "n4",
     "n5",
-    "n6"
+    "n6",
+    "n7"
   ],
   "nodes": [
     {
@@ -521,30 +522,30 @@
       "lane": "ra",
       "col": 0,
       "type": "backend",
-      "label": "SHAGRDE",
-      "sublabel": "revisar la escala",
+      "label": "SHAEGBC",
+      "sublabel": "abrir el calendario",
       "width": 150,
-      "tag": "modo V · mínimo 11"
+      "tag": "202656 · fechas de notas"
     },
     {
       "id": "n2",
       "lane": "ra",
       "col": 1,
       "type": "backend",
-      "label": "SHAEGBC",
-      "sublabel": "abrir calendario",
+      "label": "SHAGCOM",
+      "sublabel": "cargar el plan",
       "width": 150,
-      "tag": "periodo 202656 · fechas"
+      "tag": "NRC 10044 · notas + ATTRGRD"
     },
     {
       "id": "n3",
       "lane": "ra",
       "col": 2,
       "type": "backend",
-      "label": "SHAGCOM",
-      "sublabel": "asignar plan · NRC 10026",
+      "label": "SOAATRK",
+      "sublabel": "activar la asistencia",
       "width": 150,
-      "tag": "ATTRGRD · TEST validado"
+      "tag": "regla del NRC · Presente/Ausente"
     },
     {
       "id": "n4",
@@ -552,29 +553,41 @@
       "col": 3,
       "type": "frontend",
       "label": "Autoservicio",
-      "sublabel": "registrar asistencia y notas",
+      "sublabel": "pasar lista",
       "width": 150,
-      "tag": "70% asist. · nota ≥11"
+      "tag": "mínimo 70 % de asistencia"
     },
     {
       "id": "n5",
-      "lane": "ra",
+      "lane": "doc",
       "col": 4,
-      "type": "messagebus",
-      "label": "SHRROLL",
-      "sublabel": "pase a historia",
+      "type": "frontend",
+      "label": "Autoservicio",
+      "sublabel": "notas por componente",
       "width": 150,
-      "tag": "notas a la historia"
+      "tag": "libro → nota compuesta"
     },
     {
       "id": "n6",
       "lane": "ra",
       "col": 5,
       "type": "database",
-      "label": "SMICRLT",
-      "sublabel": "revisar el avance",
+      "label": "SFASLST",
+      "sublabel": "revisar la nota final",
       "width": 150,
-      "tag": "CAPP: cumple o no"
+      "tag": "aprueba con 11 · si no, INH",
+      "yOffset": -46
+    },
+    {
+      "id": "n7",
+      "lane": "ra",
+      "col": 5,
+      "type": "messagebus",
+      "label": "SHRROLL",
+      "sublabel": "pase a historia",
+      "width": 150,
+      "tag": "GJAPCTL · notas a la historia",
+      "yOffset": 46
     }
   ],
   "edges": [
@@ -607,6 +620,12 @@
       "from": "n5",
       "to": "n6",
       "variant": "emphasis"
+    },
+    {
+      "id": "e-n6-n7",
+      "from": "n6",
+      "to": "n7",
+      "variant": "emphasis"
     }
   ],
   "cards": [
@@ -614,20 +633,36 @@
       "dot": "emerald",
       "title": "Probado en TEST",
       "items": [
-        "Script 13: Notas 16, 10, 08 e INH en NRC 1021 y 1026",
+        "NRC 10044 (ESEC 00684 Diseño Web, X06): plan en SHAGCOM con TA1 0.15, TA2 0.15, PA 0.40 y EF 0.30 (VIG_11) + ATTRGRD 0.00, Debe aprobar, AST_70 (C98)",
+        "SOAATRK: regla del NRC con Desplegar clase, Presente/Ausente y Control de asistencia; sin ella el NRC no aparece en Pasar lista (C101)",
+        "Faculty › Pasar lista: 43 % de asistencia; libro de calificaciones: 85/100 → 17 en los cuatro componentes (C102–C105)",
+        "Calificaciones compuestas: porcentaje 85 y ATTRGRD 43 → nota final INH; SFASLST muestra INH sin escribirla en «Calificaciones finales» (C105–C107)",
+        "Script 13: Notas 16, 10, 08 e INH en NRC 1021 y 1026 por SFASLST. 24/10: también por Autoservicio con el NRC 10044 (libro de calificaciones → nota compuesta INH → SFASLST) (C107)",
         "Script 12: GJAPCTL: jobs SHRROLL 8113 y 8114 exitosos",
-        "Script 14: Cierre y pase a historia con SHRROLL",
-        "Script 10: S00581108 (nota 08): «No cumple» y curso no usado en CAPP"
+        "Script 14: Cierre y pase a historia con SHRROLL"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Antes de empezar",
+      "items": [
+        "SHAGRDE: la escala del nivel C con el modo del curso (modo V · aprueba con 11) y el código INH",
+        "Escala de asistencia para ATTRGRD con aprobatoria 70 % (en Computación, AST_70)",
+        "SSASECT: docente principal al 100 % en la sesión del horario",
+        "SFAREGS: alumno con currículo del nivel del curso y matrícula RE en el NRC"
       ]
     },
     {
       "dot": "rose",
-      "title": "Si falla el pase a historia",
+      "title": "Si algo falla",
       "items": [
-        "«No Substitute Grade»: la escala del nivel no tiene el modo del curso; agrégalo en SHAGRDE (U20)",
-        "Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)",
-        "Computación: nota mínima 11 y asistencia mínima 70 %; por debajo de 70 % corresponde INH (C27, C63)",
-        "El registro de asistencia en Faculty está documentado, pero todavía no se ha validado en TEST (C89)"
+        "SHAGCOM pide «controles del libro de calificaciones»: configura antes SHAEGBC (C91)",
+        "Pasar lista no muestra el NRC: falta la regla del NRC en SOAATRK (C101)",
+        "El libro no muestra el NRC: debe tener docente, plan y alumnos matriculados (7.1.4, diap. 58)",
+        "«Calificaciones finales» sin alumnos: es normal con libro; la nota pasa sola a SFASLST (C106)",
+        "ATTRGRD vacío: el porcentaje de asistencia no pasó solo; revisa GORICCR, GORRSQL y STVGCHG (U32)",
+        "«No Substitute Grade» en el pase a historia: falta el modo del curso en SHAGRDE (U20)",
+        "Con asistencia menor a 70 %, ATTRGRD (Debe aprobar) deja la nota final en INH aunque el promedio apruebe"
       ]
     },
     {
@@ -635,6 +670,7 @@
       "title": "Términos",
       "items": [
         "pase a historia: SHRROLL lleva las notas a la historia académica. No se dice «cierre de actas».",
+        "INH: Nota de inhabilitado: asistencia menor al mínimo. No aprueba ni da créditos, aunque el promedio apruebe.",
         "alumno: Persona admitida en un programa del centro, de la USS o externa. No se dice «participante» ni «estudiante»."
       ]
     },
@@ -642,12 +678,12 @@
       "dot": "cyan",
       "title": "En Ellucian (instructivos)",
       "items": [
-        "Escalas y modos: instructivo 7.1.3, diap. 16 (SHAGRDE)",
         "Calendario de ingreso de calificaciones: instructivo 7.1.4, diap. 40–43 (SHAEGBC)",
         "Plan de evaluación y notas: instructivos 7.1.4 (SHAGCOM) y 7.1.6 (SFASLST)",
+        "Regla de asistencia y Pasar lista: instructivo 7.1.1, diap. 34–48 (SOAATRK, Autoservicio)",
         "Componente ATTRGRD: instructivo 7.1.0, diap. 29–30; 7.1.4, diap. 55",
-        "Pase a historia: instructivo 7.1.9 (SHRROLL)",
-        "CAPP: instructivo 7.2.4, diap. 30 a 55"
+        "Envío de la asistencia al libro: instructivo 7.1.0, diap. 11–26 (GORICCR, GORRSQL, STVGCHG)",
+        "Pase a historia: instructivo 7.1.9 (SHRROLL)"
       ]
     },
     {

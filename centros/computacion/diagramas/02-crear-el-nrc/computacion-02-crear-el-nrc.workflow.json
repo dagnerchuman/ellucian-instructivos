@@ -617,7 +617,8 @@
       "items": [
         "NRC 1021: ESEC 00650, sección B, parte X07 (28/09)",
         "NRC 1026: sección D, lunes y miércoles 08:00–12:00, aula SAUVIR, cupo 1 → 4 (02/10)",
-        "NRC de prueba ESEC 00650 A en 202751, parte X01 (Script 11, 05/10)"
+        "NRC de prueba ESEC 00650 A en 202751, parte X01 (Script 11, 05/10)",
+        "NRC 10044: ESEC 00684 Diseño Web, sección A, X06, cupo 40, SAUVIR / SALA-VIRT con sobrepaso O (23/10)"
       ]
     },
     {
@@ -638,6 +639,8 @@
         "«Debe guardar antes de salir»: guarda en cada pestaña antes de pasar a la siguiente",
         "«Closed» al matricular: el NRC está lleno; sube el cupo (Script 15)",
         "«Sesión sin horas»: usa la misma sesión (01) en el horario y en el docente",
+        "«Conflicto de salón» con SAUVIR / SALA-VIRT: pon la letra O en «Indicador de sobrepaso» del horario (C97)",
+        "«Proyectado» es obligatorio: llénalo antes de abrir «Lugares reservados» (C97)",
         "Al crear un NRC nuevo, campus, estatus y tipo de horario son obligatorios",
         "Para pasar al bloque del docente usa «Sección siguiente»; el clic directo da error"
       ]

@@ -36,6 +36,7 @@ TERMINOS = {
     "carga lectiva": "Horas del docente en sus NRC, que se ven en SIAASGN.",
     "pase a historia": "SHRROLL lleva las notas a la historia académica. No se dice «cierre de actas».",
     "retención": "Bloqueo en SOAHOLD que impide la matrícula.",
+    "INH": "Nota de inhabilitado: asistencia menor al mínimo. No aprueba ni da créditos, aunque el promedio apruebe.",
     "liga": "Unión de dos o más NRC del mismo curso que el alumno matricula juntos, como el NRC teórico y el club de conversación de Inglés. Es el término de Banner en español.",
 }
 
@@ -64,6 +65,8 @@ CITAS = {
     "notas": "Plan de evaluación y notas: instructivos 7.1.4 (SHAGCOM) y 7.1.6 (SFASLST)",
     "calendario": "Calendario de ingreso de calificaciones: instructivo 7.1.4, diap. 40–43 (SHAEGBC)",
     "asistencia_componente": "Componente ATTRGRD: instructivo 7.1.0, diap. 29–30; 7.1.4, diap. 55",
+    "asistencia_regla": "Regla de asistencia y Pasar lista: instructivo 7.1.1, diap. 34–48 (SOAATRK, Autoservicio)",
+    "asistencia_envio": "Envío de la asistencia al libro: instructivo 7.1.0, diap. 11–26 (GORICCR, GORRSQL, STVGCHG)",
     "cierre": "Pase a historia: instructivo 7.1.9 (SHRROLL)",
     "capp": "CAPP: instructivo 7.2.4, diap. 30 a 55",
     "convalidacion": "Convalidación y homologación: capacidad 3.3.1, diap. 33 a 36 (SHATRNS) y diap. 47 a 56 (SHATFAC)",
@@ -246,8 +249,8 @@ def recorrido(c):
             ("banner", "alumno", "TSAAREV", "return", "el alumno recibe el cobro en su cuenta"),
         ]),
         ("Dictar y cerrar", [
-            ("docente", "banner", "Autoservicio", "emphasis", "el docente registra asistencia y notas"),
-            ("registros", "banner", "SHRROLL", "emphasis", "pase a historia de las notas"),
+            ("docente", "banner", "Autoservicio", "emphasis", "el docente pasa lista y registra las notas en el libro; Registros carga antes el plan (SHAGCOM) y la regla de asistencia (SOAATRK)"),
+            ("registros", "banner", "SHRROLL", "emphasis", "revisa la nota final en SFASLST y hace el pase a historia"),
             ("banner", "alumno", "SMICRLT", "return", "el alumno ve su avance en CAPP"),
         ]),
     ]
@@ -271,7 +274,8 @@ def recorrido(c):
             "SSASECT: NRC 1021, 1024 y 1026; SIAASGN: 4 NRC del docente 100582059",
             "GOAMTCH y SAAQUIK: S00581081 y S00581108 a S00581111 con CMEMC38",
             "SFAREGS: matrícula, retiro, traslado y sobrepasos (Scripts 01, 02, 08, 16)",
-            "Autoservicio y SHRROLL: notas 16, 10, 08 e INH; job 8114 exitoso",
+            "Autoservicio: Pasar lista y libro de calificaciones con el NRC 10044 (asistencia 43 % → INH en SFASLST)",
+            "SFASLST y SHRROLL: notas 16, 10, 08 e INH; job 8114 exitoso",
         ],
         "idiomas": ["Todavía no hay un NRC de Idiomas en TEST",
                     "El flujo es el mismo que se validó en Computación; falta probarlo con el nivel I"],
@@ -323,6 +327,7 @@ def crear_nrc(c):
             "NRC 1021: ESEC 00650, sección B, parte X07 (28/09)",
             "NRC 1026: sección D, lunes y miércoles 08:00–12:00, aula SAUVIR, cupo 1 → 4 (02/10)",
             "NRC de prueba ESEC 00650 A en 202751, parte X01 (Script 11, 05/10)",
+            "NRC 10044: ESEC 00684 Diseño Web, sección A, X06, cupo 40, SAUVIR / SALA-VIRT con sobrepaso O (23/10)",
         ],
         "idiomas": ["Todavía no hay un NRC de Idiomas en TEST"],
         "emprendimiento": ["NRC 1025: ESGE 00117, sección A, con el docente en la sesión 02 (no principal)"],
@@ -331,6 +336,8 @@ def crear_nrc(c):
         "«Debe guardar antes de salir»: guarda en cada pestaña antes de pasar a la siguiente",
         "«Closed» al matricular: el NRC está lleno; sube el cupo (Script 15)",
         "«Sesión sin horas»: usa la misma sesión (01) en el horario y en el docente",
+        "«Conflicto de salón» con SAUVIR / SALA-VIRT: pon la letra O en «Indicador de sobrepaso» del horario (C97)",
+        "«Proyectado» es obligatorio: llénalo antes de abrir «Lugares reservados» (C97)",
         "Al crear un NRC nuevo, campus, estatus y tipo de horario son obligatorios",
         "Para pasar al bloque del docente usa «Sección siguiente»; el clic directo da error",
     ]}
@@ -441,6 +448,8 @@ def matricula(c):
         f"Estatus del alumno IS o SU en SGASTDN (Script 09, {ESTADO_TEXTO[c.script('09')['estado']]})",
         f"NRC lleno, error «Closed» (Script 15, {ESTADO_TEXTO[c.script('15')['estado']]})",
         "Mismo curso en otro NRC del periodo: «Duplicate Course with Section»",
+        "El alumno no tiene currículo del nivel del curso: agrégalo en SFAREGS › Currículos y autoriza ese plan con EL (C100)",
+        "Conflicto de horario con otro NRC del alumno: cambia el horario del NRC o elige otro",
     ] + (["BASIC II sin BASIC I: prerrequisito Fatal (Script 04)"] if c.prerrequisito_fatal else [])}
     return flujo(
         c, 5, "matricula-en-el-nrc",
@@ -458,45 +467,55 @@ def matricula(c):
 
 # --------------------------------------------------------------------------- 6
 def notas(c):
-    """SHAGRDE → SHAEGBC → SHAGCOM → Autoservicio → SHRROLL → SMICRLT."""
+    """SHAEGBC → SHAGCOM → SOAATRK → Autoservicio (asistencia, notas) → SFASLST → SHRROLL."""
     e = c.d["escala"]
-    escala = f"modo {e['modo']} · mínimo {e['nota_minima']}" if e else "escala por confirmar"
-    aprueba = f"nota mínima {e['nota_minima']}" if e else "nota mínima por confirmar"
+    minimo = e["nota_minima"] if e else None
     asistencia = c.comun.get("asistencia_minima_porcentaje", {}).get("valor")
-    asistencia_tag = f"{asistencia}% asist." if asistencia is not None else "asist. por confirmar"
-    nota_tag = f"nota ≥{e['nota_minima']}" if e else "nota pendiente"
-    nrc = c.nrc("10026") if c.id == "computacion" else None
-    nrc_tag = f"NRC {nrc['nrc']}" if nrc else "plan del NRC"
-    calendario_tag = f"periodo {c.periodo_ejemplo} · fechas"
-    asist_validada = c.id == "computacion" and c.d.get("scripts", {}).get("19", {}).get("estado") == "validado"
+    asist_txt = f"{asistencia} %" if asistencia is not None else "por confirmar"
+    prueba = c.d.get("flujo_notas_test")
+    nrc = prueba["nrc"] if prueba else None
     nodos = [
-        paso("n1", "ra", 0, "SHAGRDE", "revisar la escala", escala),
-        paso("n2", "ra", 1, "SHAEGBC", "abrir calendario", calendario_tag),
-        paso("n3", "ra", 2, "SHAGCOM", f"asignar plan · {nrc_tag}",
-             "ATTRGRD · peso 0 · Debe Pasar" if not asist_validada else "ATTRGRD · TEST validado"),
-        paso("n4", "doc", 3, "Autoservicio", "registrar asistencia y notas",
-             f"{asistencia_tag} · {nota_tag}", "frontend"),
-        paso("n5", "ra", 4, "SHRROLL", "pase a historia", "notas a la historia", "messagebus"),
-        paso("n6", "ra", 5, "SMICRLT", "revisar el avance", "CAPP: cumple o no", "database"),
+        paso("n1", "ra", 0, "SHAEGBC", "abrir el calendario", f"{c.periodo_ejemplo} · fechas de notas"),
+        paso("n2", "ra", 1, "SHAGCOM", "cargar el plan",
+             f"NRC {nrc} · notas + ATTRGRD" if nrc else "componentes + ATTRGRD peso 0"),
+        paso("n3", "ra", 2, "SOAATRK", "activar la asistencia", "regla del NRC · Presente/Ausente"),
+        paso("n4", "doc", 3, "Autoservicio", "pasar lista",
+             f"mínimo {asist_txt} de asistencia", "frontend"),
+        paso("n5", "doc", 4, "Autoservicio", "notas por componente",
+             "libro → nota compuesta", "frontend"),
+        paso("n6", "ra", 5, "SFASLST", "revisar la nota final",
+             f"aprueba con {minimo} · si no, INH" if minimo else "nota final o INH", "database"),
+        paso("n7", "ra", 5, "SHRROLL", "pase a historia", "GJAPCTL · notas a la historia", "messagebus"),
     ]
-    probado = evidencia(c, ["13", "12", "14", "10"])
-    leccion = {"dot": "rose", "title": "Si falla el pase a historia", "items": [
-        "«No Substitute Grade»: la escala del nivel no tiene el modo del curso; agrégalo en SHAGRDE (U20)",
-        "Con nota bajo el mínimo o INH, CAPP deja el curso «no usado» y el alumno lo repite (Script 10)",
-        "Computación: nota mínima 11 y asistencia mínima 70 %; por debajo de 70 % corresponde INH (C27, C63)",
-        "El registro de asistencia en Faculty está documentado, pero todavía no se ha validado en TEST (C89)",
+    nodos[5]["yOffset"] = -46
+    nodos[6]["yOffset"] = 46
+    probado = (prueba["evidencia"] if prueba else []) + evidencia(c, ["13", "12", "14"])
+    antes = {"dot": "violet", "title": "Antes de empezar", "items": [
+        f"SHAGRDE: la escala del nivel {c.nivel} con el modo del curso ({c.escala}) y el código INH",
+        f"Escala de asistencia para ATTRGRD con aprobatoria {asist_txt} (en Computación, AST_70)",
+        "SSASECT: docente principal al 100 % en la sesión del horario",
+        "SFAREGS: alumno con currículo del nivel del curso y matrícula RE en el NRC",
+    ]}
+    falla = {"dot": "rose", "title": "Si algo falla", "items": [
+        "SHAGCOM pide «controles del libro de calificaciones»: configura antes SHAEGBC (C91)",
+        "Pasar lista no muestra el NRC: falta la regla del NRC en SOAATRK (C101)",
+        "El libro no muestra el NRC: debe tener docente, plan y alumnos matriculados (7.1.4, diap. 58)",
+        "«Calificaciones finales» sin alumnos: es normal con libro; la nota pasa sola a SFASLST (C106)",
+        "ATTRGRD vacío: el porcentaje de asistencia no pasó solo; revisa GORICCR, GORRSQL y STVGCHG (U32)",
+        "«No Substitute Grade» en el pase a historia: falta el modo del curso en SHAGRDE (U20)",
+        f"Con asistencia menor a {asist_txt}, ATTRGRD (Debe aprobar) deja la nota final en INH aunque el promedio apruebe",
     ]}
     return flujo(
         c, 6, "notas-y-pase-a-historia",
-        [{"id": "ra", "label": "Registros Académicos"}, {"id": "doc", "label": "Docente"}],
+        [{"id": "ra", "label": "Registros Académicos"}, {"id": "doc", "label": "Docente (Autoservicio)"}],
         nodos,
-        tarjetas(c, probado, [CITAS["escala"], CITAS["calendario"], CITAS["notas"],
-                              CITAS["asistencia_componente"], CITAS["cierre"], CITAS["capp"]],
-                 [leccion, tarjeta_terminos("pase a historia", "alumno")]),
+        tarjetas(c, probado, [CITAS["calendario"], CITAS["notas"], CITAS["asistencia_regla"],
+                              CITAS["asistencia_componente"], CITAS["asistencia_envio"], CITAS["cierre"]],
+                 [antes, falla, tarjeta_terminos("pase a historia", "INH", "alumno")]),
         fases=[
-            {"id": "f0", "label": "Preparar", "fromCol": 0, "toCol": 2},
-            {"id": "f1", "label": "Dictar", "fromCol": 3, "toCol": 3, "variant": "emphasis"},
-            {"id": "f2", "label": "Cerrar", "fromCol": 4, "toCol": 5, "variant": "dashed"},
+            {"id": "f0", "label": "Preparar el NRC", "fromCol": 0, "toCol": 2},
+            {"id": "f1", "label": "Dictar y calificar", "fromCol": 3, "toCol": 4, "variant": "emphasis"},
+            {"id": "f2", "label": "Cerrar", "fromCol": 5, "toCol": 5, "variant": "dashed"},
         ],
     )
 
@@ -957,8 +976,11 @@ def guia_casuistica_de(id_centro, sid):
     return construir_guia((sit, sit_sub), pasos, (res, res_sub), items, titulo)
 
 
+FASES_CASUISTICAS = [("periodo", "Abrir el periodo"), ("matricula", "Matrícula"), ("notas", "Notas y cierre")]
+
+
 def casuisticas_de(c, inicio=7):
-    ids = c.d["casuisticas"]["matricula"] + c.d["casuisticas"]["notas"]
+    ids = [i for clave, _ in FASES_CASUISTICAS for i in c.d["casuisticas"].get(clave, [])]
     return [(inicio + k, slug_script(i), lambda c, i=i, n=inicio + k: casuistica(c, n, i)) for k, i in enumerate(ids)]
 
 

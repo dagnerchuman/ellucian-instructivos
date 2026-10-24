@@ -402,6 +402,43 @@ svg[data-preset="editorial"][data-animation="trace"] [data-animate="node"] { ani
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.48; transform: scale(0.78); }
 }
+[data-theme="light"] .flow-nav-top { background: rgba(255, 255, 255, 0.94) !important; border-color: rgba(203, 213, 225, 0.85) !important; box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 10px !important; }
+[data-theme="light"] .btn-flow-centros:hover { color: rgb(15, 23, 42) !important; }
+[data-theme="light"] .flow-bottom-card.primary-accent { background: linear-gradient(135deg, rgba(112, 48, 160, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%) !important; border-color: rgba(112, 48, 160, 0.3) !important; }
+.diagram-container svg [data-detail="fine"], .diagram-container svg [data-detail="context"], .diagram-container svg [data-detail], svg [data-detail="fine"], svg [data-detail="context"], svg [data-detail] { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+.diagram-container svg [data-detail-anchor], svg [data-detail-anchor] { transform: none !important; }
+.diagram-container svg g[data-step-state="pending"] &gt; rect:not(.c-mask), svg g[data-step-state="pending"] &gt; rect:not(.c-mask), g[data-step-state="pending"] &gt; rect:not(.c-mask) { fill: rgba(30, 41, 59, 0.45) !important; stroke: rgb(71, 85, 105) !important; stroke-width: 1.3px !important; stroke-dasharray: 5, 4 !important; filter: none !important; transition: 0.25s !important; }
+svg[data-ocultar-posteriores="true"] g[data-node-id="s5"], svg[data-ocultar-posteriores="true"] g[data-node-id="s6"], svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s4-s5"], svg[data-ocultar-posteriores="true"] path[data-edge-id="e-s5-s6"], svg[data-ocultar-posteriores="true"] path[data-edge-to="s5"], svg[data-ocultar-posteriores="true"] path[data-edge-to="s6"], svg[data-ocultar-posteriores="true"] .phase-posterior-header { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity 0.25s, visibility 0.25s !important; }
+svg[data-ocultar-posteriores="true"] g.placeholder-pasos-posteriores { display: inline !important; cursor: pointer !important; }
+[data-theme="light"] .toolbar button.btn-tb-reset:hover { background: rgb(254, 226, 226) !important; color: rgb(220, 38, 38) !important; }
+[data-theme="light"] .toolbar button.btn-tb-resume { background: rgb(254, 243, 199) !important; color: rgb(180, 83, 9) !important; border-color: rgb(245, 158, 11) !important; }
+[data-theme="light"] .toolbar button.btn-tb-resume:hover { background: rgb(253, 230, 138) !important; color: rgb(146, 64, 14) !important; }
+[data-theme="light"] .btn-flow-reset { background: rgb(241, 245, 249) !important; color: rgb(100, 116, 139) !important; border-color: rgb(203, 213, 225) !important; }
+[data-theme="light"] .btn-flow-reset:hover { background: rgb(254, 226, 226) !important; color: rgb(220, 38, 38) !important; border-color: rgb(252, 165, 165) !important; }
+[data-theme="light"] .guia-banner-revision { background: rgb(254, 243, 199) !important; border-color: rgb(245, 158, 11) !important; color: rgb(146, 64, 14) !important; }
+[data-theme="light"] .btn-pie-resume { background: rgb(254, 243, 199) !important; border-color: rgb(245, 158, 11) !important; color: rgb(180, 83, 9) !important; }
+[data-theme="light"] .ai-drawer { background: rgb(255, 255, 255); color: rgb(26, 20, 38); border-left-color: rgba(112, 48, 160, 0.15); box-shadow: rgba(112, 48, 160, 0.15) -10px 0px 35px; }
+[data-theme="light"] .ai-drawer-header { background: rgba(255, 255, 255, 0.9); border-bottom-color: rgb(228, 221, 240); }
+[data-theme="light"] .ai-brand-badge { background: rgba(112, 48, 160, 0.1); color: rgb(112, 48, 160); border-color: rgba(112, 48, 160, 0.25); }
+[data-theme="light"] .ai-title { color: rgb(26, 20, 38); }
+[data-theme="light"] .ai-subtitle { color: rgb(100, 91, 122); }
+[data-theme="light"] .ai-action-btn { background: rgb(240, 236, 247); border-color: rgb(228, 221, 240); color: rgb(100, 91, 122); }
+[data-theme="light"] .ai-action-btn:hover { background: rgb(227, 220, 237); color: rgb(26, 20, 38); border-color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-engine-bar { background: rgb(250, 248, 253); border-bottom-color: rgb(237, 231, 245); }
+[data-theme="light"] .ai-engine-select { background: rgb(255, 255, 255); border-color: rgb(220, 212, 234); color: rgb(26, 20, 38); }
+[data-theme="light"] .ai-chat-msg.bot .ai-msg-card { background: rgb(247, 245, 250); border-color: rgb(228, 221, 240); color: rgb(26, 20, 38); }
+[data-theme="light"] .ai-msg-header { border-bottom-color: rgba(112, 48, 160, 0.1); }
+[data-theme="light"] .ai-msg-author { color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-msg-tag { background: rgba(112, 48, 160, 0.1); color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-pill-screen { background: rgba(112, 48, 160, 0.08); color: rgb(112, 48, 160); border-color: rgba(112, 48, 160, 0.25); }
+[data-theme="light"] .ai-suggested-box { background: rgb(250, 248, 253); border-color: rgb(220, 212, 234); }
+[data-theme="light"] .ai-chip { background: rgb(255, 255, 255); border-color: rgb(228, 221, 240); color: rgb(43, 34, 61); }
+[data-theme="light"] .ai-chip:hover { background: rgba(112, 48, 160, 0.08); border-color: rgb(112, 48, 160); color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-chat-dock { background: rgba(255, 255, 255, 0.94); border-top-color: rgb(228, 221, 240); }
+[data-theme="light"] .ai-input-wrapper { background: rgb(255, 255, 255); border-color: rgb(220, 212, 234); }
+[data-theme="light"] .ai-input-wrapper:focus-within { border-color: rgb(112, 48, 160); }
+[data-theme="light"] .ai-input-area { color: rgb(26, 20, 38); }
+[data-theme="light"] .ai-dock-btn.mic { background: rgb(240, 236, 247); color: rgb(100, 91, 122); }
 :root, svg { --bg: #020617; --grid: #1e293b; --canvas-dot: rgba(148, 163, 184, 0.16); --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
 @media (prefers-color-scheme: light) { :root, svg { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5; --text: #111827; --text-muted: #5b6474; --text-dim: #9aa3b2; --text-faint: #6b7280; --panel: #ffffff; --panel-border: #e5e7eb; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; } }
 svg[data-theme="light"] { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5; --text: #111827; --text-muted: #5b6474; --text-dim: #9aa3b2; --text-faint: #6b7280; --panel: #ffffff; --panel-border: #e5e7eb; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; }
@@ -449,24 +486,24 @@ rect.c-bg-rect { fill: var(--bg); }
 
 
         <!-- Edge paths -->
-        <path data-edge-from="computacion_0" data-edge-to="computacion_1" data-edge-key="0" data-edge-id="e-computacion_0-computacion_1" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,246;226,246" d="M 198 246 L 226 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="computacion_1" data-edge-to="computacion_2" data-edge-key="1" data-edge-id="e-computacion_1-computacion_2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="376,246;404,246" d="M 376 246 L 404 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="computacion_2" data-edge-to="computacion_3" data-edge-key="2" data-edge-id="e-computacion_2-computacion_3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="554,246;582,246" d="M 554 246 L 582 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="computacion_3" data-edge-to="computacion_4" data-edge-key="3" data-edge-id="e-computacion_3-computacion_4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="732,246;760,246" d="M 732 246 L 760 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="computacion_4" data-edge-to="computacion_5" data-edge-key="4" data-edge-id="e-computacion_4-computacion_5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="910,246;938,246" d="M 910 246 L 938 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="emprendimiento_0" data-edge-to="emprendimiento_1" data-edge-key="5" data-edge-id="e-emprendimiento_0-emprendimiento_1" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,372;226,372" d="M 198 372 L 226 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="emprendimiento_1" data-edge-to="emprendimiento_2" data-edge-key="6" data-edge-id="e-emprendimiento_1-emprendimiento_2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="376,372;404,372" d="M 376 372 L 404 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="emprendimiento_2" data-edge-to="emprendimiento_3" data-edge-key="7" data-edge-id="e-emprendimiento_2-emprendimiento_3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="554,372;582,372" d="M 554 372 L 582 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="emprendimiento_3" data-edge-to="emprendimiento_4" data-edge-key="8" data-edge-id="e-emprendimiento_3-emprendimiento_4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="732,372;760,372" d="M 732 372 L 760 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="emprendimiento_4" data-edge-to="emprendimiento_5" data-edge-key="9" data-edge-id="e-emprendimiento_4-emprendimiento_5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="910,372;938,372" d="M 910 372 L 938 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="idiomas_0" data-edge-to="idiomas_1" data-edge-key="10" data-edge-id="e-idiomas_0-idiomas_1" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,120;226,120" d="M 198 120 L 226 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="idiomas_1" data-edge-to="idiomas_2" data-edge-key="11" data-edge-id="e-idiomas_1-idiomas_2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="376,120;404,120" d="M 376 120 L 404 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="idiomas_2" data-edge-to="idiomas_3" data-edge-key="12" data-edge-id="e-idiomas_2-idiomas_3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="554,120;582,120" d="M 554 120 L 582 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="idiomas_3" data-edge-to="idiomas_4" data-edge-key="13" data-edge-id="e-idiomas_3-idiomas_4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="732,120;760,120" d="M 732 120 L 760 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="idiomas_4" data-edge-to="idiomas_5" data-edge-key="14" data-edge-id="e-idiomas_4-idiomas_5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="910,120;938,120" d="M 910 120 L 938 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="computacion_0" data-edge-to="computacion_1" data-edge-key="0" data-edge-id="e-computacion_0-computacion_1" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,246;226,246" d="M 198 246 L 226 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="computacion_1" data-edge-to="computacion_2" data-edge-key="1" data-edge-id="e-computacion_1-computacion_2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="376,246;404,246" d="M 376 246 L 404 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="computacion_2" data-edge-to="computacion_3" data-edge-key="2" data-edge-id="e-computacion_2-computacion_3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="554,246;582,246" d="M 554 246 L 582 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="computacion_3" data-edge-to="computacion_4" data-edge-key="3" data-edge-id="e-computacion_3-computacion_4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="732,246;760,246" d="M 732 246 L 760 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="computacion_4" data-edge-to="computacion_5" data-edge-key="4" data-edge-id="e-computacion_4-computacion_5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="910,246;938,246" d="M 910 246 L 938 246" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="emprendimiento_0" data-edge-to="emprendimiento_1" data-edge-key="5" data-edge-id="e-emprendimiento_0-emprendimiento_1" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,372;226,372" d="M 198 372 L 226 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="emprendimiento_1" data-edge-to="emprendimiento_2" data-edge-key="6" data-edge-id="e-emprendimiento_1-emprendimiento_2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="376,372;404,372" d="M 376 372 L 404 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="emprendimiento_2" data-edge-to="emprendimiento_3" data-edge-key="7" data-edge-id="e-emprendimiento_2-emprendimiento_3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="554,372;582,372" d="M 554 372 L 582 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="emprendimiento_3" data-edge-to="emprendimiento_4" data-edge-key="8" data-edge-id="e-emprendimiento_3-emprendimiento_4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="732,372;760,372" d="M 732 372 L 760 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="emprendimiento_4" data-edge-to="emprendimiento_5" data-edge-key="9" data-edge-id="e-emprendimiento_4-emprendimiento_5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="910,372;938,372" d="M 910 372 L 938 372" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="idiomas_0" data-edge-to="idiomas_1" data-edge-key="10" data-edge-id="e-idiomas_0-idiomas_1" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="198,120;226,120" d="M 198 120 L 226 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="idiomas_1" data-edge-to="idiomas_2" data-edge-key="11" data-edge-id="e-idiomas_1-idiomas_2" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="376,120;404,120" d="M 376 120 L 404 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="idiomas_2" data-edge-to="idiomas_3" data-edge-key="12" data-edge-id="e-idiomas_2-idiomas_3" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="554,120;582,120" d="M 554 120 L 582 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="idiomas_3" data-edge-to="idiomas_4" data-edge-key="13" data-edge-id="e-idiomas_3-idiomas_4" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="732,120;760,120" d="M 732 120 L 760 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
+        <path data-edge-from="idiomas_4" data-edge-to="idiomas_5" data-edge-key="14" data-edge-id="e-idiomas_4-idiomas_5" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="910,120;938,120" d="M 910 120 L 938 120" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)" data-step-edge="pending"/>
 
         <!-- Nodes -->
-        <g id="node-idiomas_0" data-node-id="idiomas_0" data-node-label="SOATERM" tabindex="0" role="button" aria-label="Enfocar SOATERM, partes I01–I12, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="partes I01–I12" data-node-tag="8 y 12–13 semanas" data-node-context="Centro de Idiomas · nivel I">
+        <g id="node-idiomas_0" data-node-id="idiomas_0" data-node-label="SOATERM" tabindex="0" role="button" aria-label="Enfocar SOATERM, partes I01–I12, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="partes I01–I12" data-node-tag="8 y 12–13 semanas" data-node-context="Centro de Idiomas · nivel I" data-step-state="pending">
           <title>SOATERM · partes I01–I12 · Centro de Idiomas · nivel I · 8 y 12–13 semanas</title>
           <rect x="48" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="48" y="86" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -478,8 +515,8 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="123" y="142" class="t-backend" font-size="7" text-anchor="middle">8 y 12–13 semanas</text>
         </g>
 
-        <g id="node-idiomas_1" data-node-id="idiomas_1" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, BASIC I … INTERM. III, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="BASIC I … INTERM. III" data-node-tag="materia por confirmar" data-node-context="Centro de Idiomas · nivel I">
-          <title>SSASECT · BASIC I … INTERM. III · Centro de Idiomas · nivel I · materia por confirmar</title>
+        <g id="node-idiomas_1" data-node-id="idiomas_1" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, BASIC I … INTERM. III, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="BASIC I … INTERM. III" data-node-tag="materia ESEP" data-node-context="Centro de Idiomas · nivel I" data-step-state="pending">
+          <title>SSASECT · BASIC I … INTERM. III · Centro de Idiomas · nivel I · materia ESEP</title>
           <rect x="226" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="226" y="86" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(232 92) scale(0.6875)">
@@ -487,22 +524,22 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="301" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SSASECT</text>
           <text x="301" y="124" class="t-muted" font-size="8" text-anchor="middle">BASIC I … INTERM. III</text>
-        <text x="301" y="142" class="t-backend" font-size="7" text-anchor="middle">materia por confirmar</text>
+        <text x="301" y="142" class="t-backend" font-size="7" text-anchor="middle">materia ESEP</text>
         </g>
 
-        <g id="node-idiomas_2" data-node-id="idiomas_2" data-node-label="SAAQUIK" tabindex="0" role="button" aria-label="Enfocar SAAQUIK, programa por confirmar, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="programa por confirmar" data-node-tag="nivel I" data-node-context="Centro de Idiomas · nivel I">
-          <title>SAAQUIK · programa por confirmar · Centro de Idiomas · nivel I · nivel I</title>
+        <g id="node-idiomas_2" data-node-id="idiomas_2" data-node-label="SAAQUIK" tabindex="0" role="button" aria-label="Enfocar SAAQUIK, programa IMEMI03, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="programa IMEMI03" data-node-tag="nivel I" data-node-context="Centro de Idiomas · nivel I" data-step-state="pending">
+          <title>SAAQUIK · programa IMEMI03 · Centro de Idiomas · nivel I · nivel I</title>
           <rect x="404" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="404" y="86" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(410 92) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" x="479" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SAAQUIK</text>
-          <text x="479" y="124" class="t-muted" font-size="8" text-anchor="middle">programa por confirmar</text>
+          <text x="479" y="124" class="t-muted" font-size="8" text-anchor="middle">programa IMEMI03</text>
         <text x="479" y="142" class="t-backend" font-size="7" text-anchor="middle">nivel I</text>
         </g>
 
-        <g id="node-idiomas_3" data-node-id="idiomas_3" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, BASIC I antes que II, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="BASIC I antes que II" data-node-tag="prerrequisito Fatal" data-node-context="Centro de Idiomas · nivel I">
+        <g id="node-idiomas_3" data-node-id="idiomas_3" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, BASIC I antes que II, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="BASIC I antes que II" data-node-tag="prerrequisito Fatal" data-node-context="Centro de Idiomas · nivel I" data-step-state="pending">
           <title>SFAREGS · BASIC I antes que II · Centro de Idiomas · nivel I · prerrequisito Fatal</title>
           <rect x="582" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="582" y="86" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -514,7 +551,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="657" y="142" class="t-backend" font-size="7" text-anchor="middle">prerrequisito Fatal</text>
         </g>
 
-        <g id="node-idiomas_4" data-node-id="idiomas_4" data-node-label="SHAGRDE" tabindex="0" role="button" aria-label="Enfocar SHAGRDE, escala por confirmar, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="escala por confirmar" data-node-tag="nota final" data-node-context="Centro de Idiomas · nivel I">
+        <g id="node-idiomas_4" data-node-id="idiomas_4" data-node-label="SHAGRDE" tabindex="0" role="button" aria-label="Enfocar SHAGRDE, escala por confirmar, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="backend" data-node-sublabel="escala por confirmar" data-node-tag="nota final" data-node-context="Centro de Idiomas · nivel I" data-step-state="pending">
           <title>SHAGRDE · escala por confirmar · Centro de Idiomas · nivel I · nota final</title>
           <rect x="760" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="760" y="86" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -526,8 +563,8 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="835" y="142" class="t-backend" font-size="7" text-anchor="middle">nota final</text>
         </g>
 
-        <g id="node-idiomas_5" data-node-id="idiomas_5" data-node-label="En TEST" tabindex="0" role="button" aria-label="Enfocar En TEST, 0 de 20 scripts, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="database" data-node-sublabel="0 de 20 scripts" data-node-tag="validados" data-node-context="Centro de Idiomas · nivel I">
-          <title>En TEST · 0 de 20 scripts · Centro de Idiomas · nivel I · validados</title>
+        <g id="node-idiomas_5" data-node-id="idiomas_5" data-node-label="En TEST" tabindex="0" role="button" aria-label="Enfocar En TEST, 2 de 22 scripts, Centro de Idiomas · nivel I" aria-pressed="false" data-node-kind="database" data-node-sublabel="2 de 22 scripts" data-node-tag="validados" data-node-context="Centro de Idiomas · nivel I" data-step-state="pending">
+          <title>En TEST · 2 de 22 scripts · Centro de Idiomas · nivel I · validados</title>
           <rect x="938" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="938" y="86" width="150" height="68" rx="6" class="c-database" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="success" class="semantic-sigil s-database" transform="translate(944 92) scale(0.6875)">
@@ -535,11 +572,11 @@ rect.c-bg-rect { fill: var(--bg); }
             <path d="m5.2 8 1.8 1.8 3.8-4"/>
           </g>
           <text data-node-label="" x="1013" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">En TEST</text>
-          <text x="1013" y="124" class="t-muted" font-size="8" text-anchor="middle">0 de 20 scripts</text>
+          <text x="1013" y="124" class="t-muted" font-size="8" text-anchor="middle">2 de 22 scripts</text>
         <text x="1013" y="142" class="t-database" font-size="7" text-anchor="middle">validados</text>
         </g>
 
-        <g id="node-computacion_0" data-node-id="computacion_0" data-node-label="SOATERM" tabindex="0" role="button" aria-label="Enfocar SOATERM, partes X01–X07, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="partes X01–X07" data-node-tag="4 a 8 semanas" data-node-context="Centro de Computación · nivel C">
+        <g id="node-computacion_0" data-node-id="computacion_0" data-node-label="SOATERM" tabindex="0" role="button" aria-label="Enfocar SOATERM, partes X01–X07, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="partes X01–X07" data-node-tag="4 a 8 semanas" data-node-context="Centro de Computación · nivel C" data-step-state="pending">
           <title>SOATERM · partes X01–X07 · Centro de Computación · nivel C · 4 a 8 semanas</title>
           <rect x="48" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="48" y="212" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -551,7 +588,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="123" y="268" class="t-backend" font-size="7" text-anchor="middle">4 a 8 semanas</text>
         </g>
 
-        <g id="node-computacion_1" data-node-id="computacion_1" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, ESEC 00650 a 00657, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="ESEC 00650 a 00657" data-node-tag="materia ESEC" data-node-context="Centro de Computación · nivel C">
+        <g id="node-computacion_1" data-node-id="computacion_1" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, ESEC 00650 a 00657, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="ESEC 00650 a 00657" data-node-tag="materia ESEC" data-node-context="Centro de Computación · nivel C" data-step-state="pending">
           <title>SSASECT · ESEC 00650 a 00657 · Centro de Computación · nivel C · materia ESEC</title>
           <rect x="226" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="226" y="212" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -563,7 +600,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="301" y="268" class="t-backend" font-size="7" text-anchor="middle">materia ESEC</text>
         </g>
 
-        <g id="node-computacion_2" data-node-id="computacion_2" data-node-label="SAAQUIK" tabindex="0" role="button" aria-label="Enfocar SAAQUIK, programa CMEMC38, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="programa CMEMC38" data-node-tag="nivel C" data-node-context="Centro de Computación · nivel C">
+        <g id="node-computacion_2" data-node-id="computacion_2" data-node-label="SAAQUIK" tabindex="0" role="button" aria-label="Enfocar SAAQUIK, programa CMEMC38, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="programa CMEMC38" data-node-tag="nivel C" data-node-context="Centro de Computación · nivel C" data-step-state="pending">
           <title>SAAQUIK · programa CMEMC38 · Centro de Computación · nivel C · nivel C</title>
           <rect x="404" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="404" y="212" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -575,7 +612,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="479" y="268" class="t-backend" font-size="7" text-anchor="middle">nivel C</text>
         </g>
 
-        <g id="node-computacion_3" data-node-id="computacion_3" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, orden por confirmar, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="orden por confirmar" data-node-tag="U02" data-node-context="Centro de Computación · nivel C">
+        <g id="node-computacion_3" data-node-id="computacion_3" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, orden por confirmar, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="orden por confirmar" data-node-tag="U02" data-node-context="Centro de Computación · nivel C" data-step-state="pending">
           <title>SFAREGS · orden por confirmar · Centro de Computación · nivel C · U02</title>
           <rect x="582" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="582" y="212" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -587,7 +624,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="657" y="268" class="t-backend" font-size="7" text-anchor="middle">U02</text>
         </g>
 
-        <g id="node-computacion_4" data-node-id="computacion_4" data-node-label="SHAGRDE" tabindex="0" role="button" aria-label="Enfocar SHAGRDE, modo V · aprueba con 11, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="modo V · aprueba con 11" data-node-tag="nota final" data-node-context="Centro de Computación · nivel C">
+        <g id="node-computacion_4" data-node-id="computacion_4" data-node-label="SHAGRDE" tabindex="0" role="button" aria-label="Enfocar SHAGRDE, modo V · aprueba con 11, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="backend" data-node-sublabel="modo V · aprueba con 11" data-node-tag="nota final" data-node-context="Centro de Computación · nivel C" data-step-state="pending">
           <title>SHAGRDE · modo V · aprueba con 11 · Centro de Computación · nivel C · nota final</title>
           <rect x="760" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="760" y="212" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -599,8 +636,8 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="835" y="268" class="t-backend" font-size="7" text-anchor="middle">nota final</text>
         </g>
 
-        <g id="node-computacion_5" data-node-id="computacion_5" data-node-label="En TEST" tabindex="0" role="button" aria-label="Enfocar En TEST, 17 de 19 scripts, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="database" data-node-sublabel="17 de 19 scripts" data-node-tag="validados" data-node-context="Centro de Computación · nivel C">
-          <title>En TEST · 17 de 19 scripts · Centro de Computación · nivel C · validados</title>
+        <g id="node-computacion_5" data-node-id="computacion_5" data-node-label="En TEST" tabindex="0" role="button" aria-label="Enfocar En TEST, 19 de 21 scripts, Centro de Computación · nivel C" aria-pressed="false" data-node-kind="database" data-node-sublabel="19 de 21 scripts" data-node-tag="validados" data-node-context="Centro de Computación · nivel C" data-step-state="pending">
+          <title>En TEST · 19 de 21 scripts · Centro de Computación · nivel C · validados</title>
           <rect x="938" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="938" y="212" width="150" height="68" rx="6" class="c-database" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="success" class="semantic-sigil s-database" transform="translate(944 218) scale(0.6875)">
@@ -608,11 +645,11 @@ rect.c-bg-rect { fill: var(--bg); }
             <path d="m5.2 8 1.8 1.8 3.8-4"/>
           </g>
           <text data-node-label="" x="1013" y="233" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">En TEST</text>
-          <text x="1013" y="250" class="t-muted" font-size="8" text-anchor="middle">17 de 19 scripts</text>
+          <text x="1013" y="250" class="t-muted" font-size="8" text-anchor="middle">19 de 21 scripts</text>
         <text x="1013" y="268" class="t-database" font-size="7" text-anchor="middle">validados</text>
         </g>
 
-        <g id="node-emprendimiento_0" data-node-id="emprendimiento_0" data-node-label="SOATERM" tabindex="0" role="button" aria-label="Enfocar SOATERM, partes P01–P06, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="partes P01–P06" data-node-tag="10 semanas" data-node-context="Centro de Emprendimiento · nivel M">
+        <g id="node-emprendimiento_0" data-node-id="emprendimiento_0" data-node-label="SOATERM" tabindex="0" role="button" aria-label="Enfocar SOATERM, partes P01–P06, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="partes P01–P06" data-node-tag="10 semanas" data-node-context="Centro de Emprendimiento · nivel M" data-step-state="pending">
           <title>SOATERM · partes P01–P06 · Centro de Emprendimiento · nivel M · 10 semanas</title>
           <rect x="48" y="338" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="48" y="338" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -624,31 +661,31 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="123" y="394" class="t-backend" font-size="7" text-anchor="middle">10 semanas</text>
         </g>
 
-        <g id="node-emprendimiento_1" data-node-id="emprendimiento_1" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, ESGE 00117, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="ESGE 00117" data-node-tag="materia ESGE" data-node-context="Centro de Emprendimiento · nivel M">
-          <title>SSASECT · ESGE 00117 · Centro de Emprendimiento · nivel M · materia ESGE</title>
+        <g id="node-emprendimiento_1" data-node-id="emprendimiento_1" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, EMPRENDIMIENTO I, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="EMPRENDIMIENTO I" data-node-tag="materia ESGE" data-node-context="Centro de Emprendimiento · nivel M" data-step-state="pending">
+          <title>SSASECT · EMPRENDIMIENTO I · Centro de Emprendimiento · nivel M · materia ESGE</title>
           <rect x="226" y="338" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="226" y="338" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(232 344) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" x="301" y="359" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SSASECT</text>
-          <text x="301" y="376" class="t-muted" font-size="8" text-anchor="middle">ESGE 00117</text>
+          <text x="301" y="376" class="t-muted" font-size="8" text-anchor="middle">EMPRENDIMIENTO I</text>
         <text x="301" y="394" class="t-backend" font-size="7" text-anchor="middle">materia ESGE</text>
         </g>
 
-        <g id="node-emprendimiento_2" data-node-id="emprendimiento_2" data-node-label="SAAQUIK" tabindex="0" role="button" aria-label="Enfocar SAAQUIK, programa por confirmar, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="programa por confirmar" data-node-tag="nivel M" data-node-context="Centro de Emprendimiento · nivel M">
-          <title>SAAQUIK · programa por confirmar · Centro de Emprendimiento · nivel M · nivel M</title>
+        <g id="node-emprendimiento_2" data-node-id="emprendimiento_2" data-node-label="SAAQUIK" tabindex="0" role="button" aria-label="Enfocar SAAQUIK, programa MMEMM01, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="programa MMEMM01" data-node-tag="nivel M" data-node-context="Centro de Emprendimiento · nivel M" data-step-state="pending">
+          <title>SAAQUIK · programa MMEMM01 · Centro de Emprendimiento · nivel M · nivel M</title>
           <rect x="404" y="338" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="404" y="338" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(410 344) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" x="479" y="359" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SAAQUIK</text>
-          <text x="479" y="376" class="t-muted" font-size="8" text-anchor="middle">programa por confirmar</text>
+          <text x="479" y="376" class="t-muted" font-size="8" text-anchor="middle">programa MMEMM01</text>
         <text x="479" y="394" class="t-backend" font-size="7" text-anchor="middle">nivel M</text>
         </g>
 
-        <g id="node-emprendimiento_3" data-node-id="emprendimiento_3" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, orden por confirmar, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="orden por confirmar" data-node-tag="U02" data-node-context="Centro de Emprendimiento · nivel M">
+        <g id="node-emprendimiento_3" data-node-id="emprendimiento_3" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, orden por confirmar, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="orden por confirmar" data-node-tag="U02" data-node-context="Centro de Emprendimiento · nivel M" data-step-state="pending">
           <title>SFAREGS · orden por confirmar · Centro de Emprendimiento · nivel M · U02</title>
           <rect x="582" y="338" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="582" y="338" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -660,7 +697,7 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="657" y="394" class="t-backend" font-size="7" text-anchor="middle">U02</text>
         </g>
 
-        <g id="node-emprendimiento_4" data-node-id="emprendimiento_4" data-node-label="SHAGRDE" tabindex="0" role="button" aria-label="Enfocar SHAGRDE, escala por confirmar, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="escala por confirmar" data-node-tag="nota final" data-node-context="Centro de Emprendimiento · nivel M">
+        <g id="node-emprendimiento_4" data-node-id="emprendimiento_4" data-node-label="SHAGRDE" tabindex="0" role="button" aria-label="Enfocar SHAGRDE, escala por confirmar, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="backend" data-node-sublabel="escala por confirmar" data-node-tag="nota final" data-node-context="Centro de Emprendimiento · nivel M" data-step-state="pending">
           <title>SHAGRDE · escala por confirmar · Centro de Emprendimiento · nivel M · nota final</title>
           <rect x="760" y="338" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="760" y="338" width="150" height="68" rx="6" class="c-backend" stroke-width="1.5"/>
@@ -672,8 +709,8 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="835" y="394" class="t-backend" font-size="7" text-anchor="middle">nota final</text>
         </g>
 
-        <g id="node-emprendimiento_5" data-node-id="emprendimiento_5" data-node-label="En TEST" tabindex="0" role="button" aria-label="Enfocar En TEST, 1 de 20 scripts, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="database" data-node-sublabel="1 de 20 scripts" data-node-tag="validados" data-node-context="Centro de Emprendimiento · nivel M">
-          <title>En TEST · 1 de 20 scripts · Centro de Emprendimiento · nivel M · validados</title>
+        <g id="node-emprendimiento_5" data-node-id="emprendimiento_5" data-node-label="En TEST" tabindex="0" role="button" aria-label="Enfocar En TEST, 2 de 22 scripts, Centro de Emprendimiento · nivel M" aria-pressed="false" data-node-kind="database" data-node-sublabel="2 de 22 scripts" data-node-tag="validados" data-node-context="Centro de Emprendimiento · nivel M" data-step-state="pending">
+          <title>En TEST · 2 de 22 scripts · Centro de Emprendimiento · nivel M · validados</title>
           <rect x="938" y="338" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="938" y="338" width="150" height="68" rx="6" class="c-database" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="success" class="semantic-sigil s-database" transform="translate(944 344) scale(0.6875)">
@@ -681,7 +718,7 @@ rect.c-bg-rect { fill: var(--bg); }
             <path d="m5.2 8 1.8 1.8 3.8-4"/>
           </g>
           <text data-node-label="" x="1013" y="359" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">En TEST</text>
-          <text x="1013" y="376" class="t-muted" font-size="8" text-anchor="middle">1 de 20 scripts</text>
+          <text x="1013" y="376" class="t-muted" font-size="8" text-anchor="middle">2 de 22 scripts</text>
         <text x="1013" y="394" class="t-database" font-size="7" text-anchor="middle">validados</text>
         </g>
 

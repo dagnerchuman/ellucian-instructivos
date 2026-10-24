@@ -3,7 +3,7 @@ id: ADR-021
 titulo: El asistente de diagramas responde con conocimiento local y bloquea pantallas sin evidencia
 estado: aceptado
 fecha: 2026-10-23
-fuentes: [C83]
+fuentes: [C83, C108]
 temas: [asistente, diagramas, conocimiento]
 ---
 # ADR-021 · Asistente con conocimiento local y modo seguro
@@ -16,6 +16,7 @@ El usuario pidió integrar el asistente en las páginas de diagramas con Groq y 
 - El conocimiento se genera localmente desde el registro, los datos de los tres centros, las referencias operativas y los ADR aceptados. La base se carga como un asset compartido en las páginas generadas.
 - Si la respuesta de Qwen menciona un código de pantalla Banner ausente de la evidencia recuperada, no se muestra la respuesta del modelo y se presenta el extracto local con sus fuentes.
 - Se conserva el modo local, que muestra evidencia sin pedir redacción al modelo.
+- **Formato profesional (24/10/2026, C108):** el asistente usa tono institucional y trato de usted, sin emojis ni exclamaciones. Responde primero en una o dos oraciones; si es un procedimiento, agrega «Pasos» numerados que empiezan con la página de Banner, y luego «Validado en TEST», «Según el instructivo» y «Por confirmar» solo cuando correspondan. El modo local presenta los extractos limpios, con el nombre de cada fuente.
 
 ## Alternativas descartadas
 - **Respuestas libres del modelo:** pueden inventar páginas, pasos o datos de los centros.

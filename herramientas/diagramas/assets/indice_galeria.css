@@ -233,6 +233,26 @@ main {
   border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
 }
 
+/* Fases del proceso dentro de cada centro */
+.phase-group + .phase-group { margin-top: 1.5rem; }
+.phase-group.hidden { display: none !important; }
+.phase-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0 0 0.75rem;
+  padding-left: 0.6rem;
+  border-left: 3px solid var(--c);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--fg);
+}
+.phase-count {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
 /* Cuadrícula de Tarjetas Responsiva */
 .grid {
   display: grid;

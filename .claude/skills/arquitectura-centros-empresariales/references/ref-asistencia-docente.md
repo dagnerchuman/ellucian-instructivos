@@ -19,5 +19,5 @@
 - El periodo debe tener fechas de acceso docente en Autoservicio configuradas en **SOATERM**. *(instructivo 7.1.1, diap. 12)*
 - Debe existir una regla de control activa para la sesión del NRC, con **Desplegar clase** y **Control de asistencia** activos, unidad de control y fechas de inicio/fin configuradas; se repite por cada sesión. *(instructivo 7.1.1, diap. 42)*
 - El proceso **ENTERATTEND** debe estar disponible para el perfil docente en Autoservicio. La regla de acceso puede requerir relación docente-alumno o que el docente sea principal. *(instructivo 7.1.1, diap. 14 y 15)*
-- Estos requisitos y la secuencia de la interfaz están documentados, pero **la ejecución del registro todavía debe probarse en el ambiente TEST de la USS**. No afirmar que ya fue probada ni que el NRC 10020 está habilitado para asistencia.
+- **Validado en TEST (C101, 23/10/2026):** con la regla de `SOAATRK` del NRC 10044, el NRC aparece en Autoservicio › Control de asistencia › Lista de cursos › **Pasar lista** y Banner calcula el porcentaje. Para otro NRC hay que crear su propia regla; sin ella la lista sale vacía.
 - `ATTRGRD` configura cómo la asistencia interviene en la calificación; no es el control diario. Solo incluirlo si preguntan por la configuración de calificaciones o por el componente de asistencia.

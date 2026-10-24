@@ -691,8 +691,8 @@
         "8. SAAQUIK: admite al alumno en el programa CMEMC38",
         "9. SFAREGS: matricula al alumno en el NRC (RE)",
         "10. TSAAREV: el alumno recibe el cobro en su cuenta",
-        "11. Autoservicio: el docente registra asistencia y notas",
-        "12. SHRROLL: pase a historia de las notas",
+        "11. Autoservicio: el docente pasa lista y registra las notas en el libro; Registros carga antes el plan (SHAGCOM) y la regla de asistencia (SOAATRK)",
+        "12. SHRROLL: revisa la nota final en SFASLST y hace el pase a historia",
         "13. SMICRLT: el alumno ve su avance en CAPP"
       ]
     },
@@ -704,7 +704,8 @@
         "SSASECT: NRC 1021, 1024 y 1026; SIAASGN: 4 NRC del docente 100582059",
         "GOAMTCH y SAAQUIK: S00581081 y S00581108 a S00581111 con CMEMC38",
         "SFAREGS: matrícula, retiro, traslado y sobrepasos (Scripts 01, 02, 08, 16)",
-        "Autoservicio y SHRROLL: notas 16, 10, 08 e INH; job 8114 exitoso"
+        "Autoservicio: Pasar lista y libro de calificaciones con el NRC 10044 (asistencia 43 % → INH en SFASLST)",
+        "SFASLST y SHRROLL: notas 16, 10, 08 e INH; job 8114 exitoso"
       ]
     },
     {

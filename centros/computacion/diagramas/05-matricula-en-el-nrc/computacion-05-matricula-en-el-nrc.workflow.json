@@ -605,7 +605,9 @@
         "Retención en SOAHOLD (Script 18-B, validado en TEST)",
         "Estatus del alumno IS o SU en SGASTDN (Script 09, validado en TEST)",
         "NRC lleno, error «Closed» (Script 15, validado en TEST)",
-        "Mismo curso en otro NRC del periodo: «Duplicate Course with Section»"
+        "Mismo curso en otro NRC del periodo: «Duplicate Course with Section»",
+        "El alumno no tiene currículo del nivel del curso: agrégalo en SFAREGS › Currículos y autoriza ese plan con EL (C100)",
+        "Conflicto de horario con otro NRC del alumno: cambia el horario del NRC o elige otro"
       ]
     },
     {

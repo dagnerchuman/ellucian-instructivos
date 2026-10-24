@@ -193,7 +193,7 @@
       "docente": "100582059 (Dagner Chuman)",
       "horario": "Jueves por la tarde (cambiado para evitar el cruce con el 10042; hora exacta por anotar)",
       "aula": "SAUVIR / SALA-VIRT",
-      "uso": "DISEÑO WEB, flujo completo (C96–C105): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista con 43 %; componentes en 85 y ATTRGRD 43 → calificación compuesta INH (porcentaje 85). Pendiente: calificaciones finales, SFASLST y SHRROLL; confirmar el envío automático de ATTRGRD (U32)",
+      "uso": "DISEÑO WEB, flujo completo validado (C96–C107): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista con 43 %; componentes en 85 y ATTRGRD 43 → compuesta INH → SFASLST INH. Pendiente: SHRROLL y confirmar el envío automático de ATTRGRD (U32)",
       "cupo": "40"
     }
   ],
@@ -298,7 +298,7 @@
     },
     "13": {
       "estado": "validado",
-      "evidencia": "Notas 16, 10, 08 e INH en NRC 1021 y 1026"
+      "evidencia": "Notas 16, 10, 08 e INH en NRC 1021 y 1026 por SFASLST. 24/10: también por Autoservicio con el NRC 10044 (libro de calificaciones → nota compuesta INH → SFASLST) (C107)"
     },
     "14": {
       "estado": "validado",
@@ -350,23 +350,37 @@
     }
   ],
   "casuisticas": {
-    "matricula": [
+    "_leeme": "Scripts con diagrama propio (del n.º 7 u 8 en adelante), agrupados por fase del proceso y en el orden en que ocurren: abrir el periodo, matrícula, notas y cierre.",
+    "periodo": [
       "11",
-      "11-B",
-      "15",
+      "11-B"
+    ],
+    "matricula": [
+      "03",
+      "06",
       "02",
-      "08",
+      "15",
+      "18-B",
       "16",
-      "09",
-      "06"
+      "08",
+      "09"
     ],
     "notas": [
-      "03",
+      "19",
       "10",
-      "12",
-      "18-B",
-      "19"
-    ],
-    "_leeme": "Scripts que tienen su propio diagrama de casuística (del n.º 7 en adelante), en este orden."
+      "12"
+    ]
+  },
+  "flujo_notas_test": {
+    "_leeme": "Flujo de notas y asistencia por Autoservicio probado de punta a punta en TEST. Lo usa el diagrama 6.",
+    "nrc": "10044",
+    "curso": "ESEC 00684 Diseño Web",
+    "alumno": "100582059",
+    "evidencia": [
+      "NRC 10044 (ESEC 00684 Diseño Web, X06): plan en SHAGCOM con TA1 0.15, TA2 0.15, PA 0.40 y EF 0.30 (VIG_11) + ATTRGRD 0.00, Debe aprobar, AST_70 (C98)",
+      "SOAATRK: regla del NRC con Desplegar clase, Presente/Ausente y Control de asistencia; sin ella el NRC no aparece en Pasar lista (C101)",
+      "Faculty › Pasar lista: 43 % de asistencia; libro de calificaciones: 85/100 → 17 en los cuatro componentes (C102–C105)",
+      "Calificaciones compuestas: porcentaje 85 y ATTRGRD 43 → nota final INH; SFASLST muestra INH sin escribirla en «Calificaciones finales» (C105–C107)"
+    ]
   }
 }

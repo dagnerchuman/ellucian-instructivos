@@ -220,7 +220,7 @@ def revisar_manifest(adrs, registro):
                 aviso(donde, f"duda con id «{duda['id']}»: no es un ID del registro (C/R/E/U/S + 2 dígitos)")
             elif duda["id"] not in registro:
                 error(donde, f"duda {duda['id']}, que no existe en registro.md")
-        for lista in ("matricula", "notas"):
+        for lista in ("periodo", "matricula", "notas"):
             for sid in d.get("casuisticas", {}).get(lista, []):
                 if sid not in catalogo:
                     error(donde, f"casuística {sid}: no está en el catálogo")

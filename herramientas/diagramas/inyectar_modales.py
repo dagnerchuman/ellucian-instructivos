@@ -10,7 +10,8 @@ import json
 import os
 import re
 from pathlib import Path
-from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
+import sys
+from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS, INSTRUCTIVOS
 from plantillas import TITULOS, CAPACIDADES, guia_casuistica_de
 
 # "plantillas": la guía de las casuísticas sale de plantillas.py (CASOS + EXTRA_CASOS) y pisa a GUIAS_SCRIPTS.
@@ -333,6 +334,36 @@ def _limpiar_inyeccion_previa(contenido):
     return contenido
 
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import diapositivas  # noqa: E402  (herramientas/diapositivas.py)
+
+RAIZ_REPO = Path(__file__).resolve().parents[2]
+VISOR = RAIZ_REPO / "visor_instructivos" / "index.html"
+
+
+def _resolver_diapositivas(guia, carpeta_html, slug):
+    """Cambia {"instructivo", "n"} por rutas relativas al HTML (recorte, completa y visor)."""
+    for paso, info in guia.items():
+        lista = info.get("diapositivas")
+        if not lista:
+            continue
+        resueltas = []
+        for d in lista:
+            inst = INSTRUCTIVOS[d["instructivo"]]
+            recorte = diapositivas.recorte(inst["id"], d["n"], d.get("caja"))
+            completa = diapositivas.diapositiva(inst["id"], d["n"])
+            if not recorte:
+                ADVERTENCIAS.append(f"{slug} · {paso}: falta la diapositiva {d['n']} de {inst['id']} (ejecuta herramientas/diapositivas.py)")
+                continue
+            rel = lambda ruta: os.path.relpath(RAIZ_REPO / ruta, carpeta_html).replace(os.sep, "/")
+            resueltas.append({
+                "src": rel(recorte), "completa": rel(completa),
+                "visor": rel(VISOR.relative_to(RAIZ_REPO)) + f"?p={inst['id']}&d={d['n']}",
+                "fuente": inst["titulo"], "n": d["n"], "texto": d.get("texto", ""),
+            })
+        info["diapositivas"] = resueltas
+
+
 def _json_seguro(obj):
     """JSON para incrustar en <script>: «</» se escapa para que un texto no cierre el script."""
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
@@ -347,6 +378,7 @@ def inyectar_en_html(ruta_html, slug):
     contenido = _limpiar_inyeccion_previa(ruta_html.read_text(encoding="utf-8"))
     nodo_ids = ids_nodos_en_html(contenido)
     guia = obtener_guia_para_slug(slug, id_centro, nodo_ids)
+    _resolver_diapositivas(guia, ruta_html.parent, slug)
     conocimiento_script = os.path.relpath(
         ASSETS_DIR / "asistente_conocimiento.js",
         ruta_html.parent,

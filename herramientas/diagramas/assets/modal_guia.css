@@ -2700,3 +2700,170 @@ html[data-theme="light"] g[data-ultimo-escogido="true"] text[data-detail="fine"]
     --archify-mobile-flow-width: 800px;
   }
 }
+
+
+/* ==========================================================================
+   Diapositivas del instructivo en cada paso (galería y visor ampliado)
+   ========================================================================== */
+.guia-diapos {
+  margin: 0.45rem 0 0.6rem;
+  padding: 0.55rem 0.6rem 0.65rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(15, 23, 42, 0.35);
+}
+html:not([data-theme="dark"]) .guia-diapos {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+.guia-diapos-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.guia-diapos-titulo {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.guia-diapos-fuente {
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
+.guia-diapos-grid {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.25rem;
+}
+.guia-diapos-grid > .guia-diapo {
+  flex: 0 0 min(250px, 78%);
+  scroll-snap-align: start;
+}
+.guia-diapo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: zoom-in;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+html:not([data-theme="dark"]) .guia-diapo {
+  background: #ffffff;
+  border-color: #dbe2ea;
+}
+.guia-diapo:hover,
+.guia-diapo:focus-visible {
+  border-color: #8b5cf6;
+  transform: translateY(-1px);
+  outline: none;
+}
+.guia-diapo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.35rem;
+  background: #ffffff;
+}
+.guia-diapo-pie {
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+.guia-diapo-pie strong {
+  color: #8b5cf6;
+  margin-right: 0.2rem;
+}
+
+.guia-diapo-visor {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(2, 6, 23, 0.82);
+  backdrop-filter: blur(3px);
+}
+.guia-diapo-visor[hidden] { display: none; }
+.gdv-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: min(1400px, 100%);
+  max-height: 100%;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: #0f172a;
+  color: #e2e8f0;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+html:not([data-theme="dark"]) .gdv-panel {
+  background: #ffffff;
+  color: #0f172a;
+}
+.gdv-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.gdv-titulo { font-size: 0.85rem; font-weight: 700; }
+.gdv-acciones { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.gdv-btn {
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.gdv-btn:hover { border-color: #8b5cf6; }
+.gdv-lienzo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  overflow: auto;
+}
+.gdv-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 9rem);
+  border-radius: 0.4rem;
+  background: #ffffff;
+}
+.gdv-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  border: none;
+  background: rgba(15, 23, 42, 0.7);
+  color: #ffffff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.gdv-nav[data-gdv="ant"] { left: 0.4rem; }
+.gdv-nav[data-gdv="sig"] { right: 0.4rem; }
+.gdv-nav:disabled { opacity: 0.25; cursor: default; }
+.gdv-pie { font-size: 0.8rem; text-align: center; opacity: 0.85; white-space: pre-wrap; }
+body.gdv-abierto { overflow: hidden; }

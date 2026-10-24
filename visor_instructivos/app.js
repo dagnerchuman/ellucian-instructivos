@@ -145,6 +145,16 @@ function initApp() {
     });
   }
 
+  // Enlace directo desde las guías de los diagramas: ?p=<id del instructivo>&d=<n.º de diapositiva>
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const pedido = params.get('p');
+    if (pedido && typeof PRESENTATIONS !== 'undefined' && PRESENTATIONS[pedido]) {
+      state.currentId = pedido;
+      state.currentSlide = Math.max(0, (parseInt(params.get('d'), 10) || 1) - 1);
+    }
+  } catch (_) {}
+
   // Also ensure parents of current presentation are expanded
   ensureAncestorsExpanded(state.currentId);
 
@@ -427,7 +437,72 @@ function initApp() {
   }
 
   // =========================================================================
-  // PRESENTATION LOADING (pptx-browser Canvas Renderer)
+  // DIAPOSITIVAS COMO IMÁGENES (herramientas/diapositivas.py)
+  // Si el instructivo ya está convertido, se muestran sus WebP en lugar de leer el PPTX.
+  // =========================================================================
+
+  class ImagenesRenderer {
+    constructor(presId, info) {
+      this.base = 'diapositivas/' + encodeURIComponent(presId) + '/';
+      this.slideCount = info.n;
+      this.ancho = info.ancho || 1600;
+      this.alto = info.alto || 900;
+      this.cache = new Map();
+    }
+
+    url(idx) {
+      return this.base + String(idx + 1).padStart(3, '0') + '.webp';
+    }
+
+    cargar(idx) {
+      if (!this.cache.has(idx)) {
+        this.cache.set(idx, new Promise((resolve, reject) => {
+          const img = new Image();
+          img.decoding = 'async';
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error('No se encontró la imagen de la diapositiva ' + (idx + 1) + '.'));
+          img.src = this.url(idx);
+        }));
+      }
+      return this.cache.get(idx);
+    }
+
+    async load(_buffer, progreso) {
+      if (progreso) progreso(0.5, '');
+      await this.cargar(0);
+      if (progreso) progreso(1, '');
+    }
+
+    async renderSlide(idx, canvas) {
+      const img = await this.cargar(idx);
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      canvas.getContext('2d').drawImage(img, 0, 0);
+      // Precarga la siguiente para que la navegación sea inmediata
+      if (idx + 1 < this.slideCount) this.cargar(idx + 1).catch(() => {});
+    }
+
+    async renderAllSlides() {
+      const miniaturas = [];
+      for (let i = 0; i < this.slideCount; i++) {
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.alt = 'Diapositiva ' + (i + 1);
+        img.src = this.url(i);
+        img.style.objectFit = 'contain';
+        miniaturas.push(img);
+      }
+      return miniaturas;
+    }
+
+    destroy() {
+      this.cache.clear();
+    }
+  }
+
+  // =========================================================================
+  // PRESENTATION LOADING (imágenes o, si faltan, pptx-browser Canvas Renderer)
   // =========================================================================
 
   async function loadPresentation(presId, targetSlide = 0) {
@@ -469,6 +544,21 @@ function initApp() {
       if (state.renderer) {
         state.renderer.destroy();
         state.renderer = null;
+      }
+
+      const convertida = (typeof window.DIAPOSITIVAS !== 'undefined') ? window.DIAPOSITIVAS[presId] : null;
+      if (convertida && convertida.n) {
+        const renderer = new ImagenesRenderer(presId, convertida);
+        await renderer.load(null, (progress) => {
+          elements.loadingMsg.textContent = `Cargando "${displayName}"... ${Math.round(progress * 100)}%`;
+        });
+        state.renderer = renderer;
+        elements.loadingOverlay.style.display = 'none';
+        const initial = Math.max(0, Math.min(targetSlide, renderer.slideCount - 1));
+        await renderSlide(initial);
+        await renderThumbnails();
+        updateActiveTreeItem(presId);
+        return;
       }
 
       // Fetch the PPTX file with automatic fallback handling

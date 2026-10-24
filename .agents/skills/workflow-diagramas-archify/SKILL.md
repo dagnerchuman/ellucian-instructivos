@@ -79,6 +79,12 @@ python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar 
 - **No inventar códigos:** lo que no está en `datos.json` se muestra «por confirmar». Los datos de ejemplo se marcan «(ejemplo)».
 - **Interfaz en español:** `meta.locale = "es"` con el catálogo `examples/locales/es.json` de Archify.
 
+## Diapositivas en cada paso de la guía (ADR-022)
+- `python3 herramientas/diapositivas.py` convierte los instructivos a WebP en `visor_instructivos/diapositivas/<id>/` (solo los que faltan o cambiaron; `--solo <texto>` para uno). El visor las usa en lugar del PPTX.
+- En `guias_operativas.py`, `INSTRUCTIVOS` da el `<id>` de cada instructivo y cada paso lleva `"diapositivas": [{"instructivo": "5.3", "n": 21, "texto": "…"}]`. `inyectar_modales.py` crea el recorte (`recortes/NNN.webp`, sin título, banda lateral ni pie) y escribe las rutas relativas al HTML.
+- Si una lámina tiene otro diseño, agrega `"caja": [izquierda, arriba, derecha, abajo]` (proporciones). Mira el recorte antes de subirlo.
+- Hoy lo tiene «Crear el NRC» (5.3 y 6.2.1). Para otro diagrama, busca las diapositivas con `buscar_instructivos.py` y agrégalas a su guía.
+
 ## Tono de las guías y del asistente (pedido del usuario, 24/10)
 - **Guías paso a paso:** lenguaje profesional, imperativo formal (ingrese, pulse, verifique), sin emojis, sin exclamaciones ni palabras completas en mayúsculas. Cada fila cita su fuente (C##, U##, instructivo y diapositiva).
 - **Asistente:** responde primero en una o dos oraciones; luego, si aplica, «Pasos» numerados con la página de Banner al inicio de cada paso, «Validado en TEST», «Según el instructivo» y «Por confirmar». Siempre con fuentes; sin evidencia local, no consulta al modelo (ADR-021).

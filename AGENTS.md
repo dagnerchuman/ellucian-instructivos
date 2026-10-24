@@ -8,7 +8,7 @@
 - **Este repositorio:** instructivos de Ellucian (PPTX, carpetas `CAPACIDAD n`) y un visor web (`visor_instructivos/`, que Netlify publica solo desde la rama `main`, con `publish = "."`; lo de otras ramas no sale en el sitio).
 - **Todo por carpetas:**
   - `centros/<centro>/` (`idiomas`, `computacion`, `emprendimiento`): `datos.json` (**fuente única** de los datos del centro), `README.md` (ficha) y `diagramas/` (HTML interactivo, PNG claro y oscuro, SVG). Lo común va en `centros/comun/`.
-  - `herramientas/`: generador de diagramas (Archify) y sincronizador de skills.
+  - `herramientas/`: generador de diagramas (Archify), conversor de instructivos a imágenes (`diapositivas.py`, ADR-022) y sincronizador de skills.
   - `docs/`: documentos sueltos.
 - **Idioma:** responde **en español**, simple y directo.
 

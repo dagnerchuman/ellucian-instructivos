@@ -39,23 +39,33 @@ GUIA_CREAR_NRC_IDIOMAS = {
         ]
     },
     "s3": {
-        "fase": "Paso 3: Información de ingreso de sección",
+        "fase": "Paso 3: Definir el cupo",
         "pantalla": "SSASECT",
-        "hito": "Segundo guardado: Aforo y Reservas",
+        "hito": "Segundo guardado: cupo proyectado",
         "instrucciones": [
-            {"campo": "Pestaña Ingreso de sección", "valor": "Clic en pestaña 2", "tipo": "Navegación", "detalle": "Ir a «Información de ingreso de sección» (Enrollment Details)."},
-            {"campo": "Aforo Máximo y Proyectado", "valor": "Máximo: 40 | Proyectado: 40", "tipo": "Obligatorio", "detalle": "En subpestaña «Detalles de ingreso»: ingresar 40 en Máximo y 40 en Proyectado (o 25 en salón presencial AC1)."},
-            {"campo": "Indicador de Reservado", "valor": "Casilla «Reservado» ☑", "tipo": "Obligatorio", "detalle": "Marcar check Reservado para habilitar la subpestaña «Lugares reservados»."},
-            {"campo": "Códigos de Autorización", "valor": "Casilla «Códigos activos» ☑", "tipo": "Control", "detalle": "Verificar marcado para control de permisos de inscripción en la sección."},
-            {"campo": "Créditos Generados", "valor": "AT: 4.000 cr | AC1-AC3: 0.000 cr", "tipo": "Control Cobro", "detalle": "La teoría genera 4 créditos; las prácticas asociadas generan 0 créditos por estar dispensadas."},
-            {"campo": "Subpestaña Lugares Reservados", "valor": "Regla nula (0) + Regla Centro (40)", "tipo": "Blindaje", "detalle": "En subpestaña «Lugares reservados»: Fila 1 regla NULL con cupo 0; Fila 2 regla por programa IMEMI03 con Máximo reservado: 40."},
-            {"campo": "Segundo guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) para fijar el cupo. Los contadores Total reservado y Restante se actualizan a 40."}
+            {"campo": "Pestaña Ingreso de sección", "valor": "Clic en pestaña 2", "tipo": "Navegación", "detalle": "Ir a «Información de ingreso de sección», subpestaña «Detalles de ingreso»."},
+            {"campo": "Máximo y Proyectado", "valor": "Máximo: 40 | Proyectado: 40", "tipo": "Obligatorio", "detalle": "Ingrese 40 en Máximo y en Proyectado (25 en el salón presencial AC1). Proyectado es obligatorio y va antes de «Lugares reservados» (C97)."},
+            {"campo": "Indicador de Reservado", "valor": "Casilla «Reservado» ☑", "tipo": "Obligatorio", "detalle": "Marque Reservado para habilitar la subpestaña «Lugares reservados»."},
+            {"campo": "Códigos de Autorización", "valor": "Casilla «Códigos activos» ☑", "tipo": "Control", "detalle": "Verifique que esté marcada para el control de permisos de inscripción."},
+            {"campo": "Créditos Generados", "valor": "AT: 4.000 cr | AC1-AC3: 0.000 cr", "tipo": "Control Cobro", "detalle": "La teoría genera 4 créditos; las prácticas, 0 por estar dispensadas."},
+            {"campo": "Segundo guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guarde para fijar el cupo antes de configurar las reservas."}
         ]
     },
     "s4": {
-        "fase": "Paso 4: Instructor y horas de reunión",
+        "fase": "Paso 4: Lugares reservados",
         "pantalla": "SSASECT",
-        "hito": "Tercer guardado: Horario, Aula y Docente",
+        "hito": "Tercer guardado: reservas activas",
+        "instrucciones": [
+            {"campo": "Subpestaña Lugares reservados", "valor": "SSASECT → Información de ingreso de sección", "tipo": "Navegación", "detalle": "La reserva se configura en SSASECT, no en SSARRES (C66)."},
+            {"campo": "Regla nula", "valor": "Máximo reservado: 0", "tipo": "Regla base", "detalle": "Conserve la fila sin criterio con cupo 0."},
+            {"campo": "Regla del centro", "valor": "Programa IMEMI03 · Máximo reservado: 40", "tipo": "Obligatorio", "detalle": "Pulse + y agregue la fila por programa IMEMI03 con Máximo reservado 40. Total reservado y Restante pasan a 40."},
+            {"campo": "Tercer guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guarde las reglas de reserva antes de continuar con horario y docente."}
+        ]
+    },
+    "s5": {
+        "fase": "Paso 5: Horario, aula y docente",
+        "pantalla": "SSASECT",
+        "hito": "Cuarto guardado: horario, aula y docente",
         "instrucciones": [
             {"campo": "Pestaña Horario y reunión", "valor": "Clic en pestaña 3", "tipo": "Navegación", "detalle": "Ir a «Instructor y horas de reunión» (Meeting Times and Faculty)."},
             {"campo": "Fechas de reunión (Horario)", "valor": "Tipo CLAS | 05-OCT-2026 a 26-NOV-2026", "tipo": "Obligatorio", "detalle": "En subpestaña «Fechas de reunión»: tipo CLAS, vigencia de ciclo según parte de periodo I10."},
@@ -63,20 +73,9 @@ GUIA_CREAR_NRC_IDIOMAS = {
             {"campo": "Créditos y Ubicación", "valor": "Edificio SA / SPOSGR | Tipo PRA / TEO", "tipo": "Obligatorio", "detalle": "En subpestaña «Créditos y ubicación»: Edificio SA / SAUVIR (Virtual) o SPOSGR (Presencial). Horas por semana: 4.00. Créditos sesión: 4.000 para AT y 0.000 para AC1-AC3."},
             {"campo": "Consistencia de Sesión", "valor": "Indicador de sesión: 01 en ambos", "tipo": "Regla Crítica", "detalle": "Regla clave: El campo «Indicador de sesión» del bloque HORARIO debe ser exactamente igual al de INSTRUCTOR (ambos 01)."},
             {"campo": "Docente Asignado (Múltiples)", "valor": "ID Docente | Principal ☑ | 100% resp", "tipo": "Obligatorio", "detalle": "• AT (10010): 100582059 (Dagner Anibal Chuman Lluen)\n• AC1 (10011): S00912435 (Jossymar Cabanillas)\n• AC2 (10013): S00912438 (Arnold Vaca)\n• AC3 (10024): S00912437 (Willy Valverde)\nMarcar Principal ☑, 100% responsabilidad, 100% sesión y carga 4.000 (AT) o 3.000 (AC)."},
-            {"campo": "Tercer guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). Mensaje superior Banner: ✓ Saved successfully (1 rows saved)."}
-        ]
-    },
-    "s5": {
-        "fase": "Paso 5: Ligas de Sección y Detalle (SSADETL)",
-        "pantalla": "SSADETL",
-        "hito": "Cuarto guardado: Ligas cruzadas TA ↔ PA",
-        "instrucciones": [
-            {"campo": "Acceso a SSADETL", "valor": "Menú Relacionados → SSADETL", "tipo": "Navegación", "detalle": "Desde SSASECT, ir a Relacionados → SSADETL (Detalle de horario de sección) con Periodo y NRC."},
-            {"campo": "Pestaña Correquisitos y Ligas", "valor": "Subpestaña «Ligas de sección»", "tipo": "Configuración", "detalle": "Ir al bloque inferior donde se define el conector vinculado para armar el bloque de matrícula obligatoria."},
-            {"campo": "En NRC Teórico (10010 · TA)", "valor": "Conector vinculado: PA", "tipo": "Enlace TA→PA", "detalle": "El teórico con Identificador TA se enlaza con el conector de liga PA. Exige cualquiera de las prácticas asociadas."},
-            {"campo": "En NRCs Prácticos (10011, 10013, 10024 · PA)", "valor": "Conector vinculado: TA", "tipo": "Enlace PA→TA", "detalle": "Cada práctica con Identificador PA se enlaza con el conector TA del curso teórico."},
-            {"campo": "Alcance de la Liga", "valor": "Estricto por Materia y Curso", "tipo": "Regla clave", "detalle": "Regla confirmada: La liga solo actúa dentro de la misma materia y curso (ESEP 02458). Puedes reutilizar TA y PA en Basic I, Basic II, Intermedios, etc., sin cruces. Solo se usa TB/PB si dentro del mismo curso abres una segunda teoría (BT)."},
-            {"campo": "Cuarto guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) en cada NRC. En SFAREGS, Banner impedirá inscribir el teórico sin su práctica ligada."}
+            {"campo": "Indicador de sobrepaso (horario)", "valor": "O", "tipo": "Regla clave", "detalle": "Con el aula virtual SAUVIR / SALA-VIRT ponga siempre la letra O; sin ella Banner muestra «Conflicto de salón» (C97)."},
+            {"campo": "Ligas", "valor": "Después, en SSADETL", "tipo": "Siguiente diagrama", "detalle": "Las ligas TA ↔ PA del NRC teórico y su club se configuran en el diagrama 7 «Ligas: NRC teórico + club de conversación»."},
+            {"campo": "Cuarto guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). Mensaje superior Banner: ✓ Saved successfully (1 rows saved)."}
         ]
     },
     "s6": {
@@ -204,31 +203,33 @@ GUIA_CREAR_NRC_EMPRENDIMIENTO = {
         "instrucciones": [
             {"campo": "Pestaña Ingreso de sección", "valor": "Clic en pestaña 2", "tipo": "Navegación", "detalle": "Ir a «Información de ingreso de sección» (Enrollment Details)."},
             {"campo": "Máximo (Cupos del aula)", "valor": "40 (o aforo aula: 30, 35)", "tipo": "Obligatorio", "detalle": "Ingresar cantidad autorizada de vacantes para el NRC."},
+            {"campo": "Proyectado", "valor": "Igual al cupo", "tipo": "Obligatorio", "detalle": "Es obligatorio y debe llenarse antes de abrir «Lugares reservados» (C97)."},
             {"campo": "Segundo guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10) para fijar el cupo."}
         ]
     },
     "s4": {
-        "fase": "Paso 4: Horario, Aula y Docente",
+        "fase": "Paso 4: Lugares reservados",
         "pantalla": "SSASECT",
-        "hito": "Tercer guardado: Horario y Docente",
+        "hito": "Tercer guardado: reservas activas",
         "instrucciones": [
-            {"campo": "Pestaña Horario y reunión", "valor": "Clic en pestaña 3", "tipo": "Navegación", "detalle": "Ir a «Instructor y horas de reunión»."},
-            {"campo": "Horario (Días y Horas)", "valor": "Tipo CLAS | Formato 24h", "tipo": "Obligatorio", "detalle": "Definir días y horas de la sesión según cronograma de 10 semanas."},
-            {"campo": "Ubicación (Edificio y Aula)", "valor": "Edificio SAUVIR | Salón SALA VIRT.", "tipo": "Obligatorio", "detalle": "Usar aula virtual oficial SAUVIR."},
-            {"campo": "Consistencia de Sesión", "valor": "Indicador de sesión: 01", "tipo": "Regla Crítica", "detalle": "Indicador de sesión de Horario idéntico al de Instructor."},
-            {"campo": "Docente Asignado", "valor": "ID Docente | Principal ☑ | 100%", "tipo": "Obligatorio", "detalle": "ID activo en SIAINST con 100% responsabilidad."},
-            {"campo": "Tercer guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). NRC listo con horario y profesor."}
+            {"campo": "Subpestaña Lugares reservados", "valor": "SSASECT → Información de ingreso de sección", "tipo": "Navegación", "detalle": "La reserva se configura en SSASECT; SSARRES solo restringe quién puede matricularse (C66)."},
+            {"campo": "Regla nula", "valor": "Máximo reservado: 0", "tipo": "Regla base", "detalle": "Conserve la fila sin criterio."},
+            {"campo": "Regla del centro", "valor": "Nivel M o programa del centro", "tipo": "Obligatorio", "detalle": "Pulse + y agregue la fila con el criterio y el Máximo reservado del NRC."},
+            {"campo": "Tercer guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guarde las reglas de reserva antes de continuar con horario y docente."}
         ]
     },
     "s5": {
-        "fase": "Paso 5: Reserva de cupos (SSARRES)",
-        "pantalla": "SSARRES",
-        "hito": "Cuarto guardado: Reservas activas",
+        "fase": "Paso 5: Horario, aula y docente",
+        "pantalla": "SSASECT",
+        "hito": "Cuarto guardado: horario y docente",
         "instrucciones": [
-            {"campo": "Lugares Reservados", "valor": "Menú Relacionado → SSARRES", "tipo": "Navegación", "detalle": "Subpestaña «Lugares reservados» para blindar cupos."},
-            {"campo": "Regla Nula (Cupo General)", "valor": "Regla NULL | Cupo: 1", "tipo": "Mandatorio institucional", "detalle": "Asegura cupo general."},
-            {"campo": "Regla por Nivel M", "valor": "Nivel: M (Emprendimiento)", "tipo": "Condicional CCEE", "detalle": "Reserva de cupos para estudiantes del nivel M."},
-            {"campo": "Cuarto guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar reservas (F10)."}
+            {"campo": "Pestaña Horario y reunión", "valor": "Clic en pestaña 3", "tipo": "Navegación", "detalle": "Ir a «Instructor y horas de reunión»."},
+            {"campo": "Horario (Días y Horas)", "valor": "Tipo CLAS | Formato 24h", "tipo": "Obligatorio", "detalle": "Definir días y horas de la sesión según cronograma de 10 semanas."},
+            {"campo": "Ubicación (Edificio y Aula)", "valor": "Edificio SAUVIR | Salón SALA-VIRT", "tipo": "Obligatorio", "detalle": "Aula virtual oficial del campus S."},
+            {"campo": "Indicador de sobrepaso (horario)", "valor": "O", "tipo": "Regla clave", "detalle": "Con el aula virtual ponga siempre la letra O; sin ella Banner muestra «Conflicto de salón» (C97)."},
+            {"campo": "Consistencia de Sesión", "valor": "Indicador de sesión: 01", "tipo": "Regla Crítica", "detalle": "Indicador de sesión de Horario idéntico al de Instructor."},
+            {"campo": "Docente Asignado", "valor": "ID Docente | Principal ☑ | 100%", "tipo": "Obligatorio", "detalle": "ID activo en SIAINST con 100% responsabilidad."},
+            {"campo": "Cuarto guardado", "valor": "Botón «Guardar» (F10)", "tipo": "Hito Crítico", "detalle": "Guardar (F10). NRC listo con horario y profesor."}
         ]
     },
     "s6": {
@@ -241,6 +242,36 @@ GUIA_CREAR_NRC_EMPRENDIMIENTO = {
         ]
     }
 }
+
+# Diapositivas de los instructivos que acompañan cada paso de «Crear el NRC» (las mismas en los tres
+# centros). Se convierten con herramientas/diapositivas.py; la guía muestra el recorte y, al ampliar,
+# la diapositiva completa. «caja» cambia el recorte (izquierda, arriba, derecha, abajo) de una lámina.
+INSTRUCTIVOS = {
+    "5.3": {"id": "5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos",
+            "titulo": "Instructivo 5.3 · Registrar la oferta horaria de los cursos"},
+    "6.2.1": {"id": "6.2.1_Asignar_Docentes", "titulo": "Instructivo 6.2.1 · Asignar docentes"},
+}
+
+DIAPOSITIVAS_CREAR_NRC = {
+    "s1": [{"instructivo": "5.3", "n": 19, "texto": "Ingresar el periodo y pulsar «Crear NRC»"},
+           {"instructivo": "5.3", "n": 20, "texto": "El NRC queda en ADD hasta el primer guardado"}],
+    "s2": [{"instructivo": "5.3", "n": 21, "texto": "Materia, número de curso, sección, campus y estatus"},
+           {"instructivo": "5.3", "n": 22, "texto": "Tipo de horario, método educativo, modo de calificar y sesión"},
+           {"instructivo": "5.3", "n": 23, "texto": "Parte de periodo y horas crédito"},
+           {"instructivo": "5.3", "n": 24, "texto": "Calificable, horas de cobro, sin dispensa, y guardar"},
+           {"instructivo": "5.3", "n": 26, "texto": "Al guardar, Banner asigna el número de NRC"}],
+    "s3": [{"instructivo": "5.3", "n": 27, "texto": "Detalles de ingreso: cupo del NRC y guardar"}],
+    "s4": [{"instructivo": "5.3", "n": 28, "texto": "Lugares reservados: regla nula y regla por criterio"}],
+    "s5": [{"instructivo": "5.3", "n": 29, "texto": "Fechas de reunión: horas, días e indicador de sesión", "caja": [0.034, 0.118, 0.0, 0.0]},
+           {"instructivo": "5.3", "n": 30, "texto": "Créditos y ubicación: horas por semana calculadas"},
+           {"instructivo": "6.2.1", "n": 15, "texto": "Bloque Instructor: ID del docente"},
+           {"instructivo": "6.2.1", "n": 19, "texto": "Responsabilidad, docente principal, sobrepaso y porcentaje de sesión"},
+           {"instructivo": "6.2.1", "n": 20, "texto": "Conflicto de horario del docente: indicador de sobrepaso"}],
+}
+
+for _guia in (GUIA_CREAR_NRC_IDIOMAS, GUIA_CREAR_NRC_COMPUTACION, GUIA_CREAR_NRC_EMPRENDIMIENTO):
+    for _paso, _lista in DIAPOSITIVAS_CREAR_NRC.items():
+        _guia[_paso]["diapositivas"] = _lista
 
 # ===========================================================================
 # 2. LIGAS: TEÓRICO + CLUB DE CONVERSACIÓN (SSASECT / SSADETL / SFAREGS)

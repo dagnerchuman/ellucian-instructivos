@@ -803,6 +803,106 @@
     return { valor: raw, ejemplo: '-' };
   }
 
+  function renderDiapositivasHtml(info) {
+    var lista = (info && info.diapositivas) || [];
+    if (!lista.length) return '';
+    var fuentes = [];
+    lista.forEach(function (d) { if (fuentes.indexOf(d.fuente) === -1) fuentes.push(d.fuente); });
+    var html = '<section class="guia-diapos" aria-label="Diapositivas del instructivo para este paso">';
+    html += '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así se ve en Banner</span>';
+    html += '<span class="guia-diapos-fuente">' + escapeHtml(fuentes.join(' · ')) + '</span></div>';
+    html += '<div class="guia-diapos-grid">';
+    lista.forEach(function (d, i) {
+      html += '<button type="button" class="guia-diapo" data-diapo-idx="' + i + '" title="Ampliar: ' + escapeHtml(d.texto || ('Diapositiva ' + d.n)) + '">';
+      html += '<img loading="lazy" decoding="async" src="' + escapeHtml(d.src) + '" alt="' + escapeHtml(d.texto || ('Diapositiva ' + d.n)) + '">';
+      html += '<span class="guia-diapo-pie"><strong>Diap. ' + d.n + '</strong> ' + escapeHtml(d.texto || '') + '</span>';
+      html += '</button>';
+    });
+    html += '</div></section>';
+    return html;
+  }
+
+  // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
+  var visorDiapo = { lista: [], idx: 0, completa: false };
+
+  function asegurarVisorDiapo() {
+    var v = document.getElementById('guia-diapo-visor');
+    if (v) return v;
+    v = document.createElement('div');
+    v.id = 'guia-diapo-visor';
+    v.className = 'guia-diapo-visor';
+    v.hidden = true;
+    v.setAttribute('role', 'dialog');
+    v.setAttribute('aria-modal', 'true');
+    v.setAttribute('aria-label', 'Diapositiva ampliada');
+    v.innerHTML = '<div class="gdv-panel">' +
+      '<div class="gdv-barra"><span class="gdv-titulo"></span>' +
+      '<div class="gdv-acciones">' +
+      '<button type="button" class="gdv-btn" data-gdv="completa">Ver diapositiva completa</button>' +
+      '<a class="gdv-btn" data-gdv="visor" target="_blank" rel="noopener">Abrir en el visor</a>' +
+      '<button type="button" class="gdv-btn gdv-cerrar" data-gdv="cerrar" aria-label="Cerrar">✕</button>' +
+      '</div></div>' +
+      '<div class="gdv-lienzo"><button type="button" class="gdv-nav" data-gdv="ant" aria-label="Anterior">‹</button>' +
+      '<img class="gdv-img" alt=""><button type="button" class="gdv-nav" data-gdv="sig" aria-label="Siguiente">›</button></div>' +
+      '<div class="gdv-pie"></div></div>';
+    document.body.appendChild(v);
+    v.addEventListener('click', function (e) {
+      var accion = e.target.closest('[data-gdv]');
+      if (!accion) {
+        if (e.target === v) cerrarVisorDiapo();
+        return;
+      }
+      var tipo = accion.getAttribute('data-gdv');
+      if (tipo === 'visor') return;
+      e.preventDefault();
+      if (tipo === 'cerrar') cerrarVisorDiapo();
+      else if (tipo === 'ant') moverVisorDiapo(-1);
+      else if (tipo === 'sig') moverVisorDiapo(1);
+      else if (tipo === 'completa') { visorDiapo.completa = !visorDiapo.completa; pintarVisorDiapo(); }
+    });
+    return v;
+  }
+
+  function pintarVisorDiapo() {
+    var v = asegurarVisorDiapo();
+    var d = visorDiapo.lista[visorDiapo.idx];
+    if (!d) return;
+    v.querySelector('.gdv-img').src = visorDiapo.completa ? d.completa : d.src;
+    v.querySelector('.gdv-img').alt = d.texto || ('Diapositiva ' + d.n);
+    v.querySelector('.gdv-titulo').textContent = d.fuente + ' · diap. ' + d.n;
+    v.querySelector('.gdv-pie').textContent = (d.texto || '') + '  (' + (visorDiapo.idx + 1) + ' de ' + visorDiapo.lista.length + ')';
+    v.querySelector('[data-gdv="completa"]').textContent = visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa';
+    v.querySelector('[data-gdv="visor"]').href = d.visor;
+    v.querySelector('[data-gdv="ant"]').disabled = visorDiapo.idx === 0;
+    v.querySelector('[data-gdv="sig"]').disabled = visorDiapo.idx === visorDiapo.lista.length - 1;
+  }
+
+  function abrirVisorDiapo(lista, idx) {
+    visorDiapo = { lista: lista, idx: idx, completa: false };
+    var v = asegurarVisorDiapo();
+    pintarVisorDiapo();
+    v.hidden = false;
+    document.body.classList.add('gdv-abierto');
+  }
+
+  function moverVisorDiapo(paso) {
+    var nuevo = visorDiapo.idx + paso;
+    if (nuevo < 0 || nuevo >= visorDiapo.lista.length) return;
+    visorDiapo.idx = nuevo;
+    pintarVisorDiapo();
+  }
+
+  function cerrarVisorDiapo() {
+    var v = document.getElementById('guia-diapo-visor');
+    if (v) v.hidden = true;
+    document.body.classList.remove('gdv-abierto');
+  }
+
+  function visorDiapoAbierto() {
+    var v = document.getElementById('guia-diapo-visor');
+    return !!(v && !v.hidden);
+  }
+
   function renderGuiaHtml(info, nodeId) {
     if (!info) return '';
     var stepKeys = Object.keys(GUIA_MAP);
@@ -883,7 +983,7 @@
       html += '<button type="button" class="' + toggleBtnClass + '" data-toggle-todos="' + escapeHtml(nodeId) + '" title="' + toggleBtnTitle + '">' + toggleBtnTxt + '</button>';
     }
     if (info.hito) {
-      html += '<div class="guia-hito-badge">🎯 ' + escapeHtml(info.hito) + '</div>';
+      html += '<div class="guia-hito-badge">' + escapeHtml(info.hito) + '</div>';
     }
     html += '</div>';
     html += '</div>';
@@ -902,6 +1002,8 @@
       html += '</button>';
       html += '</div>';
     }
+
+    html += renderDiapositivasHtml(info);
 
     if (info.instrucciones && info.instrucciones.length > 0) {
       html += '<div class="guia-tabla-wrap"><table class="guia-tabla">';
@@ -1352,6 +1454,19 @@
         return;
       }
 
+      var btnDiapo = e.target.closest('[data-diapo-idx]');
+      if (btnDiapo) {
+        e.preventDefault();
+        e.stopPropagation();
+        var idFoco = document.getElementById('focus-id');
+        var pasoActual = (idFoco ? idFoco.textContent : '').trim();
+        var infoPaso = GUIA_MAP[pasoActual];
+        if (infoPaso && infoPaso.diapositivas) {
+          abrirVisorDiapo(infoPaso.diapositivas, parseInt(btnDiapo.getAttribute('data-diapo-idx'), 10) || 0);
+        }
+        return;
+      }
+
       var btnCheck = e.target.closest('[data-check-row]');
       if (btnCheck) {
         e.preventDefault();
@@ -1409,6 +1524,12 @@
 
     document.addEventListener('keydown', function (e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+      if (visorDiapoAbierto()) {
+        if (e.key === 'Escape') { e.preventDefault(); cerrarVisorDiapo(); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); moverVisorDiapo(1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); moverVisorDiapo(-1); }
+        return;
+      }
       if (e.key === 'Escape') {
         var chip = document.getElementById('focus-chip');
         if (chip) {

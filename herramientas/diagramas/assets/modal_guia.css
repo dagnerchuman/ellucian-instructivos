@@ -2959,6 +2959,10 @@ html:not([data-theme="dark"]) .gdv-pasos {
   color: #ffffff;
 }
 .gdv-hecho > span:last-child { opacity: 0.7; }
+/* Si la lámina numera algún campo, todas las filas usan la misma columna para alinear números y círculos. */
+.gdv-guia:has(.gdv-con-num) .gdv-item { grid-template-columns: 1.6rem 1fr; }
+.gdv-guia:has(.gdv-con-num) .gdv-marca { justify-self: center; }
+.gdv-ok { color: #8b5cf6; font-weight: 700; }
 .gdv-aviso {
   margin: 0.55rem 0 0;
   font-size: 0.7rem;

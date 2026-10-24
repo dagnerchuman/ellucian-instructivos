@@ -162,8 +162,12 @@ def _textos_presentacion(id_):
                 auto = ppr.find(qn("a:buAutoNum")) if ppr is not None else None
                 if auto is not None:
                     contador = (contador + 1) if contador is not None else int(auto.get("startAt", "1"))
+                num = str(contador) if auto is not None else ""
+                escrito = re.match(r"^(\d{1,2})[.)]\s*(\S.*)$", texto)
+                if not num and escrito:  # número escrito a mano en la lámina («20.Guardar la información»)
+                    num, texto = escrito.group(1), escrito.group(2)
                 if texto:
-                    parrafos.append({"num": str(contador) if auto is not None else "", "texto": texto, "nivel": p.level})
+                    parrafos.append({"num": num, "texto": texto, "nivel": p.level})
         por_lamina.append(parrafos)
     # Lo que aparece en muchas láminas es diseño (banda lateral, pie, logo): se descarta.
     frecuencia = Counter(p["texto"] for ps in por_lamina for p in {x["texto"]: x for x in ps}.values())

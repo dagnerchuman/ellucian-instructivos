@@ -897,14 +897,24 @@
     var filas = (info && info.instrucciones) || [];
     if (filas.length) {
       var checks = (window.__guiaChecks && window.__guiaChecks[paso]) || {};
-      // Sin números: los números verdes de la imagen son los del instructivo y no deben confundirse con la guía.
+      // Las filas cuyo campo es un paso numerado de la lámina llevan el mismo número verde de la imagen;
+      // las demás, un círculo, para no inventar una numeración que la imagen no tiene.
+      var marcas = d.marcas || {};
+      var hayMarcas = Object.keys(marcas).length > 0;
       html += '<section class="gdv-bloque"><h4>Su guía · ' + escapeHtml((info.fase || '').replace(/^Paso\s*\d+:\s*/i, '')) + '</h4><ul class="gdv-lista gdv-guia">';
       filas.forEach(function (f, i) {
         var hecho = !!checks[i];
-        html += '<li class="gdv-item' + (hecho ? ' gdv-hecho' : '') + '"><span class="gdv-marca" aria-label="' + (hecho ? 'Validado' : 'Pendiente') + '">' + (hecho ? '✓' : '') + '</span>' +
-          '<span><strong>' + escapeHtml(f.campo || '') + '</strong>' + (f.valor ? ': ' + escapeHtml(f.valor) : '') + '</span></li>';
+        var num = marcas[String(i)];
+        var marca = num
+          ? '<span class="gdv-badge" title="Número ' + escapeHtml(num) + ' en la imagen">' + escapeHtml(num) + '</span>'
+          : '<span class="gdv-marca">' + (hecho ? '✓' : '') + '</span>';
+        html += '<li class="gdv-item' + (num ? ' gdv-con-num' : '') + (hecho ? ' gdv-hecho' : '') + '">' + marca +
+          '<span><strong>' + escapeHtml(f.campo || '') + '</strong>' + (f.valor ? ': ' + escapeHtml(f.valor) : '') +
+          (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + '</span></li>';
       });
-      html += '</ul><p class="gdv-aviso">Los números verdes de la imagen son los del instructivo.</p></section>';
+      html += '</ul><p class="gdv-aviso">' + (hayMarcas
+        ? 'Los números verdes son los mismos de la imagen. Las filas con círculo no tienen número en esta diapositiva.'
+        : 'Esta diapositiva no numera los campos de su guía.') + '</p></section>';
     }
 
     // El texto ya se lee en la imagen: queda plegado y solo se abre si se pide.

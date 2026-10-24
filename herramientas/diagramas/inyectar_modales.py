@@ -341,6 +341,58 @@ RAIZ_REPO = Path(__file__).resolve().parents[2]
 VISOR = RAIZ_REPO / "visor_instructivos" / "index.html"
 
 
+def _sin_tildes(texto):
+    import unicodedata
+    return unicodedata.normalize("NFKD", texto).encode("ascii", "ignore").decode().lower()
+
+
+GENERICAS = {"horario", "formulario", "docente", "ubicacion", "pestana", "consulta"}
+COMILLAS = r"[\'‘’\"“”«»]([^\'‘’\"“”«»]{3,60})[\'‘’\"“”«»]"
+
+
+def _claves_fila(fila):
+    """Frases de una fila de la guía que pueden aparecer en el texto de la lámina."""
+    campo = _sin_tildes(re.sub(r"\s*\(.*?\)", "", fila.get("campo", "")).strip())
+    claves = [campo] if len(campo) >= 4 and campo not in GENERICAS else []
+    claves += [_sin_tildes(c) for c in re.findall(r"«([^»]{4,})»", fila.get("valor", ""))]
+    if "guardado" in campo:
+        claves.append("guard")  # «Guardar la información», «Guarde la información»
+    return claves
+
+
+def _puntaje(clave, linea):
+    """3: la lámina la nombra entre comillas · 2: al inicio del paso · 1: más adelante · 0: no aparece."""
+    texto = _sin_tildes(linea["texto"])
+    pos = texto.find(clave)
+    if pos == -1:
+        return 0
+    if any(clave == _sin_tildes(c).strip() for c in re.findall(COMILLAS, linea["texto"])):
+        return 3
+    return 2 if pos < 40 else 1
+
+
+def _marcas(filas, lineas, sin_marca=()):
+    """{índice de fila: número de la lámina} cuando el campo de la guía es el de un paso numerado."""
+    marcas = {}
+    numeradas = [l for l in lineas if l["num"]]
+    for i, fila in enumerate(filas):
+        if fila.get("campo") in sin_marca:
+            continue
+        mejor = (0, None)
+        usados = set(marcas.values())
+        for clave in _claves_fila(fila):
+            for linea in numeradas:
+                p = _puntaje(clave, linea)
+                if not (p >= 2 or len(clave) >= 14):
+                    continue
+                # A igual puntaje gana el paso que ninguna otra fila tomó todavía.
+                if p > mejor[0] or (p == mejor[0] and mejor[1] in usados and linea["num"] not in usados):
+                    mejor = (p, linea["num"])
+        if mejor[1]:
+            marcas[str(i)] = mejor[1]
+    return marcas
+
+
 def _resolver_diapositivas(guia, carpeta_html, slug):
     """Cambia {"instructivo", "n"} por rutas relativas al HTML (recorte, completa y visor)."""
     for paso, info in guia.items():
@@ -362,6 +414,7 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
                 "fuente": inst["titulo"], "n": d["n"], "texto": d.get("texto", ""),
                 "lineas": [{"num": x["num"], "texto": x["texto"]} for x in diapositivas.texto_diapositiva(inst["id"], d["n"])],
             })
+            resueltas[-1]["marcas"] = _marcas(info.get("instrucciones") or [], resueltas[-1]["lineas"], d.get("sin_marca", ()))
         info["diapositivas"] = resueltas
 
 

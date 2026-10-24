@@ -246,6 +246,8 @@ GUIA_CREAR_NRC_EMPRENDIMIENTO = {
 # Diapositivas de los instructivos que acompañan cada paso de «Crear el NRC» (las mismas en los tres
 # centros). Se convierten con herramientas/diapositivas.py; la guía muestra el recorte y, al ampliar,
 # la diapositiva completa. «caja» cambia el recorte (izquierda, arriba, derecha, abajo) de una lámina.
+# Las filas de la guía cuyo campo es un paso numerado de la lámina llevan ese número (inyectar_modales._marcas);
+# «sin_marca» evita un número cuando el campo se llama igual pero es otro (por ejemplo, otro bloque).
 INSTRUCTIVOS = {
     "5.3": {"id": "5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos",
             "titulo": "Instructivo 5.3 · Registrar la oferta horaria de los cursos"},
@@ -265,7 +267,9 @@ DIAPOSITIVAS_CREAR_NRC = {
     "s5": [{"instructivo": "5.3", "n": 29, "texto": "Fechas de reunión: horas, días e indicador de sesión", "caja": [0.034, 0.118, 0.0, 0.0]},
            {"instructivo": "5.3", "n": 30, "texto": "Créditos y ubicación: horas por semana calculadas"},
            {"instructivo": "6.2.1", "n": 15, "texto": "Bloque Instructor: ID del docente"},
-           {"instructivo": "6.2.1", "n": 19, "texto": "Responsabilidad, docente principal, sobrepaso y porcentaje de sesión"},
+           {"instructivo": "6.2.1", "n": 19, "texto": "Responsabilidad, docente principal, sobrepaso y porcentaje de sesión",
+            # El 4 de la lámina es el sobrepaso del docente; la fila de la guía es el del horario (aula virtual).
+            "sin_marca": ["Indicador de sobrepaso (horario)"]},
            {"instructivo": "6.2.1", "n": 20, "texto": "Conflicto de horario del docente: indicador de sobrepaso"}],
 }
 

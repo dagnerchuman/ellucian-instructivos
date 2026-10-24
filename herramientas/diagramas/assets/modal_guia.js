@@ -853,6 +853,9 @@
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
+    v.addEventListener('toggle', function (e) {
+      if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
+    }, true);
     v.addEventListener('click', function (e) {
       var accion = e.target.closest('[data-gdv]');
       if (!accion) {
@@ -887,23 +890,7 @@
   }
 
   function pasosVisorDiapoHtml(d) {
-    var html = '<section class="gdv-bloque"><h4>En esta diapositiva</h4>';
-    var lineas = d.lineas || [];
-    if (lineas.length) {
-      html += '<ol class="gdv-lista">';
-      lineas.forEach(function (l) {
-        if (l.num) {
-          html += '<li class="gdv-num"><span class="gdv-badge">' + escapeHtml(l.num) + '</span><span>' + escapeHtml(l.texto) + '</span></li>';
-        } else {
-          html += '<li class="gdv-nota">' + escapeHtml(l.texto) + '</li>';
-        }
-      });
-      html += '</ol>';
-    } else {
-      html += '<p class="gdv-vacio">' + escapeHtml(d.texto || 'Sin texto en la diapositiva.') + '</p>';
-    }
-    html += '</section>';
-
+    var html = '';
     var idFoco = document.getElementById('focus-id');
     var paso = (idFoco ? idFoco.textContent : '').trim();
     var info = GUIA_MAP[paso];
@@ -918,11 +905,26 @@
       });
       html += '</ol></section>';
     }
+
+    // El texto ya se lee en la imagen: queda plegado y solo se abre si se pide.
+    var lineas = d.lineas || [];
+    if (lineas.length) {
+      html += '<details class="gdv-bloque gdv-texto"' + (visorDiapo.textoAbierto ? ' open' : '') + '>';
+      html += '<summary>Ver el texto de la diapositiva</summary><ol class="gdv-lista">';
+      lineas.forEach(function (l) {
+        if (l.num) {
+          html += '<li class="gdv-num"><span class="gdv-badge">' + escapeHtml(l.num) + '</span><span>' + escapeHtml(l.texto) + '</span></li>';
+        } else {
+          html += '<li class="gdv-nota">' + escapeHtml(l.texto) + '</li>';
+        }
+      });
+      html += '</ol></details>';
+    }
     return html;
   }
 
   function abrirVisorDiapo(lista, idx) {
-    visorDiapo = { lista: lista, idx: idx, completa: false };
+    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;

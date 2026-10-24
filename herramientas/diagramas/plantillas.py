@@ -72,6 +72,7 @@ CITAS = {
     "convalidacion": "Convalidación y homologación: capacidad 3.3.1, diap. 33 a 36 (SHATRNS) y diap. 47 a 56 (SHATFAC)",
     "egreso": "Requisito de egreso de Pregrado: instructivo 8, diap. 13",
     "ligas": "Ligas: instructivo 5.3_4.1.4.1.9 Crear Ligas, diap. 9 a 24; verificación «Ligas» en SOATERM: 5.4_4.1.4.1.12, diap. 15",
+    "solicitudes": "Solicitudes de servicio: instructivo 4.3.2, diap. 10 a 15 (Autoservicio) y 17 a 21 (SVASVPR); servicios en 4.3.1",
 }
 
 LEYENDA_FLUJO = {
@@ -636,6 +637,16 @@ CASOS = {
             ("SSASECT", "alerta de conflicto", "alerta cruce horario instructor"),
             ("SSASECT", "crear sobrepaso", "Indicador de sobrepaso docente")],
            ("Conflicto resuelto", "docente con sobrepaso"), "nrc"),
+    "14": (("Fin del curso", "el NRC terminó sus clases"),
+           [("SFASLST", "revisar notas finales", "todos los alumnos con nota"),
+            ("GJAPCTL", "pase a historia", "proceso SHRROLL"),
+            ("SFASLST", "verificar «Pasada»", "nota ya en la historia")],
+           ("NRC cerrado", "notas en la historia"), "cierre"),
+    "18-C": (("Solicitud o queja", "el alumno pide un servicio"),
+             [("Autoservicio", "crear la solicitud", "servicio CER (no hay de queja)"),
+              ("SVASVPR", "buscar la solicitud", "número, servicio y estatus"),
+              ("SVASVPR", "atender y responder", "estatus y comentarios")],
+             ("Solicitud atendida", "queja: falta su servicio (U14)"), "solicitudes"),
     "19": (("Asistencia y notas", "preparar el libro del NRC"),
            [("SHAEGBC", "calendario del periodo", "202656 · fechas autorizadas"),
             ("SHAGCOM", "asignar ATTRGRD", "NRC 10026 · ESEC 00697 · X06")],
@@ -872,6 +883,24 @@ EXTRA_CASOS = {
             "Paso 05 (SIAASGN): Auditoría de Carga — Verificación de horas simultáneas asignadas al docente sin duplicidad de FTE.",
         ],
     },
+    "14": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Capacidad 7.1 · Instructivos 7.1.6 y 7.1.9)",
+        "items": [
+            "Paso 01 (SFASLST): Notas completas — Periodo y NRC; todos los alumnos del NRC deben tener su calificación final antes del cierre (7.1.6, diap. 15–16).",
+            "Paso 02 (GJAPCTL): Pase a historia — Proceso SHRROLL con sus parámetros y la opción Enviar (7.1.9, diap. 22–27). En Computación se validó junto con el Script 12.",
+            "Paso 03 (SFASLST): Verificación final — La casilla «Pasada» marcada indica que la nota ya está en la historia académica (7.1.6, diap. 16). El script también pide pasar el estatus de la sección a cerrado en SSASECT; eso no se ha probado en TEST.",
+        ],
+    },
+    "18-C": {
+        "dot": "violet",
+        "title": "Guía Operativa Paso a Paso (Capacidad 4.3 · Instructivo 4.3.2)",
+        "items": [
+            "Paso 01 (Autoservicio): Solicitud del alumno — El alumno elige la categoría y el servicio y pulsa Continuar (4.3.2, diap. 10). En TEST no hay servicio de queja (U14); el mecanismo se probó con CER (Certificado).",
+            "Paso 02 (SVASVPR): Búsqueda — Ingrese al menos un criterio (ID, servicio, estatus) para ver las solicitudes; el número es el mismo que ve el alumno (4.3.2, diap. 17–18).",
+            "Paso 03 (SVASVPR): Atención — Actualice el estatus según avance el servicio y registre el comentario interno y el comentario de respuesta (4.3.2, diap. 19–20). SVASVPR no deja crear la solicitud («Función inválida»): la crea el alumno.",
+        ],
+    },
     "19": {
         "dot": "violet",
         "title": "Script 19 · Configurar calificaciones y asistencia (TEST)",
@@ -886,8 +915,64 @@ EXTRA_CASOS = {
 }
 
 
+# Datos de las pruebas de Computación en TEST (alumnos, NRC, programa, jobs, docente). En otro centro
+# no se muestran como propios: la etiqueta del paso se quita y la guía los presenta como referencia.
+RE_DATO_COMPUTACION = re.compile(
+    r"S005\d{5}|\b10[0-2]\d\b|CMEMC\d+|\bJob \d+|IST150|\bESEC\b|100582059|FTE 0\.|h/sem|L-M \d")
+# La escala de Computación (vigesimal, modo V, aprueba con 11) solo vale donde la escala es la misma.
+RE_ESCALA_V = re.compile(r"vigesimal|[Mm]odo V\b|≥ ?11\b|m[ií]nima 11\b|\(\d\d V\)")
+# Casos que en ese centro son otra cosa: no llevan la guía de Computación.
+CASO_PROPIO = {("idiomas", "02"), ("idiomas", "05"), ("idiomas", "10")}
+
+
+def escala_de(c):
+    """(modo, nota aprobatoria) del centro, de datos.json › escala_calificacion."""
+    e = c.d.get("escala_calificacion") or {}
+    return e.get("modo") or "por confirmar", e.get("aprobatoria") or "por confirmar"
+
+
+def es_de_computacion(c, texto):
+    """True si el texto trae datos de las pruebas de Computación que no son de este centro."""
+    if c.id == "computacion" or not texto:
+        return False
+    return bool(RE_DATO_COMPUTACION.search(texto) or (escala_de(c) != ("V", 11) and RE_ESCALA_V.search(texto)))
+
+
+def _etiqueta_del_centro(c, etiqueta):
+    """La etiqueta de un paso; None si en este centro sería un dato de las pruebas de Computación."""
+    return None if es_de_computacion(c, etiqueta) else etiqueta
+
+
 def caso(c, id_script):
     """Situación, pasos y resultado de un script, con los ajustes de cada centro."""
+    sit, pasos, res, cita = _caso(c, id_script)
+    pasos = [(p[0], p[1]) + ((et,) if (et := _etiqueta_del_centro(c, p[2] if len(p) > 2 else None)) else ())
+             for p in pasos]
+    return sit, pasos, res, cita
+
+
+def referencia_computacion(c, id_script, extra):
+    """La guía de Excel del script para este centro: en otro centro se presenta como referencia de Computación."""
+    if not extra or (c.id, id_script) in CASO_PROPIO:
+        return None
+    if id_script == "11-B":  # guía de los instructivos: solo cambia la escala del ejemplo
+        modo, aprobatoria = escala_de(c)
+        return {**extra, "items": [i.replace("(Modo V, 11)", f"(Modo {modo}, {aprobatoria})") for i in extra["items"]]}
+    if not any(es_de_computacion(c, item) for item in extra.get("items", [])):
+        return extra
+    estado = Centro("computacion").script(id_script)["estado"]
+    titulo = ("Referencia: así se probó en Computación (TEST)" if estado == "validado"
+              else "Referencia: guía preparada para Computación")
+    return {**extra, "title": titulo}
+
+
+def _caso(c, id_script):
+    if c.id == "idiomas" and id_script == "02":
+        return (("Sin prerrequisito", "no aprobó el nivel anterior"),
+                [("SFAROVR", "regla de sobrepaso", "sobrepaso de prerrequisito"),
+                 ("SFASRPO", "permiso al alumno", "quién lo autoriza: U10"),
+                 ("SFAREGS", "matrícula con permiso", "código RE")],
+                ("Inscrito con sobrepaso", "prerrequisito sobrepasado"), "matricula")
     if c.id == "idiomas" and id_script == "05":
         return (("Egresado", "no lleva el curso regular"),
                 [("Plataforma", "activar y rendir en plataforma", "instrucción intensiva"),
@@ -925,8 +1010,13 @@ def caso(c, id_script):
                  ("SMAPROG", "malla del programa", f"Área {area} · regla CAPP")],
                 ("Malla aprobada", "lista para admisión y CAPP"), "mallas")
     sit, pasos, res, cita = CASOS[id_script]
-    if id_script == "13" and c.d["escala"]:
-        res = (res[0], f"aprueba con {c.d['escala']['nota_minima']}")
+    modo, aprobatoria = escala_de(c)
+    if id_script == "13":
+        tipo = (c.d.get("escala_calificacion") or {}).get("tipo", "del centro").lower()
+        pasos = [("SHAGRDE", f"escala {tipo}", f"modo {modo} · nota mínima {aprobatoria}")] + pasos[1:]
+        res = (res[0], f"aprueba con {aprobatoria}")
+    if id_script == "19":
+        res = (res[0], f"nota ≥{aprobatoria} · asistencia ≥{c.comun['asistencia_minima_porcentaje']['valor']}%")
     return sit, pasos, res, cita
 
 
@@ -942,9 +1032,10 @@ def casuistica(c, numero, id_script):
         tipo = {"SHRROLL": "messagebus", "SSASECQ": "database", "SMARQCM": "database", "Plataforma": "external"}.get(codigo, "backend")
         nodos.append(paso(f"c{j}", "caso", j, codigo, accion, dato=tag, tipo=tipo, ancho=170))
     nodos.append(paso("cr", "caso", len(pasos) + 1, res, res_sub, ESTADO_TEXTO[s["estado"]], "database", "success", ancho=170))
-    probado = [s["evidencia"]] if s["estado"] == "validado" else [f"{ESTADO_TEXTO[s['estado']].capitalize()}: {s['evidencia']}"]
+    estado = ESTADO_TEXTO[s["estado"]]
+    probado = [s["evidencia"]] if s["estado"] == "validado" else [f"{estado[:1].upper()}{estado[1:]}: {s['evidencia']}"]
     lane_label = f"{cap} · Situación → pasos → resultado" if cap else "Situación → pasos → resultado"
-    extra = EXTRA_CASOS.get(id_script)
+    extra = referencia_computacion(c, id_script, EXTRA_CASOS.get(id_script))
     if extra:
         extra = extra if isinstance(extra, list) else [extra]
     return flujo(
@@ -970,9 +1061,11 @@ def guia_casuistica_de(id_centro, sid):
     if id_script not in CASOS:
         return {}
     (sit, sit_sub), pasos, (res, res_sub), _ = caso(c, id_script)
-    extra = EXTRA_CASOS.get(id_script) or {}
+    extra = referencia_computacion(c, id_script, EXTRA_CASOS.get(id_script)) or {}
     items = extra.get("items", []) if isinstance(extra, dict) else (extra if isinstance(extra, list) else [extra])
     titulo = f"Script {id_script} · {TITULOS.get(slug_script(id_script), id_script)}"
+    if extra and extra is not EXTRA_CASOS.get(id_script):
+        titulo += " · referencia: prueba de Computación"
     return construir_guia((sit, sit_sub), pasos, (res, res_sub), items, titulo)
 
 

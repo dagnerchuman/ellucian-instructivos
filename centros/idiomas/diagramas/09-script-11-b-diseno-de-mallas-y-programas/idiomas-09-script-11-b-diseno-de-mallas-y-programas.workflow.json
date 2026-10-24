@@ -599,7 +599,7 @@
         "Paso 02 (SMAPRLE): Definición de Programa — Código del programa (12 caracteres), nivel académico, grado 000000 y escuela EM.",
         "Paso 03 (SOACURR): Regla Curricular — Vinculación del programa con Campus S, periodo de inicio, Major de STVMAJR y departamento institucional.",
         "Paso 04 (SMAALIB): Biblioteca de Áreas — Definición del código de área curricular con casilla Cumplimiento activada para auditoría CAPP.",
-        "Paso 05 (SMAAREA): Requerimientos de Área — Reglas de asignaturas del catálogo (SCACRSE), condiciones y nota mínima aprobatoria (Modo V, 11).",
+        "Paso 05 (SMAAREA): Requerimientos de Área — Reglas de asignaturas del catálogo (SCACRSE), condiciones y nota mínima aprobatoria (Modo C, 70).",
         "Paso 06 (SMAPROG): Malla Oficial del Programa — Requerimientos generales, créditos totales requeridos y anexo formal de áreas curriculares."
       ]
     },

@@ -11,7 +11,7 @@
 |---|---|
 | `generar.py` | Orquesta todo: escribe la especificación, la valida y compila con `archify finalize`, exporta las imágenes y arma los índices |
 | `generar_conocimiento_asistente.py` | Genera el índice local del asistente desde el registro, datos de los centros, referencias operativas y ADR aceptados; no usa red ni contiene claves |
-| `plantillas.py` | Los 14 diagramas por centro (6 flujos y una casuística por diagrama) y el comparativo. Reglas: un solo flujo, un código por paso y el glosario `TERMINOS` |
+| `plantillas.py` | Los diagramas de cada centro (6 flujos base, ligas si las hay y un diagrama por cada script que aplica) y el comparativo. Reglas: un solo flujo, un código por paso y el glosario `TERMINOS` |
 | `centro.py` | Lee `datos.json` y arma los textos cortos. Un `null` se muestra como «por confirmar» |
 | `indices.py` | `centros/README.md`, `centros/index.html` y la ficha `README.md` de cada centro |
 | `exportar.mjs` | Usa el menú «Exportar» del HTML (Playwright y Chromium) para sacar el PNG claro, el PNG oscuro y el SVG |

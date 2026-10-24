@@ -10,7 +10,7 @@ description: Arquitectura específica del Centro de Computación (Informática) 
 >
 > **Carpeta del centro:** `centros/computacion/`
 > - `datos.json` es la **fuente única** de los datos de esta página (códigos, grupos, NRC, personas de TEST, estado de los scripts y dudas). Si un dato cambia, cámbialo allí y en esta skill, y regenera los diagramas.
-> - `diagramas/` tiene los flujos paso a paso en HTML interactivo, PNG claro y oscuro, y SVG: seis flujos base y una casuística por diagrama. Ver la skill `workflow-diagramas-archify`.
+> - `diagramas/` tiene 27 flujos paso a paso en HTML interactivo, PNG claro y oscuro, y SVG: seis flujos base y los 21 scripts que aplican (el 04 no aplica, C36). Ver la skill `workflow-diagramas-archify`.
 
 ## Identificadores en Banner
 

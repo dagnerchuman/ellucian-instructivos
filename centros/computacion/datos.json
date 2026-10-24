@@ -350,23 +350,31 @@
     }
   ],
   "casuisticas": {
-    "_leeme": "Scripts con diagrama propio (del n.º 7 u 8 en adelante), agrupados por fase del proceso y en el orden en que ocurren: abrir el periodo, matrícula, notas y cierre.",
+    "_leeme": "Cada script que aplica al centro tiene diagrama propio (del n.º 7 u 8 en adelante), agrupado por fase del proceso y en el orden en que ocurre: abrir el periodo, matrícula, notas y cierre. Quedan fuera los scripts «no aplica» o «por definir».",
     "periodo": [
       "11",
-      "11-B"
+      "11-B",
+      "17",
+      "18-A"
     ],
     "matricula": [
+      "01",
       "03",
+      "05",
       "06",
+      "07",
       "02",
       "15",
       "18-B",
       "16",
       "08",
-      "09"
+      "09",
+      "18-C"
     ],
     "notas": [
       "19",
+      "13",
+      "14",
       "10",
       "12"
     ]

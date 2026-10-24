@@ -20,6 +20,7 @@ INSTRUCTIVOS = {
     "3.2.1": {"id": "3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n", "titulo": "Instructivo 3.2.1 · Crear solicitudes de admisión"},
     "3.2.2": {"id": "3.2.2_Procedimiento_Validar_los_requisitos_de_admisio_n", "titulo": "Instructivo 3.2.2 · Validar los requisitos de admisión"},
     "3.3.1": {"id": "3.3.1_Gestionar_homologacio_n_y_convalidacio_n", "titulo": "Instructivo 3.3.1 · Gestionar homologación y convalidación"},
+    "4.3.2": {"id": "4.3.2_Gestionar_las_solicitudes_de_servicios", "titulo": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios"},
     "4.1.1": {"id": "4.1.1_Actualizar_estado_del_estudiante", "titulo": "Instructivo 4.1.1 · Actualizar el estado del estudiante"},
     "5.1.1": {"id": "5.1.1_Instructivo_-_Gestionar_persona_natural_V2", "titulo": "Instructivo 5.1.1 · Gestionar persona natural"},
     "5.2-docentes": {"id": "5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes", "titulo": "Instructivo 5.2 · Información de docentes"},
@@ -110,6 +111,16 @@ TEMAS = {
     # Ligas
     "scacrse_ligas": _l("5.3-ligas", (11, "Premisa: el curso tiene más de un tipo de horario en SCACRSE"),
                         (12, "Premisa: horas crédito del NRC teórico")),
+    "ssasect_sobrepaso_docente": _l("6.2.1", (19, "Indicador de sobrepaso del docente"),
+                                    (20, "Conflicto de horario del docente: indicador de sobrepaso")),
+    # Solicitudes de servicio (Script 18-C)
+    "solicitud_autoservicio": _l("4.3.2", (10, "Autoservicio: el alumno elige la categoría y el servicio"),
+                                 (11, "Autoservicio: datos adicionales del servicio"),
+                                 (12, "Autoservicio: el alumno consulta su solicitud")),
+    "svasvpr_buscar": _l("4.3.2", (17, "SVASVPR: criterios para buscar las solicitudes"),
+                         (18, "SVASVPR: lista de solicitudes con su número y estatus")),
+    "svasvpr_atender": _l("4.3.2", (19, "SVASVPR: detalle y estatus de la solicitud"),
+                          (20, "SVASVPR: comentarios interno y de respuesta")),
     "ssasect_liga": _l("5.3-ligas", (14, "SSASECT: nombre de la liga del NRC"), (15, "SSASECT: identificador de liga")),
     "ssadetl": _l("5.3-ligas", (16, "SSADETL: liga que se valida al inscribir"), (17, "SSADETL: conector de la liga"),
                   (18, "SSADETL: guardar la liga")),
@@ -153,8 +164,8 @@ CREAR_NRC = {
              (26, "Al guardar, Banner asigna el número de NRC")),
     "s3": _l("5.3", (27, "Detalles de ingreso: cupo del NRC y guardar")),
     "s4": _l("5.3", (28, "Lugares reservados: regla nula y regla por criterio")),
-    "s5": [{"instructivo": "5.3", "n": 29, "texto": "Fechas de reunión: horas, días e indicador de sesión", "caja": [0.034, 0.118, 0.0, 0.0]}] +
-          _l("5.3", (30, "Créditos y ubicación: horas por semana calculadas")) +
+    "s5": _l("5.3", (29, "Fechas de reunión: horas, días e indicador de sesión"),
+             (30, "Créditos y ubicación: horas por semana calculadas")) +
           _l("6.2.1", (15, "Bloque Instructor: ID del docente")) +
           [{"instructivo": "6.2.1", "n": 19, "texto": "Responsabilidad, docente principal, sobrepaso y porcentaje de sesión",
             # El 4 de la lámina es el sobrepaso del docente; la fila de la guía es el del horario (aula virtual).
@@ -182,19 +193,22 @@ REGLAS = [
     ("SFAREGS", r"permiso|sobrepaso", "sfaregs_sobrepaso"),
     ("SFAREGS", r"bloque|saturaci|error|fatal|intento", "sfaregs_error"),
     ("SFAREGS", r".", "sfaregs_inscribir"),
+    ("SSASECT", r"sobrepaso", "ssasect_sobrepaso_docente"),
     ("SSASECT", r"horario|conflicto|asignar a secci", "ssasect_horario"),
     ("SSASECT", r"especial|crear", "ssasect_crear"),
     ("SSASECT", r".", "ssasect_cupo"),
     ("SGASTDN", r"curr[ií]cula|programa|nivel|triple|doble|expediente", "sgastdn_doble"),
     ("SGASTDN", r".", "sgastdn"),
     ("SHAGCOM", r"attrgrd", "shagcom_attrgrd"),
-    ("TSAAREV", r".", "tsaarev"), ("SFASLST", r".", "sfaslst"), ("GJAPCTL", r".", "shrroll"),
+    ("TSAAREV", r".", "tsaarev"), ("SFASLST", r".", "sfaslst"), ("GJAPCTL", r".", "shrroll"), ("SHRROLL", r".", "shrroll"),
     ("SHAGRDE", r".", "shagrde"), ("SHAEGBC", r".", "shaegbc"), ("SHAGCOM", r".", "shagcom"),
     ("STVTERM", r".", "periodo"), ("STVPTRM", r".", "partes"), ("SOATERM", r".", "soaterm"), ("SIATERM", r".", "siaterm"),
     ("STVMAJR", r".", "stvmajr"), ("SMAPRLE", r".", "smaprle"), ("SOACURR", r".", "soacurr"), ("SMAPROG", r".", "smaprog"),
     ("SHATRNS", r".", "shatrns"), ("SOAHOLD", r".", "soahold"), ("SMARQCM", r".", "smarqcm"), ("SMICRLT", r".", "smicrlt"),
     ("SOATEST", r".", "soatest"), ("SCAPREQ", r".", "scapreq"), ("SFAROVR", r".", "sfarovr"), ("SFASRPO", r".", "sfasrpo"),
     ("SIAASGN", r".", "siaasgn"), ("SIAINST", r".", "siainst"),
+    ("AUTOSERVICIO", r"solicitud", "solicitud_autoservicio"),
+    ("SVASVPR", r"buscar", "svasvpr_buscar"), ("SVASVPR", r".", "svasvpr_atender"),
 ]
 
 
@@ -207,7 +221,7 @@ def para(slug, paso, info):
     if not slug.startswith("script-"):
         return []
     pantalla = (info.get("pantalla") or "").split()[0].upper() if info.get("pantalla") else ""
-    fase = (info.get("fase", "") + " " + info.get("hito", "")).lower()
+    fase = ((info.get("fase") or "") + " " + (info.get("hito") or "")).lower()
     for codigo, patron, tema in REGLAS:
         if pantalla == codigo and re.search(patron, fase):
             return list(TEMAS[tema])

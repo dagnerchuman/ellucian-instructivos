@@ -38,7 +38,9 @@ Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salid
 | 5 | Matrícula en el NRC (SSASECQ → SFAREGS → TSAAREV → SFASLST) | workflow |
 | 6 | Notas y pase a historia, flujo probado con el NRC 10044 (SHAEGBC → SHAGCOM → SOAATRK → Autoservicio: pasar lista → Autoservicio: notas → SFASLST → SHRROLL). Los datos de la prueba salen de `datos.json › flujo_notas_test` | workflow |
 | 7 | Solo si el centro tiene `ligas` en `datos.json` (hoy, Idiomas): Ligas, NRC teórico + club (SCACRSE → SSASECT ×2 → SSADETL → SFAREGS) | workflow |
-| 7 u 8+ | Una casuística por diagrama, agrupadas por fase y en el orden del proceso: `datos.json › casuisticas` tiene `periodo`, `matricula` y `notas` | workflow |
+| 7 u 8+ | Un script por diagrama: **todos los que aplican al centro** (no van los «no aplica» ni los «por definir»), agrupados por fase y en el orden del proceso: `datos.json › casuisticas` tiene `periodo`, `matricula` y `notas` (C113) | workflow |
+
+**Datos de Computación en otros centros (C113):** las plantillas de los scripts (`CASOS`, `EXTRA_CASOS`) traen los datos con que se probó en Computación. En Idiomas y Emprendimiento, `plantillas.caso()` quita la etiqueta del paso si trae un dato de esas pruebas (`RE_DATO_COMPUTACION`: alumnos S005…, NRC 10xx, CMEMC…, jobs, docente) o la escala vigesimal donde la escala es otra (`RE_ESCALA_V`), y la guía de Excel se muestra como «Referencia: así se probó en Computación (TEST)». Los casos que en un centro son otra cosa tienen flujo propio y no llevan esa guía (`CASO_PROPIO`: Idiomas 02, 05 y 10). El 13 y el 19 toman la escala del centro (`escala_calificacion`).
 
 ## Galería ordenada por fases
 `centros/index.html` y las tablas de los README muestran cada centro en cuatro grupos: **Flujos base** (1 a 6, más ligas), **Abrir el periodo**, **Matrícula** y **Notas y cierre**. La fase de cada script sale de `datos.json › casuisticas`; para mover un script de fase o de orden, se cambia allí y se regenera con imágenes.
@@ -48,7 +50,7 @@ Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salid
 ## Regenerar
 ```bash
 bash herramientas/diagramas/instalar_archify.sh            # una vez por máquina o sesión
-python3 herramientas/diagramas/generar.py                  # todo: 54 diagramas (JSON + HTML + índices, sin imágenes)
+python3 herramientas/diagramas/generar.py                  # todo: 84 diagramas (JSON + HTML + índices, sin imágenes)
 python3 herramientas/diagramas/generar.py idiomas --solo 4 # un diagrama de un centro
 python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar también PNG y SVG (lento)
 ```
@@ -83,9 +85,9 @@ python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar 
 - `python3 herramientas/diapositivas.py` convierte los instructivos a WebP en `visor_instructivos/diapositivas/<id>/` (solo los que faltan o cambiaron; `--solo <texto>` para uno). El visor las usa en lugar del PPTX.
 - **Qué lámina va en cada paso (C112):** `herramientas/diagramas/diapositivas_pasos.py`. `INSTRUCTIVOS` da el `<id>` de cada instructivo; `TEMAS` agrupa las láminas por tema (`ssasect_crear`, `sfaregs_retiro`, `pasar_lista`…); `BASE` asigna temas a los pasos de los flujos base (`crear-el-nrc` › `s1`…) y `REGLAS` a los pasos de las casuísticas según la pantalla y palabras de la fase o el hito (por ejemplo, SFAREGS con «retiro» → `sfaregs_retiro`). Una guía también puede traer su propia lista `"diapositivas": [{"instructivo": "5.3", "n": 21}]`, que manda sobre las reglas.
 - **Recorte:** `inyectar_modales.py` llama a `diapositivas.recorte()`, que guarda `recortes/NNN.webp` y su firma `NNN.caja`. La caja sale de la posición de los elementos de la lámina (`caja_contenido`): sin título, banda lateral ni pie. Si un recuadro desborda su forma, el borde de abajo baja; si un borde parte las letras de un título, lo baja hasta una fila limpia o mete el título entero. Si cambias la forma de recortar, sube `VERSION_RECORTE` para rehacer todos.
-- Si aun así una lámina sale mal, agrega `"caja": [izquierda, arriba, derecha, abajo]` (proporciones) a esa diapositiva. Revisa los recortes con una hoja de contacto antes de subirlos.
+- Si aun así una lámina sale mal, agrega `"caja": [izquierda, arriba, derecha, abajo]` (proporciones) a esa diapositiva. Ese recorte se guarda aparte (`NNN-<caja>.webp`) para no pisar el automático, que otros pasos pueden usar con la misma lámina. Hoy ninguna lámina lo necesita. Revisa los recortes con una hoja de contacto antes de subirlos.
 - **Cómo se ve (C110):** fila de láminas con ‹ ›, barra visible y rueda horizontal. Al ampliar: imagen en 3/4 y, a la izquierda, «Su guía»: la fila cuyo campo es un paso numerado de la lámina lleva **el mismo número verde de la captura** (`inyectar_modales._marcas`, C111); las demás llevan círculo y ✓ al validarse. Para evitar un número equivocado, usa `"sin_marca": [campo]` en la diapositiva. El texto numerado de la lámina (`diapositivas.texto_diapositiva`) va plegado en «Ver el texto de la diapositiva»: ya se lee en la imagen.
-- **Cobertura (C112):** los 54 diagramas; 199 de 224 pasos con lámina. No tienen: SSASECQ, SHATERM, SHATFAC, SHASMRY y SMIPOUT (no salen en ningún instructivo) ni los pasos fuera de Banner. Para un tema nuevo, busca las láminas con `buscar_instructivos.py`, agrégalas a `TEMAS` y enlázalas en `BASE` o `REGLAS`.
+- **Cobertura (C112, C113):** los 84 diagramas; 303 de 333 pasos con lámina. No tienen: SSASECQ, SHATERM, SHATFAC, SHASMRY y SMIPOUT (no salen en ningún instructivo) ni los pasos fuera de Banner. Para un tema nuevo, busca las láminas con `buscar_instructivos.py`, agrégalas a `TEMAS` y enlázalas en `BASE` o `REGLAS`.
 
 ## Tono de las guías y del asistente (pedido del usuario, 24/10)
 - **Guías paso a paso:** lenguaje profesional, imperativo formal (ingrese, pulse, verifique), sin emojis, sin exclamaciones ni palabras completas en mayúsculas. Cada fila cita su fuente (C##, U##, instructivo y diapositiva).

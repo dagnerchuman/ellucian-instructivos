@@ -260,6 +260,8 @@ def recorte(id_, n, caja=None):
     if not origen.exists():
         return None
     destino = SALIDA / id_ / "recortes" / nombre_diapositiva(n)
+    if caja:  # caja propia de un paso: archivo aparte, para no pisar el recorte automático que usan otros pasos
+        destino = destino.with_name(f"{destino.stem}-{'-'.join(f'{round(v * 1000):03d}' for v in caja)}{destino.suffix}")
     titulos = [] if caja else titulos_quitados(id_, n)
     caja = tuple(caja or caja_contenido(id_, n))
     marca = destino.with_suffix(".caja")

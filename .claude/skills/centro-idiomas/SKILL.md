@@ -11,7 +11,7 @@ description: Arquitectura específica del Centro de Idiomas (Inglés) de la USS 
 > **Carpeta del centro:** `centros/idiomas/`
 > - `datos.json` es la **fuente única** de los datos de este centro. Lo que allí está en `null` sigue **por confirmar** en TEST y en los diagramas se muestra así.
 > - `pruebas-test.md` es la **guía de pruebas en TEST**: 6 bloques que cierran los 20 scripts de Idiomas. Empieza por el bloque 0 (descubrir los códigos, U25).
-> - `diagramas/` tiene 16 diagramas paso a paso (un flujo y un código por paso), entre ellos el de **ligas** (n.º 7) (HTML interactivo, PNG claro y oscuro, SVG). Ver la skill `workflow-diagramas-archify`.
+> - `diagramas/` tiene 29 diagramas paso a paso (un flujo y un código por paso; HTML interactivo, PNG claro y oscuro, SVG): 6 flujos base, el de **ligas** (n.º 7) y los 22 scripts. En los scripts que solo se probaron en Computación, sus datos aparecen como «Referencia: así se probó en Computación»; el 02 (sobrepaso de prerrequisito, U10), el 05 (egresados, C50) y el 10 (prerrequisito Fatal) tienen flujo propio de Idiomas (C113). Ver la skill `workflow-diagramas-archify`.
 
 ## Identificadores en Banner
 

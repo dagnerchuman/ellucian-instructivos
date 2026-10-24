@@ -360,6 +360,7 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
                 "src": rel(recorte), "completa": rel(completa),
                 "visor": rel(VISOR.relative_to(RAIZ_REPO)) + f"?p={inst['id']}&d={d['n']}",
                 "fuente": inst["titulo"], "n": d["n"], "texto": d.get("texto", ""),
+                "lineas": [{"num": x["num"], "texto": x["texto"]} for x in diapositivas.texto_diapositiva(inst["id"], d["n"])],
             })
         info["diapositivas"] = resueltas
 

@@ -16573,16 +16573,57 @@ html:not([data-theme="dark"]) .guia-diapos {
   font-size: 0.72rem;
   opacity: 0.75;
 }
+.guia-diapos {
+  flex: 0 0 auto;
+}
+.guia-diapos-carril {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.guia-diapos-mover {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(15, 23, 42, 0.55);
+  color: #e2e8f0;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+html:not([data-theme="dark"]) .guia-diapos-mover {
+  background: #ffffff;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+.guia-diapos-mover:hover { border-color: #8b5cf6; color: #8b5cf6; }
 .guia-diapos-grid {
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   gap: 0.6rem;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x proximity;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.45rem;
+  scrollbar-width: thin;
+  scrollbar-color: #8b5cf6 rgba(148, 163, 184, 0.2);
 }
+.guia-diapos-grid::-webkit-scrollbar { height: 9px; }
+.guia-diapos-grid::-webkit-scrollbar-track { background: rgba(148, 163, 184, 0.18); border-radius: 999px; }
+.guia-diapos-grid::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 999px; }
+.guia-tabla-wrap::-webkit-scrollbar { width: 10px; height: 10px; }
 .guia-diapos-grid > .guia-diapo {
-  flex: 0 0 min(250px, 78%);
+  flex: 0 0 min(215px, 72%);
   scroll-snap-align: start;
+}
+.guia-diapos-grid .guia-diapo-pie {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .guia-diapo {
   display: flex;
@@ -16673,6 +16714,74 @@ html:not([data-theme="dark"]) .gdv-panel {
   cursor: pointer;
 }
 .gdv-btn:hover { border-color: #8b5cf6; }
+.gdv-cuerpo {
+  display: grid;
+  grid-template-columns: minmax(250px, 1fr) 3fr;
+  gap: 0.75rem;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+.gdv-pasos {
+  min-height: 0;
+  max-height: calc(100vh - 9rem);
+  overflow-y: auto;
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(30, 41, 59, 0.55);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  scrollbar-width: thin;
+  scrollbar-color: #8b5cf6 transparent;
+}
+html:not([data-theme="dark"]) .gdv-pasos {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+.gdv-bloque + .gdv-bloque {
+  margin-top: 0.8rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+}
+.gdv-bloque h4 {
+  margin: 0 0 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #8b5cf6;
+}
+.gdv-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.gdv-num {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.4rem;
+  align-items: start;
+}
+.gdv-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 0.35rem;
+  background: #166534;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.gdv-hecho .gdv-badge { background: #8b5cf6; }
+.gdv-nota {
+  padding-left: 2rem;
+  opacity: 0.8;
+  font-size: 0.76rem;
+}
+.gdv-vacio { margin: 0; opacity: 0.75; }
 .gdv-lienzo {
   position: relative;
   display: flex;
@@ -16707,6 +16816,12 @@ html:not([data-theme="dark"]) .gdv-panel {
 .gdv-nav:disabled { opacity: 0.25; cursor: default; }
 .gdv-pie { font-size: 0.8rem; text-align: center; opacity: 0.85; white-space: pre-wrap; }
 body.gdv-abierto { overflow: hidden; }
+
+@media (max-width: 900px) {
+  .gdv-cuerpo { grid-template-columns: 1fr; }
+  .gdv-pasos { order: 2; max-height: 32vh; }
+  .gdv-img { max-height: 50vh; }
+}
 
 
 /* ==========================================================================
@@ -18624,6 +18739,8 @@ button.ai-fab:active,
     var html = '<section class="guia-diapos" aria-label="Diapositivas del instructivo para este paso">';
     html += '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así se ve en Banner</span>';
     html += '<span class="guia-diapos-fuente">' + escapeHtml(fuentes.join(' · ')) + '</span></div>';
+    html += '<div class="guia-diapos-carril">';
+    html += '<button type="button" class="guia-diapos-mover" data-diapos-mover="-1" aria-label="Ver láminas anteriores">‹</button>';
     html += '<div class="guia-diapos-grid">';
     lista.forEach(function (d, i) {
       html += '<button type="button" class="guia-diapo" data-diapo-idx="' + i + '" title="Ampliar: ' + escapeHtml(d.texto || ('Diapositiva ' + d.n)) + '">';
@@ -18631,6 +18748,8 @@ button.ai-fab:active,
       html += '<span class="guia-diapo-pie"><strong>Diap. ' + d.n + '</strong> ' + escapeHtml(d.texto || '') + '</span>';
       html += '</button>';
     });
+    html += '</div>';
+    html += '<button type="button" class="guia-diapos-mover" data-diapos-mover="1" aria-label="Ver más láminas">›</button>';
     html += '</div></section>';
     return html;
   }
@@ -18655,8 +18774,11 @@ button.ai-fab:active,
       '<a class="gdv-btn" data-gdv="visor" target="_blank" rel="noopener">Abrir en el visor</a>' +
       '<button type="button" class="gdv-btn gdv-cerrar" data-gdv="cerrar" aria-label="Cerrar">✕</button>' +
       '</div></div>' +
+      '<div class="gdv-cuerpo">' +
+      '<aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
       '<div class="gdv-lienzo"><button type="button" class="gdv-nav" data-gdv="ant" aria-label="Anterior">‹</button>' +
       '<img class="gdv-img" alt=""><button type="button" class="gdv-nav" data-gdv="sig" aria-label="Siguiente">›</button></div>' +
+      '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
     v.addEventListener('click', function (e) {
@@ -18688,6 +18810,43 @@ button.ai-fab:active,
     v.querySelector('[data-gdv="visor"]').href = d.visor;
     v.querySelector('[data-gdv="ant"]').disabled = visorDiapo.idx === 0;
     v.querySelector('[data-gdv="sig"]').disabled = visorDiapo.idx === visorDiapo.lista.length - 1;
+    v.querySelector('.gdv-pasos').innerHTML = pasosVisorDiapoHtml(d);
+    v.querySelector('.gdv-pasos').scrollTop = 0;
+  }
+
+  function pasosVisorDiapoHtml(d) {
+    var html = '<section class="gdv-bloque"><h4>En esta diapositiva</h4>';
+    var lineas = d.lineas || [];
+    if (lineas.length) {
+      html += '<ol class="gdv-lista">';
+      lineas.forEach(function (l) {
+        if (l.num) {
+          html += '<li class="gdv-num"><span class="gdv-badge">' + escapeHtml(l.num) + '</span><span>' + escapeHtml(l.texto) + '</span></li>';
+        } else {
+          html += '<li class="gdv-nota">' + escapeHtml(l.texto) + '</li>';
+        }
+      });
+      html += '</ol>';
+    } else {
+      html += '<p class="gdv-vacio">' + escapeHtml(d.texto || 'Sin texto en la diapositiva.') + '</p>';
+    }
+    html += '</section>';
+
+    var idFoco = document.getElementById('focus-id');
+    var paso = (idFoco ? idFoco.textContent : '').trim();
+    var info = GUIA_MAP[paso];
+    var filas = (info && info.instrucciones) || [];
+    if (filas.length) {
+      var checks = (window.__guiaChecks && window.__guiaChecks[paso]) || {};
+      html += '<section class="gdv-bloque"><h4>Su guía · ' + escapeHtml((info.fase || '').replace(/^Paso\s*\d+:\s*/i, '')) + '</h4><ol class="gdv-lista">';
+      filas.forEach(function (f, i) {
+        var hecho = !!checks[i];
+        html += '<li class="gdv-num' + (hecho ? ' gdv-hecho' : '') + '"><span class="gdv-badge">' + (hecho ? '✓' : (i + 1)) + '</span>' +
+          '<span><strong>' + escapeHtml(f.campo || '') + '</strong>' + (f.valor ? ': ' + escapeHtml(f.valor) : '') + '</span></li>';
+      });
+      html += '</ol></section>';
+    }
+    return html;
   }
 
   function abrirVisorDiapo(lista, idx) {
@@ -19267,6 +19426,15 @@ button.ai-fab:active,
         return;
       }
 
+      var btnMover = e.target.closest('[data-diapos-mover]');
+      if (btnMover) {
+        e.preventDefault();
+        e.stopPropagation();
+        var carril = btnMover.parentElement.querySelector('.guia-diapos-grid');
+        if (carril) carril.scrollBy({ left: parseInt(btnMover.getAttribute('data-diapos-mover'), 10) * carril.clientWidth * 0.8, behavior: 'smooth' });
+        return;
+      }
+
       var btnDiapo = e.target.closest('[data-diapo-idx]');
       if (btnDiapo) {
         e.preventDefault();
@@ -19334,6 +19502,15 @@ button.ai-fab:active,
         }, 450);
       }
     });
+
+    // En la fila de láminas, la rueda del mouse avanza en horizontal
+    document.addEventListener('wheel', function (e) {
+      var carril = e.target.closest && e.target.closest('.guia-diapos-grid');
+      if (!carril || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (carril.scrollWidth <= carril.clientWidth) return;
+      e.preventDefault();
+      carril.scrollLeft += e.deltaY;
+    }, { passive: false });
 
     document.addEventListener('keydown', function (e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;

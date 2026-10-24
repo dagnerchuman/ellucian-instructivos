@@ -18,6 +18,7 @@ visor_instructivos/data.js; las carpetas CAPACIDAD n/ no se mueven (ADR-015).
 """
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -135,6 +136,52 @@ def recorte(id_, n, caja=None):
             im.crop((round(w * izq), round(h * sup), round(w * (1 - der)), round(h * (1 - inf)))).save(
                 destino, "WEBP", quality=CALIDAD, method=6)
     return destino.relative_to(RAIZ).as_posix()
+
+
+_TEXTOS = {}
+
+
+def _textos_presentacion(id_):
+    """Por diapositiva: lista de párrafos [{"num", "texto", "nivel"}] sin el texto que se repite en el diseño."""
+    if id_ in _TEXTOS:
+        return _TEXTOS[id_]
+    from collections import Counter
+    from pptx import Presentation
+    from pptx.oxml.ns import qn
+    pres = Presentation(RAIZ / presentaciones()[id_]["path"])
+    por_lamina = []
+    for lamina in pres.slides:
+        parrafos = []
+        for forma in lamina.shapes:
+            if not forma.has_text_frame:
+                continue
+            contador = None
+            for p in forma.text_frame.paragraphs:
+                texto = " ".join("".join(r.text for r in p.runs).split())
+                ppr = p._p.pPr
+                auto = ppr.find(qn("a:buAutoNum")) if ppr is not None else None
+                if auto is not None:
+                    contador = (contador + 1) if contador is not None else int(auto.get("startAt", "1"))
+                if texto:
+                    parrafos.append({"num": str(contador) if auto is not None else "", "texto": texto, "nivel": p.level})
+        por_lamina.append(parrafos)
+    # Lo que aparece en muchas láminas es diseño (banda lateral, pie, logo): se descarta.
+    frecuencia = Counter(p["texto"] for ps in por_lamina for p in {x["texto"]: x for x in ps}.values())
+    limite = max(3, len(por_lamina) * 0.3)
+    es_titulo = re.compile(r"^[^.]{3,50}\([A-Z]{6,8}\)$")  # «Programar NRC (SSASECT)»: título de la lámina
+    _TEXTOS[id_] = [[p for p in ps if frecuencia[p["texto"]] < limite and len(p["texto"]) > 3
+                     and not p["texto"].isdigit() and not (not p["num"] and es_titulo.match(p["texto"]))]
+                    for ps in por_lamina]
+    return _TEXTOS[id_]
+
+
+def texto_diapositiva(id_, n):
+    """Párrafos de la diapositiva n (1, 2…) para mostrarlos junto a la imagen."""
+    try:
+        laminas = _textos_presentacion(id_)
+    except Exception:  # noqa: BLE001 - el texto es un complemento; sin él se muestra solo la imagen
+        return []
+    return laminas[n - 1] if 0 < n <= len(laminas) else []
 
 
 def diapositiva(id_, n):

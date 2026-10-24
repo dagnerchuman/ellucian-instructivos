@@ -76,7 +76,9 @@
     "centros/idiomas/datos.json",
     "centros/computacion/datos.json",
     "centros/emprendimiento/datos.json",
-    "herramientas/diagramas/plantillas.py"
+    "herramientas/diagramas/plantillas.py",
+    "herramientas/diagramas/guias_operativas.py",
+    "herramientas/diagramas/diapositivas_pasos.py"
    ],
    "salidas": [
     "centros/README.md",

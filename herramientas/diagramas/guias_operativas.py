@@ -243,39 +243,7 @@ GUIA_CREAR_NRC_EMPRENDIMIENTO = {
     }
 }
 
-# Diapositivas de los instructivos que acompañan cada paso de «Crear el NRC» (las mismas en los tres
-# centros). Se convierten con herramientas/diapositivas.py; la guía muestra el recorte y, al ampliar,
-# la diapositiva completa. «caja» cambia el recorte (izquierda, arriba, derecha, abajo) de una lámina.
-# Las filas de la guía cuyo campo es un paso numerado de la lámina llevan ese número (inyectar_modales._marcas);
-# «sin_marca» evita un número cuando el campo se llama igual pero es otro (por ejemplo, otro bloque).
-INSTRUCTIVOS = {
-    "5.3": {"id": "5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos",
-            "titulo": "Instructivo 5.3 · Registrar la oferta horaria de los cursos"},
-    "6.2.1": {"id": "6.2.1_Asignar_Docentes", "titulo": "Instructivo 6.2.1 · Asignar docentes"},
-}
-
-DIAPOSITIVAS_CREAR_NRC = {
-    "s1": [{"instructivo": "5.3", "n": 19, "texto": "Ingresar el periodo y pulsar «Crear NRC»"},
-           {"instructivo": "5.3", "n": 20, "texto": "El NRC queda en ADD hasta el primer guardado"}],
-    "s2": [{"instructivo": "5.3", "n": 21, "texto": "Materia, número de curso, sección, campus y estatus"},
-           {"instructivo": "5.3", "n": 22, "texto": "Tipo de horario, método educativo, modo de calificar y sesión"},
-           {"instructivo": "5.3", "n": 23, "texto": "Parte de periodo y horas crédito"},
-           {"instructivo": "5.3", "n": 24, "texto": "Calificable, horas de cobro, sin dispensa, y guardar"},
-           {"instructivo": "5.3", "n": 26, "texto": "Al guardar, Banner asigna el número de NRC"}],
-    "s3": [{"instructivo": "5.3", "n": 27, "texto": "Detalles de ingreso: cupo del NRC y guardar"}],
-    "s4": [{"instructivo": "5.3", "n": 28, "texto": "Lugares reservados: regla nula y regla por criterio"}],
-    "s5": [{"instructivo": "5.3", "n": 29, "texto": "Fechas de reunión: horas, días e indicador de sesión", "caja": [0.034, 0.118, 0.0, 0.0]},
-           {"instructivo": "5.3", "n": 30, "texto": "Créditos y ubicación: horas por semana calculadas"},
-           {"instructivo": "6.2.1", "n": 15, "texto": "Bloque Instructor: ID del docente"},
-           {"instructivo": "6.2.1", "n": 19, "texto": "Responsabilidad, docente principal, sobrepaso y porcentaje de sesión",
-            # El 4 de la lámina es el sobrepaso del docente; la fila de la guía es el del horario (aula virtual).
-            "sin_marca": ["Indicador de sobrepaso (horario)"]},
-           {"instructivo": "6.2.1", "n": 20, "texto": "Conflicto de horario del docente: indicador de sobrepaso"}],
-}
-
-for _guia in (GUIA_CREAR_NRC_IDIOMAS, GUIA_CREAR_NRC_COMPUTACION, GUIA_CREAR_NRC_EMPRENDIMIENTO):
-    for _paso, _lista in DIAPOSITIVAS_CREAR_NRC.items():
-        _guia[_paso]["diapositivas"] = _lista
+# Las diapositivas de cada paso se definen en diapositivas_pasos.py (ADR-022).
 
 # ===========================================================================
 # 2. LIGAS: TEÓRICO + CLUB DE CONVERSACIÓN (SSASECT / SSADETL / SFAREGS)

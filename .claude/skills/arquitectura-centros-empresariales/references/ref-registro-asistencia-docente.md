@@ -6,6 +6,7 @@
 3. En la lista, marca a cada alumno para la fecha seleccionada: **✓ verde** = presente y **− rojo** = ausente. Solo se permiten fechas pasadas, no futuras. *(instructivo 7.1.1, diap. 45–46)*
 4. Banner calcula el porcentaje de asistencia mientras se registran las marcas. *(instructivo 7.1.1, diap. 47)*
 5. **Actualizar todo** permite marcar masivamente registros vacíos o a todos como presentes/ausentes. No usar estas opciones sin revisar a quién se aplicará cada marca. *(instructivo 7.1.1, diap. 48)*
+6. Al terminar el periodo, cuando el porcentaje ya considera todas las sesiones, pulsa **Clase › «Actualizar la asistencia en el libro de calificaciones»** y confirma el paso del porcentaje al componente de calificaciones (`ATTRGRD`). *(instructivo 7.1.1, diap. 56–57; R21)*
 
 ## Requisitos si algo no aparece
 - El docente debe tener disponible el proceso `ENTERATTEND` en Autoservicio. El acceso puede depender de la relación docente-alumno o de que sea instructor principal en `SSASECT`. *(instructivo 7.1.1, diap. 14–15)*
@@ -18,7 +19,7 @@
   - la regla en **`SOAATRK`** (Desplegar clase, unidad Presente/Ausente, Control de asistencia, del 07-SEP al 31-OCT-2026) hace que el NRC aparezca en **Pasar lista**; sin ella, la lista sale vacía;
   - **Captura de calificaciones › Libro de calificaciones › Componentes** registra las notas (85 de 100 → 17);
   - con asistencia de 43 %, `ATTRGRD` («Debe aprobar», `AST_70`) deja la nota compuesta en **INH**, y **SFASLST** muestra INH sin escribir nada en «Calificaciones finales».
-- **Por confirmar (U32):** el porcentaje de Pasar lista no pasó solo a `ATTRGRD`, aunque `GORICCR` está en Y, `GORRSQL` activa y `STVGCHG` tiene CA (C104). Según el instructivo 7.1.0, el docente envía el porcentaje al libro.
+- **Por confirmar (U32):** el porcentaje de Pasar lista no pasó solo a `ATTRGRD`, aunque `GORICCR` está en Y, `GORRSQL` activa y `STVGCHG` tiene CA (C104). Según los instructivos 7.1.0 y 7.1.1 (diap. 56–57), lo envía el docente con el paso 6; falta probarlo con el NRC 10044.
 - **Antes (C89):** sin la regla de SOAATRK, Faculty Grading daba error y la lista de asistencia no mostraba NRC.
 
 La ruta administrativa de búsqueda está en [ref-busqueda-asistencia-banner.md](ref-busqueda-asistencia-banner.md). No alterar reglas existentes ni guardar cambios sin confirmar el periodo y el NRC.

@@ -11,7 +11,8 @@ import os
 import re
 from pathlib import Path
 import sys
-from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS, INSTRUCTIVOS
+from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
+from diapositivas_pasos import INSTRUCTIVOS, para as diapositivas_del_paso
 from plantillas import TITULOS, CAPACIDADES, guia_casuistica_de
 
 # "plantillas": la guía de las casuísticas sale de plantillas.py (CASOS + EXTRA_CASOS) y pisa a GUIAS_SCRIPTS.
@@ -346,7 +347,7 @@ def _sin_tildes(texto):
     return unicodedata.normalize("NFKD", texto).encode("ascii", "ignore").decode().lower()
 
 
-GENERICAS = {"horario", "formulario", "docente", "ubicacion", "pestana", "consulta"}
+GENERICAS = {"horario", "formulario", "docente", "ubicacion", "pestana", "consulta", "proceso"}
 COMILLAS = r"[\'‘’\"“”«»]([^\'‘’\"“”«»]{3,60})[\'‘’\"“”«»]"
 
 
@@ -395,8 +396,9 @@ def _marcas(filas, lineas, sin_marca=()):
 
 def _resolver_diapositivas(guia, carpeta_html, slug):
     """Cambia {"instructivo", "n"} por rutas relativas al HTML (recorte, completa y visor)."""
+    slug_limpio = RE_PREFIJO.sub("", slug)
     for paso, info in guia.items():
-        lista = info.get("diapositivas")
+        lista = info.get("diapositivas") or diapositivas_del_paso(slug_limpio, paso, info)
         if not lista:
             continue
         resueltas = []

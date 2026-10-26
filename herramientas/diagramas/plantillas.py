@@ -223,8 +223,8 @@ def dato_nrc(c, prefijo=""):
 
 
 # --------------------------------------------------------------------------- 1
-def recorrido(c):
-    """Secuencia: quién hace cada paso, de abrir el periodo al avance en CAPP."""
+def actores_recorrido(c):
+    """(participantes, tramos) del recorrido completo; tramo = (nombre, [(de, a, página, variante, qué hace)])."""
     participantes = [
         {"id": "alumno", "type": "external", "label": "Alumno", "sublabel": "USS o externo", "icon": "person"},
         {"id": "asistente", "type": "backend", "label": "Asistente", "sublabel": "o especialista", "icon": "briefcase"},
@@ -255,6 +255,39 @@ def recorrido(c):
             ("banner", "alumno", "SMICRLT", "return", "el alumno ve su avance en CAPP"),
         ]),
     ]
+    return participantes, tramos
+
+
+def guia_recorrido(c):
+    """Guía de cada actor del recorrido: los pasos que hace o recibe, en orden, con las láminas de sus páginas."""
+    from guias_operativas import _fila
+    from diapositivas_pasos import para_recorrido
+    participantes, tramos = actores_recorrido(c)
+    nombre = {p["id"]: p["label"] for p in participantes}
+    guia = {}
+    for p in participantes:
+        filas, paginas, n = [], [], 0
+        for tramo, pasos in tramos:
+            for de, a, etiqueta, _, explica in pasos:
+                n += 1
+                if p["id"] not in (de, a):
+                    continue
+                hace = p["id"] == de
+                filas.append(_fila(f"{n}. {etiqueta}", explica[:1].upper() + explica[1:],
+                                   f"{'Hace' if hace else 'Recibe'} · {tramo}", "Acción" if hace else "Verificación",
+                                   f"Paso {n} del recorrido ({tramo}): {nombre[de]} → {nombre[a]}."))
+                if hace or p["id"] in ("alumno", "banner"):
+                    paginas.append(etiqueta)
+        guia[p["id"]] = {"titulo": TITULOS["recorrido-completo"], "pantalla": p["label"],
+                         "fase": f"{p['label']}: qué hace en el recorrido", "hito": p.get("sublabel", ""),
+                         "instrucciones": filas,
+                         "diapositivas": para_recorrido(paginas, 1 if p["id"] == "banner" else 2)}
+    return guia
+
+
+def recorrido(c):
+    """Secuencia: quién hace cada paso, de abrir el periodo al avance en CAPP."""
+    participantes, tramos = actores_recorrido(c)
     mensajes, segmentos, vistas, que_hace = [], [], [], []
     y = 182
     for k, (nombre, pasos) in enumerate(tramos):

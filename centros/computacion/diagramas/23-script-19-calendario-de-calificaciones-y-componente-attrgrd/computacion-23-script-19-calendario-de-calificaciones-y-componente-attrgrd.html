@@ -16479,6 +16479,26 @@ html:not([data-theme="dark"]) .guia-diapos {
   font-size: 0.72rem;
   opacity: 0.75;
 }
+/* Lámina de referencia (la página no sale en los instructivos) y paso sin lámina */
+.guia-diapos-ref,
+.gdv-ref {
+  margin: 0 0 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0.35rem;
+  background: rgba(245, 158, 11, 0.12);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+.guia-diapos-aviso {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px dashed rgba(148, 163, 184, 0.55);
+  border-radius: 0.45rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
 .guia-diapos {
   flex: 0 0 auto;
 }
@@ -17717,6 +17737,198 @@ button.ai-fab:active,
   }
 }
 
+/* ==========================================================================
+   Pasos en imágenes: botón de la respuesta y visor (imagen 3/4, pasos 1/4)
+   ========================================================================== */
+.ai-pasos-img {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(124, 58, 237, 0.18);
+}
+.ai-btn-pasos-img {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid rgba(124, 58, 237, 0.45);
+  border-radius: 0.6rem;
+  background: rgba(124, 58, 237, 0.08);
+  color: #6d28d9;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.ai-btn-pasos-img:hover,
+.ai-btn-pasos-img:focus-visible {
+  background: rgba(124, 58, 237, 0.16);
+  border-color: #7c3aed;
+  outline: none;
+}
+.ai-btn-pasos-cuenta {
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #5b21b6;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.ai-pasos-visor {
+  position: fixed;
+  inset: 0;
+  z-index: 1000001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(15, 23, 42, 0.78);
+  color: #0f172a;
+  font-family: inherit;
+}
+.ai-pasos-visor[hidden] { display: none; }
+.aipv-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(1400px, 100%);
+  max-height: 100%;
+  border-radius: 0.9rem;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.45);
+  overflow: hidden;
+}
+.aipv-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+.aipv-cabecera { display: flex; flex-direction: column; gap: 0.1rem; }
+.aipv-titulo { font-size: 0.95rem; font-weight: 700; color: #5b21b6; }
+.aipv-fuente { font-size: 0.78rem; color: #475569; }
+.aipv-acciones { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.aipv-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.38rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+.aipv-btn:hover { border-color: #7c3aed; }
+.aipv-btn[hidden] { display: none; }
+.aipv-cerrar { font-size: 1.1rem; padding: 0.2rem 0.6rem; }
+.aipv-cuerpo {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) 3fr;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem 1rem;
+  min-height: 0;
+  overflow: hidden;
+}
+.aipv-pasos {
+  margin: 0;
+  padding: 0.3rem;
+  list-style: none;
+  max-height: calc(100vh - 11rem);
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  background: #f8fafc;
+}
+.aipv-paso {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.45rem;
+  align-items: start;
+  padding: 0.45rem 0.5rem;
+  border-radius: 0.45rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.aipv-paso:hover { background: #ede9fe; }
+.aipv-paso.activo { background: #7c3aed; color: #ffffff; }
+.aipv-paso.activo .ai-pill-screen { background: #ffffff; color: #5b21b6; border-color: #ffffff; }
+.aipv-paso.sin-img { opacity: 0.6; }
+.aipv-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 999px;
+  background: #166534;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.aipv-paso.sin-img .aipv-num { background: #94a3b8; }
+.aipv-lienzo { display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+.aipv-ref {
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0.35rem;
+  background: #fef3c7;
+  color: #78350f;
+  font-size: 0.78rem;
+}
+.aipv-ref[hidden] { display: none; }
+.aipv-marco {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  background: #ffffff;
+}
+.aipv-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 13rem);
+  object-fit: contain;
+}
+.aipv-img[hidden] { display: none; }
+.aipv-vacio { margin: 0; padding: 2rem; color: #64748b; font-size: 0.9rem; }
+.aipv-vacio[hidden] { display: none; }
+.aipv-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.4rem;
+  height: 2.4rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.65);
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.aipv-nav[data-aipv="ant"] { left: 0.5rem; }
+.aipv-nav[data-aipv="sig"] { right: 0.5rem; }
+.aipv-nav:disabled { opacity: 0.25; cursor: default; }
+.aipv-pie { margin: 0; text-align: center; font-size: 0.8rem; color: #334155; }
+@media (max-width: 900px) {
+  .aipv-cuerpo { grid-template-columns: 1fr; overflow-y: auto; }
+  .aipv-pasos { max-height: 12rem; order: 2; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -17874,9 +18086,10 @@ button.ai-fab:active,
 <!-- === /ASISTENTE IA CENTROS EMPRESARIALES USS === -->
 
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
+<script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
 (function () {
-  var GUIA_MAP = {"c0": {"titulo": "Script 19 · Script 19 · Calendario de calificaciones y componente ATTRGRD", "pantalla": "CASO", "fase": "Situación: Asistencia y notas", "hito": "preparar el libro del NRC", "instrucciones": [{"campo": "Situación inicial", "valor": "Asistencia y notas", "ejemplo": "preparar el libro del NRC", "tipo": "Contexto", "detalle": "Punto de partida del script: preparar el libro del NRC."}]}, "c1": {"titulo": "Script 19 · Script 19 · Calendario de calificaciones y componente ATTRGRD", "pantalla": "SHAEGBC", "fase": "Paso 1: calendario del periodo", "hito": "202656 · fechas autorizadas", "instrucciones": [{"campo": "SHAEGBC (Calendario): para 202656, definir y guardar las fec", "valor": "Periodo 202656", "ejemplo": "-", "tipo": "Acción", "detalle": "SHAEGBC (Calendario): para 202656, definir y guardar las fechas de apertura y corte autorizadas. No inventar fechas ni dar por requerido el corte final sin confirmación."}, {"campo": "SHAGCOM (Plan de evaluación): ejemplo TEST, periodo 202656,", "valor": "Periodo 202656", "ejemplo": "-", "tipo": "Verificación", "detalle": "SHAGCOM (Plan de evaluación): ejemplo TEST, periodo 202656, NRC 10026, materia ESEC, curso 00697, parte X06."}, {"campo": "Agregar ATTRGRD con peso 0.00, marcar Debe Pasar y seleccion", "valor": "SHAEGBC", "ejemplo": "-", "tipo": "Acción", "detalle": "Agregar ATTRGRD con peso 0.00, marcar Debe Pasar y seleccionar la escala propia de asistencia que corresponda al mínimo institucional de 70 %."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/040.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/040.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=40", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 40, "texto": "SHAEGBC: calendario del periodo", "lineas": [{"num": "", "texto": "Calendario de Ingreso de calificaciones a nivel de periodo (SHAEGBC)"}, {"num": "", "texto": "Se muestra solo la definición a nivel de período."}, {"num": "1", "texto": "En SHAEGBC, seleccione o digite el período para el cual se hará la definición."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/041.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/041.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=41", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 41, "texto": "SHAEGBC: fechas de ingreso de calificaciones", "lineas": [{"num": "", "texto": "Calendario de Ingreso de calificaciones a nivel de periodo (SHAEGBC)"}, {"num": "3", "texto": "Ingrese la fecha a partir de la cual los docentes podrán cargar las calificaciones (fecha abierta)."}, {"num": "4", "texto": "Ingrese la fecha hasta la cual los docentes pueden cargar las calificaciones (fecha de corte)."}, {"num": "5", "texto": "Guarde la información."}], "marcas": {}}]}, "c2": {"titulo": "Script 19 · Script 19 · Calendario de calificaciones y componente ATTRGRD", "pantalla": "SHAGCOM", "fase": "Paso 2: asignar ATTRGRD", "hito": "NRC 10026 · ESEC 00697 · X06", "instrucciones": [{"campo": "En Computación, mantener el modo V con nota mínima aprobator", "valor": "SHAGCOM", "ejemplo": "-", "tipo": "Acción", "detalle": "En Computación, mantener el modo V con nota mínima aprobatoria 11. Son dos criterios: nota ≥11 y asistencia ≥70 %."}, {"campo": "Computación, NRC 10026: Script 19 validado en TEST por confi", "valor": "SHAGCOM", "ejemplo": "-", "tipo": "Acción", "detalle": "Computación, NRC 10026: Script 19 validado en TEST por confirmación del usuario (C95)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.0_Usar_Componente_Asistencia/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.0_Usar_Componente_Asistencia/029.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.0_Usar_Componente_Asistencia&d=29", "fuente": "Instructivo 7.1.0 · Usar el componente de asistencia", "n": 29, "texto": "ATTRGRD: peso 0, Debe aprobar y escala de asistencia", "lineas": [{"num": "", "texto": "Configuraciones: Activación"}, {"num": "", "texto": "En el esquema de calificación del NRC, debemos agregar el componente ATTRGRD (nombre obligatorio), éste debe tener:"}, {"num": "", "texto": "Peso 0."}, {"num": "", "texto": "Marcado como Debe Pasar."}, {"num": "", "texto": "Usar otra escala para el componente de asistencia, para poder indicar la calificación aprobatoria/reprobatoria en ciertos rangos de asistencia."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/044.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=44", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 44, "texto": "SHAGCOM: escala de calificación del plan", "lineas": [{"num": "", "texto": "Al entrar a definir los componentes el sistema muestra una advertencia, pues la escala de calificación es obligatoria. Haga clic cobre la advertencia para continuar."}, {"num": "3", "texto": "Ingrese la escala de calificación que predominará en los componentes del plan de evaluación."}, {"num": "4", "texto": "Presione el botón Guardar."}, {"num": "5", "texto": "Pase al siguiente bloque."}], "marcas": {}}]}, "cr": {"titulo": "Script 19 · Script 19 · Calendario de calificaciones y componente ATTRGRD", "pantalla": "RESULTADO", "fase": "Resultado: Criterios confirmados", "hito": "nota ≥11 · asistencia ≥70%", "instrucciones": [{"campo": "Resultado esperado", "valor": "Criterios confirmados", "ejemplo": "nota ≥11 · asistencia ≥70%", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}]}};
+  var GUIA_MAP = {"c0": {"titulo": "Script 19 · Script 19 · Calendario de calificaciones y componente ATTRGRD", "pantalla": "CASO", "fase": "Situación: Asistencia y notas", "hito": "preparar el libro del NRC", "instrucciones": [{"campo": "Situación inicial", "valor": "Asistencia y notas", "ejemplo": "preparar el libro del NRC", "tipo": "Contexto", "detalle": "Punto de partida del script: preparar el libro del NRC."}]}, "c1": {"titulo": "Script 19 · Script 19 · Calendario de calificaciones y componente ATTRGRD", "pantalla": "SHAEGBC", "fase": "Paso 1: calendario del periodo", "hito": "202656 · fechas autorizadas", "instrucciones": [{"campo": "SHAEGBC (Calendario): para 202656, definir y guardar las fec", "valor": "Periodo 202656", "ejemplo": "-", "tipo": "Acción", "detalle": "SHAEGBC (Calendario): para 202656, definir y guardar las fechas de apertura y corte autorizadas. No inventar fechas ni dar por requerido el corte final sin confirmación."}, {"campo": "SHAGCOM (Plan de evaluación): ejemplo TEST, periodo 202656,", "valor": "Periodo 202656", "ejemplo": "-", "tipo": "Verificación", "detalle": "SHAGCOM (Plan de evaluación): ejemplo TEST, periodo 202656, NRC 10026, materia ESEC, curso 00697, parte X06."}, {"campo": "Agregar ATTRGRD con peso 0.00, marcar Debe Pasar y seleccion", "valor": "SHAEGBC", "ejemplo": "-", "tipo": "Acción", "detalle": "Agregar ATTRGRD con peso 0.00, marcar Debe Pasar y seleccionar la escala propia de asistencia que corresponda al mínimo institucional de 70 %."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/040.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/040.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=40", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 40, "texto": "SHAEGBC: calendario del periodo", "nota": "", "lineas": [{"num": "", "texto": "Calendario de Ingreso de calificaciones a nivel de periodo (SHAEGBC)"}, {"num": "", "texto": "Se muestra solo la definición a nivel de período."}, {"num": "1", "texto": "En SHAEGBC, seleccione o digite el período para el cual se hará la definición."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/041.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/041.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=41", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 41, "texto": "SHAEGBC: fechas de ingreso de calificaciones", "nota": "", "lineas": [{"num": "", "texto": "Calendario de Ingreso de calificaciones a nivel de periodo (SHAEGBC)"}, {"num": "3", "texto": "Ingrese la fecha a partir de la cual los docentes podrán cargar las calificaciones (fecha abierta)."}, {"num": "4", "texto": "Ingrese la fecha hasta la cual los docentes pueden cargar las calificaciones (fecha de corte)."}, {"num": "5", "texto": "Guarde la información."}], "marcas": {}}]}, "c2": {"titulo": "Script 19 · Script 19 · Calendario de calificaciones y componente ATTRGRD", "pantalla": "SHAGCOM", "fase": "Paso 2: asignar ATTRGRD", "hito": "NRC 10026 · ESEC 00697 · X06", "instrucciones": [{"campo": "En Computación, mantener el modo V con nota mínima aprobator", "valor": "SHAGCOM", "ejemplo": "-", "tipo": "Acción", "detalle": "En Computación, mantener el modo V con nota mínima aprobatoria 11. Son dos criterios: nota ≥11 y asistencia ≥70 %."}, {"campo": "Computación, NRC 10026: Script 19 validado en TEST por confi", "valor": "SHAGCOM", "ejemplo": "-", "tipo": "Acción", "detalle": "Computación, NRC 10026: Script 19 validado en TEST por confirmación del usuario (C95)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.0_Usar_Componente_Asistencia/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.0_Usar_Componente_Asistencia/029.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.0_Usar_Componente_Asistencia&d=29", "fuente": "Instructivo 7.1.0 · Usar el componente de asistencia", "n": 29, "texto": "ATTRGRD: peso 0, Debe aprobar y escala de asistencia", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: Activación"}, {"num": "", "texto": "En el esquema de calificación del NRC, debemos agregar el componente ATTRGRD (nombre obligatorio), éste debe tener:"}, {"num": "", "texto": "Peso 0."}, {"num": "", "texto": "Marcado como Debe Pasar."}, {"num": "", "texto": "Usar otra escala para el componente de asistencia, para poder indicar la calificación aprobatoria/reprobatoria en ciertos rangos de asistencia."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/044.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=44", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 44, "texto": "SHAGCOM: escala de calificación del plan", "nota": "", "lineas": [{"num": "", "texto": "Al entrar a definir los componentes el sistema muestra una advertencia, pues la escala de calificación es obligatoria. Haga clic cobre la advertencia para continuar."}, {"num": "3", "texto": "Ingrese la escala de calificación que predominará en los componentes del plan de evaluación."}, {"num": "4", "texto": "Presione el botón Guardar."}, {"num": "5", "texto": "Pase al siguiente bloque."}], "marcas": {}}]}, "cr": {"titulo": "Script 19 · Script 19 · Calendario de calificaciones y componente ATTRGRD", "pantalla": "RESULTADO", "fase": "Resultado: Criterios confirmados", "hito": "nota ≥11 · asistencia ≥70%", "instrucciones": [{"campo": "Resultado esperado", "valor": "Criterios confirmados", "ejemplo": "nota ≥11 · asistencia ≥70%", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}]}};
   window.__SIGUIENTE_FLUJO = {"num": 24, "slug": "script-13-procesamiento-de-calificaciones", "titulo": "Script 13 · Procesamiento de calificaciones", "cap": "Capacidad 7", "url": "../24-script-13-procesamiento-de-calificaciones/computacion-24-script-13-procesamiento-de-calificaciones.html", "is_curr": false};
   window.__ANTERIOR_FLUJO = {"num": 22, "slug": "script-18-c-solicitud-de-servicio-o-queja", "titulo": "Script 18-C · Solicitud de servicio o queja", "cap": "Capacidad 4 y 10", "url": "../22-script-18-c-solicitud-de-servicio-o-queja/computacion-22-script-18-c-solicitud-de-servicio-o-queja.html", "is_curr": false};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-computacion";
@@ -18682,12 +18895,19 @@ button.ai-fab:active,
 
   function renderDiapositivasHtml(info) {
     var lista = (info && info.diapositivas) || [];
-    if (!lista.length) return '';
+    if (!lista.length) {
+      // Sin lámina: se dice por qué (página que no sale en los instructivos o paso fuera de Banner).
+      if (!info || !info.sin_lamina) return '';
+      return '<section class="guia-diapos guia-diapos-vacia" aria-label="Diapositivas del instructivo para este paso">' +
+        '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así se ve en Banner</span></div>' +
+        '<p class="guia-diapos-aviso">' + escapeHtml(info.sin_lamina) + '</p></section>';
+    }
     var fuentes = [];
     lista.forEach(function (d) { if (fuentes.indexOf(d.fuente) === -1) fuentes.push(d.fuente); });
     var html = '<section class="guia-diapos" aria-label="Diapositivas del instructivo para este paso">';
     html += '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así se ve en Banner</span>';
     html += '<span class="guia-diapos-fuente">' + escapeHtml(fuentes.join(' · ')) + '</span></div>';
+    if (lista[0].nota) html += '<p class="guia-diapos-ref">' + escapeHtml(lista[0].nota) + '</p>';
     html += '<div class="guia-diapos-carril">';
     html += '<button type="button" class="guia-diapos-mover" data-diapos-mover="-1" aria-label="Ver láminas anteriores">‹</button>';
     html += '<div class="guia-diapos-grid">';
@@ -18767,7 +18987,7 @@ button.ai-fab:active,
   }
 
   function pasosVisorDiapoHtml(d) {
-    var html = '';
+    var html = d.nota ? '<p class="gdv-ref">' + escapeHtml(d.nota) + '</p>' : '';
     var idFoco = document.getElementById('focus-id');
     var paso = (idFoco ? idFoco.textContent : '').trim();
     var info = GUIA_MAP[paso];
@@ -19767,7 +19987,7 @@ button.ai-fab:active,
     // -------------------------------------------------------------
     // Formateador Enriquecido con Badges para Pantallas Banner
     // -------------------------------------------------------------
-    var PANTALLAS_CONOCIDAS = /\b(?:[GSTF][A-Z]{6}|OpenLMS|Moodle)\b/g;
+    var PANTALLAS_CONOCIDAS = /\b(?:(?!GUARDAR\b|GENERAL\b|SIGUIENTE\b)[GSTF][A-Z]{6}|OpenLMS|Moodle)\b/g;
 
     function enLinea(texto) {
       return texto
@@ -20116,6 +20336,230 @@ button.ai-fab:active,
       }
     }
 
+    // -------------------------------------------------------------
+    // Pasos en imágenes: cada paso de la respuesta con la lámina del instructivo (ADR-022).
+    // El índice (asistente_diapositivas.js) agrupa las láminas por página de Banner.
+    // -------------------------------------------------------------
+    var LAMINAS = window.CCEE_DIAPOSITIVAS || { laminas: [], paginas: {} };
+    var RAIZ_REPO = (function () {
+      var s = document.querySelector('script[src*="asistente_diapositivas.js"]');
+      try { return s ? new URL('../../../', s.src).href : ''; } catch (_) { return ''; }
+    })();
+    var PALABRAS_VACIAS = {};
+    ('ingrese ingresar presione presionar pulse boton botones campo campos pagina paginas banner seleccione ' +
+     'seleccionar haga clic click sobre para luego debe este esta estos estas informacion azul opcion desde donde ' +
+     'cada todos todas valor datos dato ejemplo siguiente primero final verifique revise escriba alumno estudiante ' +
+     'tambien solo puede pueden segun cual como bloque pestana').split(' ').forEach(function (p) { PALABRAS_VACIAS[p] = 1; });
+
+    function raices(texto, excluir) {
+      var vistas = {};
+      return (normalizar(texto).match(/[a-z0-9]{3,}/g) || []).filter(function (t) {
+        return (t.length > 3 || t === 'nrc') && !PALABRAS_VACIAS[t] && t !== excluir;
+      }).map(function (t) { return t.slice(0, 5); }).filter(function (r) {
+        if (vistas[r]) return false;
+        vistas[r] = 1;
+        return true;
+      });
+    }
+
+    var raicesLamina = {};
+    function raicesDe(i, excluir) {
+      if (!raicesLamina[i]) {
+        var l = LAMINAS.laminas[i];
+        raicesLamina[i] = { pie: raices(l.texto, excluir), contenido: raices(l.contenido, excluir) };
+      }
+      return raicesLamina[i];
+    }
+
+    function codigoDelPaso(texto) {
+      var codigos = String(texto).match(/\b[A-Z]{6,8}\b/g) || [];
+      for (var i = 0; i < codigos.length; i++) {
+        if (LAMINAS.paginas[codigos[i]]) return codigos[i];
+      }
+      if (/autoservicio/i.test(texto)) return 'AUTOSERVICIO';
+      if (/faculty/i.test(texto)) return 'FACULTY';
+      return '';
+    }
+
+    function pasosDeRespuesta(texto) {
+      var lineas = String(texto || '').split('\n');
+      var inicio = 0;
+      for (var i = 0; i < lineas.length; i++) {
+        if (/^#{1,4}\s*pasos\b/i.test(lineas[i].trim())) { inicio = i + 1; break; }
+      }
+      var pasos = [];
+      for (var j = inicio; j < lineas.length; j++) {
+        var l = lineas[j].trim();
+        if (inicio && /^#{1,4}\s/.test(l)) break;
+        var m = l.match(/^(\d+)[.)]\s+(.*)$/);
+        if (m) pasos.push({ num: m[1], texto: m[2].replace(/\*\*|`/g, '') });
+      }
+      if (!pasos.length) {  // sin lista numerada: una entrada por página mencionada
+        var vistos = {};
+        (String(texto).match(/\b[A-Z]{6,8}\b/g) || []).forEach(function (c) {
+          if (LAMINAS.paginas[c] && !vistos[c] && pasos.length < 4) {
+            vistos[c] = 1;
+            pasos.push({ num: String(pasos.length + 1), texto: 'Página ' + c });
+          }
+        });
+      }
+      return pasos;
+    }
+
+    function pasosConLaminas(texto) {
+      if (!RAIZ_REPO || !LAMINAS.laminas.length) return [];
+      var previo = null;
+      var codigoPrevio = codigoDelPaso(texto);  // un paso sin página sigue en la última nombrada (o en la primera de la respuesta)
+      return pasosDeRespuesta(texto).map(function (paso) {
+        var codigo = codigoDelPaso(paso.texto) || codigoPrevio;
+        codigoPrevio = codigo;
+        var pool = LAMINAS.paginas[codigo] || [];
+        var propias = raices(paso.texto, codigo.toLowerCase());
+        var mejor = -1, mejorPts = 0;
+        pool.forEach(function (i) {
+          var r = raicesDe(i, codigo.toLowerCase());
+          var pts = 0;
+          propias.forEach(function (t) {
+            if (r.pie.indexOf(t) !== -1) pts += 3;
+            if (r.contenido.indexOf(t) !== -1) pts += 1;
+          });
+          var l = LAMINAS.laminas[i];
+          if (pts && previo !== null && LAMINAS.laminas[previo].fuente === l.fuente && l.n >= LAMINAS.laminas[previo].n) pts += 0.5;
+          if (pts > mejorPts) { mejorPts = pts; mejor = i; }
+        });
+        if (mejorPts < 2) mejor = -1;  // una sola palabra suelta en el texto de la lámina no basta
+        if (mejor < 0 && pool.length) {
+          mejor = (previo !== null && pool.indexOf(previo) !== -1) ? previo : pool[0];
+        }
+        if (mejor >= 0) previo = mejor;
+        return { num: paso.num, texto: paso.texto, codigo: codigo, lamina: mejor >= 0 ? mejor : null };
+      });
+    }
+
+    var visorPasos = { pasos: [], idx: 0, completa: false };
+
+    function asegurarVisorPasos() {
+      var v = document.getElementById('ai-pasos-visor');
+      if (v) return v;
+      v = document.createElement('div');
+      v.id = 'ai-pasos-visor';
+      v.className = 'ai-pasos-visor';
+      v.hidden = true;
+      v.setAttribute('role', 'dialog');
+      v.setAttribute('aria-modal', 'true');
+      v.setAttribute('aria-label', 'Pasos en imágenes');
+      v.innerHTML = '<div class="aipv-panel">' +
+        '<div class="aipv-barra"><div class="aipv-cabecera"><span class="aipv-titulo">Pasos en imágenes</span>' +
+        '<span class="aipv-fuente"></span></div><div class="aipv-acciones">' +
+        '<button type="button" class="aipv-btn" data-aipv="completa">Ver diapositiva completa</button>' +
+        '<a class="aipv-btn" data-aipv="visor" target="_blank" rel="noopener">Abrir en el visor</a>' +
+        '<button type="button" class="aipv-btn aipv-cerrar" data-aipv="cerrar" aria-label="Cerrar">×</button></div></div>' +
+        '<div class="aipv-cuerpo"><ol class="aipv-pasos"></ol>' +
+        '<div class="aipv-lienzo"><p class="aipv-ref" hidden></p><div class="aipv-marco">' +
+        '<button type="button" class="aipv-nav" data-aipv="ant" aria-label="Paso anterior">‹</button>' +
+        '<img class="aipv-img" alt=""><p class="aipv-vacio" hidden>Este paso no tiene una lámina en los instructivos.</p>' +
+        '<button type="button" class="aipv-nav" data-aipv="sig" aria-label="Paso siguiente">›</button></div>' +
+        '<p class="aipv-pie"></p></div></div></div>';
+      v.addEventListener('click', function (e) {
+        if (e.target === v) return cerrarVisorPasos();
+        var accion = e.target.closest('[data-aipv]');
+        var item = e.target.closest('[data-aipv-paso]');
+        if (item) return pintarVisorPasos(Number(item.getAttribute('data-aipv-paso')));
+        if (!accion) return;
+        var a = accion.getAttribute('data-aipv');
+        if (a === 'cerrar') cerrarVisorPasos();
+        else if (a === 'ant') pintarVisorPasos(visorPasos.idx - 1);
+        else if (a === 'sig') pintarVisorPasos(visorPasos.idx + 1);
+        else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
+      });
+      document.body.appendChild(v);
+      return v;
+    }
+
+    function escaparHtml(t) {
+      return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function pintarVisorPasos(idx) {
+      var v = asegurarVisorPasos();
+      var pasos = visorPasos.pasos;
+      if (!pasos.length) return;
+      visorPasos.idx = Math.max(0, Math.min(pasos.length - 1, idx));
+      var paso = pasos[visorPasos.idx];
+      var l = paso.lamina !== null ? LAMINAS.laminas[paso.lamina] : null;
+      v.querySelector('.aipv-pasos').innerHTML = pasos.map(function (p, i) {
+        return '<li class="aipv-paso' + (i === visorPasos.idx ? ' activo' : '') + (p.lamina === null ? ' sin-img' : '') +
+          '" data-aipv-paso="' + i + '" title="' + (p.lamina === null ? 'Sin lámina en los instructivos' : 'Ver la lámina de este paso') + '">' +
+          '<span class="aipv-num">' + escaparHtml(p.num) + '</span><span class="aipv-texto">' +
+          (p.codigo && /^[A-Z]{6,8}$/.test(p.codigo) ? '<span class="ai-pill-screen">' + p.codigo + '</span> ' : '') +
+          escaparHtml(p.texto.replace(new RegExp('^\\s*' + (p.codigo || '#') + '\\s*:?\\s*'), '')) + '</span></li>';
+      }).join('');
+      var activo = v.querySelector('.aipv-paso.activo');
+      if (activo && activo.scrollIntoView) activo.scrollIntoView({ block: 'nearest' });
+      var img = v.querySelector('.aipv-img');
+      var vacio = v.querySelector('.aipv-vacio');
+      var ref = v.querySelector('.aipv-ref');
+      var visor = v.querySelector('[data-aipv="visor"]');
+      var completa = v.querySelector('[data-aipv="completa"]');
+      img.hidden = !l;
+      vacio.hidden = !!l;
+      completa.hidden = !l;
+      visor.hidden = !l;
+      ref.hidden = !(l && l.nota);
+      ref.textContent = l && l.nota ? l.nota : '';
+      if (l) {
+        img.src = new URL(visorPasos.completa ? l.completa : l.src, RAIZ_REPO).href;
+        img.alt = l.texto;
+        visor.href = new URL(l.visor, RAIZ_REPO).href;
+        completa.textContent = visorPasos.completa ? 'Ver solo el recorte' : 'Ver diapositiva completa';
+      }
+      v.querySelector('.aipv-fuente').textContent = l ? l.fuente + ' · diap. ' + l.n : '';
+      v.querySelector('.aipv-pie').textContent = 'Paso ' + paso.num + ' de ' + pasos[pasos.length - 1].num +
+        (l ? ' · ' + l.texto : ' · sin lámina en los instructivos');
+      v.querySelector('[data-aipv="ant"]').disabled = visorPasos.idx === 0;
+      v.querySelector('[data-aipv="sig"]').disabled = visorPasos.idx === pasos.length - 1;
+    }
+
+    function abrirVisorPasos(pasos) {
+      visorPasos.pasos = pasos;
+      visorPasos.completa = false;
+      var primero = 0;
+      for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
+      asegurarVisorPasos().hidden = false;
+      pintarVisorPasos(primero);
+    }
+
+    function cerrarVisorPasos() {
+      var v = document.getElementById('ai-pasos-visor');
+      if (v) v.hidden = true;
+    }
+
+    // El visor va antes que el drawer: Esc lo cierra a él solo y las flechas recorren los pasos.
+    document.addEventListener('keydown', function (e) {
+      var v = document.getElementById('ai-pasos-visor');
+      if (!v || v.hidden) return;
+      if (e.key === 'Escape') cerrarVisorPasos();
+      else if (e.key === 'ArrowLeft') pintarVisorPasos(visorPasos.idx - 1);
+      else if (e.key === 'ArrowRight') pintarVisorPasos(visorPasos.idx + 1);
+      else return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+
+    function agregarBotonPasos(card, respuesta) {
+      var pasos = pasosConLaminas(respuesta);
+      var conImagen = pasos.filter(function (p) { return p.lamina !== null; }).length;
+      if (!conImagen) return;
+      var caja = document.createElement('div');
+      caja.className = 'ai-pasos-img';
+      caja.innerHTML = '<button type="button" class="ai-btn-pasos-img">' +
+        '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 17l-5-5-7 7"></path></svg>' +
+        '<span>Ver los pasos en imágenes</span><span class="ai-btn-pasos-cuenta">' + conImagen + ' de ' + pasos.length + ' pasos</span></button>';
+      caja.querySelector('button').addEventListener('click', function () { abrirVisorPasos(pasos); });
+      card.appendChild(caja);
+    }
+
     async function enviarPregunta() {
       var txt = (promptInput.value || '').trim();
       if (!txt) return;
@@ -20140,6 +20584,7 @@ button.ai-fab:active,
         ? 'Por confirmar'
         : (/fuentes/i.test(res) ? 'Con fuentes' : 'Revisar evidencia');
       tempCard.innerHTML = '<div class="ai-msg-header"><span class="ai-msg-author">Asistente CCEE</span><span class="ai-msg-tag">' + estado + '</span></div>' + renderizarTexto(res);
+      if (estado !== 'Por confirmar') agregarBotonPasos(tempCard, res);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 

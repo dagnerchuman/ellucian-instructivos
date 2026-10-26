@@ -1,6 +1,6 @@
 """Qué diapositivas de los instructivos acompañan cada paso de las guías (ADR-022).
 
-- INSTRUCTIVOS: clave corta → id del visor (visor_instructivos/data.js) y título legible.
+- INSTRUCTIVOS: código corto → id del visor (visor_instructivos/data.js) y título legible.
 - TEMAS: un tema = una lista de diapositivas {instructivo, n, texto}. «texto» es el pie que se ve.
 - BASE: en los flujos base, el tema o la lista de cada nodo (s1, n3…).
 - REGLAS: en las casuísticas (scripts), el tema sale de la página del paso y de palabras de su fase.
@@ -9,7 +9,10 @@ Las diapositivas se convierten con herramientas/diapositivas.py. Si una lámina 
 agrega "caja": [izquierda, arriba, derecha, abajo]; si un número de la lámina no corresponde a la fila
 de la guía que se llama igual, agrega "sin_marca": [campo].
 """
+import json
 import re
+import sys
+from pathlib import Path
 
 INSTRUCTIVOS = {
     "1.1.1": {"id": "1.1.1_Definir_la_estructura_de_los_periodos_acade_micos", "titulo": "Instructivo 1.1.1 · Definir la estructura de los periodos académicos"},
@@ -46,6 +49,11 @@ INSTRUCTIVOS = {
 def _l(instructivo, *pares):
     """_l("5.3", (19, "texto"), (20, "texto")) → [{"instructivo", "n", "texto"}, …]"""
     return [{"instructivo": instructivo, "n": n, "texto": t} for n, t in pares]
+
+
+def _ref(nota, laminas):
+    """Láminas de referencia para una página que no sale en ningún instructivo: llevan la nota que lo explica."""
+    return [{**d, "nota": nota} for d in laminas]
 
 
 TEMAS = {
@@ -121,6 +129,23 @@ TEMAS = {
                          (18, "SVASVPR: lista de solicitudes con su número y estatus")),
     "svasvpr_atender": _l("4.3.2", (19, "SVASVPR: detalle y estatus de la solicitud"),
                           (20, "SVASVPR: comentarios interno y de respuesta")),
+    # Páginas que no salen en ningún instructivo: se muestra, rotulado, dónde el instructivo ve lo mismo
+    "ssasecq_ref": _ref("SSASECQ no sale en los instructivos. Referencia: los mismos datos del NRC en SSASECT (instructivo 5.3).",
+                        _l("5.3", (26, "SSASECT: número de NRC asignado al guardar"),
+                           (27, "SSASECT: cupo del NRC (máximo, real y restante)"))),
+    "shatfac_ref": _ref("SHATFAC no sale en los instructivos. Referencia: en el instructivo 3.3.1 la articulación se hace en SHATAEQ.",
+                        _l("3.3.1", (43, "SHATAEQ: articular las asignaturas"), (44, "SHATAEQ: resultado de la articulación"),
+                           (45, "SHATAEQ: créditos otorgados"))),
+    "shasmry_ref": _ref("SHASMRY no sale en los instructivos. Referencia: el instructivo 3.3.1 verifica la convalidación en SHATRNS.",
+                        _l("3.3.1", (50, "SHATRNS: asignaturas convalidadas al alumno"))),
+    "shaterm_ref": _ref("SHATERM no sale en los instructivos. Referencia: el pase a historia se verifica en la salida del proceso (7.1.9) y en la casilla «Pasada» de SFASLST (7.1.6).",
+                        _l("7.1.9", (27, "GJIREVO: revisar la salida del pase a historia"), (29, "GJIREVO: resultados del proceso")) +
+                        _l("7.1.6", (16, "SFASLST: «Pasada» marcada = nota en la historia"))),
+    "smipout_ref": _ref("SMIPOUT no sale en los instructivos. Referencia: el cumplimiento de cada área se ve en SMICRLT (instructivo 7.2.4).",
+                        _l("7.2.4", (64, "SMICRLT: requerimientos generales del programa"),
+                           (69, "SMICRLT: áreas con créditos y cursos otorgados"))),
+    "nota_manual_ref": _ref("La página para pasar la nota de la plataforma está por confirmar (U24). Referencia: ingreso de notas por SFASLST (instructivo 7.1.6).",
+                            _l("7.1.6", (15, "SFASLST: periodo y NRC"), (16, "SFASLST: calificación de cada alumno"))),
     "ssasect_liga": _l("5.3-ligas", (14, "SSASECT: nombre de la liga del NRC"), (15, "SSASECT: identificador de liga")),
     "ssadetl": _l("5.3-ligas", (16, "SSADETL: liga que se valida al inscribir"), (17, "SSADETL: conector de la liga"),
                   (18, "SSADETL: guardar la liga")),
@@ -163,6 +188,7 @@ CREAR_NRC = {
              (23, "Parte de periodo y horas crédito"), (24, "Calificable, horas de cobro, sin dispensa, y guardar"),
              (26, "Al guardar, Banner asigna el número de NRC")),
     "s3": _l("5.3", (27, "Detalles de ingreso: cupo del NRC y guardar")),
+    "s6": "ssasecq_ref",
     "s4": _l("5.3", (28, "Lugares reservados: regla nula y regla por criterio")),
     "s5": _l("5.3", (29, "Fechas de reunión: horas, días e indicador de sesión"),
              (30, "Créditos y ubicación: horas por semana calculadas")) +
@@ -177,7 +203,7 @@ BASE = {
     "crear-el-nrc": CREAR_NRC,
     "carga-lectiva": {"k1": "siainst", "k2": "ssasect_docente", "k3": "siaasgn"},
     "persona-y-admision": {"a1": "goamtch", "a2": "spaiden", "a3": "saaquik", "a4": "saaquik_curr", "a5": "sgastdn"},
-    "matricula-en-el-nrc": {"i2": "sfaregs_autorizar", "i3": "sfaregs_inscribir", "i4": "tsaarev", "i5": "sfaslst_lista"},
+    "matricula-en-el-nrc": {"i1": "ssasecq_ref", "i2": "sfaregs_autorizar", "i3": "sfaregs_inscribir", "i4": "tsaarev", "i5": "sfaslst_lista"},
     "notas-y-pase-a-historia": {"n1": "shaegbc", "n2": "shagcom", "n3": "soaatrk", "n4": "pasar_lista",
                                 "n5": "libro", "n6": "nota_final", "n7": "shrroll"},
     "ligas-teorico-y-club": {"g1": "scacrse_ligas", "g2": "ssasect_liga", "g3": "ssasect_liga", "g4": "ssadetl",
@@ -208,8 +234,30 @@ REGLAS = [
     ("SOATEST", r".", "soatest"), ("SCAPREQ", r".", "scapreq"), ("SFAROVR", r".", "sfarovr"), ("SFASRPO", r".", "sfasrpo"),
     ("SIAASGN", r".", "siaasgn"), ("SIAINST", r".", "siainst"),
     ("AUTOSERVICIO", r"solicitud", "solicitud_autoservicio"),
+    ("SSASECQ", r".", "ssasecq_ref"), ("SHATFAC", r".", "shatfac_ref"), ("SHASMRY", r".", "shasmry_ref"),
+    ("SHATERM", r".", "shaterm_ref"), ("SMIPOUT", r".", "smipout_ref"), ("NOTA", r".", "nota_manual_ref"),
     ("SVASVPR", r"buscar", "svasvpr_buscar"), ("SVASVPR", r".", "svasvpr_atender"),
 ]
+
+
+# Recorrido completo: la página de cada mensaje y su tema (primeras láminas del tema).
+RECORRIDO = {"SOATERM": "soaterm", "SSASECT": "ssasect_crear", "SIAASGN": "siaasgn", "GOAMTCH": "goamtch",
+             "SAAQUIK": "saaquik", "SFAREGS": "sfaregs_inscribir", "TSAAREV": "tsaarev", "Autoservicio": ["pasar_lista", "libro"],
+             "SHRROLL": "shrroll", "SMICRLT": "smicrlt"}
+
+
+def para_recorrido(paginas, por_tema=2):
+    """Láminas de las páginas que usa un actor del recorrido, sin repetir."""
+    lista, vistas = [], set()
+    for pagina in paginas:
+        temas = RECORRIDO.get(pagina) or []
+        for tema in [temas] if isinstance(temas, str) else temas:
+            for d in TEMAS[tema][:por_tema]:
+                lamina_id = (d["instructivo"], d["n"])
+                if lamina_id not in vistas:
+                    vistas.add(lamina_id)
+                    lista.append(d)
+    return lista
 
 
 def para(slug, paso, info):
@@ -226,3 +274,65 @@ def para(slug, paso, info):
         if pantalla == codigo and re.search(patron, fase):
             return list(TEMAS[tema])
     return []
+
+
+# --------------------------------------------------------------------------- asistente IA
+# El asistente muestra la lámina de cada paso de su respuesta. Este índice reúne, por página de Banner,
+# las láminas de TEMAS: por el prefijo del tema (sfaregs_…), por REGLAS, por el código al inicio del pie
+# («SHATAEQ: …») y por EXTRA_PAGINAS (términos fuera de los códigos).
+ASISTENTE_JS = Path(__file__).resolve().parent / "assets" / "asistente_diapositivas.js"
+EXTRA_PAGINAS = {
+    "AUTOSERVICIO": ["pasar_lista", "libro", "solicitud_autoservicio", "ligas_inscripcion"],
+    "FACULTY": ["pasar_lista", "libro"],
+    "STVTERM": ["periodo"], "STVPTRM": ["partes"],
+    "GJAPCTL": ["shrroll"], "SHRROLL": ["shrroll"], "GJIREVO": ["shrroll"],
+}
+
+
+def indice_asistente():
+    """{"laminas": [...], "paginas": {código: [índices de laminas]}} con rutas relativas a la raíz del repositorio."""
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    import diapositivas
+
+    laminas, posicion, paginas = [], {}, {}
+    for tema, lista in TEMAS.items():
+        codigos = {p for p, _, t in REGLAS if t == tema} | {p for p, temas in EXTRA_PAGINAS.items() if tema in temas}
+        prefijo = tema.split("_")[0].upper()
+        if re.fullmatch(r"[GSTF][A-Z]{5,7}", prefijo):  # código de página (sfaregs_…), no «periodo» ni «partes»
+            codigos.add(prefijo)
+        for d in lista:
+            m = re.match(r"([A-Z]{6,8}):", d["texto"])
+            if m:
+                codigos.add(m.group(1))
+        for d in lista:
+            lamina_id = (d["instructivo"], d["n"])
+            if lamina_id not in posicion:
+                inst = INSTRUCTIVOS[d["instructivo"]]
+                recorte = diapositivas.recorte(inst["id"], d["n"])
+                if not recorte:
+                    continue
+                posicion[lamina_id] = len(laminas)
+                contenido = " ".join(l["texto"] for l in diapositivas.texto_diapositiva(inst["id"], d["n"]))
+                laminas.append({
+                    "src": recorte, "completa": diapositivas.diapositiva(inst["id"], d["n"]),
+                    "visor": f"visor_instructivos/index.html?p={inst['id']}&d={d['n']}",
+                    "fuente": inst["titulo"], "n": d["n"], "texto": d["texto"], "nota": d.get("nota", ""),
+                    "contenido": contenido[:600],
+                })
+            for codigo in sorted(codigos):
+                indices = paginas.setdefault(codigo, [])
+                if posicion[lamina_id] not in indices:
+                    indices.append(posicion[lamina_id])
+    paginas = {k: v for k, v in paginas.items() if re.fullmatch(r"[A-Z]{6,8}|AUTOSERVICIO|FACULTY", k)}
+    return {"laminas": laminas, "paginas": paginas}
+
+
+def escribir_indice_asistente():
+    """Escribe assets/asistente_diapositivas.js; devuelve (ruta, número de láminas)."""
+    datos = indice_asistente()
+    ASISTENTE_JS.write_text(
+        "/* Generado por herramientas/diagramas/diapositivas_pasos.py (ADR-022). No se edita a mano.\n"
+        "   Láminas de los instructivos por página de Banner, para las respuestas del asistente. */\n"
+        "window.CCEE_DIAPOSITIVAS = " + json.dumps(datos, ensure_ascii=False, separators=(",", ":")) + ";\n",
+        encoding="utf-8")
+    return ASISTENTE_JS, len(datos["laminas"])

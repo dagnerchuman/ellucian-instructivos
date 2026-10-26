@@ -2733,6 +2733,26 @@ html:not([data-theme="dark"]) .guia-diapos {
   font-size: 0.72rem;
   opacity: 0.75;
 }
+/* Lámina de referencia (la página no sale en los instructivos) y paso sin lámina */
+.guia-diapos-ref,
+.gdv-ref {
+  margin: 0 0 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0.35rem;
+  background: rgba(245, 158, 11, 0.12);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+.guia-diapos-aviso {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px dashed rgba(148, 163, 184, 0.55);
+  border-radius: 0.45rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
 .guia-diapos {
   flex: 0 0 auto;
 }

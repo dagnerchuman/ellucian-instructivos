@@ -16531,6 +16531,26 @@ html:not([data-theme="dark"]) .guia-diapos {
   font-size: 0.72rem;
   opacity: 0.75;
 }
+/* Lámina de referencia (la página no sale en los instructivos) y paso sin lámina */
+.guia-diapos-ref,
+.gdv-ref {
+  margin: 0 0 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0.35rem;
+  background: rgba(245, 158, 11, 0.12);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+.guia-diapos-aviso {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px dashed rgba(148, 163, 184, 0.55);
+  border-radius: 0.45rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
 .guia-diapos {
   flex: 0 0 auto;
 }
@@ -17769,6 +17789,198 @@ button.ai-fab:active,
   }
 }
 
+/* ==========================================================================
+   Pasos en imágenes: botón de la respuesta y visor (imagen 3/4, pasos 1/4)
+   ========================================================================== */
+.ai-pasos-img {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(124, 58, 237, 0.18);
+}
+.ai-btn-pasos-img {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid rgba(124, 58, 237, 0.45);
+  border-radius: 0.6rem;
+  background: rgba(124, 58, 237, 0.08);
+  color: #6d28d9;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.ai-btn-pasos-img:hover,
+.ai-btn-pasos-img:focus-visible {
+  background: rgba(124, 58, 237, 0.16);
+  border-color: #7c3aed;
+  outline: none;
+}
+.ai-btn-pasos-cuenta {
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #5b21b6;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.ai-pasos-visor {
+  position: fixed;
+  inset: 0;
+  z-index: 1000001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(15, 23, 42, 0.78);
+  color: #0f172a;
+  font-family: inherit;
+}
+.ai-pasos-visor[hidden] { display: none; }
+.aipv-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(1400px, 100%);
+  max-height: 100%;
+  border-radius: 0.9rem;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.45);
+  overflow: hidden;
+}
+.aipv-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+.aipv-cabecera { display: flex; flex-direction: column; gap: 0.1rem; }
+.aipv-titulo { font-size: 0.95rem; font-weight: 700; color: #5b21b6; }
+.aipv-fuente { font-size: 0.78rem; color: #475569; }
+.aipv-acciones { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.aipv-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.38rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+.aipv-btn:hover { border-color: #7c3aed; }
+.aipv-btn[hidden] { display: none; }
+.aipv-cerrar { font-size: 1.1rem; padding: 0.2rem 0.6rem; }
+.aipv-cuerpo {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) 3fr;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem 1rem;
+  min-height: 0;
+  overflow: hidden;
+}
+.aipv-pasos {
+  margin: 0;
+  padding: 0.3rem;
+  list-style: none;
+  max-height: calc(100vh - 11rem);
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  background: #f8fafc;
+}
+.aipv-paso {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.45rem;
+  align-items: start;
+  padding: 0.45rem 0.5rem;
+  border-radius: 0.45rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.aipv-paso:hover { background: #ede9fe; }
+.aipv-paso.activo { background: #7c3aed; color: #ffffff; }
+.aipv-paso.activo .ai-pill-screen { background: #ffffff; color: #5b21b6; border-color: #ffffff; }
+.aipv-paso.sin-img { opacity: 0.6; }
+.aipv-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 999px;
+  background: #166534;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.aipv-paso.sin-img .aipv-num { background: #94a3b8; }
+.aipv-lienzo { display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+.aipv-ref {
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0.35rem;
+  background: #fef3c7;
+  color: #78350f;
+  font-size: 0.78rem;
+}
+.aipv-ref[hidden] { display: none; }
+.aipv-marco {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  background: #ffffff;
+}
+.aipv-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 13rem);
+  object-fit: contain;
+}
+.aipv-img[hidden] { display: none; }
+.aipv-vacio { margin: 0; padding: 2rem; color: #64748b; font-size: 0.9rem; }
+.aipv-vacio[hidden] { display: none; }
+.aipv-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.4rem;
+  height: 2.4rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.65);
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.aipv-nav[data-aipv="ant"] { left: 0.5rem; }
+.aipv-nav[data-aipv="sig"] { right: 0.5rem; }
+.aipv-nav:disabled { opacity: 0.25; cursor: default; }
+.aipv-pie { margin: 0; text-align: center; font-size: 0.8rem; color: #334155; }
+@media (max-width: 900px) {
+  .aipv-cuerpo { grid-template-columns: 1fr; overflow-y: auto; }
+  .aipv-pasos { max-height: 12rem; order: 2; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -17926,9 +18138,10 @@ button.ai-fab:active,
 <!-- === /ASISTENTE IA CENTROS EMPRESARIALES USS === -->
 
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
+<script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
 (function () {
-  var GUIA_MAP = {"g1": {"fase": "Paso 1: Catálogo y Horarios (SCACRSE)", "pantalla": "SCACRSE", "hito": "Asignatura configurada con Teoría y Práctica en el catálogo", "instrucciones": [{"campo": "Formulario", "valor": "SCACRSE", "tipo": "Catálogo base", "detalle": "Comprobar que el curso de Idiomas (ej. ESEP 02456 BASIC I, 02457 BASIC II, 02458 BASIC III) tenga dos tipos de horario: TEO (Teoría) y PRA (Práctica)."}, {"campo": "Créditos y Horas", "valor": "HT: 4 | HP: 3 | 4 Créditos", "tipo": "Estructura académica", "detalle": "La teoría concentra la carga académica evaluable; la práctica es el espacio complementario de conversación."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/011.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/011.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=11", "fuente": "Instructivo 5.3 · Crear ligas", "n": 11, "texto": "Premisa: el curso tiene más de un tipo de horario en SCACRSE", "lineas": [{"num": "", "texto": "Premisa: El curso o asignatura tiene más de un tipo de Horario SCACRSELas ligas unen dos o más NRCs de una misma asignatura"}, {"num": "", "texto": "Se requiere unir el NRC de la teoría y la práctica"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/012.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/012.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=12", "fuente": "Instructivo 5.3 · Crear ligas", "n": 12, "texto": "Premisa: horas crédito del NRC teórico", "lineas": [{"num": "", "texto": "Premisa: Tipo de horario principal: Teoría - Los NRC deben tener las Horas créditos totales que corresponden (ejemplo: 4 créditos según definición de SCACRSE) - Debe estar marcado el flag de Calificable - No debe estar marcado el falg de Dispensa de colegiatura y cuotas para que se incluya los créditos en el total de créditos a cobrar.Tipo de horario diferente al principal: Laboratorio - Los NRC en el campo de Horas crédito deberían estar con cero (0) para que no se sumen en el total de créditos inscritos. - No debe estar marcado el flag de Calificable - Debe estar marcado el falg de Dispensa de colegiatura y cuotas para que NO se incluya los créditos en el total de créditos a cobrar."}], "marcas": {}}]}, "g2": {"fase": "Paso 2: NRC Principal Teórico Virtual (SSASECT)", "pantalla": "SSASECT", "hito": "Sección AT · Liga TA · Calificable ☑ · Sin Dispensa ☐", "instrucciones": [{"campo": "Encabezado", "valor": "Periodo 202656 | Materia ESEP | Curso 02458", "tipo": "Identificación", "detalle": "Crear sección AT (ej. NRC 10010 de Basic III)."}, {"campo": "Tipo de horario", "valor": "TEO (Teórico)", "tipo": "Horario principal", "detalle": "Método educativo: VIRT (Virtual). Aula: SAUVIR / SALA-VIRT."}, {"campo": "Horas y Créditos", "valor": "4.000 créditos / 4.000 cobro", "tipo": "Obligatorio", "detalle": "Lleva los créditos completos de la asignatura."}, {"campo": "Indicadores de Clase", "valor": "Calificable ☑ | Dispensa ☐", "tipo": "Regla obligatoria", "detalle": "Calificable MARCADO y Dispensa de colegiatura DESMARCADA para liquidar el cobro regular."}, {"campo": "Identificador de liga", "valor": "TA (Teoría Sección A)", "tipo": "Clave de Liga", "detalle": "Ingresar código TA en campo Identificador de liga de SSASECT. Guardar (F10)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/014.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/014.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=14", "fuente": "Instructivo 5.3 · Crear ligas", "n": 14, "texto": "SSASECT: nombre de la liga del NRC", "lineas": [{"num": "", "texto": "En la página SSASECT se le asigna un nombre a la liga:"}, {"num": "1", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "2", "texto": "En la pestaña de Información de curso adiciona el nombre de la liga (Campo de 2 caracteres)"}, {"num": "3", "texto": "Dejar el nombre de la liga que haga referencia al tipo de horario. Liga TE del tipo de horario TEO - Teoría"}, {"num": "4", "texto": "Guarde la información"}], "marcas": {"1": "3"}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/015.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=15", "fuente": "Instructivo 5.3 · Crear ligas", "n": 15, "texto": "SSASECT: identificador de liga", "lineas": [{"num": "", "texto": "En la página SSASECT se le asigna un nombre a la liga:"}, {"num": "1", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "2", "texto": "En la pestaña de Información de curso adiciona el nombre de la liga (Campo de 2 caracteres)"}, {"num": "3", "texto": "Dejar el nombre de la liga que haga referencia al tipo de horario. Liga PR del tipo de horario PRA - Práctica"}, {"num": "4", "texto": "Guarde la información"}], "marcas": {"1": "3"}}]}, "g3": {"fase": "Paso 3: NRCs Secundarios Prácticos (SSASECT)", "pantalla": "SSASECT", "hito": "Secciones AC1 (Presencial) y AC2/AC3 (Virtual) · Liga PA · No Calificable ☐ · Dispensa ☑", "instrucciones": [{"campo": "Segundo curso (AC1)", "valor": "Presencial y Práctico (SPOSGR)", "tipo": "Regla Institucional", "detalle": "Regla confirmada: El segundo curso (sección AC1, ej. 10011) es PRESENCIAL en aulas de Posgrado (SPOSGR A-21 / A-11 / A-31)."}, {"campo": "Resto de cursos (AC2, AC3)", "valor": "Virtual y Práctico (SAUVIR)", "tipo": "Regla Institucional", "detalle": "Regla confirmada: Las demás secciones de práctica (AC2, AC3, ej. 10013, 10024) son VIRTUALES en SAUVIR SALA-VIRT."}, {"campo": "Tipo de horario", "valor": "PRA (Práctico)", "tipo": "Horario secundario", "detalle": "Asignado a las sesiones de práctica / club de conversación."}, {"campo": "Créditos y Cobro", "valor": "0 créditos (o con dispensa)", "tipo": "Configuración", "detalle": "Horas crédito y cobro con dispensa para no duplicar el costo de la matrícula."}, {"campo": "Indicadores de Clase", "valor": "Calificable ☐ | Dispensa ☑", "tipo": "Regla obligatoria", "detalle": "Calificable DESMARCADO y Dispensa de colegiatura y cuotas MARCADA."}, {"campo": "Identificador de liga", "valor": "PA (Práctica Sección A)", "tipo": "Clave de Liga", "detalle": "Ingresar código PA en campo Identificador de liga de SSASECT. Guardar (F10)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/014.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/014.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=14", "fuente": "Instructivo 5.3 · Crear ligas", "n": 14, "texto": "SSASECT: nombre de la liga del NRC", "lineas": [{"num": "", "texto": "En la página SSASECT se le asigna un nombre a la liga:"}, {"num": "1", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "2", "texto": "En la pestaña de Información de curso adiciona el nombre de la liga (Campo de 2 caracteres)"}, {"num": "3", "texto": "Dejar el nombre de la liga que haga referencia al tipo de horario. Liga TE del tipo de horario TEO - Teoría"}, {"num": "4", "texto": "Guarde la información"}], "marcas": {"2": "3"}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/015.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=15", "fuente": "Instructivo 5.3 · Crear ligas", "n": 15, "texto": "SSASECT: identificador de liga", "lineas": [{"num": "", "texto": "En la página SSASECT se le asigna un nombre a la liga:"}, {"num": "1", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "2", "texto": "En la pestaña de Información de curso adiciona el nombre de la liga (Campo de 2 caracteres)"}, {"num": "3", "texto": "Dejar el nombre de la liga que haga referencia al tipo de horario. Liga PR del tipo de horario PRA - Práctica"}, {"num": "4", "texto": "Guarde la información"}], "marcas": {"2": "3"}}]}, "g4": {"fase": "Paso 4: Vinculación Bidireccional (SSADETL)", "pantalla": "SSADETL", "hito": "Vinculación completa en ambos sentidos", "instrucciones": [{"campo": "Acceso", "valor": "Menú Relacionados → SSADETL", "tipo": "Navegación", "detalle": "Desde SSASECT ir a SSADETL con el periodo y el NRC cargado."}, {"campo": "Pestaña", "valor": "Correquisitos y ligas de sección", "tipo": "Configuración", "detalle": "Ir a la pestaña 2 de SSADETL."}, {"campo": "En el NRC Teórico (TA)", "valor": "Conector de liga: PA", "tipo": "Enlace", "detalle": "En el NRC de Teoría (ej. 10010), colocar PA en el campo Conector de liga y Guardar (F10)."}, {"campo": "En los NRC Prácticos (PA)", "valor": "Conector de liga: TA", "tipo": "Enlace", "detalle": "En cada NRC de Práctica (ej. 10011, 10013, 10024), colocar TA en Conector de liga y Guardar (F10)."}, {"campo": "Escenario", "valor": "Muchos a muchos con restricción", "tipo": "Lógica", "detalle": "Al elegir el teórico sección AT (TA), el estudiante debe escoger obligatoriamente una de las prácticas PA (AC1 presencial o AC2/AC3 virtual)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/016.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=16", "fuente": "Instructivo 5.3 · Crear ligas", "n": 16, "texto": "SSADETL: liga que se valida al inscribir", "lineas": [{"num": "", "texto": "Univer las ligas - SSADETL"}, {"num": "", "texto": "En la página SSADETL se le asigna la liga que se va a validar que tenga el estudiante al momento de inscribir el NRC de la teoría, en este caso 10023"}, {"num": "6", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "7", "texto": "En la pestaña de Correquisitos y ligas de sección adiciona el nombre de la liga del otro u otros tipos de horario"}, {"num": "8", "texto": "Guarde la información"}, {"num": "9", "texto": "Repita los pasos con el tipo de horario de Práctica"}, {"num": "", "texto": "EL NRC DE LA TEORÍA (10023) SE UNE A LA LIGA DE LA PRÁCTICA"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/017.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/017.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=17", "fuente": "Instructivo 5.3 · Crear ligas", "n": 17, "texto": "SSADETL: conector de la liga", "lineas": [{"num": "", "texto": "Univer las ligas - SSADETL"}, {"num": "", "texto": "En la página SSADETL se le asigna la liga que se va a validar que tenga el estudiante al momento de inscribir el NRC de la teoría, en este caso 10023"}, {"num": "6", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "7", "texto": "En la pestaña de Correquisitos y ligas de sección adiciona el nombre de la liga del otro u otros tipos de horario"}, {"num": "8", "texto": "Guarde la información"}, {"num": "", "texto": "EL NRC DE LA TEORÍA (10023) SE UNE A LA LIGA DE LA PRÁCTICA"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/018.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/018.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=18", "fuente": "Instructivo 5.3 · Crear ligas", "n": 18, "texto": "SSADETL: guardar la liga", "lineas": [{"num": "", "texto": "Univer las ligas - SSADETL"}, {"num": "", "texto": "En la página SSADETL se le asigna la liga que se va a validar que tenga el estudiante al momento de inscribir el NRC de la teoría, en este caso 10023"}, {"num": "9", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "10", "texto": "En la pestaña de Correquisitos y ligas de sección adiciona el nombre de la liga del otro u otros tipos de horario"}, {"num": "11", "texto": "Guarde la información"}, {"num": "", "texto": "EL NRC DE LA TEORÍA (10029) SE UNE A LA LIGA DE LA TEORÍA"}], "marcas": {}}]}, "g5": {"fase": "Paso 5: Inscripción Conjunta Obligatoria", "pantalla": "SFAREGS / Web", "hito": "Matrícula exigida de Teórico + Práctico juntos", "instrucciones": [{"campo": "Control SOATERM", "valor": "Verificación Ligas en Fatal", "tipo": "Restricción", "detalle": "Banner bloquea la inscripción si el alumno solo ingresa el teórico sin su práctica ligada."}, {"campo": "Inscripción Backoffice", "valor": "Digitar Teórico + Práctico (código RE)", "tipo": "Inscripción", "detalle": "Ingresar en SFAREGS el NRC teórico (ej. 10010) junto al práctico seleccionado (ej. 10011 o 10024) y Guardar (F10)."}, {"campo": "Autoservicio Web", "valor": "Panel «Secciones ligadas»", "tipo": "Autoservicio", "detalle": "El alumno marca su clase teórica y el autoservicio le despliega para elegir el grupo de práctica correspondiente."}, {"campo": "Tasación", "valor": "Estimación de cuota procesada", "tipo": "Financiero", "detalle": "Solo se liquidan los 4 créditos del NRC teórico principal; la práctica queda dispensada."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/024.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=24", "fuente": "Instructivo 5.3 · Crear ligas", "n": 24, "texto": "Inscripción por autoservicio con ligas", "lineas": [{"num": "", "texto": "Inscripción por autoservicio"}, {"num": "", "texto": "El estudiante al seleccionar el NRC de teoría: 10023, debe escoger el NRC 10029 de la práctica"}, {"num": "", "texto": "El estudiante al seleccionar el NRC de teoría 10031, debe escoger el NRC 10030 de la práctica."}, {"num": "", "texto": "Al ingresar al autoservicio el estudiante va a poder visualizar los NRC que están ligados."}], "marcas": {}}]}, "g6": {"fase": "Paso 6: Participante Matriculado", "pantalla": "SFASLST / SSASECT", "hito": "Alumno matriculado en ambos NRC", "instrucciones": [{"campo": "Estado de Matrícula", "valor": "Estatus RE en ambos NRCs", "tipo": "Verificación", "detalle": "El estudiante figura formalmente matriculado en la teoría y en su grupo práctico."}, {"campo": "Listas de Clase (SFASLST)", "valor": "Listas docentes independientes", "tipo": "Académico", "detalle": "Docente de teoría evalúa la nota final; docente de práctica supervisa asistencia y avance."}, {"campo": "Aforo SSASECT", "valor": "Vacantes descontadas en ambos", "tipo": "Control", "detalle": "El contador Actual suma 1 y Remaining resta 1 en cada sección involucrada."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/015.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=15", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 15, "texto": "SFASLST: periodo y NRC", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "", "texto": "En la página SFASLST:"}, {"num": "1", "texto": "Ingrese el período y NRC para el cual desea ingresar las calificaciones."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}]}};
+  var GUIA_MAP = {"g1": {"fase": "Paso 1: Catálogo y Horarios (SCACRSE)", "pantalla": "SCACRSE", "hito": "Asignatura configurada con Teoría y Práctica en el catálogo", "instrucciones": [{"campo": "Formulario", "valor": "SCACRSE", "tipo": "Catálogo base", "detalle": "Comprobar que el curso de Idiomas (ej. ESEP 02456 BASIC I, 02457 BASIC II, 02458 BASIC III) tenga dos tipos de horario: TEO (Teoría) y PRA (Práctica)."}, {"campo": "Créditos y Horas", "valor": "HT: 4 | HP: 3 | 4 Créditos", "tipo": "Estructura académica", "detalle": "La teoría concentra la carga académica evaluable; la práctica es el espacio complementario de conversación."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/011.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/011.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=11", "fuente": "Instructivo 5.3 · Crear ligas", "n": 11, "texto": "Premisa: el curso tiene más de un tipo de horario en SCACRSE", "nota": "", "lineas": [{"num": "", "texto": "Premisa: El curso o asignatura tiene más de un tipo de Horario SCACRSELas ligas unen dos o más NRCs de una misma asignatura"}, {"num": "", "texto": "Se requiere unir el NRC de la teoría y la práctica"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/012.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/012.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=12", "fuente": "Instructivo 5.3 · Crear ligas", "n": 12, "texto": "Premisa: horas crédito del NRC teórico", "nota": "", "lineas": [{"num": "", "texto": "Premisa: Tipo de horario principal: Teoría - Los NRC deben tener las Horas créditos totales que corresponden (ejemplo: 4 créditos según definición de SCACRSE) - Debe estar marcado el flag de Calificable - No debe estar marcado el falg de Dispensa de colegiatura y cuotas para que se incluya los créditos en el total de créditos a cobrar.Tipo de horario diferente al principal: Laboratorio - Los NRC en el campo de Horas crédito deberían estar con cero (0) para que no se sumen en el total de créditos inscritos. - No debe estar marcado el flag de Calificable - Debe estar marcado el falg de Dispensa de colegiatura y cuotas para que NO se incluya los créditos en el total de créditos a cobrar."}], "marcas": {}}]}, "g2": {"fase": "Paso 2: NRC Principal Teórico Virtual (SSASECT)", "pantalla": "SSASECT", "hito": "Sección AT · Liga TA · Calificable ☑ · Sin Dispensa ☐", "instrucciones": [{"campo": "Encabezado", "valor": "Periodo 202656 | Materia ESEP | Curso 02458", "tipo": "Identificación", "detalle": "Crear sección AT (ej. NRC 10010 de Basic III)."}, {"campo": "Tipo de horario", "valor": "TEO (Teórico)", "tipo": "Horario principal", "detalle": "Método educativo: VIRT (Virtual). Aula: SAUVIR / SALA-VIRT."}, {"campo": "Horas y Créditos", "valor": "4.000 créditos / 4.000 cobro", "tipo": "Obligatorio", "detalle": "Lleva los créditos completos de la asignatura."}, {"campo": "Indicadores de Clase", "valor": "Calificable ☑ | Dispensa ☐", "tipo": "Regla obligatoria", "detalle": "Calificable MARCADO y Dispensa de colegiatura DESMARCADA para liquidar el cobro regular."}, {"campo": "Identificador de liga", "valor": "TA (Teoría Sección A)", "tipo": "Clave de Liga", "detalle": "Ingresar código TA en campo Identificador de liga de SSASECT. Guardar (F10)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/014.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/014.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=14", "fuente": "Instructivo 5.3 · Crear ligas", "n": 14, "texto": "SSASECT: nombre de la liga del NRC", "nota": "", "lineas": [{"num": "", "texto": "En la página SSASECT se le asigna un nombre a la liga:"}, {"num": "1", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "2", "texto": "En la pestaña de Información de curso adiciona el nombre de la liga (Campo de 2 caracteres)"}, {"num": "3", "texto": "Dejar el nombre de la liga que haga referencia al tipo de horario. Liga TE del tipo de horario TEO - Teoría"}, {"num": "4", "texto": "Guarde la información"}], "marcas": {"1": "3"}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/015.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=15", "fuente": "Instructivo 5.3 · Crear ligas", "n": 15, "texto": "SSASECT: identificador de liga", "nota": "", "lineas": [{"num": "", "texto": "En la página SSASECT se le asigna un nombre a la liga:"}, {"num": "1", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "2", "texto": "En la pestaña de Información de curso adiciona el nombre de la liga (Campo de 2 caracteres)"}, {"num": "3", "texto": "Dejar el nombre de la liga que haga referencia al tipo de horario. Liga PR del tipo de horario PRA - Práctica"}, {"num": "4", "texto": "Guarde la información"}], "marcas": {"1": "3"}}]}, "g3": {"fase": "Paso 3: NRCs Secundarios Prácticos (SSASECT)", "pantalla": "SSASECT", "hito": "Secciones AC1 (Presencial) y AC2/AC3 (Virtual) · Liga PA · No Calificable ☐ · Dispensa ☑", "instrucciones": [{"campo": "Segundo curso (AC1)", "valor": "Presencial y Práctico (SPOSGR)", "tipo": "Regla Institucional", "detalle": "Regla confirmada: El segundo curso (sección AC1, ej. 10011) es PRESENCIAL en aulas de Posgrado (SPOSGR A-21 / A-11 / A-31)."}, {"campo": "Resto de cursos (AC2, AC3)", "valor": "Virtual y Práctico (SAUVIR)", "tipo": "Regla Institucional", "detalle": "Regla confirmada: Las demás secciones de práctica (AC2, AC3, ej. 10013, 10024) son VIRTUALES en SAUVIR SALA-VIRT."}, {"campo": "Tipo de horario", "valor": "PRA (Práctico)", "tipo": "Horario secundario", "detalle": "Asignado a las sesiones de práctica / club de conversación."}, {"campo": "Créditos y Cobro", "valor": "0 créditos (o con dispensa)", "tipo": "Configuración", "detalle": "Horas crédito y cobro con dispensa para no duplicar el costo de la matrícula."}, {"campo": "Indicadores de Clase", "valor": "Calificable ☐ | Dispensa ☑", "tipo": "Regla obligatoria", "detalle": "Calificable DESMARCADO y Dispensa de colegiatura y cuotas MARCADA."}, {"campo": "Identificador de liga", "valor": "PA (Práctica Sección A)", "tipo": "Clave de Liga", "detalle": "Ingresar código PA en campo Identificador de liga de SSASECT. Guardar (F10)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/014.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/014.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=14", "fuente": "Instructivo 5.3 · Crear ligas", "n": 14, "texto": "SSASECT: nombre de la liga del NRC", "nota": "", "lineas": [{"num": "", "texto": "En la página SSASECT se le asigna un nombre a la liga:"}, {"num": "1", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "2", "texto": "En la pestaña de Información de curso adiciona el nombre de la liga (Campo de 2 caracteres)"}, {"num": "3", "texto": "Dejar el nombre de la liga que haga referencia al tipo de horario. Liga TE del tipo de horario TEO - Teoría"}, {"num": "4", "texto": "Guarde la información"}], "marcas": {"2": "3"}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/015.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=15", "fuente": "Instructivo 5.3 · Crear ligas", "n": 15, "texto": "SSASECT: identificador de liga", "nota": "", "lineas": [{"num": "", "texto": "En la página SSASECT se le asigna un nombre a la liga:"}, {"num": "1", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "2", "texto": "En la pestaña de Información de curso adiciona el nombre de la liga (Campo de 2 caracteres)"}, {"num": "3", "texto": "Dejar el nombre de la liga que haga referencia al tipo de horario. Liga PR del tipo de horario PRA - Práctica"}, {"num": "4", "texto": "Guarde la información"}], "marcas": {"2": "3"}}]}, "g4": {"fase": "Paso 4: Vinculación Bidireccional (SSADETL)", "pantalla": "SSADETL", "hito": "Vinculación completa en ambos sentidos", "instrucciones": [{"campo": "Acceso", "valor": "Menú Relacionados → SSADETL", "tipo": "Navegación", "detalle": "Desde SSASECT ir a SSADETL con el periodo y el NRC cargado."}, {"campo": "Pestaña", "valor": "Correquisitos y ligas de sección", "tipo": "Configuración", "detalle": "Ir a la pestaña 2 de SSADETL."}, {"campo": "En el NRC Teórico (TA)", "valor": "Conector de liga: PA", "tipo": "Enlace", "detalle": "En el NRC de Teoría (ej. 10010), colocar PA en el campo Conector de liga y Guardar (F10)."}, {"campo": "En los NRC Prácticos (PA)", "valor": "Conector de liga: TA", "tipo": "Enlace", "detalle": "En cada NRC de Práctica (ej. 10011, 10013, 10024), colocar TA en Conector de liga y Guardar (F10)."}, {"campo": "Escenario", "valor": "Muchos a muchos con restricción", "tipo": "Lógica", "detalle": "Al elegir el teórico sección AT (TA), el estudiante debe escoger obligatoriamente una de las prácticas PA (AC1 presencial o AC2/AC3 virtual)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/016.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=16", "fuente": "Instructivo 5.3 · Crear ligas", "n": 16, "texto": "SSADETL: liga que se valida al inscribir", "nota": "", "lineas": [{"num": "", "texto": "Univer las ligas - SSADETL"}, {"num": "", "texto": "En la página SSADETL se le asigna la liga que se va a validar que tenga el estudiante al momento de inscribir el NRC de la teoría, en este caso 10023"}, {"num": "6", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "7", "texto": "En la pestaña de Correquisitos y ligas de sección adiciona el nombre de la liga del otro u otros tipos de horario"}, {"num": "8", "texto": "Guarde la información"}, {"num": "9", "texto": "Repita los pasos con el tipo de horario de Práctica"}, {"num": "", "texto": "EL NRC DE LA TEORÍA (10023) SE UNE A LA LIGA DE LA PRÁCTICA"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/017.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/017.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=17", "fuente": "Instructivo 5.3 · Crear ligas", "n": 17, "texto": "SSADETL: conector de la liga", "nota": "", "lineas": [{"num": "", "texto": "Univer las ligas - SSADETL"}, {"num": "", "texto": "En la página SSADETL se le asigna la liga que se va a validar que tenga el estudiante al momento de inscribir el NRC de la teoría, en este caso 10023"}, {"num": "6", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "7", "texto": "En la pestaña de Correquisitos y ligas de sección adiciona el nombre de la liga del otro u otros tipos de horario"}, {"num": "8", "texto": "Guarde la información"}, {"num": "", "texto": "EL NRC DE LA TEORÍA (10023) SE UNE A LA LIGA DE LA PRÁCTICA"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/018.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/018.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=18", "fuente": "Instructivo 5.3 · Crear ligas", "n": 18, "texto": "SSADETL: guardar la liga", "nota": "", "lineas": [{"num": "", "texto": "Univer las ligas - SSADETL"}, {"num": "", "texto": "En la página SSADETL se le asigna la liga que se va a validar que tenga el estudiante al momento de inscribir el NRC de la teoría, en este caso 10023"}, {"num": "9", "texto": "Ingrese o seleccione el período académico y el NRC"}, {"num": "10", "texto": "En la pestaña de Correquisitos y ligas de sección adiciona el nombre de la liga del otro u otros tipos de horario"}, {"num": "11", "texto": "Guarde la información"}, {"num": "", "texto": "EL NRC DE LA TEORÍA (10029) SE UNE A LA LIGA DE LA TEORÍA"}], "marcas": {}}]}, "g5": {"fase": "Paso 5: Inscripción Conjunta Obligatoria", "pantalla": "SFAREGS / Web", "hito": "Matrícula exigida de Teórico + Práctico juntos", "instrucciones": [{"campo": "Control SOATERM", "valor": "Verificación Ligas en Fatal", "tipo": "Restricción", "detalle": "Banner bloquea la inscripción si el alumno solo ingresa el teórico sin su práctica ligada."}, {"campo": "Inscripción Backoffice", "valor": "Digitar Teórico + Práctico (código RE)", "tipo": "Inscripción", "detalle": "Ingresar en SFAREGS el NRC teórico (ej. 10010) junto al práctico seleccionado (ej. 10011 o 10024) y Guardar (F10)."}, {"campo": "Autoservicio Web", "valor": "Panel «Secciones ligadas»", "tipo": "Autoservicio", "detalle": "El alumno marca su clase teórica y el autoservicio le despliega para elegir el grupo de práctica correspondiente."}, {"campo": "Tasación", "valor": "Estimación de cuota procesada", "tipo": "Financiero", "detalle": "Solo se liquidan los 4 créditos del NRC teórico principal; la práctica queda dispensada."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.9_Instructivo_Crear_Ligas/024.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.9_Instructivo_Crear_Ligas&d=24", "fuente": "Instructivo 5.3 · Crear ligas", "n": 24, "texto": "Inscripción por autoservicio con ligas", "nota": "", "lineas": [{"num": "", "texto": "Inscripción por autoservicio"}, {"num": "", "texto": "El estudiante al seleccionar el NRC de teoría: 10023, debe escoger el NRC 10029 de la práctica"}, {"num": "", "texto": "El estudiante al seleccionar el NRC de teoría 10031, debe escoger el NRC 10030 de la práctica."}, {"num": "", "texto": "Al ingresar al autoservicio el estudiante va a poder visualizar los NRC que están ligados."}], "marcas": {}}]}, "g6": {"fase": "Paso 6: Participante Matriculado", "pantalla": "SFASLST / SSASECT", "hito": "Alumno matriculado en ambos NRC", "instrucciones": [{"campo": "Estado de Matrícula", "valor": "Estatus RE en ambos NRCs", "tipo": "Verificación", "detalle": "El estudiante figura formalmente matriculado en la teoría y en su grupo práctico."}, {"campo": "Listas de Clase (SFASLST)", "valor": "Listas docentes independientes", "tipo": "Académico", "detalle": "Docente de teoría evalúa la nota final; docente de práctica supervisa asistencia y avance."}, {"campo": "Aforo SSASECT", "valor": "Vacantes descontadas en ambos", "tipo": "Control", "detalle": "El contador Actual suma 1 y Remaining resta 1 en cada sección involucrada."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/015.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=15", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 15, "texto": "SFASLST: periodo y NRC", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "", "texto": "En la página SFASLST:"}, {"num": "1", "texto": "Ingrese el período y NRC para el cual desea ingresar las calificaciones."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 8, "slug": "script-11-apertura-de-periodo", "titulo": "Script 11 · Apertura de periodo", "cap": "Capacidad 1", "url": "../08-script-11-apertura-de-periodo/idiomas-08-script-11-apertura-de-periodo.html", "is_curr": false};
   window.__ANTERIOR_FLUJO = {"num": 6, "slug": "notas-y-pase-a-historia", "titulo": "Scripts 13 y 14 · Notas y pase a historia", "cap": "Capacidades 7 y 8", "url": "../06-notas-y-pase-a-historia/idiomas-06-notas-y-pase-a-historia.html", "is_curr": false};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-idiomas";
@@ -18734,12 +18947,19 @@ button.ai-fab:active,
 
   function renderDiapositivasHtml(info) {
     var lista = (info && info.diapositivas) || [];
-    if (!lista.length) return '';
+    if (!lista.length) {
+      // Sin lámina: se dice por qué (página que no sale en los instructivos o paso fuera de Banner).
+      if (!info || !info.sin_lamina) return '';
+      return '<section class="guia-diapos guia-diapos-vacia" aria-label="Diapositivas del instructivo para este paso">' +
+        '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así se ve en Banner</span></div>' +
+        '<p class="guia-diapos-aviso">' + escapeHtml(info.sin_lamina) + '</p></section>';
+    }
     var fuentes = [];
     lista.forEach(function (d) { if (fuentes.indexOf(d.fuente) === -1) fuentes.push(d.fuente); });
     var html = '<section class="guia-diapos" aria-label="Diapositivas del instructivo para este paso">';
     html += '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así se ve en Banner</span>';
     html += '<span class="guia-diapos-fuente">' + escapeHtml(fuentes.join(' · ')) + '</span></div>';
+    if (lista[0].nota) html += '<p class="guia-diapos-ref">' + escapeHtml(lista[0].nota) + '</p>';
     html += '<div class="guia-diapos-carril">';
     html += '<button type="button" class="guia-diapos-mover" data-diapos-mover="-1" aria-label="Ver láminas anteriores">‹</button>';
     html += '<div class="guia-diapos-grid">';
@@ -18819,7 +19039,7 @@ button.ai-fab:active,
   }
 
   function pasosVisorDiapoHtml(d) {
-    var html = '';
+    var html = d.nota ? '<p class="gdv-ref">' + escapeHtml(d.nota) + '</p>' : '';
     var idFoco = document.getElementById('focus-id');
     var paso = (idFoco ? idFoco.textContent : '').trim();
     var info = GUIA_MAP[paso];
@@ -19819,7 +20039,7 @@ button.ai-fab:active,
     // -------------------------------------------------------------
     // Formateador Enriquecido con Badges para Pantallas Banner
     // -------------------------------------------------------------
-    var PANTALLAS_CONOCIDAS = /\b(?:[GSTF][A-Z]{6}|OpenLMS|Moodle)\b/g;
+    var PANTALLAS_CONOCIDAS = /\b(?:(?!GUARDAR\b|GENERAL\b|SIGUIENTE\b)[GSTF][A-Z]{6}|OpenLMS|Moodle)\b/g;
 
     function enLinea(texto) {
       return texto
@@ -20168,6 +20388,230 @@ button.ai-fab:active,
       }
     }
 
+    // -------------------------------------------------------------
+    // Pasos en imágenes: cada paso de la respuesta con la lámina del instructivo (ADR-022).
+    // El índice (asistente_diapositivas.js) agrupa las láminas por página de Banner.
+    // -------------------------------------------------------------
+    var LAMINAS = window.CCEE_DIAPOSITIVAS || { laminas: [], paginas: {} };
+    var RAIZ_REPO = (function () {
+      var s = document.querySelector('script[src*="asistente_diapositivas.js"]');
+      try { return s ? new URL('../../../', s.src).href : ''; } catch (_) { return ''; }
+    })();
+    var PALABRAS_VACIAS = {};
+    ('ingrese ingresar presione presionar pulse boton botones campo campos pagina paginas banner seleccione ' +
+     'seleccionar haga clic click sobre para luego debe este esta estos estas informacion azul opcion desde donde ' +
+     'cada todos todas valor datos dato ejemplo siguiente primero final verifique revise escriba alumno estudiante ' +
+     'tambien solo puede pueden segun cual como bloque pestana').split(' ').forEach(function (p) { PALABRAS_VACIAS[p] = 1; });
+
+    function raices(texto, excluir) {
+      var vistas = {};
+      return (normalizar(texto).match(/[a-z0-9]{3,}/g) || []).filter(function (t) {
+        return (t.length > 3 || t === 'nrc') && !PALABRAS_VACIAS[t] && t !== excluir;
+      }).map(function (t) { return t.slice(0, 5); }).filter(function (r) {
+        if (vistas[r]) return false;
+        vistas[r] = 1;
+        return true;
+      });
+    }
+
+    var raicesLamina = {};
+    function raicesDe(i, excluir) {
+      if (!raicesLamina[i]) {
+        var l = LAMINAS.laminas[i];
+        raicesLamina[i] = { pie: raices(l.texto, excluir), contenido: raices(l.contenido, excluir) };
+      }
+      return raicesLamina[i];
+    }
+
+    function codigoDelPaso(texto) {
+      var codigos = String(texto).match(/\b[A-Z]{6,8}\b/g) || [];
+      for (var i = 0; i < codigos.length; i++) {
+        if (LAMINAS.paginas[codigos[i]]) return codigos[i];
+      }
+      if (/autoservicio/i.test(texto)) return 'AUTOSERVICIO';
+      if (/faculty/i.test(texto)) return 'FACULTY';
+      return '';
+    }
+
+    function pasosDeRespuesta(texto) {
+      var lineas = String(texto || '').split('\n');
+      var inicio = 0;
+      for (var i = 0; i < lineas.length; i++) {
+        if (/^#{1,4}\s*pasos\b/i.test(lineas[i].trim())) { inicio = i + 1; break; }
+      }
+      var pasos = [];
+      for (var j = inicio; j < lineas.length; j++) {
+        var l = lineas[j].trim();
+        if (inicio && /^#{1,4}\s/.test(l)) break;
+        var m = l.match(/^(\d+)[.)]\s+(.*)$/);
+        if (m) pasos.push({ num: m[1], texto: m[2].replace(/\*\*|`/g, '') });
+      }
+      if (!pasos.length) {  // sin lista numerada: una entrada por página mencionada
+        var vistos = {};
+        (String(texto).match(/\b[A-Z]{6,8}\b/g) || []).forEach(function (c) {
+          if (LAMINAS.paginas[c] && !vistos[c] && pasos.length < 4) {
+            vistos[c] = 1;
+            pasos.push({ num: String(pasos.length + 1), texto: 'Página ' + c });
+          }
+        });
+      }
+      return pasos;
+    }
+
+    function pasosConLaminas(texto) {
+      if (!RAIZ_REPO || !LAMINAS.laminas.length) return [];
+      var previo = null;
+      var codigoPrevio = codigoDelPaso(texto);  // un paso sin página sigue en la última nombrada (o en la primera de la respuesta)
+      return pasosDeRespuesta(texto).map(function (paso) {
+        var codigo = codigoDelPaso(paso.texto) || codigoPrevio;
+        codigoPrevio = codigo;
+        var pool = LAMINAS.paginas[codigo] || [];
+        var propias = raices(paso.texto, codigo.toLowerCase());
+        var mejor = -1, mejorPts = 0;
+        pool.forEach(function (i) {
+          var r = raicesDe(i, codigo.toLowerCase());
+          var pts = 0;
+          propias.forEach(function (t) {
+            if (r.pie.indexOf(t) !== -1) pts += 3;
+            if (r.contenido.indexOf(t) !== -1) pts += 1;
+          });
+          var l = LAMINAS.laminas[i];
+          if (pts && previo !== null && LAMINAS.laminas[previo].fuente === l.fuente && l.n >= LAMINAS.laminas[previo].n) pts += 0.5;
+          if (pts > mejorPts) { mejorPts = pts; mejor = i; }
+        });
+        if (mejorPts < 2) mejor = -1;  // una sola palabra suelta en el texto de la lámina no basta
+        if (mejor < 0 && pool.length) {
+          mejor = (previo !== null && pool.indexOf(previo) !== -1) ? previo : pool[0];
+        }
+        if (mejor >= 0) previo = mejor;
+        return { num: paso.num, texto: paso.texto, codigo: codigo, lamina: mejor >= 0 ? mejor : null };
+      });
+    }
+
+    var visorPasos = { pasos: [], idx: 0, completa: false };
+
+    function asegurarVisorPasos() {
+      var v = document.getElementById('ai-pasos-visor');
+      if (v) return v;
+      v = document.createElement('div');
+      v.id = 'ai-pasos-visor';
+      v.className = 'ai-pasos-visor';
+      v.hidden = true;
+      v.setAttribute('role', 'dialog');
+      v.setAttribute('aria-modal', 'true');
+      v.setAttribute('aria-label', 'Pasos en imágenes');
+      v.innerHTML = '<div class="aipv-panel">' +
+        '<div class="aipv-barra"><div class="aipv-cabecera"><span class="aipv-titulo">Pasos en imágenes</span>' +
+        '<span class="aipv-fuente"></span></div><div class="aipv-acciones">' +
+        '<button type="button" class="aipv-btn" data-aipv="completa">Ver diapositiva completa</button>' +
+        '<a class="aipv-btn" data-aipv="visor" target="_blank" rel="noopener">Abrir en el visor</a>' +
+        '<button type="button" class="aipv-btn aipv-cerrar" data-aipv="cerrar" aria-label="Cerrar">×</button></div></div>' +
+        '<div class="aipv-cuerpo"><ol class="aipv-pasos"></ol>' +
+        '<div class="aipv-lienzo"><p class="aipv-ref" hidden></p><div class="aipv-marco">' +
+        '<button type="button" class="aipv-nav" data-aipv="ant" aria-label="Paso anterior">‹</button>' +
+        '<img class="aipv-img" alt=""><p class="aipv-vacio" hidden>Este paso no tiene una lámina en los instructivos.</p>' +
+        '<button type="button" class="aipv-nav" data-aipv="sig" aria-label="Paso siguiente">›</button></div>' +
+        '<p class="aipv-pie"></p></div></div></div>';
+      v.addEventListener('click', function (e) {
+        if (e.target === v) return cerrarVisorPasos();
+        var accion = e.target.closest('[data-aipv]');
+        var item = e.target.closest('[data-aipv-paso]');
+        if (item) return pintarVisorPasos(Number(item.getAttribute('data-aipv-paso')));
+        if (!accion) return;
+        var a = accion.getAttribute('data-aipv');
+        if (a === 'cerrar') cerrarVisorPasos();
+        else if (a === 'ant') pintarVisorPasos(visorPasos.idx - 1);
+        else if (a === 'sig') pintarVisorPasos(visorPasos.idx + 1);
+        else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
+      });
+      document.body.appendChild(v);
+      return v;
+    }
+
+    function escaparHtml(t) {
+      return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function pintarVisorPasos(idx) {
+      var v = asegurarVisorPasos();
+      var pasos = visorPasos.pasos;
+      if (!pasos.length) return;
+      visorPasos.idx = Math.max(0, Math.min(pasos.length - 1, idx));
+      var paso = pasos[visorPasos.idx];
+      var l = paso.lamina !== null ? LAMINAS.laminas[paso.lamina] : null;
+      v.querySelector('.aipv-pasos').innerHTML = pasos.map(function (p, i) {
+        return '<li class="aipv-paso' + (i === visorPasos.idx ? ' activo' : '') + (p.lamina === null ? ' sin-img' : '') +
+          '" data-aipv-paso="' + i + '" title="' + (p.lamina === null ? 'Sin lámina en los instructivos' : 'Ver la lámina de este paso') + '">' +
+          '<span class="aipv-num">' + escaparHtml(p.num) + '</span><span class="aipv-texto">' +
+          (p.codigo && /^[A-Z]{6,8}$/.test(p.codigo) ? '<span class="ai-pill-screen">' + p.codigo + '</span> ' : '') +
+          escaparHtml(p.texto.replace(new RegExp('^\\s*' + (p.codigo || '#') + '\\s*:?\\s*'), '')) + '</span></li>';
+      }).join('');
+      var activo = v.querySelector('.aipv-paso.activo');
+      if (activo && activo.scrollIntoView) activo.scrollIntoView({ block: 'nearest' });
+      var img = v.querySelector('.aipv-img');
+      var vacio = v.querySelector('.aipv-vacio');
+      var ref = v.querySelector('.aipv-ref');
+      var visor = v.querySelector('[data-aipv="visor"]');
+      var completa = v.querySelector('[data-aipv="completa"]');
+      img.hidden = !l;
+      vacio.hidden = !!l;
+      completa.hidden = !l;
+      visor.hidden = !l;
+      ref.hidden = !(l && l.nota);
+      ref.textContent = l && l.nota ? l.nota : '';
+      if (l) {
+        img.src = new URL(visorPasos.completa ? l.completa : l.src, RAIZ_REPO).href;
+        img.alt = l.texto;
+        visor.href = new URL(l.visor, RAIZ_REPO).href;
+        completa.textContent = visorPasos.completa ? 'Ver solo el recorte' : 'Ver diapositiva completa';
+      }
+      v.querySelector('.aipv-fuente').textContent = l ? l.fuente + ' · diap. ' + l.n : '';
+      v.querySelector('.aipv-pie').textContent = 'Paso ' + paso.num + ' de ' + pasos[pasos.length - 1].num +
+        (l ? ' · ' + l.texto : ' · sin lámina en los instructivos');
+      v.querySelector('[data-aipv="ant"]').disabled = visorPasos.idx === 0;
+      v.querySelector('[data-aipv="sig"]').disabled = visorPasos.idx === pasos.length - 1;
+    }
+
+    function abrirVisorPasos(pasos) {
+      visorPasos.pasos = pasos;
+      visorPasos.completa = false;
+      var primero = 0;
+      for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
+      asegurarVisorPasos().hidden = false;
+      pintarVisorPasos(primero);
+    }
+
+    function cerrarVisorPasos() {
+      var v = document.getElementById('ai-pasos-visor');
+      if (v) v.hidden = true;
+    }
+
+    // El visor va antes que el drawer: Esc lo cierra a él solo y las flechas recorren los pasos.
+    document.addEventListener('keydown', function (e) {
+      var v = document.getElementById('ai-pasos-visor');
+      if (!v || v.hidden) return;
+      if (e.key === 'Escape') cerrarVisorPasos();
+      else if (e.key === 'ArrowLeft') pintarVisorPasos(visorPasos.idx - 1);
+      else if (e.key === 'ArrowRight') pintarVisorPasos(visorPasos.idx + 1);
+      else return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+
+    function agregarBotonPasos(card, respuesta) {
+      var pasos = pasosConLaminas(respuesta);
+      var conImagen = pasos.filter(function (p) { return p.lamina !== null; }).length;
+      if (!conImagen) return;
+      var caja = document.createElement('div');
+      caja.className = 'ai-pasos-img';
+      caja.innerHTML = '<button type="button" class="ai-btn-pasos-img">' +
+        '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 17l-5-5-7 7"></path></svg>' +
+        '<span>Ver los pasos en imágenes</span><span class="ai-btn-pasos-cuenta">' + conImagen + ' de ' + pasos.length + ' pasos</span></button>';
+      caja.querySelector('button').addEventListener('click', function () { abrirVisorPasos(pasos); });
+      card.appendChild(caja);
+    }
+
     async function enviarPregunta() {
       var txt = (promptInput.value || '').trim();
       if (!txt) return;
@@ -20192,6 +20636,7 @@ button.ai-fab:active,
         ? 'Por confirmar'
         : (/fuentes/i.test(res) ? 'Con fuentes' : 'Revisar evidencia');
       tempCard.innerHTML = '<div class="ai-msg-header"><span class="ai-msg-author">Asistente CCEE</span><span class="ai-msg-tag">' + estado + '</span></div>' + renderizarTexto(res);
+      if (estado !== 'Por confirmar') agregarBotonPasos(tempCard, res);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 

@@ -82,7 +82,8 @@
    ],
    "salidas": [
     "centros/README.md",
-    "centros/index.html"
+    "centros/index.html",
+    "herramientas/diagramas/assets/asistente_diapositivas.js"
    ],
    "adr": "ADR-003"
   },

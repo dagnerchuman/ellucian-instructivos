@@ -16,7 +16,8 @@ JS_GALERIA = (ASSETS_DIR / "indice_galeria.js").read_text(encoding="utf-8")
 CSS_AI = (ASSETS_DIR / "asistente_ia.css").read_text(encoding="utf-8")
 JS_AI = (ASSETS_DIR / "asistente_ia.js").read_text(encoding="utf-8")
 HTML_AI = (ASSETS_DIR / "asistente_ia_snippet.html").read_text(encoding="utf-8")
-SCRIPT_CONOCIMIENTO_AI = '<script src="../herramientas/diagramas/assets/asistente_conocimiento.js"></script>'
+SCRIPT_CONOCIMIENTO_AI = ('<script src="../herramientas/diagramas/assets/asistente_conocimiento.js"></script>\n'
+                          '  <script src="../herramientas/diagramas/assets/asistente_diapositivas.js"></script>')
 
 AVISO = "<!-- Archivo generado por herramientas/diagramas/generar.py: no lo edites a mano. -->"
 

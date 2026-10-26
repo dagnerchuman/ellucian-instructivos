@@ -805,12 +805,19 @@
 
   function renderDiapositivasHtml(info) {
     var lista = (info && info.diapositivas) || [];
-    if (!lista.length) return '';
+    if (!lista.length) {
+      // Sin lámina: se dice por qué (página que no sale en los instructivos o paso fuera de Banner).
+      if (!info || !info.sin_lamina) return '';
+      return '<section class="guia-diapos guia-diapos-vacia" aria-label="Diapositivas del instructivo para este paso">' +
+        '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así se ve en Banner</span></div>' +
+        '<p class="guia-diapos-aviso">' + escapeHtml(info.sin_lamina) + '</p></section>';
+    }
     var fuentes = [];
     lista.forEach(function (d) { if (fuentes.indexOf(d.fuente) === -1) fuentes.push(d.fuente); });
     var html = '<section class="guia-diapos" aria-label="Diapositivas del instructivo para este paso">';
     html += '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así se ve en Banner</span>';
     html += '<span class="guia-diapos-fuente">' + escapeHtml(fuentes.join(' · ')) + '</span></div>';
+    if (lista[0].nota) html += '<p class="guia-diapos-ref">' + escapeHtml(lista[0].nota) + '</p>';
     html += '<div class="guia-diapos-carril">';
     html += '<button type="button" class="guia-diapos-mover" data-diapos-mover="-1" aria-label="Ver láminas anteriores">‹</button>';
     html += '<div class="guia-diapos-grid">';
@@ -890,7 +897,7 @@
   }
 
   function pasosVisorDiapoHtml(d) {
-    var html = '';
+    var html = d.nota ? '<p class="gdv-ref">' + escapeHtml(d.nota) + '</p>' : '';
     var idFoco = document.getElementById('focus-id');
     var paso = (idFoco ? idFoco.textContent : '').trim();
     var info = GUIA_MAP[paso];

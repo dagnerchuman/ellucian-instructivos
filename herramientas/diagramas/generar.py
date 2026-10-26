@@ -124,6 +124,10 @@ def main():
         check=True,
     )
     from indices import generar_indices
+    from diapositivas_pasos import escribir_indice_asistente
+
+    ruta, n = escribir_indice_asistente()
+    print(f"LÁMINAS {ruta.relative_to(RAIZ)} · {n} láminas para el asistente")
 
     tr = traducciones()
     pedidos = args.centros or [*centros_disponibles(), "comun"]

@@ -217,7 +217,7 @@
     // -------------------------------------------------------------
     // Formateador Enriquecido con Badges para Pantallas Banner
     // -------------------------------------------------------------
-    var PANTALLAS_CONOCIDAS = /\b(?:[GSTF][A-Z]{6}|OpenLMS|Moodle)\b/g;
+    var PANTALLAS_CONOCIDAS = /\b(?:(?!GUARDAR\b|GENERAL\b|SIGUIENTE\b)[GSTF][A-Z]{6}|OpenLMS|Moodle)\b/g;
 
     function enLinea(texto) {
       return texto
@@ -566,6 +566,230 @@
       }
     }
 
+    // -------------------------------------------------------------
+    // Pasos en imágenes: cada paso de la respuesta con la lámina del instructivo (ADR-022).
+    // El índice (asistente_diapositivas.js) agrupa las láminas por página de Banner.
+    // -------------------------------------------------------------
+    var LAMINAS = window.CCEE_DIAPOSITIVAS || { laminas: [], paginas: {} };
+    var RAIZ_REPO = (function () {
+      var s = document.querySelector('script[src*="asistente_diapositivas.js"]');
+      try { return s ? new URL('../../../', s.src).href : ''; } catch (_) { return ''; }
+    })();
+    var PALABRAS_VACIAS = {};
+    ('ingrese ingresar presione presionar pulse boton botones campo campos pagina paginas banner seleccione ' +
+     'seleccionar haga clic click sobre para luego debe este esta estos estas informacion azul opcion desde donde ' +
+     'cada todos todas valor datos dato ejemplo siguiente primero final verifique revise escriba alumno estudiante ' +
+     'tambien solo puede pueden segun cual como bloque pestana').split(' ').forEach(function (p) { PALABRAS_VACIAS[p] = 1; });
+
+    function raices(texto, excluir) {
+      var vistas = {};
+      return (normalizar(texto).match(/[a-z0-9]{3,}/g) || []).filter(function (t) {
+        return (t.length > 3 || t === 'nrc') && !PALABRAS_VACIAS[t] && t !== excluir;
+      }).map(function (t) { return t.slice(0, 5); }).filter(function (r) {
+        if (vistas[r]) return false;
+        vistas[r] = 1;
+        return true;
+      });
+    }
+
+    var raicesLamina = {};
+    function raicesDe(i, excluir) {
+      if (!raicesLamina[i]) {
+        var l = LAMINAS.laminas[i];
+        raicesLamina[i] = { pie: raices(l.texto, excluir), contenido: raices(l.contenido, excluir) };
+      }
+      return raicesLamina[i];
+    }
+
+    function codigoDelPaso(texto) {
+      var codigos = String(texto).match(/\b[A-Z]{6,8}\b/g) || [];
+      for (var i = 0; i < codigos.length; i++) {
+        if (LAMINAS.paginas[codigos[i]]) return codigos[i];
+      }
+      if (/autoservicio/i.test(texto)) return 'AUTOSERVICIO';
+      if (/faculty/i.test(texto)) return 'FACULTY';
+      return '';
+    }
+
+    function pasosDeRespuesta(texto) {
+      var lineas = String(texto || '').split('\n');
+      var inicio = 0;
+      for (var i = 0; i < lineas.length; i++) {
+        if (/^#{1,4}\s*pasos\b/i.test(lineas[i].trim())) { inicio = i + 1; break; }
+      }
+      var pasos = [];
+      for (var j = inicio; j < lineas.length; j++) {
+        var l = lineas[j].trim();
+        if (inicio && /^#{1,4}\s/.test(l)) break;
+        var m = l.match(/^(\d+)[.)]\s+(.*)$/);
+        if (m) pasos.push({ num: m[1], texto: m[2].replace(/\*\*|`/g, '') });
+      }
+      if (!pasos.length) {  // sin lista numerada: una entrada por página mencionada
+        var vistos = {};
+        (String(texto).match(/\b[A-Z]{6,8}\b/g) || []).forEach(function (c) {
+          if (LAMINAS.paginas[c] && !vistos[c] && pasos.length < 4) {
+            vistos[c] = 1;
+            pasos.push({ num: String(pasos.length + 1), texto: 'Página ' + c });
+          }
+        });
+      }
+      return pasos;
+    }
+
+    function pasosConLaminas(texto) {
+      if (!RAIZ_REPO || !LAMINAS.laminas.length) return [];
+      var previo = null;
+      var codigoPrevio = codigoDelPaso(texto);  // un paso sin página sigue en la última nombrada (o en la primera de la respuesta)
+      return pasosDeRespuesta(texto).map(function (paso) {
+        var codigo = codigoDelPaso(paso.texto) || codigoPrevio;
+        codigoPrevio = codigo;
+        var pool = LAMINAS.paginas[codigo] || [];
+        var propias = raices(paso.texto, codigo.toLowerCase());
+        var mejor = -1, mejorPts = 0;
+        pool.forEach(function (i) {
+          var r = raicesDe(i, codigo.toLowerCase());
+          var pts = 0;
+          propias.forEach(function (t) {
+            if (r.pie.indexOf(t) !== -1) pts += 3;
+            if (r.contenido.indexOf(t) !== -1) pts += 1;
+          });
+          var l = LAMINAS.laminas[i];
+          if (pts && previo !== null && LAMINAS.laminas[previo].fuente === l.fuente && l.n >= LAMINAS.laminas[previo].n) pts += 0.5;
+          if (pts > mejorPts) { mejorPts = pts; mejor = i; }
+        });
+        if (mejorPts < 2) mejor = -1;  // una sola palabra suelta en el texto de la lámina no basta
+        if (mejor < 0 && pool.length) {
+          mejor = (previo !== null && pool.indexOf(previo) !== -1) ? previo : pool[0];
+        }
+        if (mejor >= 0) previo = mejor;
+        return { num: paso.num, texto: paso.texto, codigo: codigo, lamina: mejor >= 0 ? mejor : null };
+      });
+    }
+
+    var visorPasos = { pasos: [], idx: 0, completa: false };
+
+    function asegurarVisorPasos() {
+      var v = document.getElementById('ai-pasos-visor');
+      if (v) return v;
+      v = document.createElement('div');
+      v.id = 'ai-pasos-visor';
+      v.className = 'ai-pasos-visor';
+      v.hidden = true;
+      v.setAttribute('role', 'dialog');
+      v.setAttribute('aria-modal', 'true');
+      v.setAttribute('aria-label', 'Pasos en imágenes');
+      v.innerHTML = '<div class="aipv-panel">' +
+        '<div class="aipv-barra"><div class="aipv-cabecera"><span class="aipv-titulo">Pasos en imágenes</span>' +
+        '<span class="aipv-fuente"></span></div><div class="aipv-acciones">' +
+        '<button type="button" class="aipv-btn" data-aipv="completa">Ver diapositiva completa</button>' +
+        '<a class="aipv-btn" data-aipv="visor" target="_blank" rel="noopener">Abrir en el visor</a>' +
+        '<button type="button" class="aipv-btn aipv-cerrar" data-aipv="cerrar" aria-label="Cerrar">×</button></div></div>' +
+        '<div class="aipv-cuerpo"><ol class="aipv-pasos"></ol>' +
+        '<div class="aipv-lienzo"><p class="aipv-ref" hidden></p><div class="aipv-marco">' +
+        '<button type="button" class="aipv-nav" data-aipv="ant" aria-label="Paso anterior">‹</button>' +
+        '<img class="aipv-img" alt=""><p class="aipv-vacio" hidden>Este paso no tiene una lámina en los instructivos.</p>' +
+        '<button type="button" class="aipv-nav" data-aipv="sig" aria-label="Paso siguiente">›</button></div>' +
+        '<p class="aipv-pie"></p></div></div></div>';
+      v.addEventListener('click', function (e) {
+        if (e.target === v) return cerrarVisorPasos();
+        var accion = e.target.closest('[data-aipv]');
+        var item = e.target.closest('[data-aipv-paso]');
+        if (item) return pintarVisorPasos(Number(item.getAttribute('data-aipv-paso')));
+        if (!accion) return;
+        var a = accion.getAttribute('data-aipv');
+        if (a === 'cerrar') cerrarVisorPasos();
+        else if (a === 'ant') pintarVisorPasos(visorPasos.idx - 1);
+        else if (a === 'sig') pintarVisorPasos(visorPasos.idx + 1);
+        else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
+      });
+      document.body.appendChild(v);
+      return v;
+    }
+
+    function escaparHtml(t) {
+      return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function pintarVisorPasos(idx) {
+      var v = asegurarVisorPasos();
+      var pasos = visorPasos.pasos;
+      if (!pasos.length) return;
+      visorPasos.idx = Math.max(0, Math.min(pasos.length - 1, idx));
+      var paso = pasos[visorPasos.idx];
+      var l = paso.lamina !== null ? LAMINAS.laminas[paso.lamina] : null;
+      v.querySelector('.aipv-pasos').innerHTML = pasos.map(function (p, i) {
+        return '<li class="aipv-paso' + (i === visorPasos.idx ? ' activo' : '') + (p.lamina === null ? ' sin-img' : '') +
+          '" data-aipv-paso="' + i + '" title="' + (p.lamina === null ? 'Sin lámina en los instructivos' : 'Ver la lámina de este paso') + '">' +
+          '<span class="aipv-num">' + escaparHtml(p.num) + '</span><span class="aipv-texto">' +
+          (p.codigo && /^[A-Z]{6,8}$/.test(p.codigo) ? '<span class="ai-pill-screen">' + p.codigo + '</span> ' : '') +
+          escaparHtml(p.texto.replace(new RegExp('^\\s*' + (p.codigo || '#') + '\\s*:?\\s*'), '')) + '</span></li>';
+      }).join('');
+      var activo = v.querySelector('.aipv-paso.activo');
+      if (activo && activo.scrollIntoView) activo.scrollIntoView({ block: 'nearest' });
+      var img = v.querySelector('.aipv-img');
+      var vacio = v.querySelector('.aipv-vacio');
+      var ref = v.querySelector('.aipv-ref');
+      var visor = v.querySelector('[data-aipv="visor"]');
+      var completa = v.querySelector('[data-aipv="completa"]');
+      img.hidden = !l;
+      vacio.hidden = !!l;
+      completa.hidden = !l;
+      visor.hidden = !l;
+      ref.hidden = !(l && l.nota);
+      ref.textContent = l && l.nota ? l.nota : '';
+      if (l) {
+        img.src = new URL(visorPasos.completa ? l.completa : l.src, RAIZ_REPO).href;
+        img.alt = l.texto;
+        visor.href = new URL(l.visor, RAIZ_REPO).href;
+        completa.textContent = visorPasos.completa ? 'Ver solo el recorte' : 'Ver diapositiva completa';
+      }
+      v.querySelector('.aipv-fuente').textContent = l ? l.fuente + ' · diap. ' + l.n : '';
+      v.querySelector('.aipv-pie').textContent = 'Paso ' + paso.num + ' de ' + pasos[pasos.length - 1].num +
+        (l ? ' · ' + l.texto : ' · sin lámina en los instructivos');
+      v.querySelector('[data-aipv="ant"]').disabled = visorPasos.idx === 0;
+      v.querySelector('[data-aipv="sig"]').disabled = visorPasos.idx === pasos.length - 1;
+    }
+
+    function abrirVisorPasos(pasos) {
+      visorPasos.pasos = pasos;
+      visorPasos.completa = false;
+      var primero = 0;
+      for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
+      asegurarVisorPasos().hidden = false;
+      pintarVisorPasos(primero);
+    }
+
+    function cerrarVisorPasos() {
+      var v = document.getElementById('ai-pasos-visor');
+      if (v) v.hidden = true;
+    }
+
+    // El visor va antes que el drawer: Esc lo cierra a él solo y las flechas recorren los pasos.
+    document.addEventListener('keydown', function (e) {
+      var v = document.getElementById('ai-pasos-visor');
+      if (!v || v.hidden) return;
+      if (e.key === 'Escape') cerrarVisorPasos();
+      else if (e.key === 'ArrowLeft') pintarVisorPasos(visorPasos.idx - 1);
+      else if (e.key === 'ArrowRight') pintarVisorPasos(visorPasos.idx + 1);
+      else return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+
+    function agregarBotonPasos(card, respuesta) {
+      var pasos = pasosConLaminas(respuesta);
+      var conImagen = pasos.filter(function (p) { return p.lamina !== null; }).length;
+      if (!conImagen) return;
+      var caja = document.createElement('div');
+      caja.className = 'ai-pasos-img';
+      caja.innerHTML = '<button type="button" class="ai-btn-pasos-img">' +
+        '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 17l-5-5-7 7"></path></svg>' +
+        '<span>Ver los pasos en imágenes</span><span class="ai-btn-pasos-cuenta">' + conImagen + ' de ' + pasos.length + ' pasos</span></button>';
+      caja.querySelector('button').addEventListener('click', function () { abrirVisorPasos(pasos); });
+      card.appendChild(caja);
+    }
+
     async function enviarPregunta() {
       var txt = (promptInput.value || '').trim();
       if (!txt) return;
@@ -590,6 +814,7 @@
         ? 'Por confirmar'
         : (/fuentes/i.test(res) ? 'Con fuentes' : 'Revisar evidencia');
       tempCard.innerHTML = '<div class="ai-msg-header"><span class="ai-msg-author">Asistente CCEE</span><span class="ai-msg-tag">' + estado + '</span></div>' + renderizarTexto(res);
+      if (estado !== 'Por confirmar') agregarBotonPasos(tempCard, res);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 

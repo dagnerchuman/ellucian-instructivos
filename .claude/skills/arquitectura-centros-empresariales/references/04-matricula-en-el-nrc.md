@@ -26,7 +26,7 @@ Procedimiento oficial probado y validado en el ambiente **TEST de la USS** (29/0
 ## 3. Autorización del Plan de Estudios
 1. En el bloque superior **«INFORMACIÓN DE INGRESO»**, verificar que el campo **Estatus** tenga **`EL`** (*Inscripción Autorizada*).
 2. En el bloque del medio **«PLAN DE ESTUDIOS DE INGRESO»**:
-   * En la columna **Plan de estudios:** ingresar **`1`**.
+   * En la columna **Plan de estudios:** ingresar el plan del alumno, el mismo del encabezado. No asumir `1`: en la prueba del 29/09 fue `1` y con el NRC 10044 fue `4` (C100).
    * En la columna **Estatus de ingreso:** ingresar **`EL`**.
 3. **Paso crítico de confirmación:**  
    Hacer clic en el botón azul **«GUARDAR»** (abajo a la derecha) para autorizar este plan en el periodo.

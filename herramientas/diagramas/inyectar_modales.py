@@ -13,7 +13,8 @@ from pathlib import Path
 import sys
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
 from diapositivas_pasos import INSTRUCTIVOS, para as diapositivas_del_paso
-from plantillas import TITULOS, CAPACIDADES, guia_casuistica_de
+from plantillas import TITULOS, CAPACIDADES, guia_casuistica_de, guia_recorrido
+from centro import Centro
 
 # "plantillas": la guía de las casuísticas sale de plantillas.py (CASOS + EXTRA_CASOS) y pisa a GUIAS_SCRIPTS.
 # "curada": manda GUIAS_SCRIPTS y solo se generan los nodos que le falten.
@@ -56,6 +57,7 @@ __CSS__
 </style>
 {HTML_AI}
 <script src="__KNOWLEDGE_SCRIPT__"></script>
+<script src="__DIAPOS_SCRIPT__"></script>
 <script>
 {_JS_LOGIC}
 {_JS_AI}
@@ -145,6 +147,8 @@ def _validar_y_ordenar(guia, ids_nodos, slug):
 def obtener_guia_para_slug(slug, id_centro="", ids_nodos=None):
     """Guía {id_de_nodo: ficha} del flujo, validada contra los nodos reales del SVG."""
     sid = detectar_script(slug)
+    if RE_PREFIJO.sub("", slug) == "recorrido-completo" and id_centro in ("idiomas", "computacion", "emprendimiento"):
+        return _validar_y_ordenar(guia_recorrido(Centro(id_centro)), ids_nodos, slug)
     guia = dict(_guia_curada(slug, id_centro, sid) or {})
     if sid:  # casuísticas: se completan (o se imponen) desde plantillas.py
         generada = guia_casuistica_de(id_centro, sid)
@@ -324,7 +328,7 @@ def _limpiar_inyeccion_previa(contenido):
     )
     contenido = re.sub(r"\s*<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?</script>", "", contenido, flags=re.DOTALL)
     contenido = re.sub(r'\s*<style>(?:(?!</style>).)*?ASISTENTE IA CENTROS EMPRESARIALES USS · DISEÑO ULTRA-PREMIUM(?:(?!</style>).)*?</style>', "", contenido, flags=re.DOTALL)
-    contenido = re.sub(r'\s*<script src="[^"]*asistente_conocimiento\.js"></script>', "", contenido)
+    contenido = re.sub(r'\s*<script src="[^"]*asistente_(?:conocimiento|diapositivas)\.js"></script>', "", contenido)
     for marca in ("FLOW NAV TOP", "FLOW NAV BOTTOM"):
         contenido = re.sub(rf"\s*<!-- === {marca} === -->.*?<!-- === /{marca} === -->", "", contenido, flags=re.DOTALL)
     contenido = re.sub(r"\s*<!-- === ASISTENTE IA CENTROS EMPRESARIALES USS.*?<!-- === /ASISTENTE IA CENTROS EMPRESARIALES USS === -->", "", contenido, flags=re.DOTALL)
@@ -400,6 +404,12 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
     for paso, info in guia.items():
         lista = info.get("diapositivas") or diapositivas_del_paso(slug_limpio, paso, info)
         if not lista:
+            pantalla = (info.get("pantalla") or "").strip()
+            if pantalla and pantalla not in ("CASO", "RESULTADO"):
+                info["sin_lamina"] = (
+                    f"La página {pantalla} no sale en los instructivos de Ellucian: no hay lámina para mostrar."
+                    if re.fullmatch(r"[A-Z]{6,8}", pantalla) else
+                    f"Este paso ocurre fuera de Banner ({pantalla}). Los instructivos de Ellucian no lo cubren.")
             continue
         resueltas = []
         for d in lista:
@@ -413,7 +423,7 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
             resueltas.append({
                 "src": rel(recorte), "completa": rel(completa),
                 "visor": rel(VISOR.relative_to(RAIZ_REPO)) + f"?p={inst['id']}&d={d['n']}",
-                "fuente": inst["titulo"], "n": d["n"], "texto": d.get("texto", ""),
+                "fuente": inst["titulo"], "n": d["n"], "texto": d.get("texto", ""), "nota": d.get("nota", ""),
                 "lineas": [{"num": x["num"], "texto": x["texto"]} for x in diapositivas.texto_diapositiva(inst["id"], d["n"])],
             })
             resueltas[-1]["marcas"] = _marcas(info.get("instrucciones") or [], resueltas[-1]["lineas"], d.get("sin_marca", ()))
@@ -450,6 +460,7 @@ def inyectar_en_html(ruta_html, slug):
         + JS_SCRIPT_TEMPLATE
         .replace("__CSS__", CSS_MODAL)
         .replace("__KNOWLEDGE_SCRIPT__", html.escape(conocimiento_script, quote=True))
+        .replace("__DIAPOS_SCRIPT__", html.escape(conocimiento_script.replace("asistente_conocimiento.js", "asistente_diapositivas.js"), quote=True))
         .replace("__GUIA_JSON__", _json_seguro(guia))
         .replace("__SIGUIENTE_FLUJO_JSON__", _json_seguro(nav["flujo_sig"]))
         .replace("__ANTERIOR_FLUJO_JSON__", _json_seguro(nav["flujo_ant"]))

@@ -65,6 +65,18 @@
    "ruta": "docs/propuesta-usuarios-finales",
    "que": "Borrador confidencial de usuarios finales para Pedro Pérez Martinto",
    "adr": "ADR-016"
+  },
+  {
+   "id": "dudas-word",
+   "ruta": "docs/dudas",
+   "que": "Preguntas para Ellucian y la USS en Word, con recuadro de respuesta; se responden y se devuelven para alimentar el registro",
+   "adr": "ADR-023"
+  },
+  {
+   "id": "guia-operativa-excel",
+   "ruta": "docs/fuentes/guia-operativa-excel",
+   "que": "Hojas de la guía operativa descargadas en CSV (crear el NRC, persona, admisión, matrícula, notas)",
+   "adr": "ADR-023"
   }
  ],
  "generadores": [
@@ -116,6 +128,21 @@
     "herramientas/diagramas/assets/asistente_conocimiento.js"
    ],
    "adr": "ADR-021"
+  },
+  {
+   "id": "preguntas-word",
+   "comando": "python3 .claude/skills/documentos-uss/fuentes/preguntas/build_preguntas.py",
+   "entradas": [
+    ".claude/skills/preguntas-y-dudas-centros/registro.md",
+    "centros/comun/datos.json",
+    "centros/idiomas/datos.json",
+    "centros/computacion/datos.json",
+    "centros/emprendimiento/datos.json"
+   ],
+   "salidas": [
+    "docs/dudas"
+   ],
+   "adr": "ADR-023"
   },
   {
    "id": "espejo-skills",

@@ -8,8 +8,9 @@
 - **Este repositorio:** instructivos de Ellucian (PPTX, carpetas `CAPACIDAD n`) y un visor web (`visor_instructivos/`, que se publica solo desde la rama `main` en https://centros-empresariales-ellucian.vercel.app, antes en Netlify con `publish = "."`; lo de otras ramas no sale en el sitio).
 - **Todo por carpetas:**
   - `centros/<centro>/` (`idiomas`, `computacion`, `emprendimiento`): `datos.json` (**fuente única** de los datos del centro), `README.md` (ficha) y `diagramas/` (HTML interactivo, PNG claro y oscuro, SVG). Lo común va en `centros/comun/`.
-  - `herramientas/`: generador de diagramas (Archify), conversor de instructivos a imágenes (`diapositivas.py`, ADR-022) y sincronizador de skills.
-  - `docs/`: documentos sueltos.
+  - `herramientas/`: solo código: generador de diagramas (Archify), conversor de instructivos a imágenes (`diapositivas.py`, ADR-022), validador y sincronizador de skills.
+  - `docs/`: entregables por tipo (`dudas/`, `afiches/`, `capacitacion/`, `arquitectura/`, `presentaciones/`, `fuentes/`, `propuesta-usuarios-finales/`).
+  - Mapa completo y «dónde va algo nuevo»: `README.md` de la raíz y ADR-023.
 - **Idioma:** responde **en español**, simple y directo.
 
 ## Primero: la base de conocimiento

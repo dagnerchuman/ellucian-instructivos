@@ -106,6 +106,11 @@ En `scripts/pptx/`:
 - Convierte a PDF (`to_pdf`) y revisa los PNG.
 - Avisa al usuario de que no se pudo abrir en PowerPoint real.
 
+## Word de preguntas (para responder y devolver)
+- Cuando pida las preguntas para una reunión en Word: `fuentes/preguntas/build_preguntas.py` arma un `.docx` con un título por pregunta (su código E## o U##), «Lo que ya sabemos» y un recuadro «Respuesta». Los textos salen del registro; solo se eligen y ordenan los bloques.
+- Va en `docs/dudas/` con nombre en mayúsculas. Revisa el PDF que sale de LibreOffice y valida con `validate.py` de la skill docx.
+- Cuando lo devuelva respondido: `fuentes/preguntas/leer_respuestas.py` lista las respuestas por código; pásalas al registro (skill `preguntas-y-dudas-centros`).
+
 ## Excel
 - Genera con `openpyxl` y fórmulas reales: COUNTIFS, fechas con TODAY.
 - Las listas desplegables van en una hoja oculta «Listas».

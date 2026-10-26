@@ -3,14 +3,16 @@
 El usuario, Dagner Anibal Chuman Lluen, trabaja en los **Centros Empresariales** de la Universidad Señor de Sipán: Idiomas/Inglés, Computación/Informática y Emprendimiento. Está documentando cómo pasan de SEUSS a Banner.
 
 ## Estructura del repositorio
+Mapa completo y «dónde va algo nuevo» en `README.md` (raíz) y ADR-023. En la raíz solo van instrucciones, la publicación del sitio y las carpetas de trabajo.
+
 | Carpeta | Qué hay |
 |---|---|
 | `CAPACIDAD n/` | Instructivos de Ellucian Banner (PPTX) y scripts de prueba de la USS. No se mueven: el visor depende de sus rutas |
 | `visor_instructivos/` | Visor web. El sitio se publica desde la rama `main` en https://centros-empresariales-ellucian.vercel.app (antes Netlify, `publish = "."`); lo que está en otras ramas o solo en local no sale en el sitio. Muestra las diapositivas como imágenes de `diapositivas/`, generadas con `herramientas/diapositivas.py` (ADR-022) |
 | `centros/` | **Todo lo propio de cada centro**, en `idiomas/`, `computacion/` y `emprendimiento/`: `datos.json` (fuente única), `README.md` (ficha) y `diagramas/` (HTML, PNG, SVG). Lo común va en `comun/`. Índice: `centros/README.md`; galería: `centros/index.html` |
-| `herramientas/` | `diagramas/` (generador Archify), `diapositivas.py` (instructivos a imágenes WebP) y `sincronizar_skills.py` |
+| `herramientas/` | Solo código: `diagramas/` (generador Archify), `diapositivas.py` (instructivos a imágenes WebP), `validar_conocimiento.py`, `sincronizar_skills.py` y `videos/` (piloto de HyperFrames) |
 | `conocimiento/` | Base de conocimiento: `manifest.json`, ADR en `decisiones/` y auditorías. Se abre en Obsidian |
-| `docs/` | Documentos sueltos: propuesta de usuarios finales y la skill de Computación exportada |
+| `docs/` | Entregables por tipo: `dudas/` (preguntas en Word para responder y devolver), `afiches/`, `capacitacion/`, `arquitectura/`, `presentaciones/`, `fuentes/` (CSV de la guía operativa) y `propuesta-usuarios-finales/`. Índice: `docs/README.md` |
 | `.claude/skills/` y `.agents/skills/` | Memoria de los agentes; las dos carpetas son iguales |
 
 ## Base de conocimiento (léela primero)

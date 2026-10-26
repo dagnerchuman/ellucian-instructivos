@@ -5,6 +5,10 @@
 | `diagramas/` | Genera los diagramas paso a paso, la galería y la base local del Asistente IA (HTML, PNG, SVG y conocimiento recuperable) | `bash herramientas/diagramas/instalar_archify.sh` y luego `python3 herramientas/diagramas/generar.py` |
 | `validar_conocimiento.py` | Revisa la base de conocimiento: enlaces, ADR, manifest, `datos.json`, espejo de skills y datos sensibles | `python3 herramientas/validar_conocimiento.py` (`--estricto` cuenta los avisos como error) |
 | `sincronizar_skills.py` | Mantiene iguales `.claude/skills` (Claude Code) y `.agents/skills` (Antigravity) | `--check` revisa · `--desde claude` o `--desde agents` copia en espejo |
+| `diapositivas.py` | Convierte los instructivos PPTX del visor en imágenes WebP (`visor_instructivos/diapositivas/`, ADR-022) | `python3 herramientas/diapositivas.py` |
+| `videos/pilotos/` | Piloto de video «Creación del NRC» hecho con HyperFrames (skills en `.agents/skills`) | Se abre con las skills de HyperFrames; su estado guarda rutas absolutas, por eso no se mueve |
+
+**Solo código.** Los datos de entrada (por ejemplo, los CSV de la guía operativa) van en `docs/fuentes/` (ADR-023).
 
 ## diagramas/
 | Archivo | Qué hace |

@@ -347,6 +347,7 @@
       { claves: ['curso', 'cursos', 'nrc'], terminos: ['curso', 'cursos', 'nrc'], peso: 2 },
       { claves: ['seccion', 'secciones', 'grupo', 'grupos'], terminos: ['seccion', 'secciones', 'nrc'], peso: 2 },
       { claves: ['attrgrd', 'configuracion', 'configurar', 'configuraciones', 'libro', 'calificaciones', 'calificacion', 'evaluacion'], terminos: ['attrgrd', 'configuracion', 'configurar', 'libro', 'calificaciones', 'evaluacion'], peso: 4 },
+      { claves: ['escala', 'escalas', 'vigesimal', 'centesimal', 'aprobatoria', 'aprobatorio', 'minima', 'modo'], terminos: ['vigesimal', 'centesimal', 'modo v', 'modo c', 'escala v', 'escala c', 'vig 11', 'ast 70', '00 a 20', '0 a 100', 'nota minima', 'aprobatoria'], peso: 7, varios: true },
       { claves: ['inh', 'inhabilitado', 'inhabilitada', 'compuesta', 'compuestas', 'nota', 'notas', 'final'], terminos: ['inh', 'inhabilitado', 'compuesta', 'compuestas', 'nota final', 'sfaslst', 'debe aprobar'], peso: 5 },
       { claves: ['pasar', 'lista', 'faculty', 'autoservicio', 'soaatrk', 'regla'], terminos: ['pasar lista', 'faculty', 'autoservicio', 'soaatrk', 'control de asistencia'], peso: 4 },
       { claves: ['ver', 'veo', 'verificar', 'consulta', 'consultar', 'revisar', 'visualizar', 'mostrar', 'muestra'], terminos: ['ver', 'consulta', 'consultar', 'revisar', 'visualizar', 'mostrar', 'muestra'], peso: 1 }
@@ -357,10 +358,28 @@
         .indexOf(' ' + termino + ' ') !== -1;
     }
 
+    // Frases de 2 y 3 palabras de la pregunta («pase a historia», «parte de periodo»).
+    function frasesDe(consulta) {
+      var palabras = consulta.replace(/[^a-z0-9]+/g, ' ').trim().split(' ');
+      var vacias = {de: 1, del: 1, la: 1, el: 1, los: 1, las: 1, en: 1, un: 1, una: 1, y: 1, a: 1, al: 1, que: 1, como: 1, es: 1, se: 1, lo: 1, me: 1, mi: 1};
+      var frases = [];
+      [2, 3].forEach(function (n) {
+        for (var i = 0; i + n <= palabras.length; i++) {
+          var trozo = palabras.slice(i, i + n);
+          if (vacias[trozo[0]] || vacias[trozo[n - 1]]) continue;
+          // Solo frases de palabras con contenido («pase a historia»), no «nrc en ssasect».
+          if (trozo.some(function (p) { return !vacias[p] && p.length < 4; })) continue;
+          frases.push(trozo.join(' '));
+        }
+      });
+      return frases;
+    }
+
     function recuperarEvidencia(pregunta) {
       var base = Array.isArray(window.CCEE_KNOWLEDGE) ? window.CCEE_KNOWLEDGE : [];
       var consulta = normalizar(pregunta);
       var terminos = terminosDe(consulta);
+      var frases = frasesDe(consulta);
       var conceptos = sinonimosBusqueda.filter(function(concepto) {
         return concepto.claves.some(function(clave) {
           return contieneTermino(consulta, clave);
@@ -371,8 +390,10 @@
         var fuente = normalizar(fragmento.fuente);
         var puntos = 0;
         conceptos.forEach(function(concepto) {
-          if (concepto.terminos.some(function(termino) { return contieneTermino(contenido, termino); })) {
-            puntos += concepto.peso;
+          var hallados = concepto.terminos.filter(function(termino) { return contieneTermino(contenido, termino); }).length;
+          if (hallados) {
+            // En los conceptos «varios», cada término extra encontrado suma (el fragmento trata el tema a fondo).
+            puntos += concepto.peso + (concepto.varios ? Math.min(hallados - 1, 4) * 2 : 0);
           }
           if (concepto.terminos.some(function(termino) { return contieneTermino(fuente, termino); })) {
             puntos += 1;
@@ -380,7 +401,15 @@
         });
         terminos.forEach(function(termino) {
           if (conceptos.some(function(concepto) { return concepto.claves.indexOf(termino) !== -1; })) return;
-          if (contieneTermino(contenido, termino)) puntos += termino.length > 5 ? 2 : 1;
+          if (contieneTermino(contenido, termino)) {
+            puntos += termino.length > 5 ? 2 : 1;
+            // Código de página de Banner (SFAREGS, SOATERM): escrito en mayúsculas en el fragmento.
+            if (termino.length >= 6 && termino.length <= 8 && /^[a-z]+$/.test(termino) &&
+                new RegExp('\\b' + termino.toUpperCase() + '\\b').test(fragmento.texto)) puntos += 4;
+          }
+        });
+        frases.forEach(function(frase) {
+          if (contieneTermino(contenido, frase)) puntos += 3;
         });
         var consultaAsistencia = conceptos.some(function(concepto) {
           return concepto.claves.indexOf('asistencia') !== -1;
@@ -429,6 +458,50 @@
       return elegidos;
     }
 
+    // -------------------------------------------------------------
+    // Contexto de la conversación: una pregunta de seguimiento («¿cuáles son?», «¿y en Idiomas?»)
+    // se busca junto con las preguntas anteriores, y al modelo se le envían los últimos turnos.
+    // -------------------------------------------------------------
+    var historial = [];
+
+    // Seguimiento claro: empieza con «y», «pero»… o se refiere a lo anterior («eso», «cuáles son»).
+    function esSeguimiento(pregunta) {
+      var n = normalizar(pregunta).trim();
+      if (/^(y|pero|entonces|ademas|tambien|ok|vale|osea|o sea)\b/.test(n)) return true;
+      return /\b(eso|esos|esas|esto|estos|estas|ese|esa|aquello|cuales son|cuales|dime|explica|explicame|detalla|detallame|ejemplo|ejemplos|mas detalle|lo anterior|el anterior|la anterior)\b/.test(n);
+    }
+
+    // La consulta de búsqueda: la pregunta sola, o unida al tema anterior si es un seguimiento
+    // o si es tan corta que por sí sola no encuentra evidencia.
+    function consultaConContexto(pregunta, anterior) {
+      if (!anterior) return pregunta;
+      var corta = terminosDe(normalizar(pregunta)).length <= 3;
+      if (esSeguimiento(pregunta) || (corta && !recuperarEvidencia(pregunta).length)) {
+        return anterior + ' ' + pregunta;
+      }
+      return pregunta;
+    }
+    // ¿La pregunta nombra algún tema, o solo remite a lo anterior («pero dime cuáles son»)?
+    function tieneTema(pregunta) {
+      var relleno = {pero: 1, dime: 1, cuales: 1, cual: 1, son: 1, eso: 1, esos: 1, esas: 1, estos: 1, estas: 1, ese: 1, esa: 1,
+        aquello: 1, explica: 1, explicame: 1, detalla: 1, detallame: 1, ejemplo: 1, ejemplos: 1, mas: 1, detalle: 1, anterior: 1,
+        entonces: 1, ademas: 1, tambien: 1, vale: 1, osea: 1, favor: 1, puedes: 1, puede: 1, decir: 1, saber: 1, todo: 1, todos: 1};
+      return terminosDe(normalizar(pregunta)).some(function (t) { return !relleno[t]; });
+    }
+    // FIN CONTEXTO
+
+    // Últimos turnos para el modelo: sin la lista de fuentes y con la respuesta acortada.
+    function turnosPrevios(turnos) {
+      var mensajes = [];
+      (turnos || []).slice(-3).forEach(function (t) {
+        var resp = String(t.respuesta || '').split(/\n\*\*Fuentes consultadas\*\*/)[0].trim();
+        if (resp.length > 1500) resp = resp.slice(0, 1500) + '…';
+        mensajes.push({ role: 'user', content: t.pregunta });
+        mensajes.push({ role: 'assistant', content: resp });
+      });
+      return mensajes;
+    }
+
     function codigosPantalla(texto) {
       var encontrados = String(texto || '').match(/\b[A-Z]{6,8}\b/g) || [];
       return encontrados.filter(function(codigo, indice) {
@@ -472,7 +545,17 @@
       return fuentesDe(fragmentos).map(function(f) { return '- ' + nombreFuente(f) + ' (`' + f.split('/').pop() + '`)'; }).join('\n');
     }
 
-    function limpiarFragmento(texto) {
+    // Términos con que se buscó: los de la pregunta y los de sus conceptos (escala → vigesimal, centesimal…).
+    function terminosResaltar(consulta) {
+      var n = normalizar(consulta);
+      var lista = terminosDe(n);
+      sinonimosBusqueda.forEach(function (concepto) {
+        if (concepto.claves.some(function (clave) { return contieneTermino(n, clave); })) lista = lista.concat(concepto.terminos);
+      });
+      return lista;
+    }
+
+    function limpiarFragmento(texto, consulta) {
       var lineas = String(texto || '').split('\n').map(function(l) { return l.trim(); }).filter(function(l) {
         return l && !/^\|?\s*-{3,}/.test(l) && !/^[{}\[\],]+$/.test(l) && !/^#/.test(l);
       }).map(function(l) {
@@ -484,24 +567,36 @@
         if (kv) return '- ' + kv[1].replace(/_/g, ' ') + ': ' + kv[2];
         return /^[-*]\s/.test(l) ? l : l;
       });
-      var salida = [];
+      // Primero las líneas que tratan lo preguntado (en su orden original); si ninguna, el inicio.
+      var orden = lineas.map(function (l, i) { return i; });
+      if (consulta) {
+        var buscar = terminosResaltar(consulta);
+        var puntaje = lineas.map(function (l) {
+          var t = normalizar(l);
+          return buscar.filter(function (b) { return contieneTermino(t, b); }).length;
+        });
+        if (puntaje.some(function (p) { return p > 0; })) {
+          orden.sort(function (a, b) { return puntaje[b] - puntaje[a] || a - b; });
+        }
+      }
+      var elegidas = [];
       var total = 0;
-      for (var i = 0; i < lineas.length && total < 900; i++) {
-        var l = lineas[i].length > 420 ? lineas[i].slice(0, 420).replace(/\s+\S*$/, '') + '…' : lineas[i];
-        salida.push(l);
+      for (var i = 0; i < orden.length && total < 900; i++) {
+        var l = lineas[orden[i]].length > 420 ? lineas[orden[i]].slice(0, 420).replace(/\s+\S*$/, '') + '…' : lineas[orden[i]];
+        elegidas.push({ i: orden[i], l: l });
         total += l.length;
       }
-      return salida.join('\n');
+      return elegidas.sort(function (a, b) { return a.i - b.i; }).map(function (e) { return e.l; }).join('\n');
     }
 
-    function respuestaConEvidencia(pregunta, aviso) {
-      var fragmentos = recuperarEvidencia(pregunta);
+    function respuestaConEvidencia(pregunta, aviso, consulta) {
+      var fragmentos = recuperarEvidencia(consulta || pregunta);
       if (!fragmentos.length) {
         return "**No hay evidencia local suficiente para responder esta consulta.**\n\n" +
           "Le sugiero registrarla como duda para Ellucian o para la USS. No se presenta una pantalla ni un procedimiento sin respaldo.";
       }
       var bloques = fragmentos.slice(0, 2).map(function(item) {
-        return '### ' + nombreFuente(item.fuente) + '\n' + limpiarFragmento(item.texto);
+        return '### ' + nombreFuente(item.fuente) + '\n' + limpiarFragmento(item.texto, consulta || pregunta);
       }).join("\n\n");
       return "**Información encontrada en la base local**" + (aviso ? "\n\n" + aviso : "") +
         "\n\n" + bloques + "\n\n**Fuentes**\n" + listaFuentes(fragmentos);
@@ -510,18 +605,18 @@
     // -------------------------------------------------------------
     // Respuesta local sin modelo: muestra evidencia, no la interpreta.
     // -------------------------------------------------------------
-    function resolverLocal(pregunta) {
-      return respuestaConEvidencia(pregunta, "*Modo local: se muestran los extractos recuperados, sin redacción de IA.*");
+    function resolverLocal(pregunta, consulta) {
+      return respuestaConEvidencia(pregunta, "*Modo local: se muestran los extractos recuperados, sin redacción de IA.*", consulta);
     }
 
     // -------------------------------------------------------------
     // Qwen 3.8 en Groq, probado antes de integrarlo.
     // -------------------------------------------------------------
-    async function resolverRemoto(engine, query) {
+    async function resolverRemoto(engine, query, consulta, turnos) {
       var token = (localStorage.getItem('ccee_groq_token') || '').trim();
-      var fragmentos = recuperarEvidencia(query);
+      var fragmentos = recuperarEvidencia(consulta || query);
       if (!token) {
-        return respuestaConEvidencia(query, "*No hay una clave de Groq configurada. Puede registrarla en Ajustes; mientras tanto se muestran los extractos locales.*");
+        return respuestaConEvidencia(query, "*No hay una clave de Groq configurada. Puede registrarla en Ajustes; mientras tanto se muestran los extractos locales.*", consulta);
       }
       if (!fragmentos.length) {
         return "**No hay evidencia local suficiente para responder esta consulta.**\n\n" +
@@ -544,6 +639,7 @@
         "Distinga el origen: 'Hoy en SEUSS' para lo actual de la USS, 'En Ellucian' para lo respaldado por instructivos, 'Validado en TEST' para lo probado y 'Por confirmar' para lo abierto.",
         "REGLAS DE BANNER CONFIRMADAS: en SFAREGS el encabezado va periodo, luego ID del alumno y al final plan de estudios; no asuma que el plan es 1 y, si falta el currículo del nivel del curso, se agrega en la pestaña Currículos. Si SHAGCOM pide los controles del libro de calificaciones, primero se configura SHAEGBC (periodo, Ir, fecha abierta y de corte autorizadas, sin inventarlas).",
         "ASISTENCIA Y NOTAS (estado actual de TEST, C101 a C107): el control de asistencia de Autoservicio muestra el NRC solo si existe una regla en SOAATRK (Desplegar clase, unidad de control, Control de asistencia y fechas). El docente pasa lista en Autoservicio y registra las notas por componente en el libro de calificaciones; ATTRGRD (peso 0, Debe aprobar, escala de asistencia) lleva la nota final a INH si la asistencia es menor al mínimo. Con libro de calificaciones, la nota calculada pasa sola a SFASLST; luego sigue el pase a historia. El envío automático del porcentaje de asistencia a ATTRGRD sigue por confirmar (U32).",
+        "CONVERSACIÓN: se le envían los turnos anteriores. Si la pregunta es de seguimiento («¿cuáles son?», «¿y en Idiomas?», «explíquelo»), interprétela según lo conversado y responda en ese contexto, siempre con la BASE LOCAL.",
         "No cite rutas de archivos: la aplicación agrega las fuentes. Si la base no permite responder, escriba literalmente 'No hay evidencia local suficiente' e indique qué falta confirmar."
       ].join("\n");
       var headers = { 'Content-Type': 'application/json' };
@@ -557,9 +653,10 @@
             model: 'qwen/qwen3.8-27b',
             messages: [
               { role: 'system', content: sysPrompt },
-              { role: 'system', content: 'BASE LOCAL RECUPERADA:\n\n' + contexto },
+              { role: 'system', content: 'BASE LOCAL RECUPERADA:\n\n' + contexto }
+            ].concat(turnosPrevios(turnos)).concat([
               { role: 'user', content: query }
-            ],
+            ]),
             max_tokens: 900,
             temperature: 0.1
           })
@@ -577,7 +674,8 @@
             console.warn('Groq devolvió una respuesta no sustentada; se usará evidencia local.', pantallasInventadas);
             return respuestaConEvidencia(
               query,
-              "*Modo seguro: la respuesta redactada por IA mencionó una pantalla sin respaldo en la base, por eso se muestran solo los extractos locales.*"
+              "*Modo seguro: la respuesta redactada por IA mencionó una pantalla sin respaldo en la base, por eso se muestran solo los extractos locales.*",
+              consulta
             );
           }
           return respuesta + "\n\n**Fuentes consultadas**\n" + listaFuentes(fragmentos);
@@ -585,7 +683,7 @@
         throw new Error('Respuesta inválida');
       } catch (err) {
         console.warn('Respuesta local por error de Groq:', err.message);
-        return respuestaConEvidencia(query, "*No fue posible consultar Groq (" + err.message + "). Se muestran solo los extractos locales.*");
+        return respuestaConEvidencia(query, "*No fue posible consultar Groq (" + err.message + "). Se muestran solo los extractos locales.*", consulta);
       }
     }
 
@@ -823,15 +921,31 @@
 
       var tempCard = registrarMensaje('bot', 'Consultando la base de conocimiento…');
 
+      // Un seguimiento corto («pero dime cuáles son») sin conversación previa: se pide el tema.
+      if (!historial.length && esSeguimiento(txt) && !tieneTema(txt)) {
+        await new Promise(function(resolve) { setTimeout(resolve, 200); });
+        tempCard.innerHTML = '<div class="ai-msg-header"><span class="ai-msg-author">Asistente CCEE</span><span class="ai-msg-tag">Falta el tema</span></div>' +
+          renderizarTexto("**¿Sobre qué tema es su consulta?** Esta conversación aún no tiene una pregunta anterior a la cual referirse.\n\n" +
+            "Escriba el tema completo; por ejemplo: «¿Cuáles son las escalas de calificación de cada centro?».");
+        chatBody.scrollTop = chatBody.scrollHeight;
+        return;
+      }
+
       var modelo = modoEnLinea() ? (engineSelect ? engineSelect.value : 'groq-qwen-38') : 'local-ccee';
+      var turnos = historial.slice();
+      var previo = turnos[turnos.length - 1];
+      var consulta = consultaConContexto(txt, previo ? previo.tema : '');
       var res = '';
 
       if (modelo === 'local-ccee') {
         await new Promise(function(resolve) { setTimeout(resolve, 280); });
-        res = resolverLocal(txt);
+        res = resolverLocal(txt, consulta);
       } else {
-        res = await resolverRemoto(modelo, txt);
+        res = await resolverRemoto(modelo, txt, consulta, turnos);
       }
+      // «tema» guarda la consulta usada (con el contexto), acotada a las últimas preguntas.
+      historial.push({ pregunta: txt, tema: consulta.split(' ').slice(-40).join(' '), respuesta: res });
+      if (historial.length > 6) historial.shift();
 
       var estado = /no hay evidencia local suficiente/i.test(res)
         ? 'Por confirmar'
@@ -842,6 +956,15 @@
     }
 
     if (sendBtn) sendBtn.addEventListener('click', enviarPregunta);
+
+    // Nueva conversación: olvida los turnos anteriores y deja solo la bienvenida.
+    var nuevaBtn = document.getElementById('ai-btn-nueva');
+    if (nuevaBtn) nuevaBtn.addEventListener('click', function () {
+      historial = [];
+      chatBody.querySelectorAll('.ai-chat-msg').forEach(function (n, i) { if (i > 0) n.remove(); });
+      chatBody.scrollTop = 0;
+      promptInput.focus();
+    });
   }
 
   // Inicializar al cargar el DOM

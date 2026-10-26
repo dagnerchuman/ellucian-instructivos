@@ -3,7 +3,7 @@ id: ADR-021
 titulo: El asistente de diagramas responde con conocimiento local y bloquea pantallas sin evidencia
 estado: aceptado
 fecha: 2026-10-23
-fuentes: [C83, C108]
+fuentes: [C83, C108, C117]
 temas: [asistente, diagramas, conocimiento]
 ---
 # ADR-021 · Asistente con conocimiento local y modo seguro
@@ -17,6 +17,7 @@ El usuario pidió integrar el asistente en las páginas de diagramas con Groq y 
 - Si la respuesta de Qwen menciona un código de pantalla Banner ausente de la evidencia recuperada, no se muestra la respuesta del modelo y se presenta el extracto local con sus fuentes.
 - Se conserva el modo local, que muestra evidencia sin pedir redacción al modelo.
 - **Formato profesional (24/10/2026, C108):** el asistente usa tono institucional y trato de usted, sin emojis ni exclamaciones. Responde primero en una o dos oraciones; si es un procedimiento, agrega «Pasos» numerados que empiezan con la página de Banner, y luego «Validado en TEST», «Según el instructivo» y «Por confirmar» solo cuando correspondan. El modo local presenta los extractos limpios, con el nombre de cada fuente.
+- **Memoria de la conversación (26/10/2026, C117):** el asistente recuerda lo conversado. Una pregunta de seguimiento («pero dime cuáles son», «¿y en Idiomas?») se busca junto con el tema anterior; también una pregunta muy corta que sola no encuentra evidencia. A Groq se le envían, además de la evidencia, los tres últimos turnos (pregunta y respuesta, sin la lista de fuentes). La evidencia recuperada sigue siendo la única fuente y el control de pantallas sin respaldo no cambia. En el modo local se muestran primero las líneas del fragmento que tratan lo preguntado. El botón «Nueva conversación» borra los mensajes y el contexto. Si la primera pregunta solo remite a algo anterior, sin nombrar un tema, el asistente pide el tema.
 
 ## Alternativas descartadas
 - **Respuestas libres del modelo:** pueden inventar páginas, pasos o datos de los centros.
@@ -25,7 +26,7 @@ El usuario pidió integrar el asistente en las páginas de diagramas con Groq y 
 ## Consecuencias
 - Las respuestas siguen disponibles sin Groq, pero el modo local presenta extractos y no una síntesis.
 - Para refrescar el conocimiento se ejecuta `python3 herramientas/diagramas/generar_conocimiento_asistente.py`; el generador de diagramas lo ejecuta automáticamente antes de inyectar el asistente.
-- Groq recibe la consulta y los fragmentos seleccionados cuando el usuario configura su clave. No se deben ingresar datos reales de alumnos.
+- Groq recibe la consulta, los fragmentos seleccionados y los últimos turnos de la conversación cuando el usuario configura su clave. No se deben ingresar datos reales de alumnos.
 
 ## Criterio de salida
 Revisar si cambia el proveedor/modelo validado, la disponibilidad de la base local o el requisito de no inventar páginas.

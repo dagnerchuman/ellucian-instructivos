@@ -29,6 +29,14 @@
         <span class="ai-subtitle">USS · Banner Student & SEUSS</span>
       </div>
     </div>
+    <!-- Modelo y estado, en la misma cabecera (antes iban en una barra aparte) -->
+    <div class="ai-header-motor">
+      <select id="ai-engine-select" class="ai-engine-select" title="Seleccionar motor de IA">
+        <option value="groq-qwen-38" selected>Qwen 3.8 27B · Groq</option>
+        <option value="local-ccee">Solo evidencia local CCEE</option>
+      </select>
+      <span class="ai-status-pill" id="ai-status-pill">Online</span>
+    </div>
     <div class="ai-header-actions">
       <button type="button" class="ai-action-btn" id="ai-btn-config" title="Configurar modelo y credenciales" aria-label="Ajustes">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -44,18 +52,6 @@
       </button>
     </div>
   </header>
-
-  <!-- Barra de Selección de Modelo -->
-  <div class="ai-engine-bar">
-    <div class="ai-engine-select-group">
-      <span class="ai-engine-icon">⚡</span>
-      <select id="ai-engine-select" class="ai-engine-select" title="Seleccionar motor de IA">
-        <option value="groq-qwen-38" selected>Qwen 3.8 27B · Groq</option>
-        <option value="local-ccee">Solo evidencia local CCEE</option>
-      </select>
-    </div>
-    <span class="ai-status-pill" id="ai-status-pill">Online</span>
-  </div>
 
   <!-- Panel de Configuración de API Keys (Colapsable) -->
   <div class="ai-config-panel" id="ai-config-panel">

@@ -1590,6 +1590,33 @@ button.ai-fab:active,
 [data-theme="light"] .ai-field input { background: #ffffff; color: #1a1426; border-color: rgba(112, 48, 160, 0.3); }
 [data-theme="light"] .ai-btn-pill.text { color: #6d28d9; }
 
+/* Cabecera compacta: mismo alto que la barra superior de la página (56 px) y con el modelo y el estado */
+.ai-drawer-header {
+  height: 56px;
+  min-height: 56px;
+  padding: 0 0.85rem 0 1rem;
+  gap: 0.6rem;
+  flex: none;
+}
+.ai-header-brand { gap: 0.55rem; min-width: 0; }
+.ai-brand-badge { width: 32px; height: 32px; border-radius: 0.55rem; }
+.ai-title { font-size: 0.9rem; white-space: nowrap; }
+.ai-subtitle { font-size: 0.68rem; margin-top: 0.05rem; white-space: nowrap; }
+.ai-header-motor {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-left: auto;
+  min-width: 0;
+}
+.ai-header-motor .ai-engine-select { width: auto; max-width: 205px; padding: 0.3rem 0.55rem; font-size: 0.76rem; }
+.ai-header-actions { gap: 0.35rem; flex: none; }
+.ai-action-btn { width: 32px; height: 32px; }
+@media (max-width: 560px) {
+  .ai-subtitle { display: none; }
+  .ai-header-motor .ai-engine-select { max-width: 130px; }
+}
+
 </style>
 </head>
 <body>
@@ -1750,6 +1777,14 @@ button.ai-fab:active,
         <span class="ai-subtitle">USS · Banner Student & SEUSS</span>
       </div>
     </div>
+    <!-- Modelo y estado, en la misma cabecera (antes iban en una barra aparte) -->
+    <div class="ai-header-motor">
+      <select id="ai-engine-select" class="ai-engine-select" title="Seleccionar motor de IA">
+        <option value="groq-qwen-38" selected>Qwen 3.8 27B · Groq</option>
+        <option value="local-ccee">Solo evidencia local CCEE</option>
+      </select>
+      <span class="ai-status-pill" id="ai-status-pill">Online</span>
+    </div>
     <div class="ai-header-actions">
       <button type="button" class="ai-action-btn" id="ai-btn-config" title="Configurar modelo y credenciales" aria-label="Ajustes">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1765,18 +1800,6 @@ button.ai-fab:active,
       </button>
     </div>
   </header>
-
-  <!-- Barra de Selección de Modelo -->
-  <div class="ai-engine-bar">
-    <div class="ai-engine-select-group">
-      <span class="ai-engine-icon">⚡</span>
-      <select id="ai-engine-select" class="ai-engine-select" title="Seleccionar motor de IA">
-        <option value="groq-qwen-38" selected>Qwen 3.8 27B · Groq</option>
-        <option value="local-ccee">Solo evidencia local CCEE</option>
-      </select>
-    </div>
-    <span class="ai-status-pill" id="ai-status-pill">Online</span>
-  </div>
 
   <!-- Panel de Configuración de API Keys (Colapsable) -->
   <div class="ai-config-panel" id="ai-config-panel">

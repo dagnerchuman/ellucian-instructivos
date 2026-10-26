@@ -3046,3 +3046,95 @@ body.gdv-abierto { overflow: hidden; }
   .gdv-pasos { order: 2; max-height: 32vh; }
   .gdv-img { max-height: 50vh; }
 }
+
+
+/* Botón «Pasos 5 y 6» y recorrido automático: mismo estilo que «Reiniciar» (fondo transparente, sin bloque morado) */
+.toolbar button.btn-tb-toggle-post,
+html[data-theme="light"] .toolbar button.btn-tb-toggle-post,
+.toolbar button.btn-tb-recorrido {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0.38rem 0.68rem !important;
+  border-radius: 0.5625rem !important;
+  font-family: inherit !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  color: rgb(91, 100, 116) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
+.toolbar button.btn-tb-toggle-post:hover,
+html[data-theme="light"] .toolbar button.btn-tb-toggle-post:hover,
+.toolbar button.btn-tb-recorrido:hover {
+  background: #f3f0fa !important;
+  color: #6d28d9 !important;
+}
+.toolbar .tb-ico { flex: none; min-width: 0 !important; }
+.toolbar-recorrido-group { display: inline-flex; align-items: center; gap: 0.25rem; }
+.toolbar button.btn-tb-recorrido.activo { color: #b91c1c !important; background: #fef2f2 !important; }
+.toolbar button.btn-tb-recorrido .tb-rec-estado {
+  font-weight: 500;
+  color: rgb(91, 100, 116);
+  font-variant-numeric: tabular-nums;
+  margin-left: 0.15rem;
+}
+.toolbar .sel-tb-recorrido {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.45rem;
+  background: #ffffff;
+  color: rgb(91, 100, 116);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.22rem 0.3rem;
+  cursor: pointer;
+}
+html[data-theme="dark"] .toolbar .sel-tb-recorrido { background: transparent; border-color: rgba(148, 163, 184, 0.35); color: #cbd5e1; }
+
+.recorrido-flotante {
+  position: fixed;
+  top: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100050;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.45rem 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+  font-variant-numeric: tabular-nums;
+}
+.recorrido-flotante[hidden] { display: none; }
+.recorrido-flotante .rf-punto { width: 8px; height: 8px; border-radius: 50%; background: #16a34a; animation: rfPulso 1.2s infinite; }
+@keyframes rfPulso { 50% { opacity: 0.3; } }
+.recorrido-flotante .rf-detener {
+  display: inline-flex; align-items: center; gap: 0.3rem; border: 0; border-radius: 999px; cursor: pointer;
+  background: #fee2e2; color: #b91c1c; font: inherit; font-weight: 700; padding: 0.3rem 0.75rem;
+}
+.recorrido-flotante .rf-detener:hover { background: #fecaca; }
+.recorrido-flotante .tb-ico { min-width: 0 !important; }
+
+/* Íconos de los botones: Archify estira todo svg (min-width global); se fija su tamaño */
+.toolbar svg.tb-ico,
+.recorrido-flotante svg.tb-ico {
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  max-width: 15px !important;
+  flex: none !important;
+  display: inline-block !important;
+}
+
+/* Pantalla completa: textos cortos en la barra para que el título no se parta en tres líneas */
+html[data-present="true"] .toolbar .tb-post-txt,
+html[data-present="true"] .toolbar .tb-rec-extra { display: none; }

@@ -195,8 +195,8 @@
         });
       }
       btnPost.innerHTML = visible
-        ? '<span class="tb-post-icon">👁️</span> <span class="tb-post-txt">Ocultar pasos 5 y 6</span>'
-        : '<span class="tb-post-icon">👁️</span> <span class="tb-post-txt">Pasos 5 y 6 (Horario y consulta)</span>';
+        ? '<svg class="tb-ico" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg> <span class="tb-post-txt">Ocultar pasos 5 y 6</span>'
+        : '<svg class="tb-ico" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></svg> <span class="tb-post-txt">Pasos 5 y 6 (Horario y consulta)</span>';
       btnPost.title = visible
         ? 'Ocultar horario/docente y consulta oficial'
         : 'Mostrar horario/docente y consulta oficial en el diagrama';
@@ -1287,6 +1287,7 @@
   }
 
   function cerrarModalGuia() {
+    if (recorrido.activo) detenerRecorrido();
     cerrarModalConfirmacionValidacion();
     var chip = document.getElementById('focus-chip');
     var b = document.getElementById('guia-modal-backdrop');
@@ -1386,6 +1387,7 @@
       scrollBody.scrollTop = prevBodyScroll;
     }
 
+    setTimeout(ajustarGuiaPresentacion, 120);
     setTimeout(function () {
       mantenerFlujoCompleto();
       var activePill = card.querySelector('.guia-step-pill.active');
@@ -1397,7 +1399,161 @@
     }, 50);
   }
 
+  // ---------------------------------------------------------------------------
+  // Recorrido automático: abre cada paso de la guía, uno tras otro, cada N segundos
+  // (N lo elige el usuario y se recuerda en este navegador). «Detener» lo para en el paso actual.
+  // ---------------------------------------------------------------------------
+  var recorrido = { activo: false, tick: null, pasos: [], i: 0, restante: 0 };
+  var ICONO_PLAY = '<svg class="tb-ico" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"></path></svg>';
+  var ICONO_STOP = '<svg class="tb-ico" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>';
+
+  function segundosRecorrido() {
+    var sel = document.getElementById('sel-recorrido-seg');
+    return sel ? parseInt(sel.value, 10) || 5 : 5;
+  }
+
+  function pasosRecorrido() {
+    var ids = obtenerIdsNodosDiagrama().filter(function (k) { return GUIA_MAP[k]; });
+    return ids.length ? ids : Object.keys(GUIA_MAP);
+  }
+
+  // Mientras corre, la guía tapa la barra superior: un control flotante (encima de la guía) permite detenerlo.
+  function pintarFlotanteRecorrido() {
+    var f = document.getElementById('recorrido-flotante');
+    if (!f) {
+      f = document.createElement('div');
+      f.id = 'recorrido-flotante';
+      f.className = 'recorrido-flotante';
+      f.setAttribute('role', 'status');
+      f.innerHTML = '<span class="rf-punto" aria-hidden="true"></span><span class="rf-txt"></span>' +
+        '<button type="button" class="rf-detener">' + ICONO_STOP + ' Detener</button>';
+      // Archify cierra el paso abierto con un clic fuera de la guía (lo escucha antes que este botón):
+      // el clic se atiende en la fase de captura de window y no sigue; al detener se queda en el mismo paso.
+      ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'click', 'touchstart', 'touchend'].forEach(function (tipo) {
+        window.addEventListener(tipo, function (e) {
+          if (!e.target || !e.target.closest || !e.target.closest('#recorrido-flotante')) return;
+          e.stopPropagation();
+          if (tipo === 'click' && e.target.closest('.rf-detener')) {
+            e.preventDefault();
+            detenerRecorrido(true);
+          }
+        }, true);
+      });
+      document.body.appendChild(f);
+    }
+    f.hidden = !recorrido.activo;
+    if (recorrido.activo) {
+      f.querySelector('.rf-txt').textContent = 'Recorrido automático · Paso ' + (recorrido.i + 1) + ' de ' +
+        recorrido.pasos.length + ' · siguiente en ' + recorrido.restante + ' s';
+    }
+  }
+
+  function pintarRecorrido() {
+    pintarFlotanteRecorrido();
+    var btn = document.getElementById('btn-recorrido');
+    if (!btn) return;
+    btn.classList.toggle('activo', recorrido.activo);
+    btn.innerHTML = recorrido.activo
+      ? ICONO_STOP + '<span class="tb-rec-txt">Detener</span><span class="tb-rec-estado">Paso ' + (recorrido.i + 1) +
+        ' de ' + recorrido.pasos.length + ' · ' + recorrido.restante + ' s</span>'
+      : ICONO_PLAY + '<span class="tb-rec-txt">Recorrido<span class="tb-rec-extra"> automático</span></span>';
+    btn.title = recorrido.activo ? 'Detener el recorrido automático' : 'Abrir los pasos uno tras otro, solos';
+  }
+
+  function iniciarRecorrido() {
+    var pasos = pasosRecorrido();
+    if (pasos.length < 2) return;
+    var idFoco = document.getElementById('focus-id');
+    var i = pasos.indexOf(idFoco ? idFoco.textContent.trim() : '');
+    if (i < 0 || i === pasos.length - 1) i = 0;
+    if (esFlujoCrearNrc()) setPasosPosterioresVisibles(true);
+    recorrido.activo = true;
+    recorrido.pasos = pasos;
+    recorrido.i = i;
+    recorrido.restante = segundosRecorrido();
+    window.irAPaso(pasos[i], true);
+    clearInterval(recorrido.tick);
+    recorrido.tick = setInterval(function () {
+      recorrido.restante -= 1;
+      if (recorrido.restante > 0) return pintarRecorrido();
+      recorrido.i += 1;
+      if (recorrido.i >= recorrido.pasos.length) return detenerRecorrido();
+      recorrido.restante = segundosRecorrido();
+      window.irAPaso(recorrido.pasos[recorrido.i], true);
+      pintarRecorrido();
+    }, 1000);
+    pintarRecorrido();
+  }
+
+  function detenerRecorrido(quedarseEnPaso) {
+    clearInterval(recorrido.tick);
+    var paso = recorrido.activo ? recorrido.pasos[recorrido.i] : null;
+    recorrido.activo = false;
+    pintarRecorrido();
+    if (quedarseEnPaso && paso) {
+      setTimeout(function () {
+        var idFoco = document.getElementById('focus-id');
+        if (!idFoco || idFoco.textContent.trim() !== paso) window.irAPaso(paso, true);
+      }, 120);
+    }
+  }
+
+  function crearControlRecorrido() {
+    if (Object.keys(GUIA_MAP).length < 2) return;
+    var toolbar = document.querySelector('.toolbar');
+    if (!toolbar || toolbar.querySelector('.toolbar-recorrido-group')) return;
+    var guardado = 5;
+    try { guardado = parseInt(localStorage.getItem('ccee_recorrido_seg'), 10) || 5; } catch (_) { }
+    var g = document.createElement('div');
+    g.className = 'toolbar-group toolbar-recorrido-group';
+    g.innerHTML = '<button type="button" class="btn-tb-recorrido" id="btn-recorrido"></button>' +
+      '<select id="sel-recorrido-seg" class="sel-tb-recorrido" title="Segundos por paso" aria-label="Segundos por paso">' +
+      [3, 5, 8, 10, 15, 20, 30].map(function (n) {
+        return '<option value="' + n + '"' + (n === guardado ? ' selected' : '') + '>' + n + ' s</option>';
+      }).join('') + '</select>';
+    var sesion = toolbar.querySelector('.toolbar-session-group');
+    toolbar.insertBefore(g, sesion ? sesion.nextSibling : toolbar.firstChild);
+    g.querySelector('#btn-recorrido').addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (recorrido.activo) detenerRecorrido(); else iniciarRecorrido();
+    });
+    g.querySelector('#sel-recorrido-seg').addEventListener('change', function (e) {
+      try { localStorage.setItem('ccee_recorrido_seg', e.target.value); } catch (_) { }
+    });
+    pintarRecorrido();
+  }
+
+  // Pantalla completa: el SVG deja un margen en blanco bajo la leyenda; la guía sube hasta ahí y gana ese alto.
+  function ajustarGuiaPresentacion() {
+    var chip = document.getElementById('focus-chip');
+    if (!chip) return;
+    ['margin-top', 'height', 'max-height'].forEach(function (p) { chip.style.removeProperty(p); });
+    if (!estaEnPresentacion() || !document.body.classList.contains('has-guia-open') || !chip.classList.contains('tiene-guia')) return;
+    var svg = document.querySelector('.diagram-container > svg');
+    if (!svg) return;
+    var fondo = 0;
+    [].slice.call(svg.querySelectorAll('[data-node-id], text')).forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.height > 0 && r.height < svg.getBoundingClientRect().height * 0.6) fondo = Math.max(fondo, r.bottom);
+    });
+    var hueco = Math.round(svg.getBoundingClientRect().bottom - fondo - 16);
+    if (!fondo || hueco < 24) return;
+    var alto = Math.round(chip.getBoundingClientRect().height + hueco);
+    chip.style.setProperty('margin-top', -hueco + 'px', 'important');
+    chip.style.setProperty('height', alto + 'px', 'important');
+    chip.style.setProperty('max-height', alto + 'px', 'important');
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    crearControlRecorrido();
+    setTimeout(crearControlRecorrido, 600);
+    window.addEventListener('resize', function () { setTimeout(ajustarGuiaPresentacion, 120); });
+    document.addEventListener('fullscreenchange', function () { setTimeout(ajustarGuiaPresentacion, 250); });
+    if (window.MutationObserver) {
+      new MutationObserver(function () { setTimeout(ajustarGuiaPresentacion, 250); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['data-present'] });
+    }
     acomodarHeaderPagina();
     prepararLecturaTactil();
 

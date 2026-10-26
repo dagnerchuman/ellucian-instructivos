@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """Afiche de una hoja: los términos de Banner en el orden del flujo de los Centros Empresariales.
 
-Uso: python3 build_afiche.py "/ruta/TÉRMINOS DE BANNER - AFICHE PARA ESTUDIAR - CENTROS EMPRESARIALES.pdf"
+Uso: python3 build_afiche.py [--general] "/ruta/salida.pdf"
+  sin opción: versión de Centros Empresariales (datos de Idiomas, Computación y Emprendimiento);
+  --general: la misma tabla sin datos de ningún centro, para cualquier usuario de Banner.
 Fuentes: TERMINOS de herramientas/diagramas/plantillas.py, glosario (references/ref-glosario.md),
 centros/<centro>/datos.json y lo validado en TEST (registro C65, C91, C95, C97, C100, C101, C105, C107).
 """
@@ -101,6 +103,23 @@ TERMINOS = [
     ]),
 ]
 
+# Versión general: las filas que llevan datos de los centros se cambian por una definición sin centro.
+GENERAL = {
+    'Periodo': 'Código del periodo académico: año + nivel + secuencia. Ej.: **202656**.',
+    'Parte de periodo': 'Tramo del periodo con sus fechas y semanas; cada NRC pertenece a una parte.',
+    'SSASECT': 'Crea y edita el NRC: materia, curso, horario, cupo y docente.',
+    'Liga': 'Dos NRC del mismo curso que se matriculan juntos (SSADETL), por ejemplo teoría y práctica.',
+    'SIAINST': 'Registra al docente en el periodo: estatus, contrato y regla de carga.',
+    'Carga lectiva': 'Horas del docente en sus NRC; se revisa en SIAASGN.',
+    'SAAQUIK': 'Admite a la persona en un programa: desde ahí es **alumno**.',
+    'Programa': 'Plan académico al que se admite al alumno; define su malla.',
+    'Alumno': 'Persona admitida en un programa. No se dice «participante» ni «estudiante».',
+    'Retención': 'Bloqueo que impide la matrícula; por ejemplo, por deuda.',
+    'ATTRGRD': 'Componente de asistencia del plan: peso 0 y «Debe aprobar» con la asistencia mínima.',
+    'Escala': 'Modo de calificación y nota mínima aprobatoria del nivel (SHAGRDE).',
+    'INH': 'Asistencia menor al mínimo: no aprueba ni da créditos, aunque el promedio apruebe.',
+}
+
 DIGA = [('participante', 'alumno'), ('sección o grupo', 'NRC'), ('inscripción', 'matrícula'),
         ('vacante', 'cupo'), ('cierre de actas', 'pase a historia')]
 
@@ -126,8 +145,8 @@ CSS = '''
            font: 700 7.4pt/15px 'Montserrat', sans-serif; text-align: center; margin-right: 4px; }
 .paso .t { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 7.4pt; line-height: 1.15; }
 .paso .q { display: block; font-size: 6.4pt; color: var(--mut); margin-top: 2px; }
-table.afiche { font-size: 7.45pt; line-height: 1.27; }
-table.afiche td { padding: 1.9px 6px; vertical-align: middle; }
+table.afiche { font-size: 7.7pt; line-height: 1.28; }
+table.afiche td { padding: 2.1px 6px; vertical-align: middle; }
 table.afiche th { padding: 3.5px 6px; font-size: 7.4pt; }
 table.afiche tr.grp td { padding: 2.6px 6px; font-size: 7pt; text-align: left; }
 table.afiche td:nth-child(2) b { font-size: 7.9pt; }
@@ -144,32 +163,33 @@ table.afiche td:nth-child(2) b { font-size: 7.9pt; }
 '''
 
 
-def construir():
+def construir(general=False):
     flujo = ''.join(f'<div class="paso"><span class="n">{k}</span><span class="t">{t}</span></div>'
                     for k, (t, _) in enumerate(FLUJO, start=1))
     filas, n = [], 0
     for fase, terminos in TERMINOS:
         nombre, quien = FLUJO[fase]
-        filas.append(('grp', f'{fase + 1} · {nombre} — {quien}'))
+        filas.append(('grp', f'{fase + 1} · {nombre}' + ('' if general else f' — {quien}')))
         for termino, corto, definicion in terminos:
+            if general:
+                definicion = GENERAL.get(termino, definicion)
+                corto = {'plan del centro': 'plan académico'}.get(corto, corto)
             n += 1
             filas.append([str(n), f'<b>{termino}</b> <span class="tm">({corto})</span>', con_centros(definicion)])
     tabla = table([('#', 4), ('Término', 25), ('Qué significa', 71)], filas, 'afiche left')
     diga = '<div class="diga"><span class="tit">Diga así</span>' + ''.join(
         f'<span><s>{mal}</s> › <b>{bien}</b></span>' for mal, bien in DIGA) + '</div>'
+    # Sin banda morada (pedido del usuario, 26/10): solo los logos; el autor va en el pie.
     cab = (f'<header class="cover"><div class="logos"><img src="{_url("img", "uss.png")}" alt="USS">'
-           f'<img src="{_url("img", "ellucian.png")}" alt="Ellucian"></div><div class="band">'
-           '<div class="kicker">Afiche para estudiar · Banner Student · Idiomas, Computación y Emprendimiento</div>'
-           '<h1>Términos de Banner en el flujo de Centros Empresariales</h1>'
-           '<div class="sub">En el orden en que ocurren: del periodo al pase a historia.</div>'
-           f'<div class="firma">Elaborado por: <b>{AUTHOR}</b> · 26/10/2026 · Fuentes: instructivos de Ellucian y '
-           'pruebas en TEST de la USS</div></div></header>')
+           f'<img src="{_url("img", "ellucian.png")}" alt="Ellucian"></div></header>')
     return cab + f'<div class="flujo">{flujo}</div>' + tabla + diga, n
 
 
 if __name__ == '__main__':
-    salida = sys.argv[1]
-    cuerpo, n = construir()
-    render('afiche_terminos', cuerpo, CSS, 'Términos de Banner · Centros Empresariales', salida,
-           'Términos de Banner en el flujo de Centros Empresariales', f'Afiche de estudio: {n} términos en orden del flujo')
+    general = '--general' in sys.argv
+    salida = [a for a in sys.argv[1:] if a != '--general'][0]
+    cuerpo, n = construir(general)
+    pie = 'Términos de Banner · General' if general else 'Términos de Banner · Centros Empresariales'
+    titulo = 'Términos de Banner en el flujo académico' if general else 'Términos de Banner en el flujo de Centros Empresariales'
+    render('afiche_terminos', cuerpo, CSS, pie, salida, titulo, f'Afiche de estudio: {n} términos en orden del flujo')
     check_pdf(salida, png_dir=os.path.join(os.path.dirname(os.path.abspath(salida)), 'png_afiche'), dpi=110)

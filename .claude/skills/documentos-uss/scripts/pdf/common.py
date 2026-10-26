@@ -162,7 +162,7 @@ PAGINAS = {
     'SAAQUIK': 'admisión rápida', 'SAAADMS': 'solicitud de admisión', 'SGASTDN': 'registro del estudiante',
     'SGAADVR': 'tutor o asesor del estudiante', 'SHAGRDE': 'códigos de calificación', 'SHAGSCH': 'escalas de calificación',
     'SHAGCOM': 'plan de evaluación del NRC', 'SFASLST': 'notas por backoffice', 'SHATCKN': 'notas ya en la historia académica',
-    'SHRCINC': 'notas incompletas', 'SHAEGBC': 'fechas de corrección extemporánea de notas',
+    'SHRCINC': 'notas incompletas', 'SHAEGBC': 'calendario del libro de calificaciones', 'SOAATRK': 'regla de control de asistencia del NRC',
     'SHRROLL': 'paso de notas a la historia académica', 'SHACRSE': 'historia académica por curso', 'SHADEGR': 'grado del estudiante',
     'GTVINTP': 'códigos de socio de integración', 'GORINTG': 'reglas de socio de integración',
     'SOACURR': 'reglas de currículo del programa', 'SMAPRLE': 'programa académico', 'STVFCST': 'códigos de estatus del docente',

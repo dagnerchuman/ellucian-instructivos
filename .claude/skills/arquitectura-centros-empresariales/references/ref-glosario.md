@@ -52,7 +52,7 @@ Este archivo sale de los diccionarios `SIGLAS` y `PAGINAS` de ese mismo archivo.
 | SGASTDN | Registro del estudiante |
 | SHACRSE | Historia académica por curso |
 | SHADEGR | Grado del estudiante |
-| SHAEGBC | Fechas de corrección extemporánea de notas |
+| SHAEGBC | Calendario del libro de calificaciones: fechas para registrar notas; va antes que SHAGCOM (C91, C95) |
 | SHAGCOM | Plan de evaluación del NRC |
 | SHAGRDE | Códigos de calificación |
 | SHAGSCH | Escalas de calificación |
@@ -70,6 +70,7 @@ Este archivo sale de los diccionarios `SIGLAS` y `PAGINAS` de ese mismo archivo.
 | SMARQCM | CAPP de un estudiante |
 | SMICRLT | Resultado del CAPP |
 | SMRBCMP | CAPP masivo |
+| SOAATRK | Regla de control de asistencia del NRC (C101) |
 | SOAHOLD | Retenciones |
 | SOATERM | Control de periodo |
 | SOATEST | Puntajes de examen del estudiante |

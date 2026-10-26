@@ -25,4 +25,5 @@ Estos son los scripts con los que se hicieron los PDF, PPTX y Excel de `referenc
 | `diag/build_diagrama.py` | DIAGRAMA DE INICIO A FIN (PDF A3) |
 | `build_ppts.py` | PPTX de validación, CAPP, lo que entiendo y diagrama |
 | `reunion28/build_reunion28.py` | RESUMEN DE LA REUNIÓN 28-09 |
+| `afiche/build_afiche.py` | TÉRMINOS DE BANNER - AFICHE PARA ESTUDIAR (una hoja A4, 35 términos en el orden del flujo). Esta sí corre tal cual: `python3 build_afiche.py "<salida>.pdf"` |
 | `casos/casos_data.py`, `casos/build_pdf.py`, `casos/build_pptx.py` | CASUÍSTICAS PARA LAS PRUEBAS INTEGRALES (PDF + PPTX con los mismos datos) |

@@ -200,12 +200,11 @@ button.ai-fab:active,
 }
 
 /* 2. Overlay / Backdrop */
+/* Sin velo: la página sigue visible y se puede usar con el asistente abierto (pedido del usuario, 26/10). */
 .ai-drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(8, 5, 16, 0.68);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: transparent;
   z-index: 999998;
   opacity: 0;
   pointer-events: none;
@@ -214,7 +213,7 @@ button.ai-fab:active,
 
 .ai-drawer-overlay.active {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 /* 3. Panel Drawer Lateral */
@@ -223,7 +222,7 @@ button.ai-fab:active,
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(500px, 100vw);
+  width: min(640px, 100vw);
   background: #110b1f;
   color: #f3f0f9;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -430,6 +429,18 @@ button.ai-fab:active,
 .ai-config-inner {
   padding: 1rem 1.35rem;
 }
+
+.ai-config-aviso {
+  margin: 0 0 0.75rem;
+  padding: 0.55rem 0.7rem;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0.4rem;
+  background: rgba(245, 158, 11, 0.14);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.ai-config-aviso[hidden] { display: none; }
 
 .ai-config-help {
   font-size: 0.75rem;
@@ -1133,3 +1144,12 @@ button.ai-fab:active,
   .aipv-cuerpo { grid-template-columns: 1fr; overflow-y: auto; }
   .aipv-pasos { max-height: 12rem; order: 2; }
 }
+
+/* Panel de la clave en el tema claro: fondo claro, sin bloque gris */
+[data-theme="light"] .ai-config-panel { background: #f8f5fc; }
+[data-theme="light"] .ai-config-panel.open { border-bottom-color: rgba(112, 48, 160, 0.15); }
+[data-theme="light"] .ai-config-help { color: #5f5f6b; }
+[data-theme="light"] .ai-config-aviso { color: #78350f; background: #fef3c7; }
+[data-theme="light"] .ai-field label { color: #3b2a55; }
+[data-theme="light"] .ai-field input { background: #ffffff; color: #1a1426; border-color: rgba(112, 48, 160, 0.3); }
+[data-theme="light"] .ai-btn-pill.text { color: #6d28d9; }

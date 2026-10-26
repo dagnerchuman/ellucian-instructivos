@@ -3037,6 +3037,7 @@ html:not([data-theme="dark"]) .gdv-pasos {
 .gdv-nav[data-gdv="ant"] { left: 0.4rem; }
 .gdv-nav[data-gdv="sig"] { right: 0.4rem; }
 .gdv-nav:disabled { opacity: 0.25; cursor: default; }
+.gdv-nav.gdv-nav-paso { background: #166534; color: #fff; box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.25); }
 .gdv-pie { font-size: 0.8rem; text-align: center; opacity: 0.85; white-space: pre-wrap; }
 body.gdv-abierto { overflow: hidden; }
 

@@ -872,6 +872,7 @@
       var tipo = accion.getAttribute('data-gdv');
       if (tipo === 'visor') return;
       e.preventDefault();
+      e.stopPropagation();  // el clic no debe llegar al documento, que cerraría el paso abierto
       if (tipo === 'cerrar') cerrarVisorDiapo();
       else if (tipo === 'ant') moverVisorDiapo(-1);
       else if (tipo === 'sig') moverVisorDiapo(1);
@@ -890,8 +891,21 @@
     v.querySelector('.gdv-pie').textContent = (d.texto || '') + '  (' + (visorDiapo.idx + 1) + ' de ' + visorDiapo.lista.length + ')';
     v.querySelector('[data-gdv="completa"]').textContent = visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa';
     v.querySelector('[data-gdv="visor"]').href = d.visor;
-    v.querySelector('[data-gdv="ant"]').disabled = visorDiapo.idx === 0;
-    v.querySelector('[data-gdv="sig"]').disabled = visorDiapo.idx === visorDiapo.lista.length - 1;
+    // En la última lámina, «›» pasa al paso siguiente (y en la primera, «‹» vuelve al anterior).
+    var ultima = visorDiapo.idx === visorDiapo.lista.length - 1;
+    var primera = visorDiapo.idx === 0;
+    var sig = pasoVecino(1), ant = pasoVecino(-1);
+    visorDiapo.vecinos = { '1': sig, '-1': ant };  // se guardan al pintar: al hacer clic el foco puede cambiar
+    var bSig = v.querySelector('[data-gdv="sig"]'), bAnt = v.querySelector('[data-gdv="ant"]');
+    bSig.disabled = ultima && !sig;
+    bAnt.disabled = primera && !ant;
+    bSig.classList.toggle('gdv-nav-paso', ultima && !!sig);
+    bAnt.classList.toggle('gdv-nav-paso', primera && !!ant);
+    bSig.title = ultima && sig ? 'Siguiente paso: ' + nombrePaso(sig) : 'Lámina siguiente';
+    bAnt.title = primera && ant ? 'Paso anterior: ' + nombrePaso(ant) : 'Lámina anterior';
+    if (ultima && sig) {
+      v.querySelector('.gdv-pie').textContent += '  ·  › Siguiente paso: ' + nombrePaso(sig);
+    }
     v.querySelector('.gdv-pasos').innerHTML = pasosVisorDiapoHtml(d);
     v.querySelector('.gdv-pasos').scrollTop = 0;
   }
@@ -949,9 +963,39 @@
     document.body.classList.add('gdv-abierto');
   }
 
+  function pasoVecino(delta) {
+    var idFoco = document.getElementById('focus-id');
+    var claves = Object.keys(GUIA_MAP);
+    var i = claves.indexOf((idFoco ? idFoco.textContent : '').trim());
+    return i === -1 ? null : (claves[i + delta] || null);
+  }
+
+  function nombrePaso(id) {
+    var info = GUIA_MAP[id] || {};
+    return (info.fase || info.pantalla || id).replace(/^Paso\s*\d+:\s*/i, '');
+  }
+
+  // Al pasar de la última lámina de un paso, va al paso siguiente y abre su primera lámina (si tiene).
+  function irAPasoDesdeVisor(delta) {
+    var destino = (visorDiapo.vecinos && visorDiapo.vecinos[String(delta)]) || pasoVecino(delta);
+    if (!destino) return;
+    cerrarVisorDiapo();
+    window.irAPaso(destino);
+    var intentos = 0;
+    (function abrirCuandoLlegue() {
+      var idFoco = document.getElementById('focus-id');
+      if (idFoco && idFoco.textContent.trim() === destino) {
+        var lista = (GUIA_MAP[destino] || {}).diapositivas || [];
+        if (lista.length) abrirVisorDiapo(lista, delta > 0 ? 0 : lista.length - 1);
+        return;
+      }
+      if (++intentos < 20) setTimeout(abrirCuandoLlegue, 150);  // si pide confirmar, el visor no se reabre
+    })();
+  }
+
   function moverVisorDiapo(paso) {
     var nuevo = visorDiapo.idx + paso;
-    if (nuevo < 0 || nuevo >= visorDiapo.lista.length) return;
+    if (nuevo < 0 || nuevo >= visorDiapo.lista.length) return irAPasoDesdeVisor(paso);
     visorDiapo.idx = nuevo;
     pintarVisorDiapo();
   }

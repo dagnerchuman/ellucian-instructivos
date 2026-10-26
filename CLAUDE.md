@@ -6,7 +6,7 @@ El usuario, Dagner Anibal Chuman Lluen, trabaja en los **Centros Empresariales**
 | Carpeta | Qué hay |
 |---|---|
 | `CAPACIDAD n/` | Instructivos de Ellucian Banner (PPTX) y scripts de prueba de la USS. No se mueven: el visor depende de sus rutas |
-| `visor_instructivos/` | Visor web. Netlify publica solo la rama `main` (`publish = "."`); lo que está en otras ramas o solo en local no sale en el sitio. Muestra las diapositivas como imágenes de `diapositivas/`, generadas con `herramientas/diapositivas.py` (ADR-022) |
+| `visor_instructivos/` | Visor web. El sitio se publica desde la rama `main` en https://centros-empresariales-ellucian.vercel.app (antes Netlify, `publish = "."`); lo que está en otras ramas o solo en local no sale en el sitio. Muestra las diapositivas como imágenes de `diapositivas/`, generadas con `herramientas/diapositivas.py` (ADR-022) |
 | `centros/` | **Todo lo propio de cada centro**, en `idiomas/`, `computacion/` y `emprendimiento/`: `datos.json` (fuente única), `README.md` (ficha) y `diagramas/` (HTML, PNG, SVG). Lo común va en `comun/`. Índice: `centros/README.md`; galería: `centros/index.html` |
 | `herramientas/` | `diagramas/` (generador Archify), `diapositivas.py` (instructivos a imágenes WebP) y `sincronizar_skills.py` |
 | `conocimiento/` | Base de conocimiento: `manifest.json`, ADR en `decisiones/` y auditorías. Se abre en Obsidian |

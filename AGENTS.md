@@ -5,7 +5,7 @@
 
 - **Usuario:** Dagner Anibal Chuman Lluen, de los **Centros Empresariales** de la Universidad Señor de Sipán (USS): Idiomas/Inglés, Computación/Informática y Emprendimiento.
 - **Qué hace:** documenta y prueba cómo pasan del sistema actual **SEUSS** a **Ellucian Banner Student**.
-- **Este repositorio:** instructivos de Ellucian (PPTX, carpetas `CAPACIDAD n`) y un visor web (`visor_instructivos/`, que Netlify publica solo desde la rama `main`, con `publish = "."`; lo de otras ramas no sale en el sitio).
+- **Este repositorio:** instructivos de Ellucian (PPTX, carpetas `CAPACIDAD n`) y un visor web (`visor_instructivos/`, que se publica solo desde la rama `main` en https://centros-empresariales-ellucian.vercel.app, antes en Netlify con `publish = "."`; lo de otras ramas no sale en el sitio).
 - **Todo por carpetas:**
   - `centros/<centro>/` (`idiomas`, `computacion`, `emprendimiento`): `datos.json` (**fuente única** de los datos del centro), `README.md` (ficha) y `diagramas/` (HTML interactivo, PNG claro y oscuro, SVG). Lo común va en `centros/comun/`.
   - `herramientas/`: generador de diagramas (Archify), conversor de instructivos a imágenes (`diapositivas.py`, ADR-022) y sincronizador de skills.

@@ -36,9 +36,21 @@
       if (savedEngine && engineSelect) engineSelect.value = savedEngine;
     } catch (_) {}
 
-    function actualizarBadge(modelo) {
+    function tieneToken() {
+      try { return !!(localStorage.getItem('ccee_groq_token') || '').trim(); } catch (_) { return false; }
+    }
+
+    // Sin clave de Groq el asistente está offline (solo base local), aunque el selector diga Groq.
+    function modoEnLinea() {
+      return tieneToken() && (!engineSelect || engineSelect.value !== 'local-ccee');
+    }
+
+    var configAviso = document.getElementById('ai-config-aviso');
+
+    function actualizarBadge() {
       if (!statusPill) return;
-      if (modelo === 'local-ccee') {
+      if (configAviso) configAviso.hidden = tieneToken();
+      if (!modoEnLinea()) {
         statusPill.textContent = 'Offline';
         statusPill.style.color = '#b98ae0';
         statusPill.style.background = 'rgba(185, 138, 224, 0.15)';
@@ -51,12 +63,13 @@
       }
     }
 
+    actualizarBadge();
     if (engineSelect) {
-      actualizarBadge(engineSelect.value);
       engineSelect.addEventListener('change', function() {
         var m = engineSelect.value;
         try { localStorage.setItem('ccee_selected_model', m); } catch (_) {}
-        actualizarBadge(m);
+        if (m !== 'local-ccee' && !tieneToken() && configPanel) configPanel.classList.add('open');
+        actualizarBadge();
       });
     }
 
@@ -64,8 +77,13 @@
       drawer.classList.add('active');
       overlay.classList.add('active');
       drawer.setAttribute('aria-hidden', 'false');
+      actualizarBadge();
+      // Sin clave: se abre la ventana para ingresarla; mientras tanto el asistente sigue offline.
+      var pedirToken = !tieneToken() && configPanel;
+      if (pedirToken) configPanel.classList.add('open');
       setTimeout(function() {
-        if (promptInput) promptInput.focus();
+        var foco = pedirToken ? groqTokenInput : promptInput;
+        if (foco) foco.focus();
       }, 350);
     }
 
@@ -96,9 +114,14 @@
     if (saveKeysBtn) {
       saveKeysBtn.addEventListener('click', function() {
         try {
-          localStorage.setItem('ccee_groq_token', (groqTokenInput.value || '').trim());
-          alert('Credenciales guardadas en este navegador.');
-          if (configPanel) configPanel.classList.remove('open');
+          var clave = (groqTokenInput.value || '').trim();
+          localStorage.setItem('ccee_groq_token', clave);
+          if (clave && engineSelect && engineSelect.value === 'local-ccee') {
+            engineSelect.value = 'groq-qwen-38';
+            localStorage.setItem('ccee_selected_model', 'groq-qwen-38');
+          }
+          if (clave && configPanel) configPanel.classList.remove('open');
+          actualizarBadge();
         } catch (_) {}
       });
     }
@@ -108,7 +131,7 @@
         try {
           localStorage.removeItem('ccee_groq_token');
           if (groqTokenInput) groqTokenInput.value = '';
-          alert('Credenciales eliminadas de este navegador. El Motor Experto Local seguirá disponible.');
+          actualizarBadge();
         } catch (_) {}
       });
     }
@@ -800,7 +823,7 @@
 
       var tempCard = registrarMensaje('bot', 'Consultando la base de conocimiento…');
 
-      var modelo = engineSelect ? engineSelect.value : 'groq-qwen-38';
+      var modelo = modoEnLinea() ? (engineSelect ? engineSelect.value : 'groq-qwen-38') : 'local-ccee';
       var res = '';
 
       if (modelo === 'local-ccee') {

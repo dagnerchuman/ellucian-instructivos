@@ -50,16 +50,7 @@ EXTRA = {
 # "texto" reemplaza al del registro solo cuando el original es demasiado largo para la reunión.
 # ---------------------------------------------------------------------------------------------
 ELLUCIAN = [
-    ("Notas y asistencia (hoy bloquean el cierre)", [
-        dict(id="U32", titulo="La asistencia no llega sola a ATTRGRD",
-             texto="El porcentaje de asistencia no llega a **ATTRGRD** aunque la configuración de TI del instructivo 7.1.0 "
-                   "está completa (GORICCR en Y, GORRSQL activa y validada). ¿Qué falta revisar: (a) el segundo registro de la "
-                   "regla en GORRSQL; (b) el cálculo por horas, si el panel de Pasar lista muestra «Horas asistidas 00:00» con la "
-                   "unidad Presente/Ausente de SOAATRK; (c) que el tipo de reunión y la sesión coincidan con `:MEETING_CODE` y "
-                   "`:SESSION_ID`; (d) la acción del docente que dispara el envío?",
-             sabemos="Con el porcentaje cargado, la nota final sale INH en SFASLST (C105, C107). Según el instructivo 7.1.1 "
-                     "(diap. 56 y 57), el docente pulsa Clase › «Actualizar la asistencia en el libro de calificaciones» (R21); "
-                     "falta probarlo con el NRC 10044."),
+    ("Notas (bloquean el cierre de Idiomas y Emprendimiento)", [
         dict(id="E22", titulo="Escala de Idiomas y Emprendimiento en SHAGRDE",
              sabemos="Idiomas califica con el modo C (00 a 100, aprueba con 70); Computación y Emprendimiento con el modo V "
                      "(00 a 20, aprueba con 11) (C65, ADR-009)."),

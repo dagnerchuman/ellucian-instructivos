@@ -535,7 +535,7 @@ def notas(c):
         "Pasar lista no muestra el NRC: falta la regla del NRC en SOAATRK (C101)",
         "El libro no muestra el NRC: debe tener docente, plan y alumnos matriculados (7.1.4, diap. 58)",
         "«Calificaciones finales» sin alumnos: es normal con libro; la nota pasa sola a SFASLST (C106)",
-        "ATTRGRD vacío: el porcentaje de asistencia no pasó solo; revisa GORICCR, GORRSQL y STVGCHG (U32)",
+        "ATTRGRD vacío o viejo: el docente no lo envió; en Pasar lista, Clase › «Actualizar la asistencia en el libro» (C119)",
         "«No Substitute Grade» en el pase a historia: falta el modo del curso en SHAGRDE (U20)",
         f"Con asistencia menor a {asist_txt}, ATTRGRD (Debe aprobar) deja la nota final en INH aunque el promedio apruebe",
     ]}

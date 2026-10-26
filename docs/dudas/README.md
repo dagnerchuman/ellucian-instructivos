@@ -2,11 +2,11 @@
 
 | Archivo | Qué es |
 |---|---|
-| `PREGUNTAS PARA ELLUCIAN - REUNIÓN 27-10 - CENTROS EMPRESARIALES.docx` | 26 preguntas para Ellucian, 19 para la USS y lo que falta para seguir aprendiendo (datos y pruebas pendientes en TEST), cada una con su recuadro «Respuesta» |
+| `PREGUNTAS PARA ELLUCIAN - REUNIÓN 27-10 - CENTROS EMPRESARIALES.docx` | 25 preguntas para Ellucian, 19 para la USS y lo que falta para seguir aprendiendo (datos y pruebas pendientes en TEST), cada una con su recuadro «Respuesta» |
 
 ## Cómo se usa
 1. En la reunión, escriba la respuesta en el recuadro de cada pregunta, quién respondió y el estado (☒ Resuelta, ☒ Sigue abierta o ☒ Lo revisa Ellucian).
-2. Envíe el Word al asistente (Claude Code o Antigravity). Las respuestas se leen por código (E01, U32…):
+2. Envíe el Word al asistente (Claude Code o Antigravity). Las respuestas se leen por código (E01, U31…):
    ```bash
    python3 .claude/skills/documentos-uss/fuentes/preguntas/leer_respuestas.py "docs/dudas/<archivo>.docx"
    ```

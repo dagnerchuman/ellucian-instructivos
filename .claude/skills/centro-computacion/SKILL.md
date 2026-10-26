@@ -108,7 +108,9 @@ Parte de periodo general: **CGE**.
 
 ---
 
-## ✅ Flujo completo validado: Diseño Web, NRC 10044 (23–24/10/2026)
+## ✅ Flujo completo validado: Diseño Web, NRC 10044 (23–26/10/2026)
+> **Dónde está «Faculty»:** pestaña **Autoservicio Docentes**, tarjeta **«Detalle de Notas y Asistencia»**: **Ingresar asistencia** (Pasar lista) e **Ingresar calificaciones** (Libro de calificaciones). La tarjeta «Faculty Grading» da error y no hace falta (C119).
+
 Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuario como docente **y** alumno (C96–C103).
 
 | # | Paso | Página | Estado | Evidencia |
@@ -120,7 +122,7 @@ Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuari
 | 5 | Regla de asistencia | `SOAATRK` | ✅ | **Va primero**: 202656, X06, ESEC 00684, NRC 10044, Desplegar clase, Presente/Ausente, Control de asistencia, del 07-SEP al 31-OCT-2026 (C101) |
 | 6 | Pasar lista | Faculty › Control de asistencia | ✅ | 86 % (ausente el jueves 22-OCT) (C101) |
 | 7 | Notas por componente | Faculty › Libro de calificaciones › Componentes | ✅ | TA1, TA2, PA y EF con 85 de 100 (→ 17), visibles en el Autoservicio del alumno (C102, C103, C105) |
-| 8 | Asistencia a `ATTRGRD` | Envío desde el control de asistencia (7.1.0) | ⚠️ | `ATTRGRD` = **43**, el mismo % de Pasar lista (C105). Por confirmar si llegó sola o se ingresó a mano. GORICCR en Y, GORRSQL activa y STVGCHG con CA (C104, U32) |
+| 8 | Asistencia a `ATTRGRD` | Pasar lista › **Clase › «Actualizar la asistencia en el libro de calificaciones»** › Sí | ✅ | No pasa sola: la envía el docente. Al enviarla, `ATTRGRD` tomó 57,14 → INH y luego 85,71 → APRO (C119; U32 resuelta). Requiere GORICCR en Y, GORRSQL activa y STVGCHG con CA (C104) |
 | 9 | Nota final | Calificaciones compuestas → `SFASLST` | ✅ | Compuesta: porcentaje 85 y **INH** (C105). «Calificaciones finales» no pide nada: la nota pasa sola al backoffice y **SFASLST muestra INH** (C106, C107) |
 | 10 | Pase a historia | `SHRROLL` | ⏳ | Después de la nota final |
 

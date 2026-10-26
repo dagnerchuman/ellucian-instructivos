@@ -551,7 +551,7 @@ def obtener_guia_notas(id_centro):
             "instrucciones": [
                 {"campo": "Ruta", "valor": "Captura de calificaciones › Libro de calificaciones › Componentes", "tipo": "Navegación", "detalle": "Seleccione el NRC; solo aparece si tiene docente, plan y alumnos matriculados (7.1.4, diap. 58)."},
                 {"campo": "Puntaje", "valor": "85 de 100 → calificación 17" if comp else "Puntaje sobre 100", "tipo": "Registro", "detalle": "Banner propone la calificación según la escala. Razón: «Captura Original - OE». Guarde cada componente."},
-                {"campo": "ATTRGRD", "valor": "Porcentaje de asistencia", "tipo": "Control", "detalle": "Si no llega solo desde Pasar lista, revise GORICCR, GORRSQL y STVGCHG (U32)."},
+                {"campo": "ATTRGRD", "valor": "Porcentaje de asistencia", "tipo": "Control", "detalle": "No llega solo: el docente lo envía en Pasar lista › Clase › «Actualizar la asistencia en el libro de calificaciones» › Sí (C119)."},
                 {"campo": "Calificaciones compuestas", "valor": "Porcentaje 85 · ATTRGRD 43 → INH" if comp else "Nota final calculada", "tipo": "Resultado", "detalle": "Con asistencia bajo el mínimo, «Debe aprobar» deja la nota final en INH aunque el promedio apruebe (C105)."},
             ]
         },

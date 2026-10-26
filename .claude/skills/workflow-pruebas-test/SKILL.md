@@ -48,7 +48,7 @@ Este workflow guía y audita la ejecución de pruebas en el ambiente **TEST de E
 - [x] Completar TA2, PA y EF y revisar «Calificaciones compuestas»: con los cuatro en 85 y `ATTRGRD` en 43, porcentaje final 85 y **calificación final INH** (C105).
 - [x] La nota compuesta pasa sola a la lista de clase: **SFASLST muestra INH** (C107). «Calificaciones finales» sale «Completado» y sin alumnos para escribir (C106).
 - [ ] Rolar con `SHRROLL`. Opcional: `ATTRGRD` en 70 o más con razón de cambio → la final debe salir 17.
-- [ ] **`ATTRGRD`:** el porcentaje de Pasar lista **no pasa solo** al libro (C103). Revisar en `GORICCR` (ATTENDANCE_TRACKING / ENABLE.GRADEBOOK.UPDATE), `GORRSQL` (ATTR_UPDATE_GRADEBOOK validada y activa) y `STVGCHG` (razón con atributo CA) (U32; 7.1.0, diap. 11–26). Mientras tanto, ingresarlo a mano en Componentes para probar «Debe aprobar»: con 70 o más aprueba; con menos, INH.
+- [x] **`ATTRGRD`:** el porcentaje de Pasar lista **no pasa solo**: el docente lo envía con **Clase › «Actualizar la asistencia en el libro de calificaciones» › Sí** (7.1.1, diap. 56–57). Validado con el NRC 10044: 57,14 → INH y 85,71 → APRO (C119). Requiere `GORICCR`, `GORRSQL` y `STVGCHG` con CA (C104).
 - [x] Probar impacto de inasistencia: con `ATTRGRD` 43 (< 70 %), la calificación compuesta del NRC 10044 salió **INH** aunque los componentes daban 85 (C105).
 - [ ] Ejecutar pase a historia académica con **SHRROLL**.
 - [ ] Ejecutar CAPP masivo con **SMRBCMP** para verificar actualización del estatus del alumno.

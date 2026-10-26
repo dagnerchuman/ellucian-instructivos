@@ -23,7 +23,7 @@ Esta guía documenta el procedimiento y los requisitos para la asignación de do
 4. **SOAATRK:** regla de control de asistencia para el periodo, la parte, el curso o el NRC. **Sin ella, el NRC no aparece en el control de asistencia de Faculty** (C101).
 5. **Faculty › Control de asistencia › Pasar lista:** marcas presente/ausente en fechas pasadas; Banner calcula el porcentaje (C101).
 6. **Faculty › Captura de calificaciones › Libro de calificaciones › Componentes:** puntaje sobre 100 → Banner propone la nota vigesimal (85 → 17); guardar con «Captura Original - OE». El alumno lo ve en **Autoservicio › Ver calificaciones › Componentes** (C102, C103).
-7. **ATTRGRD:** el porcentaje de asistencia no pasa solo; depende del envío del docente y de la configuración de TI (GORICCR, GORRSQL, STVGCHG; U32).
+7. **ATTRGRD:** el porcentaje de asistencia no pasa solo: el docente lo envía en Pasar lista › **Clase › «Actualizar la asistencia en el libro de calificaciones»** › Sí. Validado con el NRC 10044: 57,14 → INH y 85,71 → APRO (C119).
 
 ## 2. Flujo Completo Paso a Paso
 

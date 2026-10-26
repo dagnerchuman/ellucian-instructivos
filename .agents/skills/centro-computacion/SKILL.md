@@ -126,6 +126,7 @@ Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuari
 | 9 | Nota final | Calificaciones compuestas → `SFASLST` | ✅ | Compuesta: porcentaje 85 y **INH** (C105). «Calificaciones finales» no pide nada: la nota pasa sola al backoffice y **SFASLST muestra INH** (C106, C107) |
 | 9b | Escala de arriba en SHAGCOM | `SHAGCOM` › Asignación de escala de calificación | ⚠️ | Con `AST_70` arriba, la nota final salió **APRO** en SFASLST (C120). Cambiar a `VIG_11` y comprobar: asistencia ≥ 70 % → 17; menor → INH |
 | 10 | Pase a historia | `GJAPCTL` › `SHRROLL`; salida en `GJIREVO` | ✅ | Modo A (job 7761) y modo U (job **7762**): «Rolled to Academic History» y «Deg Created» por cada plan del alumno, más un «API Error» por un plan inactivo (C121, C122). Por confirmar la nota que quedó (17 o APRO, C120) |
+| 11 | Corregir la nota en la historia | `SHATCKN` (Insertar secuencia: 17, modo V, razón de cambio) | ⏳ | En SFASLST y SHACRSE quedó **APRO** (C123). SFASLST ya no deja editar: la corrección va en SHATCKN (7.1.6, diap. 19–24) |
 
 ## ▶️ Dónde quedamos (05/10/2026)
 - **19 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07.

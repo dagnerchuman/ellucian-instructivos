@@ -19957,13 +19957,13 @@ button.ai-fab:active,
     if (saveKeysBtn) {
       saveKeysBtn.addEventListener('click', function() {
         try {
-          var clave = (groqTokenInput.value || '').trim();
-          localStorage.setItem('ccee_groq_token', clave);
-          if (clave && engineSelect && engineSelect.value === 'local-ccee') {
+          var nuevoToken = (groqTokenInput.value || '').trim();
+          localStorage.setItem('ccee_groq_token', nuevoToken);
+          if (nuevoToken && engineSelect && engineSelect.value === 'local-ccee') {
             engineSelect.value = 'groq-qwen-38';
             localStorage.setItem('ccee_selected_model', 'groq-qwen-38');
           }
-          if (clave && configPanel) configPanel.classList.remove('open');
+          if (nuevoToken && configPanel) configPanel.classList.remove('open');
           actualizarBadge();
         } catch (_) {}
       });

@@ -42,14 +42,29 @@ description: Arquitectura específica del Centro de Computación (Informática) 
 
 Parte de periodo general: **CGE**.
 
-## Cursos conocidos
+## Acreditación en Computación (Protech XP): rutas de aprendizaje (C125)
+> Detalle completo (escuelas, cursos, costos, pagos y certificados): `arquitectura-centros-empresariales/references/ref-acreditacion-computacion.md`. Datos en `centros/computacion/datos.json › rutas_aprendizaje` y `› acreditacion`. Fuente: carpeta `acreditaciones-uss/`.
 
-> ⚠ Los **nombres reales** de los cursos de Computación **no se conocen** (duda U05). El cronograma solo dice «TODOS».
+- **Cuándo:** 5.º y 6.º ciclo de pregrado (Resolución Rectoral 175-2023/USS); requisito para el bachiller.
+- **Cómo:** 3 cursos de su ruta, en el orden que desee y en paralelo, + 1 Taller de Certificación Internacional (o 4 talleres según la lámina 2026, U35). Certificación Microsoft Office Specialist.
+- **Cada ruta es un programa en Banner** («Acreditación Computación XP 01…07»): `CMEMC38` = XP 01, `CMEMC44` = XP 07; los demás por confirmar (U37).
 
-| Materia | Curso | Nombre (en TEST) | Créditos |
-|---|---|---|---|
-| ESEC | 00650 | Ofimática Word 365 | — |
-| ESEC | 00651–00657 | (otros cursos del ciclo I, sin nombre confirmado) | — |
+| Ruta | Escuelas | Cursos (más el taller) |
+|---|---|---|
+| 1 (XP 01, `CMEMC38`) | Salud: Enfermería, Estomatología, Medicina, Tecnología Médica | Word 365, Excel 365, Canva, Excel Asociado, SPSS, Base de datos científicos |
+| 2 | Derecho, Psicología, Trabajo Social | Word 365, Excel 365, Canva, Word Asociado, Excel Asociado, SPSS |
+| 3 | Administración, Contabilidad, Negocios, Turismo, Agroindustrial | Word 365, Excel 365, Canva, Excel Asociado, Project, Power BI |
+| 4 | Arquitectura, Civil, Diseño de Interiores | Excel Asociado, AutoCAD 2D y 3D, Sketchup, Project, Revit |
+| 5 | Sistemas, Software, Industrial | Excel Asociado, AutoCAD 2D y 3D, Bizagi, Diseño Web, Power BI |
+| 6 | Mecánica Eléctrica, Civil, Arquitectura | Excel Asociado, AutoCAD 2D y 3D, SolidWorks, MatLab, Diseño Mecánico |
+| 7 (XP 07, `CMEMC44`) | Artes y Diseño Gráfico, Comunicación, Sistemas, Software | Word 365, Excel 365, Canva, Word Asociado, Excel Asociado, Diseño Web |
+
+- **Costos por curso o taller:** Chiclayo S/ 420 y S/ 340; filiales S/ 240 y S/ 280. Modalidad regular 3 meses, intensivo 2, súper intensivo 1 (el taller, 1 mes).
+- **Pago:** contado (−5 %, paga antes), 3 cuotas (paga la 1.ª), 2 cuotas o diferido (+5 %); no se anula una vez programado.
+- **Sin retiro ni reserva** (Acuerdo de Directorio 0453-2013), salvo salud: el alumno queda INH (U38).
+
+## Cursos conocidos en TEST
+Los de la hoja de NRC 202656 (ver `datos.json › cursos_conocidos`): ESEC 00678 Word 365, 00679 Excel 365, 00680 Canva, 00682 Excel Asociado, 00691 SPSS, 00694 Base de datos científicos (ruta 1), 00684 Diseño Web (rutas 5 y 7) y los talleres 00696 a 00700. ESEC 00650 es el curso de las primeras pruebas.
 
 ## Escala de notas (SHAGRDE, Nivel C)
 
@@ -180,6 +195,15 @@ Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuari
 | ID | Descripción | Solución aplicada y confirmada |
 |---|---|---|
 | **U20** | Modo de calificación V (catálogo) vs P (SHAGRDE Nivel C) | **RESUELTA (02/10):** Se añadió el Modo `V` (*Vigesimal Regular*) a las notas del Nivel `C` en `SHAGRDE` (Instructivo 7.1.3 diap. 16). `SHRROLL` procesó de inmediato el cierre del NRC 1026 con 100% de éxito. |
+
+## Errores frecuentes de los usuarios finales (no son dudas)
+| Mensaje o síntoma | Causa | Qué hacer |
+|---|---|---|
+| La nota final sale APRO o INH en lugar de un número | En SHAGCOM, la escala de arriba es `AST_70` | Poner `VIG_11` arriba; `AST_70` solo en el componente ATTRGRD (C120, C123) |
+| `ATTRGRD` vacío o con un porcentaje viejo | El docente no envió la asistencia | Pasar lista › Clase › «Actualizar la asistencia en el libro de calificaciones» › Sí (C119) |
+| «El modo de calificar no es válido para la calificación ingresada» (SHATCKN, SFASLST) o «No Substitute Grade Found» (SHRROLL) | En SHAGRDE, esa nota del nivel C no tiene el modo `V` | Agregar `V` en «Modos de calificar válidos» de esa nota (C34, C124) |
+| «El elemento está protegido contra actualización» en SFASLST | La nota ya pasó a la historia | Corregir en SHATCKN con una secuencia nueva (C123) |
+| «API Error: Invalid study path sequence for outcome» en el .lis de SHRROLL | El alumno tiene un plan de estudios inactivo | No impide el pase de la nota (C121) |
 
 ## Prerrequisitos y orden de cursos
 

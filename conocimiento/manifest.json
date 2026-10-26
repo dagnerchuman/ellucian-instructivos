@@ -77,6 +77,12 @@
    "ruta": "docs/fuentes/guia-operativa-excel",
    "que": "Hojas de la guía operativa descargadas en CSV (crear el NRC, persona, admisión, matrícula, notas)",
    "adr": "ADR-023"
+  },
+  {
+   "id": "acreditaciones-uss",
+   "ruta": "acreditaciones-uss",
+   "que": "Láminas y PDF oficiales de la Acreditación en Computación (rutas de aprendizaje, costos, pagos, certificados CIS); subidas por el usuario el 26/10/2026",
+   "adr": "ADR-002"
   }
  ],
  "generadores": [

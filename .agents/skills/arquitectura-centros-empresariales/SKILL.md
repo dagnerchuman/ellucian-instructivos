@@ -87,6 +87,7 @@ El flujo completo de 7 fases y 17 pasos está en [references/00-flujo-de-inicio-
 | Glosario de siglas y páginas explicadas (para usar entre paréntesis) | [references/ref-glosario.md](references/ref-glosario.md) |
 | Mapa de instructivos PPTX del repositorio por capacidad | [references/ref-mapa-instructivos.md](references/ref-mapa-instructivos.md) |
 | Parámetros y umbrales de la Migración R2 | [references/ref-migracion-r2.md](references/ref-migracion-r2.md) |
+| Acreditación en Computación: rutas de aprendizaje, costos, pagos y certificados CIS | [references/ref-acreditacion-computacion.md](references/ref-acreditacion-computacion.md) |
 
 ## Buscar evidencia en los instructivos
 ```bash

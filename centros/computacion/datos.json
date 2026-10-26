@@ -390,5 +390,145 @@
       "Faculty › Pasar lista: 43 % de asistencia; libro de calificaciones: 85/100 → 17 en los cuatro componentes (C102–C105)",
       "Calificaciones compuestas: porcentaje 85 y ATTRGRD 43 → nota final INH; SFASLST muestra INH sin escribirla en «Calificaciones finales» (C105–C107)"
     ]
+  },
+  "rutas_aprendizaje": {
+    "regla": "3 cursos de la ruta en el orden que desee (pueden ir en paralelo) + 1 Taller de Certificación Internacional; o 4 talleres de certificación (lámina 4, 2026; U35)",
+    "programas_banner": "Cada ruta es un programa «Acreditación Computación XP 01…07» (usuario, 26/10). Confirmados en TEST: CMEMC38 = XP 01 y CMEMC44 = XP 07; el resto por confirmar en SMAPROG (U37)",
+    "fuente": "acreditaciones-uss (láminas 5 a 8, 2026; C125)",
+    "agrupaciones": [
+      {
+        "ruta": 1,
+        "programa_xp": "XP 01",
+        "programa_banner": "CMEMC38",
+        "escuelas": "Enfermería; Estomatología; Medicina Humana; Tecnología Médica (Terapia Física y Rehabilitación; Laboratorio Clínico y Anatomía Patológica; Radiología)",
+        "cursos": [
+          "Ofimática Word 365",
+          "Ofimática Excel 365",
+          "Diseño con Canva",
+          "Microsoft Excel Asociado",
+          "Análisis de datos con SPSS",
+          "Base de datos científicos y vigilancia tecnológica",
+          "Taller de Certificación Internacional"
+        ]
+      },
+      {
+        "ruta": 2,
+        "programa_xp": "XP 02",
+        "programa_banner": null,
+        "escuelas": "Derecho; Psicología; Trabajo Social",
+        "cursos": [
+          "Ofimática Word 365",
+          "Ofimática Excel 365",
+          "Diseño con Canva",
+          "Microsoft Word Asociado",
+          "Microsoft Excel Asociado",
+          "Análisis de datos con SPSS",
+          "Taller de Certificación Internacional"
+        ]
+      },
+      {
+        "ruta": 3,
+        "programa_xp": "XP 03",
+        "programa_banner": null,
+        "escuelas": "Administración; Administración y Emprendimiento; Administración y Marketing; Contabilidad; Contabilidad y Finanzas; Negocios Internacionales; Turismo y Negocios; Ingeniería Agroindustrial y Comercio Exterior",
+        "cursos": [
+          "Ofimática Word 365",
+          "Ofimática Excel 365",
+          "Diseño con Canva",
+          "Microsoft Excel Asociado",
+          "Microsoft Project",
+          "Power BI",
+          "Taller de Certificación Internacional"
+        ]
+      },
+      {
+        "ruta": 4,
+        "programa_xp": "XP 04",
+        "programa_banner": null,
+        "escuelas": "Arquitectura; Ingeniería Civil; Arquitectura y Diseño de Interiores",
+        "cursos": [
+          "Microsoft Excel Asociado",
+          "AutoCAD 2D",
+          "AutoCAD 3D",
+          "Sketchup",
+          "Microsoft Project",
+          "Revit Architecture",
+          "Taller de Certificación Internacional"
+        ]
+      },
+      {
+        "ruta": 5,
+        "programa_xp": "XP 05",
+        "programa_banner": null,
+        "escuelas": "Ingeniería de Sistemas; Ingeniería de Software; Ingeniería Industrial",
+        "cursos": [
+          "Microsoft Excel Asociado",
+          "AutoCAD 2D",
+          "AutoCAD 3D",
+          "Software Bizagi",
+          "Diseño Web",
+          "Power BI",
+          "Taller de Certificación Internacional"
+        ]
+      },
+      {
+        "ruta": 6,
+        "programa_xp": "XP 06",
+        "programa_banner": null,
+        "escuelas": "Ingeniería Mecánica Eléctrica; Ingeniería Civil; Arquitectura",
+        "cursos": [
+          "Microsoft Excel Asociado",
+          "AutoCAD 2D",
+          "AutoCAD 3D",
+          "SolidWorks",
+          "MatLab",
+          "Diseño Mecánico con AutoCAD 3D",
+          "Taller de Certificación Internacional"
+        ]
+      },
+      {
+        "ruta": 7,
+        "programa_xp": "XP 07",
+        "programa_banner": "CMEMC44",
+        "escuelas": "Artes y Diseño Gráfico Empresarial; Ciencias de la Comunicación; Ingeniería de Sistemas; Ingeniería de Software",
+        "cursos": [
+          "Ofimática Word 365",
+          "Ofimática Excel 365",
+          "Diseño con Canva",
+          "Microsoft Word Asociado",
+          "Microsoft Excel Asociado",
+          "Diseño Web",
+          "Taller de Certificación Internacional"
+        ]
+      }
+    ]
+  },
+  "acreditacion": {
+    "ciclos": "5.º y 6.º ciclo de pregrado (Resolución Rectoral N.° 175-2023/USS); requisito para el grado de bachiller",
+    "certificacion": "Microsoft Office Specialist; examen de 50 minutos, 35 preguntas, aprueba con 700 puntos o más",
+    "sin_retiro": "Acuerdo de Directorio, Oficio 0453-2013 SG-USS: sin reserva ni retiro (INHABILITADO), salvo salud justificada (U38)",
+    "costos": {
+      "curso_chiclayo": 420,
+      "taller_chiclayo": 340,
+      "curso_filial": 240,
+      "taller_filial": 280,
+      "moneda": "S/",
+      "nota": "Por cada curso o taller (láminas 9 y 10, 2026)"
+    },
+    "modalidades": {
+      "regular": "3 meses",
+      "intensivo": "2 meses",
+      "super_intensivo": "1 mes",
+      "taller": "1 mes"
+    },
+    "modalidades_pago": {
+      "contado": "5 % de descuento, paga antes de matricularse (S/ 399)",
+      "tres_cuotas": "paga la 1.ª cuota para completar la matrícula (3 × S/ 140)",
+      "dos_cuotas": "matrícula automática, paga a la mitad y al final (2 × S/ 210)",
+      "diferido": "5 % adicional, matrícula automática, paga al final (S/ 441)",
+      "nota": "Una vez programado el pago no se puede anular (lámina 2)"
+    },
+    "gente_con_experiencia": "Enero a marzo S/ 100 por mes; abril a julio gratis (CISCO asincrónico); agosto S/ 250 (lámina 11)",
+    "fuente": "acreditaciones-uss (láminas 1 a 11 y PDF 2025; C125). Detalle: arquitectura-centros-empresariales/references/ref-acreditacion-computacion.md"
   }
 }

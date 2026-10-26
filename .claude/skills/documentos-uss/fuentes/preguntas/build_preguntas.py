@@ -135,7 +135,6 @@ USS = [
         dict(id="U09", titulo="Nombres de las horas (pedagógica y cronológica)"),
     ]),
     ("Programas, mallas y catálogo", [
-        dict(id="U31", titulo="¿CMEMC44 o CMEMC38 para Diseño Web?"),
         dict(id="U19", titulo="Programa MC38 y regla ECOM-01",
              texto="`CMEMC38` y el nivel `C` ya están confirmados. ¿Qué programa es **MC38** en SMAAREA y la regla "
                    "**ECOM-01** es el requisito de computación de pregrado?"),
@@ -164,6 +163,16 @@ USS = [
         dict(id="U14", titulo="Área que recibe las quejas contra docentes"),
         dict(id="U15", titulo="Tipos de comentario de seguimiento"),
         dict(id="U07", titulo="¿La tutoría aplica a los centros?"),
+    ]),
+    ("Acreditación en Computación (rutas de aprendizaje)", [
+        dict(id="U35", titulo="¿4 talleres o un 4.º curso?",
+             sabemos="Lámina 4 (2026): 3 cursos de la ruta + 1 taller, o 4 talleres. PDF 2025, C62 y C67: 3 cursos + taller, o un 4.º curso (C125)."),
+        dict(id="U37", titulo="Código de Banner de cada ruta",
+             sabemos="Cada programa XP es una ruta (C125). CMEMC38 = XP 01 y CMEMC44 = XP 07; Diseño Web está en las rutas 5 y 7, por eso el NRC 10044 va con CMEMC44."),
+        dict(id="U38", titulo="Retiro prohibido: ¿se bloquea en Banner?",
+             sabemos="Acuerdo de Directorio 0453-2013 SG-USS: sin reserva ni retiro (INH), salvo salud. En TEST el retiro DD funciona (Script 08)."),
+        dict(id="U36", titulo="Tabla de pago con base S/ 330"),
+        dict(id="U39", titulo="Ciclos de la acreditación en Emprendimiento"),
     ]),
     ("Validación contra SEUSS", [
         dict(id="U11", titulo="Totales por centro y fecha de corte"),

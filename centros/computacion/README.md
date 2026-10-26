@@ -76,7 +76,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **10018**: ESEC 00678, sección A, parte X06. OFIMÁTICA WORD 365 (Hoja oficial 202656).
 - NRC **10019**: ESEC 00679, sección A, parte X06. OFIMÁTICA EXCEL 365 (Hoja oficial 202656).
 - NRC **10026**: ESEC 00697, sección A, parte X06. Ejemplo actual de configuración de asistencia y ATTRGRD (capturas TEST 23/10/2026).
-- NRC **10044**: ESEC 00684, sección A, parte X06. DISEÑO WEB, flujo completo validado (C96–C107): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista con 43 %; componentes en 85 y ATTRGRD 43 → compuesta INH → SFASLST INH. Pendiente: SHRROLL y confirmar el envío automático de ATTRGRD (U32).
+- NRC **10044**: ESEC 00684, sección A, parte X06. DISEÑO WEB, flujo completo validado (C96–C107, C119): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista y envío al libro con Clase › «Actualizar la asistencia en el libro de calificaciones»: ATTRGRD 57,14 → INH y 85,71 → APRO (C119). Pendiente: nota final con la asistencia nueva y SHRROLL.
 
 ## Scripts de prueba (19 validado · 2 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |

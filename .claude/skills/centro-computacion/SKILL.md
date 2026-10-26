@@ -125,7 +125,7 @@ Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuari
 | 8 | Asistencia a `ATTRGRD` | Pasar lista › **Clase › «Actualizar la asistencia en el libro de calificaciones»** › Sí | ✅ | No pasa sola: la envía el docente. Al enviarla, `ATTRGRD` tomó 57,14 → INH y luego 85,71 → APRO (C119; U32 resuelta). Requiere GORICCR en Y, GORRSQL activa y STVGCHG con CA (C104) |
 | 9 | Nota final | Calificaciones compuestas → `SFASLST` | ✅ | Compuesta: porcentaje 85 y **INH** (C105). «Calificaciones finales» no pide nada: la nota pasa sola al backoffice y **SFASLST muestra INH** (C106, C107) |
 | 9b | Escala de arriba en SHAGCOM | `SHAGCOM` › Asignación de escala de calificación | ⚠️ | Con `AST_70` arriba, la nota final salió **APRO** en SFASLST (C120). Cambiar a `VIG_11` y comprobar: asistencia ≥ 70 % → 17; menor → INH |
-| 10 | Pase a historia | `SHRROLL` | ⏳ | Solo cuando SFASLST muestre la nota vigesimal (C120) |
+| 10 | Pase a historia | `GJAPCTL` › `SHRROLL`; salida en `GJIREVO` | ⏳ | Modo A (job 7761): «Rolled to Academic History» y «Deg Created» por cada plan del alumno, más un «API Error» por un plan inactivo (C121). Falta el modo U cuando SFASLST muestre la nota vigesimal (C120) |
 
 ## ▶️ Dónde quedamos (05/10/2026)
 - **19 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07.

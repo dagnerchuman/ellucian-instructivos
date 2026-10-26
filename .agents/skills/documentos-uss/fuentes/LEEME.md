@@ -27,4 +27,5 @@ Estos son los scripts con los que se hicieron los PDF, PPTX y Excel de `referenc
 | `reunion28/build_reunion28.py` | RESUMEN DE LA REUNIÓN 28-09 |
 | `afiche/build_afiche.py` | TÉRMINOS DE BANNER - AFICHE PARA ESTUDIAR (una hoja A4, 35 términos en el orden del flujo). Sin banda morada (26/10). Corre tal cual: `python3 build_afiche.py [--general] "<salida>.pdf"`; los PDF están en `docs/afiches/` |
 | `casos/casos_data.py`, `casos/build_pdf.py`, `casos/build_pptx.py` | CASUÍSTICAS PARA LAS PRUEBAS INTEGRALES (PDF + PPTX con los mismos datos) |
+| `ruta/build_ruta.py` | RUTA DE APRENDIZAJE - INSCRIPCIÓN Y CURSOS NUEVOS (PPTX, 16 diap.). Usa como plantilla `docs/presentaciones/2. PROGRAMACIÓN DE ASIGNATURAS.pptx` (la «Ppt USS 2026»); corre tal cual. Salida en `docs/presentaciones/` |
 | `preguntas/build_preguntas.py`, `preguntas/leer_respuestas.py` | PREGUNTAS PARA ELLUCIAN (Word con recuadro de respuesta por pregunta). Toma los textos del registro por código. Corre tal cual: `python3 build_preguntas.py "<salida>.docx"`; el lector devuelve las respuestas escritas en Word. Salida en `docs/dudas/` |

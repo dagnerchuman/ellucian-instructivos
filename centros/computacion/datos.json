@@ -193,7 +193,7 @@
       "docente": "100582059 (Dagner Chuman)",
       "horario": "Jueves por la tarde (cambiado para evitar el cruce con el 10042; hora exacta por anotar)",
       "aula": "SAUVIR / SALA-VIRT",
-      "uso": "DISEÑO WEB, flujo completo validado (C96–C107, C119): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista y envío al libro con Clase › «Actualizar la asistencia en el libro de calificaciones»: ATTRGRD 57,14 → INH y 85,71 → APRO (C119). Pendiente: nota final con la asistencia nueva y SHRROLL",
+      "uso": "DISEÑO WEB, flujo completo validado (C96–C107, C119): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista y envío al libro con Clase › «Actualizar la asistencia en el libro de calificaciones»: ATTRGRD 57,14 → INH y 85,71 → APRO (C119). SFASLST quedó en APRO porque la escala de arriba de SHAGCOM es AST_70 (C120). Pendiente: cambiarla a VIG_11, comprobar 17 o INH y luego SHRROLL",
       "cupo": "40"
     }
   ],

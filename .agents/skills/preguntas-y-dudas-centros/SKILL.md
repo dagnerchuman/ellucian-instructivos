@@ -1,6 +1,13 @@
 ---
 name: preguntas-y-dudas-centros
-description: Registro vivo de preguntas, dudas y decisiones del proyecto Centros Empresariales USS en Ellucian Banner, con el método para procesar notas de reuniones o Zoom. Úsala cuando el usuario mande notas, fotos de apuntes o capturas de una reunión, traiga respuestas de Ellucian o de la USS, pida preparar preguntas, o diga «rectificar», «confirmar», «ver si permite» o «cómo es el proceso». Mantén actualizado registro.md.
+description: >-
+  Qué hace: registro vivo del proyecto (registro.md): lo confirmado (C##), lo resuelto con los
+  instructivos (R##), las dudas abiertas para Ellucian (E##) y para la USS (U##) y los supuestos
+  descartados (S##). Cuándo usarla: antes de afirmar algo del proyecto, cuando pida preparar
+  preguntas o el Word de dudas, traiga una respuesta de Ellucian o de la USS, o diga «rectificar»,
+  «confirmar», «ver si permite» o «qué falta»; al terminar una tarea, para anotar lo aprendido.
+  Cuándo no usarla como principal: para procesar notas, fotos o minutas de una reunión entra primero
+  workflow-procesar-reunion, que luego escribe aquí.
 ---
 
 # Preguntas y dudas: Centros Empresariales

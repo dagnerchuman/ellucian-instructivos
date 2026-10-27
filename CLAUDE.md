@@ -21,16 +21,27 @@ Está en `conocimiento/`: `README.md`, `manifest.json` (qué existe) y `decision
 - **Un ADR aceptado es una restricción.** Si la tarea lo contradice, **detente y pide revisión explícita** al usuario; nunca lo pases por alto en silencio.
 - **Al terminar:** devuelve lo aprendido. Va al registro (C##, U##…), a un ADR nuevo o actualizado si se decidió algo, a `datos.json` o al manifest. Luego ejecuta `python3 herramientas/validar_conocimiento.py`, que debe quedar con 0 errores.
 
-Responde en español. Antes de trabajar en el proyecto, usa estas skills:
-- `arquitectura-centros-empresariales`: modelo, periodos, flujo, páginas de Banner, reglas con cita y buscador de instructivos.
-- `centro-idiomas`, `centro-computacion` y `centro-emprendimiento`: lo propio de cada centro. Sus datos están en `centros/<centro>/datos.json`.
-- `preguntas-y-dudas-centros`: qué está confirmado, qué se resolvió y qué dudas siguen abiertas (`registro.md`). Mantenlo actualizado.
-- `documentos-uss`: preferencias del usuario y cómo generar PDF, PPTX y Excel con formato USS.
-- `workflow-consultas-banner`: resolver dudas de pantallas Banner (SSASECT, SOATERM, SFAREGS, etc.) con citas de instructivos.
-- `workflow-entregables-uss`: pipeline de generación y validación de PDF, PPTX y Excel USS sin errores.
-- `workflow-diagramas-archify`: diagramas interactivos paso a paso por centro (HTML, PNG y SVG) con Archify.
-- `workflow-procesar-reunion`: procesar notas y minutas de Zoom/reuniones y actualizar registro.md.
-- `workflow-pruebas-test`: guía y checklist de pruebas integrales en Banner TEST.
+Responde en español.
+
+## Enrutamiento de skills (carga progresiva, ADR-024)
+Antes de actuar, cruza el pedido con esta tabla. Elige **una skill principal**; si la tarea necesita otra, encadénala después, nunca todas a la vez. Lee su `SKILL.md` solo cuando vayas a ejecutar el flujo y, de sus `references/` o `scripts/`, abre solo el archivo de la subtarea. Si nada coincide, trabaja con lo general, sin abrir skills que no vienen al caso.
+
+| Si el usuario… | Skill principal | Se encadena después |
+|---|---|---|
+| Pregunta cómo se hace algo en Banner para los centros (periodo, curso, NRC, malla, matrícula, notas, CAPP) | `arquitectura-centros-empresariales` (abre la guía `references/` del paso) | `centro-<centro>` si es de uno solo |
+| Habla solo de un centro (Computación y sus rutas XP, Idiomas, Emprendimiento) | `centro-computacion`, `centro-idiomas` o `centro-emprendimiento` (datos en `centros/<centro>/datos.json`) | `arquitectura-centros-empresariales` para el flujo común |
+| Manda una captura de Banner o pregunta «qué pongo aquí» o qué significa un error | `workflow-consultas-banner` | `centro-<centro>` |
+| Va a entrar a TEST y pide los pasos o un checklist para validar | `workflow-pruebas-test` | `centro-<centro>` |
+| Trae notas, fotos, minutas, chats o correcciones de una reunión | `workflow-procesar-reunion` | `preguntas-y-dudas-centros` (registro) |
+| Pide preparar preguntas o el Word de dudas, o pregunta qué está confirmado | `preguntas-y-dudas-centros` | `documentos-uss` para el Word |
+| Pide un PDF, PPT, Word, Excel, afiche o resumen | `documentos-uss` | `workflow-entregables-uss` para revisar antes de entregar |
+| Pide un diagrama del sitio o cambia un dato que sale en los diagramas | `workflow-diagramas-archify` | — |
+| Pide un video | `hyperframes` (piloto en `herramientas/videos/`) | — |
+
+- **Antes de afirmar** algo del proyecto, busca en `registro.md` (C##, U##…), no lo leas completo.
+- **Respuestas limpias:** no copies el contenido de una skill en la respuesta. Di la decisión, la acción y la cita («instructivo 5.3, diap. 23», «C124», «ADR-009»); los archivos, con enlace relativo del repositorio.
+- **Validación final:** `python3 herramientas/validar_conocimiento.py` con 0 errores; además, la de la skill usada (`generar.py` para diagramas, revisión visual para PDF y PPTX).
+- **Descripción de una skill nueva:** fórmula «Qué hace… Cuándo usarla… Cuándo no usarla…» en el `description` del `SKILL.md`, con las palabras que diría el usuario.
 
 **Skills:** se editan en `.claude/skills/` y luego se copian a `.agents/skills/` con `python3 herramientas/sincronizar_skills.py --desde claude`. Si las editó Antigravity, usa `--desde agents`. Para comprobar que estén iguales, usa `--check`.
 

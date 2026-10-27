@@ -1,6 +1,13 @@
 ---
 name: centro-computacion
-description: Arquitectura específica del Centro de Computación (Informática) de la USS en Ellucian Banner. Datos confirmados en TEST, NRCs creados, alumnos matriculados, notas registradas, scripts validados y diagramas paso a paso (centros/computacion). Úsala siempre que se trabaje exclusivamente con Computación/Informática.
+description: >-
+  Qué hace: datos y pruebas del Centro de Computación (Informática, Protech XP) en Banner: nivel C,
+  programas XP 01 a 07 (rutas de aprendizaje, CMEMC38 a CMEMC44), materia ESEC, partes X01 a X07,
+  NRC 10018, 10019 y 10044, flujo validado en TEST, acreditación, costos y errores frecuentes de los
+  usuarios finales; sus datos están en centros/computacion/datos.json. Cuándo usarla: la tarea es
+  solo de Computación o Informática (rutas, NRC 10044, CMEMC, ESEC, reunión con el jefe del Centro de
+  Informática). Cuándo no usarla: lo que vale igual para los tres centros
+  (arquitectura-centros-empresariales) ni Idiomas o Emprendimiento.
 ---
 
 # Centro de Computación (Informática) — Arquitectura Específica

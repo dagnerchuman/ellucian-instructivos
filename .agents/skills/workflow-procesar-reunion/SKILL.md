@@ -1,6 +1,13 @@
 ---
 name: workflow-procesar-reunion
-description: Procedimiento para procesar apuntes de reuniones, minutas, notas manuscritas, transcripciones de Zoom o aclaraciones de Dagner sobre Centros Empresariales. Actualiza registro.md con trazabilidad completa (C##, R##, E##, U##, S##) y evalúa impacto en entregables.
+description: >-
+  Qué hace: procedimiento para procesar apuntes de reuniones, minutas, fotos de notas a mano,
+  transcripciones de Zoom, chats o mensajes del jefe sobre los Centros Empresariales: transcribe,
+  clasifica (dato, verificar, pregunta), separa «Hoy en SEUSS» de «En Ellucian», actualiza
+  registro.md con C##, R##, E##, U## y S## y revisa qué entregables cambian. Cuándo usarla: el
+  usuario trae notas, capturas de un chat o correcciones de una reunión. Cuándo no usarla: una duda
+  puntual de pantalla (workflow-consultas-banner) ni preparar las preguntas antes de la reunión
+  (preguntas-y-dudas-centros).
 ---
 
 # Workflow: Procesamiento de Notas de Reuniones y Zoom

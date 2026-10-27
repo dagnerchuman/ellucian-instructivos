@@ -1,6 +1,13 @@
 ---
 name: documentos-uss
-description: Cómo producir los entregables del proyecto Centros Empresariales USS (PDF, presentaciones PPTX, diagramas y planillas Excel) con el formato y el estilo que pide el usuario Dagner Anibal Chuman Lluen. Úsala siempre que pida un PDF, un resumen, una presentación o diapositivas, un diagrama, una tabla o una planilla sobre Banner o los centros, o cuando diga «hazme el PDF», «pásame el ppt» o «resumen».
+description: >-
+  Qué hace: preferencias del usuario (Dagner Anibal Chuman Lluen) y generadores de los entregables
+  con formato USS: PDF, presentaciones PPTX, Word de preguntas y planillas Excel, con sus fuentes en
+  fuentes/ y las piezas en scripts/. Cuándo usarla: siempre que pida un PDF, un PPT o diapositivas,
+  un Word, un resumen, un afiche, una tabla o una planilla, o diga «hazme el PDF» o «pásame el ppt»;
+  es la skill principal de todo entregable. Cuándo no usarla: diagramas Archify del sitio
+  (workflow-diagramas-archify), videos (hyperframes), ni mientras el usuario solo está «alimentando»
+  información (entonces no se generan diapositivas).
 ---
 
 # Entregables con formato USS

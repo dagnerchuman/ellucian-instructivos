@@ -1,6 +1,11 @@
 ---
 name: workflow-entregables-uss
-description: Protocolo y pipeline de generación de entregables oficiales USS (PDF mediante Chromium/Playwright, presentaciones PPTX nativas sin errores de reparación y hojas Excel con fórmulas). Cumple las directrices estrictas de diseño, paleta morada/verde, autoría de Dagner Chuman y control de calidad visual.
+description: >-
+  Qué hace: control de calidad de los entregables USS: pipeline PDF con Chromium, PPTX nativo que abre
+  sin «reparar», Excel con fórmulas, paleta morada y verde, autoría de Dagner Chuman y revisión visual
+  página por página. Cuándo usarla: después de documentos-uss, para validar y revisar un PDF, PPTX o
+  Excel antes de entregarlo, o cuando un archivo sale roto, desalineado o pide reparación. Cuándo no
+  usarla como principal: para decidir el contenido o el estilo de un entregable (documentos-uss).
 ---
 
 # Workflow: Generación y Validación de Entregables USS

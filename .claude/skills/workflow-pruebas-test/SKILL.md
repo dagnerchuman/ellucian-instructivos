@@ -1,6 +1,12 @@
 ---
 name: workflow-pruebas-test
-description: Guía de ejecución, casos de prueba y checklist para pruebas integrales en el ambiente Banner TEST (experience-test.elluciancloud.com/ussipantest). Cubre creación de NRCs, admisión, matrícula, notas, y casuísticas de docentes, quejas y sanciones.
+description: >-
+  Qué hace: guía, casos de prueba y checklist para ejecutar pruebas integrales en Banner TEST
+  (experience-test.elluciancloud.com/ussipantest): NRC, admisión, matrícula, asistencia, notas, pase
+  a historia y casuísticas de docentes, quejas y sanciones. Cuándo usarla: el usuario va a entrar a
+  TEST, pide «los pasos de lo que tenemos que validar», un checklist o el orden de una prueba de
+  punta a punta. Cuándo no usarla: explicar un campo o un error de una pantalla
+  (workflow-consultas-banner) ni datos ya validados de un centro (centro-*).
 ---
 
 # Workflow: Pruebas Integrales en Banner TEST

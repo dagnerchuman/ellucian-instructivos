@@ -1,6 +1,13 @@
 ---
 name: workflow-diagramas-archify
-description: Cómo crear, corregir y regenerar los diagramas interactivos paso a paso de los Centros Empresariales (HTML de Archify, PNG claro y oscuro, SVG) por centro. Úsala cuando el usuario pida un diagrama, flujo, mapa de estados o casuísticas, diga «Archify» o «diagramas_flujo», cambie un dato de un centro (programa, materia, NRC, escala, estado de un script) o pida actualizar las imágenes.
+description: >-
+  Qué hace: crear, corregir y regenerar los diagramas interactivos paso a paso de cada centro (HTML de
+  Archify, PNG claro y oscuro, SVG) desde centros/<centro>/datos.json y
+  herramientas/diagramas/plantillas.py, sin editarlos a mano. Cuándo usarla: pide un diagrama, flujo,
+  mapa de estados o casuística del sitio, dice «Archify» o «diagramas_flujo», cambia un dato de un
+  centro que sale en los diagramas, o hay que actualizar las imágenes o el asistente del sitio.
+  Cuándo no usarla: un BPM o flujo dentro de un PDF o PPT (documentos-uss) ni las diapositivas de los
+  instructivos (herramientas/diapositivas.py).
 ---
 
 # Workflow: diagramas paso a paso con Archify

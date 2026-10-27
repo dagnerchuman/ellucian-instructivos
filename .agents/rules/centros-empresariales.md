@@ -74,7 +74,12 @@ description: "Reglas de trabajo y modelo de los Centros Empresariales USS en Ban
 4. **Paso 4: Matrícula y Retiros en el NRC (`SFAREGS`):** Autorizar plan (`EL`), ingresar NRC con código `RE` (inscribe). Si se retira: código `DD` libera la vacante automáticamente en `SSASECT`. Si tiene retención en `SOAHOLD`, bloquea con error fatal.
 5. **Paso 5: Notas y Cierre de Actas (`SFASLST` → `GJAPCTL` / `SHRROLL`):** Docente califica en `SFASLST` con Modo `V` (aprueba ≥11, desaprueba ≤10). Cierre masivo en `GJAPCTL` ejecutando `SHRROLL` para rolar a historia académica. Auditoría en CAPP con `SMARQCM`/`SMICRLT`.
 
-## 5. Base de conocimiento
+## 8. Base de conocimiento
 - Antes de trabajar, lee `conocimiento/README.md`, `conocimiento/manifest.json` y los ADR aceptados del tema en `conocimiento/decisiones/`.
 - Un ADR aceptado es una restricción. Si la tarea lo contradice, detente y pide revisión explícita al usuario.
 - Al terminar, actualiza el registro, el ADR, `datos.json` o el manifest según corresponda. Después ejecuta `python3 herramientas/validar_conocimiento.py` (0 errores).
+
+## 9. Enrutamiento de skills (carga progresiva, ADR-024)
+- Antes de actuar, cruza el pedido con la tabla «Enrutamiento de skills» de `AGENTS.md` y elige **una skill principal**; si hace falta otra, encadénala después.
+- Lee el `SKILL.md` solo al ejecutar el flujo y, de `references/` o `scripts/`, solo el archivo de la subtarea. Si ninguna skill coincide, no abras ninguna.
+- No copies el contenido de una skill en la respuesta: di la decisión, la acción y la cita (instructivo y diapositiva, C##, ADR).

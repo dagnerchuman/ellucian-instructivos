@@ -1,6 +1,13 @@
 ---
 name: workflow-consultas-banner
-description: Guía de ejecución y workflow para resolver consultas de pantallas de Ellucian Banner Student (SSASECT, SOATERM, SFAREGS, SIAINST, SIAASGN, SMAAREA, etc.), capturas de pantalla del usuario o dudas de "qué pongo aquí". Usa los 83 instructivos oficiales del repositorio.
+description: >-
+  Qué hace: procedimiento para resolver en vivo una duda de una pantalla de Ellucian Banner Student
+  (SSASECT, SOATERM, SFAREGS, SHAGCOM, SHATCKN, SCACRSE, SMAAREA…) con cita de los 83 instructivos:
+  campo por campo, en el orden de la pantalla, sin inventar códigos de la USS. Cuándo usarla: el
+  usuario manda una captura de Banner, pregunta «qué pongo aquí», «dónde está», «qué significa este
+  error» o cómo se llena un bloque. Cuándo no usarla: preguntas generales del modelo o del flujo
+  (arquitectura-centros-empresariales), armar una guía de prueba completa (workflow-pruebas-test) ni
+  generar documentos.
 ---
 
 # Workflow: Consultas y Soporte en Vivo de Pantallas Banner

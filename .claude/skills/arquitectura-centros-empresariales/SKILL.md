@@ -1,6 +1,15 @@
 ---
 name: arquitectura-centros-empresariales
-description: Arquitectura y contexto del proyecto de los Centros Empresariales de la Universidad Señor de Sipán (Idiomas/Inglés, Computación/Informática y Emprendimiento) en Ellucian Banner Student. Úsala siempre que se hable de centros empresariales, SEUSS, Banner, periodos 2026xx, partes de periodo, NRC, carga docente, CAPP, notas, asistencia, matrícula, migración R2 o de los instructivos de este repositorio, aunque el usuario no lo pida explícitamente.
+description: >-
+  Qué hace: modelo común de los tres Centros Empresariales de la USS (Idiomas, Computación y
+  Emprendimiento) en Ellucian Banner Student: periodos y partes de periodo, flujo de punta a punta,
+  páginas de Banner, reglas con cita, guías operativas paso a paso (crear periodo, curso y NRC,
+  persona, admisión, matrícula, notas), rutas de aprendizaje y el buscador de los 83 instructivos.
+  Cuándo usarla: siempre que se pregunte cómo se hace algo en Banner para los centros, SEUSS frente a
+  Banner, periodos 2026xx, NRC, malla, CAPP, carga docente, notas, asistencia, matrícula o migración
+  R2, aunque no se nombre la skill. Cuándo no usarla: datos propios de un solo centro (centro-idiomas,
+  centro-computacion, centro-emprendimiento), una captura o «qué pongo aquí» de una pantalla
+  (workflow-consultas-banner), generar documentos (documentos-uss) ni videos.
 ---
 
 # Arquitectura: Centros Empresariales USS en Ellucian Banner

@@ -1,6 +1,12 @@
 ---
 name: centro-idiomas
-description: Arquitectura específica del Centro de Idiomas (Inglés) de la USS en Ellucian Banner. Cursos conocidos (BASIC I-III, INTERMEDIATE I-III), prerrequisitos secuenciales confirmados, examen de suficiencia, partes de periodo I01-I12 y diagramas paso a paso (centros/idiomas). Úsala siempre que se trabaje exclusivamente con Idiomas/Inglés.
+description: >-
+  Qué hace: datos y pruebas del Centro de Idiomas (Inglés) en Banner: nivel I, materia ESEP, BASIC I
+  a III e INTERMEDIATE I a III, prerrequisito secuencial en «Fatal», examen de suficiencia en
+  SOATEST, ligas del NRC teórico y el club, partes I01 a I12, cuotas X032 y X228; sus datos están en
+  centros/idiomas/datos.json. Cuándo usarla: la tarea es solo de Idiomas o Inglés (cursos, ligas,
+  suficiencia, egresados, programas IMEMI). Cuándo no usarla: lo que vale igual para los tres
+  centros (arquitectura-centros-empresariales) ni Computación o Emprendimiento.
 ---
 
 # Centro de Idiomas (Inglés) — Arquitectura Específica

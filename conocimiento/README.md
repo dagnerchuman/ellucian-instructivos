@@ -57,5 +57,6 @@ Memoria compartida de las personas y los agentes (Claude Code, Antigravity u otr
 | [ADR-021](decisiones/ADR-021-asistente-conocimiento-local-y-modo-seguro.md) | El asistente responde con conocimiento local y bloquea pantallas sin evidencia | aceptado |
 | [ADR-022](decisiones/ADR-022-instructivos-como-imagenes.md) | Los instructivos se muestran como imágenes WebP y cada paso de las guías trae su diapositiva | aceptado |
 | [ADR-023](decisiones/ADR-023-estructura-del-repositorio.md) | Cada tipo de archivo tiene su carpeta y la raíz solo guarda instrucciones y publicación | aceptado |
+| [ADR-024](decisiones/ADR-024-enrutamiento-de-skills.md) | Las skills se eligen con una tabla de enrutamiento y se cargan por partes | aceptado |
 
 Para una decisión nueva, copia [`decisiones/plantilla-adr.md`](decisiones/plantilla-adr.md).

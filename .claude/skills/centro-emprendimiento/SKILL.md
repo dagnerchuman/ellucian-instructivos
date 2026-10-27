@@ -1,6 +1,11 @@
 ---
 name: centro-emprendimiento
-description: Arquitectura específica del Centro de Emprendimiento de la USS en Ellucian Banner. Partes de periodo P01-P06, materia ESGE, NRC 1025 probado en TEST y diagramas paso a paso (centros/emprendimiento). Úsala siempre que se trabaje exclusivamente con Emprendimiento.
+description: >-
+  Qué hace: datos y pruebas del Centro de Emprendimiento en Banner: nivel M, materia ESGE, partes P01
+  a P06 de 10 semanas, NRC 1025 probado en TEST y sus diagramas; sus datos están en
+  centros/emprendimiento/datos.json. Cuándo usarla: la tarea es solo de Emprendimiento (ESGE, P01 a
+  P06, sus cursos o su acreditación). Cuándo no usarla: lo que vale igual para los tres centros
+  (arquitectura-centros-empresariales) ni Idiomas o Computación.
 ---
 
 # Centro de Emprendimiento — Arquitectura Específica

@@ -1096,7 +1096,7 @@ def guia_casuistica_de(id_centro, sid):
     (sit, sit_sub), pasos, (res, res_sub), _ = caso(c, id_script)
     extra = referencia_computacion(c, id_script, EXTRA_CASOS.get(id_script)) or {}
     items = extra.get("items", []) if isinstance(extra, dict) else (extra if isinstance(extra, list) else [extra])
-    titulo = f"Script {id_script} · {TITULOS.get(slug_script(id_script), id_script)}"
+    titulo = TITULOS.get(slug_script(id_script)) or f"Script {id_script}"  # ya dice «Script NN · …»
     if extra and extra is not EXTRA_CASOS.get(id_script):
         titulo += " · referencia: prueba de Computación"
     return construir_guia((sit, sit_sub), pasos, (res, res_sub), items, titulo)

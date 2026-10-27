@@ -105,6 +105,11 @@ python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar 
 - **Guías paso a paso:** lenguaje profesional, imperativo formal (ingrese, pulse, verifique), sin emojis, sin exclamaciones ni palabras completas en mayúsculas. Cada fila cita su fuente (C##, U##, instructivo y diapositiva).
 - **Asistente:** responde primero en una o dos oraciones; luego, si aplica, «Pasos» numerados con la página de Banner al inicio de cada paso, «Validado en TEST», «Según el instructivo» y «Por confirmar». Siempre con fuentes; sin evidencia local, no consulta al modelo (ADR-021).
 
+## Láminas de cada paso (ADR-022)
+- **Todo paso lleva su lámina**, también la situación (`c0`) y el resultado (`cr`) de las casuísticas, y nunca la misma que otro paso del diagrama. Se definen en `herramientas/diagramas/diapositivas_pasos.py`: `TEMAS` (láminas por tema), `BASE` (flujos base), `REGLAS` (casuísticas, por página y fase) y `SCRIPTS` (láminas propias de un paso, del caso y del resultado).
+- **Paso fuera de Banner** (intranet, Vicerrectorado, plataforma): lámina de referencia con `_ref(nota, …)`, que dice dónde se ve en Banner lo que ese paso revisa o aprueba.
+- `generar.py` avisa al final si un paso queda sin lámina o repite las de otro: deben quedar **0 advertencias**. Elige la lámina leyendo su texto y mirando el recorte (`visor_instructivos/diapositivas/`), no solo por el título.
+
 ## Al terminar
 1. Mira al menos el PNG claro de cada diagrama cambiado (Read).
 2. Si cambió una skill, ejecuta `python3 herramientas/sincronizar_skills.py --desde claude`.

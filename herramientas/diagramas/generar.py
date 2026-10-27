@@ -44,7 +44,7 @@ def entorno():
     """Archify necesita Chrome o Chromium para su prueba en navegador (browser-check)."""
     env = dict(os.environ)
     if "ARCHIFY_CHROME" not in env:
-        for candidato in sorted(Path("/opt/pw-browsers").glob("chromium-*/chrome-linux/chrome"), reverse=True):
+        for candidato in sorted(Path("/opt/pw-browsers").glob("chromium-*/chrome-linux*/chrome"), reverse=True):
             env["ARCHIFY_CHROME"] = str(candidato)
             break
     return env
@@ -165,6 +165,11 @@ def main():
         print(f"ÍNDICE {ruta.relative_to(RAIZ)}")
 
     print(f"\n{len(hechos)} diagramas listos, {len(fallas)} con fallas.")
+    from inyectar_modales import ADVERTENCIAS
+    if ADVERTENCIAS:
+        print(f"\n⚠ {len(ADVERTENCIAS)} advertencias de las guías:")
+        for aviso in ADVERTENCIAS:
+            print("  -", aviso)
     sys.exit(1 if fallas else 0)
 
 

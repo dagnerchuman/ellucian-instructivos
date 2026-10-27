@@ -428,6 +428,17 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
             })
             resueltas[-1]["marcas"] = _marcas(info.get("instrucciones") or [], resueltas[-1]["lineas"], d.get("sin_marca", ()))
         info["diapositivas"] = resueltas
+    # Cada paso lleva su lámina, y no la misma que otro paso del diagrama.
+    vistas = {}
+    for paso, info in guia.items():
+        lista = info.get("diapositivas") or []
+        if not lista:
+            ADVERTENCIAS.append(f"{slug} · {paso}: paso sin lámina (agrégala en diapositivas_pasos.py)")
+            continue
+        firma = tuple((d["fuente"], d["n"]) for d in lista)
+        if firma in vistas:
+            ADVERTENCIAS.append(f"{slug} · {paso}: repite las láminas de {vistas[firma]} (SCRIPTS en diapositivas_pasos.py)")
+        vistas.setdefault(firma, paso)
 
 
 def _json_seguro(obj):

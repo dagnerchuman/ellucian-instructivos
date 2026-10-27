@@ -16074,13 +16074,29 @@ html:not([data-theme="dark"]) .guia-pie-final {
     padding: 0.55rem 0.8rem 0.65rem 0.8rem !important;
   }
 
+  /* En dos filas (estado arriba, botones abajo) el pie no cabe en los 36 px del escritorio. */
   .guia-footer-sticky {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
     padding: 0.55rem 0.8rem !important;
     grid-template-columns: 1fr 1fr !important;
     grid-template-areas:
       "status status"
       "prev next" !important;
     gap: 0.42rem !important;
+  }
+
+  /* El botón «Siguiente» va dentro de este contenedor: el área de la rejilla es del contenedor. */
+  .guia-pie-right-actions {
+    grid-area: next !important;
+    display: flex !important;
+  }
+
+  .guia-pie-right-actions > * {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
   }
 
   .guia-pie-status {
@@ -16586,6 +16602,12 @@ html:not([data-theme="dark"]) .guia-diapos-mover {
 .guia-diapos-grid > .guia-diapo {
   flex: 0 0 min(215px, 72%);
   scroll-snap-align: start;
+}
+/* En escritorio sobra alto en el modal: láminas más grandes para que se lea la pantalla. */
+@media (min-width: 1100px) and (min-height: 760px) {
+  .guia-diapos-grid > .guia-diapo {
+    flex-basis: min(320px, 31%);
+  }
 }
 .guia-diapos-grid .guia-diapo-pie {
   display: -webkit-box;

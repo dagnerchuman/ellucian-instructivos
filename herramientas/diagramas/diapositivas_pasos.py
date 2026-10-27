@@ -43,6 +43,8 @@ INSTRUCTIVOS = {
     "7.1.9": {"id": "7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_", "titulo": "Instructivo 7.1.9 · Procesos de cierre del periodo académico"},
     "7.2.4": {"id": "7.2.4_Ejecucio_n_del_CAPP", "titulo": "Instructivo 7.2.4 · Ejecución del CAPP"},
     "11.2.1": {"id": "11.2.1_-_Gestionar_la_matri_cula", "titulo": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)"},
+    "08-graduacion": {"id": "08_4.1.4.1.5_Inst._Validar_el_cumplimiento_de_los_requisitos_de_graduacio_n",
+                      "titulo": "Instructivo 8 · Validar el cumplimiento de los requisitos de graduación"},
 }
 
 
@@ -146,6 +148,14 @@ TEMAS = {
                            (69, "SMICRLT: áreas con créditos y cursos otorgados"))),
     "nota_manual_ref": _ref("La página para pasar la nota de la plataforma está por confirmar (U24). Referencia: ingreso de notas por SFASLST (instructivo 7.1.6).",
                             _l("7.1.6", (15, "SFASLST: periodo y NRC"), (16, "SFASLST: calificación de cada alumno"))),
+    # Pasos fuera de Banner: se muestra, rotulado, dónde se ve en Banner lo que ese paso revisa o aprueba
+    "oficio_ref": _ref("El visto bueno y el oficio se tramitan en la intranet de la USS, fuera de Banner (C47, C48). Referencia: la carga que se envía es la que resume SIAASGN (instructivo 5.2).",
+                       _l("5.2-carga", (26, "SIAASGN: resumen de la carga horaria del docente"),
+                          (27, "SIAASGN: sobrecarga o subcarga por criterio"))),
+    "resolucion_ref": _ref("La resolución del Vicerrectorado Académico se emite fuera de Banner (C47, C48). Referencia: la carga que aprueba es la de cada NRC en SIAASGN (instructivo 5.2).",
+                           _l("5.2-carga", (24, "SIAASGN: carga de los NRC asignados al docente"))),
+    "plataforma_ref": _ref("La instrucción y la evaluación se hacen en la plataforma, fuera de Banner. Referencia: en Banner, el NRC guarda las fechas, el horario y el aula de la clase (instructivo 5.3).",
+                           _l("5.3", (29, "SSASECT: fechas, horario y aula de la clase"))),
     "ssasect_liga": _l("5.3-ligas", (14, "SSASECT: nombre de la liga del NRC"), (15, "SSASECT: identificador de liga")),
     "ssadetl": _l("5.3-ligas", (16, "SSADETL: liga que se valida al inscribir"), (17, "SSADETL: conector de la liga"),
                   (18, "SSADETL: guardar la liga")),
@@ -177,8 +187,144 @@ TEMAS = {
                   (25, "SHRROLL: enviar y guardar"), (27, "Revisar la salida en GJIREVO")),
     "smarqcm": _l("7.2.4", (30, "SMARQCM: ID del alumno"), (32, "SMARQCM: nueva solicitud de cumplimiento"),
                   (33, "SMARQCM: parámetros heredados de SMADFLT"), (41, "SMARQCM: abrir los resultados en SMICRLT")),
-    "smicrlt": _l("7.1.9", (61, "SMICRLT: alumno y solicitud"), (63, "SMICRLT: resultados del CAPP"),
+    "smicrlt": _l("7.1.9", (61, "SMICRLT: alumno y solicitud"), (64, "SMICRLT: programa y catálogo con que se evaluó"),
                   (80, "SMICRLT: cursos no usados")),
+}
+
+# Casuísticas: láminas propias de un paso cuando REGLAS le daría las mismas que a otro paso del script,
+# y las de la situación inicial (c0) y el resultado (cr): dónde se ve en Banner. La clave es el paso o
+# «paso@PÁGINA» (si los centros tienen variantes del script); el valor, un tema, una lista o
+# {regex de la fase y el hito: lista}.
+SCRIPTS = {
+    "script-01-matricula-regular": {
+        "c0": _l("4.1.1", (15, "SGASTDN: el alumno admitido queda con estatus activo")),
+        "cr": _l("5.4-inscripcion", (45, "SFAREGS: inscripción sin errores y total de ingreso")) +
+              _l("5.4-inscripcion", (41, "Buscar secciones: lugares disponibles del NRC")),
+    },
+    "script-02-matricula-especial-con-sobrepasos": {
+        "c0": {r"cupo|satur": _l("5.4-sobrepasos", (37, "SFAREGS: error fatal por cupo lleno")),
+               r".": _l("5.4-sobrepasos", (37, "SFAREGS: error fatal por prerrequisito"))},
+        "cr": _l("5.4-sobrepasos", (39, "SFAREGS: el NRC se guarda con el sobrepaso"),
+                 (40, "SFAREGS: sin errores, total de ingreso")),
+    },
+    "script-03-matricula-por-convalidacion": {
+        "c0": _l("3.3.1", (12, "STVSBGI: institución de procedencia del curso externo")),
+        "cr": _l("7.2.4", (69, "SMICRLT: el área del programa con los créditos otorgados")) +
+              _l("7.1.9", (78, "SMICRLT: el curso convalidado entre los usados")),
+    },
+    "script-04-matricula-por-examen-de-suficiencia": {
+        "c0": _l("1.1.5", (8, "Examen de curso: la suficiencia cuenta como prerrequisito")),
+        "c3": _l("5.4-inscripcion", (38, "SFAREGS: ingresar el NRC del nivel siguiente"), (42, "SFAREGS: datos del NRC y plan de estudios")),
+        "c4": _l("5.4-inscripcion", (43, "SFAREGS: guardar la inscripción con código RE")) +
+              _l("5.3", (27, "SSASECT: el cupo del NRC baja en uno")),
+        "cr": _l("3.2.2", (15, "El examen queda como requisito cumplido")) +
+              _l("5.4-inscripcion", (45, "SFAREGS: inscripción sin errores")),
+    },
+    "script-05-curso-especial-para-egresados": {
+        "c0": _l("08-graduacion", (13, "Egresado: cumplió la malla, con idiomas, computación y emprendimiento")),
+        "cr": {r"titulaci|acredit": _l("7.1.9", (75, "SMICRLT: la regla del área con «Cumple» marcado")),
+               r".": _l("7.1.6", (19, "SHATCKN: la nota de cada curso en la historia"), (20, "SHATCKN: detalle del curso calificado"))},
+    },
+    "script-06-dos-programas-en-simultaneo": {
+        "c0": _l("4.1.1", (59, "Dos carreras: el alumno cursa dos programas a la vez")),
+        "c1": _l("4.1.1", (60, "SGASTDN: alumno y periodo"), (61, "SGASTDN: pestaña Currículum, insertar")),
+        "c2": _l("4.1.1", (62, "SGASTDN: elegir el programa del centro"), (63, "SGASTDN: regla curricular del programa"),
+                 (64, "SGASTDN: valores que llena la regla curricular")),
+        "cr": _l("4.1.1", (65, "SGASTDN: los dos currículos quedan activos"), (66, "SGASTDN: y también sus planes de estudios")),
+    },
+    "script-07-tres-programas-en-simultaneo": {
+        "c0": _l("4.1.1", (59, "Varias carreras: el alumno cursa programas a la vez")),
+        "c1": _l("4.1.1", (61, "SGASTDN: pestaña Currículum, insertar"), (62, "SGASTDN: elegir cada programa"),
+                 (63, "SGASTDN: regla curricular del programa")),
+        "c2": _l("4.1.1", (64, "SGASTDN: nivel y datos que llena la regla curricular"), (65, "SGASTDN: currículos activos")),
+        "cr": _l("4.1.1", (66, "SGASTDN: los planes de estudios quedan activos")),
+    },
+    "script-08-retiro-de-matricula-dd": {
+        "c0": _l("5.4-retiro", (40, "SFAREGS: el alumno sigue elegible (EL) en el periodo")),
+        "c1": _l("5.4-retiro", (39, "SFAREGS: periodo e ID del alumno"), (41, "SFAREGS: plan de estudios de ingreso")),
+        "c2": _l("5.4-retiro", (42, "SFAREGS: código de retiro en el NRC"), (43, "SFAREGS: guardar el retiro")),
+        "c3": _l("5.4-retiro", (44, "SFAREGS: recálculo de la cuenta")) + _l("11.2.1", (92, "TSAAREV: cargo en negativo tras el retiro")),
+        "cr": _l("5.4-inscripcion", (41, "Buscar secciones: el lugar vuelve a estar disponible")),
+    },
+    "script-09-suspension-y-reactivacion": {
+        "c0": _l("4.1.1", (11, "STVSTST: estatus del estudiante (activo, inactivo…)")),
+        "c1": _l("4.1.1", (14, "SGASTDN: consultar el estatus del alumno")),
+        "c2": _l("5.4-inscripcion", (14, "SOATERM: verificación de errores de inscripción")) + list(TEMAS["sfaregs_error"]),
+        "c3": _l("4.1.1", (15, "SGASTDN: cambiar el estatus a activo y guardar"), (17, "SGASTDN: copiar a un periodo posterior")),
+        "cr": _l("4.1.1", (19, "SFAREGS: estatus del alumno en el periodo")),
+    },
+    "script-10-retorno-por-desaprobado": {
+        "c0": _l("7.1.6", (16, "SFASLST: la nota final desaprobatoria")),
+        "c4@SMARQCM": _l("7.2.4", (67, "Sin «Cumple» marcado, el alumno no cumple el requisito")) +
+                      _l("7.1.9", (75, "Área: la columna «Cumple» de cada regla")),
+        "cr": {r"basic|suficiencia": _l("5.4-inscripcion", (38, "SFAREGS: se matricula otra vez en el nivel")),
+               r".": _l("7.1.9", (80, "SMICRLT: el curso desaprobado queda en «No usados»"))},
+    },
+    "script-11-apertura-de-periodo": {
+        "c0": _l("1.1.1", (10, "Periodo, parte de periodo y tipo de periodo")),
+        "cr": _l("1.1.2", (17, "SOATERM: número inicial de NRC"), (18, "SOATERM: inscripción permitida en el periodo")),
+    },
+    "script-11-b-diseno-de-mallas-y-programas": {
+        "c0": _l("1.1.3", (19, "STVMAJR: la carrera del programa")),
+        "cr": _l("7.1.9", (64, "SMICRLT: el CAPP evalúa con el programa y su catálogo")),
+    },
+    "script-12-cierre-de-periodo": {
+        "c0": _l("7.1.9", (5, "Al terminar el periodo, las notas pasan a la historia")),
+        "cr": _l("7.1.9", (29, "GJIREVO: resultados del pase a historia")) +
+              _l("7.1.6", (19, "SHATCKN: la nota ya está en la historia académica")),
+    },
+    "script-13-procesamiento-de-calificaciones": {
+        "c0": _l("7.1.4", (76, "Calificación de cada alumno por componente"), (77, "La nota calculada pasa a la lista de clase")),
+        "cr": _l("7.1.3", (15, "SHAGRDE: la nota cuenta o no como aprobada")),
+    },
+    "script-14-cierre-de-curso": {
+        "c0": _l("7.1.4", (77, "La nota calculada pasa a la lista de clase")),
+        "c3": _l("7.1.6", (16, "SFASLST: casilla «Pasada» marcada tras el pase")) +
+              _l("7.1.6", (19, "SHATCKN: la nota en la historia académica")),
+        "cr": _l("7.1.9", (29, "GJIREVO: resultados del pase a historia")) +
+              _l("7.1.6", (20, "SHATCKN: detalle del curso en la historia")),
+    },
+    "script-15-ampliacion-de-cupos-y-reservas": {
+        "c0": _l("5.4-inscripcion", (41, "Buscar secciones: el NRC sin lugares disponibles")),
+        "c1": _l("5.3", (27, "SSASECT: cupo máximo inicial del NRC")),
+        "c3": _l("5.3", (27, "SSASECT: ampliar el cupo máximo"), (28, "Lugares reservados: la regla nula toma el nuevo cupo")),
+        "cr": _l("5.4-inscripcion", (40, "Buscar secciones: filtros del NRC"), (41, "Buscar secciones: lugares disponibles")),
+    },
+    "script-16-division-de-grupos-y-traslado": {
+        "c0": {r"p0\d|superpon": _l("1.1.2", (21, "Partes de periodo: semanas y fechas de cada grupo")),
+               r".": _l("5.4-inscripcion", (42, "SFAREGS: el NRC actual del alumno"))},
+        "cr": _l("7.1.6", (15, "SFASLST: el alumno en la lista del NRC nuevo")) +
+              _l("5.4-inscripcion", (41, "Buscar secciones: lugar liberado en el NRC de origen")),
+    },
+    "script-17-gestion-de-horarios-y-cruces": {
+        "c0": _l("6.2.1", (12, "Premisa: el NRC tiene su bloque de horario en SSASECT")),
+        "c1": _l("5.3", (29, "SSASECT: horario de la sesión del NRC"), (30, "SSASECT: horas por semana del bloque")),
+        "c2": _l("6.2.1", (15, "Bloque Instructor: el mismo docente en el otro NRC"), (16, "SIAFAVL: consultar docentes disponibles")),
+        "c3": _l("6.2.1", (20, "Banner impide asignar al docente por cruce de horario")),
+        "c4": _l("6.2.1", (19, "Indicador de sobrepaso del docente y porcentaje")),
+        "cr": _l("5.2-carga", (24, "SIAASGN: el docente con los dos NRC en su carga")),
+    },
+    "script-18-a-auditoria-de-carga-docente": {
+        "c0": _l("5.2-docentes", (17, "SIAINST: docente y periodo"), (19, "SIAINST: contrato y regla de carga")),
+        "c1": _l("5.2-carga", (23, "SIAASGN: docente y periodo a revisar")),
+        "c2": _l("5.2-carga", (24, "SIAASGN: carga de cada NRC asignado")),
+        "c3": _l("5.2-carga", (26, "SIAASGN: resumen de horas de la carga")),
+        "c4": _l("5.2-carga", (27, "SIAASGN: sobrecarga o subcarga por criterio"), (12, "SIATERM: factor FTE del periodo")),
+        "cr": _l("5.2-carga", (24, "SIAASGN: carga por NRC"), (26, "SIAASGN: carga consolidada del periodo")),
+    },
+    "script-18-b-retenciones-y-bloqueo-de-matricula": {
+        "c0": _l("5.2.1", (10, "STVHLDD: códigos de retención"), (11, "Qué bloquea cada retención (inscripción, notas…)")),
+        "cr": _l("5.4-inscripcion", (14, "SOATERM: verificación de retenciones en Fatal"),
+                 (17, "Retenciones: impiden inscribir mientras estén activas")),
+    },
+    "script-18-c-solicitud-de-servicio-o-queja": {
+        "c0": _l("4.3.2", (10, "Autoservicio: el alumno elige el servicio que pide")),
+        "cr": _l("4.3.2", (15, "Autoservicio: el alumno ve el estatus y la respuesta")),
+    },
+    "script-19-calendario-de-calificaciones-y-componente-attrgrd": {
+        "c0": _l("7.1.4", (62, "Autoservicio: el libro de calificaciones del docente")),
+        "cr": _l("7.1.4", (46, "SHAGCOM: peso de cada componente"), (48, "SHAGCOM: incluir en la calificación final")),
+    },
 }
 
 CREAR_NRC = {
@@ -201,12 +347,16 @@ CREAR_NRC = {
 
 BASE = {
     "crear-el-nrc": CREAR_NRC,
-    "carga-lectiva": {"k1": "siainst", "k2": "ssasect_docente", "k3": "siaasgn"},
+    "carga-lectiva": {"k1": "siainst", "k2": "ssasect_docente", "k3": "siaasgn", "k4": "oficio_ref", "k5": "resolucion_ref"},
     "persona-y-admision": {"a1": "goamtch", "a2": "spaiden", "a3": "saaquik", "a4": "saaquik_curr", "a5": "sgastdn"},
     "matricula-en-el-nrc": {"i1": "ssasecq_ref", "i2": "sfaregs_autorizar", "i3": "sfaregs_inscribir", "i4": "tsaarev", "i5": "sfaslst_lista"},
     "notas-y-pase-a-historia": {"n1": "shaegbc", "n2": "shagcom", "n3": "soaatrk", "n4": "pasar_lista",
                                 "n5": "libro", "n6": "nota_final", "n7": "shrroll"},
-    "ligas-teorico-y-club": {"g1": "scacrse_ligas", "g2": "ssasect_liga", "g3": "ssasect_liga", "g4": "ssadetl",
+    "ligas-teorico-y-club": {"g1": "scacrse_ligas",
+                             "g2": _l("5.3-ligas", (14, "SSASECT: nombre de la liga del NRC teórico")),
+                             "g3": _l("5.3-ligas", (15, "SSASECT: identificador de liga de los NRC prácticos"),
+                                      (22, "Muchos a muchos con restricción: cada teórico con su práctico")),
+                             "g4": "ssadetl",
                              "g5": "ligas_inscripcion", "g6": "sfaslst_lista"},
 }
 
@@ -237,13 +387,14 @@ REGLAS = [
     ("SSASECQ", r".", "ssasecq_ref"), ("SHATFAC", r".", "shatfac_ref"), ("SHASMRY", r".", "shasmry_ref"),
     ("SHATERM", r".", "shaterm_ref"), ("SMIPOUT", r".", "smipout_ref"), ("NOTA", r".", "nota_manual_ref"),
     ("SVASVPR", r"buscar", "svasvpr_buscar"), ("SVASVPR", r".", "svasvpr_atender"),
+    ("PLATAFORMA", r".", "plataforma_ref"),
 ]
 
 
 # Recorrido completo: la página de cada mensaje y su tema (primeras láminas del tema).
 RECORRIDO = {"SOATERM": "soaterm", "SSASECT": "ssasect_crear", "SIAASGN": "siaasgn", "GOAMTCH": "goamtch",
              "SAAQUIK": "saaquik", "SFAREGS": "sfaregs_inscribir", "TSAAREV": "tsaarev", "Autoservicio": ["pasar_lista", "libro"],
-             "SHRROLL": "shrroll", "SMICRLT": "smicrlt"}
+             "SHRROLL": "shrroll", "SMICRLT": "smicrlt", "Oficio": "oficio_ref", "Resolución": "resolucion_ref"}
 
 
 def para_recorrido(paginas, por_tema=2):
@@ -270,6 +421,13 @@ def para(slug, paso, info):
         return []
     pantalla = (info.get("pantalla") or "").split()[0].upper() if info.get("pantalla") else ""
     fase = ((info.get("fase") or "") + " " + (info.get("hito") or "")).lower()
+    propio = SCRIPTS.get(slug, {})
+    for clave in (f"{paso}@{pantalla}", paso):
+        valor = propio.get(clave)
+        if isinstance(valor, dict):
+            valor = next((v for patron, v in valor.items() if re.search(patron, fase)), None)
+        if valor:
+            return list(TEMAS[valor] if isinstance(valor, str) else valor)
     for codigo, patron, tema in REGLAS:
         if pantalla == codigo and re.search(patron, fase):
             return list(TEMAS[tema])

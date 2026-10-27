@@ -3,8 +3,9 @@
 
 Inscribir a un alumno en su ruta de aprendizaje, crear el NRC (viendo antes a qué malla va el alumno) y asignar los
 programas al NRC, con el BPM «ve a tal página», los enlaces del sitio y prompts para el asistente IA. Correcciones del
-jefe (C127): «crear NRC» en vez de «curso nuevo», «asignar programas» en vez de «asignar escuelas»; las escuelas a las
-rutas las asigna Pregrado.
+jefe (C127, C128): «crear NRC» en vez de «curso nuevo», «asignar programas» en vez de «asignar escuelas» (el curso va en la
+malla de los programas: SMAPROG y SMAAREA); las escuelas a las rutas las asigna Pregrado; SSARRES son restricciones, no
+asignación de programas.
 La plantilla es «docs/presentaciones/2. PROGRAMACIÓN DE ASIGNATURAS.pptx» (la de ussdeck).
 
     python3 build_ruta.py ["<salida>.pptx"]
@@ -94,7 +95,7 @@ PROMPTS = [
     '¿Cómo se matricula el alumno por Autoservicio en un curso de su ruta?',
     '¿Cómo creo un NRC de Computación en SSASECT, paso a paso?',
     '¿Cómo veo si un curso está en la malla del programa del alumno (SMAAREA)?',
-    '¿Cómo asigno los programas que pueden matricularse en un NRC con SSARRES?',
+    '¿Para qué sirve SSARRES y cuándo pongo una restricción de programa en un NRC?',
     '¿Cuánto cuesta un curso y un taller en Chiclayo y en filiales?',
     '¿Qué hago si sale «El modo de calificar no es válido para la calificación ingresada»?',
     '¿Qué dudas siguen abiertas sobre las rutas de aprendizaje?',
@@ -112,15 +113,15 @@ def s_agenda(p):
            'NRC y se le asignan los programas**. Todo lo de aquí está probado en TEST o citado del instructivo.', kind='purple',
            sz=1500)
     S.chevrons([('Rutas', 'Qué son y cuántas'), ('Inscribir', 'Alumno en su ruta'), ('Crear el NRC', 'Malla y programación'),
-                ('Programas', 'Asignar al NRC'), ('Repaso', 'Sitio y asistente IA')], h=760000, sz=1400)
+                ('Programas', 'El curso en la malla'), ('Repaso', 'Sitio y asistente IA')], h=760000, sz=1400)
     seen = set()
     columnas(S, [
         ('Hoy en SEUSS', [ex('Campus Virtual › Procesos en línea › Matrícula en línea › logo del Centro de Informática › modalidad › '
                              'curso y sección › modalidad de pago.', seen)], GRAYL, MUT),
         ('En Banner', [ex('El alumno se **admite en el programa XP de su ruta** (SAAQUIK) y se matricula en el NRC (SFAREGS o '
                           'Autoservicio).', seen),
-                       ex('El NRC se crea en SSASECT para un curso que está en la **malla del programa** (SMAAREA) y se le '
-                          '**asignan los programas** que pueden matricularse (SSARRES).', seen)],
+                       ex('El curso se **asigna a los programas** poniéndolo en su **malla** (SMAPROG, SMAAREA) y el NRC se crea en '
+                          'SSASECT. Las **restricciones** de quién se matricula van en SSARRES.', seen)],
          PURL, PURD),
     ], sz=1500, titulo_sz=1600)
     S.save()
@@ -197,14 +198,14 @@ def s_bpm_nrc(p):
     S = Slide(p, 'BPM: CREAR EL NRC')
     S.text('Dagner, ve en este orden (primero mira **a qué malla va el alumno**):', sz=1500, color=INK, bold=True)
     S.chevrons([('Malla', 'el curso en el XP'), ('SOATERM', 'periodo y parte'), ('SSASECT', 'crear el NRC'),
-                ('SSASECT', 'cupo, horario, docente'), ('SSARRES', 'asignar programas'), ('SFAREGS', 'matricular')],
+                ('SSASECT', 'cupo, horario, docente'), ('SSARRES', 'restricciones (si hay)'), ('SFAREGS', 'matricular')],
                h=820000, sz=1250)
     seen = set()
     columnas(S, [
         ('Primero, la malla', [ex('El curso del NRC tiene que estar en la **malla del programa XP** del alumno (SMAPROG y SMAAREA). Si no '
                                   'está, **hay que hacer la malla y la programación** antes de crear el NRC.', seen)], PURL, PURD),
-        ('Lo hace Pregrado', ['Asignar las **escuelas** a las **rutas** lo hace Pregrado. El centro **asigna los programas** al NRC.'],
-         AMBL, AMBD),
+        ('Lo hace Pregrado', ['Asignar las **escuelas** a las **rutas** lo hace Pregrado. El centro pone el curso en la **malla de '
+                              'los programas** XP.'], AMBL, AMBD),
         ('Ejemplo real', ['NRC **10044** Diseño Web (ESEC 00684, X06, cupo 40), para el alumno con el programa **CMEMC44** (XP 07).'],
          GRAYL, MUT),
     ], sz=1400, titulo_sz=1500)
@@ -229,35 +230,39 @@ def s_ssasect(p):
 
 
 def s_malla(p):
-    S = Slide(p, 'SI EL CURSO NO ESTÁ EN LA MALLA')
-    S.text('Antes del NRC hay que **hacer la malla y la programación**. Quién la hace está por confirmar (U40).', sz=1450,
-           color=INK)
+    S = Slide(p, 'ASIGNAR EL CURSO A LOS PROGRAMAS (MALLA)')
+    S.chevrons([('Escuela', 'la asigna Pregrado'), ('Ruta', 'agrupación 1 a 7'), ('Programa XP', 'SMAPROG'),
+                ('Área', 'SMAAREA'), ('Curso', 'ESEC ·····')], h=700000, sz=1300, fill=GRND)
     seen = set()
     rows = [
-        ['1', ex('SMAAREA', seen), 'Abrir el área del **programa XP** (por ejemplo MC38-01) y ver si el curso está en su regla', '1.2.1 diap. 23–25'],
-        ['2', ex('SCACRSE', seen), 'Si el curso no existe: crearlo (materia ESEC, número nuevo, escuela EM, departamento EMCI, nivel C, modo V; '
-                                   'mejor **Copiar** uno parecido)', '1.1.4 diap. 20–25'],
-        ['3', 'SMAAREA', 'En la regla del área: **Insertar** ESEC y el número; si cambia la malla, **Copiar** al periodo nuevo', '1.3.1 diap. 10–13'],
-        ['4', ex('SMAPROG', seen), 'El área sigue en la malla del programa, con su calificación mínima', '1.2.1 diap. 31'],
+        ['1', ex('SMAPROG', seen), 'Abrir el **programa XP** de la ruta (por ejemplo CMEMC38) y ver sus **áreas**', '1.2.1 diap. 26–31'],
+        ['2', ex('SMAAREA', seen), 'En el **área** del programa (por ejemplo MC38-01), en la regla: **Insertar** materia ESEC y número del '
+                                   'curso · Guardar. Si la malla cambia, **Copiar** el área al periodo nuevo', '1.2.1 diap. 23–25; 1.3.1 diap. 10–13'],
+        ['3', ex('SCACRSE', seen), 'Solo si el curso no existe: crearlo (ESEC, número nuevo, escuela EM, departamento EMCI, nivel C, '
+                                   'modo V; mejor **Copiar** uno parecido). Se crea **antes** de tocar el área', '1.1.4 diap. 20–25; R12'],
+        ['4', ex('SMARQCM', seen), 'CAPP de un alumno de esa ruta: el curso cuenta en su área', 'Script 10'],
     ]
-    S.table([6, 22, 52, 20], ['N.º', 'Página', 'Qué haces', 'Instructivo'], rows, lo=1050, hi=1400)
+    S.table([6, 20, 54, 20], ['N.º', 'Página', 'Qué haces', 'Instructivo'], rows, lo=1050, hi=1400, reserve=520000)
+    S.text('Quién hace la malla cuando el curso no está: por confirmar (U40).', sz=1200, y=YB - 330000)
     S.save()
 
 
-def s_programas(p):
-    S = Slide(p, 'ASIGNAR PROGRAMAS AL NRC (SSARRES)')
-    S.chevrons([('Escuela', 'la asigna Pregrado'), ('Ruta', 'agrupación 1 a 7'), ('Programa XP', 'CMEMC38 … 44'),
-                ('NRC', 'SSARRES')], h=700000, sz=1300, fill=GRND)
+def s_restricciones(p):
+    S = Slide(p, 'RESTRICCIONES DEL NRC (SSARRES)')
+    S.note('SSARRES **no asigna programas ni reserva cupos**: define **quién puede matricularse** en el NRC (incluir o excluir). Se '
+           'usa solo si hace falta limitar el NRC.', kind='warn', sz=1400)
     seen = set()
     rows = [
-        ['1', ex('SSARRES: desde el menú relacionado de SSASECT o desde Experience', seen), '5.3 diap. 44'],
-        ['2', 'Pestaña **Grado y Programa** › Restricción **Incluir** › el **programa XP** (o los programas) que llevan el curso › '
-              '**Guardar**: solo esos alumnos podrán matricularse', '5.3 diap. 48'],
-        ['3', 'Si hace falta: **Clase y Nivel** (nivel C) y **Campus** (S)', '5.3 diap. 47 y 49'],
-        ['4', 'Lo que venga del catálogo (SCARRES) aparece aquí y se puede ajustar', '5.3 diap. 46'],
-        ['5', 'Probar: un alumno de otro programa no debe poder matricularse en SFAREGS', 'Por probar'],
+        ['Acceso', ex('Menú relacionado de SSASECT o desde Experience', seen), '44'],
+        ['Heredadas', 'Vienen del catálogo (SCARRES) y se pueden ajustar para este NRC', '46'],
+        ['Clase y Nivel', 'Incluir o excluir alumnos por nivel (por ejemplo, solo nivel **C**)', '47'],
+        ['Grado y Programa', 'Incluir o excluir alumnos por **programa** (por ejemplo, solo los de un programa XP)', '48'],
+        ['Campus', 'Incluir o excluir por sede (por ejemplo, **S**)', '49'],
+        ['Atributo y Cohorte', 'Incluir o excluir por atributo o cohorte del alumno', '50–51'],
     ]
-    S.table([6, 70, 24], ['N.º', 'Qué haces', 'Instructivo'], rows, lo=1100, hi=1400)
+    S.table([22, 66, 12], ['Pestaña', 'Para qué', 'Diap.'], rows, lo=1100, hi=1450)
+    S.text('Instructivo 5.3 Registrar la oferta horaria, diapositivas 44 a 51. Los cupos reservados se ponen en SSASECT (C66, C97).',
+           sz=1150)
     S.save()
 
 
@@ -316,7 +321,7 @@ def s_dudas(p):
     qs = [
         '**U37** ¿Qué código tiene cada ruta (CMEMC39 a CMEMC43)? (Las escuelas a las rutas las asigna Pregrado.)',
         '**U40** Cuando un curso no está en la malla, ¿quién hace la malla y la programación (SCACRSE, SMAAREA): el centro o Registros?',
-        '**U41** En SSARRES, ¿un NRC se abre a todos los programas XP que llevan el curso, o se crea un NRC por ruta?',
+        '**U41** ¿Se pondrán restricciones de programa en los NRC (SSARRES), o cualquier alumno del centro puede llevar el NRC?',
         '**U35** ¿Se acredita con 4 talleres (lámina 2026) o con un 4.º curso (PDF 2025)?',
         '**U38** Si el retiro está prohibido (Acuerdo 0453-2013), ¿se bloquea en Banner?',
     ]
@@ -332,8 +337,8 @@ def main():
                                         'Admitirlo en el programa XP de su ruta y matricularlo en un curso de esa ruta.')),
             ('text', s_bpm_inscripcion), ('text', s_saaquik), ('text', s_sfaregs),
             ('div', lambda p: build_div(p, '2. CREAR EL NRC Y ASIGNAR PROGRAMAS',
-                                        'Ver a qué malla va el alumno, programar el NRC y abrirlo a los programas de la ruta.')),
-            ('text', s_bpm_nrc), ('text', s_ssasect), ('text', s_malla), ('text', s_programas),
+                                        'Ver a qué malla va el alumno, poner el curso en la malla de los programas y programar el NRC.')),
+            ('text', s_bpm_nrc), ('text', s_ssasect), ('text', s_malla), ('text', s_restricciones),
             ('div', lambda p: build_div(p, '3. REPASO', 'Dónde verlo en el sitio, qué preguntarle al asistente y qué dudas llevar.')),
             ('text', s_sitio), ('text', s_prompts), ('text', s_errores), ('text', s_dudas)]
     u, paths = build_structure(tempfile.mkdtemp(prefix='deck_ruta_'), [k for k, _ in plan])

@@ -1,9 +1,12 @@
-# Guía: inscribir a un alumno en su ruta de aprendizaje y crear un curso nuevo (Computación)
+# Guía: inscribir a un alumno en su ruta de aprendizaje, crear el NRC y asignarle los programas (Computación)
 
-Repaso para la reunión del 27/10/2026 con el jefe del Centro de Informática (C126). Junta lo probado en TEST (C17, C19, C71, C86, C100) con los instructivos de Ellucian. Las rutas están en [ref-acreditacion-computacion.md](ref-acreditacion-computacion.md).
+Repaso para la reunión del 27/10/2026 con el jefe del Centro de Informática (C126, corregido en C127). Junta lo probado en TEST (C17, C19, C71, C86, C100) con los instructivos de Ellucian. Las rutas están en [ref-acreditacion-computacion.md](ref-acreditacion-computacion.md).
 
-## Idea clave
-Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) → **programa XP** en Banner (`CMEMC38` = XP 01 … `CMEMC44` = XP 07) → cursos de esa ruta. Un curso nuevo se «asigna a las escuelas» agregándolo a la **malla de los programas XP** de las rutas que lo llevan (SMAAREA) y, si se quiere impedir que otros lo lleven, con una **restricción de programa** (SCARRES).
+## Idea clave (corregida por el jefe del Centro de Informática, C127)
+Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) → **programa XP** en Banner (`CMEMC38` = XP 01 … `CMEMC44` = XP 07) → cursos de esa ruta.
+- **Asignar las escuelas a las rutas lo hace Pregrado**, no el centro.
+- El centro **crea el NRC** (no «un curso nuevo»): antes mira **a qué malla va el alumno**; el curso tiene que estar en la malla del programa XP. Si no está, **hay que hacer la malla y la programación** (sección C).
+- Luego **asigna los programas** al NRC (no «las escuelas»): restricción de programa en **SSARRES** (sección B).
 
 ## A. Inscribir al alumno en su ruta
 | N.º | Página | Qué hacer | Fuente |
@@ -20,7 +23,7 @@ Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) �
 
 **Hoy en SEUSS:** Campus Virtual › Procesos en línea › Matrícula en línea › logo del Centro de Informática › modalidad › curso y sección › modalidad de pago (lámina 3).
 
-## B. Crear un curso nuevo
+## C. Si el curso no está en la malla: hacer la malla y la programación
 | N.º | Página | Qué hacer | Fuente |
 |---|---|---|---|
 | 1 | **SCACRSE** (bloque clave) | Materia `ESEC`, **número nuevo** (revisar el último que existe; en TEST el más alto conocido es `00700`), periodo desde el que rige. Recomendado: **Copiar** de un curso parecido (por ejemplo `ESEC 00684`) | 1.1.4, diap. 20 |
@@ -32,7 +35,7 @@ Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) �
 | 7 | **SCADETL** | Cuotas del curso (como `X032` en Idiomas) y equivalencias si las tiene | C68; 1.2.3 |
 | 8 | **SSASECT** | Programar el NRC del curso nuevo en el periodo | 01-creacion-nrc.md |
 
-## C. Asignar el curso a las escuelas (a sus rutas)
+## C2. Agregar el curso a la malla de las rutas
 | N.º | Página | Qué hacer | Fuente |
 |---|---|---|---|
 | 1 | **SMAAREA** | Por cada programa XP de las rutas que llevan el curso: abrir su área (por ejemplo `MC38-01`), periodo; si cambia la malla, **Copiar** al periodo nuevo; en «Anexos de curso/atributo de área», en la regla del área, **Insertar** la materia `ESEC` y el número del curso; Guardar | 1.2.1, diap. 23–25; 1.3.1, diap. 10–13 |
@@ -43,5 +46,17 @@ Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) �
 - **Orden:** el curso se crea **antes** de cambiar las áreas (1.3.1, diap. 5; R12).
 - En SSASECT se puede restringir un NRC puntual con **SSARRES**; SCARRES restringe el curso para todos sus NRC.
 
+## B. Crear el NRC y asignarle los programas
+| N.º | Página | Qué hacer | Fuente |
+|---|---|---|---|
+| 1 | **SMAPROG / SMAAREA** | Ver a qué malla va el alumno: el curso debe estar en el área de su programa XP | 1.2.1, diap. 23–25 |
+| 2 | **SOATERM** | Periodo y parte de periodo habilitados para programar (X05 a X07 en 202656) | 5.3, diap. 15–16 |
+| 3 | **SSASECT** › encabezado | Periodo · NRC vacío · **Crear NRC** (o **Copiar NRC**) | 5.3, diap. 19 |
+| 4 | **SSASECT** › Información de sección | Materia ESEC y número · sección · campus S · estatus activo · tipo de horario · modo V · parte de periodo · **Guardar** antes de cambiar de pestaña | 5.3, diap. 20–26; C97 |
+| 5 | **SSASECT** › Información de ingreso | Cupo en **Proyectado** antes de «Lugares reservados» · Guardar | 5.3, diap. 27–28; C97 |
+| 6 | **SSASECT** › Instructor y horas | CLAS, horario 24 h, días, sesión 01 · SAUVIR / SALA VIRT. con **O** en sobrepaso · docente principal 100 % · Guardar | 5.3, diap. 29–30; C97 |
+| 7 | **SSARRES** | **Asignar programas:** pestaña «Grado y Programa» › Incluir › los programas XP que llevan el curso › Guardar. También nivel (C) y campus (S) si hace falta | 5.3, diap. 44, 46–49 |
+| 8 | **SFAREGS** | Probar: un alumno de otro programa no debe poder matricularse | Por probar |
+
 ## Por confirmar
-U35 (4 talleres o 4.º curso), U37 (código de cada ruta y cómo se elige si la escuela está en dos rutas), U40 (quién crea los cursos en SCACRSE y las áreas en SMAAREA), U41 (si se usará SCARRES para limitar los cursos a su ruta).
+U35 (4 talleres o 4.º curso), U37 (código de cada ruta; las escuelas las asigna Pregrado), U40 (quién hace la malla y la programación cuando el curso no está), U41 (en SSARRES, ¿un NRC para todos los programas XP del curso o un NRC por ruta?).

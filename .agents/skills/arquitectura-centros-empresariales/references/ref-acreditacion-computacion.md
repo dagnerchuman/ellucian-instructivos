@@ -76,6 +76,7 @@ Se piden en el Campus Virtual de SEUSS, **Programación de servicios**: escuela 
 El digital llega al correo institucional en un día hábil; el impreso se recoge en la oficina de Centros Empresariales en Chiclayo (lunes a viernes, 8:00 a 13:00 y 14:00 a 18:00). En Banner, estos documentos serían **solicitudes de servicio** (R20, C44: servicio `CER`); cómo se genera y se cobra sigue abierto (E21).
 
 ## En Banner
+- **Las escuelas las asigna a las rutas Pregrado** (jefe del Centro de Informática, C127); el centro asigna los programas a cada NRC (SSARRES).
 - **Cada ruta es un programa** (el usuario, 26/10): hay unos 7 programas «Acreditación Computación XP 01…07». En TEST: `CMEMC38` = **XP 01** y `CMEMC44` = **XP 07**. Por el número, XP 01 a XP 07 corresponderían a las agrupaciones 1 a 7 y `CMEMC39` a `CMEMC43` a las 2 a 6 (por confirmar en SMAPROG, U37).
 - **Diseño Web (ESEC 00684)** está en las agrupaciones **5 y 7**, no en la 1. Por eso el NRC 10044 corresponde a `CMEMC44` (XP 07) y no a `CMEMC38` (XP 01): resuelve la parte práctica de U31.
 - Los NRC de la hoja de 202656 (10018 a 10029: Word 365, Excel 365, Canva, Excel Asociado, SPSS, Base de datos científicos y los talleres) son los cursos de la **agrupación 1**.

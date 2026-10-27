@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.join(USS, 'scripts', 'pptx'))
 sys.path.insert(0, os.path.join(USS, 'scripts', 'pdf'))
 import common as GL  # noqa: E402  (glosario: PAGINAS, SIGLAS, _TERM_RE)
 from pptlib import *  # noqa: E402,F401,F403
-from ussdeck import build_cover, build_div, build_structure, finalize  # noqa: E402
+from ussdeck import build_cover, build_div, build_structure, finalize, to_pdf  # noqa: E402
 
 OUT = os.path.join(RAIZ, 'docs', 'presentaciones',
                    'RUTA DE APRENDIZAJE - INSCRIPCIÓN, NRC Y PROGRAMAS - CENTRO DE INFORMÁTICA.pptx')
@@ -197,13 +197,14 @@ def s_sfaregs(p):
 def s_bpm_nrc(p):
     S = Slide(p, 'BPM: CREAR EL NRC')
     S.text('Dagner, ve en este orden (primero mira **a qué malla va el alumno**):', sz=1500, color=INK, bold=True)
-    S.chevrons([('Malla', 'el curso en el XP'), ('SOATERM', 'periodo y parte'), ('SSASECT', 'crear el NRC'),
-                ('SSASECT', 'cupo, horario, docente'), ('SSARRES', 'restricciones (si hay)'), ('SFAREGS', 'matricular')],
-               h=820000, sz=1250)
+    S.chevrons([('Malla', 'SGASTDN · SMAPROG · SMAAREA'), ('SOATERM', 'periodo y parte'), ('SSASECT', 'crear el NRC'),
+                ('SSASECT', 'cupo, horario, docente'), ('SSARRES', 'restricciones, si hay'), ('SFAREGS', 'matricular'),
+                ('SMARQCM', 'CAPP')], h=860000, sz=1000)
     seen = set()
     columnas(S, [
-        ('Primero, la malla', [ex('El curso del NRC tiene que estar en la **malla del programa XP** del alumno (SMAPROG y SMAAREA). Si no '
-                                  'está, **hay que hacer la malla y la programación** antes de crear el NRC.', seen)], PURL, PURD),
+        ('Primero, la malla', [ex('SGASTDN: qué programa XP tiene el alumno. SMAPROG y SMAAREA: si el curso está en su malla. Si no '
+                                  'está, **se asigna al programa** en SMAAREA (y SCACRSE si el curso no existe).', seen),
+                               'Por Autoservicio, el alumno solo ve en **Proyecciones** los cursos de su malla (C71).'], PURL, PURD),
         ('Lo hace Pregrado', ['Asignar las **escuelas** a las **rutas** lo hace Pregrado. El centro pone el curso en la **malla de '
                               'los programas** XP.'], AMBL, AMBD),
         ('Ejemplo real', ['NRC **10044** Diseño Web (ESEC 00684, X06, cupo 40), para el alumno con el programa **CMEMC44** (XP 07).'],
@@ -244,6 +245,28 @@ def s_malla(p):
     ]
     S.table([6, 20, 54, 20], ['N.º', 'Página', 'Qué haces', 'Instructivo'], rows, lo=1050, hi=1400, reserve=520000)
     S.text('Quién hace la malla cuando el curso no está: por confirmar (U40).', sz=1200, y=YB - 330000)
+    S.save()
+
+
+def s_estudiante(p):
+    S = Slide(p, 'PRUEBA: PONERME COMO ESTUDIANTE')
+    S.text('Tu ID 100582059 ya existe como persona: no vas a GOAMTCH. Te agregas el programa de la ruta y te matriculas (C99, C100).',
+           sz=1350)
+    rows = [
+        ['1', 'SFAREGS · encabezado', 'Periodo **202656** → ID **100582059** → un plan que ya tengas (por ejemplo 2) › **Ir**'],
+        ['2', 'Pestaña Currículos', '**+** › programa XP de la ruta del curso (por ejemplo **CMEMC44** para Diseño Web) › **Tab**: Banner '
+                                    'llena nivel C, campus S, escuela EM, mayor ACXP y departamento EMCI › **Guardar**'],
+        ['3', 'Anota el plan nuevo', 'El número del plan de estudios que se creó (la vez pasada fue el **4**)'],
+        ['4', 'Encabezado otra vez', 'Plan de estudios = el nuevo › **Ir**'],
+        ['5', 'Información de ingreso', 'Estatus **EL** · en el plan de estudios de ingreso, el plan nuevo con **EL** › **Guardar**'],
+        ['6', 'Cursos', '**⤓** › NRC › **Tab** › **Guardar**: queda **RE**'],
+    ]
+    S.table([6, 24, 70], ['N.º', 'Dónde', 'Qué haces'], rows, lo=1050, hi=1350, reserve=1000000)
+    columnas(S, [
+        ('Otra forma', ['SAAQUIK: tu ID, periodo 202656, nivel C, programa XP › Guardar; luego SFAREGS con ese plan.'], GRAYL, MUT),
+        ('Cuidado', ['El programa XP que te pongas debe tener el curso en su malla (Diseño Web: rutas 5 y 7). Si eres también el docente, '
+                     'te calificas a ti mismo: vale para pruebas.'], AMBL, AMBD),
+    ], sz=1250, titulo_sz=1350)
     S.save()
 
 
@@ -338,7 +361,7 @@ def main():
             ('text', s_bpm_inscripcion), ('text', s_saaquik), ('text', s_sfaregs),
             ('div', lambda p: build_div(p, '2. CREAR EL NRC Y ASIGNAR PROGRAMAS',
                                         'Ver a qué malla va el alumno, poner el curso en la malla de los programas y programar el NRC.')),
-            ('text', s_bpm_nrc), ('text', s_ssasect), ('text', s_malla), ('text', s_restricciones),
+            ('text', s_bpm_nrc), ('text', s_malla), ('text', s_ssasect), ('text', s_restricciones), ('text', s_estudiante),
             ('div', lambda p: build_div(p, '3. REPASO', 'Dónde verlo en el sitio, qué preguntarle al asistente y qué dudas llevar.')),
             ('text', s_sitio), ('text', s_prompts), ('text', s_errores), ('text', s_dudas)]
     u, paths = build_structure(tempfile.mkdtemp(prefix='deck_ruta_'), [k for k, _ in plan])
@@ -346,8 +369,9 @@ def main():
         if fn:
             fn(path)
     out = sys.argv[1] if len(sys.argv) > 1 else OUT
-    finalize(u, out, 'Ruta de aprendizaje: inscripción y cursos nuevos - Centro de Informática')
-    print('OK', out, len(paths), 'diapositivas')
+    finalize(u, out, 'Ruta de aprendizaje: inscripción, NRC y programas - Centro de Informática')
+    pdf = to_pdf(out, os.path.splitext(out)[0] + '.pdf')
+    print('OK', out, len(paths), 'diapositivas ·', pdf)
 
 
 if __name__ == '__main__':

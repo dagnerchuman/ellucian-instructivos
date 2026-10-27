@@ -1252,9 +1252,30 @@ function initApp() {
   loadPresentation(state.currentId, state.currentSlide);
 }
 
+/**
+ * Tema claro u oscuro: se guarda en archify-theme, la misma preferencia de la galería y los diagramas.
+ */
+function initTema() {
+  const btn = document.getElementById('btn-tema');
+  if (!btn) return;
+  const rotular = () => {
+    const oscuro = document.documentElement.getAttribute('data-theme') === 'dark';
+    btn.title = oscuro ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro';
+    btn.setAttribute('aria-pressed', oscuro ? 'true' : 'false');
+  };
+  btn.addEventListener('click', () => {
+    const siguiente = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', siguiente);
+    try { localStorage.setItem('archify-theme', siguiente); } catch (_) {}
+    rotular();
+  });
+  rotular();
+}
+
 // Ensure execution whether DOM is loading or already ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
+  document.addEventListener('DOMContentLoaded', () => { initTema(); initApp(); });
 } else {
+  initTema();
   initApp();
 }

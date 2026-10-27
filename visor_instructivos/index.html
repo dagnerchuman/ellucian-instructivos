@@ -5,7 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ellucian Instructivos — Visor de Presentaciones PPTX</title>
   <meta name="description" content="Visor interactivo en alta definición de instructivos y procesos de Ellucian Banner.">
-  <link rel="stylesheet" href="styles.css?v=23">
+  <script>
+    // Tema claro u oscuro antes de pintar: el que se eligió en el sitio (archify-theme) o el del sistema.
+    (function () {
+      var tema = null;
+      try { tema = localStorage.getItem('archify-theme'); } catch (_) {}
+      if (tema !== 'light' && tema !== 'dark') {
+        tema = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', tema);
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=24">
 </head>
 <body>
   <div class="app-container" id="app-container">
@@ -22,6 +33,12 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
               <path d="M3 3v5h5"/>
+            </svg>
+          </button>
+          <button class="icon-btn" id="btn-tema" title="Cambiar a tema oscuro" aria-label="Cambiar entre tema claro y oscuro" aria-pressed="false">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/>
             </svg>
           </button>
           <button class="icon-btn" id="btn-collapse-all" title="Colapsar todo">
@@ -265,6 +282,6 @@
   <script src="data.js?v=24"></script>
   <!-- Diapositivas convertidas a imágenes (herramientas/diapositivas.py) -->
   <script src="diapositivas/indice.js?v=24"></script>
-  <script src="app.js?v=24"></script>
+  <script src="app.js?v=25"></script>
 </body>
 </html>

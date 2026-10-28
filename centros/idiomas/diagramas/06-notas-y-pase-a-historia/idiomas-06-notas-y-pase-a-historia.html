@@ -18234,6 +18234,80 @@ button.ai-fab:active,
   .ai-header-motor .ai-engine-select { max-width: 130px; }
 }
 
+
+/* Zoom y lupa de las láminas (zoom_imagen.js) */
+.zi-zona {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  border-radius: 0.4rem;
+  touch-action: none;
+  cursor: zoom-in;
+}
+.zi-zona > img {
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zi-zona.zi-zoom { cursor: grab; }
+.zi-zona.zi-arrastrando { cursor: grabbing; }
+.zi-zona.zi-con-lupa { cursor: none; }
+.zi-barra {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+}
+.zi-barra button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
+}
+.zi-barra button:hover,
+.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
+.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
+.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
+.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-lupa {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn { display: none; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18391,6 +18465,171 @@ button.ai-fab:active,
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
 <script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
+/* Zoom y lupa para las láminas de los visores (guía de cada paso y asistente IA).
+   Solo agranda la imagen: la rueda, el pellizco del touchpad (ctrl + rueda) y el gesto de Safari se
+   detienen aquí para que el navegador no agrande toda la página.
+   Uso: var z = window.CCEEZoom(img);  z.reset();  z.zoom(1.25);  — se reinicia solo al cambiar la imagen. */
+(function () {
+  if (window.CCEEZoom) return;
+  var MIN = 1, MAX = 4, LUPA_R = 95;  // más de 4× solo agranda los píxeles: las láminas miden 1600 px
+
+  window.CCEEZoom = function (img) {
+    if (img.__cceeZoom) return img.__cceeZoom;
+    var zona = document.createElement('div');
+    zona.className = 'zi-zona';
+    img.parentNode.insertBefore(zona, img);
+    zona.appendChild(img);
+    img.draggable = false;
+
+    var barra = document.createElement('div');
+    barra.className = 'zi-barra';
+    barra.innerHTML =
+      '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
+      '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
+      '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
+      '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
+    zona.appendChild(barra);
+
+    var lupa = document.createElement('div');
+    lupa.className = 'zi-lupa';
+    lupa.hidden = true;
+    zona.appendChild(lupa);
+
+    var s = 1, tx = 0, ty = 0, lupaOn = false, lupaK = 2.5;
+    var punteros = {}, arrastre = null, pinza = null, gestoBase = 1;
+
+    function limitar() {
+      var w = zona.clientWidth, h = zona.clientHeight;
+      tx = Math.min(0, Math.max(w - w * s, tx));
+      ty = Math.min(0, Math.max(h - h * s, ty));
+    }
+    function pintar() {
+      limitar();
+      img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      zona.classList.toggle('zi-zoom', s > 1);
+      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+    }
+    function zoomEn(f, cx, cy) {
+      var r = zona.getBoundingClientRect();
+      var x = cx === undefined ? r.width / 2 : cx - r.left;
+      var y = cy === undefined ? r.height / 2 : cy - r.top;
+      var nuevo = Math.min(MAX, Math.max(MIN, s * f));
+      tx = x - (x - tx) * (nuevo / s);
+      ty = y - (y - ty) * (nuevo / s);
+      s = nuevo;
+      if (s === 1) { tx = 0; ty = 0; }
+      pintar();
+    }
+    function reset() { s = 1; tx = 0; ty = 0; pintar(); }
+
+    function moverLupa(e) {
+      var r = img.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
+      var z = zona.getBoundingClientRect();
+      lupa.hidden = false;
+      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
+      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
+      lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
+      lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
+    }
+    function alternarLupa() {
+      lupaOn = !lupaOn;
+      if (lupaOn) reset();
+      lupa.hidden = true;
+      zona.classList.toggle('zi-con-lupa', lupaOn);
+      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+    }
+
+    function accion(a) {
+      if (lupaOn && a !== 'lupa') alternarLupa();
+      if (a === 'mas') zoomEn(1.4);
+      else if (a === 'menos') zoomEn(1 / 1.4);
+      else if (a === 'reset') reset();
+      else if (a === 'lupa') alternarLupa();
+    }
+    // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
+    barra.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-zi]');
+      if (!b) return;
+      e.preventDefault();
+      e.stopPropagation();
+      accion(b.getAttribute('data-zi'));
+    });
+
+    // Rueda y pellizco del touchpad (llega como rueda con ctrlKey): acercan en el punto del cursor.
+    zona.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      if (lupaOn) {
+        lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        moverLupa(e);
+        return;
+      }
+      zoomEn(Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0018)), e.clientX, e.clientY);
+    }, { passive: false });
+    // Safari (Mac) manda el pellizco como gesto propio.
+    zona.addEventListener('gesturestart', function (e) { e.preventDefault(); gestoBase = s; }, { passive: false });
+    zona.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (!lupaOn) zoomEn((gestoBase * e.scale) / s, e.clientX, e.clientY);
+    }, { passive: false });
+    zona.addEventListener('gestureend', function (e) { e.preventDefault(); }, { passive: false });
+
+    zona.addEventListener('dblclick', function (e) {
+      if (e.target.closest('.zi-barra') || lupaOn) return;
+      e.preventDefault();
+      if (s > 1.05) reset(); else zoomEn(2.5, e.clientX, e.clientY);
+    });
+
+    // Arrastrar para mover; con dos dedos, pellizcar (pantallas táctiles).
+    zona.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.zi-barra')) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        pinza = { d: Math.hypot(a.x - b.x, a.y - b.y), s: s };
+        arrastre = null;
+      } else if (s > 1 && !lupaOn) {
+        arrastre = { x: e.clientX - tx, y: e.clientY - ty };
+        zona.setPointerCapture(e.pointerId);
+        zona.classList.add('zi-arrastrando');
+      }
+    });
+    zona.addEventListener('pointermove', function (e) {
+      if (lupaOn) { moverLupa(e); return; }
+      if (!punteros[e.pointerId]) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (pinza && ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        zoomEn((pinza.s * Math.hypot(a.x - b.x, a.y - b.y) / pinza.d) / s, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      } else if (arrastre) {
+        tx = e.clientX - arrastre.x;
+        ty = e.clientY - arrastre.y;
+        pintar();
+      }
+    });
+    function soltar(e) {
+      delete punteros[e.pointerId];
+      if (Object.keys(punteros).length < 2) pinza = null;
+      arrastre = null;
+      zona.classList.remove('zi-arrastrando');
+    }
+    zona.addEventListener('pointerup', soltar);
+    zona.addEventListener('pointercancel', soltar);
+    zona.addEventListener('pointerleave', function () { if (lupaOn) lupa.hidden = true; });
+
+    img.addEventListener('load', reset);  // imagen nueva (otra lámina, recorte o completa): vuelve al 100 %
+    var ctl = { reset: reset, zoom: function (f) { zoomEn(f); }, accion: accion, zona: zona };
+    img.__cceeZoom = ctl;
+    return ctl;
+  };
+})();
+
 (function () {
   var GUIA_MAP = {"n1": {"fase": "Paso 1: Calendario de calificaciones", "pantalla": "SHAEGBC", "hito": "Fechas de ingreso de notas abiertas para el periodo", "instrucciones": [{"campo": "Periodo", "valor": "202656", "tipo": "Bloque clave", "detalle": "Ingrese el periodo y pulse «Ir»."}, {"campo": "Fecha abierta para puntaje", "valor": "Fecha autorizada por Registros Académicos", "tipo": "Obligatorio", "detalle": "Use las fechas institucionales; no las invente. En TEST se vio 01-SEP-2026 (C92)."}, {"campo": "Fecha de corte", "valor": "Fecha autorizada", "tipo": "Obligatorio", "detalle": "Guarde. Sin este calendario, SHAGCOM muestra «Debe configurar los controles del libro de calificaciones en SHAEGBC» (C91)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/040.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/040.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=40", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 40, "texto": "SHAEGBC: calendario del periodo", "nota": "", "lineas": [{"num": "", "texto": "Calendario de Ingreso de calificaciones a nivel de periodo (SHAEGBC)"}, {"num": "", "texto": "Se muestra solo la definición a nivel de período."}, {"num": "1", "texto": "En SHAEGBC, seleccione o digite el período para el cual se hará la definición."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {"0": "1"}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/041.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/041.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=41", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 41, "texto": "SHAEGBC: fechas de ingreso de calificaciones", "nota": "", "lineas": [{"num": "", "texto": "Calendario de Ingreso de calificaciones a nivel de periodo (SHAEGBC)"}, {"num": "3", "texto": "Ingrese la fecha a partir de la cual los docentes podrán cargar las calificaciones (fecha abierta)."}, {"num": "4", "texto": "Ingrese la fecha hasta la cual los docentes pueden cargar las calificaciones (fecha de corte)."}, {"num": "5", "texto": "Guarde la información."}], "marcas": {"2": "4"}}]}, "n2": {"fase": "Paso 2: Plan de evaluación del NRC", "pantalla": "SHAGCOM", "hito": "Componentes con peso final 1.00 y ATTRGRD aparte", "instrucciones": [{"campo": "Periodo y NRC", "valor": "202656 · (NRC del centro)", "tipo": "Bloque clave", "detalle": "Ingrese periodo y NRC y pulse «Ir»."}, {"campo": "Escala de calificación (bloque superior)", "valor": "Escala regular del centro", "tipo": "Obligatorio", "detalle": "Es la escala que predomina en los componentes (7.1.4, diap. 44). Guarde antes de pasar al bloque de componentes."}, {"campo": "Componentes del sílabo", "valor": "Según el sílabo aprobado", "tipo": "Obligatorio", "detalle": "Secuencia, nombre, descripción, peso, calificadas de 100, incluir en FINAL y escala Escala regular del centro (por confirmar). La suma de pesos debe ser 1.00."}, {"campo": "Componente de asistencia", "valor": "ATTRGRD · peso 0.00 · Debe aprobar", "tipo": "Regla institucional", "detalle": "Nombre obligatorio ATTRGRD, escala Escala de asistencia con el mínimo institucional (70 %) (7.1.4, diap. 55)."}, {"campo": "Verificación", "valor": "Total de peso final 1.00", "tipo": "Control", "detalle": "Salga y vuelva a consultar el NRC para confirmar que las filas quedaron guardadas."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/043.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/043.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=43", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 43, "texto": "SHAGCOM: requisitos, periodo y NRC", "nota": "", "lineas": [{"num": "", "texto": "Para poder asignar un plan de evaluación, previamente se deben haber definido:"}, {"num": "", "texto": "Las escalas de calificación disponibles en la institución (SHA"}, {"num": "", "texto": "El calendario de ingreso de calificaciones (SHAEGBC) para el período correspondiente."}, {"num": "1", "texto": "En SHAGCOM, ingrese el Período y el NRC al que se le va a asignar el Plan de evaluación."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/044.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=44", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 44, "texto": "SHAGCOM: escala de calificación del plan", "nota": "", "lineas": [{"num": "", "texto": "Al entrar a definir los componentes el sistema muestra una advertencia, pues la escala de calificación es obligatoria. Haga clic cobre la advertencia para continuar."}, {"num": "3", "texto": "Ingrese la escala de calificación que predominará en los componentes del plan de evaluación."}, {"num": "4", "texto": "Presione el botón Guardar."}, {"num": "5", "texto": "Pase al siguiente bloque."}], "marcas": {"1": "3"}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/045.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/045.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=45", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 45, "texto": "SHAGCOM: secuencia y nombre del componente", "nota": "", "lineas": [{"num": "6", "texto": "Ingrese el número de secuencia que indicará el orden en que los componentes se desplegarán para el alumno en SSB."}, {"num": "7", "texto": "Ingrese el nombre del componente calificable."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/046.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/046.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=46", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 46, "texto": "SHAGCOM: descripción y peso", "nota": "", "lineas": [{"num": "8", "texto": "Ingrese la descripción del componente, que se mostrará al alumno en SSB."}, {"num": "9", "texto": "Ingrese el peso(%) de la nota que este componente tiene en el cálculo de las calificaciones finales. En el campo “Calificadas de+ se muestra que el cálculo es sobre 100%."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/048.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/048.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=48", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 48, "texto": "SHAGCOM: incluir en la calificación final", "nota": "", "lineas": [{"num": "12", "texto": "Indique si el componente que se está definiendo se toma en cuenta en la calificación final. Solo pasan a la historia académica del estudiante las calificaciones finales."}, {"num": "13", "texto": "Los campos indicados se utilizan si hay una lógica y/o entre varios componentes. En el campo Secuencia Y/O se indicaría el componente con el cual se aplica la lógica junto al que se está definiendo y en el campo Y/O se indica la lógica a aplicar."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.0_Usar_Componente_Asistencia/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.0_Usar_Componente_Asistencia/029.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.0_Usar_Componente_Asistencia&d=29", "fuente": "Instructivo 7.1.0 · Usar el componente de asistencia", "n": 29, "texto": "ATTRGRD: peso 0, Debe aprobar y escala de asistencia", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: Activación"}, {"num": "", "texto": "En el esquema de calificación del NRC, debemos agregar el componente ATTRGRD (nombre obligatorio), éste debe tener:"}, {"num": "", "texto": "Peso 0."}, {"num": "", "texto": "Marcado como Debe Pasar."}, {"num": "", "texto": "Usar otra escala para el componente de asistencia, para poder indicar la calificación aprobatoria/reprobatoria en ciertos rangos de asistencia."}], "marcas": {}}]}, "n3": {"fase": "Paso 3: Regla de control de asistencia", "pantalla": "SOAATRK", "hito": "El NRC aparece en «Pasar lista» del docente", "instrucciones": [{"campo": "Periodo", "valor": "202656", "tipo": "Bloque clave", "detalle": "Ingrese el periodo y pulse «Ir»."}, {"campo": "Parte, materia, curso y NRC", "valor": "Datos del NRC", "tipo": "Obligatorio", "detalle": "La regla puede ser por parte, curso o NRC (7.1.1, diap. 34–38)."}, {"campo": "Desplegar clase y Control de asistencia", "valor": "Ambas casillas marcadas", "tipo": "Obligatorio", "detalle": "Sin esta regla, el NRC no aparece en el control de asistencia de Autoservicio (C101)."}, {"campo": "Unidad de control y fechas", "valor": "Unidad y fechas de la parte", "tipo": "Obligatorio", "detalle": "Use las fechas de la parte de periodo. Guarde."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/034.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/034.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=34", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 34, "texto": "SOAATRK: periodo de las reglas", "nota": "", "lineas": [{"num": "", "texto": "Reglas de Control de Asistencia a nivel de periodo"}, {"num": "1", "texto": "En SOAATRK, digite o seleccione el período para el cual definirá las reglas"}, {"num": "2", "texto": "Hacer clic en el botón Ir."}], "marcas": {"0": "1"}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/035.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/035.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=35", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 35, "texto": "SOAATRK: criterio de la regla", "nota": "", "lineas": [{"num": "", "texto": "Reglas de Control de Asistencia a nivel de periodo"}, {"num": "3", "texto": "Ingrese el o los criterios a los que procederá a definir las reglas de control de asistencia:"}, {"num": "1", "texto": "Por parte de período: Ingrese o seleccione la parte de período para la que definirá la regla. Para poder seleccionarla, debe estar definida en SOATERM para el período, se lo contrario el sistema arrojará un error. La descripción se desplegará automáticamente. Si define la regla (fechas, despliegue unidad de control) solo por parte de período, ésta aplicará para todos los NRC programados en la parte de período correspondiente."}, {"num": "2", "texto": "Por materia: Ingrese o seleccione el código correspondiente a la materia para la que definirá la regla. Su descripción se despliega automáticamente. Si define la regla de control de asistencia por materia, los criterios definidos aplican para todos los NRC programados en el período que tengan como materia el código ingresado."}], "marcas": {"0": "1"}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/036.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/036.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=36", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 36, "texto": "SOAATRK: materia y número de curso", "nota": "", "lineas": [{"num": "", "texto": "Reglas de Control de Asistencia a nivel de periodo"}, {"num": "3", "texto": "Por materia-número de curso: Ingrese o seleccione el código correspondiente a la materia y el número del curso de la asignatura para el que definirá la regla. Si define la regla de control de asistencia por materia, los criterios definidos aplican para todos los NRC programados en el período que correspondan curso (materia y número de curso) ingresados. En el ejemplo, todos los NRC del curso identificado en catálogo como TID-01072."}, {"num": "4", "texto": "Por NRC: Ingrese o seleccione el NRC para el cual se define la regla. Al agregar el NRC, automáticamente se llenan los campos parte de período, materia y número de curso. En este caso, las fechas y unidad de control que se configuren aplicarán solo al NRC ingresado. En el ejemplo, para el NRC 24109."}, {"num": "", "texto": "Nota: Se puede configurar criterios combinados según lo que se indica a continuación:"}, {"num": "", "texto": "Período + materia: la regla aplicaría para todos los NRC programados en la parte de período ingresada y que correspondan a cursos de la materia definida."}, {"num": "", "texto": "Período + materia + curso: la regla aplicaría para todos los NRC programados en la parte de período ingresada y que corresponden a la materia-curso configuradas."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/037.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/037.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=37", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 37, "texto": "SOAATRK: Desplegar clase y control de asistencia", "nota": "", "lineas": [{"num": "", "texto": "Reglas de Control de Asistencia a nivel de periodo"}, {"num": "4", "texto": "Marque la casilla Desplegar clase para indicar que el control de asistencia está activo para la regla."}, {"num": "5", "texto": "Seleccione en el campo la Unidad de control."}, {"num": "6", "texto": "Marque la casilla Control de asistencia a clase, para que el registro de la asistencia esté disponible para la regla en el autoservicio."}, {"num": "7", "texto": "Ingrese las fechas entre las cuales el docente podrá ingresar el control de asistencia para los cursos que se definan en la regla en los campos Fecha de inicio de control y Fecha de fin de control. Las fechas incluyen las que se indiquen en los campos indicados."}, {"num": "8", "texto": "Guarde la información. Al guardar, el sistema asigna un número de secuencia único asignado a la regla."}], "marcas": {}}]}, "n4": {"fase": "Paso 4: Pasar lista", "pantalla": "Autoservicio docente", "hito": "Porcentaje de asistencia calculado por alumno", "instrucciones": [{"campo": "Ruta", "valor": "Control de asistencia › Lista de cursos › Pasar lista", "tipo": "Navegación", "detalle": "Seleccione el NRC y la fecha de la sesión."}, {"campo": "Marca por alumno", "valor": "Presente (✓) o Ausente (−)", "tipo": "Registro", "detalle": "Solo se registran fechas pasadas. Banner calcula el porcentaje de asistencia (7.1.1, diap. 44–48)."}, {"campo": "Resultado en TEST", "valor": "Por probar", "tipo": "Evidencia", "detalle": "Este centro aún no lo ha probado."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/044.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=44", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 44, "texto": "Autoservicio: «Pasar lista» del NRC y la sesión", "nota": "", "lineas": [{"num": "", "texto": "Registro de Asistencia"}, {"num": "", "texto": "El docente deberá presionar el botón “Pasar lista” correspondiente al NRC y sesión para la cual desea registrar la asistencia de los alumnos."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/045.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/045.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=45", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 45, "texto": "Registrar asistencia o ausencia", "nota": "", "lineas": [{"num": "", "texto": "Registro de Asistencia"}, {"num": "", "texto": "Para cada estudiante de la lista, registre la asistencia o ausencia, haciendo clic sobre el círculo correspondiente a la sesión del día seleccionado."}, {"num": "", "texto": "Solo se pueden cargar asistencias para fechas anteriores a la fecha en que se está ingresando al sistema, no se pueden ingresar asistencias en días futuros."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/046.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/046.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=46", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 46, "texto": "Marcas de presente y ausente", "nota": "", "lineas": [{"num": "", "texto": "Registro de Asistencia"}, {"num": "", "texto": "La marca verde con el símbolo “” significa que el estudiante asistió a la sesión"}, {"num": "", "texto": "El círculo rojo con el símbolo “-” quiere decir que el alumno estuvo ausente en la sesión."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/048.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/048.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=48", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 48, "texto": "Opciones de «Actualizar todo»", "nota": "", "lineas": [{"num": "", "texto": "Registro de Asistencia"}, {"num": "", "texto": "Mediante el botón Actualizar todo, se presentan las siguientes opciones:"}, {"num": "", "texto": "Actualizar los registros vacíos como presente, aplica si ha registrado sólo a los estudiantes ausentes para marcar como asistente al resto de los alumnos."}, {"num": "", "texto": "Actualizar los registros vacíos como ausente, aplica si ha registrado sólo a los estudiantes que no asistieron y desea marcar al resto como presentes."}, {"num": "", "texto": "Marcar todos como presente, aplica para registrar a todos los alumnos con asistencia para el día señalado"}, {"num": "", "texto": "Marcar todos como ausente, aplica para registrar inasistencia a todos los estudiantes para el día señalado."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/056.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/056.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=56", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 56, "texto": "Pasar la asistencia a calificaciones", "nota": "", "lineas": [{"num": "", "texto": "Pasar asistencia a calificaciones"}, {"num": "", "texto": "Al finalizar el semestre, cuando ya el porcentaje de asistencia ha sido calculado con el total de las sesiones, el docente debe presionar el botón Clase y hacer clic sobre la opción Actualizar la asistencia en el libro de calificaciones."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/057.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/057.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=57", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 57, "texto": "Confirmar el paso del porcentaje al componente", "nota": "", "lineas": [{"num": "", "texto": "Pasar asistencia a calificaciones"}, {"num": "", "texto": "El docente debe confirmar el paso del porcentaje asistencia al componente de calificaciones."}], "marcas": {}}]}, "n5": {"fase": "Paso 5: Notas por componente", "pantalla": "Autoservicio docente", "hito": "Nota compuesta calculada", "instrucciones": [{"campo": "Ruta", "valor": "Captura de calificaciones › Libro de calificaciones › Componentes", "tipo": "Navegación", "detalle": "Seleccione el NRC; solo aparece si tiene docente, plan y alumnos matriculados (7.1.4, diap. 58)."}, {"campo": "Puntaje", "valor": "Puntaje sobre 100", "tipo": "Registro", "detalle": "Banner propone la calificación según la escala. Razón: «Captura Original - OE». Guarde cada componente."}, {"campo": "ATTRGRD", "valor": "Porcentaje de asistencia", "tipo": "Control", "detalle": "No llega solo: el docente lo envía en Pasar lista › Clase › «Actualizar la asistencia en el libro de calificaciones» › Sí (C119)."}, {"campo": "Calificaciones compuestas", "valor": "Nota final calculada", "tipo": "Resultado", "detalle": "Con asistencia bajo el mínimo, «Debe aprobar» deja la nota final en INH aunque el promedio apruebe (C105)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/062.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/062.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=62", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 62, "texto": "Autoservicio: Libro de calificaciones", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones"}, {"num": "", "texto": "La página debe ingresar a la lista de Libro de Calificaciones."}, {"num": "", "texto": "Si no está en esta opción, el docente debe hacer clic sobre la misma."}, {"num": "", "texto": "Puede haber más de una página con registros, puede moverse entre las páginas."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/064.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/064.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=64", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 64, "texto": "Elegir el NRC y abrir Componentes", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones"}, {"num": "1", "texto": "El docente deberá hacer clic sobre el registro del NRC para el que desea cargar las calificaciones."}, {"num": "2", "texto": "Presionar la opción Componentes."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/066.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/066.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=66", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 66, "texto": "Componentes del NRC", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones: componentes"}, {"num": "", "texto": "Se muestran los componentes creados para el NRC."}, {"num": "3", "texto": "Hacer clic sobre el componente en el que se van a cargar las calificaciones."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/067.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/067.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=67", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 67, "texto": "Calificación de cada alumno", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones: componentes"}, {"num": "", "texto": "Se despliega la lista de estudiantes para la carga de calificaciones."}, {"num": "4", "texto": "Seleccione la calificación que se dará a cada estudiante (las calificaciones que se muestran son las configuradas para la escala correspondiente)."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/068.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/068.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=68", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 68, "texto": "Guardar las calificaciones", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones : componentes"}, {"num": "5", "texto": "Presione el botón Guardar."}, {"num": "6", "texto": "Presiono OK al mensaje de éxito al guardar."}, {"num": "", "texto": "Si se desea modificar una calificación, se debe seleccionar la razón de cambio y guardar."}, {"num": "", "texto": "Una razón de cambio se puede usar más de una vez solamente si en la página STVGCHG está activada la casilla “Permitir duplicados”, de lo contrario el sistema mostrará un error."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/075.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/075.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=75", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 75, "texto": "Calificaciones compuestas", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones"}, {"num": "", "texto": "Mediante el botón Calificaciones compuestas se puede visualizar el resumen de calificaciones de los componentes de los estudiantes y el cálculo de la calificación final de los estudiantes (siempre que se hayan completado las calificaciones de los componentes correspondientes)"}], "marcas": {}}]}, "n6": {"fase": "Paso 6: Nota final en el backoffice", "pantalla": "SFASLST", "hito": "La nota del libro pasó a la lista de clase", "instrucciones": [{"campo": "Periodo y NRC", "valor": "202656 · (NRC del centro)", "tipo": "Bloque clave", "detalle": "Pulse «Ir»."}, {"campo": "Nota final", "valor": "Nota final o INH", "tipo": "Verificación", "detalle": "Con libro de calificaciones no se escribe la nota en «Calificaciones finales»: la calculada pasa sola (7.1.4, diap. 18 y 77; C106, C107)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/077.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/077.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=77", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 77, "texto": "La nota calculada pasa a la lista de clase", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones"}, {"num": "", "texto": "Adicionalmente, si ya la calificación de algún estudiante ha sido calculada, el docente puede ver la nota calculada si selecciona el NRC correspondiente en la pestaña Calificaciones finales."}, {"num": "", "texto": "Desde admin pages, cuando se calcula una nota final en autoservicios, ésta pasa a la calificación final del estudiante en la página SFAALST."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/015.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=15", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 15, "texto": "SFASLST: periodo y NRC", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "", "texto": "En la página SFASLST:"}, {"num": "1", "texto": "Ingrese el período y NRC para el cual desea ingresar las calificaciones."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {"0": "1"}}]}, "n7": {"fase": "Paso 7: Pase a historia", "pantalla": "SHRROLL (GJAPCTL)", "hito": "Notas en la historia académica", "instrucciones": [{"campo": "Proceso", "valor": "SHRROLL desde GJAPCTL", "tipo": "Proceso masivo", "detalle": "Ejecute con periodo y NRC; revise que el job termine sin errores (Scripts 12 y 14)."}, {"campo": "Si falla", "valor": "«No Substitute Grade Found»", "tipo": "Diagnóstico", "detalle": "Agregue en SHAGRDE el modo del curso para el nivel (U20)."}, {"campo": "Después", "valor": "CAPP (SMICRLT)", "tipo": "Seguimiento", "detalle": "El curso aprobado suma; con nota bajo el mínimo o INH queda «no usado» (Script 10)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/022.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/022.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=22", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 22, "texto": "GJAPCTL: proceso SHRROLL", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "1", "texto": "Ingrese al proceso SHRROLL desde la página GJAPCTL."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/023.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/023.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=23", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 23, "texto": "SHRROLL: impresora y parámetros", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "3", "texto": "Defina la impresora como DATABASE"}, {"num": "4", "texto": "Pase al siguiente bloque."}, {"num": "5", "texto": "Ingrese los parámetros del proceso, según la tabla que se presenta en la siguiente diapositiva."}, {"num": "", "texto": "Inicialmente se muestras solo 10 parámetros, amplíe los registros por página para ver todos los que se solicitan."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/025.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/025.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=25", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 25, "texto": "SHRROLL: enviar y guardar", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "7", "texto": "Seleccione la opción enviar."}, {"num": "8", "texto": "Guarde la información."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/027.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=27", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 27, "texto": "Revisar la salida en GJIREVO", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "9", "texto": "Presione la opción Relacionado en la barra superior."}, {"num": "10", "texto": "Seleccione Revisar Salida (GJIREVO)."}], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 7, "slug": "ligas-teorico-y-club", "titulo": "Ligas: NRC teórico + club de conversación", "cap": "Capacidad 5", "url": "../07-ligas-teorico-y-club/idiomas-07-ligas-teorico-y-club.html", "is_curr": false};
@@ -19227,7 +19466,7 @@ button.ai-fab:active,
   }
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
-  var visorDiapo = { lista: [], idx: 0, completa: false };
+  var visorDiapo = { lista: [], idx: 0, completa: true };
 
   function asegurarVisorDiapo() {
     var v = document.getElementById('guia-diapo-visor');
@@ -19253,15 +19492,14 @@ button.ai-fab:active,
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
-    // Archify cierra el paso abierto con un clic fuera de su ficha y lo escucha en la captura de window:
-    // los toques dentro del visor se detienen ahí (el «click» sigue y lo atiende el visor), así el paso no se pierde.
-    ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click'].forEach(function (tipo) {
-      window.addEventListener(tipo, function (e) {
-        if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
-        e.stopPropagation();
-        if (tipo === 'click') clicEnVisor(e, v);
-      }, true);
-    });
+    if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
+    // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
+    window.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
+      e.stopPropagation();
+      clicEnVisor(e, v);
+    }, true);
     v.addEventListener('toggle', function (e) {
       if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
     }, true);
@@ -19270,6 +19508,13 @@ button.ai-fab:active,
 
   // Clic dentro del visor (se atiende en la captura de window; ver arriba).
   function clicEnVisor(e, v) {
+    var zi = e.target.closest('[data-zi]');
+    if (zi) {
+      e.preventDefault();
+      var zoom = v.querySelector('.gdv-img').__cceeZoom;
+      if (zoom) zoom.accion(zi.getAttribute('data-zi'));
+      return;
+    }
     var accion = e.target.closest('[data-gdv]');
     if (!accion) {
       if (e.target === v) cerrarVisorDiapo();
@@ -19382,7 +19627,8 @@ button.ai-fab:active,
 
   function abrirVisorDiapo(lista, idx) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
-    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -20234,6 +20480,10 @@ button.ai-fab:active,
       if (visorDiapoAbierto()) {
         if (e.key === 'Escape') { e.preventDefault(); cerrarVisorDiapo(); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); moverVisorDiapo(1); }
+        else if (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0') {
+          var zoom = document.querySelector('#guia-diapo-visor .gdv-img').__cceeZoom;
+          if (zoom) { e.preventDefault(); zoom.accion(e.key === '0' ? 'reset' : (e.key === '-' ? 'menos' : 'mas')); }
+        }
         else if (e.key === 'ArrowLeft') { e.preventDefault(); moverVisorDiapo(-1); }
         return;
       }
@@ -21092,7 +21342,7 @@ button.ai-fab:active,
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: false };
+    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -21129,6 +21379,7 @@ button.ai-fab:active,
         else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
       });
       document.body.appendChild(v);
+      if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
       return v;
     }
 
@@ -21158,6 +21409,7 @@ button.ai-fab:active,
       var visor = v.querySelector('[data-aipv="visor"]');
       var completa = v.querySelector('[data-aipv="completa"]');
       img.hidden = !l;
+      if (img.__cceeZoom) img.__cceeZoom.zona.hidden = !l;  // con zoom, la imagen va dentro de su zona
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
@@ -21178,7 +21430,6 @@ button.ai-fab:active,
 
     function abrirVisorPasos(pasos) {
       visorPasos.pasos = pasos;
-      visorPasos.completa = false;
       var primero = 0;
       for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
       asegurarVisorPasos().hidden = false;

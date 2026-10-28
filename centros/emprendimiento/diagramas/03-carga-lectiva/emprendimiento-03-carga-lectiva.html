@@ -18165,6 +18165,80 @@ button.ai-fab:active,
   .ai-header-motor .ai-engine-select { max-width: 130px; }
 }
 
+
+/* Zoom y lupa de las láminas (zoom_imagen.js) */
+.zi-zona {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  border-radius: 0.4rem;
+  touch-action: none;
+  cursor: zoom-in;
+}
+.zi-zona > img {
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zi-zona.zi-zoom { cursor: grab; }
+.zi-zona.zi-arrastrando { cursor: grabbing; }
+.zi-zona.zi-con-lupa { cursor: none; }
+.zi-barra {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+}
+.zi-barra button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
+}
+.zi-barra button:hover,
+.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
+.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
+.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
+.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-lupa {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn { display: none; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18322,6 +18396,171 @@ button.ai-fab:active,
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
 <script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
+/* Zoom y lupa para las láminas de los visores (guía de cada paso y asistente IA).
+   Solo agranda la imagen: la rueda, el pellizco del touchpad (ctrl + rueda) y el gesto de Safari se
+   detienen aquí para que el navegador no agrande toda la página.
+   Uso: var z = window.CCEEZoom(img);  z.reset();  z.zoom(1.25);  — se reinicia solo al cambiar la imagen. */
+(function () {
+  if (window.CCEEZoom) return;
+  var MIN = 1, MAX = 4, LUPA_R = 95;  // más de 4× solo agranda los píxeles: las láminas miden 1600 px
+
+  window.CCEEZoom = function (img) {
+    if (img.__cceeZoom) return img.__cceeZoom;
+    var zona = document.createElement('div');
+    zona.className = 'zi-zona';
+    img.parentNode.insertBefore(zona, img);
+    zona.appendChild(img);
+    img.draggable = false;
+
+    var barra = document.createElement('div');
+    barra.className = 'zi-barra';
+    barra.innerHTML =
+      '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
+      '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
+      '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
+      '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
+    zona.appendChild(barra);
+
+    var lupa = document.createElement('div');
+    lupa.className = 'zi-lupa';
+    lupa.hidden = true;
+    zona.appendChild(lupa);
+
+    var s = 1, tx = 0, ty = 0, lupaOn = false, lupaK = 2.5;
+    var punteros = {}, arrastre = null, pinza = null, gestoBase = 1;
+
+    function limitar() {
+      var w = zona.clientWidth, h = zona.clientHeight;
+      tx = Math.min(0, Math.max(w - w * s, tx));
+      ty = Math.min(0, Math.max(h - h * s, ty));
+    }
+    function pintar() {
+      limitar();
+      img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      zona.classList.toggle('zi-zoom', s > 1);
+      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+    }
+    function zoomEn(f, cx, cy) {
+      var r = zona.getBoundingClientRect();
+      var x = cx === undefined ? r.width / 2 : cx - r.left;
+      var y = cy === undefined ? r.height / 2 : cy - r.top;
+      var nuevo = Math.min(MAX, Math.max(MIN, s * f));
+      tx = x - (x - tx) * (nuevo / s);
+      ty = y - (y - ty) * (nuevo / s);
+      s = nuevo;
+      if (s === 1) { tx = 0; ty = 0; }
+      pintar();
+    }
+    function reset() { s = 1; tx = 0; ty = 0; pintar(); }
+
+    function moverLupa(e) {
+      var r = img.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
+      var z = zona.getBoundingClientRect();
+      lupa.hidden = false;
+      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
+      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
+      lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
+      lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
+    }
+    function alternarLupa() {
+      lupaOn = !lupaOn;
+      if (lupaOn) reset();
+      lupa.hidden = true;
+      zona.classList.toggle('zi-con-lupa', lupaOn);
+      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+    }
+
+    function accion(a) {
+      if (lupaOn && a !== 'lupa') alternarLupa();
+      if (a === 'mas') zoomEn(1.4);
+      else if (a === 'menos') zoomEn(1 / 1.4);
+      else if (a === 'reset') reset();
+      else if (a === 'lupa') alternarLupa();
+    }
+    // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
+    barra.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-zi]');
+      if (!b) return;
+      e.preventDefault();
+      e.stopPropagation();
+      accion(b.getAttribute('data-zi'));
+    });
+
+    // Rueda y pellizco del touchpad (llega como rueda con ctrlKey): acercan en el punto del cursor.
+    zona.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      if (lupaOn) {
+        lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        moverLupa(e);
+        return;
+      }
+      zoomEn(Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0018)), e.clientX, e.clientY);
+    }, { passive: false });
+    // Safari (Mac) manda el pellizco como gesto propio.
+    zona.addEventListener('gesturestart', function (e) { e.preventDefault(); gestoBase = s; }, { passive: false });
+    zona.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (!lupaOn) zoomEn((gestoBase * e.scale) / s, e.clientX, e.clientY);
+    }, { passive: false });
+    zona.addEventListener('gestureend', function (e) { e.preventDefault(); }, { passive: false });
+
+    zona.addEventListener('dblclick', function (e) {
+      if (e.target.closest('.zi-barra') || lupaOn) return;
+      e.preventDefault();
+      if (s > 1.05) reset(); else zoomEn(2.5, e.clientX, e.clientY);
+    });
+
+    // Arrastrar para mover; con dos dedos, pellizcar (pantallas táctiles).
+    zona.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.zi-barra')) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        pinza = { d: Math.hypot(a.x - b.x, a.y - b.y), s: s };
+        arrastre = null;
+      } else if (s > 1 && !lupaOn) {
+        arrastre = { x: e.clientX - tx, y: e.clientY - ty };
+        zona.setPointerCapture(e.pointerId);
+        zona.classList.add('zi-arrastrando');
+      }
+    });
+    zona.addEventListener('pointermove', function (e) {
+      if (lupaOn) { moverLupa(e); return; }
+      if (!punteros[e.pointerId]) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (pinza && ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        zoomEn((pinza.s * Math.hypot(a.x - b.x, a.y - b.y) / pinza.d) / s, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      } else if (arrastre) {
+        tx = e.clientX - arrastre.x;
+        ty = e.clientY - arrastre.y;
+        pintar();
+      }
+    });
+    function soltar(e) {
+      delete punteros[e.pointerId];
+      if (Object.keys(punteros).length < 2) pinza = null;
+      arrastre = null;
+      zona.classList.remove('zi-arrastrando');
+    }
+    zona.addEventListener('pointerup', soltar);
+    zona.addEventListener('pointercancel', soltar);
+    zona.addEventListener('pointerleave', function () { if (lupaOn) lupa.hidden = true; });
+
+    img.addEventListener('load', reset);  // imagen nueva (otra lámina, recorte o completa): vuelve al 100 %
+    var ctl = { reset: reset, zoom: function (f) { zoomEn(f); }, accion: accion, zona: zona };
+    img.__cceeZoom = ctl;
+    return ctl;
+  };
+})();
+
 (function () {
   var GUIA_MAP = {"k1": {"fase": "Paso 1: Activación y Habilitación Docente", "pantalla": "SIAINST", "hito": "Docente activo en facultad y periodo", "instrucciones": [{"campo": "Formulario", "valor": "SIAINST", "tipo": "Acceso inicial", "detalle": "Ingresar ID del docente (ej. 100582059 Dagner Chuman) y verificar estatus en facultad."}, {"campo": "Pestaña Facultad", "valor": "Status: Activo", "tipo": "Obligatorio", "detalle": "Comprobar que el docente tenga permisos vigentes para dictado en el periodo lectivo."}, {"campo": "Contrato Docente", "valor": "ES (Especialista) / FC (Facilitador)", "tipo": "Régimen CCEE", "detalle": "Régimen docente confirmado: Especialista ES (48h/sem con funciones administrativas) o Facilitador FC (14 a 23h/sem)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes/recortes/017.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes/017.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes&d=17", "fuente": "Instructivo 5.2 · Información de docentes", "n": 17, "texto": "SIAINST: docente y periodo", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAINST Información de docente / asesor"}, {"num": "", "texto": "Se debe ingresar el ID del Docente a configurar, así como el Periodo desde el cual dicha configuración será vigente."}, {"num": "", "texto": "Presionar el botón ‘Ir’"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes/recortes/018.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes/018.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes&d=18", "fuente": "Instructivo 5.2 · Información de docentes", "n": 18, "texto": "SIAINST: estatus del docente", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAINST Información de docente / asesor 1/3"}, {"num": "", "texto": "Se ingresa el estatus del docente y se activan o desactivan las casillas ‘Docente’ y/o ‘Asesor’, según corresponda."}, {"num": "", "texto": "Luego se debe ingresar información acerca de la categoría, tipo de personal y regla de carga de trabajo del docente, según corresponda al caso."}, {"num": "", "texto": "Guardar información"}, {"num": "", "texto": "Bloque siguiente"}, {"num": "", "texto": "El indicador Sobrepasar Seguridad de Regla de Proceso es opcional y solo se puede marcar cuando están marcados los indicadores de Docente y Asesor."}, {"num": "", "texto": "Cuando esta opción de seguridad está marcada, el ID de SIAINST puede ignorar la seguridad asociada con las páginas web de Banner Student Self-Service."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes/019.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes&d=19", "fuente": "Instructivo 5.2 · Información de docentes", "n": 19, "texto": "SIAINST: contrato y regla del docente", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAINST Información de docente / asesor 2/3"}, {"num": "", "texto": "Ingrese información de contrato del docente y regla a la cual estaría asociado ese contrato. Importante dejar al menos de un registro con la casilla ‘Indicador de predefinido’ activa."}, {"num": "", "texto": "Guardar información"}, {"num": "", "texto": "Bloque siguiente"}, {"num": "", "texto": "También ingresar información de la escuela a la que pertenece el docente."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes/recortes/020.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes/020.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.4.1_Instructivo_-_Informacio_n_de_Docentes&d=20", "fuente": "Instructivo 5.2 · Información de docentes", "n": 20, "texto": "SIAINST: atributos y guardar", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAINST Información de docente / asesor 3/3"}, {"num": "", "texto": "Guardar información"}, {"num": "", "texto": "Ingrese atributos de docente y comentarios que pudiera tener asociado el docente desde el periodo académico en cuestión."}], "marcas": {}}]}, "k2": {"fase": "Paso 2: Asignación al NRC", "pantalla": "SSASECT", "hito": "Docente principal asignado al 100%", "instrucciones": [{"campo": "Formulario", "valor": "SSASECT", "tipo": "Programación", "detalle": "En pestaña Horario e instructores, asignar ID con sesión 01 y 100% responsabilidad."}, {"campo": "Indicador Principal", "valor": "Casilla Principal ☑", "tipo": "Obligatorio", "detalle": "Marcar como instructor principal para emisión de actas oficiales."}, {"campo": "Sobrepaso de Horario", "valor": "Indicador de sobrepaso ☑", "tipo": "Contingencia", "detalle": "Si el docente tiene otro NRC a la misma hora, marcar sobrepaso para salvar el cruce."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/014.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/014.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=14", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 14, "texto": "Indicador de sesión del horario", "nota": "", "lineas": [{"num": "", "texto": "Al momento de programar un NRC, en particular al definir las sesiones de horarios en las que se dictaría la clase (rango de fechas, días y horario) por defecto el campo ‘Indicador de sesión’ toma el valor 01, pero este registro se puede cambiar según la necesidad de asignación de docente se tenga."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/015.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=15", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 15, "texto": "Bloque Instructor: ID del docente", "nota": "", "lineas": [{"num": "", "texto": "En el bloque ‘Instructor’, según la sesión que corresponda:"}, {"num": "1", "texto": "Ingrese el ID del docente a través de dos opciones:"}, {"num": "", "texto": "Directamente en el campo ‘ID’, si lo conoce"}, {"num": "", "texto": "Por medio de la opción Consultar docentes disponibles desde el Menú Relacionado (se explica en las diapositivas 17 a 19)"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/019.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=19", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 19, "texto": "Responsabilidad, docente principal y porcentaje de sesión", "nota": "", "lineas": [{"num": "", "texto": "Toda vez asignado el o los docentes:"}, {"num": "2", "texto": "Si hay más de un docente, puede ajustar el porcentaje de responsabilidad de los mismos sobre el NRC. Este concepto está asociado al porcentaje de la carga de trabajo que estaría asumiendo el docente durante el desarrollo de la actividad educativa del NRC."}, {"num": "3", "texto": "La casilla ‘Indicador de principal’ debe estar activa solamente para uno de los docentes, en caso de que haya más de uno."}, {"num": "4", "texto": "La casilla ‘Indicador de sobrepaso’ se deja activa cuando el docente, teniendo conflicto de horario con la sesión programada, de todas formas, deseamos quede asociado."}, {"num": "5", "texto": "El campo ‘porcentaje de sesión’ representa el porcentaje del tiempo de contacto que dedicará el docente a la sesión en la cual está siendo asociado. Puede ser ajustado para cada docente."}, {"num": "6", "texto": "Guarde la información ingresada."}], "marcas": {}}]}, "k3": {"fase": "Paso 3: Auditoría de Carga Docente", "pantalla": "SIAASGN", "hito": "Horas y FTE computados automáticamente", "instrucciones": [{"campo": "Formulario", "valor": "SIAASGN", "tipo": "Auditoría", "detalle": "Consultar con Periodo 202656 e ID del docente (100582059 Dagner Chuman)."}, {"campo": "Secciones asignadas", "valor": "Carga consolidada del periodo", "tipo": "Consolidación", "detalle": "Auditoría de todas las secciones asignadas al docente en el periodo."}, {"campo": "Horas semanales", "valor": "Calculadas según factor SIATERM", "tipo": "Cálculo", "detalle": "Multiplicación de horas y factor de duración institucional de SIATERM."}, {"campo": "Horas acumuladas", "valor": "Cómputo total del periodo", "tipo": "Cálculo", "detalle": "Cómputo acumulado de la carga lectiva total del periodo."}, {"campo": "Asignación de FTE", "valor": "FTE generado automáticamente", "tipo": "Cálculo", "detalle": "Factor de dedicación académica generado automáticamente sustituyendo planillas Excel."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/023.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/023.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=23", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 23, "texto": "SIAASGN: docente y periodo a analizar", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente 1/6"}, {"num": "", "texto": "Se ingresa el ID del Docente y el Periodo Académico al cual se analizará su Carga Académica y No-Académica"}, {"num": "", "texto": "Presionar el botón ‘Ir’"}, {"num": "", "texto": "La página «Asignación docente» se usa para ingresar y mantener la información de asignación para un periodo por docente o asesor."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/024.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=24", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 24, "texto": "SIAASGN: carga de los NRC asignados", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente 2/6"}, {"num": "", "texto": "Si hicimos alguna modificación, guardamos"}, {"num": "", "texto": "En esta sección se visualiza la carga de trabajo por NRC que tenga asociado el docente. Inclusive podemos realizar algunas modificaciones a los porcentajes de sesión y responsabilidad. Adicionalmente podemos sobrepasar la carga de trabajo que viene de SCACRSE y también asignar o cambiar el tipo de contrato que tiene el docente (podemos predefinir que cargue un contrato por defecto en SIAINST)."}, {"num": "", "texto": "Bloque siguiente"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/026.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/026.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=26", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 26, "texto": "SIAASGN: resumen de la carga horaria", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente"}, {"num": "", "texto": "En este bloque aparece un resumen de la carga horario docente."}, {"num": "", "texto": "Siguiente sección"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/027.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=27", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 27, "texto": "SIAASGN: análisis por criterio de carga", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente"}, {"num": "", "texto": "En la siguiente sección, se calcula para cada criterio de carga de trabajo si el docente se encuentra con una sobrecarga (O) y/o una subcarga (U) del docente. En la imagen podemos ver que el docente está bajo la carga esperada en términos de creditaje y carga de trabajo educativa, pero está con una sobrecarga de trabajo a nivel No-Educativo."}], "marcas": {}}]}, "k4": {"fase": "Paso 4: Visto Bueno del Centro", "pantalla": "Intranet USS", "hito": "Oficio institucional tramitado", "instrucciones": [{"campo": "Trámite", "valor": "Oficio del Jefe de Centro", "tipo": "Administrativo", "detalle": "El jefe de centro valida la carga lectiva y genera oficio con asunto, detalle y adjunto en la intranet USS."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/026.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/026.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=26", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 26, "texto": "SIAASGN: resumen de la carga horaria del docente", "nota": "El visto bueno y el oficio se tramitan en la intranet de la USS, fuera de Banner (C47, C48). Referencia: la carga que se envía es la que resume SIAASGN (instructivo 5.2).", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente"}, {"num": "", "texto": "En este bloque aparece un resumen de la carga horario docente."}, {"num": "", "texto": "Siguiente sección"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/027.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=27", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 27, "texto": "SIAASGN: sobrecarga o subcarga por criterio", "nota": "El visto bueno y el oficio se tramitan en la intranet de la USS, fuera de Banner (C47, C48). Referencia: la carga que se envía es la que resume SIAASGN (instructivo 5.2).", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente"}, {"num": "", "texto": "En la siguiente sección, se calcula para cada criterio de carga de trabajo si el docente se encuentra con una sobrecarga (O) y/o una subcarga (U) del docente. En la imagen podemos ver que el docente está bajo la carga esperada en términos de creditaje y carga de trabajo educativa, pero está con una sobrecarga de trabajo a nivel No-Educativo."}], "marcas": {}}]}, "k5": {"fase": "Paso 5: Aprobación Oficial", "pantalla": "Resolución VRA", "hito": "Resolución de carga docente aprobada", "instrucciones": [{"campo": "Aprobación", "valor": "Resolución Vicerrectoral", "tipo": "Oficial", "detalle": "El Vicerrectorado Académico revisa y emite la resolución formal de aprobación de carga."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/024.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=24", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 24, "texto": "SIAASGN: carga de los NRC asignados al docente", "nota": "La resolución del Vicerrectorado Académico se emite fuera de Banner (C47, C48). Referencia: la carga que aprueba es la de cada NRC en SIAASGN (instructivo 5.2).", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente 2/6"}, {"num": "", "texto": "Si hicimos alguna modificación, guardamos"}, {"num": "", "texto": "En esta sección se visualiza la carga de trabajo por NRC que tenga asociado el docente. Inclusive podemos realizar algunas modificaciones a los porcentajes de sesión y responsabilidad. Adicionalmente podemos sobrepasar la carga de trabajo que viene de SCACRSE y también asignar o cambiar el tipo de contrato que tiene el docente (podemos predefinir que cargue un contrato por defecto en SIAINST)."}, {"num": "", "texto": "Bloque siguiente"}], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 4, "slug": "persona-y-admision", "titulo": "Persona y admisión", "cap": "Capacidades 3, 4 y 5", "url": "../04-persona-y-admision/emprendimiento-04-persona-y-admision.html", "is_curr": false};
@@ -19158,7 +19397,7 @@ button.ai-fab:active,
   }
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
-  var visorDiapo = { lista: [], idx: 0, completa: false };
+  var visorDiapo = { lista: [], idx: 0, completa: true };
 
   function asegurarVisorDiapo() {
     var v = document.getElementById('guia-diapo-visor');
@@ -19184,15 +19423,14 @@ button.ai-fab:active,
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
-    // Archify cierra el paso abierto con un clic fuera de su ficha y lo escucha en la captura de window:
-    // los toques dentro del visor se detienen ahí (el «click» sigue y lo atiende el visor), así el paso no se pierde.
-    ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click'].forEach(function (tipo) {
-      window.addEventListener(tipo, function (e) {
-        if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
-        e.stopPropagation();
-        if (tipo === 'click') clicEnVisor(e, v);
-      }, true);
-    });
+    if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
+    // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
+    window.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
+      e.stopPropagation();
+      clicEnVisor(e, v);
+    }, true);
     v.addEventListener('toggle', function (e) {
       if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
     }, true);
@@ -19201,6 +19439,13 @@ button.ai-fab:active,
 
   // Clic dentro del visor (se atiende en la captura de window; ver arriba).
   function clicEnVisor(e, v) {
+    var zi = e.target.closest('[data-zi]');
+    if (zi) {
+      e.preventDefault();
+      var zoom = v.querySelector('.gdv-img').__cceeZoom;
+      if (zoom) zoom.accion(zi.getAttribute('data-zi'));
+      return;
+    }
     var accion = e.target.closest('[data-gdv]');
     if (!accion) {
       if (e.target === v) cerrarVisorDiapo();
@@ -19313,7 +19558,8 @@ button.ai-fab:active,
 
   function abrirVisorDiapo(lista, idx) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
-    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -20165,6 +20411,10 @@ button.ai-fab:active,
       if (visorDiapoAbierto()) {
         if (e.key === 'Escape') { e.preventDefault(); cerrarVisorDiapo(); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); moverVisorDiapo(1); }
+        else if (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0') {
+          var zoom = document.querySelector('#guia-diapo-visor .gdv-img').__cceeZoom;
+          if (zoom) { e.preventDefault(); zoom.accion(e.key === '0' ? 'reset' : (e.key === '-' ? 'menos' : 'mas')); }
+        }
         else if (e.key === 'ArrowLeft') { e.preventDefault(); moverVisorDiapo(-1); }
         return;
       }
@@ -21023,7 +21273,7 @@ button.ai-fab:active,
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: false };
+    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -21060,6 +21310,7 @@ button.ai-fab:active,
         else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
       });
       document.body.appendChild(v);
+      if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
       return v;
     }
 
@@ -21089,6 +21340,7 @@ button.ai-fab:active,
       var visor = v.querySelector('[data-aipv="visor"]');
       var completa = v.querySelector('[data-aipv="completa"]');
       img.hidden = !l;
+      if (img.__cceeZoom) img.__cceeZoom.zona.hidden = !l;  // con zoom, la imagen va dentro de su zona
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
@@ -21109,7 +21361,6 @@ button.ai-fab:active,
 
     function abrirVisorPasos(pasos) {
       visorPasos.pasos = pasos;
-      visorPasos.completa = false;
       var primero = 0;
       for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
       asegurarVisorPasos().hidden = false;

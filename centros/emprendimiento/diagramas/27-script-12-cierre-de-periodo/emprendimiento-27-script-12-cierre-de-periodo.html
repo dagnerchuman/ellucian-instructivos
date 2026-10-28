@@ -18160,6 +18160,80 @@ button.ai-fab:active,
   .ai-header-motor .ai-engine-select { max-width: 130px; }
 }
 
+
+/* Zoom y lupa de las láminas (zoom_imagen.js) */
+.zi-zona {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  border-radius: 0.4rem;
+  touch-action: none;
+  cursor: zoom-in;
+}
+.zi-zona > img {
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zi-zona.zi-zoom { cursor: grab; }
+.zi-zona.zi-arrastrando { cursor: grabbing; }
+.zi-zona.zi-con-lupa { cursor: none; }
+.zi-barra {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+}
+.zi-barra button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
+}
+.zi-barra button:hover,
+.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
+.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
+.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
+.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-lupa {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn { display: none; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18317,6 +18391,171 @@ button.ai-fab:active,
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
 <script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
+/* Zoom y lupa para las láminas de los visores (guía de cada paso y asistente IA).
+   Solo agranda la imagen: la rueda, el pellizco del touchpad (ctrl + rueda) y el gesto de Safari se
+   detienen aquí para que el navegador no agrande toda la página.
+   Uso: var z = window.CCEEZoom(img);  z.reset();  z.zoom(1.25);  — se reinicia solo al cambiar la imagen. */
+(function () {
+  if (window.CCEEZoom) return;
+  var MIN = 1, MAX = 4, LUPA_R = 95;  // más de 4× solo agranda los píxeles: las láminas miden 1600 px
+
+  window.CCEEZoom = function (img) {
+    if (img.__cceeZoom) return img.__cceeZoom;
+    var zona = document.createElement('div');
+    zona.className = 'zi-zona';
+    img.parentNode.insertBefore(zona, img);
+    zona.appendChild(img);
+    img.draggable = false;
+
+    var barra = document.createElement('div');
+    barra.className = 'zi-barra';
+    barra.innerHTML =
+      '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
+      '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
+      '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
+      '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
+    zona.appendChild(barra);
+
+    var lupa = document.createElement('div');
+    lupa.className = 'zi-lupa';
+    lupa.hidden = true;
+    zona.appendChild(lupa);
+
+    var s = 1, tx = 0, ty = 0, lupaOn = false, lupaK = 2.5;
+    var punteros = {}, arrastre = null, pinza = null, gestoBase = 1;
+
+    function limitar() {
+      var w = zona.clientWidth, h = zona.clientHeight;
+      tx = Math.min(0, Math.max(w - w * s, tx));
+      ty = Math.min(0, Math.max(h - h * s, ty));
+    }
+    function pintar() {
+      limitar();
+      img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      zona.classList.toggle('zi-zoom', s > 1);
+      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+    }
+    function zoomEn(f, cx, cy) {
+      var r = zona.getBoundingClientRect();
+      var x = cx === undefined ? r.width / 2 : cx - r.left;
+      var y = cy === undefined ? r.height / 2 : cy - r.top;
+      var nuevo = Math.min(MAX, Math.max(MIN, s * f));
+      tx = x - (x - tx) * (nuevo / s);
+      ty = y - (y - ty) * (nuevo / s);
+      s = nuevo;
+      if (s === 1) { tx = 0; ty = 0; }
+      pintar();
+    }
+    function reset() { s = 1; tx = 0; ty = 0; pintar(); }
+
+    function moverLupa(e) {
+      var r = img.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
+      var z = zona.getBoundingClientRect();
+      lupa.hidden = false;
+      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
+      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
+      lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
+      lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
+    }
+    function alternarLupa() {
+      lupaOn = !lupaOn;
+      if (lupaOn) reset();
+      lupa.hidden = true;
+      zona.classList.toggle('zi-con-lupa', lupaOn);
+      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+    }
+
+    function accion(a) {
+      if (lupaOn && a !== 'lupa') alternarLupa();
+      if (a === 'mas') zoomEn(1.4);
+      else if (a === 'menos') zoomEn(1 / 1.4);
+      else if (a === 'reset') reset();
+      else if (a === 'lupa') alternarLupa();
+    }
+    // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
+    barra.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-zi]');
+      if (!b) return;
+      e.preventDefault();
+      e.stopPropagation();
+      accion(b.getAttribute('data-zi'));
+    });
+
+    // Rueda y pellizco del touchpad (llega como rueda con ctrlKey): acercan en el punto del cursor.
+    zona.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      if (lupaOn) {
+        lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        moverLupa(e);
+        return;
+      }
+      zoomEn(Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0018)), e.clientX, e.clientY);
+    }, { passive: false });
+    // Safari (Mac) manda el pellizco como gesto propio.
+    zona.addEventListener('gesturestart', function (e) { e.preventDefault(); gestoBase = s; }, { passive: false });
+    zona.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (!lupaOn) zoomEn((gestoBase * e.scale) / s, e.clientX, e.clientY);
+    }, { passive: false });
+    zona.addEventListener('gestureend', function (e) { e.preventDefault(); }, { passive: false });
+
+    zona.addEventListener('dblclick', function (e) {
+      if (e.target.closest('.zi-barra') || lupaOn) return;
+      e.preventDefault();
+      if (s > 1.05) reset(); else zoomEn(2.5, e.clientX, e.clientY);
+    });
+
+    // Arrastrar para mover; con dos dedos, pellizcar (pantallas táctiles).
+    zona.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.zi-barra')) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        pinza = { d: Math.hypot(a.x - b.x, a.y - b.y), s: s };
+        arrastre = null;
+      } else if (s > 1 && !lupaOn) {
+        arrastre = { x: e.clientX - tx, y: e.clientY - ty };
+        zona.setPointerCapture(e.pointerId);
+        zona.classList.add('zi-arrastrando');
+      }
+    });
+    zona.addEventListener('pointermove', function (e) {
+      if (lupaOn) { moverLupa(e); return; }
+      if (!punteros[e.pointerId]) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (pinza && ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        zoomEn((pinza.s * Math.hypot(a.x - b.x, a.y - b.y) / pinza.d) / s, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      } else if (arrastre) {
+        tx = e.clientX - arrastre.x;
+        ty = e.clientY - arrastre.y;
+        pintar();
+      }
+    });
+    function soltar(e) {
+      delete punteros[e.pointerId];
+      if (Object.keys(punteros).length < 2) pinza = null;
+      arrastre = null;
+      zona.classList.remove('zi-arrastrando');
+    }
+    zona.addEventListener('pointerup', soltar);
+    zona.addEventListener('pointercancel', soltar);
+    zona.addEventListener('pointerleave', function () { if (lupaOn) lupa.hidden = true; });
+
+    img.addEventListener('load', reset);  // imagen nueva (otra lámina, recorte o completa): vuelve al 100 %
+    var ctl = { reset: reset, zoom: function (f) { zoomEn(f); }, accion: accion, zona: zona };
+    img.__cceeZoom = ctl;
+    return ctl;
+  };
+})();
+
 (function () {
   var GUIA_MAP = {"c0": {"titulo": "Script 12 · Cierre de periodo · referencia: prueba de Computación", "pantalla": "CASO", "fase": "Situación: Fin de periodo", "hito": "calificaciones listas", "instrucciones": [{"campo": "Situación inicial", "valor": "Fin de periodo", "ejemplo": "calificaciones listas", "tipo": "Contexto", "detalle": "Punto de partida del script: calificaciones listas."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/005.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/005.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=5", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 5, "texto": "Al terminar el periodo, las notas pasan a la historia", "nota": "", "lineas": [{"num": "", "texto": "Al finalizar el período las calificaciones cargadas por los profesores deben ser transferidas a la historia académica del estudiante."}, {"num": "", "texto": "Con las calificaciones en historia académica se puede verificar el avance de los estudiantes en los programas que tienen inscritos."}, {"num": "", "texto": "El cierre del período académico está a cargo de Registro Académico."}, {"num": "", "texto": "Overview: Ejecutar procesos de cierre de periodo académico"}], "marcas": {}}]}, "c1": {"titulo": "Script 12 · Cierre de periodo · referencia: prueba de Computación", "pantalla": "SFASLST", "fase": "Paso 1: ingreso de notas", "hito": "", "instrucciones": [{"campo": "Ingreso de Calificaciones", "valor": "Periodo 202656", "ejemplo": "NRC 1026", "tipo": "Captura", "detalle": "Periodo 202656, NRC 1026: S00581109 (16 V), S00581108 (08 V), S00581111 (INH V)."}, {"campo": "Ejecución Inicial Pase a Historia", "valor": "GJAPCTL", "ejemplo": "-", "tipo": "Crítico (guardado)", "detalle": "(GJAPCTL) Proceso SHRROLL, corrida preliminar para evaluar población."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/015.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=15", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 15, "texto": "SFASLST: periodo y NRC", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "", "texto": "En la página SFASLST:"}, {"num": "1", "texto": "Ingrese el período y NRC para el cual desea ingresar las calificaciones."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/016.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=16", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 16, "texto": "SFASLST: calificaciones de cada alumno", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "3", "texto": "Registre las calificaciones parciales, en el campo destinado a tal fin, para cada uno delos estudiantes inscritos en el NRC. Recuerde que estas calificaciones no van a Historia Académica."}, {"num": "4", "texto": "Registre las calificaciones finales, en el campo destinado a tal fin, para cada uno delos estudiantes inscritos en el NRC. Estas son las calificaciones que irán a Historia Académica."}, {"num": "", "texto": "Nota: Aquellas calificaciones que tienen la casilla “Pasada” marcada, ya están en la historia académica delos estudiantes a quienes corresponde."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/017.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/017.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=17", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 17, "texto": "SFASLST: comentario y guardar", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "5", "texto": "Si aplica, ingrese el comentario que corresponda a la calificación que está incorporando. La descripción se desplegará automáticamente."}, {"num": "6", "texto": "Si lo desea, adicionalmente puede ingresar una descripción más larga para el comentario en un máximo de 200 caracteres."}, {"num": "7", "texto": "Guarde la información."}], "marcas": {}}]}, "c2": {"titulo": "Script 12 · Cierre de periodo · referencia: prueba de Computación", "pantalla": "SHAGRDE", "fase": "Paso 2: alineación modo V", "hito": "diagnóstico y resolución U20", "instrucciones": [{"campo": "Diagnóstico Incidencia U20", "valor": "Modo V", "ejemplo": "Modo P", "tipo": "Verificación", "detalle": "Discrepancia entre Modo V en SCACRSE vs Modo P en SHAGRDE Nivel C."}, {"campo": "Alineación de Modo de Calificación", "valor": "Modo V", "ejemplo": "-", "tipo": "Captura", "detalle": "Homologación de Modo V a nivel curso y estudiante para SHRROLL."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.3_Configurar_escalas_de_calificacio_n/recortes/013.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.3_Configurar_escalas_de_calificacio_n/013.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.3_Configurar_escalas_de_calificacio_n&d=13", "fuente": "Instructivo 7.1.3 · Configurar escalas de calificación", "n": 13, "texto": "SHAGRDE: crear el código de calificación", "nota": "", "lineas": [{"num": "1", "texto": "En SHAGRDE, haga clic en Insertar para crear un nuevo código de calificación."}, {"num": "2", "texto": "Ingrese el código correspondiente a la calificación"}, {"num": "3", "texto": "Ingrese el código de nivel de curso para el cual el código de calificación es válido"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.3_Configurar_escalas_de_calificacio_n/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.3_Configurar_escalas_de_calificacio_n/015.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.3_Configurar_escalas_de_calificacio_n&d=15", "fuente": "Instructivo 7.1.3 · Configurar escalas de calificación", "n": 15, "texto": "SHAGRDE: contar en intentadas, aprobadas y ganadas", "nota": "", "lineas": [{"num": "8", "texto": "Active las casillas que se indican a continuación, según corresponda:"}, {"num": "", "texto": "Contar en intentadas: un curso que se califique con el código de calificación se debe contar como intentado o cursado por el alumno."}, {"num": "", "texto": "Contar en aprobadas: un curso al que se califique con el código de calificación se debe contar como aprobado para el alumno."}, {"num": "", "texto": "Contar en ganadas: un curso al que se califique con el código de calificación se debe contar como completado en la historia académica del alumno."}, {"num": "", "texto": "Contar en PGA: un curso al que se califique con el código de calificación se debe incluir en el cálculo del promedio del alumno. Para el cálculo del promedio se toman los puntos de calidad del código de calificación."}, {"num": "", "texto": "Indicador de tradicional: la calificación es tradicional para el cumplimiento de grado."}, {"num": "", "texto": "Indicador Web: el código de calificación puede ser utilizado por el profesor en la carga de calificaciones de curso por el autoservicio."}, {"num": "", "texto": "Nota: Las columnas correspondientes a calificación incompleta se abordarán en el instructivo correspondiente."}, {"num": "9", "texto": "Ingrese el Valor numérico asociado con la calificación para determinar cuándo una calificación cumple con un requerimiento de calificación mínima necesaria para el cumplimiento del curso."}, {"num": "9", "texto": "Active la casilla Indicador de repetido si la calificación asociada va a ser incluida en la evaluación del procesamiento de repetición."}, {"num": "10", "texto": "Active la casilla Indicador de fecha de última asistencia si el código de calificación requiere la captura de la última fecha de asistencia del alumno para que se tome en cuenta como calificación final."}, {"num": "11", "texto": "Active la casilla Comentario narrativo de la calificación para indicar que, al asignar la calificación, el docente debe agregar un comentario narrativo obligatorio. Solo aplica para la carga de calificaciones finales si se cargan por autoservicios."}, {"num": "12", "texto": "Pase al siguiente bloque presionando la tecla correspondiente"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.3_Configurar_escalas_de_calificacio_n/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.3_Configurar_escalas_de_calificacio_n/016.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.3_Configurar_escalas_de_calificacio_n&d=16", "fuente": "Instructivo 7.1.3 · Configurar escalas de calificación", "n": 16, "texto": "SHAGRDE: modos de calificación del código", "nota": "", "lineas": [{"num": "15", "texto": "Ingrese el o los modos de calificación asociados al código de calificación (inserte nuevos registros si es más de un modo de calificar)."}, {"num": "16", "texto": "Guarde la información."}], "marcas": {}}]}, "c3": {"titulo": "Script 12 · Cierre de periodo · referencia: prueba de Computación", "pantalla": "GJAPCTL", "fase": "Paso 3: reejecución SHRROLL", "hito": "", "instrucciones": [{"campo": "Reejecución de Proceso Batch", "valor": "Job 8114", "ejemplo": "-", "tipo": "Crítico (guardado)", "detalle": "SHRROLL Job 8114 exitoso con 100 % de estudiantes rolados a historia."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/022.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/022.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=22", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 22, "texto": "GJAPCTL: proceso SHRROLL", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "1", "texto": "Ingrese al proceso SHRROLL desde la página GJAPCTL."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/023.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/023.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=23", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 23, "texto": "SHRROLL: impresora y parámetros", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "3", "texto": "Defina la impresora como DATABASE"}, {"num": "4", "texto": "Pase al siguiente bloque."}, {"num": "5", "texto": "Ingrese los parámetros del proceso, según la tabla que se presenta en la siguiente diapositiva."}, {"num": "", "texto": "Inicialmente se muestras solo 10 parámetros, amplíe los registros por página para ver todos los que se solicitan."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/025.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/025.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=25", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 25, "texto": "SHRROLL: enviar y guardar", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "7", "texto": "Seleccione la opción enviar."}, {"num": "8", "texto": "Guarde la información."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/027.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=27", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 27, "texto": "Revisar la salida en GJIREVO", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "9", "texto": "Presione la opción Relacionado en la barra superior."}, {"num": "10", "texto": "Seleccione Revisar Salida (GJIREVO)."}], "marcas": {}}]}, "c4": {"titulo": "Script 12 · Cierre de periodo · referencia: prueba de Computación", "pantalla": "SHATERM", "fase": "Paso 4: historial y acta", "hito": "Rolled = Y · acta cerrada", "instrucciones": [{"campo": "Validación en Historial", "valor": "SHATERM", "ejemplo": "-", "tipo": "Verificación", "detalle": "Estatus «Rolled to Academic History» confirmado en los expedientes."}, {"campo": "Cierre Formal y Bloqueo de Acta", "valor": "SFASLST", "ejemplo": "-", "tipo": "Crítico (guardado)", "detalle": "(SFASLST / SHAGRDE) Indicador Grade Roll Status = Y impidiendo ediciones posteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/027.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=27", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 27, "texto": "GJIREVO: revisar la salida del pase a historia", "nota": "SHATERM no sale en los instructivos. Referencia: el pase a historia se verifica en la salida del proceso (7.1.9) y en la casilla «Pasada» de SFASLST (7.1.6).", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "9", "texto": "Presione la opción Relacionado en la barra superior."}, {"num": "10", "texto": "Seleccione Revisar Salida (GJIREVO)."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/029.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=29", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 29, "texto": "GJIREVO: resultados del proceso", "nota": "SHATERM no sale en los instructivos. Referencia: el pase a historia se verifica en la salida del proceso (7.1.9) y en la casilla «Pasada» de SFASLST (7.1.6).", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "", "texto": "Puede visualizar los resultados del proceso en la página…"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/016.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=16", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 16, "texto": "SFASLST: «Pasada» marcada = nota en la historia", "nota": "SHATERM no sale en los instructivos. Referencia: el pase a historia se verifica en la salida del proceso (7.1.9) y en la casilla «Pasada» de SFASLST (7.1.6).", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "3", "texto": "Registre las calificaciones parciales, en el campo destinado a tal fin, para cada uno delos estudiantes inscritos en el NRC. Recuerde que estas calificaciones no van a Historia Académica."}, {"num": "4", "texto": "Registre las calificaciones finales, en el campo destinado a tal fin, para cada uno delos estudiantes inscritos en el NRC. Estas son las calificaciones que irán a Historia Académica."}, {"num": "", "texto": "Nota: Aquellas calificaciones que tienen la casilla “Pasada” marcada, ya están en la historia académica delos estudiantes a quienes corresponde."}], "marcas": {}}]}, "cr": {"titulo": "Script 12 · Cierre de periodo · referencia: prueba de Computación", "pantalla": "RESULTADO", "fase": "Resultado: Actas cerradas", "hito": "notas en historia", "instrucciones": [{"campo": "Resultado esperado", "valor": "Actas cerradas", "ejemplo": "notas en historia", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/029.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=29", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 29, "texto": "GJIREVO: resultados del pase a historia", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "", "texto": "Puede visualizar los resultados del proceso en la página…"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/019.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=19", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 19, "texto": "SHATCKN: la nota ya está en la historia académica", "nota": "", "lineas": [{"num": "", "texto": "Modificar calificaciones en Historia académica"}, {"num": "", "texto": "En la página SHATCKN:"}, {"num": "1", "texto": "Ingrese el ID del estudiante y el Período para el cual desea modificar las calificaciones."}, {"num": "2", "texto": "Presione el botón Ir."}, {"num": "", "texto": "El campo Indicar Nivel de validación siempre muestra Horario."}], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = null;
@@ -19153,7 +19392,7 @@ button.ai-fab:active,
   }
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
-  var visorDiapo = { lista: [], idx: 0, completa: false };
+  var visorDiapo = { lista: [], idx: 0, completa: true };
 
   function asegurarVisorDiapo() {
     var v = document.getElementById('guia-diapo-visor');
@@ -19179,15 +19418,14 @@ button.ai-fab:active,
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
-    // Archify cierra el paso abierto con un clic fuera de su ficha y lo escucha en la captura de window:
-    // los toques dentro del visor se detienen ahí (el «click» sigue y lo atiende el visor), así el paso no se pierde.
-    ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click'].forEach(function (tipo) {
-      window.addEventListener(tipo, function (e) {
-        if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
-        e.stopPropagation();
-        if (tipo === 'click') clicEnVisor(e, v);
-      }, true);
-    });
+    if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
+    // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
+    window.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
+      e.stopPropagation();
+      clicEnVisor(e, v);
+    }, true);
     v.addEventListener('toggle', function (e) {
       if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
     }, true);
@@ -19196,6 +19434,13 @@ button.ai-fab:active,
 
   // Clic dentro del visor (se atiende en la captura de window; ver arriba).
   function clicEnVisor(e, v) {
+    var zi = e.target.closest('[data-zi]');
+    if (zi) {
+      e.preventDefault();
+      var zoom = v.querySelector('.gdv-img').__cceeZoom;
+      if (zoom) zoom.accion(zi.getAttribute('data-zi'));
+      return;
+    }
     var accion = e.target.closest('[data-gdv]');
     if (!accion) {
       if (e.target === v) cerrarVisorDiapo();
@@ -19308,7 +19553,8 @@ button.ai-fab:active,
 
   function abrirVisorDiapo(lista, idx) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
-    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -20160,6 +20406,10 @@ button.ai-fab:active,
       if (visorDiapoAbierto()) {
         if (e.key === 'Escape') { e.preventDefault(); cerrarVisorDiapo(); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); moverVisorDiapo(1); }
+        else if (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0') {
+          var zoom = document.querySelector('#guia-diapo-visor .gdv-img').__cceeZoom;
+          if (zoom) { e.preventDefault(); zoom.accion(e.key === '0' ? 'reset' : (e.key === '-' ? 'menos' : 'mas')); }
+        }
         else if (e.key === 'ArrowLeft') { e.preventDefault(); moverVisorDiapo(-1); }
         return;
       }
@@ -21018,7 +21268,7 @@ button.ai-fab:active,
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: false };
+    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -21055,6 +21305,7 @@ button.ai-fab:active,
         else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
       });
       document.body.appendChild(v);
+      if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
       return v;
     }
 
@@ -21084,6 +21335,7 @@ button.ai-fab:active,
       var visor = v.querySelector('[data-aipv="visor"]');
       var completa = v.querySelector('[data-aipv="completa"]');
       img.hidden = !l;
+      if (img.__cceeZoom) img.__cceeZoom.zona.hidden = !l;  // con zoom, la imagen va dentro de su zona
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
@@ -21104,7 +21356,6 @@ button.ai-fab:active,
 
     function abrirVisorPasos(pasos) {
       visorPasos.pasos = pasos;
-      visorPasos.completa = false;
       var primero = 0;
       for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
       asegurarVisorPasos().hidden = false;

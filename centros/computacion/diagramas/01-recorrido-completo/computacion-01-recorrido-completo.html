@@ -18317,6 +18317,80 @@ button.ai-fab:active,
   .ai-header-motor .ai-engine-select { max-width: 130px; }
 }
 
+
+/* Zoom y lupa de las láminas (zoom_imagen.js) */
+.zi-zona {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  border-radius: 0.4rem;
+  touch-action: none;
+  cursor: zoom-in;
+}
+.zi-zona > img {
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zi-zona.zi-zoom { cursor: grab; }
+.zi-zona.zi-arrastrando { cursor: grabbing; }
+.zi-zona.zi-con-lupa { cursor: none; }
+.zi-barra {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+}
+.zi-barra button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
+}
+.zi-barra button:hover,
+.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
+.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
+.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
+.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-lupa {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn { display: none; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18474,6 +18548,171 @@ button.ai-fab:active,
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
 <script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
+/* Zoom y lupa para las láminas de los visores (guía de cada paso y asistente IA).
+   Solo agranda la imagen: la rueda, el pellizco del touchpad (ctrl + rueda) y el gesto de Safari se
+   detienen aquí para que el navegador no agrande toda la página.
+   Uso: var z = window.CCEEZoom(img);  z.reset();  z.zoom(1.25);  — se reinicia solo al cambiar la imagen. */
+(function () {
+  if (window.CCEEZoom) return;
+  var MIN = 1, MAX = 4, LUPA_R = 95;  // más de 4× solo agranda los píxeles: las láminas miden 1600 px
+
+  window.CCEEZoom = function (img) {
+    if (img.__cceeZoom) return img.__cceeZoom;
+    var zona = document.createElement('div');
+    zona.className = 'zi-zona';
+    img.parentNode.insertBefore(zona, img);
+    zona.appendChild(img);
+    img.draggable = false;
+
+    var barra = document.createElement('div');
+    barra.className = 'zi-barra';
+    barra.innerHTML =
+      '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
+      '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
+      '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
+      '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
+    zona.appendChild(barra);
+
+    var lupa = document.createElement('div');
+    lupa.className = 'zi-lupa';
+    lupa.hidden = true;
+    zona.appendChild(lupa);
+
+    var s = 1, tx = 0, ty = 0, lupaOn = false, lupaK = 2.5;
+    var punteros = {}, arrastre = null, pinza = null, gestoBase = 1;
+
+    function limitar() {
+      var w = zona.clientWidth, h = zona.clientHeight;
+      tx = Math.min(0, Math.max(w - w * s, tx));
+      ty = Math.min(0, Math.max(h - h * s, ty));
+    }
+    function pintar() {
+      limitar();
+      img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      zona.classList.toggle('zi-zoom', s > 1);
+      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+    }
+    function zoomEn(f, cx, cy) {
+      var r = zona.getBoundingClientRect();
+      var x = cx === undefined ? r.width / 2 : cx - r.left;
+      var y = cy === undefined ? r.height / 2 : cy - r.top;
+      var nuevo = Math.min(MAX, Math.max(MIN, s * f));
+      tx = x - (x - tx) * (nuevo / s);
+      ty = y - (y - ty) * (nuevo / s);
+      s = nuevo;
+      if (s === 1) { tx = 0; ty = 0; }
+      pintar();
+    }
+    function reset() { s = 1; tx = 0; ty = 0; pintar(); }
+
+    function moverLupa(e) {
+      var r = img.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
+      var z = zona.getBoundingClientRect();
+      lupa.hidden = false;
+      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
+      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
+      lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
+      lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
+    }
+    function alternarLupa() {
+      lupaOn = !lupaOn;
+      if (lupaOn) reset();
+      lupa.hidden = true;
+      zona.classList.toggle('zi-con-lupa', lupaOn);
+      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+    }
+
+    function accion(a) {
+      if (lupaOn && a !== 'lupa') alternarLupa();
+      if (a === 'mas') zoomEn(1.4);
+      else if (a === 'menos') zoomEn(1 / 1.4);
+      else if (a === 'reset') reset();
+      else if (a === 'lupa') alternarLupa();
+    }
+    // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
+    barra.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-zi]');
+      if (!b) return;
+      e.preventDefault();
+      e.stopPropagation();
+      accion(b.getAttribute('data-zi'));
+    });
+
+    // Rueda y pellizco del touchpad (llega como rueda con ctrlKey): acercan en el punto del cursor.
+    zona.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      if (lupaOn) {
+        lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        moverLupa(e);
+        return;
+      }
+      zoomEn(Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0018)), e.clientX, e.clientY);
+    }, { passive: false });
+    // Safari (Mac) manda el pellizco como gesto propio.
+    zona.addEventListener('gesturestart', function (e) { e.preventDefault(); gestoBase = s; }, { passive: false });
+    zona.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (!lupaOn) zoomEn((gestoBase * e.scale) / s, e.clientX, e.clientY);
+    }, { passive: false });
+    zona.addEventListener('gestureend', function (e) { e.preventDefault(); }, { passive: false });
+
+    zona.addEventListener('dblclick', function (e) {
+      if (e.target.closest('.zi-barra') || lupaOn) return;
+      e.preventDefault();
+      if (s > 1.05) reset(); else zoomEn(2.5, e.clientX, e.clientY);
+    });
+
+    // Arrastrar para mover; con dos dedos, pellizcar (pantallas táctiles).
+    zona.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.zi-barra')) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        pinza = { d: Math.hypot(a.x - b.x, a.y - b.y), s: s };
+        arrastre = null;
+      } else if (s > 1 && !lupaOn) {
+        arrastre = { x: e.clientX - tx, y: e.clientY - ty };
+        zona.setPointerCapture(e.pointerId);
+        zona.classList.add('zi-arrastrando');
+      }
+    });
+    zona.addEventListener('pointermove', function (e) {
+      if (lupaOn) { moverLupa(e); return; }
+      if (!punteros[e.pointerId]) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (pinza && ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        zoomEn((pinza.s * Math.hypot(a.x - b.x, a.y - b.y) / pinza.d) / s, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      } else if (arrastre) {
+        tx = e.clientX - arrastre.x;
+        ty = e.clientY - arrastre.y;
+        pintar();
+      }
+    });
+    function soltar(e) {
+      delete punteros[e.pointerId];
+      if (Object.keys(punteros).length < 2) pinza = null;
+      arrastre = null;
+      zona.classList.remove('zi-arrastrando');
+    }
+    zona.addEventListener('pointerup', soltar);
+    zona.addEventListener('pointercancel', soltar);
+    zona.addEventListener('pointerleave', function () { if (lupaOn) lupa.hidden = true; });
+
+    img.addEventListener('load', reset);  // imagen nueva (otra lámina, recorte o completa): vuelve al 100 %
+    var ctl = { reset: reset, zoom: function (f) { zoomEn(f); }, accion: accion, zona: zona };
+    img.__cceeZoom = ctl;
+    return ctl;
+  };
+})();
+
 (function () {
   var GUIA_MAP = {"alumno": {"titulo": "Recorrido completo en Banner", "pantalla": "Alumno", "fase": "Alumno: qué hace en el recorrido", "hito": "USS o externo", "instrucciones": [{"campo": "6. Solicitud", "valor": "El alumno pide el curso (USS o externo)", "ejemplo": "Hace · Matricular", "tipo": "Acción", "detalle": "Paso 6 del recorrido (Matricular): Alumno → Asistente."}, {"campo": "10. TSAAREV", "valor": "El alumno recibe el cobro en su cuenta", "ejemplo": "Recibe · Matricular", "tipo": "Verificación", "detalle": "Paso 10 del recorrido (Matricular): Banner → Alumno."}, {"campo": "13. SMICRLT", "valor": "El alumno ve su avance en CAPP", "ejemplo": "Recibe · Dictar y cerrar", "tipo": "Verificación", "detalle": "Paso 13 del recorrido (Dictar y cerrar): Banner → Alumno."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/recortes/043.webp", "completa": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/043.webp", "visor": "../../../../visor_instructivos/index.html?p=11.2.1_-_Gestionar_la_matri_cula&d=43", "fuente": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)", "n": 43, "texto": "SFAREGS: estimación de cuota procesada", "nota": "", "lineas": [{"num": "", "texto": "Proceso: SFAREGS - Inscripción de curso de alumno"}, {"num": "11", "texto": "Se evidencia la estimación de cuota procesada."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/044.webp", "visor": "../../../../visor_instructivos/index.html?p=11.2.1_-_Gestionar_la_matri_cula&d=44", "fuente": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)", "n": 44, "texto": "TSAAREV: conceptos de la estimación de cuota", "nota": "", "lineas": [{"num": "", "texto": "Se evidencia en TSAAREV el registro correcto de los concepto de estimación de cuota."}, {"num": "", "texto": "Resultado : TSAAREV - Revisión del detalle de la cuenta - Alumnos"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/061.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/061.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=61", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 61, "texto": "SMICRLT: alumno y solicitud", "nota": "", "lineas": [{"num": "", "texto": "Resultados de avance curricular de los alumnos"}, {"num": "1", "texto": "En la página SMICRLT digite el ID del estudiante al que se le consultarán los resultados del CAPP."}, {"num": "2", "texto": "Seleccione el Número de solicitud presionando los tres botones (si viene desde el menú relacionado de SMARQCM ya viene seleccionado)."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/064.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/064.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=64", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 64, "texto": "SMICRLT: programa y catálogo con que se evaluó", "nota": "", "lineas": [{"num": "", "texto": "Resultados de avance curricular de los alumnos"}, {"num": "", "texto": "Se puede observar el Programa y período catálogo según el cual fue ejecutado el CAPP para la solicitud."}, {"num": "", "texto": "Se visualizan las columnas Cumple y No cumple, según los resultados de la evaluación del CAPP del estudiante."}, {"num": "6", "texto": "Al presionar el botón se puede ver el detalle de cada requerimiento para el estudiante en la ejecución del CAPP que se está consultando:"}], "marcas": {}}]}, "asistente": {"titulo": "Recorrido completo en Banner", "pantalla": "Asistente", "fase": "Asistente: qué hace en el recorrido", "hito": "o especialista", "instrucciones": [{"campo": "6. Solicitud", "valor": "El alumno pide el curso (USS o externo)", "ejemplo": "Recibe · Matricular", "tipo": "Verificación", "detalle": "Paso 6 del recorrido (Matricular): Alumno → Asistente."}, {"campo": "7. GOAMTCH", "valor": "Busca o crea a la persona", "ejemplo": "Hace · Matricular", "tipo": "Acción", "detalle": "Paso 7 del recorrido (Matricular): Asistente → Banner."}, {"campo": "8. SAAQUIK", "valor": "Admite al alumno en el programa CMEMC38", "ejemplo": "Hace · Matricular", "tipo": "Acción", "detalle": "Paso 8 del recorrido (Matricular): Asistente → Banner."}, {"campo": "9. SFAREGS", "valor": "Matricula al alumno en el NRC (RE)", "ejemplo": "Hace · Matricular", "tipo": "Acción", "detalle": "Paso 9 del recorrido (Matricular): Asistente → Banner."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.1.1_Instructivo_-_Gestionar_persona_natural_V2/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/5.1.1_Instructivo_-_Gestionar_persona_natural_V2/029.webp", "visor": "../../../../visor_instructivos/index.html?p=5.1.1_Instructivo_-_Gestionar_persona_natural_V2&d=29", "fuente": "Instructivo 5.1.1 · Gestionar persona natural", "n": 29, "texto": "GOAMTCH: origen de coincidencia", "nota": "", "lineas": [{"num": "", "texto": "GOAMTCH Captura de coincidencia común"}, {"num": "", "texto": "En la página GOAMATCH:"}, {"num": "2", "texto": "Se muestra en el campo de ID la palabra GENERATED."}, {"num": "3", "texto": "En el campo Origen de coincidencia común, seleccione el código de reglas de coincidencia que la institución ha definido para personas naturales (PNATURAL)"}, {"num": "4", "texto": "Luego se debe presionar el botón de ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.1.1_Instructivo_-_Gestionar_persona_natural_V2/recortes/030.webp", "completa": "../../../../visor_instructivos/diapositivas/5.1.1_Instructivo_-_Gestionar_persona_natural_V2/030.webp", "visor": "../../../../visor_instructivos/index.html?p=5.1.1_Instructivo_-_Gestionar_persona_natural_V2&d=30", "fuente": "Instructivo 5.1.1 · Gestionar persona natural", "n": 30, "texto": "GOAMTCH: criterios de búsqueda", "nota": "", "lineas": [{"num": "", "texto": "GOAMTCH Captura de coincidencia común"}, {"num": "5", "texto": "Ingrese los siguientes datos como criterios de búsqueda para coincidencia:"}, {"num": "", "texto": "Apellidos (Separados por ‘/’) y nombre (obligatorio)"}, {"num": "", "texto": "Segundo nombre (opcional)"}, {"num": "", "texto": "Ingrese el número de documento de identidad en el campo SNN/NIT* (requerido si no se ingresa ID adicional)"}, {"num": "", "texto": "Los campos fecha de nacimiento, género (sexo legal), número de teléfono y correo electrónico son opcionales."}, {"num": "", "texto": "Ingrese el número de documento de identidad o el número de pasaporte en el campo ID adicional (requerido si no se ingresa SSN)"}, {"num": "6", "texto": "Presionar el botón “Marcar-Duplicar” para que el sistema valide si existe al menos una persona con los datos ingresados."}, {"num": "", "texto": "* Si el número de documento de identificación que se ingrese en el SSN ya está asociado a otra persona, el sistema va a mostrar un mensaje indicando: “*ALERTA* SNN/NIT asignado a otro registro”."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n/recortes/021.webp", "completa": "../../../../visor_instructivos/diapositivas/3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n/021.webp", "visor": "../../../../visor_instructivos/index.html?p=3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n&d=21", "fuente": "Instructivo 3.2.1 · Crear solicitudes de admisión", "n": 21, "texto": "SAAQUIK: persona nueva o existente", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SAAQUIK Captura rápida"}, {"num": "1", "texto": "- Si la persona no existe, se da click en el signo +."}, {"num": "2", "texto": "- Sistema mostrará los campos para ingresar los datos."}, {"num": "3", "texto": "- Al guardar el sistema genera el Id."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n/recortes/022.webp", "completa": "../../../../visor_instructivos/diapositivas/3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n/022.webp", "visor": "../../../../visor_instructivos/index.html?p=3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n&d=22", "fuente": "Instructivo 3.2.1 · Crear solicitudes de admisión", "n": 22, "texto": "SAAQUIK: ID, periodo y nivel", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SAAQUIK Captura rápida"}, {"num": "", "texto": "Se debe ingresar"}, {"num": "1", "texto": "- ID"}, {"num": "2", "texto": "-Período."}, {"num": "3", "texto": "-Nivel"}, {"num": "", "texto": "Para el cual se va a realizar la admisión."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/038.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/038.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=38", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 38, "texto": "SFAREGS: ingresar el NRC", "nota": "", "lineas": [{"num": "9", "texto": "En la sección ‘Información de Curso’ se debe ingresar el NRC en el primer campo de información requerido, esto puede ser realizado directamente en el campo o bien presionando el botón de búsqueda de los NRC."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/042.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/042.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=42", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 42, "texto": "SFAREGS: datos del NRC y plan de estudios", "nota": "", "lineas": [{"num": "15", "texto": "Cargado el NRC, automáticamente se cargarían los demás campos de información, si no selecciono desde el inicio el plan de estudios, la página le pedirá que lo complete. Adicionalmente se debe ratificar si el Estatus de Inscripción con el cual se desee registrar el NRC será ‘RE’ o cualquier otro estatus que se encuentre habilitado según la configuración de SFARSTS."}], "marcas": {}}]}, "jefe": {"titulo": "Recorrido completo en Banner", "pantalla": "Jefe del centro", "fase": "Jefe del centro: qué hace en el recorrido", "hito": "Informática", "instrucciones": [{"campo": "2. SSASECT", "valor": "Crea el NRC y asigna al docente (NRC 1026)", "ejemplo": "Hace · Preparar", "tipo": "Acción", "detalle": "Paso 2 del recorrido (Preparar): Jefe del centro → Banner."}, {"campo": "3. SIAASGN", "valor": "Revisa la carga lectiva del docente", "ejemplo": "Hace · Preparar", "tipo": "Acción", "detalle": "Paso 3 del recorrido (Preparar): Jefe del centro → Banner."}, {"campo": "4. Oficio", "valor": "Envía la carga con su visto bueno por la intranet", "ejemplo": "Hace · Preparar", "tipo": "Acción", "detalle": "Paso 4 del recorrido (Preparar): Jefe del centro → Vicerrectorado."}, {"campo": "5. Resolución", "valor": "El Vicerrector aprueba la carga lectiva", "ejemplo": "Recibe · Preparar", "tipo": "Verificación", "detalle": "Paso 5 del recorrido (Preparar): Vicerrectorado → Jefe del centro."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/019.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=19", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 19, "texto": "Ingresar el periodo y pulsar «Crear NRC»", "nota": "", "lineas": [{"num": "", "texto": "Para crear un nuevo NRC en la programación académica, se requiere acceder a la página SSASECT y seguir los siguientes pasos:"}, {"num": "1", "texto": "Ingresar periodo académico"}, {"num": "2", "texto": "Presionar el botón “Crear NRC”"}, {"num": "", "texto": "Si no está creando un NRC si no consultando o desea modificar uno ya creado, debe ingresar el número de NRC en el campo correspondiente y presionar el botón “Ir”."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/021.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/021.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=21", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 21, "texto": "Materia, curso, sección, campus y estatus", "nota": "", "lineas": [{"num": "3", "texto": "Ingrese en los campos Materia y Número de curso el identificador de la asignatura para la cual desea programar el NRC."}, {"num": "", "texto": "Al ingresar los valores, se despliega el Título de la asignatura, según corresponda en el Catálogo de cursos."}, {"num": "4", "texto": "‘Sección’: identificador único a definir considerando que su valor no debe encontrarse ya utilizado para el mismo periodo, materia y curso."}, {"num": "", "texto": "En la Universidad se ha definido que la sección será un identificador Alfábetico (A) que identificará los NRC de un ciclo y paralelo o grupo."}, {"num": "5", "texto": "Ingrese o seleccione el Campus en el que se impartirá la sección que se está creando."}, {"num": "6", "texto": "Ingrese el estatus de la sección que se está creando."}, {"num": "", "texto": "Solamente en los NRC con estatus Activo se podrán inscribir los estudiantes."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/023.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/023.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=23", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 23, "texto": "SIAASGN: docente y periodo a analizar", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente 1/6"}, {"num": "", "texto": "Se ingresa el ID del Docente y el Periodo Académico al cual se analizará su Carga Académica y No-Académica"}, {"num": "", "texto": "Presionar el botón ‘Ir’"}, {"num": "", "texto": "La página «Asignación docente» se usa para ingresar y mantener la información de asignación para un periodo por docente o asesor."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/024.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=24", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 24, "texto": "SIAASGN: carga de los NRC asignados", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente 2/6"}, {"num": "", "texto": "Si hicimos alguna modificación, guardamos"}, {"num": "", "texto": "En esta sección se visualiza la carga de trabajo por NRC que tenga asociado el docente. Inclusive podemos realizar algunas modificaciones a los porcentajes de sesión y responsabilidad. Adicionalmente podemos sobrepasar la carga de trabajo que viene de SCACRSE y también asignar o cambiar el tipo de contrato que tiene el docente (podemos predefinir que cargue un contrato por defecto en SIAINST)."}, {"num": "", "texto": "Bloque siguiente"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/026.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/026.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=26", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 26, "texto": "SIAASGN: resumen de la carga horaria del docente", "nota": "El visto bueno y el oficio se tramitan en la intranet de la USS, fuera de Banner (C47, C48). Referencia: la carga que se envía es la que resume SIAASGN (instructivo 5.2).", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente"}, {"num": "", "texto": "En este bloque aparece un resumen de la carga horario docente."}, {"num": "", "texto": "Siguiente sección"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/027.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=27", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 27, "texto": "SIAASGN: sobrecarga o subcarga por criterio", "nota": "El visto bueno y el oficio se tramitan en la intranet de la USS, fuera de Banner (C47, C48). Referencia: la carga que se envía es la que resume SIAASGN (instructivo 5.2).", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente"}, {"num": "", "texto": "En la siguiente sección, se calcula para cada criterio de carga de trabajo si el docente se encuentra con una sobrecarga (O) y/o una subcarga (U) del docente. En la imagen podemos ver que el docente está bajo la carga esperada en términos de creditaje y carga de trabajo educativa, pero está con una sobrecarga de trabajo a nivel No-Educativo."}], "marcas": {}}]}, "banner": {"titulo": "Recorrido completo en Banner", "pantalla": "Banner", "fase": "Banner: qué hace en el recorrido", "hito": "TEST · 202656", "instrucciones": [{"campo": "1. SOATERM", "valor": "Crea periodo en STVTERM, valida malla y abre parte X07", "ejemplo": "Recibe · Preparar", "tipo": "Verificación", "detalle": "Paso 1 del recorrido (Preparar): Registros → Banner."}, {"campo": "2. SSASECT", "valor": "Crea el NRC y asigna al docente (NRC 1026)", "ejemplo": "Recibe · Preparar", "tipo": "Verificación", "detalle": "Paso 2 del recorrido (Preparar): Jefe del centro → Banner."}, {"campo": "3. SIAASGN", "valor": "Revisa la carga lectiva del docente", "ejemplo": "Recibe · Preparar", "tipo": "Verificación", "detalle": "Paso 3 del recorrido (Preparar): Jefe del centro → Banner."}, {"campo": "7. GOAMTCH", "valor": "Busca o crea a la persona", "ejemplo": "Recibe · Matricular", "tipo": "Verificación", "detalle": "Paso 7 del recorrido (Matricular): Asistente → Banner."}, {"campo": "8. SAAQUIK", "valor": "Admite al alumno en el programa CMEMC38", "ejemplo": "Recibe · Matricular", "tipo": "Verificación", "detalle": "Paso 8 del recorrido (Matricular): Asistente → Banner."}, {"campo": "9. SFAREGS", "valor": "Matricula al alumno en el NRC (RE)", "ejemplo": "Recibe · Matricular", "tipo": "Verificación", "detalle": "Paso 9 del recorrido (Matricular): Asistente → Banner."}, {"campo": "10. TSAAREV", "valor": "El alumno recibe el cobro en su cuenta", "ejemplo": "Hace · Matricular", "tipo": "Acción", "detalle": "Paso 10 del recorrido (Matricular): Banner → Alumno."}, {"campo": "11. Autoservicio", "valor": "El docente pasa lista y registra las notas en el libro; Registros carga antes el plan (SHAGCOM) y la regla de asistencia (SOAATRK)", "ejemplo": "Recibe · Dictar y cerrar", "tipo": "Verificación", "detalle": "Paso 11 del recorrido (Dictar y cerrar): Docente → Banner."}, {"campo": "12. SHRROLL", "valor": "Revisa la nota final en SFASLST y hace el pase a historia", "ejemplo": "Recibe · Dictar y cerrar", "tipo": "Verificación", "detalle": "Paso 12 del recorrido (Dictar y cerrar): Registros → Banner."}, {"campo": "13. SMICRLT", "valor": "El alumno ve su avance en CAPP", "ejemplo": "Hace · Dictar y cerrar", "tipo": "Acción", "detalle": "Paso 13 del recorrido (Dictar y cerrar): Banner → Alumno."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad/016.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad&d=16", "fuente": "Instructivo 1.1.2 · Programar el inicio y fin de los periodos", "n": 16, "texto": "SOATERM: ingresar el periodo creado en STVTERM", "nota": "", "lineas": [{"num": "", "texto": "Para ingresar en el periodo que se configurará, debe realizar la siguiente acción:"}, {"num": "1", "texto": "Periodo: Ingresar el periodo creado en STVTERM, que se desea configurar"}, {"num": "2", "texto": "Seleccionar “Ir”"}, {"num": "", "texto": "* Si desea copiar la configuración de un periodo existente, completar este último en el campo “Copiar De periodo” y seleccione COPIAR."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/019.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=19", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 19, "texto": "Ingresar el periodo y pulsar «Crear NRC»", "nota": "", "lineas": [{"num": "", "texto": "Para crear un nuevo NRC en la programación académica, se requiere acceder a la página SSASECT y seguir los siguientes pasos:"}, {"num": "1", "texto": "Ingresar periodo académico"}, {"num": "2", "texto": "Presionar el botón “Crear NRC”"}, {"num": "", "texto": "Si no está creando un NRC si no consultando o desea modificar uno ya creado, debe ingresar el número de NRC en el campo correspondiente y presionar el botón “Ir”."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/023.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/023.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=23", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 23, "texto": "SIAASGN: docente y periodo a analizar", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente 1/6"}, {"num": "", "texto": "Se ingresa el ID del Docente y el Periodo Académico al cual se analizará su Carga Académica y No-Académica"}, {"num": "", "texto": "Presionar el botón ‘Ir’"}, {"num": "", "texto": "La página «Asignación docente» se usa para ingresar y mantener la información de asignación para un periodo por docente o asesor."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.1.1_Instructivo_-_Gestionar_persona_natural_V2/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/5.1.1_Instructivo_-_Gestionar_persona_natural_V2/029.webp", "visor": "../../../../visor_instructivos/index.html?p=5.1.1_Instructivo_-_Gestionar_persona_natural_V2&d=29", "fuente": "Instructivo 5.1.1 · Gestionar persona natural", "n": 29, "texto": "GOAMTCH: origen de coincidencia", "nota": "", "lineas": [{"num": "", "texto": "GOAMTCH Captura de coincidencia común"}, {"num": "", "texto": "En la página GOAMATCH:"}, {"num": "2", "texto": "Se muestra en el campo de ID la palabra GENERATED."}, {"num": "3", "texto": "En el campo Origen de coincidencia común, seleccione el código de reglas de coincidencia que la institución ha definido para personas naturales (PNATURAL)"}, {"num": "4", "texto": "Luego se debe presionar el botón de ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n/recortes/021.webp", "completa": "../../../../visor_instructivos/diapositivas/3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n/021.webp", "visor": "../../../../visor_instructivos/index.html?p=3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n&d=21", "fuente": "Instructivo 3.2.1 · Crear solicitudes de admisión", "n": 21, "texto": "SAAQUIK: persona nueva o existente", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SAAQUIK Captura rápida"}, {"num": "1", "texto": "- Si la persona no existe, se da click en el signo +."}, {"num": "2", "texto": "- Sistema mostrará los campos para ingresar los datos."}, {"num": "3", "texto": "- Al guardar el sistema genera el Id."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/038.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/038.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=38", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 38, "texto": "SFAREGS: ingresar el NRC", "nota": "", "lineas": [{"num": "9", "texto": "En la sección ‘Información de Curso’ se debe ingresar el NRC en el primer campo de información requerido, esto puede ser realizado directamente en el campo o bien presionando el botón de búsqueda de los NRC."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/recortes/043.webp", "completa": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/043.webp", "visor": "../../../../visor_instructivos/index.html?p=11.2.1_-_Gestionar_la_matri_cula&d=43", "fuente": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)", "n": 43, "texto": "SFAREGS: estimación de cuota procesada", "nota": "", "lineas": [{"num": "", "texto": "Proceso: SFAREGS - Inscripción de curso de alumno"}, {"num": "11", "texto": "Se evidencia la estimación de cuota procesada."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/044.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=44", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 44, "texto": "Autoservicio: «Pasar lista» del NRC y la sesión", "nota": "", "lineas": [{"num": "", "texto": "Registro de Asistencia"}, {"num": "", "texto": "El docente deberá presionar el botón “Pasar lista” correspondiente al NRC y sesión para la cual desea registrar la asistencia de los alumnos."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/062.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/062.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=62", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 62, "texto": "Autoservicio: Libro de calificaciones", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones"}, {"num": "", "texto": "La página debe ingresar a la lista de Libro de Calificaciones."}, {"num": "", "texto": "Si no está en esta opción, el docente debe hacer clic sobre la misma."}, {"num": "", "texto": "Puede haber más de una página con registros, puede moverse entre las páginas."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/022.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/022.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=22", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 22, "texto": "GJAPCTL: proceso SHRROLL", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "1", "texto": "Ingrese al proceso SHRROLL desde la página GJAPCTL."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/061.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/061.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=61", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 61, "texto": "SMICRLT: alumno y solicitud", "nota": "", "lineas": [{"num": "", "texto": "Resultados de avance curricular de los alumnos"}, {"num": "1", "texto": "En la página SMICRLT digite el ID del estudiante al que se le consultarán los resultados del CAPP."}, {"num": "2", "texto": "Seleccione el Número de solicitud presionando los tres botones (si viene desde el menú relacionado de SMARQCM ya viene seleccionado)."}], "marcas": {}}]}, "docente": {"titulo": "Recorrido completo en Banner", "pantalla": "Docente", "fase": "Docente: qué hace en el recorrido", "hito": "autoservicio", "instrucciones": [{"campo": "11. Autoservicio", "valor": "El docente pasa lista y registra las notas en el libro; Registros carga antes el plan (SHAGCOM) y la regla de asistencia (SOAATRK)", "ejemplo": "Hace · Dictar y cerrar", "tipo": "Acción", "detalle": "Paso 11 del recorrido (Dictar y cerrar): Docente → Banner."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/044.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=44", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 44, "texto": "Autoservicio: «Pasar lista» del NRC y la sesión", "nota": "", "lineas": [{"num": "", "texto": "Registro de Asistencia"}, {"num": "", "texto": "El docente deberá presionar el botón “Pasar lista” correspondiente al NRC y sesión para la cual desea registrar la asistencia de los alumnos."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/recortes/045.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.1_Gestionar_la_asistencia_a_clases/045.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.1_Gestionar_la_asistencia_a_clases&d=45", "fuente": "Instructivo 7.1.1 · Gestionar la asistencia a clases", "n": 45, "texto": "Registrar asistencia o ausencia", "nota": "", "lineas": [{"num": "", "texto": "Registro de Asistencia"}, {"num": "", "texto": "Para cada estudiante de la lista, registre la asistencia o ausencia, haciendo clic sobre el círculo correspondiente a la sesión del día seleccionado."}, {"num": "", "texto": "Solo se pueden cargar asistencias para fechas anteriores a la fecha en que se está ingresando al sistema, no se pueden ingresar asistencias en días futuros."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/062.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/062.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=62", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 62, "texto": "Autoservicio: Libro de calificaciones", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones"}, {"num": "", "texto": "La página debe ingresar a la lista de Libro de Calificaciones."}, {"num": "", "texto": "Si no está en esta opción, el docente debe hacer clic sobre la misma."}, {"num": "", "texto": "Puede haber más de una página con registros, puede moverse entre las páginas."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/recortes/064.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.4_Ingresar_calificaci_autoservicio/064.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.4_Ingresar_calificaci_autoservicio&d=64", "fuente": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio", "n": 64, "texto": "Elegir el NRC y abrir Componentes", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones"}, {"num": "1", "texto": "El docente deberá hacer clic sobre el registro del NRC para el que desea cargar las calificaciones."}, {"num": "2", "texto": "Presionar la opción Componentes."}], "marcas": {}}]}, "registros": {"titulo": "Recorrido completo en Banner", "pantalla": "Registros", "fase": "Registros: qué hace en el recorrido", "hito": "Académicos", "instrucciones": [{"campo": "1. SOATERM", "valor": "Crea periodo en STVTERM, valida malla y abre parte X07", "ejemplo": "Hace · Preparar", "tipo": "Acción", "detalle": "Paso 1 del recorrido (Preparar): Registros → Banner."}, {"campo": "12. SHRROLL", "valor": "Revisa la nota final en SFASLST y hace el pase a historia", "ejemplo": "Hace · Dictar y cerrar", "tipo": "Acción", "detalle": "Paso 12 del recorrido (Dictar y cerrar): Registros → Banner."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad/016.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad&d=16", "fuente": "Instructivo 1.1.2 · Programar el inicio y fin de los periodos", "n": 16, "texto": "SOATERM: ingresar el periodo creado en STVTERM", "nota": "", "lineas": [{"num": "", "texto": "Para ingresar en el periodo que se configurará, debe realizar la siguiente acción:"}, {"num": "1", "texto": "Periodo: Ingresar el periodo creado en STVTERM, que se desea configurar"}, {"num": "2", "texto": "Seleccionar “Ir”"}, {"num": "", "texto": "* Si desea copiar la configuración de un periodo existente, completar este último en el campo “Copiar De periodo” y seleccione COPIAR."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad/recortes/020.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad/020.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad&d=20", "fuente": "Instructivo 1.1.2 · Programar el inicio y fin de los periodos", "n": 20, "texto": "Partes de periodo: crear el registro de la parte", "nota": "", "lineas": [{"num": "1", "texto": "‘+’ para crear nuevo registro."}, {"num": "2", "texto": "Parte de Período Base: Se ingresa la parte de período que se va a configurar."}, {"num": "", "texto": "*Siempre debe existir configuración para la parte de período 1."}, {"num": "3", "texto": "La fecha de inicio y fin son campos obligatorios."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/022.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/022.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=22", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 22, "texto": "GJAPCTL: proceso SHRROLL", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "1", "texto": "Ingrese al proceso SHRROLL desde la página GJAPCTL."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/023.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/023.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=23", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 23, "texto": "SHRROLL: impresora y parámetros", "nota": "", "lineas": [{"num": "", "texto": "Procesar cierre de calificaciones: Proceso masivo"}, {"num": "3", "texto": "Defina la impresora como DATABASE"}, {"num": "4", "texto": "Pase al siguiente bloque."}, {"num": "5", "texto": "Ingrese los parámetros del proceso, según la tabla que se presenta en la siguiente diapositiva."}, {"num": "", "texto": "Inicialmente se muestras solo 10 parámetros, amplíe los registros por página para ver todos los que se solicitan."}], "marcas": {}}]}, "vra": {"titulo": "Recorrido completo en Banner", "pantalla": "Vicerrectorado", "fase": "Vicerrectorado: qué hace en el recorrido", "hito": "Académico", "instrucciones": [{"campo": "4. Oficio", "valor": "Envía la carga con su visto bueno por la intranet", "ejemplo": "Recibe · Preparar", "tipo": "Verificación", "detalle": "Paso 4 del recorrido (Preparar): Jefe del centro → Vicerrectorado."}, {"campo": "5. Resolución", "valor": "El Vicerrector aprueba la carga lectiva", "ejemplo": "Hace · Preparar", "tipo": "Acción", "detalle": "Paso 5 del recorrido (Preparar): Vicerrectorado → Jefe del centro."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/024.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=24", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 24, "texto": "SIAASGN: carga de los NRC asignados al docente", "nota": "La resolución del Vicerrectorado Académico se emite fuera de Banner (C47, C48). Referencia: la carga que aprueba es la de cada NRC en SIAASGN (instructivo 5.2).", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente 2/6"}, {"num": "", "texto": "Si hicimos alguna modificación, guardamos"}, {"num": "", "texto": "En esta sección se visualiza la carga de trabajo por NRC que tenga asociado el docente. Inclusive podemos realizar algunas modificaciones a los porcentajes de sesión y responsabilidad. Adicionalmente podemos sobrepasar la carga de trabajo que viene de SCACRSE y también asignar o cambiar el tipo de contrato que tiene el docente (podemos predefinir que cargue un contrato por defecto en SIAINST)."}, {"num": "", "texto": "Bloque siguiente"}], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 2, "slug": "crear-el-nrc", "titulo": "Crear el NRC", "cap": "Capacidades 1 y 5", "url": "../02-crear-el-nrc/computacion-02-crear-el-nrc.html", "is_curr": false};
@@ -19310,7 +19549,7 @@ button.ai-fab:active,
   }
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
-  var visorDiapo = { lista: [], idx: 0, completa: false };
+  var visorDiapo = { lista: [], idx: 0, completa: true };
 
   function asegurarVisorDiapo() {
     var v = document.getElementById('guia-diapo-visor');
@@ -19336,15 +19575,14 @@ button.ai-fab:active,
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
-    // Archify cierra el paso abierto con un clic fuera de su ficha y lo escucha en la captura de window:
-    // los toques dentro del visor se detienen ahí (el «click» sigue y lo atiende el visor), así el paso no se pierde.
-    ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click'].forEach(function (tipo) {
-      window.addEventListener(tipo, function (e) {
-        if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
-        e.stopPropagation();
-        if (tipo === 'click') clicEnVisor(e, v);
-      }, true);
-    });
+    if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
+    // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
+    window.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
+      e.stopPropagation();
+      clicEnVisor(e, v);
+    }, true);
     v.addEventListener('toggle', function (e) {
       if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
     }, true);
@@ -19353,6 +19591,13 @@ button.ai-fab:active,
 
   // Clic dentro del visor (se atiende en la captura de window; ver arriba).
   function clicEnVisor(e, v) {
+    var zi = e.target.closest('[data-zi]');
+    if (zi) {
+      e.preventDefault();
+      var zoom = v.querySelector('.gdv-img').__cceeZoom;
+      if (zoom) zoom.accion(zi.getAttribute('data-zi'));
+      return;
+    }
     var accion = e.target.closest('[data-gdv]');
     if (!accion) {
       if (e.target === v) cerrarVisorDiapo();
@@ -19465,7 +19710,8 @@ button.ai-fab:active,
 
   function abrirVisorDiapo(lista, idx) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
-    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -20317,6 +20563,10 @@ button.ai-fab:active,
       if (visorDiapoAbierto()) {
         if (e.key === 'Escape') { e.preventDefault(); cerrarVisorDiapo(); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); moverVisorDiapo(1); }
+        else if (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0') {
+          var zoom = document.querySelector('#guia-diapo-visor .gdv-img').__cceeZoom;
+          if (zoom) { e.preventDefault(); zoom.accion(e.key === '0' ? 'reset' : (e.key === '-' ? 'menos' : 'mas')); }
+        }
         else if (e.key === 'ArrowLeft') { e.preventDefault(); moverVisorDiapo(-1); }
         return;
       }
@@ -21175,7 +21425,7 @@ button.ai-fab:active,
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: false };
+    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -21212,6 +21462,7 @@ button.ai-fab:active,
         else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
       });
       document.body.appendChild(v);
+      if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
       return v;
     }
 
@@ -21241,6 +21492,7 @@ button.ai-fab:active,
       var visor = v.querySelector('[data-aipv="visor"]');
       var completa = v.querySelector('[data-aipv="completa"]');
       img.hidden = !l;
+      if (img.__cceeZoom) img.__cceeZoom.zona.hidden = !l;  // con zoom, la imagen va dentro de su zona
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
@@ -21261,7 +21513,6 @@ button.ai-fab:active,
 
     function abrirVisorPasos(pasos) {
       visorPasos.pasos = pasos;
-      visorPasos.completa = false;
       var primero = 0;
       for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
       asegurarVisorPasos().hidden = false;

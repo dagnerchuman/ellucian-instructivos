@@ -1,0 +1,72 @@
+/* Zoom y lupa de las láminas (zoom_imagen.js) */
+.zi-zona {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  border-radius: 0.4rem;
+  touch-action: none;
+  cursor: zoom-in;
+}
+.zi-zona > img {
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zi-zona.zi-zoom { cursor: grab; }
+.zi-zona.zi-arrastrando { cursor: grabbing; }
+.zi-zona.zi-con-lupa { cursor: none; }
+.zi-barra {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+}
+.zi-barra button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
+}
+.zi-barra button:hover,
+.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
+.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
+.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
+.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-lupa {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn { display: none; }
+}

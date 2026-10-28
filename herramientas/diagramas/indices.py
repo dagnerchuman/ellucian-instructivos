@@ -16,6 +16,8 @@ JS_GALERIA = (ASSETS_DIR / "indice_galeria.js").read_text(encoding="utf-8")
 CSS_AI = (ASSETS_DIR / "asistente_ia.css").read_text(encoding="utf-8")
 JS_AI = (ASSETS_DIR / "asistente_ia.js").read_text(encoding="utf-8")
 HTML_AI = (ASSETS_DIR / "asistente_ia_snippet.html").read_text(encoding="utf-8")
+CSS_ZOOM = (ASSETS_DIR / "zoom_imagen.css").read_text(encoding="utf-8")
+JS_ZOOM = (ASSETS_DIR / "zoom_imagen.js").read_text(encoding="utf-8")
 SCRIPT_CONOCIMIENTO_AI = ('<script src="../herramientas/diagramas/assets/asistente_conocimiento.js"></script>\n'
                           '  <script src="../herramientas/diagramas/assets/asistente_diapositivas.js"></script>')
 
@@ -224,8 +226,8 @@ def galeria(ids):
     autor = html.escape(Centro(ids[0]).autor)
     pagina = (
         TEMPLATE_GALERIA
-        .replace("/*__CSS__*/", CSS_GALERIA + "\n\n" + CSS_AI)
-        .replace("/*__JS__*/", JS_GALERIA + "\n\n" + JS_AI)
+        .replace("/*__CSS__*/", CSS_GALERIA + "\n\n" + CSS_AI + "\n\n" + CSS_ZOOM)
+        .replace("/*__JS__*/", JS_ZOOM + "\n\n" + JS_GALERIA + "\n\n" + JS_AI)
         .replace("<!--__KNOWLEDGE_SCRIPT__-->", SCRIPT_CONOCIMIENTO_AI)
         .replace("{autor}", autor)
         .replace("{secciones}", "\n".join(secciones))

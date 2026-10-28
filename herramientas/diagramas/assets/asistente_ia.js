@@ -787,7 +787,7 @@
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: false };
+    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -824,6 +824,7 @@
         else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
       });
       document.body.appendChild(v);
+      if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
       return v;
     }
 
@@ -853,6 +854,7 @@
       var visor = v.querySelector('[data-aipv="visor"]');
       var completa = v.querySelector('[data-aipv="completa"]');
       img.hidden = !l;
+      if (img.__cceeZoom) img.__cceeZoom.zona.hidden = !l;  // con zoom, la imagen va dentro de su zona
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
@@ -873,7 +875,6 @@
 
     function abrirVisorPasos(pasos) {
       visorPasos.pasos = pasos;
-      visorPasos.completa = false;
       var primero = 0;
       for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
       asegurarVisorPasos().hidden = false;

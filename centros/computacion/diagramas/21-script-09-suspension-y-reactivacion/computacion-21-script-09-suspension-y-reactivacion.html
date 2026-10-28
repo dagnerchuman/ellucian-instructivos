@@ -18160,6 +18160,80 @@ button.ai-fab:active,
   .ai-header-motor .ai-engine-select { max-width: 130px; }
 }
 
+
+/* Zoom y lupa de las láminas (zoom_imagen.js) */
+.zi-zona {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  border-radius: 0.4rem;
+  touch-action: none;
+  cursor: zoom-in;
+}
+.zi-zona > img {
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zi-zona.zi-zoom { cursor: grab; }
+.zi-zona.zi-arrastrando { cursor: grabbing; }
+.zi-zona.zi-con-lupa { cursor: none; }
+.zi-barra {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+}
+.zi-barra button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
+}
+.zi-barra button:hover,
+.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
+.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
+.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
+.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-lupa {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn { display: none; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18317,6 +18391,171 @@ button.ai-fab:active,
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
 <script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
+/* Zoom y lupa para las láminas de los visores (guía de cada paso y asistente IA).
+   Solo agranda la imagen: la rueda, el pellizco del touchpad (ctrl + rueda) y el gesto de Safari se
+   detienen aquí para que el navegador no agrande toda la página.
+   Uso: var z = window.CCEEZoom(img);  z.reset();  z.zoom(1.25);  — se reinicia solo al cambiar la imagen. */
+(function () {
+  if (window.CCEEZoom) return;
+  var MIN = 1, MAX = 4, LUPA_R = 95;  // más de 4× solo agranda los píxeles: las láminas miden 1600 px
+
+  window.CCEEZoom = function (img) {
+    if (img.__cceeZoom) return img.__cceeZoom;
+    var zona = document.createElement('div');
+    zona.className = 'zi-zona';
+    img.parentNode.insertBefore(zona, img);
+    zona.appendChild(img);
+    img.draggable = false;
+
+    var barra = document.createElement('div');
+    barra.className = 'zi-barra';
+    barra.innerHTML =
+      '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
+      '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
+      '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
+      '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
+    zona.appendChild(barra);
+
+    var lupa = document.createElement('div');
+    lupa.className = 'zi-lupa';
+    lupa.hidden = true;
+    zona.appendChild(lupa);
+
+    var s = 1, tx = 0, ty = 0, lupaOn = false, lupaK = 2.5;
+    var punteros = {}, arrastre = null, pinza = null, gestoBase = 1;
+
+    function limitar() {
+      var w = zona.clientWidth, h = zona.clientHeight;
+      tx = Math.min(0, Math.max(w - w * s, tx));
+      ty = Math.min(0, Math.max(h - h * s, ty));
+    }
+    function pintar() {
+      limitar();
+      img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      zona.classList.toggle('zi-zoom', s > 1);
+      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+    }
+    function zoomEn(f, cx, cy) {
+      var r = zona.getBoundingClientRect();
+      var x = cx === undefined ? r.width / 2 : cx - r.left;
+      var y = cy === undefined ? r.height / 2 : cy - r.top;
+      var nuevo = Math.min(MAX, Math.max(MIN, s * f));
+      tx = x - (x - tx) * (nuevo / s);
+      ty = y - (y - ty) * (nuevo / s);
+      s = nuevo;
+      if (s === 1) { tx = 0; ty = 0; }
+      pintar();
+    }
+    function reset() { s = 1; tx = 0; ty = 0; pintar(); }
+
+    function moverLupa(e) {
+      var r = img.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
+      var z = zona.getBoundingClientRect();
+      lupa.hidden = false;
+      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
+      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
+      lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
+      lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
+    }
+    function alternarLupa() {
+      lupaOn = !lupaOn;
+      if (lupaOn) reset();
+      lupa.hidden = true;
+      zona.classList.toggle('zi-con-lupa', lupaOn);
+      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+    }
+
+    function accion(a) {
+      if (lupaOn && a !== 'lupa') alternarLupa();
+      if (a === 'mas') zoomEn(1.4);
+      else if (a === 'menos') zoomEn(1 / 1.4);
+      else if (a === 'reset') reset();
+      else if (a === 'lupa') alternarLupa();
+    }
+    // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
+    barra.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-zi]');
+      if (!b) return;
+      e.preventDefault();
+      e.stopPropagation();
+      accion(b.getAttribute('data-zi'));
+    });
+
+    // Rueda y pellizco del touchpad (llega como rueda con ctrlKey): acercan en el punto del cursor.
+    zona.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      if (lupaOn) {
+        lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        moverLupa(e);
+        return;
+      }
+      zoomEn(Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0018)), e.clientX, e.clientY);
+    }, { passive: false });
+    // Safari (Mac) manda el pellizco como gesto propio.
+    zona.addEventListener('gesturestart', function (e) { e.preventDefault(); gestoBase = s; }, { passive: false });
+    zona.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (!lupaOn) zoomEn((gestoBase * e.scale) / s, e.clientX, e.clientY);
+    }, { passive: false });
+    zona.addEventListener('gestureend', function (e) { e.preventDefault(); }, { passive: false });
+
+    zona.addEventListener('dblclick', function (e) {
+      if (e.target.closest('.zi-barra') || lupaOn) return;
+      e.preventDefault();
+      if (s > 1.05) reset(); else zoomEn(2.5, e.clientX, e.clientY);
+    });
+
+    // Arrastrar para mover; con dos dedos, pellizcar (pantallas táctiles).
+    zona.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.zi-barra')) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        pinza = { d: Math.hypot(a.x - b.x, a.y - b.y), s: s };
+        arrastre = null;
+      } else if (s > 1 && !lupaOn) {
+        arrastre = { x: e.clientX - tx, y: e.clientY - ty };
+        zona.setPointerCapture(e.pointerId);
+        zona.classList.add('zi-arrastrando');
+      }
+    });
+    zona.addEventListener('pointermove', function (e) {
+      if (lupaOn) { moverLupa(e); return; }
+      if (!punteros[e.pointerId]) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (pinza && ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        zoomEn((pinza.s * Math.hypot(a.x - b.x, a.y - b.y) / pinza.d) / s, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      } else if (arrastre) {
+        tx = e.clientX - arrastre.x;
+        ty = e.clientY - arrastre.y;
+        pintar();
+      }
+    });
+    function soltar(e) {
+      delete punteros[e.pointerId];
+      if (Object.keys(punteros).length < 2) pinza = null;
+      arrastre = null;
+      zona.classList.remove('zi-arrastrando');
+    }
+    zona.addEventListener('pointerup', soltar);
+    zona.addEventListener('pointercancel', soltar);
+    zona.addEventListener('pointerleave', function () { if (lupaOn) lupa.hidden = true; });
+
+    img.addEventListener('load', reset);  // imagen nueva (otra lámina, recorte o completa): vuelve al 100 %
+    var ctl = { reset: reset, zoom: function (f) { zoomEn(f); }, accion: accion, zona: zona };
+    img.__cceeZoom = ctl;
+    return ctl;
+  };
+})();
+
 (function () {
   var GUIA_MAP = {"c0": {"titulo": "Script 09 · Suspensión y reactivación", "pantalla": "CASO", "fase": "Situación: Suspendido", "hito": "estatus inactivo IS", "instrucciones": [{"campo": "Situación inicial", "valor": "Suspendido", "ejemplo": "estatus inactivo IS", "tipo": "Contexto", "detalle": "Punto de partida del script: estatus inactivo IS."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/recortes/011.webp", "completa": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/011.webp", "visor": "../../../../visor_instructivos/index.html?p=4.1.1_Actualizar_estado_del_estudiante&d=11", "fuente": "Instructivo 4.1.1 · Actualizar el estado del estudiante", "n": 11, "texto": "STVSTST: estatus del estudiante (activo, inactivo…)", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: Estatus del estudiante"}, {"num": "", "texto": "En STVSTST están definidos los estatus de estudiante"}], "marcas": {}}]}, "c1": {"titulo": "Script 09 · Suspensión y reactivación", "pantalla": "SGASTDN", "fase": "Paso 1: verificación estatus", "hito": "expediente con Status IS", "instrucciones": [{"campo": "Verificación de Estatus Suspendido", "valor": "ID S00581109", "ejemplo": "Status IS", "tipo": "Verificación", "detalle": "ID: S00581109, pestaña Curricula, Status: IS (Inactivo)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/recortes/014.webp", "completa": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/014.webp", "visor": "../../../../visor_instructivos/index.html?p=4.1.1_Actualizar_estado_del_estudiante&d=14", "fuente": "Instructivo 4.1.1 · Actualizar el estado del estudiante", "n": 14, "texto": "SGASTDN: consultar el estatus del alumno", "nota": "", "lineas": [{"num": "", "texto": "Actualización del estatus del alumno en el mismo período: SGASTDN"}, {"num": "1", "texto": "ID: código identificador del alumno del alumno al que desea realizar la actualización.."}, {"num": "2", "texto": "Periodo en el cual se desea hacer la actualización. Si no se ingresa período, el sistema tomará por defecto el último período para el cual el estudiante tiene un registro en la página."}, {"num": "3", "texto": "Hacer clic en el botón Ir."}], "marcas": {}}]}, "c2": {"titulo": "Script 09 · Suspensión y reactivación", "pantalla": "SFAREGS", "fase": "Paso 2: intento bloqueado", "hito": "motor impide inscripción", "instrucciones": [{"campo": "Intento de Inscripción con IS", "valor": "SFAREGS", "ejemplo": "-", "tipo": "Acción", "detalle": "Intento de alta de NRC bloqueado por condición inactiva."}, {"campo": "Validación de Restricción", "valor": "SFAREGS", "ejemplo": "-", "tipo": "Verificación", "detalle": "Notificación de control indicando que el estudiante no es elegible."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/014.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/014.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=14", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 14, "texto": "SOATERM: verificación de errores de inscripción", "nota": "", "lineas": [{"num": "5", "texto": "En la pestaña ‘Verificación de errores de inscripción’ , se deben configurar las distintas acciones que ha de realizar Banner si en el proceso de inscripción encuentra algún error asociado. Se sugiere colocar en fatal aquellos elementos que, según el modelo de UAI, se controlen desde la programación académica o desde el catálogo, según lo que se indica en las siguientes 4 diapositivas."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/044.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=44", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 44, "texto": "SFAREGS: error de inscripción, DD o sobrepaso", "nota": "", "lineas": [{"num": "17", "texto": "Si existiesen errores en la inscripción, usted tiene dos alternativas:"}, {"num": "18", "texto": "Eliminar la a signatura, asignándole el estatus DD"}, {"num": "19", "texto": "Sobrepasar el error presentado mediante el campo “Ajustar” ya sea sobrepasando solamente el error que se presenta (opción Si) o sobrepasando todos los errores que se pudiesen presentar con el NRC (opción Todos)."}, {"num": "20", "texto": "En cualquiera de los casos, debe guardar la información nuevamente."}], "marcas": {}}]}, "c3": {"titulo": "Script 09 · Suspensión y reactivación", "pantalla": "SGASTDN", "fase": "Paso 3: reactivación alumno", "hito": "actualización a Status AS", "instrucciones": [{"campo": "Reactivación Académica", "valor": "Status AS", "ejemplo": "-", "tipo": "Crítico (guardado)", "detalle": "Modificación de registro a Status: AS (Activo) y guardado en base de datos."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/015.webp", "visor": "../../../../visor_instructivos/index.html?p=4.1.1_Actualizar_estado_del_estudiante&d=15", "fuente": "Instructivo 4.1.1 · Actualizar el estado del estudiante", "n": 15, "texto": "SGASTDN: cambiar el estatus a activo y guardar", "nota": "", "lineas": [{"num": "", "texto": "Actualización del estatus del alumno en el mismo período: SGASTDN"}, {"num": "", "texto": "En la pestaña de estudiante:"}, {"num": "4", "texto": "Seleccionar o digitar el nuevo código de estado"}, {"num": "5", "texto": "Hacer clic en el botón Guardar"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/recortes/017.webp", "completa": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/017.webp", "visor": "../../../../visor_instructivos/index.html?p=4.1.1_Actualizar_estado_del_estudiante&d=17", "fuente": "Instructivo 4.1.1 · Actualizar el estado del estudiante", "n": 17, "texto": "SGASTDN: copiar a un periodo posterior", "nota": "", "lineas": [{"num": "", "texto": "Actualización del estatus del alumno en un período posterior"}, {"num": "", "texto": "En la pestaña de estudiante:"}, {"num": "4", "texto": "Hacer clic sobre el botón Copiar"}, {"num": "5", "texto": "Seleccionar o digitar período para el cual actualizará el estatus del alumno"}, {"num": "6", "texto": "Seleccionar o digitar el nuevo código de estado"}, {"num": "7", "texto": "Hacer clic en el botón Guardar"}], "marcas": {}}]}, "c4": {"titulo": "Script 09 · Suspensión y reactivación", "pantalla": "SFAREGS", "fase": "Paso 4: matrícula exitosa", "hito": "código RE · asignación vacante", "instrucciones": [{"campo": "Reintento de Inscripción", "valor": "SFAREGS", "ejemplo": "-", "tipo": "Acción", "detalle": "Habilitación de captura de asignaturas en el periodo lectivo."}, {"campo": "Confirmación de Asignaturas", "valor": "SFAREGS", "ejemplo": "-", "tipo": "Crítico (guardado)", "detalle": "Guardado con estatus RE, asignando vacante y actualizando carga."}, {"campo": "Auditoría Final de Expediente", "valor": "SGASTDN", "ejemplo": "-", "tipo": "Verificación", "detalle": "(SGASTDN / SHACRSE) Trazabilidad integral de estatus y récord académico."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/038.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/038.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=38", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 38, "texto": "SFAREGS: ingresar el NRC", "nota": "", "lineas": [{"num": "9", "texto": "En la sección ‘Información de Curso’ se debe ingresar el NRC en el primer campo de información requerido, esto puede ser realizado directamente en el campo o bien presionando el botón de búsqueda de los NRC."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/042.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/042.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=42", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 42, "texto": "SFAREGS: datos del NRC y plan de estudios", "nota": "", "lineas": [{"num": "15", "texto": "Cargado el NRC, automáticamente se cargarían los demás campos de información, si no selecciono desde el inicio el plan de estudios, la página le pedirá que lo complete. Adicionalmente se debe ratificar si el Estatus de Inscripción con el cual se desee registrar el NRC será ‘RE’ o cualquier otro estatus que se encuentre habilitado según la configuración de SFARSTS."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/043.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/043.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=43", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 43, "texto": "SFAREGS: guardar la inscripción", "nota": "", "lineas": [{"num": "16", "texto": "Cargados los NRC que desea inscribirle al alumno y el plan de estudios que le corresponde a cada uno, se deberá presionar el botón ‘Guardar’, siendo este el instante donde Banner verificará los posibles errores de inscripción que pudiera tener la asociación del NRC."}], "marcas": {}}]}, "cr": {"titulo": "Script 09 · Suspensión y reactivación", "pantalla": "RESULTADO", "fase": "Resultado: Puede matricularse", "hito": "alumno activo AS", "instrucciones": [{"campo": "Resultado esperado", "valor": "Puede matricularse", "ejemplo": "alumno activo AS", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/4.1.1_Actualizar_estado_del_estudiante/019.webp", "visor": "../../../../visor_instructivos/index.html?p=4.1.1_Actualizar_estado_del_estudiante&d=19", "fuente": "Instructivo 4.1.1 · Actualizar el estado del estudiante", "n": 19, "texto": "SFAREGS: estatus del alumno en el periodo", "nota": "", "lineas": [{"num": "", "texto": "Actualización del estatus alumno en un período en el que tiene registro de inscripción"}, {"num": "4", "texto": "Hacer clic sobre la pestaña Período de alumno"}, {"num": "5", "texto": "Seleccionar o digitar el nuevo código de estado"}, {"num": "6", "texto": "Hacer clic en el botón Guardar"}], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 22, "slug": "script-18-c-solicitud-de-servicio-o-queja", "titulo": "Script 18-C · Solicitud de servicio o queja", "cap": "Capacidad 4 y 10", "url": "../22-script-18-c-solicitud-de-servicio-o-queja/computacion-22-script-18-c-solicitud-de-servicio-o-queja.html", "is_curr": false};
@@ -19153,7 +19392,7 @@ button.ai-fab:active,
   }
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
-  var visorDiapo = { lista: [], idx: 0, completa: false };
+  var visorDiapo = { lista: [], idx: 0, completa: true };
 
   function asegurarVisorDiapo() {
     var v = document.getElementById('guia-diapo-visor');
@@ -19179,15 +19418,14 @@ button.ai-fab:active,
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
-    // Archify cierra el paso abierto con un clic fuera de su ficha y lo escucha en la captura de window:
-    // los toques dentro del visor se detienen ahí (el «click» sigue y lo atiende el visor), así el paso no se pierde.
-    ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click'].forEach(function (tipo) {
-      window.addEventListener(tipo, function (e) {
-        if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
-        e.stopPropagation();
-        if (tipo === 'click') clicEnVisor(e, v);
-      }, true);
-    });
+    if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
+    // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
+    window.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
+      e.stopPropagation();
+      clicEnVisor(e, v);
+    }, true);
     v.addEventListener('toggle', function (e) {
       if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
     }, true);
@@ -19196,6 +19434,13 @@ button.ai-fab:active,
 
   // Clic dentro del visor (se atiende en la captura de window; ver arriba).
   function clicEnVisor(e, v) {
+    var zi = e.target.closest('[data-zi]');
+    if (zi) {
+      e.preventDefault();
+      var zoom = v.querySelector('.gdv-img').__cceeZoom;
+      if (zoom) zoom.accion(zi.getAttribute('data-zi'));
+      return;
+    }
     var accion = e.target.closest('[data-gdv]');
     if (!accion) {
       if (e.target === v) cerrarVisorDiapo();
@@ -19308,7 +19553,8 @@ button.ai-fab:active,
 
   function abrirVisorDiapo(lista, idx) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
-    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -20160,6 +20406,10 @@ button.ai-fab:active,
       if (visorDiapoAbierto()) {
         if (e.key === 'Escape') { e.preventDefault(); cerrarVisorDiapo(); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); moverVisorDiapo(1); }
+        else if (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0') {
+          var zoom = document.querySelector('#guia-diapo-visor .gdv-img').__cceeZoom;
+          if (zoom) { e.preventDefault(); zoom.accion(e.key === '0' ? 'reset' : (e.key === '-' ? 'menos' : 'mas')); }
+        }
         else if (e.key === 'ArrowLeft') { e.preventDefault(); moverVisorDiapo(-1); }
         return;
       }
@@ -21018,7 +21268,7 @@ button.ai-fab:active,
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: false };
+    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -21055,6 +21305,7 @@ button.ai-fab:active,
         else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
       });
       document.body.appendChild(v);
+      if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
       return v;
     }
 
@@ -21084,6 +21335,7 @@ button.ai-fab:active,
       var visor = v.querySelector('[data-aipv="visor"]');
       var completa = v.querySelector('[data-aipv="completa"]');
       img.hidden = !l;
+      if (img.__cceeZoom) img.__cceeZoom.zona.hidden = !l;  // con zoom, la imagen va dentro de su zona
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
@@ -21104,7 +21356,6 @@ button.ai-fab:active,
 
     function abrirVisorPasos(pasos) {
       visorPasos.pasos = pasos;
-      visorPasos.completa = false;
       var primero = 0;
       for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
       asegurarVisorPasos().hidden = false;

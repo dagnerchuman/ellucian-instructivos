@@ -48,17 +48,22 @@ _JS_LOGIC = _cargar_asset("modal_guia.js")
 CSS_AI = _cargar_asset("asistente_ia.css")
 _JS_AI = _cargar_asset("asistente_ia.js")
 HTML_AI = _cargar_asset("asistente_ia_snippet.html")
+CSS_ZOOM = _cargar_asset("zoom_imagen.css")
+_JS_ZOOM = _cargar_asset("zoom_imagen.js")
 
 JS_SCRIPT_TEMPLATE = f"""<style>
 /* ASISTENTE CCEE: bloque generado */
 __CSS__
 
 {CSS_AI}
+
+{CSS_ZOOM}
 </style>
 {HTML_AI}
 <script src="__KNOWLEDGE_SCRIPT__"></script>
 <script src="__DIAPOS_SCRIPT__"></script>
 <script>
+{_JS_ZOOM}
 {_JS_LOGIC}
 {_JS_AI}
 </script>"""

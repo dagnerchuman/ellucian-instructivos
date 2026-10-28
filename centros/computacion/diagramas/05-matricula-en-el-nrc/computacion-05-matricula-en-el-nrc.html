@@ -18172,6 +18172,80 @@ button.ai-fab:active,
   .ai-header-motor .ai-engine-select { max-width: 130px; }
 }
 
+
+/* Zoom y lupa de las láminas (zoom_imagen.js) */
+.zi-zona {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  border-radius: 0.4rem;
+  touch-action: none;
+  cursor: zoom-in;
+}
+.zi-zona > img {
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zi-zona.zi-zoom { cursor: grab; }
+.zi-zona.zi-arrastrando { cursor: grabbing; }
+.zi-zona.zi-con-lupa { cursor: none; }
+.zi-barra {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+}
+.zi-barra button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
+}
+.zi-barra button:hover,
+.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
+.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
+.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
+.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-lupa {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn { display: none; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18329,6 +18403,171 @@ button.ai-fab:active,
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
 <script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
+/* Zoom y lupa para las láminas de los visores (guía de cada paso y asistente IA).
+   Solo agranda la imagen: la rueda, el pellizco del touchpad (ctrl + rueda) y el gesto de Safari se
+   detienen aquí para que el navegador no agrande toda la página.
+   Uso: var z = window.CCEEZoom(img);  z.reset();  z.zoom(1.25);  — se reinicia solo al cambiar la imagen. */
+(function () {
+  if (window.CCEEZoom) return;
+  var MIN = 1, MAX = 4, LUPA_R = 95;  // más de 4× solo agranda los píxeles: las láminas miden 1600 px
+
+  window.CCEEZoom = function (img) {
+    if (img.__cceeZoom) return img.__cceeZoom;
+    var zona = document.createElement('div');
+    zona.className = 'zi-zona';
+    img.parentNode.insertBefore(zona, img);
+    zona.appendChild(img);
+    img.draggable = false;
+
+    var barra = document.createElement('div');
+    barra.className = 'zi-barra';
+    barra.innerHTML =
+      '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
+      '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
+      '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
+      '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
+    zona.appendChild(barra);
+
+    var lupa = document.createElement('div');
+    lupa.className = 'zi-lupa';
+    lupa.hidden = true;
+    zona.appendChild(lupa);
+
+    var s = 1, tx = 0, ty = 0, lupaOn = false, lupaK = 2.5;
+    var punteros = {}, arrastre = null, pinza = null, gestoBase = 1;
+
+    function limitar() {
+      var w = zona.clientWidth, h = zona.clientHeight;
+      tx = Math.min(0, Math.max(w - w * s, tx));
+      ty = Math.min(0, Math.max(h - h * s, ty));
+    }
+    function pintar() {
+      limitar();
+      img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      zona.classList.toggle('zi-zoom', s > 1);
+      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+    }
+    function zoomEn(f, cx, cy) {
+      var r = zona.getBoundingClientRect();
+      var x = cx === undefined ? r.width / 2 : cx - r.left;
+      var y = cy === undefined ? r.height / 2 : cy - r.top;
+      var nuevo = Math.min(MAX, Math.max(MIN, s * f));
+      tx = x - (x - tx) * (nuevo / s);
+      ty = y - (y - ty) * (nuevo / s);
+      s = nuevo;
+      if (s === 1) { tx = 0; ty = 0; }
+      pintar();
+    }
+    function reset() { s = 1; tx = 0; ty = 0; pintar(); }
+
+    function moverLupa(e) {
+      var r = img.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
+      var z = zona.getBoundingClientRect();
+      lupa.hidden = false;
+      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
+      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
+      lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
+      lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
+    }
+    function alternarLupa() {
+      lupaOn = !lupaOn;
+      if (lupaOn) reset();
+      lupa.hidden = true;
+      zona.classList.toggle('zi-con-lupa', lupaOn);
+      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+    }
+
+    function accion(a) {
+      if (lupaOn && a !== 'lupa') alternarLupa();
+      if (a === 'mas') zoomEn(1.4);
+      else if (a === 'menos') zoomEn(1 / 1.4);
+      else if (a === 'reset') reset();
+      else if (a === 'lupa') alternarLupa();
+    }
+    // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
+    barra.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-zi]');
+      if (!b) return;
+      e.preventDefault();
+      e.stopPropagation();
+      accion(b.getAttribute('data-zi'));
+    });
+
+    // Rueda y pellizco del touchpad (llega como rueda con ctrlKey): acercan en el punto del cursor.
+    zona.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      if (lupaOn) {
+        lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        moverLupa(e);
+        return;
+      }
+      zoomEn(Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0018)), e.clientX, e.clientY);
+    }, { passive: false });
+    // Safari (Mac) manda el pellizco como gesto propio.
+    zona.addEventListener('gesturestart', function (e) { e.preventDefault(); gestoBase = s; }, { passive: false });
+    zona.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (!lupaOn) zoomEn((gestoBase * e.scale) / s, e.clientX, e.clientY);
+    }, { passive: false });
+    zona.addEventListener('gestureend', function (e) { e.preventDefault(); }, { passive: false });
+
+    zona.addEventListener('dblclick', function (e) {
+      if (e.target.closest('.zi-barra') || lupaOn) return;
+      e.preventDefault();
+      if (s > 1.05) reset(); else zoomEn(2.5, e.clientX, e.clientY);
+    });
+
+    // Arrastrar para mover; con dos dedos, pellizcar (pantallas táctiles).
+    zona.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.zi-barra')) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        pinza = { d: Math.hypot(a.x - b.x, a.y - b.y), s: s };
+        arrastre = null;
+      } else if (s > 1 && !lupaOn) {
+        arrastre = { x: e.clientX - tx, y: e.clientY - ty };
+        zona.setPointerCapture(e.pointerId);
+        zona.classList.add('zi-arrastrando');
+      }
+    });
+    zona.addEventListener('pointermove', function (e) {
+      if (lupaOn) { moverLupa(e); return; }
+      if (!punteros[e.pointerId]) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (pinza && ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        zoomEn((pinza.s * Math.hypot(a.x - b.x, a.y - b.y) / pinza.d) / s, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      } else if (arrastre) {
+        tx = e.clientX - arrastre.x;
+        ty = e.clientY - arrastre.y;
+        pintar();
+      }
+    });
+    function soltar(e) {
+      delete punteros[e.pointerId];
+      if (Object.keys(punteros).length < 2) pinza = null;
+      arrastre = null;
+      zona.classList.remove('zi-arrastrando');
+    }
+    zona.addEventListener('pointerup', soltar);
+    zona.addEventListener('pointercancel', soltar);
+    zona.addEventListener('pointerleave', function () { if (lupaOn) lupa.hidden = true; });
+
+    img.addEventListener('load', reset);  // imagen nueva (otra lámina, recorte o completa): vuelve al 100 %
+    var ctl = { reset: reset, zoom: function (f) { zoomEn(f); }, accion: accion, zona: zona };
+    img.__cceeZoom = ctl;
+    return ctl;
+  };
+})();
+
 (function () {
   var GUIA_MAP = {"i1": {"fase": "Paso 1: Consulta Previa de Vacantes", "pantalla": "SSASECQ", "hito": "Verificación de cupo disponible", "instrucciones": [{"campo": "Formulario", "valor": "SSASECQ", "tipo": "Consulta", "detalle": "Ingresar periodo 202656, materia y NRC para comprobar vacantes en Remaining."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/026.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/026.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=26", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 26, "texto": "SSASECT: número de NRC asignado al guardar", "nota": "SSASECQ no sale en los instructivos. Referencia: los mismos datos del NRC en SSASECT (instructivo 5.3).", "lineas": [{"num": "", "texto": "Una vez la asignatura sea configurada, tras realizar el guardado de la configuración, se generará el valor único del NRC para el periodo académico en consideración."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/027.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=27", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 27, "texto": "SSASECT: cupo del NRC (máximo, real y restante)", "nota": "SSASECQ no sale en los instructivos. Referencia: los mismos datos del NRC en SSASECT (instructivo 5.3).", "lineas": [{"num": "", "texto": "En la pestaña Información de ingreso de sección, Subpestaña Detalles de Ingreso:"}, {"num": "16", "texto": "Ingresar cupos máximos para el NRC."}, {"num": "17", "texto": "Guarde la información."}], "marcas": {}}]}, "i2": {"fase": "Paso 2: Autorización Curricular", "pantalla": "SFAREGS", "hito": "Plan autorizado con estatus elegible (EL)", "instrucciones": [{"campo": "Encabezado", "valor": "Periodo → ID del alumno → plan de estudios", "tipo": "Bloque clave", "detalle": "Ingrese primero el periodo (202656), luego el ID y al final el plan de estudios; pulse «Ir». Si el plan se ingresa antes, puede aparecer «no existe la tabla o vista» (C86)."}, {"campo": "Plan de estudios de ingreso", "valor": "Plan del programa del alumno · estatus EL", "tipo": "Obligatorio", "detalle": "No asuma que el plan es 1. Si el alumno no tiene currículo del nivel del curso, agréguelo en la pestaña «Currículos» (+, programa, Tab, Guardar) (C100). Guarde."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/035.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/035.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=35", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 35, "texto": "SFAREGS: periodo e ID del alumno", "nota": "", "lineas": [{"num": "", "texto": "El proceso de inscripción desde backoffice se realiza por medio de la página administrativa SFAREGS. Para proceder, siga los siguientes pasos:"}, {"num": "1", "texto": "Ingresar el Periodo Académico en el que se realizará la inscripción"}, {"num": "2", "texto": "Ingresar el ID del estudiante y Seleccione el plan de estudios. Si el estudiante tiene solo un plan de estudios (programa), el sistema lo llenara automáticamente al seleccionar esté campo."}, {"num": "3", "texto": "Presionar el botón ‘Ir’."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/036.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/036.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=36", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 36, "texto": "SFAREGS: estatus de ingreso EL", "nota": "", "lineas": [{"num": "4", "texto": "En el campo ‘Estatus’ de la sección ‘Información de ingreso’ debe ingresar el estatus Elegible (EL)."}, {"num": "5", "texto": "En los campos Mínimas y Máximas, se heredan los valores definidos en SFAMHRS. Estos valores pueden ser modificados por el usuario que está inscribiendo desde backoffice."}, {"num": "6", "texto": "Pase al siguiente bloque."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/037.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/037.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=37", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 37, "texto": "SFAREGS: plan de estudios de ingreso y guardar", "nota": "", "lineas": [{"num": "7", "texto": "En la Sección Plan de estudios de ingreso, se completará con el seleccionado."}, {"num": "8", "texto": "Guarde la información"}], "marcas": {"1": "7"}}]}, "i3": {"fase": "Paso 3: Inscripción en el NRC", "pantalla": "SFAREGS", "hito": "Inscripción regular (código RE)", "instrucciones": [{"campo": "Información de curso", "valor": "NRC oficial de Computación (ej. 10018 / 1026)", "tipo": "Obligatorio", "detalle": "En bloque Course Registration, digitar el o los NRCs según corresponda (en Idiomas ingresar Teórico + Práctico juntos por regla de ligas)."}, {"campo": "Código de estatus", "valor": "RE (Web / Backoffice Registered)", "tipo": "Obligatorio", "detalle": "Digite RE y guarde. Mensaje esperado: «Estimación de cuota procesada»."}, {"campo": "Nivel del curso", "valor": "Debe coincidir con el currículo (C para Computación)", "tipo": "Control", "detalle": "Si choca con el horario de otro NRC del alumno, Banner muestra conflicto: ajuste el horario o elija otro NRC."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/038.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/038.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=38", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 38, "texto": "SFAREGS: ingresar el NRC", "nota": "", "lineas": [{"num": "9", "texto": "En la sección ‘Información de Curso’ se debe ingresar el NRC en el primer campo de información requerido, esto puede ser realizado directamente en el campo o bien presionando el botón de búsqueda de los NRC."}], "marcas": {"0": "9"}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/042.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/042.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=42", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 42, "texto": "SFAREGS: datos del NRC y plan de estudios", "nota": "", "lineas": [{"num": "15", "texto": "Cargado el NRC, automáticamente se cargarían los demás campos de información, si no selecciono desde el inicio el plan de estudios, la página le pedirá que lo complete. Adicionalmente se debe ratificar si el Estatus de Inscripción con el cual se desee registrar el NRC será ‘RE’ o cualquier otro estatus que se encuentre habilitado según la configuración de SFARSTS."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/recortes/043.webp", "completa": "../../../../visor_instructivos/diapositivas/5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice/043.webp", "visor": "../../../../visor_instructivos/index.html?p=5.4_4.1.4.1.12_Instructivo_-_Ejecu.la_inscrip.de_cursos_por_backoffice&d=43", "fuente": "Instructivo 5.4 · Inscripción de cursos por backoffice", "n": 43, "texto": "SFAREGS: guardar la inscripción", "nota": "", "lineas": [{"num": "16", "texto": "Cargados los NRC que desea inscribirle al alumno y el plan de estudios que le corresponde a cada uno, se deberá presionar el botón ‘Guardar’, siendo este el instante donde Banner verificará los posibles errores de inscripción que pudiera tener la asociación del NRC."}], "marcas": {}}]}, "i4": {"fase": "Paso 4: Auditoría Financiera", "pantalla": "TSAAREV", "hito": "Cargos y cuotas aplicados correctamente", "instrucciones": [{"campo": "Formulario", "valor": "TSAAREV", "tipo": "Cobranzas", "detalle": "Consultar cuenta corriente del alumno para verificar la tasación automática del curso."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/recortes/043.webp", "completa": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/043.webp", "visor": "../../../../visor_instructivos/index.html?p=11.2.1_-_Gestionar_la_matri_cula&d=43", "fuente": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)", "n": 43, "texto": "SFAREGS: estimación de cuota procesada", "nota": "", "lineas": [{"num": "", "texto": "Proceso: SFAREGS - Inscripción de curso de alumno"}, {"num": "11", "texto": "Se evidencia la estimación de cuota procesada."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/recortes/044.webp", "completa": "../../../../visor_instructivos/diapositivas/11.2.1_-_Gestionar_la_matri_cula/044.webp", "visor": "../../../../visor_instructivos/index.html?p=11.2.1_-_Gestionar_la_matri_cula&d=44", "fuente": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)", "n": 44, "texto": "TSAAREV: conceptos de la estimación de cuota", "nota": "", "lineas": [{"num": "", "texto": "Se evidencia en TSAAREV el registro correcto de los concepto de estimación de cuota."}, {"num": "", "texto": "Resultado : TSAAREV - Revisión del detalle de la cuenta - Alumnos"}], "marcas": {}}]}, "i5": {"fase": "Paso 5: Lista Oficial de Clase", "pantalla": "SFASLST", "hito": "Alumno matriculado en lista del docente", "instrucciones": [{"campo": "Formulario", "valor": "SFASLST", "tipo": "Verificación", "detalle": "Abrir lista de clase con periodo y NRC; confirmar que el alumno figure como matriculado."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/015.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=15", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 15, "texto": "SFASLST: periodo y NRC", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "", "texto": "En la página SFASLST:"}, {"num": "1", "texto": "Ingrese el período y NRC para el cual desea ingresar las calificaciones."}, {"num": "2", "texto": "Presione el botón Ir."}], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 6, "slug": "notas-y-pase-a-historia", "titulo": "Scripts 13 y 14 · Notas y pase a historia", "cap": "Capacidades 7 y 8", "url": "../06-notas-y-pase-a-historia/computacion-06-notas-y-pase-a-historia.html", "is_curr": false};
@@ -19165,7 +19404,7 @@ button.ai-fab:active,
   }
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
-  var visorDiapo = { lista: [], idx: 0, completa: false };
+  var visorDiapo = { lista: [], idx: 0, completa: true };
 
   function asegurarVisorDiapo() {
     var v = document.getElementById('guia-diapo-visor');
@@ -19191,15 +19430,14 @@ button.ai-fab:active,
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
-    // Archify cierra el paso abierto con un clic fuera de su ficha y lo escucha en la captura de window:
-    // los toques dentro del visor se detienen ahí (el «click» sigue y lo atiende el visor), así el paso no se pierde.
-    ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click'].forEach(function (tipo) {
-      window.addEventListener(tipo, function (e) {
-        if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
-        e.stopPropagation();
-        if (tipo === 'click') clicEnVisor(e, v);
-      }, true);
-    });
+    if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
+    // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
+    window.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
+      e.stopPropagation();
+      clicEnVisor(e, v);
+    }, true);
     v.addEventListener('toggle', function (e) {
       if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
     }, true);
@@ -19208,6 +19446,13 @@ button.ai-fab:active,
 
   // Clic dentro del visor (se atiende en la captura de window; ver arriba).
   function clicEnVisor(e, v) {
+    var zi = e.target.closest('[data-zi]');
+    if (zi) {
+      e.preventDefault();
+      var zoom = v.querySelector('.gdv-img').__cceeZoom;
+      if (zoom) zoom.accion(zi.getAttribute('data-zi'));
+      return;
+    }
     var accion = e.target.closest('[data-gdv]');
     if (!accion) {
       if (e.target === v) cerrarVisorDiapo();
@@ -19320,7 +19565,8 @@ button.ai-fab:active,
 
   function abrirVisorDiapo(lista, idx) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
-    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -20172,6 +20418,10 @@ button.ai-fab:active,
       if (visorDiapoAbierto()) {
         if (e.key === 'Escape') { e.preventDefault(); cerrarVisorDiapo(); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); moverVisorDiapo(1); }
+        else if (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0') {
+          var zoom = document.querySelector('#guia-diapo-visor .gdv-img').__cceeZoom;
+          if (zoom) { e.preventDefault(); zoom.accion(e.key === '0' ? 'reset' : (e.key === '-' ? 'menos' : 'mas')); }
+        }
         else if (e.key === 'ArrowLeft') { e.preventDefault(); moverVisorDiapo(-1); }
         return;
       }
@@ -21030,7 +21280,7 @@ button.ai-fab:active,
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: false };
+    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -21067,6 +21317,7 @@ button.ai-fab:active,
         else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
       });
       document.body.appendChild(v);
+      if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
       return v;
     }
 
@@ -21096,6 +21347,7 @@ button.ai-fab:active,
       var visor = v.querySelector('[data-aipv="visor"]');
       var completa = v.querySelector('[data-aipv="completa"]');
       img.hidden = !l;
+      if (img.__cceeZoom) img.__cceeZoom.zona.hidden = !l;  // con zoom, la imagen va dentro de su zona
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
@@ -21116,7 +21368,6 @@ button.ai-fab:active,
 
     function abrirVisorPasos(pasos) {
       visorPasos.pasos = pasos;
-      visorPasos.completa = false;
       var primero = 0;
       for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
       asegurarVisorPasos().hidden = false;

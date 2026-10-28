@@ -18159,6 +18159,80 @@ button.ai-fab:active,
   .ai-header-motor .ai-engine-select { max-width: 130px; }
 }
 
+
+/* Zoom y lupa de las láminas (zoom_imagen.js) */
+.zi-zona {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  border-radius: 0.4rem;
+  touch-action: none;
+  cursor: zoom-in;
+}
+.zi-zona > img {
+  transform-origin: 0 0;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zi-zona.zi-zoom { cursor: grab; }
+.zi-zona.zi-arrastrando { cursor: grabbing; }
+.zi-zona.zi-con-lupa { cursor: none; }
+.zi-barra {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+}
+.zi-barra button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  justify-content: center;
+  cursor: pointer;
+}
+.zi-barra button:hover,
+.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
+.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
+.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
+.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-lupa {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid #8b5cf6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn { display: none; }
+}
+
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18316,6 +18390,171 @@ button.ai-fab:active,
 <script src="../../../../herramientas/diagramas/assets/asistente_conocimiento.js"></script>
 <script src="../../../../herramientas/diagramas/assets/asistente_diapositivas.js"></script>
 <script>
+/* Zoom y lupa para las láminas de los visores (guía de cada paso y asistente IA).
+   Solo agranda la imagen: la rueda, el pellizco del touchpad (ctrl + rueda) y el gesto de Safari se
+   detienen aquí para que el navegador no agrande toda la página.
+   Uso: var z = window.CCEEZoom(img);  z.reset();  z.zoom(1.25);  — se reinicia solo al cambiar la imagen. */
+(function () {
+  if (window.CCEEZoom) return;
+  var MIN = 1, MAX = 4, LUPA_R = 95;  // más de 4× solo agranda los píxeles: las láminas miden 1600 px
+
+  window.CCEEZoom = function (img) {
+    if (img.__cceeZoom) return img.__cceeZoom;
+    var zona = document.createElement('div');
+    zona.className = 'zi-zona';
+    img.parentNode.insertBefore(zona, img);
+    zona.appendChild(img);
+    img.draggable = false;
+
+    var barra = document.createElement('div');
+    barra.className = 'zi-barra';
+    barra.innerHTML =
+      '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
+      '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
+      '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
+      '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
+    zona.appendChild(barra);
+
+    var lupa = document.createElement('div');
+    lupa.className = 'zi-lupa';
+    lupa.hidden = true;
+    zona.appendChild(lupa);
+
+    var s = 1, tx = 0, ty = 0, lupaOn = false, lupaK = 2.5;
+    var punteros = {}, arrastre = null, pinza = null, gestoBase = 1;
+
+    function limitar() {
+      var w = zona.clientWidth, h = zona.clientHeight;
+      tx = Math.min(0, Math.max(w - w * s, tx));
+      ty = Math.min(0, Math.max(h - h * s, ty));
+    }
+    function pintar() {
+      limitar();
+      img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      zona.classList.toggle('zi-zoom', s > 1);
+      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+    }
+    function zoomEn(f, cx, cy) {
+      var r = zona.getBoundingClientRect();
+      var x = cx === undefined ? r.width / 2 : cx - r.left;
+      var y = cy === undefined ? r.height / 2 : cy - r.top;
+      var nuevo = Math.min(MAX, Math.max(MIN, s * f));
+      tx = x - (x - tx) * (nuevo / s);
+      ty = y - (y - ty) * (nuevo / s);
+      s = nuevo;
+      if (s === 1) { tx = 0; ty = 0; }
+      pintar();
+    }
+    function reset() { s = 1; tx = 0; ty = 0; pintar(); }
+
+    function moverLupa(e) {
+      var r = img.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
+      var z = zona.getBoundingClientRect();
+      lupa.hidden = false;
+      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
+      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
+      lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
+      lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
+    }
+    function alternarLupa() {
+      lupaOn = !lupaOn;
+      if (lupaOn) reset();
+      lupa.hidden = true;
+      zona.classList.toggle('zi-con-lupa', lupaOn);
+      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+    }
+
+    function accion(a) {
+      if (lupaOn && a !== 'lupa') alternarLupa();
+      if (a === 'mas') zoomEn(1.4);
+      else if (a === 'menos') zoomEn(1 / 1.4);
+      else if (a === 'reset') reset();
+      else if (a === 'lupa') alternarLupa();
+    }
+    // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
+    barra.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-zi]');
+      if (!b) return;
+      e.preventDefault();
+      e.stopPropagation();
+      accion(b.getAttribute('data-zi'));
+    });
+
+    // Rueda y pellizco del touchpad (llega como rueda con ctrlKey): acercan en el punto del cursor.
+    zona.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      if (lupaOn) {
+        lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        moverLupa(e);
+        return;
+      }
+      zoomEn(Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0018)), e.clientX, e.clientY);
+    }, { passive: false });
+    // Safari (Mac) manda el pellizco como gesto propio.
+    zona.addEventListener('gesturestart', function (e) { e.preventDefault(); gestoBase = s; }, { passive: false });
+    zona.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+      if (!lupaOn) zoomEn((gestoBase * e.scale) / s, e.clientX, e.clientY);
+    }, { passive: false });
+    zona.addEventListener('gestureend', function (e) { e.preventDefault(); }, { passive: false });
+
+    zona.addEventListener('dblclick', function (e) {
+      if (e.target.closest('.zi-barra') || lupaOn) return;
+      e.preventDefault();
+      if (s > 1.05) reset(); else zoomEn(2.5, e.clientX, e.clientY);
+    });
+
+    // Arrastrar para mover; con dos dedos, pellizcar (pantallas táctiles).
+    zona.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.zi-barra')) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        pinza = { d: Math.hypot(a.x - b.x, a.y - b.y), s: s };
+        arrastre = null;
+      } else if (s > 1 && !lupaOn) {
+        arrastre = { x: e.clientX - tx, y: e.clientY - ty };
+        zona.setPointerCapture(e.pointerId);
+        zona.classList.add('zi-arrastrando');
+      }
+    });
+    zona.addEventListener('pointermove', function (e) {
+      if (lupaOn) { moverLupa(e); return; }
+      if (!punteros[e.pointerId]) return;
+      punteros[e.pointerId] = { x: e.clientX, y: e.clientY };
+      var ids = Object.keys(punteros);
+      if (pinza && ids.length === 2) {
+        var a = punteros[ids[0]], b = punteros[ids[1]];
+        zoomEn((pinza.s * Math.hypot(a.x - b.x, a.y - b.y) / pinza.d) / s, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      } else if (arrastre) {
+        tx = e.clientX - arrastre.x;
+        ty = e.clientY - arrastre.y;
+        pintar();
+      }
+    });
+    function soltar(e) {
+      delete punteros[e.pointerId];
+      if (Object.keys(punteros).length < 2) pinza = null;
+      arrastre = null;
+      zona.classList.remove('zi-arrastrando');
+    }
+    zona.addEventListener('pointerup', soltar);
+    zona.addEventListener('pointercancel', soltar);
+    zona.addEventListener('pointerleave', function () { if (lupaOn) lupa.hidden = true; });
+
+    img.addEventListener('load', reset);  // imagen nueva (otra lámina, recorte o completa): vuelve al 100 %
+    var ctl = { reset: reset, zoom: function (f) { zoomEn(f); }, accion: accion, zona: zona };
+    img.__cceeZoom = ctl;
+    return ctl;
+  };
+})();
+
 (function () {
   var GUIA_MAP = {"c0": {"titulo": "Script 11-B · Diseño de mallas y programas · referencia: prueba de Computación", "pantalla": "CASO", "fase": "Situación: Diseño curricular", "hito": "programa CMEMC38", "instrucciones": [{"campo": "Situación inicial", "valor": "Diseño curricular", "ejemplo": "programa CMEMC38", "tipo": "Contexto", "detalle": "Punto de partida del script: programa CMEMC38."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/019.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=19", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 19, "texto": "STVMAJR: la carrera del programa", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Validación del código de carrera, especialidad, concentración - STVMAJR"}, {"num": "", "texto": "Página destinada a la creación de carreras, concentraciones y especialidades vinculadas a los programas, es decir un Major, que se entiende como una estructura coherente de cursos que se inician con la introducción a los aspectos generales de un campo específico del saber y luego progresan hacia temas más avanzados. El proceso de creación o modificación es el siguiente: 1. Debe presionar ´+’ para la creación del nuevo registro.2. Código de carrera: Código alfanumérico de 04 caracteres, se crea el código de la carrera asociada al programa."}, {"num": "3", "texto": "Descripción: Campo alfanumérico de hasta 30 caracteres que representa el nombre de la carrera creada."}, {"num": "4", "texto": "CIPC: No se utilizará."}, {"num": "5", "texto": "Carrera: Se marcará este cuadro para indicar las carreras que serán asociadas a un programa académico."}], "marcas": {}}]}, "c1": {"titulo": "Script 11-B · Diseño de mallas y programas · referencia: prueba de Computación", "pantalla": "STVMAJR", "fase": "Paso 1: código de carrera", "hito": "Major ACXP", "instrucciones": [{"campo": "Código de Carrera / Major", "valor": "STVMAJR", "ejemplo": "-", "tipo": "Acción", "detalle": "Creación del Major institucional y activación de la casilla Carrera."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/019.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=19", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 19, "texto": "STVMAJR: código de carrera", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Validación del código de carrera, especialidad, concentración - STVMAJR"}, {"num": "", "texto": "Página destinada a la creación de carreras, concentraciones y especialidades vinculadas a los programas, es decir un Major, que se entiende como una estructura coherente de cursos que se inician con la introducción a los aspectos generales de un campo específico del saber y luego progresan hacia temas más avanzados. El proceso de creación o modificación es el siguiente: 1. Debe presionar ´+’ para la creación del nuevo registro.2. Código de carrera: Código alfanumérico de 04 caracteres, se crea el código de la carrera asociada al programa."}, {"num": "3", "texto": "Descripción: Campo alfanumérico de hasta 30 caracteres que representa el nombre de la carrera creada."}, {"num": "4", "texto": "CIPC: No se utilizará."}, {"num": "5", "texto": "Carrera: Se marcará este cuadro para indicar las carreras que serán asociadas a un programa académico."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/020.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/020.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=20", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 20, "texto": "STVMAJR: indicadores de carrera y especialidad", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Validación del código de carrera, especialidad, concentración - STVMAJR"}, {"num": "6", "texto": "Especialidad: Se marcará este cuadro para indicar que ese código de carrera se va a utilizar como especialidad para asociarlo a un programa académico."}, {"num": "7", "texto": "Concentración: Se puede utilizar como otra subdivisión para asociarlos un programa académico. (si el programa tiene cursos de énfasis se deben crear y poner el check) La concentración se utilizará para las líneas de énfasis"}, {"num": "8", "texto": "Ocupación: Se puede utilizar para marcar la carrera como especifica de ocupación. No aplica"}, {"num": "9", "texto": "Elegilidad de ayuda financiera: número de mensaje de respuesta de voz y equivalente SEVIS no se utilizarán en la configuración"}, {"num": "10", "texto": "Requerido por el sistema: Aplica para aquellos registros requeridos por el sistema. En este caso aplica para el 0000."}, {"num": "11", "texto": "Finalmente se deben guardar todos los registros creados."}], "marcas": {}}]}, "c2": {"titulo": "Script 11-B · Diseño de mallas y programas · referencia: prueba de Computación", "pantalla": "SMAPRLE", "fase": "Paso 2: código de programa", "hito": "Programa CMEMC38 · nivel C", "instrucciones": [{"campo": "Definición de Programa", "valor": "SMAPRLE", "ejemplo": "-", "tipo": "Acción", "detalle": "Código del programa (12 caracteres), nivel académico, grado 000000 y escuela EM."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/022.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/022.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=22", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 22, "texto": "SMAPRLE: crear el código del programa", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Reglas de definición de programa SMAPRLE"}, {"num": "", "texto": "Página destinada a la creación de los programas1. Programa: Se crea el código del programa según la nomenclatura establecida (12 caracteres), dando clic en ‘+’."}, {"num": "2", "texto": "Descripción: Campo alfanumérico de hasta 30 caracteres que representa el nombre del programa creado."}, {"num": "3", "texto": "Web: Se marca para que el programa sea visible en el autoservicio del alumno"}, {"num": "4", "texto": "Bloqueado: Se actualiza automáticamente cuando se bloquea en SOACURR."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/023.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/023.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=23", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 23, "texto": "SMAPRLE: reglas de currículum", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Reglas de definición de programa SMAPRLE"}, {"num": "", "texto": "Página destinada a la creación de los programas5. Reglas de currículum: Se actualiza automáticamente cuando se crea la regla de currícula en SOACURR"}, {"num": "6", "texto": "Dependiente de currículum: Se activa de manera predefinida, se debe desmarcar cuando el programa a crear no tendrá regla curricular en SOACURR y se le asignará particularmente a un alumno en el campo ID."}, {"num": "7", "texto": "Nivel de alumno: Nivel académico del alumno que se inscriba al programa."}, {"num": "8", "texto": "Nivel de curso: Nivel académico que tendrán los cursos."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/024.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=24", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 24, "texto": "SMAPRLE: campus y nivel del programa", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Reglas de definición de programa SMAPRLE"}, {"num": "", "texto": "Página destinada a la creación de los programas9. Campus: Corresponde al campus del programa, se deja vacío y se define en SOACURR."}, {"num": "10", "texto": "Escuela: Se ingresa la facultad a la que está asociado el programa académico."}, {"num": "", "texto": "11 Grado: Se ingresa el tipo de grado que va a otorgar el programa académico."}, {"num": "12", "texto": "Id: Este campo solo se llena, en caso de que el programa académico se configure para un solo estudiante, ejemplo un plan curricular de doctorado diseñado para un alumno señalado. Este campo se activa desmarcando la casilla dependiente de currículo."}], "marcas": {}}]}, "c3": {"titulo": "Script 11-B · Diseño de mallas y programas · referencia: prueba de Computación", "pantalla": "SOACURR", "fase": "Paso 3: regla de currículo", "hito": "Campus S · EMCI", "instrucciones": [{"campo": "Regla Curricular", "valor": "SOACURR", "ejemplo": "-", "tipo": "Acción", "detalle": "Vinculación del programa con Campus S, periodo de inicio, Major de STVMAJR y departamento institucional."}, {"campo": "Biblioteca de Áreas", "valor": "SMAALIB", "ejemplo": "-", "tipo": "Acción", "detalle": "(SMAALIB) Definición del código de área curricular con casilla Cumplimiento activada para auditoría CAPP."}, {"campo": "Requerimientos de Área", "valor": "Modo V", "ejemplo": "-", "tipo": "Acción", "detalle": "(SMAAREA) Reglas de asignaturas del catálogo (SCACRSE), condiciones y nota mínima aprobatoria (Modo V, 11)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/026.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/026.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=26", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 26, "texto": "SOACURR: regla de currícula base", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Reglas de currículo - SOACURR"}, {"num": "", "texto": "REGLAS DE CURRICULA BASE, Se define la relación entre el programa académico y la carrera, indicando el campus, período de inicio, paso a historia académica y plan de estudios. Se inserta un registro por cada regla de currícula.1. Programa: Se ingresa el programa creado en SMAPRLE o se despliega de la lista de validación para seleccionarlo.."}, {"num": "2", "texto": "Nivel, Escuela y Grado: Se completan automáticamente con los datos definidos en SMAPRLE-"}, {"num": "3", "texto": "Campus: Se ingresa el campus o sede donde se va a dictar el programa."}, {"num": "4", "texto": "Período de vigencia: Se ingresa el período desde el cual el programa es vigente. (se ingresa 000000)."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/027.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=27", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 27, "texto": "SOACURR: detalle de la regla", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Reglas de currículo - SOACURR"}, {"num": "", "texto": "REGLAS DE CURRICULA BASE, Se define la relación entre el programa académico y la carrera, indicando el campus, período de inicio, paso a historia académica y plan de estudios. Se inserta un registro por cada regla de currícula.5. Principal: Se marca para que el registro de grado principal se creado en la página de otorgamientos institucionales."}, {"num": "6", "texto": "Secundario: Se marca para que el registro de grado secundario se creado en la página de otorgamientos institucionales ."}, {"num": "7", "texto": "Bloqueado: Se marca cuando el programa está definido y se puede asignar a los estudiantes."}, {"num": "8", "texto": "Plan de estudios: Se marca para indicar que el programa utilizará la funcionalidad de plan de estudios."}, {"num": "9", "texto": "Permitir que se realicen cambios en el periodo inscrito: Autoriza modificaciones curriculares sobre estudiantes con inscripción activa en el período. Configuración requerida para determinados procesos e integraciones mediante APIs nativas de Banner."}, {"num": "10", "texto": "Permitir transferir en: Autoriza que esta regla curricular pueda utilizarse como destino en procesos de transferencia o cambio curricular. Configuración requerida para determinados procesos e integraciones mediante APIs nativas de Banner."}], "marcas": {"0": "10"}}, {"src": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/1.1.3_Disen_ar_y_crear_los_programas_acade/029.webp", "visor": "../../../../visor_instructivos/index.html?p=1.1.3_Disen_ar_y_crear_los_programas_acade&d=29", "fuente": "Instructivo 1.1.3 · Diseñar y crear los programas académicos", "n": 29, "texto": "SOACURR: carreras y departamentos", "nota": "", "lineas": [{"num": "", "texto": "Configurar: Reglas de currículo - SOACURR"}, {"num": "", "texto": "CARRERAS Y DEPARTAMENTOS, Se define la relación entre el programa académico y la carrera.1. Carrera: Se ingresa el código de Carrera desde STVMAJR que le corresponda."}, {"num": "2", "texto": "Departamento: Se ingresa el código del departamento al que está asociado el programa y la carrera si aplica."}, {"num": "3", "texto": "Se marcan los procesos para los cuales va a estar activa la carrera; marcar reclutamiento, admisiones, general de alumnos, historia académica, CAPP."}, {"num": "4", "texto": "Desplegar en autoservicio: Se marca y se puede ingresar una descripción de 60 caracteres con el nombre del programa que se vera en autoservicio."}], "marcas": {}}]}, "c4": {"titulo": "Script 11-B · Diseño de mallas y programas · referencia: prueba de Computación", "pantalla": "SMAPROG", "fase": "Paso 4: malla del programa", "hito": "Área MC38-01 · regla CAPP", "instrucciones": [{"campo": "Malla Oficial del Programa", "valor": "SMAPROG", "ejemplo": "-", "tipo": "Acción", "detalle": "Requerimientos generales, créditos totales requeridos y anexo formal de áreas curriculares."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/1.2.1_Crear_las_mallas_curriculares/recortes/027.webp", "completa": "../../../../visor_instructivos/diapositivas/1.2.1_Crear_las_mallas_curriculares/027.webp", "visor": "../../../../visor_instructivos/index.html?p=1.2.1_Crear_las_mallas_curriculares&d=27", "fuente": "Instructivo 1.2.1 · Crear las mallas curriculares (CAPP)", "n": 27, "texto": "SMAPROG: requerimientos del programa", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SMAPROG Requerimientos de programa – Requerimientos generales"}, {"num": "", "texto": "Requerimientos de programa, se define los requerimientos generales del programa para ingresar debe:1. Programa"}, {"num": "2", "texto": "Periodo"}, {"num": "3", "texto": "Presionar “Ir”"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/1.2.1_Crear_las_mallas_curriculares/recortes/028.webp", "completa": "../../../../visor_instructivos/diapositivas/1.2.1_Crear_las_mallas_curriculares/028.webp", "visor": "../../../../visor_instructivos/index.html?p=1.2.1_Crear_las_mallas_curriculares&d=28", "fuente": "Instructivo 1.2.1 · Crear las mallas curriculares (CAPP)", "n": 28, "texto": "SMAPROG: requerimientos generales", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SMAPROG Requerimientos de programa – Requerimientos generales 1/4"}, {"num": "", "texto": "REQUERIMIENTOS GENERALES , Se define los requerimientos generales del programa.1. Activo/Inactivo: Se marca para activar y poder usar el área"}, {"num": "2", "texto": "Código de modelo de inscripción: Se indica el modelo que aplicará para la inscripción de los estudiantes:"}, {"num": "", "texto": "“Básica”: si la inscripción va a ser curso por curso"}, {"num": "", "texto": "“Inscripción Estructurada”: Si la inscripción va a realizarse por bloque de curso"}, {"num": "", "texto": "“Proyectada”: si la inscripción va a basarse en la proyección de cursos del estudiante"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/1.2.1_Crear_las_mallas_curriculares/recortes/033.webp", "completa": "../../../../visor_instructivos/diapositivas/1.2.1_Crear_las_mallas_curriculares/033.webp", "visor": "../../../../visor_instructivos/index.html?p=1.2.1_Crear_las_mallas_curriculares&d=33", "fuente": "Instructivo 1.2.1 · Crear las mallas curriculares (CAPP)", "n": 33, "texto": "SMAPROG: anexos de área del programa", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SMAPROG Requerimientos de programa–Anexos de área de programa"}, {"num": "", "texto": "ANEXOS DE ÁREA DE PROGRAMA, Se asociarán las áreas correspondientes al cumplimiento de este."}, {"num": "1", "texto": "Área: Se ingresan los códigos de áreas que se debe aprobar para el cumplimiento del programa y adicionalmente áreas dinámicas en caso de que el programa lo requiera."}, {"num": "2", "texto": "Prioridad: Se ingresa la prioridad por cada área para la revisión del cumplimiento."}], "marcas": {}}]}, "cr": {"titulo": "Script 11-B · Diseño de mallas y programas · referencia: prueba de Computación", "pantalla": "RESULTADO", "fase": "Resultado: Malla aprobada", "hito": "lista para admisión y CAPP", "instrucciones": [{"campo": "Resultado esperado", "valor": "Malla aprobada", "ejemplo": "lista para admisión y CAPP", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/064.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/064.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=64", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 64, "texto": "SMICRLT: el CAPP evalúa con el programa y su catálogo", "nota": "", "lineas": [{"num": "", "texto": "Resultados de avance curricular de los alumnos"}, {"num": "", "texto": "Se puede observar el Programa y período catálogo según el cual fue ejecutado el CAPP para la solicitud."}, {"num": "", "texto": "Se visualizan las columnas Cumple y No cumple, según los resultados de la evaluación del CAPP del estudiante."}, {"num": "6", "texto": "Al presionar el botón se puede ver el detalle de cada requerimiento para el estudiante en la ejecución del CAPP que se está consultando:"}], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 9, "slug": "script-17-gestion-de-horarios-y-cruces", "titulo": "Script 17 · Gestión de horarios y cruces", "cap": "Capacidad 5 y 6", "url": "../09-script-17-gestion-de-horarios-y-cruces/computacion-09-script-17-gestion-de-horarios-y-cruces.html", "is_curr": false};
@@ -19152,7 +19391,7 @@ button.ai-fab:active,
   }
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
-  var visorDiapo = { lista: [], idx: 0, completa: false };
+  var visorDiapo = { lista: [], idx: 0, completa: true };
 
   function asegurarVisorDiapo() {
     var v = document.getElementById('guia-diapo-visor');
@@ -19178,15 +19417,14 @@ button.ai-fab:active,
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
-    // Archify cierra el paso abierto con un clic fuera de su ficha y lo escucha en la captura de window:
-    // los toques dentro del visor se detienen ahí (el «click» sigue y lo atiende el visor), así el paso no se pierde.
-    ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click'].forEach(function (tipo) {
-      window.addEventListener(tipo, function (e) {
-        if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
-        e.stopPropagation();
-        if (tipo === 'click') clicEnVisor(e, v);
-      }, true);
-    });
+    if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
+    // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
+    window.addEventListener('click', function (e) {
+      if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
+      e.stopPropagation();
+      clicEnVisor(e, v);
+    }, true);
     v.addEventListener('toggle', function (e) {
       if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
     }, true);
@@ -19195,6 +19433,13 @@ button.ai-fab:active,
 
   // Clic dentro del visor (se atiende en la captura de window; ver arriba).
   function clicEnVisor(e, v) {
+    var zi = e.target.closest('[data-zi]');
+    if (zi) {
+      e.preventDefault();
+      var zoom = v.querySelector('.gdv-img').__cceeZoom;
+      if (zoom) zoom.accion(zi.getAttribute('data-zi'));
+      return;
+    }
     var accion = e.target.closest('[data-gdv]');
     if (!accion) {
       if (e.target === v) cerrarVisorDiapo();
@@ -19307,7 +19552,8 @@ button.ai-fab:active,
 
   function abrirVisorDiapo(lista, idx) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
-    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -20159,6 +20405,10 @@ button.ai-fab:active,
       if (visorDiapoAbierto()) {
         if (e.key === 'Escape') { e.preventDefault(); cerrarVisorDiapo(); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); moverVisorDiapo(1); }
+        else if (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0') {
+          var zoom = document.querySelector('#guia-diapo-visor .gdv-img').__cceeZoom;
+          if (zoom) { e.preventDefault(); zoom.accion(e.key === '0' ? 'reset' : (e.key === '-' ? 'menos' : 'mas')); }
+        }
         else if (e.key === 'ArrowLeft') { e.preventDefault(); moverVisorDiapo(-1); }
         return;
       }
@@ -21017,7 +21267,7 @@ button.ai-fab:active,
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: false };
+    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -21054,6 +21304,7 @@ button.ai-fab:active,
         else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
       });
       document.body.appendChild(v);
+      if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
       return v;
     }
 
@@ -21083,6 +21334,7 @@ button.ai-fab:active,
       var visor = v.querySelector('[data-aipv="visor"]');
       var completa = v.querySelector('[data-aipv="completa"]');
       img.hidden = !l;
+      if (img.__cceeZoom) img.__cceeZoom.zona.hidden = !l;  // con zoom, la imagen va dentro de su zona
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
@@ -21103,7 +21355,6 @@ button.ai-fab:active,
 
     function abrirVisorPasos(pasos) {
       visorPasos.pasos = pasos;
-      visorPasos.completa = false;
       var primero = 0;
       for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
       asegurarVisorPasos().hidden = false;

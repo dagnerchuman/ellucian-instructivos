@@ -29,7 +29,7 @@ Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) �
 |---|---|---|---|
 | 1 | **SCACRSE** (encabezado) | Materia `ESEC`, **número nuevo** (revisar el último que existe; en TEST el más alto conocido es `00700`), periodo desde el que rige. Recomendado: **Copiar** de un curso parecido (por ejemplo `ESEC 00684`) | 1.1.4, diap. 20 |
 | 2 | **SCACRSE** › Detalles | Título; escuela `EM`; departamento `EMCI`; estatus activo | 1.1.4, diap. 21 |
-| 3 | **SCACRSE** › Horas | Créditos (UEC) y créditos de cobro; horas de teoría y laboratorio (en Computación HT 1 y HP 1) | 1.1.4, diap. 22; C96, U05 |
+| 3 | **SCACRSE** › Horas | UEC o crédito y Cobro **variables**: Inferior `0`, indicador `O`, Superior `1` (así se puede fijar las horas en el NRC, 5.3 diap. 25; en el NRC de teoría quedan en 1); Teoría 1 y Laboratorio 1 (HT 1, HP 1); Contacto lo calcula Banner | 1.1.4, diap. 22; C96, U05, C145 |
 | 4 | **SCACRSE** › Nivel | `C` (Computación) | 1.1.4, diap. 23 |
 | 5 | **SCACRSE** › Modo de calificar | `V`, marcado como predefinido | 1.1.4, diap. 24; C35 |
 | 6 | **SCACRSE** › Tipo de horario | El tipo de horario y su método educativo; la carga de trabajo es la que verá el docente en SSASECT | 1.1.4, diap. 25 |

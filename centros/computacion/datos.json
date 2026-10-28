@@ -683,7 +683,7 @@
               "valor": "el nombre del curso",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Obligatorio."
+              "detalle": "Obligatorio; el nombre completo del sílabo (hasta 30 caracteres)."
             },
             {
               "campo": "Escuela",
@@ -708,10 +708,10 @@
             },
             {
               "campo": "Cobro",
-              "valor": "1",
+              "valor": "Inferior 0 · O · Superior 1",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Créditos de cobro (obligatorio); UEC o crédito también 1."
+              "detalle": "Créditos de cobro variables, igual que UEC o crédito (ejemplo en TEST, C145). Así el NRC puede fijar sus horas (5.3, diap. 25); en el NRC de teoría quedan en 1."
             },
             {
               "campo": "Teoría",
@@ -1822,7 +1822,7 @@
           },
           {
             "pregunta": "¿Cómo se crea el curso en SCACRSE?",
-            "intro": "Solo si el curso no existe. La materia (ESEC) ya está creada en STVSUBJ.",
+            "intro": "Solo si el curso no existe. La materia (ESEC) ya está creada en STVSUBJ. Ejemplo en TEST: ESEC 00701 «GOOGLE», periodo 202656 (C145).",
             "tabla": {
               "columnas": [
                 "N.º",
@@ -1852,14 +1852,14 @@
                 [
                   "4",
                   "Detalles del curso",
-                  "Título; Escuela EM; Departamento EMCI; Estatus activo (con •••). Duración no se llena.",
-                  "1.1.4, diap. 21"
+                  "Título (nombre completo, hasta 30 caracteres); Escuela EM; Departamento EMCI; Estatus A (Activo). Duración y Límite de repetición no se llenan.",
+                  "1.1.4, diap. 21 y 22 · C145"
                 ],
                 [
                   "5",
                   "Horas",
-                  "UEC o crédito y Cobro: 1; Teoría 1 y Laboratorio 1 (HT 1 y HP 1); Contacto lo calcula Banner.",
-                  "1.1.4, diap. 22 · C96"
+                  "UEC o crédito y Cobro: Inferior 0, «O», Superior 1 (créditos variables: 0 o 1; así el NRC puede fijar sus horas). Teoría 1 y Laboratorio 1 (HT 1 y HP 1); Contacto lo calcula Banner (2).",
+                  "1.1.4, diap. 22 · 5.3, diap. 25 · C96, C145"
                 ],
                 [
                   "6",

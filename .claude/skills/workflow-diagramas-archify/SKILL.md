@@ -109,6 +109,7 @@ python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar 
 ## Láminas de cada paso (ADR-022)
 - **Todo paso lleva su lámina**, también la situación (`c0`) y el resultado (`cr`) de las casuísticas, y nunca la misma que otro paso del diagrama. Se definen en `herramientas/diagramas/diapositivas_pasos.py`: `TEMAS` (láminas por tema), `BASE` (flujos base), `REGLAS` (casuísticas, por página y fase) y `SCRIPTS` (láminas propias de un paso, del caso y del resultado).
 - **Paso fuera de Banner** (intranet, Vicerrectorado, plataforma): lámina de referencia con `_ref(nota, …)`, que dice dónde se ve en Banner lo que ese paso revisa o aprueba.
+- **Cada fila de la guía con el nombre del campo de la lámina**, en el orden de la lámina: así toma el mismo número verde de la imagen. Si una fila toma un número que no es el suyo, agrega `"sin_marca": [campo]` a esa lámina. En el visor, las filas que están en otra lámina del paso salen en gris con «diap. N ›».
 - `generar.py` avisa al final si un paso queda sin lámina o repite las de otro: deben quedar **0 advertencias**. Elige la lámina leyendo su texto y mirando el recorte (`visor_instructivos/diapositivas/`), no solo por el título.
 
 ## Al terminar

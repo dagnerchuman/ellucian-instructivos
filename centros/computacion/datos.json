@@ -542,12 +542,38 @@
         {
           "id": "d1",
           "carril": "ra",
+          "col": 0,
           "codigo": "SOATERM",
           "accion": "periodo y parte abiertos",
           "dato": "202656 · parte X06",
           "quien": "Registros Académicos",
           "laminas": [
-            "soaterm"
+            {
+              "instructivo": "1.1.2",
+              "n": 16,
+              "texto": "SOATERM: el periodo › Ir"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 18,
+              "texto": "SOATERM: inscripción «Permitir»",
+              "sin_marca": [
+                "Periodo"
+              ]
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 20,
+              "texto": "Partes de periodo: la parte base",
+              "sin_marca": [
+                "Periodo"
+              ]
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 21,
+              "texto": "Partes de periodo: semanas y censo"
+            }
           ],
           "filas": [
             {
@@ -558,18 +584,25 @@
               "detalle": "Ya abierto y usado con el NRC 10044. Lo abre Registros Académicos, no el centro (C06)."
             },
             {
-              "campo": "Parte de periodo",
+              "campo": "Permitir",
+              "valor": "marcada",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "La inscripción está permitida en el periodo."
+            },
+            {
+              "campo": "Parte de periodo base",
               "valor": "X06",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Del 07-SEP al 31-OCT-2026, la misma del NRC 10044 (C97). Después del 31-OCT, la X07 (02-NOV al 13-DIC)."
+              "detalle": "Del 07-SEP al 31-OCT-2026, como el NRC 10044 (C97). Después del 31-OCT, la X07 (02-NOV al 13-DIC)."
             },
             {
-              "campo": "Inscripción",
-              "valor": "Permitir",
+              "campo": "Número de semanas",
+              "valor": "8",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Sin esto no se puede matricular en el periodo (1.1.2, diap. 18)."
+              "detalle": "La duración de la X06."
             },
             {
               "campo": "Acceso docente",
@@ -582,193 +615,751 @@
         },
         {
           "id": "d2",
-          "carril": "centro",
-          "codigo": "SSASECT",
-          "accion": "crear el NRC",
-          "dato": "NRC nuevo · ESEC 00684 B",
-          "quien": "El centro",
+          "carril": "ra",
+          "col": 1,
+          "codigo": "SCACRSE",
+          "accion": "crear el curso, si falta",
+          "dato": "Diseño Web ya existe: 00684",
+          "quien": "Diseño curricular o Registros (U40)",
           "laminas": [
-            "ssasect_crear",
-            "ssasect_cupo"
+            {
+              "instructivo": "1.1.4",
+              "n": 20,
+              "texto": "SCACRSE: materia, curso, periodo y «Copiar»"
+            },
+            {
+              "instructivo": "1.1.4",
+              "n": 21,
+              "texto": "SCACRSE: título, escuela, departamento y estatus",
+              "sin_marca": [
+                "Curso"
+              ]
+            },
+            {
+              "instructivo": "1.1.4",
+              "n": 22,
+              "texto": "SCACRSE: créditos, cobro y horas"
+            },
+            {
+              "instructivo": "1.1.4",
+              "n": 23,
+              "texto": "SCACRSE: nivel del curso"
+            },
+            {
+              "instructivo": "1.1.4",
+              "n": 24,
+              "texto": "SCACRSE: modo de calificar predefinido"
+            },
+            {
+              "instructivo": "1.1.4",
+              "n": 25,
+              "texto": "SCACRSE: tipo de horario y método educativo"
+            }
           ],
           "filas": [
             {
               "campo": "Curso",
-              "valor": "ESEC 00684 Diseño Web",
+              "valor": "ESEC 00684 ya existe",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Ya está en el catálogo (sale en «Cursos existentes», C135): no se crea el curso, se crea otra sección."
+              "detalle": "Revísalo en «Cursos existentes» (•••): si ya está, este paso no se hace. El siguiente número libre es 00701 (C135)."
             },
             {
-              "campo": "Encabezado",
-              "valor": "202656 · Crear NRC",
+              "campo": "Período",
+              "valor": "202656",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Periodo y NRC vacío › Crear NRC (5.3, diap. 19). Banner da el número al guardar."
+              "detalle": "Desde qué periodo rige el curso; «A periodo» queda 999999."
             },
             {
-              "campo": "Sección",
-              "valor": "B · campus S · TEO · VIRT",
+              "campo": "Copiar",
+              "valor": "«Copiar» de ESEC 00684",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "La A ya es el NRC 10044. Modo V, parte X06, 1 crédito y 1 de cobro, Calificable sin dispensa."
+              "detalle": "Lo más rápido: copia todo de un curso parecido y solo cambias el título."
             },
             {
-              "campo": "Cupo",
-              "valor": "40 en Máximo y Proyectado",
+              "campo": "Título de curso",
+              "valor": "el nombre del curso",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Proyectado va antes de «Lugares reservados» (C97)."
+              "detalle": "Obligatorio."
             },
             {
-              "campo": "Horario",
-              "valor": "SAUVIR / SALA-VIRT con O",
+              "campo": "Escuela",
+              "valor": "EM",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "En un bloque libre del docente; la O en «Indicador de sobrepaso» evita el «Conflicto de salón» (C97)."
+              "detalle": "Todos los ESEC son EM (C135)."
+            },
+            {
+              "campo": "Departamento",
+              "valor": "EMCI",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Jefatura del Centro de Informática."
+            },
+            {
+              "campo": "Estatus",
+              "valor": "el de activo (•••)",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Obligatorio; se elige con el •••."
+            },
+            {
+              "campo": "Cobro",
+              "valor": "1",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Créditos de cobro (obligatorio); UEC o crédito también 1."
+            },
+            {
+              "campo": "Teoría",
+              "valor": "1",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Horas de teoría (en Informática HT 1, C60)."
+            },
+            {
+              "campo": "Laboratorio",
+              "valor": "1",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Horas de práctica (HP 1)."
+            },
+            {
+              "campo": "Contacto",
+              "valor": "lo calcula Banner",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Suma las horas del curso."
+            },
+            {
+              "campo": "Nivel",
+              "valor": "C",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Computación. (1.1.4, diap. 23)"
+            },
+            {
+              "campo": "Modo de calificar",
+              "valor": "V · predefinido",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Vigesimal; debe quedar uno marcado como predefinido."
+            },
+            {
+              "campo": "Método educativo",
+              "valor": "TEO · VIRT",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "El tipo de horario y su método educativo. Luego GUARDAR, SCADETL (cuota) y SMAAREA (malla)."
             }
           ]
         },
         {
           "id": "d3",
           "carril": "centro",
+          "col": 1,
           "codigo": "SSASECT",
-          "accion": "asignar el docente",
-          "dato": "100582059 · principal 100 %",
-          "quien": "Jefe del centro",
+          "accion": "crear la sección",
+          "dato": "NRC nuevo · ESEC 00684 B",
+          "quien": "El centro",
           "laminas": [
-            "ssasect_docente",
             {
-              "instructivo": "5.2-carga",
+              "instructivo": "5.3",
+              "n": 19,
+              "texto": "SSASECT: periodo y «Crear NRC»"
+            },
+            {
+              "instructivo": "5.3",
+              "n": 21,
+              "texto": "Materia, curso, sección, campus y estatus"
+            },
+            {
+              "instructivo": "5.3",
+              "n": 22,
+              "texto": "Tipo de horario, método, modo y sesión"
+            },
+            {
+              "instructivo": "5.3",
+              "n": 23,
+              "texto": "Parte de periodo y horas crédito"
+            },
+            {
+              "instructivo": "5.3",
               "n": 24,
-              "texto": "SIAASGN: el NRC 10044 en la carga del docente"
+              "texto": "Calificable, sin dispensa y guardar"
+            },
+            {
+              "instructivo": "5.3",
+              "n": 26,
+              "texto": "Al guardar, Banner da el número de NRC"
             }
           ],
           "filas": [
             {
-              "campo": "Premisa",
-              "valor": "SIAINST",
-              "ejemplo": "",
-              "tipo": "Verificación",
-              "detalle": "El docente activo en el periodo, con contrato y regla (5.2, diap. 17–20)."
-            },
-            {
-              "campo": "Instructor",
-              "valor": "ID 100582059 · sesión 01",
+              "campo": "Periodo",
+              "valor": "202656",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "De ejemplo: el docente de prueba, para mostrar luego su Autoservicio (6.2.1, diap. 15). Si choca con su otro NRC, sobrepaso del docente (diap. 20)."
+              "detalle": "Periodo académico del NRC."
             },
             {
-              "campo": "Responsabilidad",
-              "valor": "Principal · 100 %",
+              "campo": "Crear NRC",
+              "valor": "botón «Crear NRC»",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Si son dos docentes, se reparte el porcentaje (6.2.1, diap. 19)."
+              "detalle": "Con el NRC en blanco."
             },
             {
-              "campo": "Carga",
-              "valor": "SIAASGN 202656",
+              "campo": "Materia y número de curso",
+              "valor": "ESEC 00684",
               "ejemplo": "",
-              "tipo": "Verificación",
-              "detalle": "Ahora con dos NRC de Diseño Web; luego oficio por la intranet y resolución del Vicerrectorado (C47, C48)."
+              "tipo": "Acción",
+              "detalle": "Diseño Web, ya en el catálogo."
+            },
+            {
+              "campo": "Sección",
+              "valor": "B",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "La A ya es el NRC 10044."
+            },
+            {
+              "campo": "Campus",
+              "valor": "S",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Chiclayo."
+            },
+            {
+              "campo": "Estatus",
+              "valor": "A (activo)",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Obligatorio al crear el NRC (C45)."
+            },
+            {
+              "campo": "Tipo de horario",
+              "valor": "TEO",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Teoría."
+            },
+            {
+              "campo": "Método educativo",
+              "valor": "VIRT",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Virtual, como el 10044 (C97)."
+            },
+            {
+              "campo": "Modo de calificar",
+              "valor": "V",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Vigesimal."
+            },
+            {
+              "campo": "Sesión",
+              "valor": "M «Mañana»",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "La del 10044 (C97)."
+            },
+            {
+              "campo": "Parte de periodo",
+              "valor": "X06",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Del 07-SEP al 31-OCT-2026."
+            },
+            {
+              "campo": "Horas crédito",
+              "valor": "1 crédito · 1 de cobro",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Las del curso."
+            },
+            {
+              "campo": "Casilla Calificable",
+              "valor": "marcada",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "El NRC lleva notas."
+            },
+            {
+              "campo": "Dispensa de colegiatura",
+              "valor": "sin marcar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "El NRC se cobra."
+            },
+            {
+              "campo": "Primer guardado",
+              "valor": "Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Banner da el número del NRC."
             }
           ]
         },
         {
           "id": "d4",
-          "carril": "ra",
-          "codigo": "SHAGCOM",
-          "accion": "cargar la fórmula",
-          "dato": "TA1 · TA2 · PA · EF + ATTRGRD 0",
-          "quien": "Registros Académicos",
+          "carril": "centro",
+          "col": 2,
+          "codigo": "SSASECT",
+          "accion": "cupo y horario",
+          "dato": "cupo 40 · SAUVIR con O",
+          "quien": "El centro",
           "laminas": [
-            "shaegbc",
-            "shagcom"
+            {
+              "instructivo": "5.3",
+              "n": 27,
+              "texto": "Detalles de ingreso: cupo del NRC",
+              "sin_marca": [
+                "Tercer guardado"
+              ]
+            },
+            {
+              "instructivo": "5.3",
+              "n": 28,
+              "texto": "Lugares reservados: regla nula",
+              "sin_marca": [
+                "Segundo guardado",
+                "Tercer guardado"
+              ]
+            },
+            {
+              "instructivo": "5.3",
+              "n": 29,
+              "texto": "Fechas de reunión: hora, días y sesión",
+              "sin_marca": [
+                "Segundo guardado"
+              ]
+            },
+            {
+              "instructivo": "5.3",
+              "n": 30,
+              "texto": "Horas por semana calculadas"
+            }
           ],
           "filas": [
             {
-              "campo": "Calendario",
-              "valor": "SHAEGBC 202656",
+              "campo": "Cupos máximos",
+              "valor": "40",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Pestaña «Información de ingreso de sección» › Detalles de ingreso."
+            },
+            {
+              "campo": "Proyectado",
+              "valor": "40",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Obligatorio y antes de «Lugares reservados» (C97)."
+            },
+            {
+              "campo": "Segundo guardado",
+              "valor": "Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Antes de pasar a otra subpestaña."
+            },
+            {
+              "campo": "Regla nula",
+              "valor": "«nula» · obligatoria",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "En «Lugares reservados»; sin reserva por programa."
+            },
+            {
+              "campo": "Hora de reunión",
+              "valor": "en 24 h, en un bloque libre",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Pestaña «Instructor y horas de reunión» › Fechas de reunión."
+            },
+            {
+              "campo": "Días de la semana",
+              "valor": "los del horario",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Los días de la clase."
+            },
+            {
+              "campo": "Indicador de sesión",
+              "valor": "01",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "El mismo que llevará el docente."
+            },
+            {
+              "campo": "Edificio y salón",
+              "valor": "SAUVIR / SALA-VIRT · «O»",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Con el aula virtual va la O en «Indicador de sobrepaso» del horario (C97). (5.3, diap. 29)"
+            },
+            {
+              "campo": "Cálculo automático de horas",
+              "valor": "lo hace Banner",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Ya configurado (C92, C95): sin él, SHAGCOM da error (C91)."
+              "detalle": "Horas por semana según el horario. (5.3, diap. 30)"
             },
             {
-              "campo": "Escala de arriba",
-              "valor": "VIG_11",
+              "campo": "Tercer guardado",
+              "valor": "Guardar",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "La del curso, no AST_70: si no, la nota final sale APRO (C120, C123)."
-            },
-            {
-              "campo": "Componentes",
-              "valor": "TA1 0.15 · TA2 0.15 · PA 0.40 · EF 0.30",
-              "ejemplo": "",
-              "tipo": "Acción",
-              "detalle": "Los mismos del NRC 10044, del sílabo de Diseño Web, sección 8 (C96, C98)."
-            },
-            {
-              "campo": "Asistencia",
-              "valor": "ATTRGRD 0.00 · Debe aprobar · AST_70",
-              "ejemplo": "",
-              "tipo": "Acción",
-              "detalle": "Peso 0, pero con menos de 70 % la nota final es INH (C63)."
-            },
-            {
-              "campo": "Regla de asistencia",
-              "valor": "SOAATRK",
-              "ejemplo": "",
-              "tipo": "Acción",
-              "detalle": "Para que el NRC salga en Pasar lista (C101)."
+              "detalle": ""
             }
           ]
         },
         {
           "id": "d5",
           "carril": "centro",
+          "col": 3,
+          "codigo": "SSASECT",
+          "accion": "asignar el docente",
+          "dato": "100582059 · principal 100 %",
+          "quien": "Jefe del centro",
+          "laminas": [
+            {
+              "instructivo": "6.2.1",
+              "n": 14,
+              "texto": "Indicador de sesión del horario y del docente"
+            },
+            {
+              "instructivo": "6.2.1",
+              "n": 15,
+              "texto": "Bloque Instructor: ID del docente"
+            },
+            {
+              "instructivo": "6.2.1",
+              "n": 19,
+              "texto": "Responsabilidad, principal, sobrepaso y sesión"
+            },
+            {
+              "instructivo": "6.2.1",
+              "n": 20,
+              "texto": "Cruce de horario del docente"
+            },
+            {
+              "instructivo": "5.2-carga",
+              "n": 24,
+              "texto": "SIAASGN: el NRC en la carga del docente"
+            }
+          ],
+          "filas": [
+            {
+              "campo": "SIAINST",
+              "valor": "docente activo en 202656",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Con contrato y regla (5.2, diap. 17–20)."
+            },
+            {
+              "campo": "ID del docente",
+              "valor": "100582059",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "De ejemplo: el docente de prueba, para mostrar luego su Autoservicio."
+            },
+            {
+              "campo": "Porcentaje de responsabilidad",
+              "valor": "100 %",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Si son dos docentes, se reparte."
+            },
+            {
+              "campo": "Indicador de principal",
+              "valor": "marcado",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Solo uno por NRC."
+            },
+            {
+              "campo": "Indicador de sobrepaso",
+              "valor": "solo si choca",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Si el docente ya tiene otro NRC a esa hora (diap. 20)."
+            },
+            {
+              "campo": "Porcentaje de sesión",
+              "valor": "100 %",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Tiempo del docente en la sesión 01."
+            },
+            {
+              "campo": "Cuarto guardado",
+              "valor": "Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "SIAASGN",
+              "valor": "revisar la carga",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Luego oficio por la intranet y resolución del Vicerrectorado (C47, C48). (5.2, diap. 24)"
+            }
+          ]
+        },
+        {
+          "id": "d6",
+          "carril": "ra",
+          "col": 3,
+          "codigo": "SHAGCOM",
+          "accion": "cargar la fórmula",
+          "dato": "TA1 · TA2 · PA · EF + ATTRGRD 0",
+          "quien": "Registros Académicos",
+          "laminas": [
+            {
+              "instructivo": "7.1.4",
+              "n": 40,
+              "texto": "SHAEGBC: calendario del periodo"
+            },
+            {
+              "instructivo": "7.1.4",
+              "n": 43,
+              "texto": "SHAGCOM: periodo y NRC"
+            },
+            {
+              "instructivo": "7.1.4",
+              "n": 44,
+              "texto": "SHAGCOM: escala del plan"
+            },
+            {
+              "instructivo": "7.1.4",
+              "n": 45,
+              "texto": "SHAGCOM: secuencia y nombre"
+            },
+            {
+              "instructivo": "7.1.4",
+              "n": 46,
+              "texto": "SHAGCOM: descripción y peso"
+            },
+            {
+              "instructivo": "7.1.4",
+              "n": 48,
+              "texto": "SHAGCOM: incluir en la calificación final"
+            },
+            {
+              "instructivo": "7.1.0",
+              "n": 29,
+              "texto": "ATTRGRD: peso 0 y Debe aprobar"
+            },
+            {
+              "instructivo": "7.1.1",
+              "n": 34,
+              "texto": "SOAATRK: periodo de la regla"
+            },
+            {
+              "instructivo": "7.1.1",
+              "n": 36,
+              "texto": "SOAATRK: regla por NRC"
+            },
+            {
+              "instructivo": "7.1.1",
+              "n": 37,
+              "texto": "SOAATRK: Desplegar clase y control de asistencia",
+              "sin_marca": [
+                "Número de secuencia"
+              ]
+            }
+          ],
+          "filas": [
+            {
+              "campo": "SHAEGBC",
+              "valor": "202656 · fechas ya configuradas",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Sin el calendario, SHAGCOM da error (C91, C92)."
+            },
+            {
+              "campo": "SHAGCOM",
+              "valor": "202656 · NRC nuevo",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Periodo y NRC › Ir."
+            },
+            {
+              "campo": "Escala de calificación",
+              "valor": "VIG_11",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "La del curso, no AST_70: si no, la nota final sale APRO (C120, C123)."
+            },
+            {
+              "campo": "Número de secuencia",
+              "valor": "1 a 5",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "El orden de los componentes."
+            },
+            {
+              "campo": "Nombre del componente",
+              "valor": "TA1 · TA2 · PA · EF · ATTRGRD",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Del sílabo de Diseño Web, sección 8 (C96)."
+            },
+            {
+              "campo": "Peso",
+              "valor": "0.15 · 0.15 · 0.40 · 0.30 · 0.00",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Total 1.00, como el NRC 10044 (C98)."
+            },
+            {
+              "campo": "Calificación final",
+              "valor": "incluir",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Cada componente entra en la nota final."
+            },
+            {
+              "campo": "ATTRGRD",
+              "valor": "Debe aprobar · AST_70",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Peso 0, pero con menos de 70 % la nota final es INH (C63). (7.1.0, diap. 29)"
+            },
+            {
+              "campo": "SOAATRK",
+              "valor": "202656 › Ir",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "La regla de asistencia (C101)."
+            },
+            {
+              "campo": "Por NRC",
+              "valor": "el NRC nuevo",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "La regla para este NRC."
+            },
+            {
+              "campo": "Desplegar clase",
+              "valor": "marcada · control de asistencia",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Para que el NRC salga en Pasar lista."
+            }
+          ]
+        },
+        {
+          "id": "d7",
+          "carril": "centro",
+          "col": 4,
           "codigo": "SFAREGS",
           "accion": "matricular al alumno",
           "dato": "otro alumno · CMEMC44 · RE",
           "quien": "El centro",
           "laminas": [
-            "sfaregs_autorizar",
-            "sfaregs_inscribir"
+            {
+              "instructivo": "5.4-inscripcion",
+              "n": 35,
+              "texto": "SFAREGS: periodo, ID y plan"
+            },
+            {
+              "instructivo": "5.4-inscripcion",
+              "n": 36,
+              "texto": "SFAREGS: estatus de ingreso EL"
+            },
+            {
+              "instructivo": "5.4-inscripcion",
+              "n": 37,
+              "texto": "SFAREGS: plan de estudios y guardar"
+            },
+            {
+              "instructivo": "5.4-inscripcion",
+              "n": 38,
+              "texto": "SFAREGS: el NRC en «Información de curso»"
+            },
+            {
+              "instructivo": "5.4-inscripcion",
+              "n": 43,
+              "texto": "SFAREGS: guardar la inscripción"
+            }
           ],
           "filas": [
             {
               "campo": "Alumno",
-              "valor": "otro distinto del de la sección A",
+              "valor": "otro, no el de la sección A",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "De ejemplo: S00581110. El mismo alumno no puede estar en la A y en la B: «Duplicados» en Fatal (5.4, diap. 15)."
+              "detalle": "De ejemplo S00581110. El mismo alumno no puede llevar el mismo curso dos veces: «Duplicados» en Fatal (5.4, diap. 15)."
             },
             {
               "campo": "Programa",
               "valor": "CMEMC44 (XP 07)",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Diseño Web está en las rutas 5 y 7 (C125); si no lo tiene, se agrega en SFAREGS › Currículos (C100)."
+              "detalle": "Diseño Web está en las rutas 5 y 7 (C125); si no lo tiene, SFAREGS › Currículos (C100)."
             },
             {
-              "campo": "Encabezado",
-              "valor": "202656 › ID › plan del centro",
+              "campo": "Periodo académico",
+              "valor": "202656",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "ID del estudiante",
+              "valor": "S00581110 · plan del centro",
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "El plan de estudios del centro, no asumir el 1 (C86)."
             },
             {
-              "campo": "Ingreso y curso",
-              "valor": "EL › NRC nuevo › RE",
+              "campo": "Estatus",
+              "valor": "EL",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Tab y Guardar: queda inscrito y genera el cobro (TSAAREV)."
+              "detalle": "En «Información de ingreso»."
+            },
+            {
+              "campo": "Plan de estudios de ingreso",
+              "valor": "el del centro",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "Primer guardado",
+              "valor": "Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "Información de curso",
+              "valor": "NRC nuevo › Tab",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Se cargan los datos del NRC."
+            },
+            {
+              "campo": "Inscribir",
+              "valor": "«Guardar» · queda RE",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Y el cobro aparece en TSAAREV."
             }
           ]
         },
         {
-          "id": "d6",
+          "id": "d8",
           "carril": "doc",
+          "col": 5,
           "codigo": "Autoservicio",
           "accion": "asistencia y notas",
           "dato": "Pasar lista › enviar al libro",
@@ -786,9 +1377,24 @@
               "texto": "Clase › pasar la asistencia al libro"
             },
             {
+              "instructivo": "7.1.1",
+              "n": 57,
+              "texto": "Confirmar el envío"
+            },
+            {
+              "instructivo": "7.1.4",
+              "n": 64,
+              "texto": "Libro: el NRC y «Componentes»"
+            },
+            {
               "instructivo": "7.1.4",
               "n": 66,
-              "texto": "Libro: componentes del NRC"
+              "texto": "Libro: elegir el componente"
+            },
+            {
+              "instructivo": "7.1.4",
+              "n": 67,
+              "texto": "Libro: la nota de cada alumno"
             },
             {
               "instructivo": "7.1.4",
@@ -798,45 +1404,96 @@
           ],
           "filas": [
             {
-              "campo": "Dónde",
-              "valor": "Autoservicio Docentes",
+              "campo": "Autoservicio Docentes",
+              "valor": "«Detalle de Notas y Asistencia»",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Tarjeta «Detalle de Notas y Asistencia»; «Faculty» no es otra aplicación (C119)."
+              "detalle": "«Faculty» no es otra aplicación (C119)."
             },
             {
-              "campo": "Asistencia",
-              "valor": "Ingresar asistencia › Pasar lista",
+              "campo": "Pasar lista",
+              "valor": "presentes y ausentes",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Marcar presentes y ausentes por sesión."
+              "detalle": "Ingresar asistencia, por sesión. (7.1.1, diap. 44)"
             },
             {
-              "campo": "Enviar",
+              "campo": "Actualizar la asistencia",
               "valor": "Clase › «Actualizar la asistencia en el libro» › Sí",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Sin este envío, ATTRGRD queda vacío (C119)."
+              "detalle": "Sin este envío, ATTRGRD queda vacío (C119). (7.1.1, diap. 56–57)"
             },
             {
-              "campo": "Notas",
-              "valor": "Ingresar calificaciones › Libro",
+              "campo": "Registro del NRC",
+              "valor": "el NRC nuevo",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Nota de cada componente; Banner calcula la compuesta."
+              "detalle": "Ingresar calificaciones › Libro de calificaciones."
+            },
+            {
+              "campo": "Componentes",
+              "valor": "opción «Componentes»",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "Clic sobre el componente",
+              "valor": "TA1, TA2, PA, EF",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "Calificación",
+              "valor": "la nota de cada alumno",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Banner calcula la compuesta y la final."
             }
           ]
         },
         {
-          "id": "d7",
+          "id": "d9",
           "carril": "ra",
+          "col": 5,
           "codigo": "SHRROLL",
           "accion": "pase a historia",
           "dato": "GJAPCTL · modo A y luego U",
           "quien": "Registros Académicos",
           "tipo": "messagebus",
           "laminas": [
-            "shrroll",
+            {
+              "instructivo": "7.1.6",
+              "n": 15,
+              "texto": "SFASLST: periodo y NRC"
+            },
+            {
+              "instructivo": "7.1.6",
+              "n": 16,
+              "texto": "SFASLST: calificaciones finales"
+            },
+            {
+              "instructivo": "7.1.9",
+              "n": 22,
+              "texto": "GJAPCTL: proceso SHRROLL"
+            },
+            {
+              "instructivo": "7.1.9",
+              "n": 23,
+              "texto": "SHRROLL: impresora y parámetros"
+            },
+            {
+              "instructivo": "7.1.9",
+              "n": 25,
+              "texto": "SHRROLL: enviar y guardar"
+            },
+            {
+              "instructivo": "7.1.9",
+              "n": 27,
+              "texto": "Revisar la salida en GJIREVO"
+            },
             {
               "instructivo": "7.1.6",
               "n": 19,
@@ -845,42 +1502,70 @@
           ],
           "filas": [
             {
-              "campo": "Revisar",
-              "valor": "SFASLST",
+              "campo": "Período y NRC",
+              "valor": "SFASLST 202656 · NRC nuevo",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "La nota final de cada alumno antes del pase."
+              "detalle": "Revisar la nota final antes del pase."
             },
             {
-              "campo": "Proceso",
+              "campo": "Calificaciones finales",
+              "valor": "de cada alumno",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": ""
+            },
+            {
+              "campo": "SHRROLL",
               "valor": "GJAPCTL › SHRROLL",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Periodo 202656, parte %, el NRC nuevo; primero modo A (auditoría) y luego U. Con el 10044 fueron los jobs 7761 y 7762."
+              "detalle": "El proceso de pase a historia."
             },
             {
-              "campo": "Salida",
+              "campo": "Impresora",
+              "valor": "DATABASE",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "Parámetros",
+              "valor": "202656 · parte % · NRC · modo A y luego U",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Primero auditoría (A) y luego en firme (U); con el 10044 fueron los jobs 7761 y 7762."
+            },
+            {
+              "campo": "Opción enviar",
+              "valor": "Enviar y Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "Revisar salida",
               "valor": "GJIREVO",
               "ejemplo": "",
               "tipo": "Verificación",
               "detalle": "«Rolled to Academic History» por alumno (C121, C122)."
             },
             {
-              "campo": "Si salió mal",
-              "valor": "SHATCKN",
+              "campo": "ID del estudiante",
+              "valor": "SHATCKN, si hay que corregir",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Nueva secuencia con la nota (17), modo V y razón de cambio; antes, el modo V para el 17 en SHAGRDE (C123, C124)."
+              "detalle": "Nueva secuencia con la nota y razón de cambio (C123, C124)."
             }
           ]
         }
       ],
       "guion": [
         "Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
-        "Cuenta el caso: Diseño Web ya existe y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
-        "En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo › horario › docente",
-        "En el sitio, pulsa «Siguiente» en cada paso: la ficha dice qué se llena y «Así se ve en Banner» muestra la lámina",
-        "Di quién hace cada paso: Registros (periodo, fórmula y pase), el centro (NRC, docente y matrícula), el docente (asistencia y notas)",
+        "Cuenta el caso: Diseño Web ya existe (SCACRSE) y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
+        "Si preguntan por cursos nuevos: el paso SCACRSE muestra cómo se crea uno, pero no es del centro (U40)",
+        "En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo y horario › docente",
+        "En cada ficha, abre la lámina: cada fila de la guía tiene su número verde en la diapositiva",
         "En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
         "Matricula a otro alumno (no el de la sección A): Banner no deja el mismo curso dos veces",
         "Cierra con el NRC 10044, ya probado: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"

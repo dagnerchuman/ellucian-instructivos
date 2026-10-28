@@ -1161,11 +1161,11 @@ CARRILES_DEMO = {"ra": "Registros Académicos", "centro": "El centro", "doc": "D
 def demostracion(c, d):
     """Un caso real de TEST para mostrar en una reunión, en el orden curso › NRC › docente › fórmula › alumno (C133).
 
-    Los pasos van en columnas 0 a 5; si hay 7, los dos últimos comparten la columna 5 en carriles distintos."""
+    Los pasos van en columnas 0 a 5 («col» en datos.json); dos pasos pueden compartir columna si van en carriles distintos."""
     carriles = list(dict.fromkeys(p["carril"] for p in d["pasos"]))
     orden = ["ra", "centro", "doc"]
     carriles.sort(key=orden.index)
-    nodos = [paso(p["id"], p["carril"], min(i, 5), p["codigo"], p["accion"], p["dato"], p.get("tipo", "backend"))
+    nodos = [paso(p["id"], p["carril"], p.get("col", min(i, 5)), p["codigo"], p["accion"], p["dato"], p.get("tipo", "backend"))
              for i, p in enumerate(d["pasos"])]
     nodos[0]["icon"] = "start"
     nodos[-1]["icon"] = "success"
@@ -1178,7 +1178,7 @@ def demostracion(c, d):
         c, 0, d["slug"],
         [{"id": k, "label": CARRILES_DEMO[k]} for k in carriles],
         nodos, cards,
-        fases=[{"id": "f0", "label": "Preparar el NRC: periodo, sección, docente y fórmula", "fromCol": 0, "toCol": 3},
+        fases=[{"id": "f0", "label": "Preparar: periodo, curso, sección, docente y fórmula", "fromCol": 0, "toCol": 3},
                {"id": "f1", "label": "Matricular, dictar y cerrar", "fromCol": 4, "toCol": 5, "variant": "emphasis"}],
         title_override=f"{c.nombre} · {d['titulo']}",
         subtitle_override=c.subtitulo(d.get("capacidad")),

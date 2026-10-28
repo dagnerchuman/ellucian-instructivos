@@ -18,6 +18,7 @@ INSTRUCTIVOS = {
     "1.1.1": {"id": "1.1.1_Definir_la_estructura_de_los_periodos_acade_micos", "titulo": "Instructivo 1.1.1 · Definir la estructura de los periodos académicos"},
     "1.1.2": {"id": "1.1.2_Programar_el_inicio_y_finalizacio_n_de_per_acad", "titulo": "Instructivo 1.1.2 · Programar el inicio y fin de los periodos"},
     "1.1.3": {"id": "1.1.3_Disen_ar_y_crear_los_programas_acade", "titulo": "Instructivo 1.1.3 · Diseñar y crear los programas académicos"},
+    "1.1.4": {"id": "1.1.4_Disen_ar_y_crear_los_cursos", "titulo": "Instructivo 1.1.4 · Diseñar y crear los cursos"},
     "1.1.5": {"id": "1.1.5_Asignar_prerequ__corequis_y_restricci", "titulo": "Instructivo 1.1.5 · Prerrequisitos, correquisitos y restricciones"},
     "1.2.1": {"id": "1.2.1_Crear_las_mallas_curriculares", "titulo": "Instructivo 1.2.1 · Crear las mallas curriculares (CAPP)"},
     "3.2.1": {"id": "3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n", "titulo": "Instructivo 3.2.1 · Crear solicitudes de admisión"},

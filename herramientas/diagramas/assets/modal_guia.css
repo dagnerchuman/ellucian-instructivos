@@ -3005,6 +3005,22 @@ html:not([data-theme="dark"]) .gdv-pasos {
 .gdv-guia:has(.gdv-con-num) .gdv-item { grid-template-columns: 1.6rem 1fr; }
 .gdv-guia:has(.gdv-con-num) .gdv-marca { justify-self: center; }
 .gdv-ok { color: #8b5cf6; font-weight: 700; }
+/* Fila que está en otra lámina del paso: en gris y con un botón para ir a esa lámina. */
+.gdv-otra > span:last-child { opacity: 0.55; }
+.gdv-ir {
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid rgba(139, 92, 246, 0.45);
+  border-radius: 999px;
+  background: transparent;
+  color: #8b5cf6;
+  font: inherit;
+  font-size: 0.66rem;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 1;
+}
+.gdv-ir:hover, .gdv-ir:focus-visible { background: rgba(139, 92, 246, 0.12); outline: none; }
 .gdv-aviso {
   margin: 0.55rem 0 0;
   font-size: 0.7rem;

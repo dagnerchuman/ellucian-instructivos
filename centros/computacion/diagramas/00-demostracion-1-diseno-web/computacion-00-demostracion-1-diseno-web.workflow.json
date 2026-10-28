@@ -492,7 +492,7 @@
   "phases": [
     {
       "id": "f0",
-      "label": "Preparar el NRC: periodo, sección, docente y fórmula",
+      "label": "Preparar: periodo, curso, sección, docente y fórmula",
       "fromCol": 0,
       "toCol": 3
     },
@@ -511,7 +511,9 @@
     "d4",
     "d5",
     "d6",
-    "d7"
+    "d7",
+    "d8",
+    "d9"
   ],
   "nodes": [
     {
@@ -527,18 +529,38 @@
     },
     {
       "id": "d2",
-      "lane": "centro",
+      "lane": "ra",
       "col": 1,
       "type": "backend",
-      "label": "SSASECT",
-      "sublabel": "crear el NRC",
+      "label": "SCACRSE",
+      "sublabel": "crear el curso, si falta",
       "width": 150,
-      "tag": "NRC nuevo · ESEC 00684 B"
+      "tag": "Diseño Web ya existe: 00684"
     },
     {
       "id": "d3",
       "lane": "centro",
+      "col": 1,
+      "type": "backend",
+      "label": "SSASECT",
+      "sublabel": "crear la sección",
+      "width": 150,
+      "tag": "NRC nuevo · ESEC 00684 B"
+    },
+    {
+      "id": "d4",
+      "lane": "centro",
       "col": 2,
+      "type": "backend",
+      "label": "SSASECT",
+      "sublabel": "cupo y horario",
+      "width": 150,
+      "tag": "cupo 40 · SAUVIR con O"
+    },
+    {
+      "id": "d5",
+      "lane": "centro",
+      "col": 3,
       "type": "backend",
       "label": "SSASECT",
       "sublabel": "asignar el docente",
@@ -546,7 +568,7 @@
       "tag": "100582059 · principal 100 %"
     },
     {
-      "id": "d4",
+      "id": "d6",
       "lane": "ra",
       "col": 3,
       "type": "backend",
@@ -556,7 +578,7 @@
       "tag": "TA1 · TA2 · PA · EF + ATTRGRD 0"
     },
     {
-      "id": "d5",
+      "id": "d7",
       "lane": "centro",
       "col": 4,
       "type": "backend",
@@ -566,7 +588,7 @@
       "tag": "otro alumno · CMEMC44 · RE"
     },
     {
-      "id": "d6",
+      "id": "d8",
       "lane": "doc",
       "col": 5,
       "type": "frontend",
@@ -576,7 +598,7 @@
       "tag": "Pasar lista › enviar al libro"
     },
     {
-      "id": "d7",
+      "id": "d9",
       "lane": "ra",
       "col": 5,
       "type": "messagebus",
@@ -623,6 +645,18 @@
       "from": "d6",
       "to": "d7",
       "variant": "emphasis"
+    },
+    {
+      "id": "e-d7-d8",
+      "from": "d7",
+      "to": "d8",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-d8-d9",
+      "from": "d8",
+      "to": "d9",
+      "variant": "emphasis"
     }
   ],
   "cards": [
@@ -639,10 +673,10 @@
       "title": "Guion para la reunión",
       "items": [
         "1. Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
-        "2. Cuenta el caso: Diseño Web ya existe y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
-        "3. En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo › horario › docente",
-        "4. En el sitio, pulsa «Siguiente» en cada paso: la ficha dice qué se llena y «Así se ve en Banner» muestra la lámina",
-        "5. Di quién hace cada paso: Registros (periodo, fórmula y pase), el centro (NRC, docente y matrícula), el docente (asistencia y notas)",
+        "2. Cuenta el caso: Diseño Web ya existe (SCACRSE) y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
+        "3. Si preguntan por cursos nuevos: el paso SCACRSE muestra cómo se crea uno, pero no es del centro (U40)",
+        "4. En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo y horario › docente",
+        "5. En cada ficha, abre la lámina: cada fila de la guía tiene su número verde en la diapositiva",
         "6. En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
         "7. Matricula a otro alumno (no el de la sección A): Banner no deja el mismo curso dos veces",
         "8. Cierra con el NRC 10044, ya probado: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"

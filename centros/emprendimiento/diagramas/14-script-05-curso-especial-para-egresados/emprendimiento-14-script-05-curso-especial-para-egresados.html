@@ -16794,6 +16794,22 @@ html:not([data-theme="dark"]) .gdv-pasos {
 .gdv-guia:has(.gdv-con-num) .gdv-item { grid-template-columns: 1.6rem 1fr; }
 .gdv-guia:has(.gdv-con-num) .gdv-marca { justify-self: center; }
 .gdv-ok { color: #8b5cf6; font-weight: 700; }
+/* Fila que está en otra lámina del paso: en gris y con un botón para ir a esa lámina. */
+.gdv-otra > span:last-child { opacity: 0.55; }
+.gdv-ir {
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid rgba(139, 92, 246, 0.45);
+  border-radius: 999px;
+  background: transparent;
+  color: #8b5cf6;
+  font: inherit;
+  font-size: 0.66rem;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 1;
+}
+.gdv-ir:hover, .gdv-ir:focus-visible { background: rgba(139, 92, 246, 0.12); outline: none; }
 .gdv-aviso {
   margin: 0.55rem 0 0;
   font-size: 0.7rem;
@@ -19175,25 +19191,37 @@ button.ai-fab:active,
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
+    // Archify cierra el paso abierto con un clic fuera de su ficha y lo escucha en la captura de window:
+    // los toques dentro del visor se detienen ahí (el «click» sigue y lo atiende el visor), así el paso no se pierde.
+    ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click'].forEach(function (tipo) {
+      window.addEventListener(tipo, function (e) {
+        if (!e.target || !e.target.closest || !e.target.closest('#guia-diapo-visor')) return;
+        e.stopPropagation();
+        if (tipo === 'click') clicEnVisor(e, v);
+      }, true);
+    });
     v.addEventListener('toggle', function (e) {
       if (e.target.classList && e.target.classList.contains('gdv-texto')) visorDiapo.textoAbierto = e.target.open;
     }, true);
-    v.addEventListener('click', function (e) {
-      var accion = e.target.closest('[data-gdv]');
-      if (!accion) {
-        if (e.target === v) cerrarVisorDiapo();
-        return;
-      }
-      var tipo = accion.getAttribute('data-gdv');
-      if (tipo === 'visor') return;
-      e.preventDefault();
-      e.stopPropagation();  // el clic no debe llegar al documento, que cerraría el paso abierto
-      if (tipo === 'cerrar') cerrarVisorDiapo();
-      else if (tipo === 'ant') moverVisorDiapo(-1);
-      else if (tipo === 'sig') moverVisorDiapo(1);
-      else if (tipo === 'completa') { visorDiapo.completa = !visorDiapo.completa; pintarVisorDiapo(); }
-    });
     return v;
+  }
+
+  // Clic dentro del visor (se atiende en la captura de window; ver arriba).
+  function clicEnVisor(e, v) {
+    var accion = e.target.closest('[data-gdv]');
+    if (!accion) {
+      if (e.target === v) cerrarVisorDiapo();
+      return;
+    }
+    var tipo = accion.getAttribute('data-gdv');
+    if (tipo === 'visor') return;
+    e.preventDefault();
+    e.stopPropagation();  // el clic no debe llegar al documento, que cerraría el paso abierto
+    if (tipo === 'cerrar') cerrarVisorDiapo();
+    else if (tipo === 'ant') moverVisorDiapo(-1);
+    else if (tipo === 'sig') moverVisorDiapo(1);
+    else if (tipo === 'completa') { visorDiapo.completa = !visorDiapo.completa; pintarVisorDiapo(); }
+    else if (tipo === 'ir') { visorDiapo.idx = parseInt(accion.getAttribute('data-gdv-idx'), 10) || 0; pintarVisorDiapo(); }
   }
 
   function pintarVisorDiapo() {
@@ -19227,8 +19255,7 @@ button.ai-fab:active,
 
   function pasosVisorDiapoHtml(d) {
     var html = d.nota ? '<p class="gdv-ref">' + escapeHtml(d.nota) + '</p>' : '';
-    var idFoco = document.getElementById('focus-id');
-    var paso = (idFoco ? idFoco.textContent : '').trim();
+    var paso = visorDiapo.paso || pasoEnFoco();
     var info = GUIA_MAP[paso];
     var filas = (info && info.instrucciones) || [];
     if (filas.length) {
@@ -19237,20 +19264,36 @@ button.ai-fab:active,
       // las demás, un círculo, para no inventar una numeración que la imagen no tiene.
       var marcas = d.marcas || {};
       var hayMarcas = Object.keys(marcas).length > 0;
+      // Una fila sin número aquí, pero numerada en otra lámina del paso, va en gris y con «diap. N» para ir a ella.
+      var lista = visorDiapo.lista || [];
+      var laminaDe = function (i) {
+        for (var j = 0; j < lista.length; j++) {
+          if (j !== visorDiapo.idx && (lista[j].marcas || {})[String(i)]) return j;
+        }
+        return -1;
+      };
+      var hayOtras = false;
       html += '<section class="gdv-bloque"><h4>Su guía · ' + escapeHtml((info.fase || '').replace(/^Paso\s*\d+:\s*/i, '')) + '</h4><ul class="gdv-lista gdv-guia">';
       filas.forEach(function (f, i) {
         var hecho = !!checks[i];
         var num = marcas[String(i)];
+        var otra = num ? -1 : laminaDe(i);
+        if (otra >= 0) hayOtras = true;
         var marca = num
           ? '<span class="gdv-badge" title="Número ' + escapeHtml(num) + ' en la imagen">' + escapeHtml(num) + '</span>'
           : '<span class="gdv-marca">' + (hecho ? '✓' : '') + '</span>';
-        html += '<li class="gdv-item' + (num ? ' gdv-con-num' : '') + (hecho ? ' gdv-hecho' : '') + '">' + marca +
+        var ir = otra >= 0
+          ? ' <button type="button" class="gdv-ir" data-gdv="ir" data-gdv-idx="' + otra + '" title="Ver la lámina de esta fila">diap. ' +
+            escapeHtml(String(lista[otra].n)) + ' ›</button>'
+          : '';
+        html += '<li class="gdv-item' + (num ? ' gdv-con-num' : '') + (otra >= 0 ? ' gdv-otra' : '') + (hecho ? ' gdv-hecho' : '') + '">' + marca +
           '<span><strong>' + escapeHtml(f.campo || '') + '</strong>' + (f.valor ? ': ' + escapeHtml(f.valor) : '') +
-          (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + '</span></li>';
+          (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + ir + '</span></li>';
       });
       html += '</ul><p class="gdv-aviso">' + (hayMarcas
-        ? 'Los números verdes son los mismos de la imagen. Las filas con círculo no tienen número en esta diapositiva.'
-        : 'Esta diapositiva no numera los campos de su guía.') + '</p></section>';
+        ? 'Los números verdes son los mismos de la imagen.'
+        : 'Esta diapositiva no numera los campos de su guía.') +
+        (hayOtras ? ' Las filas en gris están en otra lámina de este paso: pulse «diap.» para verla.' : '') + '</p></section>';
     }
 
     // El texto ya se lee en la imagen: queda plegado y solo se abre si se pide.
@@ -19270,8 +19313,14 @@ button.ai-fab:active,
     return html;
   }
 
+  function pasoEnFoco() {
+    var idFoco = document.getElementById('focus-id');
+    return (idFoco ? idFoco.textContent : '').trim();
+  }
+
   function abrirVisorDiapo(lista, idx) {
-    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false };
+    // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
+    visorDiapo = { lista: lista, idx: idx, completa: false, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -19279,9 +19328,8 @@ button.ai-fab:active,
   }
 
   function pasoVecino(delta) {
-    var idFoco = document.getElementById('focus-id');
     var claves = Object.keys(GUIA_MAP);
-    var i = claves.indexOf((idFoco ? idFoco.textContent : '').trim());
+    var i = claves.indexOf(visorDiapo.paso || pasoEnFoco());
     return i === -1 ? null : (claves[i + delta] || null);
   }
 

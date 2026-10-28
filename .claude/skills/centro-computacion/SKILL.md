@@ -36,7 +36,7 @@ description: >-
 | **Modo de calificación (SHAGRDE Nivel C)** | `V` (además de `P`) | Se agregó `V` el 02/10 (U20), pero no a todas las notas: el 17 solo tenía `P` hasta el 26/10 (C124). Revisar de 00 a 20 e INH |
 
 ### Curso nuevo en SCACRSE (C146)
-Lo crea **Registros Académicos**; el centro, solo si le dan acceso (C147). Periodo `000000` (Del periodo 000000 · A periodo 999999, como todos los cursos reales); Escuela `EM`; Departamento `EMCI`; Estatus `A`; UEC o crédito y Cobro **variables** `0 O 1` (Inferior 0, indicador O, Superior 1); Teoría `1` y Laboratorio `1` (HT 1, HP 1) y Contacto `2`; Nivel `C`; Modo `V` predefinido; Tipo de horario `TEO`. Lo más seguro: **Copiar** de `ESEC 00684` (Diseño Web) y dejar las horas como vengan (U45). En el ejemplo ESEC 00701 (C145) solo estaba mal «Del periodo» (202656 en vez de 000000).
+Lo crea **Registros Académicos**; el centro, solo si le dan acceso (C147). Periodo `000000` (Del periodo 000000 · A periodo 999999, como todos los cursos reales); Escuela `EM`; Departamento `EMCI`; Estatus `A`; UEC o crédito y Cobro **variables** `0 O 1` (Inferior 0, indicador O, Superior 1); Teoría `1` y Laboratorio `1` (HT 1, HP 1) y Contacto `2`; con «Sección siguiente» (↓): Nivel `C` (CEU sin marcar); Modo `V` «Vigesimal Estándar» predefinido; Tipo de horario `TEO` y `PRA`, los dos `VIRT` y carga de trabajo `1` (C148). Lo más seguro: **Copiar** de `ESEC 00684` (Diseño Web) y dejar las horas como vengan (U45). En el ejemplo ESEC 00701 (C145) solo estaba mal «Del periodo» (202656 en vez de 000000).
 
 ## Partes de periodo (Computación)
 

@@ -743,24 +743,45 @@
             },
             {
               "campo": "Nivel",
-              "valor": "C",
+              "valor": "C · Computación",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Computación. (1.1.4, diap. 23)"
+              "detalle": "Pulse «Sección siguiente» (↓, abajo a la izquierda) › «Nivel de curso». CEU sin marcar (C148)."
             },
             {
               "campo": "Modo de calificar",
-              "valor": "V · predefinido",
+              "valor": "V · Vigesimal Estándar",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Vigesimal; debe quedar uno marcado como predefinido."
+              "detalle": "«Sección siguiente» › «Modo de calificar» (C148)."
+            },
+            {
+              "campo": "Predefinido",
+              "valor": "Predefinido",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Debe haber un modo marcado como predefinido (1.1.4, diap. 24)."
+            },
+            {
+              "campo": "Horario",
+              "valor": "TEO y PRA",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "«Sección siguiente» › «Tipo de horario»: una fila Teórico y otra Práctico (con +), C148."
             },
             {
               "campo": "Método educativo",
-              "valor": "TEO · VIRT",
+              "valor": "VIRT · Virtual",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "El tipo de horario y su método educativo. Luego GUARDAR, SCADETL (cuota) y SMAAREA (malla)."
+              "detalle": "En las dos filas."
+            },
+            {
+              "campo": "Carga de trabajo",
+              "valor": "1 y 1",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "La que verá el docente en SSASECT. Sobrecarga de ingreso y carga ajustada, vacías. Guardar."
             }
           ]
         },
@@ -1624,7 +1645,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, E28",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -1890,38 +1911,39 @@
                 ],
                 [
                   "7",
-                  "Nivel",
-                  "C (Computación).",
+                  "Nivel (con «Sección siguiente»)",
+                  "Guarde y pulse «Sección siguiente» (↓, abajo a la izquierda) › «Nivel de curso»: C (Computación); CEU sin marcar.",
                   "I",
                   "M",
-                  "1.1.4, diap. 23"
+                  "1.1.4, diap. 23 · C148"
                 ],
                 [
                   "8",
                   "Modo de calificar",
-                  "V (vigesimal), marcado como predefinido.",
+                  "«Sección siguiente» › «Modo de calificar»: V «Vigesimal Estándar», Predefinido.",
                   "—",
                   "—",
-                  "1.1.4, diap. 24"
+                  "1.1.4, diap. 24 · C148"
                 ],
                 [
                   "9",
                   "Tipo de horario",
-                  "TEO con su método educativo (VIRT si es virtual). La carga de trabajo es la que verá el docente en SSASECT.",
+                  "«Sección siguiente» › «Tipo de horario»: dos filas (+), TEO Teórico y PRA Práctico, las dos con método educativo VIRT (Virtual) y carga de trabajo 1. Sobrecarga de ingreso y carga ajustada vacías.",
                   "—",
                   "—",
-                  "1.1.4, diap. 25"
+                  "1.1.4, diap. 25 · C148"
                 ],
                 [
                   "10",
                   "Guardar y después",
-                  "Guardar (F10). Luego SCADETL (cuota del curso) y SMAAREA (malla de las rutas XP que lo llevan). Recién entonces, el NRC en SSASECT.",
+                  "Guardar (F10) en cada sección. Luego SCADETL (cuota del curso) y SMAAREA (malla de las rutas XP que lo llevan). Recién entonces, el NRC en SSASECT.",
                   "SCADETL: X032 y X228 (C68)",
                   "—",
                   "C127, C128 · 1.2.1, diap. 23 a 25"
                 ]
               ]
-            }
+            },
+            "nota": "En TEST, el curso de prueba ESEC 00701 se llenó así (C145, C148); para uno real, el periodo va 000000 (C146)."
           }
         ]
       }

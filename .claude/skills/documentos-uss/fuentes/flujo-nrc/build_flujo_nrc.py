@@ -129,8 +129,8 @@ PASO_CURSO = dict(
            '**Detalles:** título, escuela `EM`, departamento del centro y estatus activo (diap. 21).',
            '**Horas:** créditos y cobro **variables** (inferior 0, indicador «O», superior: Basic I 0 O 1, Emprendimiento I 0 O 4); '
            'teoría y laboratorio, las del sílabo (Emprendimiento I fijas 1 y 2; Basic I variables 0 O 4 y 0 O 3); el contacto lo suma Banner (diap. 22).',
-           '**Nivel** del centro y **modo de calificar** predefinido (diap. 23–24).',
-           '**Tipo de horario** y método educativo; la carga de trabajo es la que verá el docente (diap. 25).',
+           'Con **«Sección siguiente»** (↓, abajo a la izquierda): **nivel** del centro y **modo de calificar** predefinido (diap. 23–24).',
+           '**Tipo de horario:** en Computación, `TEO` y `PRA`, los dos `VIRT` y carga de trabajo 1; es la que verá el docente (diap. 25, C148).',
            '**SCADETL:** la cuota del curso, si la tiene.',
            '**SMAAREA:** poner el curso en el área de la **malla** de cada programa que lo lleva (1.2.1, diap. 23–25). El curso se crea '
            '**antes** de tocar el área (1.3.1, diap. 5).'],

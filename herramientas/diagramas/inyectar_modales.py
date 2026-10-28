@@ -13,7 +13,7 @@ from pathlib import Path
 import sys
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
 from diapositivas_pasos import INSTRUCTIVOS, para as diapositivas_del_paso
-from plantillas import TITULOS, CAPACIDADES, guia_casuistica_de, guia_demostracion, guia_recorrido
+from plantillas import TITULOS, CAPACIDADES, DEMOSTRACIONES, guia_casuistica_de, guia_demostracion, guia_recorrido
 from centro import Centro
 
 # "plantillas": la guía de las casuísticas sale de plantillas.py (CASOS + EXTRA_CASOS) y pisa a GUIAS_SCRIPTS.
@@ -336,7 +336,7 @@ def _limpiar_inyeccion_previa(contenido):
     contenido = re.sub(r"\s*<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?</script>", "", contenido, flags=re.DOTALL)
     contenido = re.sub(r'\s*<style>(?:(?!</style>).)*?ASISTENTE IA CENTROS EMPRESARIALES USS · DISEÑO ULTRA-PREMIUM(?:(?!</style>).)*?</style>', "", contenido, flags=re.DOTALL)
     contenido = re.sub(r'\s*<script src="[^"]*asistente_(?:conocimiento|diapositivas)\.js"></script>', "", contenido)
-    for marca in ("FLOW NAV TOP", "FLOW NAV BOTTOM"):
+    for marca in ("FLOW NAV TOP", "FLOW NAV BOTTOM", "ANTES DEL NRC"):
         contenido = re.sub(rf"\s*<!-- === {marca} === -->.*?<!-- === /{marca} === -->", "", contenido, flags=re.DOTALL)
     contenido = re.sub(r"\s*<!-- === ASISTENTE IA CENTROS EMPRESARIALES USS.*?<!-- === /ASISTENTE IA CENTROS EMPRESARIALES USS === -->", "", contenido, flags=re.DOTALL)
     # Limpiar cualquier residuo previo en etiquetas de nodos o flechas
@@ -448,6 +448,43 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
         vistas.setdefault(firma, paso)
 
 
+def _html_antes_nrc(slug):
+    """Tabla «Antes del NRC» (periodo y partes) de una demostración: `antes_del_nrc` en datos.json (C141)."""
+    a = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {}).get("antes_del_nrc")
+    if not a:
+        return ""
+    e = html.escape
+    orden = "".join(
+        f'<tr><td class="an-n">{i}</td><td><strong>{e(o["pagina"])}</strong>'
+        + (f'<small>{e(o["detalle"])}</small>' if o.get("detalle") else "")
+        + f'</td><td>{e(o["que"])}</td><td>{e(o["cuando"])}</td><td class="an-cita">{e(o["cita"])}</td></tr>'
+        for i, o in enumerate(a["orden"], 1))
+    partes = "".join(
+        ('<tr class="an-demo">' if p.get("demo") else '<tr>') +
+        f'<td><strong>{e(p["parte"])}</strong></td><td>{e(p["descripcion"])}</td>'
+        f'<td>{e(p["inicio"])}</td><td>{e(p["fin"])}</td><td class="an-num">{p["semanas"]}</td><td>{e(p["censo"])}</td></tr>'
+        for p in a["partes"])
+    por_que = "".join(f"<li>{e(x)}</li>" for x in a["por_que"])
+    return (
+        '<!-- === ANTES DEL NRC === -->\n'
+        '<details class="antes-nrc" open>\n'
+        f'  <summary><span class="an-paso">Paso previo</span> {e(a["titulo"])}</summary>\n'
+        f'  <p class="an-intro">{e(a["intro"])}</p>\n'
+        '  <div class="an-tabla"><table>\n'
+        '    <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'
+        f'    <tbody>{orden}</tbody>\n'
+        '  </table></div>\n'
+        f'  <h3>Por qué en SOATERM solo salen algunas partes</h3>\n  <ul>{por_que}</ul>\n'
+        f'  <h3>{e(a["periodo_titulo"])}</h3>\n'
+        '  <div class="an-tabla"><table>\n'
+        '    <thead><tr><th>Parte</th><th>Descripción</th><th>Inicio</th><th>Fin</th><th>Semanas</th><th>Censo uno</th></tr></thead>\n'
+        f'    <tbody>{partes}</tbody>\n'
+        '  </table></div>\n'
+        f'  <p class="an-fuente">Resaltada: la parte de esta demostración. Fuente: {e(a["fuente"])}.</p>\n'
+        '</details>\n'
+        '<!-- === /ANTES DEL NRC === -->\n')
+
+
 def _json_seguro(obj):
     """JSON para incrustar en <script>: «</» se escapa para que un texto no cierre el script."""
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
@@ -467,6 +504,14 @@ def inyectar_en_html(ruta_html, slug):
         ASSETS_DIR / "asistente_conocimiento.js",
         ruta_html.parent,
     ).replace(os.sep, "/")
+
+    antes = _html_antes_nrc(slug)
+    if antes:
+        i = contenido.find('<script id="archify-i18n-data"')
+        if i == -1:
+            ADVERTENCIAS.append(f"{slug}: no se encontró dónde poner la tabla «Antes del NRC»")
+        else:
+            contenido = contenido[:i] + antes + "    " + contenido[i:]
 
     if re.search(r'<div class="header"', contenido):
         contenido = re.sub(r'(<div class="header"[^>]*>)', lambda m: nav["nav_top"] + "\n    " + m.group(1), contenido, count=1)

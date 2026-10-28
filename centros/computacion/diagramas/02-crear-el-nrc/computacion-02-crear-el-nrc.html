@@ -16997,6 +16997,86 @@ html[data-theme="dark"] .toolbar .sel-tb-recorrido { background: transparent; bo
 html[data-present="true"] .toolbar .tb-post-txt,
 html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 
+/* === Antes del NRC: periodo y partes (solo en las demostraciones con `antes_del_nrc`, C141) === */
+.antes-nrc {
+  margin: 0.75rem clamp(0.5rem, 2vw, 1.25rem) 1rem;
+  padding: 0.9rem 1.1rem 1rem;
+  border: 1px solid var(--panel-border, #cbd5e1);
+  border-left: 4px solid #8b5cf6;
+  border-radius: 0.75rem;
+  background: var(--panel, rgba(255, 255, 255, 0.6));
+  color: var(--text, #111827);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.antes-nrc summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 700;
+  list-style: none;
+}
+.antes-nrc summary::-webkit-details-marker { display: none; }
+.antes-nrc summary::after {
+  content: "▾";
+  margin-left: auto;
+  color: #8b5cf6;
+  transition: transform 0.15s;
+}
+.antes-nrc:not([open]) summary::after { transform: rotate(-90deg); }
+.antes-nrc .an-paso {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: #8b5cf6;
+  color: #ffffff;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  vertical-align: 0.1em;
+}
+.antes-nrc .an-intro { margin: 0.6rem 0 0.7rem; color: var(--text-muted, #475569); }
+.antes-nrc h3 { margin: 1rem 0 0.45rem; font-size: 0.95rem; }
+.antes-nrc ul { margin: 0; padding-left: 1.2rem; }
+.antes-nrc li { margin: 0.2rem 0; }
+.antes-nrc .an-tabla { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.antes-nrc table { width: 100%; border-collapse: collapse; min-width: 560px; }
+.antes-nrc th,
+.antes-nrc td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid var(--panel-border, #e2e8f0);
+  text-align: left;
+  vertical-align: top;
+}
+.antes-nrc th {
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted, #475569);
+}
+.antes-nrc td small { display: block; color: var(--text-muted, #475569); font-size: 0.78rem; }
+.antes-nrc .an-n {
+  width: 2.2rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  text-align: center;
+}
+.antes-nrc .an-cita { color: var(--text-muted, #475569); font-size: 0.8rem; white-space: nowrap; }
+.antes-nrc .an-num { text-align: right; font-variant-numeric: tabular-nums; }
+.antes-nrc tr.an-demo td { background: rgba(16, 185, 129, 0.14); }
+.antes-nrc tr.an-demo td:first-child { box-shadow: inset 3px 0 0 #10b981; }
+.antes-nrc .an-fuente { margin: 0.6rem 0 0; color: var(--text-muted, #475569); font-size: 0.8rem; }
+@media (max-width: 640px) {
+  .antes-nrc { padding: 0.8rem; font-size: 0.85rem; }
+  .antes-nrc .an-cita { white-space: normal; }
+}
+@media print {
+  .antes-nrc { break-inside: avoid; }
+}
+
 
 /* ==========================================================================
    ASISTENTE IA CENTROS EMPRESARIALES USS · DISEÑO ULTRA-PREMIUM Y RESPONSIVO

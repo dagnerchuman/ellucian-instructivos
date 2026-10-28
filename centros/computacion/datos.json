@@ -1579,7 +1579,161 @@
       ],
       "resultado": "Referencia ya probada de punta a punta: NRC 10044 (sección A), 17 en la historia académica del alumno (SHACRSE), C124. En la reunión se repite con la sección B en el mismo periodo 202656.",
       "periodo": "202656",
-      "parte": "X06"
+      "parte": "X06",
+      "antes_del_nrc": {
+        "titulo": "Antes del NRC: el periodo y sus partes",
+        "intro": "Antes de crear el NRC, el periodo y la parte en la que se dictará tienen que existir y estar configurados. Si ya existen, se pasa directo a SSASECT.",
+        "orden": [
+          {
+            "pagina": "STVTERM",
+            "que": "Se crea el código del periodo (202656).",
+            "cuando": "Solo si no existe.",
+            "cita": "Instructivo 1.1.1, diap. 18"
+          },
+          {
+            "pagina": "STVPTRM",
+            "que": "Se crea el código de la parte (X06). Es el catálogo general: 69 códigos, de X01 a X12 para Computación.",
+            "cuando": "Solo si no existe.",
+            "cita": "Instructivo 1.1.1, diap. 14 · C140"
+          },
+          {
+            "pagina": "SOATERM",
+            "detalle": "pestaña «Controles de inscripción de parte de periodo y web»",
+            "que": "Se agregan al periodo solo las partes que va a usar, cada una con fecha de inicio y fin, número de semanas y fecha de censo uno.",
+            "cuando": "En cada periodo.",
+            "cita": "Instructivo 1.1.2, diap. 20 y 21 · C141"
+          },
+          {
+            "pagina": "SSASECT",
+            "que": "Se crea el NRC y se elige su parte; el NRC toma las fechas de esa parte.",
+            "cuando": "Después de los tres anteriores.",
+            "cita": "Instructivo 5.3, diap. 23"
+          }
+        ],
+        "por_que": [
+          "STVPTRM es la lista de todas las partes posibles; SOATERM dice cuáles se usan en ese periodo y en qué fechas.",
+          "SSASECT solo ofrece las partes que están en el SOATERM del periodo. Por ejemplo, X09 existe en STVPTRM, pero no está en 202656: un NRC de 202656 no puede usarla.",
+          "En STVPTRM solo se edita la descripción, nunca el código (C140).",
+          "Las fechas de una parte se cambian en SOATERM y valen para todos los NRC de esa parte en el periodo. Si solo un NRC necesita otras fechas, conviene usar otra parte. Si los NRC ya creados se actualizan solos está por confirmar (E27)."
+        ],
+        "periodo_titulo": "Partes del periodo 202656 en SOATERM (TEST, 28/10/2026)",
+        "partes": [
+          {
+            "parte": "1",
+            "descripcion": "Período General",
+            "inicio": "01-AGO-2026",
+            "fin": "31-DIC-2026",
+            "semanas": 16,
+            "censo": "06-SEP-2026"
+          },
+          {
+            "parte": "CGE",
+            "descripcion": "Computación periodo general",
+            "inicio": "01-AGO-2026",
+            "fin": "31-DIC-2026",
+            "semanas": 16,
+            "censo": "06-SEP-2026"
+          },
+          {
+            "parte": "EGE",
+            "descripcion": "Emprendimiento periodo general",
+            "inicio": "01-AGO-2026",
+            "fin": "31-DIC-2026",
+            "semanas": 16,
+            "censo": "06-SEP-2026"
+          },
+          {
+            "parte": "IGE",
+            "descripcion": "Idiomas periodo general",
+            "inicio": "01-AGO-2026",
+            "fin": "31-DIC-2026",
+            "semanas": 16,
+            "censo": "06-SEP-2026"
+          },
+          {
+            "parte": "X05",
+            "descripcion": "Computación Grupo 05",
+            "inicio": "03-AGO-2026",
+            "fin": "30-AGO-2026",
+            "semanas": 4,
+            "censo": "10-AGO-2026"
+          },
+          {
+            "parte": "X06",
+            "descripcion": "Computación Grupo 06",
+            "inicio": "07-SEP-2026",
+            "fin": "31-OCT-2026",
+            "semanas": 8,
+            "censo": "14-SEP-2026",
+            "demo": true
+          },
+          {
+            "parte": "X07",
+            "descripcion": "Computación Grupo 07",
+            "inicio": "02-NOV-2026",
+            "fin": "13-DIC-2026",
+            "semanas": 6,
+            "censo": "09-NOV-2026"
+          },
+          {
+            "parte": "I08",
+            "descripcion": "Idiomas Grupo 08",
+            "inicio": "03-AGO-2026",
+            "fin": "31-OCT-2026",
+            "semanas": 13,
+            "censo": "10-AGO-2026"
+          },
+          {
+            "parte": "I09",
+            "descripcion": "Idiomas Grupo 09",
+            "inicio": "07-SEP-2026",
+            "fin": "30-NOV-2026",
+            "semanas": 12,
+            "censo": "14-SEP-2026"
+          },
+          {
+            "parte": "I10",
+            "descripcion": "Idiomas Grupo 10",
+            "inicio": "05-OCT-2026",
+            "fin": "31-DIC-2026",
+            "semanas": 13,
+            "censo": "12-OCT-2026"
+          },
+          {
+            "parte": "I11",
+            "descripcion": "Idiomas Grupo 11",
+            "inicio": "02-NOV-2026",
+            "fin": "30-NOV-2026",
+            "semanas": 13,
+            "censo": "09-NOV-2026"
+          },
+          {
+            "parte": "I12",
+            "descripcion": "Idiomas Grupo 12",
+            "inicio": "07-DIC-2026",
+            "fin": "28-FEB-2027",
+            "semanas": 12,
+            "censo": "14-DIC-2026"
+          },
+          {
+            "parte": "P05",
+            "descripcion": "Emprendimiento Grupo 05",
+            "inicio": "05-AGO-2026",
+            "fin": "11-OCT-2026",
+            "semanas": 10,
+            "censo": "12-AGO-2026"
+          },
+          {
+            "parte": "P06",
+            "descripcion": "Emprendimiento Grupo 06",
+            "inicio": "30-SEP-2026",
+            "fin": "06-DIC-2026",
+            "semanas": 10,
+            "censo": "07-OCT-2026"
+          }
+        ],
+        "fuente": "C140, C141, E27"
+      }
     }
   ]
 }

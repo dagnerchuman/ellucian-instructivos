@@ -5045,8 +5045,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
     <!-- === ANTES DEL NRC === -->
-<details class="antes-nrc" open>
-  <summary><span class="an-paso">Paso previo</span> Antes del NRC: el periodo y sus partes</summary>
+<details class="antes-nrc">
+  <summary><span class="an-paso">Paso previo</span> Antes del NRC: el periodo y sus partes<span class="an-abrir">Clic para ver la tabla</span></summary>
   <p class="an-intro">Antes de crear el NRC, el periodo y la parte en la que se dictará tienen que existir y estar configurados. Si ya existen, se pasa directo a SSASECT.</p>
   <div class="an-tabla"><table>
     <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>
@@ -17082,6 +17082,12 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
   transition: transform 0.15s;
 }
 .antes-nrc:not([open]) summary::after { transform: rotate(-90deg); }
+.antes-nrc .an-abrir {
+  color: var(--text-muted, #475569);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.antes-nrc[open] .an-abrir { display: none; }
 .antes-nrc .an-paso {
   display: inline-block;
   padding: 0.1rem 0.55rem;

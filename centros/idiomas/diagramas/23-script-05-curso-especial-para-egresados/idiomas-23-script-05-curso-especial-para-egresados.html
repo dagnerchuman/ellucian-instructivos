@@ -16979,6 +16979,12 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
   transition: transform 0.15s;
 }
 .antes-nrc:not([open]) summary::after { transform: rotate(-90deg); }
+.antes-nrc .an-abrir {
+  color: var(--text-muted, #475569);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.antes-nrc[open] .an-abrir { display: none; }
 .antes-nrc .an-paso {
   display: inline-block;
   padding: 0.1rem 0.55rem;

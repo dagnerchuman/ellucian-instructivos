@@ -449,7 +449,9 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
 
 
 def _html_antes_nrc(slug):
-    """Tabla «Antes del NRC» (periodo y partes) de una demostración: `antes_del_nrc` en datos.json (C141)."""
+    """Tabla «Antes del NRC» (periodo y partes) de una demostración: `antes_del_nrc` en datos.json (C141).
+
+    Sale cerrada: se abre con un clic en el título (pedido del usuario, C142)."""
     a = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {}).get("antes_del_nrc")
     if not a:
         return ""
@@ -467,8 +469,9 @@ def _html_antes_nrc(slug):
     por_que = "".join(f"<li>{e(x)}</li>" for x in a["por_que"])
     return (
         '<!-- === ANTES DEL NRC === -->\n'
-        '<details class="antes-nrc" open>\n'
-        f'  <summary><span class="an-paso">Paso previo</span> {e(a["titulo"])}</summary>\n'
+        '<details class="antes-nrc">\n'
+        f'  <summary><span class="an-paso">Paso previo</span> {e(a["titulo"])}'
+        '<span class="an-abrir">Clic para ver la tabla</span></summary>\n'
         f'  <p class="an-intro">{e(a["intro"])}</p>\n'
         '  <div class="an-tabla"><table>\n'
         '    <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'

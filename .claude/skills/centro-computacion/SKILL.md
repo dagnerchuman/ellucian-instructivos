@@ -57,7 +57,9 @@ Parte de periodo general: **CGE**.
 
 - **Cuándo:** 5.º y 6.º ciclo de pregrado (Resolución Rectoral 175-2023/USS); requisito para el bachiller.
 - **Cómo:** 3 cursos de su ruta, en el orden que desee y en paralelo, + 1 Taller de Certificación Internacional (o 4 talleres según la lámina 2026, U35). Certificación Microsoft Office Specialist.
-- **Cada ruta es un programa en Banner** («Acreditación Computación XP 01…07»): `CMEMC38` = XP 01, `CMEMC44` = XP 07; los demás por confirmar (U37).
+- **Cada ruta es un programa en Banner** (SMAPRLE, TEST, C150): `CMEMC38` XP 01 · `CMEMC39` XP 02 · `CMEMC40` XP 03 · `CMEMC41` XP 04 · `CMEMC42` XP 05 · `CMEMC43` XP 06 · `CMEMC44` XP 07. Todos nivel C, escuela EM, grado 000000, web Y, no bloqueados. XP n = agrupación n va por el número.
+- **Programas antiguos:** `CMEMC01` a `CMEMC37`, también activos (por ejemplo, CMEMC01 «Acr. Comp. Administración», CMEMC08–12 «Pac Ing. …», CMEMC17 «Cursos Libres Cinf», CMEMC21–23 Cisco, CMEMC37 «Suficiencia Pac»); si se siguen usando, U46. Lista completa: `docs/fuentes/banner-test/SMAPRLE-programas-computacion-CMEM-28-10-2026.csv`.
+- **Dónde se ven:** SMAPRLE › filtro Programa `CMEM%` (Idiomas `IMEM%`, Emprendimiento `MMEM%`); también SOACURR o el ••• de Programa en SFAREGS › Currículos.
 
 | Ruta | Escuelas | Cursos (más el taller) |
 |---|---|---|

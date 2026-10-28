@@ -393,7 +393,7 @@
   },
   "rutas_aprendizaje": {
     "regla": "3 cursos de la ruta en el orden que desee (pueden ir en paralelo) + 1 Taller de Certificación Internacional; o 4 talleres de certificación (lámina 4, 2026; U35)",
-    "programas_banner": "Cada ruta es un programa «Acreditación Computación XP 01…07» (usuario, 26/10). Confirmados en TEST: CMEMC38 = XP 01 y CMEMC44 = XP 07; el resto por confirmar en SMAPROG (U37)",
+    "programas_banner": "Cada ruta es un programa «Acreditación Computación XP 01…07». En SMAPRLE (TEST, 28/10, C150): CMEMC38 = XP 01, CMEMC39 = XP 02, CMEMC40 = XP 03, CMEMC41 = XP 04, CMEMC42 = XP 05, CMEMC43 = XP 06 y CMEMC44 = XP 07, todos nivel C, escuela EM, grado 000000, web Y, no bloqueados. Que XP n sea la agrupación n va por el número (se confirma viendo su malla en SMAPROG/SMAAREA). Además hay 37 programas antiguos, CMEMC01 a CMEMC37 (docs/fuentes/banner-test/SMAPRLE-programas-computacion-CMEM-28-10-2026.csv).",
     "fuente": "acreditaciones-uss (láminas 5 a 8, 2026; C125)",
     "agrupaciones": [
       {
@@ -414,7 +414,7 @@
       {
         "ruta": 2,
         "programa_xp": "XP 02",
-        "programa_banner": null,
+        "programa_banner": "CMEMC39",
         "escuelas": "Derecho; Psicología; Trabajo Social",
         "cursos": [
           "Ofimática Word 365",
@@ -429,7 +429,7 @@
       {
         "ruta": 3,
         "programa_xp": "XP 03",
-        "programa_banner": null,
+        "programa_banner": "CMEMC40",
         "escuelas": "Administración; Administración y Emprendimiento; Administración y Marketing; Contabilidad; Contabilidad y Finanzas; Negocios Internacionales; Turismo y Negocios; Ingeniería Agroindustrial y Comercio Exterior",
         "cursos": [
           "Ofimática Word 365",
@@ -444,7 +444,7 @@
       {
         "ruta": 4,
         "programa_xp": "XP 04",
-        "programa_banner": null,
+        "programa_banner": "CMEMC41",
         "escuelas": "Arquitectura; Ingeniería Civil; Arquitectura y Diseño de Interiores",
         "cursos": [
           "Microsoft Excel Asociado",
@@ -459,7 +459,7 @@
       {
         "ruta": 5,
         "programa_xp": "XP 05",
-        "programa_banner": null,
+        "programa_banner": "CMEMC42",
         "escuelas": "Ingeniería de Sistemas; Ingeniería de Software; Ingeniería Industrial",
         "cursos": [
           "Microsoft Excel Asociado",
@@ -474,7 +474,7 @@
       {
         "ruta": 6,
         "programa_xp": "XP 06",
-        "programa_banner": null,
+        "programa_banner": "CMEMC43",
         "escuelas": "Ingeniería Mecánica Eléctrica; Ingeniería Civil; Arquitectura",
         "cursos": [
           "Microsoft Excel Asociado",

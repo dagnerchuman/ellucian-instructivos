@@ -17,15 +17,15 @@ El curso no tiene carreras: se une a ellas con tres piezas.
 | Malla | SMAAREA (área del programa XP) | El curso cuenta en el CAPP y sale en **Proyecciones** del Autoservicio de esos alumnos | **No** |
 | Restricción | **SCARRES** (el curso, todos sus NRC) o **SSARRES** (un NRC) › Grado y Programa › **Incluir** | Solo los alumnos de esos programas pueden matricularse | **Sí** |
 
-- Ejemplo «solo Ingenierías»: Incluir los programas XP de las rutas 4, 5 y 6 (códigos por confirmar, U37). «Solo Medicina» no se separa por programa XP, porque la ruta 1 junta varias carreras de salud (E29).
+- Ejemplo «solo Ingenierías»: Incluir `CMEMC41`, `CMEMC42` y `CMEMC43` (rutas 4, 5 y 6; C150). «Solo Medicina» no se separa por programa XP, porque la ruta 1 junta varias carreras de salud (E29).
 - SCARRES también restringe por departamento, campo de estudio, clase, nivel y grado (1.1.5, diap. 23–25); SSARRES, por nivel, programa, campus, atributo y cohorte (5.3, diap. 46–48). Lo de SCARRES se hereda en SSARRES.
-- **Para que bloquee, la verificación tiene que estar en Fatal en SOATERM › «Verificación de errores de inscripción».** En 202656, **Programa está en «No verificar»** (C149): hoy una restricción de programa no hace nada. Campo de estudio, Escuela, Nivel y Campus sí están en Fatal.
+- **Para que bloquee, la verificación tiene que estar en Fatal en SOATERM › «Verificación de errores de inscripción».** En 202656, **Programa estaba en «No verificar»** (C149): así, una restricción de programa no hace nada; para la prueba de R23 se puso en Fatal (C150). Campo de estudio, Escuela, Nivel y Campus sí están en Fatal.
 - Si se restringirán los NRC está por decidir (U41).
 
 ## A. Inscribir al alumno en su ruta
 | N.º | Página | Qué hacer | Fuente |
 |---|---|---|---|
-| 1 | Lámina de rutas | Ubicar la escuela del alumno y su ruta (por ejemplo, Ing. de Software → ruta 5 o 7, U37) | C125 |
+| 1 | Lámina de rutas | Ubicar la escuela del alumno y su ruta (por ejemplo, Ing. de Software → ruta 5 o 7: `CMEMC42` o `CMEMC44`, C150) | C125 |
 | 2 | **GOAMTCH** | Solo si la persona no existe: ID `GENERATED`, origen `PERS_NATU`, apellidos con `/`, dirección `PP`, teléfono `MOV`, correo `PER1`; «Marcar-Duplicar» y guardar. Un alumno de pregrado ya existe: se salta | 02-creacion-de-persona.md; C17, C32 |
 | 3 | **SAAQUIK** | ID, periodo (`202656`), nivel `C` › Ir. Tipo de alumno, estatus `AS`, residencia `R`. Currículo, prioridad 1: Programa › `•••` › «Reglas de currículo base por programa» › el programa XP de su ruta › OK. Banner pone mayor `ACXP` y departamento `EMCI`. Guardar | 03-admision-y-asignacion-al-programa.md; C19 |
 | 3b | **SFAREGS › Currículos** | Otra forma: agregar el currículo del centro al alumno que ya tiene otro programa: `+`, programa y Tab | C100 |
@@ -75,4 +75,4 @@ El curso no tiene carreras: se une a ellas con tres piezas.
 | 8 | **SFAREGS** | Probar: un alumno de otro programa no debe poder matricularse | Por probar |
 
 ## Por confirmar
-U35 (4 talleres o 4.º curso), U37 (código de cada ruta; las escuelas las asigna Pregrado), U40 (quién hace la malla y la programación cuando el curso no está), U41 (¿se pondrán restricciones de programa en los NRC con SSARRES?).
+U35 (4 talleres o 4.º curso), U40 (quién hace la malla y la programación cuando el curso no está), U41 (¿se pondrán restricciones de programa en los NRC con SSARRES?).

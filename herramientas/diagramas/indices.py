@@ -38,6 +38,7 @@ def diagramas_de(carpeta):
 
 
 FASE_BASE = "Flujos base"
+FASE_DEMO = "Demostraciones para la reunión"
 
 
 def fases_de(carpeta, centro_id=None):
@@ -50,8 +51,10 @@ def fases_de(carpeta, centro_id=None):
                      for i in c.d["casuisticas"].get(clave, [])}
     grupos = {}
     for item in diags:
-        grupos.setdefault(fase_por_slug.get(item[3].parent.name[3:], FASE_BASE), []).append(item)
-    orden = [FASE_BASE] + [nombre for _, nombre in FASES_CASUISTICAS]
+        slug_ = item[3].parent.name[3:]
+        fase = FASE_DEMO if slug_.startswith("demostracion-") else fase_por_slug.get(slug_, FASE_BASE)
+        grupos.setdefault(fase, []).append(item)
+    orden = [FASE_DEMO, FASE_BASE] + [nombre for _, nombre in FASES_CASUISTICAS]
     return [(f, grupos[f]) for f in orden if f in grupos]
 
 

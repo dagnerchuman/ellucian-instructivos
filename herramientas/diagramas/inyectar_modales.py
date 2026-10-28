@@ -13,7 +13,7 @@ from pathlib import Path
 import sys
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
 from diapositivas_pasos import INSTRUCTIVOS, para as diapositivas_del_paso
-from plantillas import TITULOS, CAPACIDADES, guia_casuistica_de, guia_recorrido
+from plantillas import TITULOS, CAPACIDADES, guia_casuistica_de, guia_demostracion, guia_recorrido
 from centro import Centro
 
 # "plantillas": la guía de las casuísticas sale de plantillas.py (CASOS + EXTRA_CASOS) y pisa a GUIAS_SCRIPTS.
@@ -149,6 +149,8 @@ def obtener_guia_para_slug(slug, id_centro="", ids_nodos=None):
     sid = detectar_script(slug)
     if RE_PREFIJO.sub("", slug) == "recorrido-completo" and id_centro in ("idiomas", "computacion", "emprendimiento"):
         return _validar_y_ordenar(guia_recorrido(Centro(id_centro)), ids_nodos, slug)
+    if RE_PREFIJO.sub("", slug).startswith("demostracion-"):
+        return _validar_y_ordenar(guia_demostracion(Centro(id_centro), RE_PREFIJO.sub("", slug)), ids_nodos, slug)
     guia = dict(_guia_curada(slug, id_centro, sid) or {})
     if sid:  # casuísticas: se completan (o se imponen) desde plantillas.py
         generada = guia_casuistica_de(id_centro, sid)

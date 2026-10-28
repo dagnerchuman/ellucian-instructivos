@@ -37,6 +37,7 @@ Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salid
 ## Diagramas por centro
 | N.º | Tema | Tipo Archify |
 |---|---|---|
+| 0 | **Demostraciones para reuniones** (`datos.json › demostraciones`): un caso real de TEST en el orden curso › NRC › docente › fórmula › alumno, con su guion. Van primero (`00-demostracion-…`) y la galería les da su grupo. Hoy: Computación, «Demostración 1 · Diseño Web de punta a punta (NRC 10044)» (C134) | workflow |
 | 0 | El mismo flujo en los tres centros (`centros/comun`) | workflow |
 | 1 | Recorrido completo: quién hace cada paso (alumno, asistente, jefe, Banner, docente, Registros, Vicerrectorado) | sequence |
 | 2 | Crear el NRC (SOATERM → SCACRSE → SSASECT ×3 → SSASECQ) | workflow |

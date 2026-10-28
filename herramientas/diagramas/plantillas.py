@@ -22,7 +22,7 @@ Reglas de Archify que estas plantillas respetan (las valida `finalize`):
 import re
 import unicodedata
 
-from centro import leer_json, CENTROS, Centro
+from centro import leer_json, CENTROS, Centro, centros_disponibles
 
 # --------------------------------------------------------------------------- términos
 TERMINOS = {
@@ -134,6 +134,12 @@ CAPACIDADES = {
     "ligas-teorico-y-club": "Capacidad 5",
     **{slug_script(s["id"]): s.get("capacidad", "") for s in SCRIPTS_COMUN},
 }
+
+# Demostraciones para reuniones (datos.json › demostraciones de cada centro): su título y capacidad.
+DEMOSTRACIONES = {d["slug"]: d for _id in centros_disponibles()
+                  for d in leer_json(CENTROS / _id / "datos.json").get("demostraciones", [])}
+TITULOS.update({k: d["titulo"] for k, d in DEMOSTRACIONES.items()})
+CAPACIDADES.update({k: d.get("capacidad", "") for k, d in DEMOSTRACIONES.items()})
 
 CAPACIDADES_DETALLE = {
     "tres-centros": "Capacidades 1 a 8 · Visión comparativa integral",
@@ -1148,6 +1154,56 @@ def ligas(c, numero):
     )
 
 
+# --------------------------------------------------------------------------- demostraciones
+CARRILES_DEMO = {"ra": "Registros Académicos", "centro": "El centro", "doc": "Docente (Autoservicio)"}
+
+
+def demostracion(c, d):
+    """Un caso real de TEST para mostrar en una reunión, en el orden curso › NRC › docente › fórmula › alumno (C133).
+
+    Los pasos van en columnas 0 a 5; si hay 7, los dos últimos comparten la columna 5 en carriles distintos."""
+    carriles = list(dict.fromkeys(p["carril"] for p in d["pasos"]))
+    orden = ["ra", "centro", "doc"]
+    carriles.sort(key=orden.index)
+    nodos = [paso(p["id"], p["carril"], min(i, 5), p["codigo"], p["accion"], p["dato"], p.get("tipo", "backend"))
+             for i, p in enumerate(d["pasos"])]
+    nodos[0]["icon"] = "start"
+    nodos[-1]["icon"] = "success"
+    cards = tarjetas(c, [d["caso"], d["resultado"]], [CITAS["periodo"], CITAS["nrc"], CITAS["docente"], CITAS["carga"],
+                                                     CITAS["calendario"], CITAS["notas"], CITAS["asistencia_regla"],
+                                                     CITAS["cierre"]],
+                     [{"dot": "violet", "title": "Guion para la reunión", "items": [f"{i}. {t}" for i, t in enumerate(d["guion"], 1)]},
+                      {"dot": "rose", "title": "Lo que aprendimos en TEST", "items": d["aprendido"]}])
+    return flujo(
+        c, 0, d["slug"],
+        [{"id": k, "label": CARRILES_DEMO[k]} for k in carriles],
+        nodos, cards,
+        fases=[{"id": "f0", "label": "Preparar el NRC: periodo, sección, docente y fórmula", "fromCol": 0, "toCol": 3},
+               {"id": "f1", "label": "Matricular, dictar y cerrar", "fromCol": 4, "toCol": 5, "variant": "emphasis"}],
+        title_override=f"{c.nombre} · {d['titulo']}",
+        subtitle_override=c.subtitulo(d.get("capacidad")),
+    )
+
+
+def guia_demostracion(c, slug_):
+    """Guía de cada paso de la demostración, con sus láminas (temas de diapositivas_pasos.py o listas)."""
+    from diapositivas_pasos import TEMAS
+    d = DEMOSTRACIONES[slug_]
+    guia = {}
+    for p in d["pasos"]:
+        laminas = []
+        for x in p["laminas"]:
+            laminas += TEMAS[x] if isinstance(x, str) else [x]
+        guia[p["id"]] = {"titulo": d["titulo"], "pantalla": p["codigo"], "fase": f"{p['codigo']}: {p['accion']}",
+                         "hito": f"{p['quien']} · {p['dato']}", "instrucciones": p["filas"], "diapositivas": laminas}
+    return guia
+
+
+def demostraciones_de(c):
+    """Las demostraciones del centro van primero (00-…), antes de los flujos base."""
+    return [(0, d["slug"], lambda c, d=d: demostracion(c, d)) for d in c.d.get("demostraciones", [])]
+
+
 DIAGRAMAS_BASE = [
     (1, "recorrido-completo", recorrido),
     (2, "crear-el-nrc", crear_nrc),
@@ -1161,7 +1217,7 @@ DIAGRAMAS_BASE = [
 def diagramas_de(c):
     """[(número, slug, función(c))]: los 6 flujos base, los propios del centro y una casuística por diagrama."""
     propios = [(7, "ligas-teorico-y-club", lambda c: ligas(c, 7))] if c.d.get("ligas") and c.d["ligas"].get("secundaria") else []
-    return DIAGRAMAS_BASE + propios + casuisticas_de(c, 7 + len(propios))
+    return demostraciones_de(c) + DIAGRAMAS_BASE + propios + casuisticas_de(c, 7 + len(propios))
 
 
 # --------------------------------------------------------------------------- 0 (común)

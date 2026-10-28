@@ -9,6 +9,18 @@ Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) �
 - **«Asignar programas»** (no «asignar escuelas») es poner el curso en la **malla de los programas XP**: SMAPROG (áreas del programa) y SMAAREA (cursos del área), secciones C y C2.
 - **SSARRES no asigna programas:** son las **restricciones de inscripción** del NRC (incluir o excluir por nivel, programa, campus, atributo o cohorte); se usan solo si hay que limitar el NRC (C128).
 
+## ¿Cómo un curso queda solo para ciertas carreras? (R23)
+El curso no tiene carreras: se une a ellas con tres piezas.
+| Pieza | Página | Qué hace | ¿Impide que otro lo matricule? |
+|---|---|---|---|
+| Programa del alumno | SAAQUIK o SFAREGS › Currículos | Su escuela → su ruta → su programa XP (Medicina → ruta 1 → `CMEMC38`) | No |
+| Malla | SMAAREA (área del programa XP) | El curso cuenta en el CAPP y sale en **Proyecciones** del Autoservicio de esos alumnos | **No** |
+| Restricción | **SCARRES** (el curso, todos sus NRC) o **SSARRES** (un NRC) › Grado y Programa › **Incluir** | Solo los alumnos de esos programas pueden matricularse | **Sí** |
+
+- Ejemplo «solo Ingenierías»: Incluir los programas XP de las rutas 4, 5 y 6 (códigos por confirmar, U37). «Solo Medicina» no se separa por programa XP, porque la ruta 1 junta varias carreras de salud (E29).
+- SCARRES también restringe por departamento, campo de estudio, clase, nivel y grado (1.1.5, diap. 23–25); SSARRES, por nivel, programa, campus, atributo y cohorte (5.3, diap. 46–48). Lo de SCARRES se hereda en SSARRES.
+- Si se restringirán los NRC está por decidir (U41).
+
 ## A. Inscribir al alumno en su ruta
 | N.º | Página | Qué hacer | Fuente |
 |---|---|---|---|

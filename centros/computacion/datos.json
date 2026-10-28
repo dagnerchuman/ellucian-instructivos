@@ -1616,7 +1616,7 @@
           "En STVPTRM solo se edita la descripción, nunca el código (C140).",
           "Las fechas de una parte se cambian en SOATERM y valen para todos los NRC de esa parte en el periodo. Si solo un NRC necesita otras fechas, conviene usar otra parte. Si los NRC ya creados se actualizan solos está por confirmar (E27)."
         ],
-        "periodo_titulo": "Partes del periodo 202656 en SOATERM (TEST, 28/10/2026)",
+        "periodo_titulo": "¿Qué partes tiene el periodo 202656 en SOATERM? (TEST, 28/10/2026)",
         "partes": [
           {
             "parte": "1",

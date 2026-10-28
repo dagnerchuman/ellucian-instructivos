@@ -451,7 +451,7 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
 def _html_antes_nrc(slug):
     """Tabla «Antes del NRC» (periodo y partes) de una demostración: `antes_del_nrc` en datos.json (C141).
 
-    Sale cerrada: se abre con un clic en el título (pedido del usuario, C142)."""
+    Sale cerrada; al abrirla se ve solo la tabla del orden y las otras dos preguntas siguen cerradas (pedido del usuario, C142)."""
     a = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {}).get("antes_del_nrc")
     if not a:
         return ""
@@ -477,13 +477,19 @@ def _html_antes_nrc(slug):
         '    <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'
         f'    <tbody>{orden}</tbody>\n'
         '  </table></div>\n'
-        f'  <h3>Por qué en SOATERM solo salen algunas partes</h3>\n  <ul>{por_que}</ul>\n'
-        f'  <h3>{e(a["periodo_titulo"])}</h3>\n'
-        '  <div class="an-tabla"><table>\n'
-        '    <thead><tr><th>Parte</th><th>Descripción</th><th>Inicio</th><th>Fin</th><th>Semanas</th><th>Censo uno</th></tr></thead>\n'
-        f'    <tbody>{partes}</tbody>\n'
-        '  </table></div>\n'
-        f'  <p class="an-fuente">Resaltada: la parte de esta demostración. Fuente: {e(a["fuente"])}.</p>\n'
+        '  <details class="an-sub">\n'
+        '    <summary>¿Por qué en SOATERM solo salen algunas partes?</summary>\n'
+        f'    <ul>{por_que}</ul>\n'
+        '  </details>\n'
+        '  <details class="an-sub">\n'
+        f'    <summary>{e(a["periodo_titulo"])}</summary>\n'
+        '    <div class="an-tabla"><table>\n'
+        '      <thead><tr><th>Parte</th><th>Descripción</th><th>Inicio</th><th>Fin</th><th>Semanas</th><th>Censo uno</th></tr></thead>\n'
+        f'      <tbody>{partes}</tbody>\n'
+        '    </table></div>\n'
+        '    <p class="an-fuente">Resaltada: la parte de esta demostración.</p>\n'
+        '  </details>\n'
+        f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
         '</details>\n'
         '<!-- === /ANTES DEL NRC === -->\n')
 

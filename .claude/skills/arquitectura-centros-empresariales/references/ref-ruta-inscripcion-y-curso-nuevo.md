@@ -19,6 +19,7 @@ El curso no tiene carreras: se une a ellas con tres piezas.
 
 - Ejemplo «solo Ingenierías»: Incluir los programas XP de las rutas 4, 5 y 6 (códigos por confirmar, U37). «Solo Medicina» no se separa por programa XP, porque la ruta 1 junta varias carreras de salud (E29).
 - SCARRES también restringe por departamento, campo de estudio, clase, nivel y grado (1.1.5, diap. 23–25); SSARRES, por nivel, programa, campus, atributo y cohorte (5.3, diap. 46–48). Lo de SCARRES se hereda en SSARRES.
+- **Para que bloquee, la verificación tiene que estar en Fatal en SOATERM › «Verificación de errores de inscripción».** En 202656, **Programa está en «No verificar»** (C149): hoy una restricción de programa no hace nada. Campo de estudio, Escuela, Nivel y Campus sí están en Fatal.
 - Si se restringirán los NRC está por decidir (U41).
 
 ## A. Inscribir al alumno en su ruta

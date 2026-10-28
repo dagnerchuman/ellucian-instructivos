@@ -49,6 +49,9 @@ Procedimiento oficial probado y validado en el ambiente **TEST de la USS** (29/0
 
 ---
 
+## Si sale «Las reglas del estatus de inscripción al curso no están definidas para la parte de periodo» (C154)
+Falta **SFARSTS** para ese periodo y esa parte: ahí se habilitan RE y DD (y RW y DW para autoservicio) con fecha de inicio y fin, para **cada** parte de periodo de SOATERM (5.4, diap. 27–28). Lo configura Registros. Mientras tanto: pulsar ↺ (o «Limpiar registro») para quitar la fila y usar un NRC de una parte que sí esté configurada.
+
 ## 6. Resultado y Verificación
 * El curso quedará registrado en la tabla con estatus **`RE`** o **`RW`** (*Registrado*).
 * En **SSASECQ**, el NRC `1021` actualizará su cupo:

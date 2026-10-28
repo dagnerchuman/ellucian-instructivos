@@ -24,6 +24,7 @@ Una parte de periodo es un rango de fechas dentro del periodo. Tiene sus propias
 - Código de máximo 3 caracteres (STVPTRM). Debe existir la parte **1** («Periodo completo»).
 - Cada NRC se asigna a una parte de periodo en SSASECT y hereda sus fechas (instructivo 5.3, diap. 23).
 - La parte de periodo decide el periodo, **no** la fecha de fin: un grupo puede terminar después de que empezó el siguiente periodo.
+- En STVPTRM solo están el código y la descripción (se edita la descripción, nunca el código). Las fechas de cada parte se ponen por periodo en SOATERM › Partes de periodo (1.1.2, diap. 20 y 21). En TEST el catálogo ya tiene X01 a X12 y P01 a P12 (C140).
 
 | Centro | General | Grupos |
 |---|---|---|

@@ -666,17 +666,17 @@
             },
             {
               "campo": "Período",
-              "valor": "202656",
+              "valor": "000000",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Desde qué periodo rige el curso; «A periodo» queda 999999."
+              "detalle": "Del periodo 000000 y A periodo 999999, igual que los cursos reales del catálogo (Basic I y Emprendimiento I, C146)."
             },
             {
               "campo": "Copiar",
               "valor": "«Copiar» de ESEC 00684",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Lo más rápido: copia todo de un curso parecido y solo cambias el título."
+              "detalle": "Lo más seguro: copia la configuración real de un curso de Computación; solo se cambia el título."
             },
             {
               "campo": "Título de curso",
@@ -707,32 +707,39 @@
               "detalle": "Obligatorio; se elige con el •••."
             },
             {
-              "campo": "Cobro",
-              "valor": "Inferior 0 · O · Superior 1",
+              "campo": "UEC o crédito",
+              "valor": "0 · O · 1",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Créditos de cobro variables, igual que UEC o crédito (ejemplo en TEST, C145). Así el NRC puede fijar sus horas (5.3, diap. 25); en el NRC de teoría quedan en 1."
+              "detalle": "Inferior 0, indicador «O», Superior = créditos: siempre variables en los cursos reales (Basic I 0 O 1, Emprendimiento I 0 O 4; C146)."
+            },
+            {
+              "campo": "Cobro",
+              "valor": "0 · O · 1",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Igual que UEC o crédito (obligatorio). Así el NRC puede fijar sus horas (5.3, diap. 25); en el NRC de teoría quedan en 1."
             },
             {
               "campo": "Teoría",
               "valor": "1",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Horas de teoría (Diseño Web: HT 1, C96)."
+              "detalle": "Horas de teoría del sílabo (Diseño Web HT 1, C96). Así, fijas, está Emprendimiento I (1); Basic I las tiene variables (0 O 4). Si copia de ESEC 00684, déjelas como vengan."
             },
             {
               "campo": "Laboratorio",
               "valor": "1",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Horas de práctica (HP 1)."
+              "detalle": "Horas de práctica del sílabo (HP 1). Emprendimiento I: 2; Basic I: 0 O 3."
             },
             {
               "campo": "Contacto",
-              "valor": "lo calcula Banner",
+              "valor": "2",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Suma las horas del curso."
+              "detalle": "Lo calcula Banner: teoría + laboratorio (Emprendimiento I: 3; Basic I: 0 O 7)."
             },
             {
               "campo": "Nivel",
@@ -1608,7 +1615,7 @@
             "detalle": "catálogo de cursos",
             "que": "Se crea el curso: la asignatura del catálogo (por ejemplo, ESEC 00684 Diseño Web), con su título, escuela, horas, nivel, modo de calificar y tipo de horario. Un mismo curso sirve para muchos NRC y muchos periodos.",
             "cuando": "Solo si el curso no existe (búsquelo en «Cursos existentes»).",
-            "cita": "Instructivo 1.1.4, diap. 20 a 25 · C135, C137"
+            "cita": "Instructivo 1.1.4, diap. 20 a 25 · C135, C146"
           },
           {
             "pagina": "SSASECT",
@@ -1617,7 +1624,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C137, C140, C141, E27, U40",
+        "fuente": "C135, C140, C141, C146, E27, U40",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -1784,7 +1791,7 @@
                 ],
                 [
                   "Cuántas veces se crea",
-                  "Una sola vez; rige desde un periodo hasta 999999",
+                  "Una sola vez; rige de 000000 a 999999",
                   "En cada periodo, una por cada grupo o sección"
                 ],
                 [
@@ -1822,12 +1829,14 @@
           },
           {
             "pregunta": "¿Cómo se crea el curso en SCACRSE?",
-            "intro": "Solo si el curso no existe. La materia (ESEC) ya está creada en STVSUBJ. Ejemplo en TEST: ESEC 00701 «GOOGLE», periodo 202656 (C145).",
+            "intro": "Solo si el curso no existe. La materia ya está creada en STVSUBJ. Lo más seguro es «Copiar» de un curso real del mismo centro. Al lado, cómo están dos cursos reales en TEST (cargados por la migración, C146).",
             "tabla": {
               "columnas": [
                 "N.º",
                 "Dónde",
-                "Qué poner",
+                "Qué poner (Computación)",
+                "Basic I · Idiomas",
+                "Emprendimiento I",
                 "Fuente"
               ],
               "filas": [
@@ -1835,60 +1844,80 @@
                   "1",
                   "«Cursos existentes» (••• de Curso)",
                   "Busque el curso. Si ya existe, no se crea: pase a SSASECT. En TEST el número más alto de ESEC es 00700.",
-                  "1.1.4, diap. 20 (punto 6) · C135"
+                  "ESEP 02456",
+                  "ESGE 00117",
+                  "1.1.4, diap. 20 · C135"
                 ],
                 [
                   "2",
                   "Encabezado",
-                  "Materia ESEC, Curso con el número nuevo (por ejemplo 00701) y Período desde el que rige (202656) › Ir. Sale «Detalles de curso» vacío; «A periodo» queda 999999.",
-                  "1.1.4, diap. 20 · C137"
+                  "Materia ESEC, Curso 00701 (el número nuevo) y Periodo 000000 › Ir. Debe quedar Del periodo 000000 y A periodo 999999.",
+                  "000000 a 999999",
+                  "000000 a 999999",
+                  "1.1.4, diap. 20 · C146"
                 ],
                 [
                   "3",
-                  "Copiar (recomendado)",
-                  "Copie de un curso parecido, por ejemplo ESEC 00684: trae todos los datos y solo se cambia el título.",
+                  "Copiar",
+                  "Copie de ESEC 00684 (Diseño Web): trae la configuración real; solo cambie el título.",
+                  "—",
+                  "—",
                   "1.1.4, diap. 20"
                 ],
                 [
                   "4",
                   "Detalles del curso",
-                  "Título (nombre completo, hasta 30 caracteres); Escuela EM; Departamento EMCI; Estatus A (Activo). Duración y Límite de repetición no se llenan.",
-                  "1.1.4, diap. 21 y 22 · C145"
+                  "Título (nombre completo, hasta 30 caracteres); Escuela EM; Departamento EMCI; Estatus A. Duración y Límite de repetición vacíos.",
+                  "«Basic I» · EM · EMID · A",
+                  "«Emprendimiento I» · EM · EMEM · A",
+                  "1.1.4, diap. 21 y 22 · C146"
                 ],
                 [
                   "5",
-                  "Horas",
-                  "UEC o crédito y Cobro: Inferior 0, «O», Superior 1 (créditos variables: 0 o 1; así el NRC puede fijar sus horas). Teoría 1 y Laboratorio 1 (HT 1 y HP 1); Contacto lo calcula Banner (2).",
-                  "1.1.4, diap. 22 · 5.3, diap. 25 · C96, C145"
+                  "UEC o crédito y Cobro",
+                  "Variables: Inferior 0, indicador «O», Superior 1 (0 O 1). Así el NRC puede fijar sus horas; en el NRC de teoría quedan en 1.",
+                  "0 O 1",
+                  "0 O 4",
+                  "1.1.4, diap. 22 · 5.3, diap. 25 · C146"
                 ],
                 [
                   "6",
-                  "Nivel",
-                  "C (Computación).",
-                  "1.1.4, diap. 23"
+                  "Teoría, Laboratorio y Contacto",
+                  "Las horas del sílabo: Teoría 1 y Laboratorio 1 (HT 1, HP 1); Contacto lo calcula Banner (2). Si copió de ESEC 00684, déjelas como vengan.",
+                  "0 O 4 · 0 O 3 · 0 O 7 (variables)",
+                  "1 · 2 · 3 (fijas)",
+                  "1.1.4, diap. 22 · C96, C146"
                 ],
                 [
                   "7",
-                  "Modo de calificar",
-                  "V (vigesimal), marcado como predefinido.",
-                  "1.1.4, diap. 24"
+                  "Nivel",
+                  "C (Computación).",
+                  "I",
+                  "M",
+                  "1.1.4, diap. 23"
                 ],
                 [
                   "8",
-                  "Tipo de horario",
-                  "El tipo de horario y su método educativo (en la demostración, TEO · VIRT). La carga de trabajo es la que verá el docente en SSASECT.",
-                  "1.1.4, diap. 25"
+                  "Modo de calificar",
+                  "V (vigesimal), marcado como predefinido.",
+                  "—",
+                  "—",
+                  "1.1.4, diap. 24"
                 ],
                 [
                   "9",
-                  "Guardar",
-                  "Pulse Guardar (F10).",
-                  "1.1.4"
+                  "Tipo de horario",
+                  "TEO con su método educativo (VIRT si es virtual). La carga de trabajo es la que verá el docente en SSASECT.",
+                  "—",
+                  "—",
+                  "1.1.4, diap. 25"
                 ],
                 [
                   "10",
-                  "Después",
-                  "SCADETL: la cuota del curso. SMAAREA: agregar el curso a la malla de las rutas XP que lo llevan. Recién entonces, el NRC en SSASECT.",
+                  "Guardar y después",
+                  "Guardar (F10). Luego SCADETL (cuota del curso) y SMAAREA (malla de las rutas XP que lo llevan). Recién entonces, el NRC en SSASECT.",
+                  "SCADETL: X032 y X228 (C68)",
+                  "—",
                   "C127, C128 · 1.2.1, diap. 23 a 25"
                 ]
               ]

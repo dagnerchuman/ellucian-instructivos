@@ -256,7 +256,7 @@ GUIA_LIGAS = {
         "hito": "Asignatura configurada con Teoría y Práctica en el catálogo",
         "instrucciones": [
             {"campo": "Formulario", "valor": "SCACRSE", "tipo": "Catálogo base", "detalle": "Comprobar que el curso de Idiomas (ej. ESEP 02456 BASIC I, 02457 BASIC II, 02458 BASIC III) tenga dos tipos de horario: TEO (Teoría) y PRA (Práctica)."},
-            {"campo": "Créditos y Horas", "valor": "HT: 4 | HP: 3 | 4 Créditos", "tipo": "Estructura académica", "detalle": "La teoría concentra la carga académica evaluable; la práctica es el espacio complementario de conversación."}
+            {"campo": "Créditos y Horas", "valor": "UEC y Cobro 0 O 1 · Teoría 0 O 4 · Laboratorio 0 O 3 · Contacto 0 O 7", "tipo": "Estructura académica", "detalle": "Así está ESEP 02456 Basic I en TEST: Del periodo 000000 a 999999 y horas variables (Inferior 0, indicador «O», Superior), C146. La teoría concentra la carga evaluable; la práctica es el espacio de conversación."}
         ]
     },
     "g2": {

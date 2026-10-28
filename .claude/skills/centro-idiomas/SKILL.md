@@ -34,6 +34,9 @@ description: >-
 
 > ✅ Los identificadores de Idiomas (`IMEMI03`, `EMID`, `MI03-01`, `ESEP`) fueron confirmados en TEST y en la hoja oficial de programación de NRCs (C60).
 
+### Curso en SCACRSE: así está Basic I (C146)
+`ESEP 02456` «Basic I» en TEST: Del periodo `000000` · A periodo `999999`; Escuela `EM`; Departamento `EMID`; Estatus `A`; prerrequisito «Básico o ninguno»; horas **variables** (Inferior · indicador · Superior): UEC o crédito `0 O 1`, Cobro `0 O 1`, Teoría `0 O 4`, Laboratorio `0 O 3`, Otro `Ninguno`, Contacto `0 O 7`; Límite de repetición vacío. Es el modelo para un curso nuevo de Idiomas: **Copiar** de él y cambiar el título. A diferencia de Emprendimiento I (horas fijas), Basic I tiene también la teoría, el laboratorio y el contacto variables.
+
 ## Partes de periodo (Idiomas)
 
 | Parte | Periodo | Niveles I–II | Niveles III |

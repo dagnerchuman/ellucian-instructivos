@@ -124,10 +124,11 @@ PASO_PERIODO = dict(
 
 PASO_CURSO = dict(
     n='2a', titulo='Crear el curso (solo si no está en el catálogo)', quien='Diseño curricular o Registros (por confirmar, U40)',
-    pasos=['**SCACRSE**, encabezado: materia, **número nuevo** (revisar el último que existe) y periodo desde el que rige. Lo más rápido: '
-           '**Copiar** de un curso parecido (1.1.4, diap. 20).',
+    pasos=['**SCACRSE**, encabezado: materia, **número nuevo** (revisar el último que existe) y periodo **000000**: los cursos del catálogo '
+           'quedan del periodo 000000 al 999999. Lo más seguro: **Copiar** de un curso real del mismo centro (1.1.4, diap. 20).',
            '**Detalles:** título, escuela `EM`, departamento del centro y estatus activo (diap. 21).',
-           '**Horas:** créditos, créditos de cobro, horas de teoría y de laboratorio (diap. 22).',
+           '**Horas:** créditos y cobro **variables** (inferior 0, indicador «O», superior: Basic I 0 O 1, Emprendimiento I 0 O 4); '
+           'teoría y laboratorio, las del sílabo (Emprendimiento I fijas 1 y 2; Basic I variables 0 O 4 y 0 O 3); el contacto lo suma Banner (diap. 22).',
            '**Nivel** del centro y **modo de calificar** predefinido (diap. 23–24).',
            '**Tipo de horario** y método educativo; la carga de trabajo es la que verá el docente (diap. 25).',
            '**SCADETL:** la cuota del curso, si la tiene.',

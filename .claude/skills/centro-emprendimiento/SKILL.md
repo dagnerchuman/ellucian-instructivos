@@ -26,9 +26,12 @@ description: >-
 | **Campus** | `S` | Sede de Chiclayo |
 | **Programa** | *(por confirmar)* | Acreditación Emprendimiento |
 | **Campo de estudio mayor** | *(por confirmar)* | Acreditación en Emprendimiento |
-| **Departamento** | *(por confirmar)* | Jef. de Centro de Emprendimiento |
+| **Departamento** | `EMEM` | Jef. Emprendimiento y Produ. (confirmado en SCACRSE, C146) |
 | **Grado** | `000000` | No otorga grado |
 | **Materia del catálogo** | `ESGE` | Cursos de Emprendimiento |
+
+### Curso en SCACRSE: así está Emprendimiento I (C146)
+`ESGE 00117` «Emprendimiento I» (materia ESGE «Estudios generales»), cargado por la migración (usuario MIGRACION, 31-Ago-2026): Del periodo `000000` · A periodo `999999`; Escuela `EM`; Departamento `EMEM`; Estatus `A`; prerrequisito «Básico o ninguno»; UEC o crédito `0 O 4` y Cobro `0 O 4` (variables); Teoría `1`, Laboratorio `2`, Contacto `3` (fijas, Ninguno); Límite vacío. Es el modelo para un curso nuevo de Emprendimiento: **Copiar** de él y cambiar el título.
 
 > ⚠ Los identificadores exactos de Programa, Campo de Estudio y Departamento para Emprendimiento **no han sido verificados completamente en TEST** todavía. Lo que sí se confirmó es que la materia es `ESGE` y el Nivel es `M`.
 
@@ -51,11 +54,11 @@ Parte de periodo general: **EGE**.
 
 ## Cursos conocidos
 
-> ⚠ Los **nombres reales** de los cursos de Emprendimiento **no se conocen** (duda U05). El cronograma solo dice «TODOS».
+> Los nombres salen de la hoja oficial de NRCs 202656 (`datos.json › cursos_conocidos`: Emprendimiento I, II y III, ESGE 00117 a 00119) y de SCACRSE (C146).
 
 | Materia | Curso | Nombre (en TEST) | Créditos |
 |---|---|---|---|
-| ESGE | 00117 | *(nombre por confirmar)* | — |
+| ESGE | 00117 | Emprendimiento I (SCACRSE, C146) | UEC y Cobro 0 O 4 |
 
 ## NRCs probados en TEST (periodo 202656)
 

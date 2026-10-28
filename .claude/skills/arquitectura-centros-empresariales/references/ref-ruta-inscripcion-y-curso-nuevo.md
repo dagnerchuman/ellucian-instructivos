@@ -27,9 +27,9 @@ Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) �
 ## C. Si el curso no está en la malla: hacer la malla y la programación
 | N.º | Página | Qué hacer | Fuente |
 |---|---|---|---|
-| 1 | **SCACRSE** (encabezado) | Materia `ESEC`, **número nuevo** (revisar el último que existe; en TEST el más alto conocido es `00700`), periodo desde el que rige. Recomendado: **Copiar** de un curso parecido (por ejemplo `ESEC 00684`) | 1.1.4, diap. 20 |
+| 1 | **SCACRSE** (encabezado) | Materia `ESEC`, **número nuevo** (revisar el último que existe; en TEST el más alto conocido es `00700`) y periodo **`000000`**: los cursos reales quedan **Del periodo 000000 · A periodo 999999** (C135, C146). Recomendado: **Copiar** de un curso real del centro (`ESEC 00684`) | 1.1.4, diap. 20 |
 | 2 | **SCACRSE** › Detalles | Título; escuela `EM`; departamento `EMCI`; estatus activo | 1.1.4, diap. 21 |
-| 3 | **SCACRSE** › Horas | UEC o crédito y Cobro **variables**: Inferior `0`, indicador `O`, Superior `1` (así se puede fijar las horas en el NRC, 5.3 diap. 25; en el NRC de teoría quedan en 1); Teoría 1 y Laboratorio 1 (HT 1, HP 1); Contacto lo calcula Banner | 1.1.4, diap. 22; C96, U05, C145 |
+| 3 | **SCACRSE** › Horas | **UEC o crédito y Cobro, siempre variables:** Inferior `0`, indicador `O`, Superior = créditos (`0 O 1`); permiten fijar las horas en el NRC (5.3, diap. 25), y en el NRC de teoría quedan en 1. **Teoría y Laboratorio:** las horas del sílabo (HT 1, HP 1; Contacto 2, lo calcula Banner). En los cursos reales hay dos formas: Basic I las tiene variables (`0 O 4`, `0 O 3`, `0 O 7`) y Emprendimiento I fijas (`1`, `2`, `3`); si se copia de `ESEC 00684`, se dejan como vengan | 1.1.4, diap. 22; C96, C146 |
 | 4 | **SCACRSE** › Nivel | `C` (Computación) | 1.1.4, diap. 23 |
 | 5 | **SCACRSE** › Modo de calificar | `V`, marcado como predefinido | 1.1.4, diap. 24; C35 |
 | 6 | **SCACRSE** › Tipo de horario | El tipo de horario y su método educativo; la carga de trabajo es la que verá el docente en SSASECT | 1.1.4, diap. 25 |

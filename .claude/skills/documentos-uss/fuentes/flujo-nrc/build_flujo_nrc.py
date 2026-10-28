@@ -94,8 +94,8 @@ CURSO_VS_NRC = (
      '**NRC** = la **sección** de ese curso en un periodo (SSASECT): sección, parte de periodo, horario, cupo y docente. Se crea '
      '**cada periodo**. Su instructivo (5.3) es de la Capacidad 5, **Programación académica** «de cada periodo» (diap. 6).',
      '**Por eso el centro crea el NRC y no el curso:** un curso mal creado afecta la malla y el CAPP de todos los programas que lo '
-     'usan. En Banner, el catálogo lo mantiene el área de diseño curricular; en la USS, quién crea un curso nuevo **está por '
-     'confirmar** (U40).'],
+     'usan. En la USS, el curso nuevo lo crea **Registros Académicos**; el centro, solo si le dan acceso. Para el go-live se '
+     'capacitará a todos por la cantidad de mallas que hay que actualizar (C147).'],
     'Instructivos 1.1.4 (diap. 6) y 5.3 (diap. 6 y 53); C06',
 )
 
@@ -123,7 +123,7 @@ PASO_PERIODO = dict(
 )
 
 PASO_CURSO = dict(
-    n='2a', titulo='Crear el curso (solo si no está en el catálogo)', quien='Diseño curricular o Registros (por confirmar, U40)',
+    n='2a', titulo='Crear el curso (solo si no está en el catálogo)', quien='Registros Académicos (C147)',
     pasos=['**SCACRSE**, encabezado: materia, **número nuevo** (revisar el último que existe) y periodo **000000**: los cursos del catálogo '
            'quedan del periodo 000000 al 999999. Lo más seguro: **Copiar** de un curso real del mismo centro (1.1.4, diap. 20).',
            '**Detalles:** título, escuela `EM`, departamento del centro y estatus activo (diap. 21).',
@@ -238,9 +238,10 @@ DUDAS_ELLUCIAN = [
     '**E22:** ¿qué código de escala y modo de calificar van en SHAGCOM y SHAGRDE para Idiomas (0 a 100) y Emprendimiento (0 a 20)?',
     '**E26:** si el alumno cambia de NRC a mitad del curso, ¿sus notas parciales y su asistencia pasan al NRC nuevo o se vuelven a '
     'ingresar?',
+    '**E28:** en SCACRSE, ¿los créditos y el cobro de un curso nuevo van fijos (1, Ninguno) o variables (0 O 1), como los cursos '
+    'migrados?',
 ]
 DUDAS_USS = [
-    '**U40:** cuando hace falta un curso nuevo, ¿quién lo crea en SCACRSE y lo pone en la malla: el centro o Registros Académicos?',
     '**U26:** ¿Registros Académicos solo abre el periodo, o también revisa la carga lectiva del docente?',
     '**U44:** ¿quién hace el cambio de sección (el centro o Registros Académicos) y hasta qué fecha del curso se permite?',
 ]

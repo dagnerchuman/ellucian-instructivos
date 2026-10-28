@@ -25,6 +25,8 @@ Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) �
 **Hoy en SEUSS:** Campus Virtual › Procesos en línea › Matrícula en línea › logo del Centro de Informática › modalidad › curso y sección › modalidad de pago (lámina 3).
 
 ## C. Si el curso no está en la malla: hacer la malla y la programación
+**Quién:** el curso lo crea **Registros Académicos**; el centro, solo si le dan acceso. Para el go-live se capacitará a todos por la cantidad de mallas que hay que actualizar (Liliana Ocampo, Ellucian, C147).
+
 | N.º | Página | Qué hacer | Fuente |
 |---|---|---|---|
 | 1 | **SCACRSE** (encabezado) | Materia `ESEC`, **número nuevo** (revisar el último que existe; en TEST el más alto conocido es `00700`) y periodo **`000000`**: los cursos reales quedan **Del periodo 000000 · A periodo 999999** (C135, C146). Recomendado: **Copiar** de un curso real del centro (`ESEC 00684`) | 1.1.4, diap. 20 |

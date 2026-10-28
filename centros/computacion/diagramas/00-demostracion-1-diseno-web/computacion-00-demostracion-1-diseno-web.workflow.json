@@ -674,7 +674,7 @@
       "items": [
         "1. Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
         "2. Cuenta el caso: Diseño Web ya existe (SCACRSE) y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
-        "3. Si preguntan por cursos nuevos: el paso SCACRSE muestra cómo se crea uno, pero no es del centro (U40)",
+        "3. Si preguntan por cursos nuevos: el paso SCACRSE muestra cómo se crea uno; lo crea Registros Académicos y el centro solo si le dan acceso; para el go-live se capacitará a todos (C147)",
         "4. En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo y horario › docente",
         "5. En cada ficha, abre la lámina: cada fila de la guía tiene su número verde en la diapositiva",
         "6. En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",

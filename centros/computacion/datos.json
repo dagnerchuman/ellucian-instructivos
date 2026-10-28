@@ -620,7 +620,7 @@
           "codigo": "SCACRSE",
           "accion": "crear el curso, si falta",
           "dato": "Diseño Web ya existe: 00684",
-          "quien": "Diseño curricular o Registros (U40)",
+          "quien": "Registros Académicos (C147)",
           "laminas": [
             {
               "instructivo": "1.1.4",
@@ -1570,7 +1570,7 @@
       "guion": [
         "Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
         "Cuenta el caso: Diseño Web ya existe (SCACRSE) y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
-        "Si preguntan por cursos nuevos: el paso SCACRSE muestra cómo se crea uno, pero no es del centro (U40)",
+        "Si preguntan por cursos nuevos: el paso SCACRSE muestra cómo se crea uno; lo crea Registros Académicos y el centro solo si le dan acceso; para el go-live se capacitará a todos (C147)",
         "En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo y horario › docente",
         "En cada ficha, abre la lámina: cada fila de la guía tiene su número verde en la diapositiva",
         "En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
@@ -1614,8 +1614,8 @@
             "pagina": "SCACRSE",
             "detalle": "catálogo de cursos",
             "que": "Se crea el curso: la asignatura del catálogo (por ejemplo, ESEC 00684 Diseño Web), con su título, escuela, horas, nivel, modo de calificar y tipo de horario. Un mismo curso sirve para muchos NRC y muchos periodos.",
-            "cuando": "Solo si el curso no existe (búsquelo en «Cursos existentes»).",
-            "cita": "Instructivo 1.1.4, diap. 20 a 25 · C135, C146"
+            "cuando": "Solo si el curso no existe (búsquelo en «Cursos existentes»). Lo crea Registros Académicos (C147).",
+            "cita": "Instructivo 1.1.4, diap. 20 a 25 · C135, C146, C147"
           },
           {
             "pagina": "SSASECT",
@@ -1624,7 +1624,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, U40",
+        "fuente": "C135, C140, C141, C146, E27, C147, E28",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -1816,7 +1816,7 @@
                 ],
                 [
                   "Quién lo crea",
-                  "Por confirmar en producción (U40)",
+                  "Registros Académicos; el centro, solo si le dan acceso (C147)",
                   "El centro"
                 ],
                 [
@@ -1829,7 +1829,7 @@
           },
           {
             "pregunta": "¿Cómo se crea el curso en SCACRSE?",
-            "intro": "Solo si el curso no existe. La materia ya está creada en STVSUBJ. Lo más seguro es «Copiar» de un curso real del mismo centro. Al lado, cómo están dos cursos reales en TEST (cargados por la migración, C146).",
+            "intro": "Solo si el curso no existe; hoy lo crea Registros Académicos, y el centro solo si le dan acceso (C147). La materia ya está creada en STVSUBJ. Lo más seguro es «Copiar» de un curso real del mismo centro. Al lado, cómo están dos cursos reales en TEST (cargados por la migración, C146).",
             "tabla": {
               "columnas": [
                 "N.º",
@@ -1875,10 +1875,10 @@
                 [
                   "5",
                   "UEC o crédito y Cobro",
-                  "Variables: Inferior 0, indicador «O», Superior 1 (0 O 1). Así el NRC puede fijar sus horas; en el NRC de teoría quedan en 1.",
+                  "Variables: Inferior 0, indicador «O», Superior 1 (0 O 1), como los cursos reales. Así el NRC puede fijar sus horas; en el NRC de teoría quedan en 1. Si también vale fijo 1 (Ninguno) está por confirmar con Ellucian (E28).",
                   "0 O 1",
                   "0 O 4",
-                  "1.1.4, diap. 22 · 5.3, diap. 25 · C146"
+                  "1.1.4, diap. 22 · 5.3, diap. 25 · C146, E28"
                 ],
                 [
                   "6",

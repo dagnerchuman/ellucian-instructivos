@@ -534,17 +534,17 @@
   "demostraciones": [
     {
       "slug": "demostracion-1-diseno-web",
-      "titulo": "Demostración 1 · Diseño Web de punta a punta (NRC 10044)",
+      "titulo": "Demostración 1 · Diseño Web de punta a punta (202751)",
       "capacidad": "Capacidades 1, 5 y 7",
       "fuente": "C96 a C100, C119 a C124, C133",
-      "caso": "Un alumno de Ingeniería de Software (rutas 5 y 7) lleva Diseño Web (ESEC 00684) en la parte X06 del periodo 202656. En TEST, el docente y el alumno son la misma persona de prueba: Dagner Chuman (100582059).",
+      "caso": "En la reunión se crea en vivo, en TEST, el NRC de Diseño Web (ESEC 00684) en el periodo 202751 (verano 2027), parte X01, para un alumno de Ingeniería de Software (rutas 5 y 7). El mismo flujo ya se probó completo en 202656 con el NRC 10044. Alternativa: 202754 (2027-I), si su parte de Computación está en SOATERM.",
       "pasos": [
         {
           "id": "d1",
           "carril": "ra",
           "codigo": "SOATERM",
           "accion": "periodo y parte abiertos",
-          "dato": "202656 · parte X06",
+          "dato": "202751 · parte X01",
           "quien": "Registros Académicos",
           "laminas": [
             "soaterm"
@@ -552,24 +552,38 @@
           "filas": [
             {
               "campo": "Periodo",
-              "valor": "202656",
+              "valor": "202751 «2027-V Verano Idi.Com.Emp.»",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Ya existe: lo abre Registros Académicos, no el centro (C06)."
+              "detalle": "Ya existe en TEST: Script 11 (C45). Lo abre Registros Académicos, no el centro (C06)."
             },
             {
               "campo": "Parte de periodo",
-              "valor": "X06",
+              "valor": "X01",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Del 07-SEP al 31-OCT-2026: el grupo de Diseño Web (C97)."
+              "detalle": "Del 12-ENE al 22-FEB-2027, 6 semanas (Script 11). La X02 todavía no está (U22)."
             },
             {
               "campo": "Inscripción",
-              "valor": "Permitir marcada",
+              "valor": "Permitir · web del 20-SEP-2026 al 15-MAR-2027",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Sin esto no se puede matricular en el periodo (1.1.2, diap. 18)."
+              "detalle": "Abierta hoy: se puede matricular en vivo (1.1.2, diap. 18 y 23)."
+            },
+            {
+              "campo": "Acceso docente",
+              "valor": "del 03-ENE al 05-ABR-2027",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Antes de esa fecha el docente no ve el NRC en Autoservicio: la asistencia y las notas se muestran con el NRC 10044."
+            },
+            {
+              "campo": "Si usas 202754",
+              "valor": "2027-I",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Antes, revisar en SOATERM que tenga la parte de Computación (en 2026 eran X03 y X04) y sus fechas web."
             }
           ]
         },
@@ -578,7 +592,7 @@
           "carril": "centro",
           "codigo": "SSASECT",
           "accion": "crear el NRC",
-          "dato": "NRC 10044 · ESEC 00684 A",
+          "dato": "NRC nuevo · ESEC 00684 A",
           "quien": "El centro",
           "laminas": [
             "ssasect_crear",
@@ -590,21 +604,21 @@
               "valor": "ESEC 00684 Diseño Web",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Ya está en el catálogo (SCACRSE): el centro no crea el curso, crea la sección."
+              "detalle": "Ya está en el catálogo (sale en «Cursos existentes», C135): el centro no crea el curso, crea la sección."
             },
             {
               "campo": "Encabezado",
-              "valor": "202656 · Crear NRC",
+              "valor": "202751 · Crear NRC",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Periodo y NRC vacío › Crear NRC (5.3, diap. 19)."
+              "detalle": "Periodo y NRC vacío › Crear NRC (5.3, diap. 19). Banner da el número al guardar."
             },
             {
               "campo": "Sección",
               "valor": "A · campus S · TEO · VIRT",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Modo V, parte X06, 1 crédito y 1 de cobro, Calificable sin dispensa. Guardar: Banner da el 10044."
+              "detalle": "Modo V, parte X01, 1 crédito y 1 de cobro, Calificable sin dispensa."
             },
             {
               "campo": "Cupo",
@@ -661,7 +675,7 @@
             },
             {
               "campo": "Carga",
-              "valor": "SIAASGN",
+              "valor": "SIAASGN 202751",
               "ejemplo": "",
               "tipo": "Verificación",
               "detalle": "Revisar NRC y horas; luego oficio por la intranet y resolución del Vicerrectorado (C47, C48)."
@@ -682,10 +696,10 @@
           "filas": [
             {
               "campo": "Calendario",
-              "valor": "SHAEGBC 202656",
+              "valor": "SHAEGBC 202751",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Sin el calendario, SHAGCOM da error (C91)."
+              "detalle": "Revisarlo antes: sin el calendario del periodo, SHAGCOM da error (C91)."
             },
             {
               "campo": "Escala de arriba",
@@ -734,11 +748,11 @@
               "valor": "CMEMC44 (XP 07)",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Diseño Web está en las rutas 5 y 7 (C125). Currículo agregado en SFAREGS › Currículos (C100)."
+              "detalle": "Diseño Web está en las rutas 5 y 7 (C125). Si el alumno no lo tiene, se agrega en SFAREGS › Currículos (C100)."
             },
             {
               "campo": "Encabezado",
-              "valor": "202656 › ID › plan 4",
+              "valor": "202751 › ID › plan del centro",
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "El plan de estudios del centro, no asumir el 1 (C86)."
@@ -752,7 +766,7 @@
             },
             {
               "campo": "Curso",
-              "valor": "NRC 10044 › RE",
+              "valor": "NRC nuevo › RE",
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "Tab y Guardar: queda inscrito y genera el cobro (TSAAREV)."
@@ -764,7 +778,7 @@
           "carril": "doc",
           "codigo": "Autoservicio",
           "accion": "asistencia y notas",
-          "dato": "Pasar lista › enviar al libro",
+          "dato": "con el NRC 10044 (202656)",
           "quien": "Docente",
           "tipo": "frontend",
           "laminas": [
@@ -817,6 +831,13 @@
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "Nota de cada componente; Banner calcula la compuesta."
+            },
+            {
+              "campo": "En 202751",
+              "valor": "desde el 03-ENE-2027",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "El acceso docente de 202751 abre en enero: hoy se muestra con el NRC 10044."
             }
           ]
         },
@@ -825,7 +846,7 @@
           "carril": "ra",
           "codigo": "SHRROLL",
           "accion": "pase a historia",
-          "dato": "GJAPCTL · jobs 7761 y 7762",
+          "dato": "NRC 10044 · jobs 7761 y 7762",
           "quien": "Registros Académicos",
           "tipo": "messagebus",
           "laminas": [
@@ -871,12 +892,12 @@
       "guion": [
         "Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
         "Cuenta el caso: un alumno de Ing. de Software lleva Diseño Web; el curso ya existe, el centro crea su NRC",
-        "Pulsa «Recorrido automático» o «Siguiente»: cada paso abre su ficha con lo que se llena",
-        "En cada ficha, muestra «Así se ve en Banner»: la lámina del instructivo; con un clic se ve grande",
+        "En TEST, en vivo: SOATERM 202751 (parte X01) › SSASECT crea el NRC de ESEC 00684 › docente › SFAREGS matricula",
+        "En el sitio, pulsa «Siguiente» en cada paso: la ficha dice qué se llena y «Así se ve en Banner» muestra la lámina",
         "Di quién hace cada paso: Registros (periodo, fórmula y pase), el centro (NRC, docente y matrícula), el docente (asistencia y notas)",
         "En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
-        "Cierra con el resultado: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)",
-        "Si preguntan algo, abre el Asistente IA: «¿cómo se crea un NRC?» o «¿cómo envío la asistencia al libro?»"
+        "Asistencia, notas y pase a historia: muéstralos con el NRC 10044 de 202656 (el acceso docente de 202751 abre el 03-ENE-2027)",
+        "Cierra con el resultado del 10044: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"
       ],
       "aprendido": [
         "Arriba en SHAGCOM va la escala del curso (VIG_11), no la de asistencia (AST_70): con AST_70 la nota final salió APRO (C120, C123)",
@@ -885,7 +906,9 @@
         "Proyectado es obligatorio en SSASECT y con SAUVIR / SALA-VIRT va la O en el sobrepaso del horario (C97)",
         "SHRROLL primero en modo A (auditoría) y luego en U; la salida se revisa en GJIREVO (C121, C122)"
       ],
-      "resultado": "NRC 10044 validado de punta a punta en TEST: 17 en la historia académica del alumno (SHACRSE), C124"
+      "resultado": "Ya probado de punta a punta en 202656 con el NRC 10044: 17 en la historia académica del alumno (SHACRSE), C124. En 202751 se repite en vivo hasta la matrícula.",
+      "periodo": "202751",
+      "parte": "X01"
     }
   ]
 }

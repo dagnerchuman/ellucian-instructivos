@@ -2,7 +2,7 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Computación · Demostración 1 · Diseño Web de punta a punta (NRC 10044)",
+    "title": "Centro de Computación · Demostración 1 · Diseño Web de punta a punta (202751)",
     "subtitle": "Capacidades 1, 5 y 7 · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
@@ -522,7 +522,7 @@
       "label": "SOATERM",
       "sublabel": "periodo y parte abiertos",
       "width": 150,
-      "tag": "202656 · parte X06",
+      "tag": "202751 · parte X01",
       "icon": "start"
     },
     {
@@ -533,7 +533,7 @@
       "label": "SSASECT",
       "sublabel": "crear el NRC",
       "width": 150,
-      "tag": "NRC 10044 · ESEC 00684 A"
+      "tag": "NRC nuevo · ESEC 00684 A"
     },
     {
       "id": "d3",
@@ -573,7 +573,7 @@
       "label": "Autoservicio",
       "sublabel": "asistencia y notas",
       "width": 150,
-      "tag": "Pasar lista › enviar al libro"
+      "tag": "con el NRC 10044 (202656)"
     },
     {
       "id": "d7",
@@ -583,7 +583,7 @@
       "label": "SHRROLL",
       "sublabel": "pase a historia",
       "width": 150,
-      "tag": "GJAPCTL · jobs 7761 y 7762",
+      "tag": "NRC 10044 · jobs 7761 y 7762",
       "icon": "success"
     }
   ],
@@ -630,8 +630,8 @@
       "dot": "emerald",
       "title": "Probado en TEST",
       "items": [
-        "Un alumno de Ingeniería de Software (rutas 5 y 7) lleva Diseño Web (ESEC 00684) en la parte X06 del periodo 202656. En TEST, el docente y el alumno son la misma persona de prueba: Dagner Chuman (100582059).",
-        "NRC 10044 validado de punta a punta en TEST: 17 en la historia académica del alumno (SHACRSE), C124"
+        "En la reunión se crea en vivo, en TEST, el NRC de Diseño Web (ESEC 00684) en el periodo 202751 (verano 2027), parte X01, para un alumno de Ingeniería de Software (rutas 5 y 7). El mismo flujo ya se probó completo en 202656 con el NRC 10044. Alternativa: 202754 (2027-I), si su parte de Computación está en SOATERM.",
+        "Ya probado de punta a punta en 202656 con el NRC 10044: 17 en la historia académica del alumno (SHACRSE), C124. En 202751 se repite en vivo hasta la matrícula."
       ]
     },
     {
@@ -640,12 +640,12 @@
       "items": [
         "1. Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
         "2. Cuenta el caso: un alumno de Ing. de Software lleva Diseño Web; el curso ya existe, el centro crea su NRC",
-        "3. Pulsa «Recorrido automático» o «Siguiente»: cada paso abre su ficha con lo que se llena",
-        "4. En cada ficha, muestra «Así se ve en Banner»: la lámina del instructivo; con un clic se ve grande",
+        "3. En TEST, en vivo: SOATERM 202751 (parte X01) › SSASECT crea el NRC de ESEC 00684 › docente › SFAREGS matricula",
+        "4. En el sitio, pulsa «Siguiente» en cada paso: la ficha dice qué se llena y «Así se ve en Banner» muestra la lámina",
         "5. Di quién hace cada paso: Registros (periodo, fórmula y pase), el centro (NRC, docente y matrícula), el docente (asistencia y notas)",
         "6. En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
-        "7. Cierra con el resultado: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)",
-        "8. Si preguntan algo, abre el Asistente IA: «¿cómo se crea un NRC?» o «¿cómo envío la asistencia al libro?»"
+        "7. Asistencia, notas y pase a historia: muéstralos con el NRC 10044 de 202656 (el acceso docente de 202751 abre el 03-ENE-2027)",
+        "8. Cierra con el resultado del 10044: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"
       ]
     },
     {

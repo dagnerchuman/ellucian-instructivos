@@ -449,9 +449,10 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
 
 
 def _html_antes_nrc(slug):
-    """Tabla «Antes del NRC» (periodo y partes) de una demostración: `antes_del_nrc` en datos.json (C141).
+    """Bloque «Antes del NRC» de una demostración: `antes_del_nrc` en datos.json (C141 a C144).
 
-    Sale cerrada; al abrirla se ve solo la tabla del orden y las otras dos preguntas siguen cerradas (pedido del usuario, C142)."""
+    Sale cerrado; al abrirlo se ve solo la tabla del orden y cada pregunta sigue cerrada hasta dar clic
+    (pedido del usuario, C142). Una pregunta lleva `lista` o `tabla` (columnas, filas, num, resaltar)."""
     a = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {}).get("antes_del_nrc")
     if not a:
         return ""
@@ -461,12 +462,29 @@ def _html_antes_nrc(slug):
         + (f'<small>{e(o["detalle"])}</small>' if o.get("detalle") else "")
         + f'</td><td>{e(o["que"])}</td><td>{e(o["cuando"])}</td><td class="an-cita">{e(o["cita"])}</td></tr>'
         for i, o in enumerate(a["orden"], 1))
-    partes = "".join(
-        ('<tr class="an-demo">' if p.get("demo") else '<tr>') +
-        f'<td><strong>{e(p["parte"])}</strong></td><td>{e(p["descripcion"])}</td>'
-        f'<td>{e(p["inicio"])}</td><td>{e(p["fin"])}</td><td class="an-num">{p["semanas"]}</td><td>{e(p["censo"])}</td></tr>'
-        for p in a["partes"])
-    por_que = "".join(f"<li>{e(x)}</li>" for x in a["por_que"])
+
+    def tabla(t):
+        num = set(t.get("num", []))
+        cab = "".join(f"<th>{e(c)}</th>" for c in t["columnas"])
+        filas = "".join(
+            ('<tr class="an-demo">' if k in t.get("resaltar", []) else "<tr>")
+            + "".join((f'<td class="an-num">{e(v)}</td>' if c in num else
+                       f"<td><strong>{e(v)}</strong></td>" if c == 0 else f"<td>{e(v)}</td>")
+                      for c, v in enumerate(fila))
+            + "</tr>"
+            for k, fila in enumerate(t["filas"]))
+        return f'    <div class="an-tabla"><table><thead><tr>{cab}</tr></thead><tbody>{filas}</tbody></table></div>\n'
+
+    preguntas = ""
+    for q in a.get("preguntas", []):
+        cuerpo = f'    <p class="an-intro">{e(q["intro"])}</p>\n' if q.get("intro") else ""
+        if q.get("lista"):
+            cuerpo += "    <ul>" + "".join(f"<li>{e(x)}</li>" for x in q["lista"]) + "</ul>\n"
+        if q.get("tabla"):
+            cuerpo += tabla(q["tabla"])
+        if q.get("nota"):
+            cuerpo += f'    <p class="an-fuente">{e(q["nota"])}</p>\n'
+        preguntas += f'  <details class="an-sub">\n    <summary>{e(q["pregunta"])}</summary>\n{cuerpo}  </details>\n'
     return (
         '<!-- === ANTES DEL NRC === -->\n'
         '<details class="antes-nrc">\n'
@@ -477,19 +495,8 @@ def _html_antes_nrc(slug):
         '    <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'
         f'    <tbody>{orden}</tbody>\n'
         '  </table></div>\n'
-        '  <details class="an-sub">\n'
-        '    <summary>¿Por qué en SOATERM solo salen algunas partes?</summary>\n'
-        f'    <ul>{por_que}</ul>\n'
-        '  </details>\n'
-        '  <details class="an-sub">\n'
-        f'    <summary>{e(a["periodo_titulo"])}</summary>\n'
-        '    <div class="an-tabla"><table>\n'
-        '      <thead><tr><th>Parte</th><th>Descripción</th><th>Inicio</th><th>Fin</th><th>Semanas</th><th>Censo uno</th></tr></thead>\n'
-        f'      <tbody>{partes}</tbody>\n'
-        '    </table></div>\n'
-        '    <p class="an-fuente">Resaltada: la parte de esta demostración.</p>\n'
-        '  </details>\n'
-        f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
+        + preguntas
+        + f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
         '</details>\n'
         '<!-- === /ANTES DEL NRC === -->\n')
 

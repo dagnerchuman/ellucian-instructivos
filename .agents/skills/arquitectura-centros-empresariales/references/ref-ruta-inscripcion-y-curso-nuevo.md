@@ -27,9 +27,9 @@ Escuela profesional del alumno → **ruta de aprendizaje** (agrupación 1 a 7) �
 ## C. Si el curso no está en la malla: hacer la malla y la programación
 | N.º | Página | Qué hacer | Fuente |
 |---|---|---|---|
-| 1 | **SCACRSE** (bloque clave) | Materia `ESEC`, **número nuevo** (revisar el último que existe; en TEST el más alto conocido es `00700`), periodo desde el que rige. Recomendado: **Copiar** de un curso parecido (por ejemplo `ESEC 00684`) | 1.1.4, diap. 20 |
+| 1 | **SCACRSE** (encabezado) | Materia `ESEC`, **número nuevo** (revisar el último que existe; en TEST el más alto conocido es `00700`), periodo desde el que rige. Recomendado: **Copiar** de un curso parecido (por ejemplo `ESEC 00684`) | 1.1.4, diap. 20 |
 | 2 | **SCACRSE** › Detalles | Título; escuela `EM`; departamento `EMCI`; estatus activo | 1.1.4, diap. 21 |
-| 3 | **SCACRSE** › Horas | Créditos (UEC) y créditos de cobro; horas de teoría y laboratorio (en Computación HT 1 y HP 1) | 1.1.4, diap. 22; C60 |
+| 3 | **SCACRSE** › Horas | Créditos (UEC) y créditos de cobro; horas de teoría y laboratorio (en Computación HT 1 y HP 1) | 1.1.4, diap. 22; C96, U05 |
 | 4 | **SCACRSE** › Nivel | `C` (Computación) | 1.1.4, diap. 23 |
 | 5 | **SCACRSE** › Modo de calificar | `V`, marcado como predefinido | 1.1.4, diap. 24; C35 |
 | 6 | **SCACRSE** › Tipo de horario | El tipo de horario y su método educativo; la carga de trabajo es la que verá el docente en SSASECT | 1.1.4, diap. 25 |

@@ -32,11 +32,12 @@ Una parte de periodo es un rango de fechas dentro del periodo. Tiene sus propias
 | Computación | CGE | X01 … X07 en 2026 |
 | Emprendimiento | EGE | P01 … P06 en 2026 |
 
-## Orden antes del NRC (C141)
+## Orden antes del NRC (C141, C144)
 1. **STVTERM**: código del periodo (solo si no existe).
 2. **STVPTRM**: código de la parte (solo si no existe).
 3. **SOATERM** › «Controles de inscripción de parte de periodo y web»: se agregan al periodo solo las partes que usará, con inicio, fin, semanas y censo uno (en cada periodo).
-4. **SSASECT**: el NRC solo ofrece las partes de ese bloque (5.3, diap. 23). Ejemplo: X09 está en STVPTRM pero no en 202656, así que un NRC de 202656 no puede usarla.
+4. **SCACRSE**: el curso del catálogo, solo si no existe (1.1.4, diap. 20 a 25; pasos en `ref-ruta-inscripcion-y-curso-nuevo.md` › C). El curso (ESEC 00684) se crea una vez; el NRC es cada vez que se dicta (C144).
+5. **SSASECT**: el NRC solo ofrece las partes de ese bloque (5.3, diap. 23). Ejemplo: X09 está en STVPTRM pero no en 202656, así que un NRC de 202656 no puede usarla.
 
 ## Editar un periodo
 El código (202656) no se edita en ninguna página. Los datos van en STVTERM y la configuración en SOATERM.

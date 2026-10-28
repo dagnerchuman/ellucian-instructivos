@@ -2,7 +2,7 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "Centro de Computación · Demostración 1 · Diseño Web de punta a punta (202751)",
+    "title": "Centro de Computación · Demostración 1 · Diseño Web, nueva sección B (202656)",
     "subtitle": "Capacidades 1, 5 y 7 · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen",
     "locale": "es",
     "translations": {
@@ -522,7 +522,7 @@
       "label": "SOATERM",
       "sublabel": "periodo y parte abiertos",
       "width": 150,
-      "tag": "202751 · parte X01",
+      "tag": "202656 · parte X06",
       "icon": "start"
     },
     {
@@ -533,7 +533,7 @@
       "label": "SSASECT",
       "sublabel": "crear el NRC",
       "width": 150,
-      "tag": "NRC nuevo · ESEC 00684 A"
+      "tag": "NRC nuevo · ESEC 00684 B"
     },
     {
       "id": "d3",
@@ -563,7 +563,7 @@
       "label": "SFAREGS",
       "sublabel": "matricular al alumno",
       "width": 150,
-      "tag": "CMEMC44 · RE"
+      "tag": "otro alumno · CMEMC44 · RE"
     },
     {
       "id": "d6",
@@ -573,7 +573,7 @@
       "label": "Autoservicio",
       "sublabel": "asistencia y notas",
       "width": 150,
-      "tag": "con el NRC 10044 (202656)"
+      "tag": "Pasar lista › enviar al libro"
     },
     {
       "id": "d7",
@@ -583,7 +583,7 @@
       "label": "SHRROLL",
       "sublabel": "pase a historia",
       "width": 150,
-      "tag": "NRC 10044 · jobs 7761 y 7762",
+      "tag": "GJAPCTL · modo A y luego U",
       "icon": "success"
     }
   ],
@@ -630,8 +630,8 @@
       "dot": "emerald",
       "title": "Probado en TEST",
       "items": [
-        "En la reunión se crea en vivo, en TEST, el NRC de Diseño Web (ESEC 00684) en el periodo 202751 (verano 2027), parte X01, para un alumno de Ingeniería de Software (rutas 5 y 7). El mismo flujo ya se probó completo en 202656 con el NRC 10044. Alternativa: 202754 (2027-I), si su parte de Computación está en SOATERM.",
-        "Ya probado de punta a punta en 202656 con el NRC 10044: 17 en la historia académica del alumno (SHACRSE), C124. En 202751 se repite en vivo hasta la matrícula."
+        "En la reunión se crea en vivo, en TEST, una sección nueva (B) de Diseño Web (ESEC 00684) en 202656, parte X06, igual que el NRC 10044 (sección A), que ya se probó de punta a punta. Se matricula un alumno de Ingeniería de Software (rutas 5 y 7) distinto del de la sección A.",
+        "Referencia ya probada de punta a punta: NRC 10044 (sección A), 17 en la historia académica del alumno (SHACRSE), C124. En la reunión se repite con la sección B en el mismo periodo 202656."
       ]
     },
     {
@@ -639,13 +639,13 @@
       "title": "Guion para la reunión",
       "items": [
         "1. Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
-        "2. Cuenta el caso: un alumno de Ing. de Software lleva Diseño Web; el curso ya existe, el centro crea su NRC",
-        "3. En TEST, en vivo: SOATERM 202751 (parte X01) › SSASECT crea el NRC de ESEC 00684 › docente › SFAREGS matricula",
+        "2. Cuenta el caso: Diseño Web ya existe y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
+        "3. En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo › horario › docente",
         "4. En el sitio, pulsa «Siguiente» en cada paso: la ficha dice qué se llena y «Así se ve en Banner» muestra la lámina",
         "5. Di quién hace cada paso: Registros (periodo, fórmula y pase), el centro (NRC, docente y matrícula), el docente (asistencia y notas)",
         "6. En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
-        "7. Asistencia, notas y pase a historia: muéstralos con el NRC 10044 de 202656 (el acceso docente de 202751 abre el 03-ENE-2027)",
-        "8. Cierra con el resultado del 10044: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"
+        "7. Matricula a otro alumno (no el de la sección A): Banner no deja el mismo curso dos veces",
+        "8. Cierra con el NRC 10044, ya probado: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"
       ]
     },
     {

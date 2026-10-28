@@ -452,7 +452,7 @@ svg[data-theme="light"] { --bg: #f4f5f7; --grid: #e9edf2; --canvas-dot: #d9dee5;
 svg[data-theme="dark"] { --bg: #020617; --grid: #1e293b; --canvas-dot: rgba(148, 163, 184, 0.16); --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
 rect.c-bg-rect { fill: var(--bg); }
 </style><rect x="0" y="0" width="880" height="534" class="c-bg-rect"/>
-        <title id="archify-diagram-title">Centro de Computación · Demostración 1 · Diseño Web de punta a punta (202751)</title>
+        <title id="archify-diagram-title">Centro de Computación · Demostración 1 · Diseño Web, nueva sección B (202656)</title>
         <desc id="archify-diagram-description">Capacidades 1, 5 y 7 · Nivel C · Programa CMEMC38 · Materia ESEC · Partes X01–X07 (2026) · Elaborado por: Dagner Anibal Chuman Lluen</desc>
         <!-- Definitions -->
         <defs>
@@ -506,8 +506,8 @@ rect.c-bg-rect { fill: var(--bg); }
         <path data-edge-from="d6" data-edge-to="d7" data-edge-key="5" data-edge-id="e-d6-d7" data-composition-routing="workflow-v2-auto" data-edge-role="" data-composition-points="781,338;781,154" d="M 781 338 L 781 154" class="a-emphasis" data-animate="edge" style="--step:5" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)" data-step-edge="pending"/>
 
         <!-- Nodes -->
-        <g id="node-d1" data-node-id="d1" data-node-label="SOATERM" tabindex="0" role="button" aria-label="Enfocar SOATERM, periodo y parte abiertos, Registros Académicos › Preparar el NRC: periodo, sección, docente y fórmula" aria-pressed="false" data-node-kind="backend" data-node-sublabel="periodo y parte abiertos" data-node-tag="202751 · parte X01" data-node-context="Registros Académicos › Preparar el NRC: periodo, sección, docente y fórmula" data-step-state="pending">
-          <title>SOATERM · periodo y parte abiertos · Registros Académicos › Preparar el NRC: periodo, sección, docente y fórmula · 202751 · parte X01</title>
+        <g id="node-d1" data-node-id="d1" data-node-label="SOATERM" tabindex="0" role="button" aria-label="Enfocar SOATERM, periodo y parte abiertos, Registros Académicos › Preparar el NRC: periodo, sección, docente y fórmula" aria-pressed="false" data-node-kind="backend" data-node-sublabel="periodo y parte abiertos" data-node-tag="202656 · parte X06" data-node-context="Registros Académicos › Preparar el NRC: periodo, sección, docente y fórmula" data-step-state="pending">
+          <title>SOATERM · periodo y parte abiertos · Registros Académicos › Preparar el NRC: periodo, sección, docente y fórmula · 202656 · parte X06</title>
           <rect x="48" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="48" y="86" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:0" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="start" class="semantic-sigil s-backend" transform="translate(54 92) scale(0.6875)">
@@ -516,7 +516,7 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="123" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SOATERM</text>
           <text x="123" y="124" class="t-muted" font-size="8" text-anchor="middle">periodo y parte abiertos</text>
-        <text x="123" y="142" class="t-backend" font-size="7" text-anchor="middle">202751 · parte X01</text>
+        <text x="123" y="142" class="t-backend" font-size="7" text-anchor="middle">202656 · parte X06</text>
         </g>
 
         <g id="node-d4" data-node-id="d4" data-node-label="SHAGCOM" tabindex="0" role="button" aria-label="Enfocar SHAGCOM, cargar la fórmula, Registros Académicos › Preparar el NRC: periodo, sección, docente y fórmula" aria-pressed="false" data-node-kind="backend" data-node-sublabel="cargar la fórmula" data-node-tag="TA1 · TA2 · PA · EF + ATTRGRD 0" data-node-context="Registros Académicos › Preparar el NRC: periodo, sección, docente y fórmula" data-step-state="pending">
@@ -531,8 +531,8 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="541" y="142" class="t-backend" font-size="7" text-anchor="middle">TA1 · TA2 · PA · EF + ATTRGRD 0</text>
         </g>
 
-        <g id="node-d7" data-node-id="d7" data-node-label="SHRROLL" tabindex="0" role="button" aria-label="Enfocar SHRROLL, pase a historia, Registros Académicos › Matricular, dictar y cerrar" aria-pressed="false" data-node-kind="messagebus" data-node-sublabel="pase a historia" data-node-tag="NRC 10044 · jobs 7761 y 7762" data-node-context="Registros Académicos › Matricular, dictar y cerrar" data-step-state="pending">
-          <title>SHRROLL · pase a historia · Registros Académicos › Matricular, dictar y cerrar · NRC 10044 · jobs 7761 y 7762</title>
+        <g id="node-d7" data-node-id="d7" data-node-label="SHRROLL" tabindex="0" role="button" aria-label="Enfocar SHRROLL, pase a historia, Registros Académicos › Matricular, dictar y cerrar" aria-pressed="false" data-node-kind="messagebus" data-node-sublabel="pase a historia" data-node-tag="GJAPCTL · modo A y luego U" data-node-context="Registros Académicos › Matricular, dictar y cerrar" data-step-state="pending">
+          <title>SHRROLL · pase a historia · Registros Académicos › Matricular, dictar y cerrar · GJAPCTL · modo A y luego U</title>
           <rect x="706" y="86" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="706" y="86" width="150" height="68" rx="6" class="c-messagebus" data-animate="node" style="--step:6" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="success" class="semantic-sigil s-messagebus" transform="translate(712 92) scale(0.6875)">
@@ -541,11 +541,11 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="781" y="107" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SHRROLL</text>
           <text x="781" y="124" class="t-muted" font-size="8" text-anchor="middle">pase a historia</text>
-        <text x="781" y="142" class="t-messagebus" font-size="7" text-anchor="middle">NRC 10044 · jobs 7761 y 7762</text>
+        <text x="781" y="142" class="t-messagebus" font-size="7" text-anchor="middle">GJAPCTL · modo A y luego U</text>
         </g>
 
-        <g id="node-d2" data-node-id="d2" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, crear el NRC, El centro › Preparar el NRC: periodo, sección, docente y fórmula" aria-pressed="false" data-node-kind="backend" data-node-sublabel="crear el NRC" data-node-tag="NRC nuevo · ESEC 00684 A" data-node-context="El centro › Preparar el NRC: periodo, sección, docente y fórmula" data-step-state="pending">
-          <title>SSASECT · crear el NRC · El centro › Preparar el NRC: periodo, sección, docente y fórmula · NRC nuevo · ESEC 00684 A</title>
+        <g id="node-d2" data-node-id="d2" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, crear el NRC, El centro › Preparar el NRC: periodo, sección, docente y fórmula" aria-pressed="false" data-node-kind="backend" data-node-sublabel="crear el NRC" data-node-tag="NRC nuevo · ESEC 00684 B" data-node-context="El centro › Preparar el NRC: periodo, sección, docente y fórmula" data-step-state="pending">
+          <title>SSASECT · crear el NRC · El centro › Preparar el NRC: periodo, sección, docente y fórmula · NRC nuevo · ESEC 00684 B</title>
           <rect x="168" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="168" y="212" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(174 218) scale(0.6875)">
@@ -553,7 +553,7 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="243" y="233" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SSASECT</text>
           <text x="243" y="250" class="t-muted" font-size="8" text-anchor="middle">crear el NRC</text>
-        <text x="243" y="268" class="t-backend" font-size="7" text-anchor="middle">NRC nuevo · ESEC 00684 A</text>
+        <text x="243" y="268" class="t-backend" font-size="7" text-anchor="middle">NRC nuevo · ESEC 00684 B</text>
         </g>
 
         <g id="node-d3" data-node-id="d3" data-node-label="SSASECT" tabindex="0" role="button" aria-label="Enfocar SSASECT, asignar el docente, El centro › Preparar el NRC: periodo, sección, docente y fórmula" aria-pressed="false" data-node-kind="backend" data-node-sublabel="asignar el docente" data-node-tag="100582059 · principal 100 %" data-node-context="El centro › Preparar el NRC: periodo, sección, docente y fórmula" data-step-state="pending">
@@ -568,8 +568,8 @@ rect.c-bg-rect { fill: var(--bg); }
         <text x="421" y="268" class="t-backend" font-size="7" text-anchor="middle">100582059 · principal 100 %</text>
         </g>
 
-        <g id="node-d5" data-node-id="d5" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, matricular al alumno, El centro › Matricular, dictar y cerrar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="matricular al alumno" data-node-tag="CMEMC44 · RE" data-node-context="El centro › Matricular, dictar y cerrar" data-step-state="pending">
-          <title>SFAREGS · matricular al alumno · El centro › Matricular, dictar y cerrar · CMEMC44 · RE</title>
+        <g id="node-d5" data-node-id="d5" data-node-label="SFAREGS" tabindex="0" role="button" aria-label="Enfocar SFAREGS, matricular al alumno, El centro › Matricular, dictar y cerrar" aria-pressed="false" data-node-kind="backend" data-node-sublabel="matricular al alumno" data-node-tag="otro alumno · CMEMC44 · RE" data-node-context="El centro › Matricular, dictar y cerrar" data-step-state="pending">
+          <title>SFAREGS · matricular al alumno · El centro › Matricular, dictar y cerrar · otro alumno · CMEMC44 · RE</title>
           <rect x="586" y="212" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="586" y="212" width="150" height="68" rx="6" class="c-backend" data-animate="node" style="--step:4" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(592 218) scale(0.6875)">
@@ -577,11 +577,11 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="661" y="233" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SFAREGS</text>
           <text x="661" y="250" class="t-muted" font-size="8" text-anchor="middle">matricular al alumno</text>
-        <text x="661" y="268" class="t-backend" font-size="7" text-anchor="middle">CMEMC44 · RE</text>
+        <text x="661" y="268" class="t-backend" font-size="7" text-anchor="middle">otro alumno · CMEMC44 · RE</text>
         </g>
 
-        <g id="node-d6" data-node-id="d6" data-node-label="Autoservicio" tabindex="0" role="button" aria-label="Enfocar Autoservicio, asistencia y notas, Docente (Autoservicio) › Matricular, dictar y cerrar" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="asistencia y notas" data-node-tag="con el NRC 10044 (202656)" data-node-context="Docente (Autoservicio) › Matricular, dictar y cerrar" data-step-state="pending">
-          <title>Autoservicio · asistencia y notas · Docente (Autoservicio) › Matricular, dictar y cerrar · con el NRC 10044 (202656)</title>
+        <g id="node-d6" data-node-id="d6" data-node-label="Autoservicio" tabindex="0" role="button" aria-label="Enfocar Autoservicio, asistencia y notas, Docente (Autoservicio) › Matricular, dictar y cerrar" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="asistencia y notas" data-node-tag="Pasar lista › enviar al libro" data-node-context="Docente (Autoservicio) › Matricular, dictar y cerrar" data-step-state="pending">
+          <title>Autoservicio · asistencia y notas · Docente (Autoservicio) › Matricular, dictar y cerrar · Pasar lista › enviar al libro</title>
           <rect x="706" y="338" width="150" height="68" rx="6" class="c-mask"/>
           <rect x="706" y="338" width="150" height="68" rx="6" class="c-frontend" data-animate="node" style="--step:5" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="frontend" class="semantic-sigil s-frontend" transform="translate(712 344) scale(0.6875)">
@@ -592,7 +592,7 @@ rect.c-bg-rect { fill: var(--bg); }
           </g>
           <text data-node-label="" x="781" y="359" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Autoservicio</text>
           <text x="781" y="376" class="t-muted" font-size="8" text-anchor="middle">asistencia y notas</text>
-        <text x="781" y="394" class="t-frontend" font-size="7" text-anchor="middle">con el NRC 10044 (202656)</text>
+        <text x="781" y="394" class="t-frontend" font-size="7" text-anchor="middle">Pasar lista › enviar al libro</text>
         </g>
 
         <!-- Edge labels -->

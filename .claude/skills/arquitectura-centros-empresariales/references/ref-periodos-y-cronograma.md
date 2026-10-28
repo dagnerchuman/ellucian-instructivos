@@ -32,6 +32,29 @@ Una parte de periodo es un rango de fechas dentro del periodo. Tiene sus propias
 | Computación | CGE | X01 … X07 en 2026 |
 | Emprendimiento | EGE | P01 … P06 en 2026 |
 
+## Orden antes del NRC (C141)
+1. **STVTERM**: código del periodo (solo si no existe).
+2. **STVPTRM**: código de la parte (solo si no existe).
+3. **SOATERM** › «Controles de inscripción de parte de periodo y web»: se agregan al periodo solo las partes que usará, con inicio, fin, semanas y censo uno (en cada periodo).
+4. **SSASECT**: el NRC solo ofrece las partes de ese bloque (5.3, diap. 23). Ejemplo: X09 está en STVPTRM pero no en 202656, así que un NRC de 202656 no puede usarla.
+
+## Editar un periodo
+El código (202656) no se edita en ninguna página. Los datos van en STVTERM y la configuración en SOATERM.
+
+**STVTERM** (1.1.1, diap. 18 y 19): filtro (embudo) › periodo › editar **Descripción** (hasta 30 caracteres), **Fecha de inicio y fin**, **Año académico**, **Tipo de período** (opcional) y **Fecha de inicio y fin de alojamiento** (las mismas del periodo, aunque no haya alojamiento) › **Guardar** (F10).
+
+**SOATERM**: Periodo › **Ir** (1.1.2, diap. 16) › la pestaña que corresponda › **Guardar** (F10):
+
+| Pestaña | Qué se cambia | Fuente |
+|---|---|---|
+| Inscripción | Número de secuencia de NRC; casillas Permitir, En progreso, Plan de estudios requerido y demás | 1.1.2, diap. 17 y 18 |
+| Controles de inscripción de parte de periodo y web | Partes del periodo (inicio, fin, semanas, censo uno); fechas de inscripción web y acceso docente | 1.1.2, diap. 20, 21 y 23 |
+| Controles de procesamiento web | Web del docente: calificaciones parciales, finales y lista de espera marcadas | 1.1.2, diap. 22 |
+
+- 202651, 202654 y 202656 son **compartidos** por los tres centros: un cambio en el periodo afecta a todos. Si es solo para un grupo, se cambia la parte.
+- Si se desmarca **Permitir**, nadie puede matricularse en el periodo.
+- Si cambiar las fechas de una parte actualiza solos los NRC ya creados está por confirmar (E27).
+
 ## Cronograma 2026: Idiomas
 Cada grupo abre 6 cursos: BASIC I, II y III e INTERMEDIATE I, II y III.
 - Los niveles I y II duran 8 semanas; en I01, 6 semanas.

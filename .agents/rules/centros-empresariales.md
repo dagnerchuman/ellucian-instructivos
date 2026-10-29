@@ -83,3 +83,4 @@ description: "Reglas de trabajo y modelo de los Centros Empresariales USS en Ban
 - Antes de actuar, cruza el pedido con la tabla «Enrutamiento de skills» de `AGENTS.md` y elige **una skill principal**; si hace falta otra, encadénala después.
 - Lee el `SKILL.md` solo al ejecutar el flujo y, de `references/` o `scripts/`, solo el archivo de la subtarea. Si ninguna skill coincide, no abras ninguna.
 - No copies el contenido de una skill en la respuesta: di la decisión, la acción y la cita (instructivo y diapositiva, C##, ADR).
+- Siempre (ADR-025): `ruta-de-escape` (cada dato con su fuente o «No lo sé») y `ciclo-de-la-ia` (todo archivo se abre, se evalúa y se corrige antes de entregarlo).

@@ -37,7 +37,10 @@ Antes de actuar, cruza el pedido con esta tabla. Elige **una skill principal**; 
 | Pide un PDF, PPT, Word, Excel, afiche o resumen | `documentos-uss` | `workflow-entregables-uss` para revisar antes de entregar |
 | Pide un diagrama del sitio o cambia un dato que sale en los diagramas | `workflow-diagramas-archify` | — |
 | Pide un video | `hyperframes` (piloto en `herramientas/videos/`) | — |
+| Crea o cambia cualquier archivo (PDF, PPT, Word, Excel, `datos.json`, diagrama, página del sitio) | La skill del tipo de archivo | `ciclo-de-la-ia` al final: abrir, evaluar, corregir |
+| Pide «no inventes», «responde solo con base en este documento», «cita la fuente» o «¿estás seguro?» | `ruta-de-escape` | La skill del tema |
 
+- **Siempre (ADR-025):** `ruta-de-escape` para cada dato (fuente citada o «No lo sé») y `ciclo-de-la-ia` para cada archivo (genera → evalúa → corrige). Son transversales: no reemplazan a la skill principal.
 - **Antes de afirmar** algo del proyecto, busca en `registro.md` (C##, U##…), no lo leas completo.
 - **Respuestas limpias:** no copies el contenido de una skill en la respuesta. Di la decisión, la acción y la cita («instructivo 5.3, diap. 23», «C124», «ADR-009»); los archivos, con enlace relativo del repositorio.
 - **Validación final:** `python3 herramientas/validar_conocimiento.py` con 0 errores; además, la de la skill usada (`generar.py` para diagramas, revisión visual para PDF y PPTX).

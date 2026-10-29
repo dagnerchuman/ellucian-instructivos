@@ -58,5 +58,6 @@ Memoria compartida de las personas y los agentes (Claude Code, Antigravity u otr
 | [ADR-022](decisiones/ADR-022-instructivos-como-imagenes.md) | Los instructivos se muestran como imágenes WebP y cada paso de las guías trae su diapositiva | aceptado |
 | [ADR-023](decisiones/ADR-023-estructura-del-repositorio.md) | Cada tipo de archivo tiene su carpeta y la raíz solo guarda instrucciones y publicación | aceptado |
 | [ADR-024](decisiones/ADR-024-enrutamiento-de-skills.md) | Las skills se eligen con una tabla de enrutamiento y se cargan por partes | aceptado |
+| [ADR-025](decisiones/ADR-025-ciclo-de-la-ia-y-ruta-de-escape.md) | Todo archivo se abre y se evalúa antes de entregarlo, y todo dato lleva su fuente o un «No lo sé» | aceptado |
 
 Para una decisión nueva, copia [`decisiones/plantilla-adr.md`](decisiones/plantilla-adr.md).

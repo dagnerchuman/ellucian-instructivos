@@ -76,6 +76,8 @@ Parte de periodo general: **EGE**.
 
 > **Duda U02 abierta:** No se sabe si los cursos de Emprendimiento tienen orden (uno requiere aprobar otro) o son todos independientes.
 
+**Como prerrequisito de pregrado:** según el resumen de Ellucian del 29/10, se exigiría **desde el 7.º ciclo** con un prerrequisito restrictivo en SCAPPRQ (C168, U49). Guía: `arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md`.
+
 ## Scripts por validar (específicos de Emprendimiento)
 
 | Script | Nombre | Particularidad Emprendimiento |

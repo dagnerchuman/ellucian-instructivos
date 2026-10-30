@@ -30,7 +30,7 @@ Antes de actuar, cruza el pedido con esta tabla. Elige **una skill principal**; 
 | Pregunta cómo se hace algo en Banner para los centros (periodo, curso, NRC, malla, matrícula, notas, CAPP) | `arquitectura-centros-empresariales` (abre la guía `references/` del paso) | `centro-<centro>` si es de uno solo |
 | Habla solo de un centro (Computación y sus rutas XP, Idiomas, Emprendimiento) | `centro-computacion`, `centro-idiomas` o `centro-emprendimiento` (datos en `centros/<centro>/datos.json`) | `arquitectura-centros-empresariales` para el flujo común |
 | Manda una captura de Banner o pregunta «qué pongo aquí» o qué significa un error | `workflow-consultas-banner` | `centro-<centro>` |
-| Va a entrar a TEST y pide los pasos o un checklist para validar | `workflow-pruebas-test` | `centro-<centro>` |
+| Va a entrar a TEST y pide los pasos o un checklist para validar, o pide que el agente haga la prueba en TEST con el navegador | `workflow-pruebas-test` (con el navegador, abre `references/manejo-banner-test.md`) | `centro-<centro>` |
 | Trae notas, fotos, minutas, chats o correcciones de una reunión | `workflow-procesar-reunion` | `preguntas-y-dudas-centros` (registro) |
 | Pide preparar preguntas o el Word de dudas, o pregunta qué está confirmado | `preguntas-y-dudas-centros` | `documentos-uss` para el Word |
 | Pide un PDF, PPT, Word, Excel, afiche o resumen | `documentos-uss` | `workflow-entregables-uss` para revisar antes de entregar |

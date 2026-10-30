@@ -55,7 +55,7 @@ Parte de periodo general: **CGE**.
 ## Acreditación en Computación (Protech XP): rutas de aprendizaje (C125)
 > Detalle completo (escuelas, cursos, costos, pagos y certificados): `arquitectura-centros-empresariales/references/ref-acreditacion-computacion.md`. Datos en `centros/computacion/datos.json › rutas_aprendizaje` y `› acreditacion`. Fuente: carpeta `acreditaciones-uss/`.
 
-- **Cuándo:** 5.º y 6.º ciclo de pregrado (Resolución Rectoral 175-2023/USS); requisito para el bachiller.
+- **Cuándo:** 5.º y 6.º ciclo de pregrado (Resolución Rectoral 175-2023/USS); requisito para el bachiller. Ellucian lo pondría como **prerrequisito restrictivo desde el 5.º ciclo** en SCAPPRQ (C168, U49); guía en `arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md`.
 - **Cómo:** 3 cursos de su ruta, en el orden que desee y en paralelo, + 1 Taller de Certificación Internacional (o 4 talleres según la lámina 2026, U35). Certificación Microsoft Office Specialist.
 - **Cada ruta es un programa en Banner** (SMAPRLE, TEST, C150): `CMEMC38` XP 01 · `CMEMC39` XP 02 · `CMEMC40` XP 03 · `CMEMC41` XP 04 · `CMEMC42` XP 05 · `CMEMC43` XP 06 · `CMEMC44` XP 07. Todos nivel C, escuela EM, grado 000000, web Y, no bloqueados. XP n = agrupación n va por el número.
 - **Programas antiguos:** `CMEMC01` a `CMEMC37`, también activos (por ejemplo, CMEMC01 «Acr. Comp. Administración», CMEMC08–12 «Pac Ing. …», CMEMC17 «Cursos Libres Cinf», CMEMC21–23 Cisco, CMEMC37 «Suficiencia Pac»); si se siguen usando, U46. Lista completa: `docs/fuentes/banner-test/SMAPRLE-programas-computacion-CMEM-28-10-2026.csv`.

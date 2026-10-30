@@ -1,14 +1,14 @@
 # Restricción por programa (SSARRES) y prerrequisito por programa (SCAPPRQ)
 
-Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora de Ellucian) en la reunión de ese día. Detalle y capturas en el registro: C149 a C164, R23, R25, E29, E31, E32, U49 y U50.
+Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora de Ellucian) en la reunión de ese día. Detalle y capturas en el registro: C149 a C168, R23, R25, E29, E31, E32, U49 y U50.
 
 ## Qué se usa para qué
 
 | Necesidad | Página | Estado |
 |---|---|---|
 | Que un NRC del centro solo lo lleven ciertos programas (por ejemplo, una ruta XP) | **SSARRES** (un NRC) o **SCARRES** (el curso) › Grado y programa › **Incluir** | Probado (C156, C157) |
-| Que un curso de pregrado exija antes un curso del centro (acreditación) | **SCAPPRQ** (por programa de pregrado y versión) | Bloquea; falta aislar la parte de Idiomas (C163, C164) |
-| Amarrar el curso del centro como **correquisito** | SCADETL | **No sirve:** exige el mismo periodo y pregrado (terminación 44) y centros (terminación 54) van en periodos distintos (R22, R24, C159) |
+| Que un curso de pregrado exija antes un curso del centro (acreditación) | **SCAPPRQ** (por programa de pregrado y versión) | Probado: la fila de Idiomas, sola, bloquea (C163, C165); el Basic «en curso» no cuenta (C166); sin la fila, se inscribe (C167) |
+| Amarrar el curso del centro como **correquisito** | SCADETL | **No sirve:** exige el mismo periodo y pregrado (terminación 44) y centros (terminación 54) van en periodos distintos (R22, R24, C159). Ellucian explorará un mismo periodo o partes de periodo (C168, U51): choca con el ADR-005 |
 
 ## 1. Restricción de programa en SSARRES
 
@@ -27,6 +27,7 @@ Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora
   - Anatomía I `ESEC 00017` = `ESEC 00055` (11) Y ( Basic I `ESEP 02456` O Basic II `02457` O Basic III `02458` ).
   - Farmacología `ESEC 00218` = `ESEC 00019` Y `00169` Y `00278` (11) Y ( Intermediate I `ESEP 02693` O II `02721` O III `02997` ).
   - Según Nidia, se repite hasta el 4.º ciclo; desde el 5.º entra Computación (C161).
+  - **Regla del resumen de Ellucian (C168):** desde el 2.º ciclo, al menos un curso de Idiomas; desde el 5.º, Computación; desde el 7.º, Emprendimiento. Falta confirmar el alcance por ciclo (U49).
 - **Y, O y paréntesis** (R25; 1.1.5, diap. 18 y 19): «Y» exige las dos filas, «O» basta una, la primera fila no lleva conector y los paréntesis agrupan.
 - **Sin nivel ni calificación** en las filas de Idiomas = basta con **haberlo cursado**; con calificación, hay que aprobarlo. Debe estar en la **historia académica**: no es una inscripción simultánea (C159).
 - SCAPPRQ **no figura** en los 83 instructivos; solo SCAPREQ (1.1.5).
@@ -47,12 +48,21 @@ Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora
 3. **SFAREGS 202744** (si pide SOADEST, ver la sección 3) › alumno › fila nueva en «Información de curso» con el NRC, RE y plan 1 › GUARDAR.
 4. **Resultado** con `A00010005` (alumno de Nidia, catálogo 202444) en el NRC 10020: **«Prerequisite and Test Score error»**, **Error fatal**, no se guardó (Real 0).
 5. «Ver detalle de resultados» no dice qué fila falló (*«No hay ningún detalle disponible…»*). **SSAPREQ del NRC está vacío**: el bloqueo viene de **SCAPPRQ**.
-6. **No se pudo aislar Idiomas:** todos los cursos que están en SCAPPRQ de Medicina tienen prerrequisitos de la malla, y en TEST nadie ha cursado `ESEC 00055`. Los cursos del primer ciclo (por ejemplo Biología Celular `ESEC 00044`) no están en la lista.
-7. **Lo que falta (lo debe guardar alguien con permiso; a Claude se lo bloqueó el control de permisos, C164):**
+6. Todos los cursos que están en SCAPPRQ de Medicina tienen prerrequisitos de la malla, y en TEST nadie ha cursado `ESEC 00055`; los del primer ciclo (por ejemplo Biología Celular `ESEC 00044`) no están en la lista. Para aislar Idiomas hubo que agregar un curso sin prerrequisitos.
+7. **Aislar Idiomas (C165).** Claude deja escrito y **el usuario pulsa GUARDAR** (a Claude el control de permisos le bloquea guardar en SCAPPRQ, C164):
    - SCAPPRQ › `1PCSP15` › periodo `202644` › Ir › «Información de curso» › `+` › `ESEC` `00044` › GUARDAR;
-   - con esa fila marcada, bloque de prerrequisitos › materia `ESEP`, curso `02456`, sin nivel ni calificación › GUARDAR;
-   - matricular a Arnold Vaca (`S00912438`, catálogo 202646) en el **NRC 10022**: sin Basic (debe rechazar) y con Basic I en curso en un periodo de centros (con «En progreso» sin marcar, debe rechazar);
-   - al final, borrar las dos filas de SCAPPRQ.
+   - con esa fila marcada, ⏬ al bloque de prerrequisitos › clic en «Materia» › `ESEP`, curso `02456`, sin nivel ni calificación › GUARDAR;
+   - SFAREGS 202744 › Arnold Vaca (`S00912438`) › fila nueva con el **NRC 10022** › GUARDAR → **«Prerequisite and Test Score error»**, no se guarda; SSAPREQ del 10022 vacío. **La fila de Idiomas, sola, bloquea.**
+8. **Basic I «en curso» (C166).**
+   - SFAREGS **202656** › Arnold › Currículos › fila nueva: programa `IMEMI03` (desde ••• › «Reglas de currículo base por programa»), campo `IDIN`, departamento `EMID` › el usuario guarda. Banner lo deja en el plan de estudios 4.
+   - Inscripción 202656 › **NRC 10042** (Basic I, BT) y **10043** (BC1), RE, parte I10. Con el plan 4 sale *«No existe el registro del estatus del ingreso para este plan de estudios»*: se usa el **plan 1** › el usuario guarda (*«Los alumnos ya están inscritos»*).
+   - SFAREGS **202744** › fila nueva con el **NRC 10022** › el usuario guarda → **«Prerequisite In Progress»**, **Error fatal**, no se guarda.
+   - **Lectura:** Banner ve el Basic en curso de otro periodo, pero no lo acepta porque «En progreso» está sin marcar en SOATERM 202744 (R10). El mensaje es distinto del de quien no lo cursó (paso 7).
+9. **Limpieza y prueba de control (C167).**
+   - SCAPPRQ `1PCSP15` 202644 › `ESEC 00044` › bloque de prerrequisitos › «–» en `ESEP 02456` › el usuario guarda; luego «–» en `ESEC 00044` › el usuario guarda (quedan 71 cursos).
+   - SFAREGS 202744 › Arnold › NRC 10022 › el usuario guarda → **se inscribe sin error**. El bloqueo de los pasos 7 y 8 venía solo de la fila de Idiomas.
+   - **La baja no se pudo hacer:** en 202744, parte 1, SFARSTS solo tiene **RE** (SFQRSTS); DD da *«El estatus “DD” es inválido…»* y un RE no se borra (sección 3). Para probar bajas en un periodo de pregrado, Registros tiene que agregar DD en SFARSTS.
+10. **Pendiente:** decidir si se marca «En progreso» en el SOATERM de pregrado (vale para todos los prerrequisitos del periodo); copiar la regla a las versiones 202544 y 202644 (E32).
 
 ## 3. Incidencias de SFAREGS en el navegador integrado (C158)
 - **SOADEST** aparece al abrir SFAREGS en una sesión nueva: llenar los cinco campos con **DATABASE**. GUARDAR da «Función inválida» (no se guarda, queda en la sesión); después abrir SFAREGS desde el buscador de la misma página.
@@ -62,10 +72,12 @@ Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora
 
 ## 4. Lo que quedó en TEST (29/10/2026)
 - **NRC 10045** (202656, `ESEC 00701`): parte **X06** (no X07, que no tiene SFARSTS); SSARRES con Incluir `CMEMC44` y `1PCSP15`; Arnold Vaca y `100582059` inscritos con RE. En X06, RE y DD valen hasta el 31-OCT-2026.
-- **NRC 10020, 10021 y 10022** (202744, sección T1): sin alumnos.
+- **NRC 10020 y 10021** (202744, sección T1): sin alumnos. **10022**: Arnold Vaca (C167).
+- **Arnold Vaca** (`S00912438`): currículo `IMEMI03` (plan 4) y NRC **10042** y **10043** (Basic I) con RE en 202656 (C166); NRC **10022** con RE en 202744, sin poder darlo de baja (C167).
+- **SCAPPRQ `1PCSP15` 202644:** sin las filas temporales; se borraron el 29/10 (C167).
 - **SOATERM 202656:** Programa en Fatal (C149 dice devolverlo a «No verificar» al terminar).
 - La limpieza espera la decisión del usuario.
 
 ## Preguntas abiertas
-- **Ellucian:** E29 (planes distintos), E31 (¿bloquea solo por el Basic?, «en progreso», desaprobado), E32 (versión que aplica, concurrencia, calificación 75, bloque de área para Computación).
-- **USS:** U49 (qué nivel, desde qué ciclo, a qué cursos y con qué nota), U50 (¿primero paga y luego se inscribe?), U43 (cómo se amarra la acreditación).
+- **Ellucian:** E29 (planes distintos), E31 (¿conviene marcar «En progreso»?, desaprobado), E32 (versión que aplica, concurrencia, calificación 75, bloque de área para Computación), E33 (recargo del 5 %, periodos compartidos, correquisito entre partes).
+- **USS:** U49 (qué nivel, desde qué ciclo, a qué cursos y con qué nota), U50 (primero paga y luego se inscribe: confirmado en C168, falta Faber), U51 (¿unificar periodos?, ADR-005), U43 (cómo se amarra la acreditación).

@@ -53,6 +53,12 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 ### Buscar un alumno con un curso en su historia (SHACRSE)
 - SHACRSE › ID › **periodo vacío** › Ir: todos sus cursos con periodo, NRC, nota y modo. Así se encontró a `A00010005` con Basic I (C170). Solo consulta.
 
+### Ver una malla (SMAPROG y SMAAREA, solo consulta)
+- **SMAPROG** › programa (por ejemplo `CMEMC44`) › periodo (el de la prueba) › Ir: versión, modelo y totales. Sus áreas están en el bloque «Anexos de área de programa» (⏬ unas 8 veces).
+- **SMAAREA** › área (por ejemplo `MC44-01`) › periodo › Ir › **⏫ una vez** desde el primer bloque lleva directo a «Anexo de curso/atributo de área» (las reglas). Con una regla seleccionada, botón **Regla**: el detalle muestra materia y curso de cada condición; **Regresar** vuelve. Si la tabla quedó corrida a la derecha, desplázala a la izquierda para ver Materia y curso (C172).
+- Para cambiar de área: «Comenzar de nuevo» (arriba a la derecha) › borrar el área › escribir la nueva › Tab › Ir.
+- **Agregar un curso a una regla** (C173): SMAAREA con el **periodo de la versión** (por ejemplo 202454, no el de la matrícula) › Anexo › regla › **Regla** › clic en una fila de Detalles › **+** de Detalles › Materia › Tab › curso › Tab › el usuario guarda. La columna «Condición» se numera sola al guardar.
+
 ### Crear un NRC (SSASECT)
 - Ver la guía [ref-restricciones-y-prerrequisitos-por-programa.md](../../arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md), paso 2 de la sección 2.
 

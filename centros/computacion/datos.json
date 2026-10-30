@@ -1609,8 +1609,8 @@
       "periodo": "202656",
       "parte": "X06",
       "antes_del_nrc": {
-        "titulo": "Antes del NRC: periodo, partes y curso",
-        "intro": "Antes de crear el NRC tienen que existir el periodo, la parte en la que se dictará y el curso. Si ya existen, se pasa directo a SSASECT.",
+        "titulo": "Antes del NRC: periodo, partes, curso y malla",
+        "intro": "Antes de crear el NRC tienen que existir el periodo, la parte en la que se dictará y el curso, y el curso tiene que estar en la malla de las rutas que lo llevan. Si ya existen, se pasa directo a SSASECT.",
         "orden": [
           {
             "pagina": "STVTERM",
@@ -1639,13 +1639,20 @@
             "cita": "Instructivo 1.1.4, diap. 20 a 25 · C135, C146, C147"
           },
           {
+            "pagina": "SMAAREA",
+            "detalle": "malla del programa (y SMAPROG para revisarla)",
+            "que": "Se pone el curso en la regla del área del programa de cada ruta que lo lleva. Diseño Web (ESEC 00684) se agregó en TEST a la ruta XP 07: área MC44-01, regla ECOM-04 «Computación IV», condición 2. Sin la malla, el NRC se crea y se matricula por backoffice, pero el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP.",
+            "cuando": "Solo si el curso no está en la malla. Después de SCACRSE: el curso tiene que existir antes.",
+            "cita": "Instructivo 1.2.1, diap. 23 a 25; 1.3.1, diap. 5 · R12 · C172, C173"
+          },
+          {
             "pagina": "SSASECT",
             "que": "Se crea el NRC: el curso dictado en un periodo y una parte, con su sección, cupo, horario y docente. El NRC toma las fechas de la parte.",
-            "cuando": "Después de los cuatro anteriores.",
+            "cuando": "Después de los cinco anteriores.",
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",

@@ -75,6 +75,13 @@ Parte de periodo general: **CGE**.
 - **Pago:** contado (−5 %, paga antes), 3 cuotas (paga la 1.ª), 2 cuotas o diferido (+5 %); no se anula una vez programado.
 - **Sin retiro ni reserva** (Acuerdo de Directorio 0453-2013), salvo salud: el alumno queda INH (U38).
 
+## Mallas de las rutas en TEST (SMAPROG y SMAAREA, 30/10/2026, C172)
+- `CMEMC44` (XP 07): versión de 202454 a 999999, «Proyectada», «Cautivo», 4 cursos (Y); área **`MC44-01` «Ciclo I»** con reglas `ECOM-01` a `ECOM-04`, **las cuatro solo con `ESEC 00678`**.
+- `CMEMC42` (XP 05): `MC42-01`, `ECOM-04` solo con `ESEC 00682`.
+- `CMEMC38` (XP 01): `MC38-01`, `ECOM-04` pide **4 de 11** (`00678`, `00679`, `00680`, `00682`, `00691`, `00694`, `00696` a `00700`).
+- **Diseño Web (`ESEC 00684`) no estaba en ninguna** de las áreas revisadas: se matricula por backoffice, pero no sale en Proyecciones del Autoservicio (C71) ni cuenta en CAPP. **Se agregó a `MC44-01`**, regla `ECOM-04`, condición 2 (C173). Quién completa las demás mallas: U52.
+- **Orden:** la malla (SMAAREA) va después de SCACRSE y antes de SSASECT (C173).
+
 ## Cursos conocidos en TEST
 Los de la hoja de NRC 202656 (ver `datos.json › cursos_conocidos`): ESEC 00678 Word 365, 00679 Excel 365, 00680 Canva, 00682 Excel Asociado, 00691 SPSS, 00694 Base de datos científicos (ruta 1), 00684 Diseño Web (rutas 5 y 7) y los talleres 00696 a 00700. ESEC 00650 es el curso de las primeras pruebas.
 

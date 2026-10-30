@@ -117,3 +117,13 @@ Cubre lo que falta del script 5.2: la labor no educativa y SIACONA. Sirve tambi�
    - ¿queda debajo (U), dentro o encima (O) de las 48 horas?
    - ¿la carga educativa que viene del catálogo cuadra con las horas por semana?
 7. **Para comparar:** en SIAASGN mira también el análisis por regla de carga (SIAFLRT). Con las dos pantallas a la vista se decide cuál es más clara para el jefe, que revisa la carga y da el visto bueno (ADR-011).
+
+## 6. Restricción por programa y acreditación como prerrequisito (29/10/2026)
+Guía completa: [ref-restricciones-y-prerrequisitos-por-programa.md](../arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md).
+- [x] **SSARRES › Incluir programa** bloquea con «Program Restriction» (Error fatal) a quien no lo tiene, **solo si** SOATERM tiene Programa en Fatal (C149, C156).
+- [x] El **currículo de pregrado** también cuenta para la restricción de programa, con los dos currículos en el mismo plan (C157, E29).
+- [x] **SCAPPRQ** bloquea la matrícula con «Prerequisite and Test Score error» (Error fatal) a quien no cumple (NRC 10020, C163).
+- [ ] Aislar la parte de Idiomas: agregar en SCAPPRQ 202644 `ESEC 00044` con solo `ESEP 02456` y matricular a Arnold en el NRC 10022 (C164). El guardado en SCAPPRQ lo debe hacer el usuario.
+- [ ] Probar el Basic «en curso» en un periodo de centros (R10: con «En progreso» sin marcar en SOATERM, no cuenta).
+- [ ] Copiar la regla de Nidia de la versión 202444 a 202544 y 202644, y confirmar qué versión usa la matrícula (C162, E32).
+- **Antes de empezar:** SFARSTS de la parte del NRC (C154); SOADEST con DATABASE si SFAREGS lo pide; no recargar la página con una fila en error (C158).

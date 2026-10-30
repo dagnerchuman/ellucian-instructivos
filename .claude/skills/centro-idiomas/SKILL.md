@@ -81,6 +81,8 @@ En SEUSS, quien desaprueba BASIC I **NO puede pasar a BASIC II** salvo con exame
 4. **SFPPROJ:** la proyección con verificación de prerrequisitos **no ofrece** BASIC II si no hay BASIC I aprobado o examen.
 5. **SFAROVR:** un sobrepaso administrativo puede saltar la regla.
 
+**Idiomas como prerrequisito de pregrado (29/10, C159 a C164):** en **SCAPPRQ** del programa de pregrado (por ejemplo Medicina `1PCSP15`, versión 202444) Nidia Beltrán puso «malla **Y (** `ESEP 02456` **O** `02457` **O** `02458` **)**» (Basic I a III) y, más adelante, Intermediate I a III (`ESEP 02693`, `02721`, `02997`), sin nivel ni calificación: basta con haberlo cursado. El correquisito no sirve, porque pregrado y centros van en periodos distintos. Guía y prueba en [ref-restricciones-y-prerrequisitos-por-programa.md](../arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md).
+
 ## Ligas: Teórico Virtual + 3 Opciones de Práctica (CONFIRMADO C60, R18, ADR-019)
 - Cada curso de Idiomas se programa mediante un esquema **Uno a Muchos**: 1 sección teórica principal ligada a 3 secciones prácticas.
 - **Teórico Principal (Sección `AT` · Virtual `SAUVIR`):**

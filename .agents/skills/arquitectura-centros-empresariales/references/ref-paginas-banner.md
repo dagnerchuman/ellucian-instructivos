@@ -16,6 +16,7 @@ Columna «Dónde»: el instructivo que más la menciona (búsqueda en los 83 PPT
 |---|---|---|
 | SCACRSE | Catálogo de cursos | 1.1.4 |
 | SCAPREQ | Prerrequisitos y exámenes del catálogo | 1.1.5 |
+| SCAPPRQ | Prerrequisitos por **programa** y versión del programa (acreditación como prerrequisito de pregrado) | No está en los 83 instructivos; probado en TEST (C160 a C164) |
 | SMAPRLE, SOACURR | Programa y reglas de currículo | 1.1.3 |
 | SMAPROG, SMAAREA | Malla del programa y áreas (CAPP) | 1.2.1, 1.3.1 |
 
@@ -64,6 +65,8 @@ Columna «Dónde»: el instructivo que más la menciona (búsqueda en los 83 PPT
 |---|---|---|
 | SFAREGS | Inscribir por backoffice | 5.4_4.1.4.1.12 |
 | SFAROVR, STVROVR | Sobrepasos | 5.4_4.1.4.1.15 |
+| SFARSTS | Estatus de inscripción (RE, DD, RW, DW) habilitados por periodo y **parte de periodo**, con fechas; sin reglas para la parte, nadie se matricula (C154, C156) | 5.4 inscripción, diap. 27–28 |
+| SOADEST | Destinos de impresión de la sesión; SFAREGS lo pide en una sesión nueva: DATABASE en los cinco campos (C158) | Visto en TEST |
 | Lista de espera, retiro | — | 5.4_4.1.4.1.14, 5.4_4.1.4.1.16 |
 
 ## Finanzas (tema 9, pendiente)

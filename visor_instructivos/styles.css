@@ -500,6 +500,17 @@ body {
   color: #fff;
 }
 
+/* Botones de la barra superior en fila: Banner TEST y Pantalla completa */
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+a.present-btn {
+  text-decoration: none;
+}
+
 /* ==========================================================================
    VIEWPORTS & NATIVE PRESENTATION WRAPPER
    ========================================================================== */

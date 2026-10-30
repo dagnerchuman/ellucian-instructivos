@@ -224,12 +224,15 @@ def galeria(ids):
         )
 
     autor = html.escape(Centro(ids[0]).autor)
+    test = Centro(ids[0]).comun["ambiente_test"]
+    url_test = html.escape(test if test.startswith("http") else "https://" + test)
     pagina = (
         TEMPLATE_GALERIA
         .replace("/*__CSS__*/", CSS_GALERIA + "\n\n" + CSS_AI + "\n\n" + CSS_ZOOM)
         .replace("/*__JS__*/", JS_ZOOM + "\n\n" + JS_GALERIA + "\n\n" + JS_AI)
         .replace("<!--__KNOWLEDGE_SCRIPT__-->", SCRIPT_CONOCIMIENTO_AI)
         .replace("{autor}", autor)
+        .replace("{url_test}", url_test)
         .replace("{secciones}", "\n".join(secciones))
         .replace("{asistente_ia_html}", HTML_AI)
     )

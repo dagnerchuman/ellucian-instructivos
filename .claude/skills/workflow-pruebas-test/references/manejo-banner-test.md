@@ -65,6 +65,16 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 ### Crear un NRC (SSASECT)
 - Ver la guía [ref-restricciones-y-prerrequisitos-por-programa.md](../../arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md), paso 2 de la sección 2.
 
+### Completar el horario y el docente de un NRC ya creado (SSASECT, C178)
+Pendiente: **NRC 10045** (202656, `ESEC 00701`, X06, sesión T), docente **100582059**, horario según el Excel de cruces del usuario (no se elige otro). El usuario mira el recorrido en su navegador; él inicia sesión con Google.
+1. SSASECT › periodo `202656` › NRC `10045` › **Ir** (no «Crear NRC»). Comprobar con zoom que salen ESEC 00701, sección A y parte X06.
+2. Pestaña **«Instructor y horas de reunión»** › subpestaña **«Fechas de reunión»** › **+** si no hay fila. Tipo de reunión CLAS; las fechas las hereda de la X06 (07-SEP a 31-OCT-2026); hora de inicio y fin en 24 h; días de la semana; Indicador de sesión **01**; edificio `SAUVIR`, salón `SALA-VIRT` y la **O** en «Indicador de sobrepaso» del horario (C97). 5.3, diap. 29.
+3. El usuario guarda. Subpestaña «Créditos y ubicación de reunión»: Banner calcula las horas por semana (5.3, diap. 30).
+4. Bloque **«Instructor»** de la sesión 01: ID `100582059` › Tab (debe salir su nombre); porcentaje de responsabilidad 100; **Indicador de principal** marcado; porcentaje de sesión 100. 6.2.1, diap. 15 y 19.
+5. El usuario guarda. Si sale «Conflicto de horario del instructor», el bloque choca con otro NRC suyo: se avisa y se revisa el Excel antes de marcar «Indicador de sobrepaso» (6.2.1, diap. 20; Script 17).
+6. Comprobar: SSASECT › Ir otra vez; **SIAASGN** › `100582059` › 202656: debe salir el 10045 (5.2 carga, diap. 24).
+7. Datos para la hoja de NRC (fila del 10045): PROGRAMA `CMEMC44`; LIB_AREA «no está en la malla»; CÓDIGO DOCENTE `100582059`; DOCENTE, el nombre que muestra SSASECT; HORARIO y AMBIENTE, los que se guardaron.
+
 ## 5. Incidencias y salida
 - **SOADEST** al abrir SFAREGS en una sesión nueva: DATABASE en los cinco campos; GUARDAR da «Función inválida»; abrir SFAREGS otra vez desde la lupa (C158).
 - **«Otra sesión de inscripción está en progreso»:** alguien recargó con cambios pendientes; se esperan unos minutos (C158).
@@ -78,5 +88,6 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 ## 6. Datos de prueba en TEST (29/10/2026)
 - **Alumno:** Arnold Vaca `S00912438` (Medicina `1PCSP15`, plan 1; `CMEMC38`; `IMEMI03` en el plan 4). En 202744 tiene los NRC 10001 a 10008 de otra persona: **no se tocan**.
 - **Otro alumno:** `100582059` (`CMEMC44`). **Alumno de Nidia:** `A00010005` (catálogo 202444; Basic I con 80 en 202646; en 202744 tiene 10023, 10024, 10022 y 10007; avisar a Nidia antes de usarlo).
-- **NRC:** 10045 (202656, X06, Computación), 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
+- **NRC:** 10045 (202656, X06, Computación; sin horario ni docente, receta de la sección 4), 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
+- **Acceso a TEST:** https://experience-test.elluciancloud.com/ussipantest, también en el botón «Banner TEST» de la galería y del visor del sitio (C178). Cada persona entra con su cuenta de Google.
 - Lo que quedó en TEST y falta limpiar: sección 4 de la guía de restricciones y C167.

@@ -195,6 +195,18 @@
       "aula": "SAUVIR / SALA-VIRT",
       "uso": "DISEÑO WEB, validado de punta a punta (C96–C107, C119–C124): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista y envío al libro con Clase › «Actualizar la asistencia en el libro de calificaciones» (ATTRGRD 57,14 → INH; 85,71 → APRO); SHRROLL job 7762. Pasó APRO porque la escala de arriba de SHAGCOM era AST_70; se corrigió a 17 en SHATCKN tras dar el modo V al 17 del nivel C en SHAGRDE (C124)",
       "cupo": "40"
+    },
+    {
+      "nrc": "10045",
+      "curso": "ESEC 00701",
+      "seccion": "A",
+      "parte": "X06",
+      "cupo": "10",
+      "docente": "100582059 (Dagner Chuman), por asignar en SSASECT (C178)",
+      "horario": "Por definir: el usuario mandará el Excel de cruces (C178)",
+      "aula": "SAUVIR / SALA-VIRT en la hoja; en TEST se asigna con el horario",
+      "programa": "CMEMC44 · sin área: ESEC 00701 no está en ninguna malla (C178)",
+      "uso": "GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Falta en SSASECT: horario y docente"
     }
   ],
   "nrc_ejemplo": "1026",

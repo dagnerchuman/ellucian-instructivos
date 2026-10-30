@@ -126,6 +126,8 @@ h1 {
   background: var(--btn-hover);
   border-color: var(--brand);
 }
+/* Enlace a Banner TEST (centros/comun/datos.json › ambiente_test): mismo aspecto que el botón de tema */
+.test-link-btn { text-decoration: none; white-space: nowrap; }
 
 /* Barra de Filtros y Búsqueda */
 .controls-bar {
@@ -1725,6 +1727,9 @@ button.ai-fab:active,
         <p class="header-sub">Idiomas, Computación y Emprendimiento · Universidad Señor de Sipán · Elaborado por: Dagner Anibal Chuman Lluen</p>
       </div>
       <div class="header-actions">
+        <a class="theme-toggle-btn test-link-btn" href="https://experience-test.elluciancloud.com/ussipantest" target="_blank" rel="noopener" title="Abrir Banner TEST de la USS en una pestaña nueva. Cada persona entra con su propia cuenta de Google.">
+          <span>🔐</span> <span>Banner TEST</span>
+        </a>
         <button type="button" class="ai-fab-header-btn" onclick="var b=document.getElementById('ai-fab-btn');if(b)b.click();" title="Consultar al Asistente IA de Centros Empresariales">
           <span class="ai-fab-sparkle">✨</span> <span>Asistente IA</span>
         </button>

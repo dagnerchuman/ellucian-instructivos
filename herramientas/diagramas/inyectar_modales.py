@@ -484,6 +484,7 @@ def _html_ejemplo_prueba(demo, tabla, carpeta_html, slug):
         "filas": [[str(p["n"]), p["codigo"], p["accion"], p["dato"], p["quien"],
                    p.get("resultado", "Pendiente"), p["cita"]] for p in pasos],
         "resaltar": [k for k, p in enumerate(pasos) if p.get("resultado")],
+        "clase": "an-secuencia",
     })
     detalle = ""
     for p in pasos:
@@ -500,6 +501,21 @@ def _html_ejemplo_prueba(demo, tabla, carpeta_html, slug):
             + secuencia
             + '  <p class="an-fuente">Resaltados: los pasos ya hechos en TEST. Abra cada paso para ver qué va en cada campo y las capturas.</p>\n'
             + detalle)
+
+
+def _html_fundamentos(demo, tabla):
+    """Por qué de cada fila con `por_que` en los pasos de la demostración, en una tabla para estudiar (C183)."""
+    e = html.escape
+    out = ""
+    for p in demo.get("pasos", []):
+        filas = [f for f in p.get("filas", []) if f.get("por_que")]
+        if not filas:
+            continue
+        cuerpo = tabla({"columnas": ["Campo", "Valor en TEST", "Por qué"],
+                        "filas": [[f["campo"], f["valor"], f["por_que"]] for f in filas]})
+        out += (f'  <details class="an-sub">\n    <summary>¿Por qué cada campo de {e(p["codigo"])} queda así? '
+                f'({e(p["dato"])})</summary>\n{cuerpo}  </details>\n')
+    return out
 
 
 def _html_antes_nrc(slug, carpeta_html=None):
@@ -529,7 +545,8 @@ def _html_antes_nrc(slug, carpeta_html=None):
                       for c, v in enumerate(fila))
             + "</tr>"
             for k, fila in enumerate(t["filas"]))
-        return f'    <div class="an-tabla"><table><thead><tr>{cab}</tr></thead><tbody>{filas}</tbody></table></div>\n'
+        clase = f' class="{e(t["clase"])}"' if t.get("clase") else ""
+        return f'    <div class="an-tabla"><table{clase}><thead><tr>{cab}</tr></thead><tbody>{filas}</tbody></table></div>\n'
 
     preguntas = ""
     for q in a.get("preguntas", []):
@@ -547,11 +564,12 @@ def _html_antes_nrc(slug, carpeta_html=None):
         f'  <summary><span class="an-paso">Paso previo</span> {e(a["titulo"])}'
         '<span class="an-abrir">Clic para ver la tabla</span></summary>\n'
         f'  <p class="an-intro">{e(a["intro"])}</p>\n'
-        '  <div class="an-tabla"><table>\n'
+        '  <div class="an-tabla"><table class="an-orden">\n'
         '    <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'
         f'    <tbody>{orden}</tbody>\n'
         '  </table></div>\n'
         + preguntas
+        + _html_fundamentos(demo, tabla)
         + _html_ejemplo_prueba(demo, tabla, carpeta_html, slug)
         + f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
         '</details>\n'

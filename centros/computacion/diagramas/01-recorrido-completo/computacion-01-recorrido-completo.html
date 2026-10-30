@@ -17193,7 +17193,13 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
   color: #8b5cf6;
   text-align: center;
 }
-.antes-nrc .an-cita { color: var(--text-muted, #475569); font-size: 0.8rem; white-space: nowrap; }
+.antes-nrc .an-cita { color: var(--text-muted, #475569); font-size: 0.8rem; }
+/* Tabla del orden: «¿Cuándo?» y «Fuente» angostas para que «Qué se hace» tenga el espacio (pedido del usuario, C183) */
+.antes-nrc .an-orden th:nth-child(4),
+.antes-nrc .an-orden td:nth-child(4) { width: 14%; }
+.antes-nrc .an-orden th:nth-child(5),
+.antes-nrc .an-orden td:nth-child(5) { width: 13%; }
+.antes-nrc .an-secuencia td:last-child { width: 12%; color: var(--text-muted, #475569); font-size: 0.8rem; }
 .antes-nrc .an-num { text-align: right; font-variant-numeric: tabular-nums; }
 .antes-nrc tr.an-demo td { background: rgba(16, 185, 129, 0.14); }
 .antes-nrc tr.an-demo td:first-child { box-shadow: inset 3px 0 0 #10b981; }

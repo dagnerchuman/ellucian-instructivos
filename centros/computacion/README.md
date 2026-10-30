@@ -78,7 +78,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 - NRC **10019**: ESEC 00679, sección A, parte X06. OFIMÁTICA EXCEL 365 (Hoja oficial 202656).
 - NRC **10026**: ESEC 00697, sección A, parte X06. Ejemplo actual de configuración de asistencia y ATTRGRD (capturas TEST 23/10/2026).
 - NRC **10044**: ESEC 00684, sección A, parte X06. DISEÑO WEB, validado de punta a punta (C96–C107, C119–C124): NRC en SSASECT; plan en SHAGCOM (TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 con VIG_11 + ATTRGRD 0.00 con AST_70); alumno 100582059 (plan 4, CMEMC44) en RE; regla en SOAATRK; Pasar lista y envío al libro con Clase › «Actualizar la asistencia en el libro de calificaciones» (ATTRGRD 57,14 → INH; 85,71 → APRO); SHRROLL job 7762. Pasó APRO porque la escala de arriba de SHAGCOM era AST_70; se corrigió a 17 en SHATCKN tras dar el modo V al 17 del nivel C en SHAGRDE (C124).
-- NRC **10045**: ESEC 00701, sección A, parte X06. GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Falta en SSASECT: horario y docente.
+- NRC **10045**: ESEC 00701, sección A, parte X06. GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Horario y docente guardados en SSASECT y visibles en SIAASGN el 30/10 (C180); sigue SHAGCOM (ejemplo de prueba 2).
 
 ## Scripts de prueba (19 validado · 2 pendiente · 1 no aplica)
 | Script | Nombre | Estado | Evidencia o pendiente |

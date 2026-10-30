@@ -202,11 +202,11 @@
       "seccion": "A",
       "parte": "X06",
       "cupo": "10",
-      "docente": "100582059 (Dagner Chuman), por asignar en SSASECT (C178)",
-      "horario": "Por definir: el usuario mandará el Excel de cruces (C178)",
-      "aula": "SAUVIR / SALA-VIRT en la hoja; en TEST se asigna con el horario",
+      "docente": "100582059 (Dagner Chuman), principal, 100 % (C180)",
+      "horario": "Miércoles 15:30–17:10, del 07-SEP al 31-OCT-2026, 2 horas por semana (C179, C180)",
+      "aula": "SAUVIR / SALA-VIRT, con O en «Indicador de sobrepaso» (C180)",
       "programa": "CMEMC44 · sin área: ESEC 00701 no está en ninguna malla (C178)",
-      "uso": "GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Falta en SSASECT: horario y docente"
+      "uso": "GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Horario y docente guardados en SSASECT y visibles en SIAASGN el 30/10 (C180); sigue SHAGCOM (ejemplo de prueba 2)"
     }
   ],
   "nrc_ejemplo": "1026",
@@ -2513,8 +2513,9 @@
         "carpeta": "Centro de Computación · Demostración 1 · Diseño Web, nueva sección B (202656)",
         "nrc": "10045",
         "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existe y tiene alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059, y cada paso queda con su captura (C178, C179).",
-        "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179)",
+        "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Arnold Vaca (S00912438) también está con RE en el 10045 (C157). Antes del pase a historia, el usuario decide si se le da de baja (DD solo hasta el 31-OCT-2026) o si recibe nota.",
+        "avance": "Pasos 1 a 4 hechos en TEST el 30/10/2026, con sus capturas en la carpeta (C180). Sigue el paso 5 (SHAGCOM).",
         "pasos": [
           {
             "n": 1,

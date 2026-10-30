@@ -15,7 +15,20 @@ Fuente: carpeta `acreditaciones-uss/` que subió el usuario el 26/10/2026 (C125)
 - La acreditación en Computación es **requisito para el trámite del grado de bachiller** (PDF 2025, pág. 17).
 - **Acuerdo de Directorio, Oficio 0453-2013 SG-USS:** el alumno sigue pagando el curso de computación **sin opción a reserva ni retiro** (queda **INHABILITADO**), salvo por motivos de salud debidamente justificados (PDF 2025, pág. 12). Ver U38.
 
-## Cómo se acredita (lámina 4, 2026)
+## Plan Tradicional y Protech XP: no confundir (C175)
+Corrección del usuario (30/10/2026) y skill de su chatbot CINF (`cinf-chatbot-architect`):
+
+| | Plan Tradicional | Acreditación Protech XP |
+|---|---|---|
+| Qué es | **Computación I → II → III**, secuencial (C62) | **7 rutas de aprendizaje** por escuela, 4 componentes |
+| Cómo se acredita | Aprobando la secuencia | Opción A: 3 cursos de la ruta + 1 taller · Opción B: 4 talleres |
+| Costo | **S/ 330** (contado S/ 313.50, 3 × S/ 110, 2 × S/ 165, diferido S/ 346.50) | Curso S/ 420 en Chiclayo y S/ 240 en filiales; taller S/ 340 y S/ 280 |
+| Sede | Computación II y III **solo en Chiclayo** (en filiales no se dicta) | Chiclayo y filiales |
+| En Banner (TEST) | Programas antiguos `CMEMC01` a `CMEMC37` (U46) | «Acreditación Computación XP 01» a «07» (`CMEMC38` a `CMEMC44`) |
+
+Las reglas `ECOM-01` a `ECOM-04` de las áreas XP (`MC38-01`, `MC42-01`, `MC44-01`) se describen en TEST «Computación I» a «IV»: son **nombres heredados del Plan Tradicional**, no rutas ni cursos (U53).
+
+## Cómo se acredita en Protech XP (lámina 4, 2026)
 1. **3 cursos de su ruta de aprendizaje + 1 taller de certificación internacional.** Los 3 cursos, en el orden que desee y en paralelo.
 2. **4 talleres de certificación internacional.**
 
@@ -42,10 +55,13 @@ En todas, el 7.º es el **Taller de Certificación Internacional**. Algunas escu
 | | Regular | Intensivo | Súper intensivo | Sede Chiclayo | Filiales |
 |---|---|---|---|---|---|
 | Curso de la ruta | 3 meses | 2 meses | 1 mes | **S/ 420** | **S/ 240** |
+
+Según el chatbot CINF del usuario (C175), la duración va **en semanas**: regular **8** y súper intensivo **4**; el taller, siempre 4. Filiales Protech XP: contado S/ 228, 3 × S/ 80, 2 × S/ 120, diferido S/ 252. Al matricularse en el Campus Virtual, el curso se elige **virtual** y el taller **presencial**. Cambio de curso o sección: 5 días (regular) o 3 (súper intensivo), derecho de trámite S/ 20.
+
 | Taller de certificación internacional | 1 mes | 1 mes | 1 mes | **S/ 340** | **S/ 280** |
 
 - Los costos son por cada curso o taller que elija el alumno. El taller dura 4 semanas e incluye el examen de certificación (PDF 2025, pág. 22).
-- **Gente con experiencia** (lámina 11): enero a marzo S/ 100 por mes (clases virtuales, talleres y master class); abril a julio gratis (curso asincrónico de CISCO); agosto S/ 250 (resolución de casos aplicados).
+- **Gente con experiencia** (lámina 11): enero a marzo S/ 100 por mes (clases virtuales, talleres y master class); abril a julio gratis (curso asincrónico de CISCO); agosto S/ 250 (resolución de casos aplicados). **Solo en Chiclayo**, S/ 550 en total (chatbot CINF, C175).
 
 ## Modalidades de pago (lámina 2 y PDF 2025, págs. 9 a 11)
 | Modalidad | Regla | Curso de S/ 420 |
@@ -55,7 +71,7 @@ En todas, el 7.º es el **Taller de Certificación Internacional**. Algunas escu
 | En 2 cuotas | Matrícula automática; paga a la mitad del curso y al final | 2 × S/ 210 |
 | Diferido | 5 % adicional; matrícula automática; paga al final del curso | S/ 441 |
 
-Una vez programado el pago, **no se puede anular**. El PDF 2025 trae otra tabla igual con base **S/ 330** (S/ 313.50, 3 × S/ 110, 2 × S/ 165 y S/ 346.50) sin decir a qué aplica (U36). Canales de pago (PDF 2025): Campus Virtual con Visa, aplicación del BCP y agentes BCP o BBVA con el código de estudiante.
+Una vez programado el pago, **no se puede anular**. El PDF 2025 trae otra tabla igual con base **S/ 330** (S/ 313.50, 3 × S/ 110, 2 × S/ 165 y S/ 346.50): es el **Plan Tradicional** (C175, resuelve U36). Canales de pago (PDF 2025): Campus Virtual con Visa, aplicación del BCP y agentes BCP o BBVA con el código de estudiante.
 
 ## Registro hoy en SEUSS (lámina 3 y PDF 2025, pág. 7)
 1. Campus Virtual: revisar **horarios**, debajo de la foto (TUTORES por centro: Idiomas, Informática, Emprendimiento).

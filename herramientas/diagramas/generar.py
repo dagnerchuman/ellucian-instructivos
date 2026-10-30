@@ -117,6 +117,13 @@ def main():
 
     if not CLI.exists():
         sys.exit(f"No encuentro Archify en {ARCHIFY}. Ejecuta: bash herramientas/diagramas/instalar_archify.sh")
+    try:
+        import pptx  # noqa: F401
+    except ImportError:
+        # diapositivas.py calla los errores del PPTX: sin python-pptx las láminas salen sin texto ni números
+        # y los recortes cambian en todo el sitio (C184).
+        sys.exit("Falta python-pptx: sin él las láminas quedan sin texto ni números verdes. "
+                 "Ejecuta: python3 -m pip install --user python-pptx")
 
     subprocess.run(
         [sys.executable, str(AQUI / "generar_conocimiento_asistente.py")],

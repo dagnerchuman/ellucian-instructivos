@@ -11,6 +11,7 @@ import os
 import re
 from pathlib import Path
 import sys
+from urllib.parse import quote
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
 from diapositivas_pasos import INSTRUCTIVOS, para as diapositivas_del_paso
 from plantillas import TITULOS, CAPACIDADES, DEMOSTRACIONES, guia_casuistica_de, guia_demostracion, guia_recorrido
@@ -455,12 +456,60 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
         vistas.setdefault(firma, paso)
 
 
-def _html_antes_nrc(slug):
+def _html_capturas(carpeta, capturas, carpeta_html, slug):
+    """Miniaturas de las capturas de TEST de un paso; cada una abre la imagen completa (C181)."""
+    e = html.escape
+    figuras = ""
+    for c in capturas:
+        if carpeta_html is not None and not (Path(carpeta_html) / carpeta / c["archivo"]).exists():
+            ADVERTENCIAS.append(f"{slug}: falta la captura {carpeta}/{c['archivo']}")
+            continue
+        src = e(quote(f"{carpeta}/{c['archivo']}"))
+        figuras += (f'<figure><a href="{src}" target="_blank" rel="noopener">'
+                    f'<img src="{src}" alt="{e(c["texto"])}" loading="lazy"></a>'
+                    f'<figcaption>{e(c["texto"])}</figcaption></figure>')
+    return f'    <div class="an-capturas">{figuras}</div>\n' if figuras else ""
+
+
+def _html_ejemplo_prueba(demo, tabla, carpeta_html, slug):
+    """Ejemplo de prueba (`ejemplo_prueba_2` en datos.json) dentro de «Antes del NRC»: la secuencia
+    completa y, por paso hecho, su tabla campo por campo y sus capturas de TEST (pedido del usuario, C181)."""
+    ej = demo.get("ejemplo_prueba_2")
+    if not ej:
+        return ""
+    e = html.escape
+    pasos = ej["pasos"]
+    secuencia = tabla({
+        "columnas": ["N.º", "Página", "Qué se hace", "Dato", "Quién", "Banner respondió", "Fuente"],
+        "filas": [[str(p["n"]), p["codigo"], p["accion"], p["dato"], p["quien"],
+                   p.get("resultado", "Pendiente"), p["cita"]] for p in pasos],
+        "resaltar": [k for k, p in enumerate(pasos) if p.get("resultado")],
+    })
+    detalle = ""
+    for p in pasos:
+        if not (p.get("tabla") or p.get("capturas")):
+            continue
+        cuerpo = tabla(p["tabla"]) if p.get("tabla") else ""
+        if p.get("nota"):
+            cuerpo += f'    <p class="an-fuente">{e(p["nota"])}</p>\n'
+        cuerpo += _html_capturas(ej["carpeta"], p.get("capturas", []), carpeta_html, slug)
+        detalle += (f'  <details class="an-sub">\n    <summary>Paso {p["n"]} · {e(p["codigo"])}: {e(p["accion"])}'
+                    f'</summary>\n{cuerpo}  </details>\n')
+    return (f'  <h3 id="ejemplo-prueba-2">{e(ej["titulo"])}</h3>\n'
+            f'  <p class="an-intro">{e(ej["caso"])}</p>\n'
+            + secuencia
+            + '  <p class="an-fuente">Resaltados: los pasos ya hechos en TEST. Abra cada paso para ver qué va en cada campo y las capturas.</p>\n'
+            + detalle)
+
+
+def _html_antes_nrc(slug, carpeta_html=None):
     """Bloque «Antes del NRC» de una demostración: `antes_del_nrc` en datos.json (C141 a C144).
 
     Sale cerrado; al abrirlo se ve solo la tabla del orden y cada pregunta sigue cerrada hasta dar clic
-    (pedido del usuario, C142). Una pregunta lleva `lista` o `tabla` (columnas, filas, num, resaltar)."""
-    a = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {}).get("antes_del_nrc")
+    (pedido del usuario, C142). Una pregunta lleva `lista` o `tabla` (columnas, filas, num, resaltar).
+    Al final va el ejemplo de prueba de la demostración, si lo tiene (C181)."""
+    demo = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {})
+    a = demo.get("antes_del_nrc")
     if not a:
         return ""
     e = html.escape
@@ -503,6 +552,7 @@ def _html_antes_nrc(slug):
         f'    <tbody>{orden}</tbody>\n'
         '  </table></div>\n'
         + preguntas
+        + _html_ejemplo_prueba(demo, tabla, carpeta_html, slug)
         + f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
         '</details>\n'
         '<!-- === /ANTES DEL NRC === -->\n')
@@ -528,7 +578,7 @@ def inyectar_en_html(ruta_html, slug):
         ruta_html.parent,
     ).replace(os.sep, "/")
 
-    antes = _html_antes_nrc(slug)
+    antes = _html_antes_nrc(slug, ruta_html.parent)
     if antes:
         i = contenido.find('<script id="archify-i18n-data"')
         if i == -1:

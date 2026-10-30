@@ -60,7 +60,16 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 - **Agregar un curso a una regla** (C173): SMAAREA con el **periodo de la versión** (por ejemplo 202454, no el de la matrícula) › Anexo › regla › **Regla** › clic en una fila de Detalles › **+** de Detalles › Materia › Tab › curso › Tab › el usuario guarda. La columna «Condición» se numera sola al guardar.
 - **Varios cursos en una regla** (C174): un **+** por cada curso; la fila nueva sale debajo de la última (cada fila, unos 18 px más abajo). Después de cada Tab, espera 2 s a que Banner valide el curso. Antes de pedir el guardado, revisa con zoom que estén todas las filas («Registro n de n»). Una regla por guardado.
 - **Quitar un curso de una regla:** clic en la fila › **–** de Detalles (al lado del +) › el usuario guarda. Sin probar todavía: es lo que falta en `MC42-01` › `ECOM-04` (C174).
-- **Comprobar:** después de guardar, «Comenzar de nuevo» › misma área y periodo de la versión › Ir › regla › Regla. Si el usuario recargó la página, hay que volver a entrar a SMAAREA.
+- **Comprobar:** después de guardar, «Comenzar de nuevo» › misma área y periodo de la versión › Ir › regla › Regla. Si el usuario recargó la página, hay que volver a entrar a SMAAREA. También sirve **Regresar** › la misma regla › **Regla** (C181).
+- **El periodo se escribe a mano:** un doble o triple clic en el campo abre la lista «Códigos de periodos del catálogo», y su Intro elige la primera fila (999999). Clic › Fin › borrar › escribir (C181).
+
+### Cargar la fórmula de un NRC (SHAGCOM, C181)
+1. SHAGCOM › periodo y NRC › Ir. Si el plan está vacío, Banner pide primero la escala: «Ingresar la escala de calificación antes de continuar».
+2. Arriba, «Escala de calificación» **`VIG_11`** (no `AST_70`: con ella la final sale APRO, C120 y C123) › Tab › el usuario guarda.
+3. Clic en Secuencia de la primera fila. Por cada componente: secuencia › Tab › nombre › Tab › descripción › Tab › peso › Tab, **esperando 1 a 2 s después de cada Tab**. Si se escribe seguido, Banner corre los campos. Un clic en otra celda no mueve el foco: Tab o Shift+Tab y, para reemplazar, Cmd+A.
+4. Siga con Tab por la fila hasta «Nota aprobatoria»: la escala la hereda de arriba y la aprobatoria se llena sola (55 con `VIG_11`). El siguiente componente se agrega con el **+** del bloque.
+5. `ATTRGRD`: peso 0, «Debe aprobar» con la barra espaciadora, escala `AST_70` (Cmd+A y escribir); la aprobatoria pasa sola a 70.
+6. El usuario guarda: *Saved successfully (5 rows saved)* y «Total de peso final» 1.00. Plan del 10044 y del 10045: TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 (C98).
 
 ### Crear un NRC (SSASECT)
 - Ver la guía [ref-restricciones-y-prerrequisitos-por-programa.md](../../arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md), paso 2 de la sección 2.
@@ -73,7 +82,7 @@ Probada el 30/10/2026 con el **NRC 10045** (202656, `ESEC 00701`, X06, sesión T
 4. Bloque **«Instructor»** de la sesión 01: clic en la fila › Tab › ID `100582059` › Tab. Banner trae el nombre, la carga 1.000, la responsabilidad 100, **Indicador de principal** marcado y porcentaje de sesión 100: solo se comprueba con la rueda a la derecha. 6.2.1, diap. 15 y 19.
 5. El usuario guarda. Si sale «Conflicto de horario del instructor», el bloque choca con otro NRC suyo: se avisa y se revisa el Excel antes de marcar «Indicador de sobrepaso» (6.2.1, diap. 20; Script 17).
 6. Comprobar: «Comenzar de nuevo» (a veces hay que pulsarlo dos veces) › Ir. Luego **SIAASGN** › `100582059` › 202656 › Ir: debe salir el 10045 (5.2 carga, diap. 24). Muestra una asignación por página: escribe el número de página en el cuadro de abajo y pulsa Intro. La alerta *«Reglas activas de carga de trabajo del docente no definidas para este periodo»* no impide consultar (C180).
-7. Datos para la hoja de NRC (fila del 10045): PROGRAMA `CMEMC44`; LIB_AREA «no está en la malla»; CÓDIGO DOCENTE `100582059`; DOCENTE, el nombre que muestra SSASECT; HORARIO y AMBIENTE, los que se guardaron.
+7. Datos para la hoja de NRC (fila del 10045): PROGRAMA `CMEMC44`; LIB_AREA `MC44-01`, el área de la malla donde está el curso (C181; antes «no está en la malla», C178); CÓDIGO DOCENTE `100582059`; DOCENTE, el nombre completo; HORARIO y AMBIENTE, los que se guardaron. La tabla completa está en «Antes del NRC» de la Demostración 1.
 
 ## 5. Incidencias y salida
 - **SOADEST** al abrir SFAREGS en una sesión nueva: DATABASE en los cinco campos; GUARDAR da «Función inválida»; abrir SFAREGS otra vez desde la lupa (C158).
@@ -88,6 +97,6 @@ Probada el 30/10/2026 con el **NRC 10045** (202656, `ESEC 00701`, X06, sesión T
 ## 6. Datos de prueba en TEST (29/10/2026)
 - **Alumno:** Arnold Vaca `S00912438` (Medicina `1PCSP15`, plan 1; `CMEMC38`; `IMEMI03` en el plan 4). En 202744 tiene los NRC 10001 a 10008 de otra persona: **no se tocan**.
 - **Otro alumno:** `100582059` (`CMEMC44`). **Alumno de Nidia:** `A00010005` (catálogo 202444; Basic I con 80 en 202646; en 202744 tiene 10023, 10024, 10022 y 10007; avisar a Nidia antes de usarlo).
-- **NRC:** 10045 (202656, X06, Computación; miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059 desde el 30/10, C180), 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
+- **NRC:** 10045 (202656, X06, Computación; miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059, malla `MC44-01` › `ECOM-03` y fórmula en SHAGCOM desde el 30/10, C180 y C181), 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
 - **Acceso a TEST:** https://experience-test.elluciancloud.com/ussipantest, también en el botón «Banner TEST» de la galería y del visor del sitio (C178). Cada persona entra con su cuenta de Google.
 - Lo que quedó en TEST y falta limpiar: sección 4 de la guía de restricciones y C167.

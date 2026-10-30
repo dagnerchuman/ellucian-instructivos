@@ -75,7 +75,7 @@ Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora
 - Si un campo no toma lo escrito: clic, tecla Fin, borrar con retroceso, esperar y escribir de nuevo. Doble clic en un campo abre su lista de valores.
 
 ## 4. Lo que quedó en TEST (29/10/2026)
-- **NRC 10045** (202656, `ESEC 00701`): parte **X06** (no X07, que no tiene SFARSTS); SSARRES con Incluir `CMEMC44` y `1PCSP15`; Arnold Vaca y `100582059` inscritos con RE. En X06, RE y DD valen hasta el 31-OCT-2026. Horario y docente completos el 30/10: miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059 (C180; receta en `workflow-pruebas-test/references/manejo-banner-test.md`).
+- **NRC 10045** (202656, `ESEC 00701`): parte **X06** (no X07, que no tiene SFARSTS); SSARRES con Incluir `CMEMC44` y `1PCSP15`; Arnold Vaca y `100582059` inscritos con RE. En X06, RE y DD valen hasta el 31-OCT-2026. Horario y docente completos el 30/10: miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059 (C180); curso en la malla `MC44-01` › `ECOM-03` y fórmula en SHAGCOM (C181; receta en `workflow-pruebas-test/references/manejo-banner-test.md`).
 - **NRC 10020 y 10021** (202744, sección T1): sin alumnos. **10022**: Arnold Vaca (C167).
 - **Arnold Vaca** (`S00912438`): currículo `IMEMI03` (plan 4) y NRC **10042** y **10043** (Basic I) con RE en 202656 (C166); NRC **10022** con RE en 202744, sin poder darlo de baja (C167).
 - **SCAPPRQ `1PCSP15`:** sin las filas temporales de C165 (C167); las de C170 también se borraron: 202444 con 70 cursos y 202644 con 71.

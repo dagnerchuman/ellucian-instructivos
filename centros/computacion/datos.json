@@ -205,8 +205,8 @@
       "docente": "100582059 (Dagner Chuman), principal, 100 % (C180)",
       "horario": "Miércoles 15:30–17:10, del 07-SEP al 31-OCT-2026, 2 horas por semana (C179, C180)",
       "aula": "SAUVIR / SALA-VIRT, con O en «Indicador de sobrepaso» (C180)",
-      "programa": "CMEMC44 · sin área: ESEC 00701 no está en ninguna malla (C178)",
-      "uso": "GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Horario y docente guardados en SSASECT y visibles en SIAASGN el 30/10 (C180); sigue SHAGCOM (ejemplo de prueba 2)"
+      "programa": "CMEMC44 · área MC44-01, regla ECOM-03 (C181)",
+      "uso": "GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Horario y docente guardados en SSASECT y visibles en SIAASGN el 30/10 (C180); malla MC44-01 › ECOM-03 y fórmula en SHAGCOM con VIG_11 arriba (C181); sigue SOAATRK (ejemplo de prueba 2)"
     }
   ],
   "nrc_ejemplo": "1026",
@@ -2153,7 +2153,7 @@
       "parte": "X06",
       "antes_del_nrc": {
         "titulo": "Antes del NRC: periodo, partes, curso y malla",
-        "intro": "Antes de crear el NRC tienen que existir el periodo, la parte en la que se dictará y el curso, y el curso tiene que estar en la malla de las rutas Protech XP que lo llevan. Si ya existen, se pasa directo a SSASECT.",
+        "intro": "Antes de crear el NRC tienen que existir el periodo, la parte en la que se dictará y el curso, y el curso tiene que estar en la malla de las rutas Protech XP que lo llevan. Si ya existen, se pasa directo a SSASECT. Al final, el ejemplo de prueba 2 (NRC 10045) con lo que se guardó en TEST en cada paso, campo por campo y con sus capturas.",
         "orden": [
           {
             "pagina": "STVTERM",
@@ -2184,7 +2184,7 @@
           {
             "pagina": "SMAAREA",
             "detalle": "malla de la ruta XP (SMAPROG para revisarla)",
-            "que": "Se pone el curso en la malla de cada ruta Protech XP que lo lleva: SMAPROG muestra el área del programa «Acreditación Computación XP n» y en SMAAREA el curso se agrega a una de sus reglas. Diseño Web (ESEC 00684, rutas 5 y 7) ya quedó en TEST en MC44-01 › ECOM-04. Las reglas se describen «Computación I» a «IV», pero no son el Plan Tradicional: son los 4 componentes de la ruta. Sin la malla, el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP.",
+            "que": "Se pone el curso en la malla de cada ruta Protech XP que lo lleva: SMAPROG muestra el área del programa «Acreditación Computación XP n» y en SMAAREA el curso se agrega a una de sus reglas. Diseño Web (ESEC 00684, rutas 5 y 7) ya quedó en TEST en MC44-01 › ECOM-04, y el curso de prueba ESEC 00701 en MC44-01 › ECOM-03 (C181). Las reglas se describen «Computación I» a «IV», pero no son el Plan Tradicional: son los 4 componentes de la ruta. Sin la malla, el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP.",
             "cuando": "Solo si el curso no está en la malla de la ruta. Después de SCACRSE (el curso tiene que existir) y antes de SSASECT.",
             "cita": "Instructivo 1.2.1, diap. 23 a 25 y 33; 1.3.1, diap. 5 · R12 · C172 a C175"
           },
@@ -2195,7 +2195,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2503,19 +2503,120 @@
               "Cada regla pide 1 condición: se cumple con cualquiera de sus cursos, y un curso no cuenta en dos reglas.",
               "Si se cambia su descripción o lo hace Registros Académicos está por decidir (U52, U53)."
             ]
+          },
+          {
+            "pregunta": "¿Qué va en la hoja de NRC? (fila del 10045)",
+            "intro": "La hoja de NRC de 202656 tiene una fila por NRC. En la del 10045 faltaban PROGRAMA, LIB_AREA, docente y horario (C178); salen de los pasos del ejemplo de prueba 2.",
+            "tabla": {
+              "columnas": [
+                "Columna",
+                "Valor del 10045",
+                "De dónde sale"
+              ],
+              "filas": [
+                [
+                  "PERIODO",
+                  "202656",
+                  "SOATERM: el periodo abierto"
+                ],
+                [
+                  "PARTE DE PERIODO",
+                  "X06",
+                  "SOATERM › partes del periodo; SSASECT"
+                ],
+                [
+                  "DEPT",
+                  "EMCI",
+                  "SCACRSE: Jef. de Centro de Informática (C145)"
+                ],
+                [
+                  "PROGRAMA",
+                  "CMEMC44",
+                  "El programa del alumno y de la restricción de SSARRES: XP 07 (C178)"
+                ],
+                [
+                  "LIB_AREA",
+                  "MC44-01",
+                  "SMAAREA: el área de la malla de CMEMC44 donde quedó el curso (paso 5)"
+                ],
+                [
+                  "NRC",
+                  "10045",
+                  "SSASECT"
+                ],
+                [
+                  "REGLA_CURSO",
+                  "ESEC-00701",
+                  "Materia y curso, como en las demás filas de la hoja"
+                ],
+                [
+                  "CURSO",
+                  "GOOGLE",
+                  "SCACRSE: título del curso"
+                ],
+                [
+                  "HT · HP",
+                  "1 · 1",
+                  "SCACRSE: teoría 1 y laboratorio 1 (C145)"
+                ],
+                [
+                  "SECCIÓN",
+                  "A",
+                  "SSASECT"
+                ],
+                [
+                  "COBRA",
+                  "SI",
+                  "Hoja de NRC (cobro 1 en SCACRSE)"
+                ],
+                [
+                  "CÓDIGO DOCENTE",
+                  "100582059",
+                  "SSASECT › Instructor (paso 3)"
+                ],
+                [
+                  "DOCENTE",
+                  "DAGNER ANIBAL CHUMAN LLUEN",
+                  "SSASECT lo muestra como «DAGNER, CHUMAN/LLUEN A.»; la hoja usa el nombre completo"
+                ],
+                [
+                  "HORARIO",
+                  "MIÉRCOLES 03:30 PM - 05:10 PM",
+                  "SSASECT › Fechas de reunión (paso 2), con el formato de la hoja"
+                ],
+                [
+                  "AMBIENTE",
+                  "SAUVIR SALA-VIRT",
+                  "SSASECT › Créditos y ubicación de reunión (paso 2)"
+                ],
+                [
+                  "LIGA · LIGA VINC",
+                  "—",
+                  "Computación no usa ligas en la hoja"
+                ]
+              ],
+              "resaltar": [
+                3,
+                4,
+                11,
+                12,
+                13
+              ]
+            },
+            "nota": "Resaltadas: las columnas que faltaban (C178) y que se llenaron con esta prueba (C180, C181)."
           }
         ]
       },
       "ejemplo_prueba_2": {
-        "_leeme": "Capturas reales de TEST, paso por paso. Cada captura se guarda en la carpeta con el nombre de «carpeta», junto al HTML de la demostración, y empieza con el número del paso (02-ssasect-horario.png; varias por paso: 02-…-b.png). Las genera la prueba; la página se arma sola con generar.py.",
+        "_leeme": "Capturas reales de TEST, paso por paso. Cada captura se guarda en la carpeta con el nombre de «carpeta», junto al HTML de la demostración, y empieza con el número del paso (02-ssasect-horario.png; varias por paso: 02-…-b.png). Cada paso hecho lleva «resultado» (lo que respondió Banner), «tabla» (campo por campo) y «capturas»; generar.py los muestra en «Antes del NRC» de la demostración (C181).",
         "titulo": "Ejemplo de prueba 2 · NRC 10045 de punta a punta en TEST",
         "boton": "Ir al ejemplo de prueba 2",
         "carpeta": "Centro de Computación · Demostración 1 · Diseño Web, nueva sección B (202656)",
         "nrc": "10045",
-        "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existe y tiene alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059, y cada paso queda con su captura (C178, C179).",
+        "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existía y tenía alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059; cada página la deja escrita Claude, el usuario guarda y cada paso queda con su captura (C178 a C181).",
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Arnold Vaca (S00912438) también está con RE en el 10045 (C157). Antes del pase a historia, el usuario decide si se le da de baja (DD solo hasta el 31-OCT-2026) o si recibe nota.",
-        "avance": "Pasos 1 a 4 hechos en TEST el 30/10/2026, con sus capturas en la carpeta (C180). Sigue el paso 5 (SHAGCOM).",
+        "avance": "Pasos 1 a 6 hechos en TEST el 30/10/2026, con sus capturas (C180, C181). Sigue el paso 7 (SOAATRK).",
         "pasos": [
           {
             "n": 1,
@@ -2523,7 +2624,66 @@
             "accion": "abrir el NRC",
             "dato": "202656 › 10045 › Ir",
             "quien": "El centro",
-            "cita": "Instructivo 5.3, diap. 19 · C151"
+            "cita": "Instructivo 5.3, diap. 19 · C151",
+            "resultado": "ESEC 00701 «Google», sección A, X06 (07-SEP a 31-OCT-2026), sesión T",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Periodo",
+                  "202656",
+                  "Usuario",
+                  ""
+                ],
+                [
+                  "NRC",
+                  "10045",
+                  "Usuario",
+                  "Se pulsa Ir: «Crear NRC» es solo para uno nuevo"
+                ],
+                [
+                  "Materia y curso",
+                  "ESEC 00701 «Google»",
+                  "Banner",
+                  "Los trae al validar el NRC"
+                ],
+                [
+                  "Sección",
+                  "A",
+                  "Banner",
+                  "Ya estaba creada (C151)"
+                ],
+                [
+                  "Parte de periodo",
+                  "X06 · 07-SEP-2026 a 31-OCT-2026 · 8 semanas",
+                  "Banner",
+                  "Pasada de X07 a X06 el 29/10 (C156)"
+                ],
+                [
+                  "Sesión",
+                  "T «Tarde»",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Campus · método · tipo de horario",
+                  "S · VIRT · TEO",
+                  "Banner",
+                  ""
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "01-ssasect-abrir.png",
+                "texto": "El NRC 10045 abierto en SSASECT"
+              }
+            ]
           },
           {
             "n": 2,
@@ -2531,7 +2691,104 @@
             "accion": "horario",
             "dato": "miércoles 15:30–17:10 · SAUVIR / SALA-VIRT · O",
             "quien": "El centro",
-            "cita": "Instructivo 5.3, diap. 29 · C97 · C179"
+            "cita": "Instructivo 5.3, diap. 29 · C97 · C179",
+            "resultado": "Saved successfully (1 rows saved) · 2.00 horas por semana",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Pestaña",
+                  "«Instructor y horas de reunión» › «Fechas de reunión»",
+                  "Usuario",
+                  "La fila ya estaba; si no hay, se agrega con +"
+                ],
+                [
+                  "Tipo de reunión",
+                  "CLAS",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Fecha de inicio y de fin",
+                  "07-SEP-2026 a 31-OCT-2026",
+                  "Banner",
+                  "Las trae de la X06 al pasar con Tab"
+                ],
+                [
+                  "Día",
+                  "Miércoles ✓",
+                  "Usuario",
+                  "Según la hoja de NRC: libre para el docente (C179)"
+                ],
+                [
+                  "Hora de inicio y de fin",
+                  "1530 a 1710",
+                  "Usuario",
+                  "En 24 horas y sin dos puntos"
+                ],
+                [
+                  "Indicador de sesión",
+                  "01",
+                  "Banner",
+                  "Después Banner salta solo a «Créditos y ubicación de reunión»"
+                ],
+                [
+                  "Edificio",
+                  "SAUVIR",
+                  "Usuario",
+                  ""
+                ],
+                [
+                  "Salón",
+                  "SALA-VIRT",
+                  "Usuario",
+                  ""
+                ],
+                [
+                  "Tipo de horario",
+                  "TEO",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Horas por semana",
+                  "2.00",
+                  "Banner",
+                  "Las calcula con el horario"
+                ],
+                [
+                  "Indicador de sobrepaso",
+                  "O",
+                  "Usuario",
+                  "C97"
+                ],
+                [
+                  "Guardar",
+                  "Saved successfully (1 rows saved)",
+                  "Usuario",
+                  "Lo pulsa el usuario, no el agente (C165)"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "02-ssasect-horario.png",
+                "texto": "Miércoles marcado y aviso de guardado"
+              },
+              {
+                "archivo": "02-ssasect-horario-b.png",
+                "texto": "Edificio, salón, horas por semana y la O"
+              },
+              {
+                "archivo": "02-ssasect-horario-c.png",
+                "texto": "Al reabrir: 1530 a 1710, sesión 01 y el docente"
+              }
+            ]
           },
           {
             "n": 3,
@@ -2539,7 +2796,82 @@
             "accion": "asignar el docente",
             "dato": "100582059 · principal 100 %",
             "quien": "Jefe del centro",
-            "cita": "Instructivo 6.2.1, diap. 15 y 19"
+            "cita": "Instructivo 6.2.1, diap. 15 y 19",
+            "resultado": "Saved successfully (1 rows saved), sin conflicto de horario",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Bloque",
+                  "Instructor, sesión 01",
+                  "Usuario",
+                  "Clic en la fila › Tab hasta el ID"
+                ],
+                [
+                  "ID",
+                  "100582059",
+                  "Usuario",
+                  "Tab para validarlo"
+                ],
+                [
+                  "Nombre",
+                  "DAGNER, CHUMAN/LLUEN A.",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Carga de trabajo educativo",
+                  "1.000",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Porcentaje de responsabilidad",
+                  "100",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Indicador de principal",
+                  "✓",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Indicador de sobrepaso",
+                  "Sin marcar",
+                  "—",
+                  "Solo si sale «Conflicto de horario del instructor» y se revisó la hoja (6.2.1, diap. 20)"
+                ],
+                [
+                  "Porcentaje de sesión",
+                  "100",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Guardar",
+                  "Saved successfully (1 rows saved)",
+                  "Usuario",
+                  ""
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "03-ssasect-docente.png",
+                "texto": "El docente guardado en la sesión 01"
+              },
+              {
+                "archivo": "03-ssasect-docente-b.png",
+                "texto": "Principal y porcentaje de sesión 100"
+              }
+            ]
           },
           {
             "n": 4,
@@ -2547,18 +2879,249 @@
             "accion": "revisar la carga",
             "dato": "100582059 · 202656",
             "quien": "Jefe del centro",
-            "cita": "Instructivo 5.2 Carga de trabajo, diap. 24"
+            "cita": "Instructivo 5.2 Carga de trabajo, diap. 24",
+            "resultado": "El 10045 es la asignación 10 de 10: contacto 2 por semana y 16 en total",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "ID",
+                  "100582059",
+                  "Usuario",
+                  "Tab y luego Ir"
+                ],
+                [
+                  "Periodo",
+                  "202656",
+                  "Banner",
+                  "Lo arrastra de la página anterior"
+                ],
+                [
+                  "Asignaciones",
+                  "10, una por página",
+                  "Banner",
+                  "Para ir a una página, escriba su número abajo y pulse Intro"
+                ],
+                [
+                  "NRC · sesión · principal",
+                  "10045 · 01 · ✓",
+                  "Banner",
+                  "Registro 10 de 10"
+                ],
+                [
+                  "Carga de trabajo · responsabilidad",
+                  "1.000 · 100 %",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Contacto semanal · total",
+                  "2 · 16",
+                  "Banner",
+                  "2 horas por las 8 semanas de la X06"
+                ],
+                [
+                  "Alerta",
+                  "«Reglas activas de carga de trabajo del docente no definidas para este periodo»",
+                  "Banner",
+                  "No impide consultar; las reglas de carga son la prueba del ADR-020"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "04-siaasgn-carga.png",
+                "texto": "El 10045 en SIAASGN"
+              },
+              {
+                "archivo": "04-siaasgn-carga-b.png",
+                "texto": "La alerta de reglas de carga"
+              }
+            ]
           },
           {
             "n": 5,
-            "codigo": "SHAGCOM",
-            "accion": "cargar la fórmula",
-            "dato": "TA1 · TA2 · PA · EF + ATTRGRD 0",
+            "codigo": "SMAAREA",
+            "accion": "poner el curso en la malla (LIB_AREA)",
+            "dato": "MC44-01 · versión 202454 · ECOM-03 · ESEC 00701",
             "quien": "Registros Académicos",
-            "cita": "Instructivo 7.1.4, diap. 43 a 48 · C98"
+            "cita": "Instructivo 1.2.1, diap. 23 a 25 · C173 · C181",
+            "resultado": "Saved successfully (1 rows saved) · condición 2 = ESEC 00701",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Área",
+                  "MC44-01 «Ciclo I»",
+                  "Usuario",
+                  "La única área de CMEMC44, XP 07 (C172): es el LIB_AREA de la hoja"
+                ],
+                [
+                  "Periodo",
+                  "202454",
+                  "Usuario",
+                  "El de la versión (202454 a 999999), no el de la matrícula. Escríbalo a mano: Intro en la lista elige la primera fila (999999)"
+                ],
+                [
+                  "Requisito del área",
+                  "4 cursos · 4 créditos · conector Y",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Bloque",
+                  "Anexo de curso/atributo de área",
+                  "Usuario",
+                  "⏫ una vez desde el primer bloque"
+                ],
+                [
+                  "Regla",
+                  "ECOM-03 «Computacion III»",
+                  "Usuario",
+                  "ECOM-04 ya tiene Diseño Web (00684); en otra regla, el Google le cuenta al alumno aparte en CAPP"
+                ],
+                [
+                  "Detalles › +",
+                  "Materia ESEC · curso 00701",
+                  "Usuario",
+                  "Clic en una fila de Detalles antes del +"
+                ],
+                [
+                  "Condición",
+                  "2",
+                  "Banner",
+                  "La numera al guardar; se ve al reabrir la regla"
+                ],
+                [
+                  "Guardar",
+                  "Saved successfully (1 rows saved)",
+                  "Usuario",
+                  ""
+                ]
+              ]
+            },
+            "nota": "Reglas de MC44-01 después del cambio: ECOM-01 y ECOM-02, ESEC 00678; ECOM-03, ESEC 00678 y 00701; ECOM-04, ESEC 00678 y 00684. Cada regla pide 1 condición (C172 a C174).",
+            "capturas": [
+              {
+                "archivo": "05-smaarea-malla.png",
+                "texto": "ESEC 00701 en ECOM-03, con el aviso de guardado"
+              },
+              {
+                "archivo": "05-smaarea-malla-b.png",
+                "texto": "Al reabrir: condiciones 1 (00678) y 2 (00701)"
+              }
+            ]
           },
           {
             "n": 6,
+            "codigo": "SHAGCOM",
+            "accion": "cargar la fórmula",
+            "dato": "VIG_11 arriba · TA1 · TA2 · PA · EF + ATTRGRD 0",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.4, diap. 43 a 48 · C98 · C120 · C181",
+            "resultado": "Saved successfully (5 rows saved) · total de peso final 1.00",
+            "tabla": {
+              "columnas": [
+                "Sec.",
+                "Nombre",
+                "Descripción",
+                "Peso",
+                "Calificada de",
+                "Debe aprobar",
+                "Incluir",
+                "Escala",
+                "Aprobatoria"
+              ],
+              "num": [
+                3,
+                4,
+                8
+              ],
+              "filas": [
+                [
+                  "1",
+                  "TA1",
+                  "Taller Online TA1",
+                  "0.15",
+                  "100",
+                  "—",
+                  "FINAL",
+                  "VIG_11",
+                  "55"
+                ],
+                [
+                  "2",
+                  "TA2",
+                  "Taller Online TA2",
+                  "0.15",
+                  "100",
+                  "—",
+                  "FINAL",
+                  "VIG_11",
+                  "55"
+                ],
+                [
+                  "3",
+                  "PA",
+                  "Participación en Aula",
+                  "0.40",
+                  "100",
+                  "—",
+                  "FINAL",
+                  "VIG_11",
+                  "55"
+                ],
+                [
+                  "4",
+                  "EF",
+                  "Examen Final EF",
+                  "0.30",
+                  "100",
+                  "—",
+                  "FINAL",
+                  "VIG_11",
+                  "55"
+                ],
+                [
+                  "5",
+                  "ATTRGRD",
+                  "Asistencia",
+                  "0.00",
+                  "100",
+                  "✓",
+                  "FINAL",
+                  "AST_70",
+                  "70"
+                ]
+              ],
+              "resaltar": [
+                4
+              ]
+            },
+            "nota": "Primero la escala de arriba («Asignación de escala de calificación»): VIG_11 «Vigesimal 0-20 aprueba 11», y se guarda; sin ella Banner dice «Ingresar la escala de calificación antes de continuar». Con AST_70 arriba la nota final salió APRO y no 17 (C120, C123). Cada componente hereda VIG_11 y su aprobatoria (55); en ATTRGRD se cambia a AST_70 y la aprobatoria pasa sola a 70. Se avanza con Tab y se espera 1 a 2 segundos: un clic en otra celda no mueve el foco.",
+            "capturas": [
+              {
+                "archivo": "06-shagcom-formula.png",
+                "texto": "Los cinco componentes guardados, peso final 1.00"
+              },
+              {
+                "archivo": "06-shagcom-formula-b.png",
+                "texto": "La escala de arriba VIG_11 guardada"
+              }
+            ]
+          },
+          {
+            "n": 7,
             "codigo": "SOAATRK",
             "accion": "regla de asistencia",
             "dato": "NRC 10045 · Presente/Ausente",
@@ -2566,7 +3129,7 @@
             "cita": "Instructivo 7.1.1, diap. 34 a 37 · C101"
           },
           {
-            "n": 7,
+            "n": 8,
             "codigo": "SFAREGS",
             "accion": "revisar la matrícula",
             "dato": "100582059 · plan 4 · RE",
@@ -2574,7 +3137,7 @@
             "cita": "Instructivo 5.4, diap. 35 · C156"
           },
           {
-            "n": 8,
+            "n": 9,
             "codigo": "Autoservicio",
             "accion": "pasar lista y enviar al libro",
             "dato": "Clase › Actualizar la asistencia",
@@ -2582,7 +3145,7 @@
             "cita": "Instructivo 7.1.1, diap. 44, 56 y 57 · C119"
           },
           {
-            "n": 9,
+            "n": 10,
             "codigo": "Autoservicio",
             "accion": "ingresar las notas",
             "dato": "TA1 · TA2 · PA · EF",
@@ -2590,7 +3153,7 @@
             "cita": "Instructivo 7.1.4, diap. 64 a 67 · C102"
           },
           {
-            "n": 10,
+            "n": 11,
             "codigo": "SFASLST",
             "accion": "revisar la nota final",
             "dato": "202656 · 10045",
@@ -2598,7 +3161,7 @@
             "cita": "Instructivo 7.1.6, diap. 15 y 16 · C107"
           },
           {
-            "n": 11,
+            "n": 12,
             "codigo": "SHRROLL",
             "accion": "pase a historia",
             "dato": "GJAPCTL · modo A y luego U",
@@ -2606,7 +3169,7 @@
             "cita": "Instructivo 7.1.9, diap. 22 a 27 · C121, C122"
           },
           {
-            "n": 12,
+            "n": 13,
             "codigo": "SHACRSE",
             "accion": "nota en la historia",
             "dato": "100582059 · ESEC 00701",

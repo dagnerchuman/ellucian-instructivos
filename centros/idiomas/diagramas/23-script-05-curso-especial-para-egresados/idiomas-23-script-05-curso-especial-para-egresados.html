@@ -17043,6 +17043,24 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 .antes-nrc .an-sub:not([open]) > summary::after { transform: rotate(-90deg); }
 .antes-nrc .an-sub[open] > summary::after { transform: none; }
 .antes-nrc .an-fuente { margin: 0.6rem 0 0; color: var(--text-muted, #475569); font-size: 0.8rem; }
+/* Capturas de TEST de cada paso del ejemplo de prueba (C181) */
+.antes-nrc .an-capturas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+.antes-nrc .an-capturas figure { margin: 0; }
+.antes-nrc .an-capturas img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--panel-border, #cbd5e1);
+  border-radius: 0.45rem;
+  background: #ffffff;
+}
+.antes-nrc .an-capturas a:hover img { border-color: #8b5cf6; }
+.antes-nrc .an-capturas figcaption { margin-top: 0.3rem; color: var(--text-muted, #475569); font-size: 0.78rem; }
 @media (max-width: 640px) {
   .antes-nrc { padding: 0.8rem; font-size: 0.85rem; }
   .antes-nrc .an-cita { white-space: normal; }

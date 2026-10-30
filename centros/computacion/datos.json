@@ -2204,7 +2204,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2625,7 +2625,7 @@
         "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existía y tenía alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059; cada página la deja escrita Claude, el usuario guarda y cada paso queda con su captura (C178 a C181).",
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Arnold Vaca (S00912438) también está con RE en el 10045 (C157). Antes del pase a historia, el usuario decide si se le da de baja (DD solo hasta el 31-OCT-2026) o si recibe nota.",
-        "avance": "Pasos 1 a 8 hechos en TEST el 30/10/2026, con sus capturas (C180 a C185). Sigue el paso 9 (Autoservicio: pasar lista y enviar al libro).",
+        "avance": "Pasos 1 a 9 hechos en TEST el 30/10/2026, con sus capturas (C180 a C186). Sigue el paso 10 (Autoservicio: notas TA1, TA2, PA y EF).",
         "pasos": [
           {
             "n": 1,
@@ -3336,9 +3336,108 @@
             "n": 9,
             "codigo": "Autoservicio",
             "accion": "pasar lista y enviar al libro",
-            "dato": "Clase › Actualizar la asistencia",
+            "dato": "Control de asistencia › Pasar lista › Clase › Actualizar la asistencia en el libro",
             "quien": "Docente",
-            "cita": "Instructivo 7.1.1, diap. 44, 56 y 57 · C119"
+            "cita": "Instructivo 7.1.1, diap. 44, 56 y 57 · C101 · C119 · C186",
+            "resultado": "100582059 con 100 % (8 de 8); en el libro, ATTRGRD 100 de 100 = APRO",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Entrada",
+                  "facultyssb-test.usspesaas.elluciancloud.com:8100/FacultySelfService/ssb/facultyAttendanceTracking",
+                  "Docente",
+                  "Es el enlace del botón «Ingresar asistencia» de la tarjeta «Detalle de Notas y Asistencia» (Autoservicio Docentes)"
+                ],
+                [
+                  "Mis cursos",
+                  "10045 «Google» · miércoles 15:30 · sesión 01",
+                  "Banner",
+                  "Sale porque existe la regla 3 de SOAATRK (paso 7)"
+                ],
+                [
+                  "Pasar lista",
+                  "100582059 y Arnold Vaca · 8 sesiones (09-SEP a 28-OCT-2026)",
+                  "Banner",
+                  "Una columna por miércoles de la X06"
+                ],
+                [
+                  "Marcar",
+                  "Presente ✓ en las 8 sesiones de 100582059",
+                  "Docente",
+                  "Solo se marca la columna de la fecha elegida (resaltada): se elige su encabezado o con ‹ › y luego el círculo. Cada clic se guarda solo: «La información de asistencia … se agregó con éxito»"
+                ],
+                [
+                  "Asistencia",
+                  "100 % (100582059) · 0 % (Arnold, sin marcar)",
+                  "Banner",
+                  "Arnold queda sin marcar hasta que el usuario decida su baja (DD)"
+                ],
+                [
+                  "Clase › menú",
+                  "Anular la reunión · Actualizar la fecha de última asistencia · Actualizar el total de horas · Actualizar la asistencia en el libro de calificaciones",
+                  "Docente",
+                  "Se usa la última (7.1.1, diap. 56 y 57)"
+                ],
+                [
+                  "Confirmación",
+                  "«¿Está seguro de que desea actualizar el libro de calificaciones con el porcentaje de asistencia?» › Sí",
+                  "Docente",
+                  "El porcentaje no pasa solo al libro (C119)"
+                ],
+                [
+                  "Libro › Componentes del 10045",
+                  "ATTRGRD: 0 calificaciones restantes; TA1, TA2, PA y EF: 2",
+                  "Banner",
+                  "Captura de calificaciones › Libro de calificaciones › Componentes"
+                ],
+                [
+                  "ATTRGRD › Lista de alumnos",
+                  "100582059 · puntaje 100 de 100 · 100 % · APRO · enviado 30-Oct-2026",
+                  "Banner",
+                  "Escala AST_70: con 70 % o más es APRO. En la lista solo sale 100582059"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "09-autoservicio-asistencia.png",
+                "texto": "Mis cursos: el 10045 junto al 10044"
+              },
+              {
+                "archivo": "09-autoservicio-asistencia-b.png",
+                "texto": "Pasar lista sin marcar: los dos alumnos en 0 %"
+              },
+              {
+                "archivo": "09-autoservicio-asistencia-c.png",
+                "texto": "Del 23-SEP al 21-OCT marcados: 100 %"
+              },
+              {
+                "archivo": "09-autoservicio-asistencia-d.png",
+                "texto": "El 09 y el 16-SEP marcados, con el aviso de éxito"
+              },
+              {
+                "archivo": "09-autoservicio-asistencia-e.png",
+                "texto": "Menú Clase: actualizar la asistencia en el libro"
+              },
+              {
+                "archivo": "09-autoservicio-asistencia-f.png",
+                "texto": "Confirmación antes de enviar al libro"
+              },
+              {
+                "archivo": "09-autoservicio-asistencia-g.png",
+                "texto": "Componentes del 10045: ATTRGRD sin calificaciones pendientes"
+              },
+              {
+                "archivo": "09-autoservicio-asistencia-h.png",
+                "texto": "ATTRGRD de 100582059: 100 de 100, APRO"
+              }
+            ]
           },
           {
             "n": 10,

@@ -69,6 +69,12 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 3. «Unidad de control» es una lista con búsqueda: escriba «P» y elija **Presente/Ausente**. La flecha abajo no cambia la opción: crea una fila vacía, que se quita con **–**.
 4. Las fechas las trae Banner de la parte. El usuario guarda; Banner pone el número de regla. Sin la regla, el NRC no sale en Faculty › Control de asistencia (C101).
 
+### Pasar lista y enviar la asistencia al libro (Autoservicio docente, C186)
+1. Abra `https://facultyssb-test.usspesaas.elluciancloud.com:8100/FacultySelfService/ssb/facultyAttendanceTracking` (el botón «Ingresar asistencia» abre una ventana aparte) › **Pasar lista** del NRC.
+2. Solo se marca la **columna de la fecha elegida** (resaltada a la derecha): pulse su encabezado o ‹ › y luego el círculo. Cada clic se guarda solo; el usuario autoriza las marcas antes.
+3. Clase › «Actualizar la asistencia en el libro de calificaciones» › el usuario pulsa **Sí**.
+4. Comprobar en `…/FacultySelfService/ssb/gradeEntry#/gradebook` › NRC › Componentes › ATTRGRD › Lista de alumnos.
+
 ### Cargar la fórmula de un NRC (SHAGCOM, C181)
 1. SHAGCOM › periodo y NRC › Ir. Si el plan está vacío, Banner pide primero la escala: «Ingresar la escala de calificación antes de continuar».
 2. Arriba, «Escala de calificación» **`VIG_11`** (no `AST_70`: con ella la final sale APRO, C120 y C123) › Tab › el usuario guarda.

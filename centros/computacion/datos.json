@@ -2505,6 +2505,114 @@
             ]
           }
         ]
+      },
+      "ejemplo_prueba_2": {
+        "_leeme": "Capturas reales de TEST, paso por paso. Cada captura se guarda en la carpeta con el nombre de «carpeta», junto al HTML de la demostración, y empieza con el número del paso (02-ssasect-horario.png; varias por paso: 02-…-b.png). Las genera la prueba; la página se arma sola con generar.py.",
+        "titulo": "Ejemplo de prueba 2 · NRC 10045 de punta a punta en TEST",
+        "boton": "Ir al ejemplo de prueba 2",
+        "carpeta": "Centro de Computación · Demostración 1 · Diseño Web, nueva sección B (202656)",
+        "nrc": "10045",
+        "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existe y tiene alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059, y cada paso queda con su captura (C178, C179).",
+        "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179)",
+        "pendiente": "Arnold Vaca (S00912438) también está con RE en el 10045 (C157). Antes del pase a historia, el usuario decide si se le da de baja (DD solo hasta el 31-OCT-2026) o si recibe nota.",
+        "pasos": [
+          {
+            "n": 1,
+            "codigo": "SSASECT",
+            "accion": "abrir el NRC",
+            "dato": "202656 › 10045 › Ir",
+            "quien": "El centro",
+            "cita": "Instructivo 5.3, diap. 19 · C151"
+          },
+          {
+            "n": 2,
+            "codigo": "SSASECT",
+            "accion": "horario",
+            "dato": "miércoles 15:30–17:10 · SAUVIR / SALA-VIRT · O",
+            "quien": "El centro",
+            "cita": "Instructivo 5.3, diap. 29 · C97 · C179"
+          },
+          {
+            "n": 3,
+            "codigo": "SSASECT",
+            "accion": "asignar el docente",
+            "dato": "100582059 · principal 100 %",
+            "quien": "Jefe del centro",
+            "cita": "Instructivo 6.2.1, diap. 15 y 19"
+          },
+          {
+            "n": 4,
+            "codigo": "SIAASGN",
+            "accion": "revisar la carga",
+            "dato": "100582059 · 202656",
+            "quien": "Jefe del centro",
+            "cita": "Instructivo 5.2 Carga de trabajo, diap. 24"
+          },
+          {
+            "n": 5,
+            "codigo": "SHAGCOM",
+            "accion": "cargar la fórmula",
+            "dato": "TA1 · TA2 · PA · EF + ATTRGRD 0",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.4, diap. 43 a 48 · C98"
+          },
+          {
+            "n": 6,
+            "codigo": "SOAATRK",
+            "accion": "regla de asistencia",
+            "dato": "NRC 10045 · Presente/Ausente",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.1, diap. 34 a 37 · C101"
+          },
+          {
+            "n": 7,
+            "codigo": "SFAREGS",
+            "accion": "revisar la matrícula",
+            "dato": "100582059 · plan 4 · RE",
+            "quien": "El centro",
+            "cita": "Instructivo 5.4, diap. 35 · C156"
+          },
+          {
+            "n": 8,
+            "codigo": "Autoservicio",
+            "accion": "pasar lista y enviar al libro",
+            "dato": "Clase › Actualizar la asistencia",
+            "quien": "Docente",
+            "cita": "Instructivo 7.1.1, diap. 44, 56 y 57 · C119"
+          },
+          {
+            "n": 9,
+            "codigo": "Autoservicio",
+            "accion": "ingresar las notas",
+            "dato": "TA1 · TA2 · PA · EF",
+            "quien": "Docente",
+            "cita": "Instructivo 7.1.4, diap. 64 a 67 · C102"
+          },
+          {
+            "n": 10,
+            "codigo": "SFASLST",
+            "accion": "revisar la nota final",
+            "dato": "202656 · 10045",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.6, diap. 15 y 16 · C107"
+          },
+          {
+            "n": 11,
+            "codigo": "SHRROLL",
+            "accion": "pase a historia",
+            "dato": "GJAPCTL · modo A y luego U",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.9, diap. 22 a 27 · C121, C122"
+          },
+          {
+            "n": 12,
+            "codigo": "SHACRSE",
+            "accion": "nota en la historia",
+            "dato": "100582059 · ESEC 00701",
+            "quien": "Registros Académicos",
+            "cita": "C124"
+          }
+        ]
       }
     }
   ]

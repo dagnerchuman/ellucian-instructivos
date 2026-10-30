@@ -59,6 +59,17 @@ def fragmentos(texto):
     return [trozo for trozo in salida if trozo]
 
 
+def fragmentos_por_pregunta(texto):
+    """Guías de preguntas (ref-preguntas-*.md): un fragmento por «### pregunta», con el título de la guía.
+
+    Así el asistente recupera la respuesta exacta y no un trozo con varias preguntas mezcladas.
+    """
+    titulo = next((l for l in texto.splitlines() if l.startswith("# ")), "").strip()
+    partes = re.split(r"(?m)^(?=### )", texto)
+    salida = [f"{titulo}\n\n{parte.strip()}" for parte in partes[1:] if parte.strip()]
+    return [trozo for p in salida for trozo in fragmentos(p)] or fragmentos(texto)
+
+
 def decisiones_aceptadas():
     """Incluye solo ADR vigentes como evidencia; las propuestas no son reglas."""
     aceptadas = []
@@ -82,7 +93,8 @@ def main():
         if not ruta.is_file():
             raise FileNotFoundError(f"Fuente local de conocimiento no encontrada: {relativo(ruta)}")
         fuente = relativo(ruta)
-        for indice, texto in enumerate(fragmentos(texto_fuente(ruta)), start=1):
+        cortar = fragmentos_por_pregunta if ruta.name.startswith("ref-preguntas-") else fragmentos
+        for indice, texto in enumerate(cortar(texto_fuente(ruta)), start=1):
             conocimiento.append({
                 "id": f"{fuente}#{indice}",
                 "fuente": fuente,

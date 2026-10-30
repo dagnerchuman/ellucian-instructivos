@@ -66,6 +66,8 @@ python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar 
 - Si falla, `generar.py` imprime el diagnóstico y el arreglo sugerido. Corrige la plantilla, no el HTML.
 - En Windows (Antigravity) funciona igual con `python` y `node`. Para la prueba en navegador, define `ARCHIFY_CHROME` con la ruta de Chrome. En la nube de Claude Code: `ARCHIFY_CHROME=/opt/pw-browsers/chromium-*/chrome-linux64/chrome`; sin esa variable, `finalize` falla y deja HTML incompletos (no los subas: `git checkout -- centros/*/diagramas`).
 - Si cambia la numeración (se agrega, quita o reordena una casuística), regenera **con imágenes**: las carpetas nuevas no traen PNG ni SVG y la galería las muestra vacías.
+- **Requisito `python-pptx`** (`pip install python-pptx`): sin él, `generar.py` deja **vacías las líneas de las láminas** en las guías de los diagramas, sin avisar (`texto_diapositiva` devuelve `[]`). En la Mac del usuario faltaba (30/10/2026, C171); revisa el diff de `GUIA_MAP` antes de subir. Si además cambian las WebP de `visor_instructivos/diapositivas` sin haber tocado los instructivos, son recodificaciones: `git checkout -- visor_instructivos`.
+- **Si solo cambió el asistente** (`assets/asistente_ia.js`), no hace falta regenerar todo: reemplaza en cada `centros/**/*.html` el bloque anterior del asistente (el de `git show HEAD:herramientas/diagramas/assets/asistente_ia.js`) por el nuevo, y ejecuta `python3 herramientas/diagramas/generar_conocimiento_asistente.py` para la base (C171).
 
 ## Reglas de Archify aprendidas (para no romper la validación)
 - **Rejilla:** columnas `0..5` en flujos y `0..4` en estados (lifecycle, con 4 carriles como máximo). Un nodo por carril y columna; para apilar dos, usa `yOffset` (±46).

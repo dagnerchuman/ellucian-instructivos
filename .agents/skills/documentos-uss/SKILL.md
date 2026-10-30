@@ -63,6 +63,15 @@ Para un documento nuevo, copia `ejemplo_centros.py` a tu carpeta de trabajo, fue
 
 Requisitos: `node` con `playwright` (Chromium en /opt/pw-browsers) y `pymupdf` (`pip install pymupdf` si falta).
 
+**En la Mac del usuario** (30/10/2026) no hay ninguno de los dos. Sin tocar el sistema, en una carpeta de trabajo:
+```bash
+npm install playwright-core                                   # en la carpeta de trabajo
+PLAYWRIGHT_BROWSERS_PATH=$PWD/browsers node node_modules/playwright-core/cli.js install chromium
+python3 -m venv venv && venv/bin/pip install pymupdf
+PLAYWRIGHT_BROWSERS_PATH=<carpeta>/browsers NODE_PATH=<carpeta>/node_modules <carpeta>/venv/bin/python generador.py
+```
+`render.js` acepta `playwright-core` y, si no hay Chromium, usa el Google Chrome instalado; pero con Chrome el **pie sale en Times** (no carga la fuente incrustada) y `check_pdf` lo marca: usa el Chromium de Playwright.
+
 ### Control de calidad (siempre, antes de entregar)
 1. `check_pdf(ruta, png_dir=...)`:
    - Revisa las páginas y el autor.

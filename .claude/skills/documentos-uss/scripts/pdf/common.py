@@ -150,6 +150,8 @@ PAGINAS = {
     'SSAEXCL': 'feriados y excepciones de clases', 'SIATERM': 'Control de periodo de carga docente',
     'SIAINST': 'datos del docente', 'SIAASGN': 'Asignación de docente, su carga', 'SIAFAVL': 'disponibilidad del docente',
     'SIAFLRT': 'reglas de carga docente', 'SCACRSE': 'catálogo de cursos', 'SCAPREQ': 'prerrequisitos y puntajes de examen del catálogo',
+    'SCAPPRQ': 'prerrequisitos de catálogo por programa', 'SFARSTS': 'estatus de inscripción permitidos por parte de periodo',
+    'SFQRSTS': 'consulta de estatus de inscripción',
     'SCADETL': 'detalle del curso: correquisitos y equivalentes', 'SCARRES': 'restricciones de inscripción del curso',
     'SSASECT': 'Programar NRC', 'SSADETL': 'detalle del NRC', 'SSAPREQ': 'prerrequisitos del NRC',
     'SSARRES': 'restricciones de inscripción del NRC', 'SSAWSEC': 'consulta web de notas por NRC', 'SLQMEET': 'salones disponibles',

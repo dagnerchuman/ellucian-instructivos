@@ -2204,7 +2204,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2625,7 +2625,7 @@
         "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existía y tenía alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059; cada página la deja escrita Claude, el usuario guarda y cada paso queda con su captura (C178 a C181).",
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Arnold Vaca (S00912438) también está con RE en el 10045 (C157). Antes del pase a historia, el usuario decide si se le da de baja (DD solo hasta el 31-OCT-2026) o si recibe nota.",
-        "avance": "Pasos 1 a 7 hechos en TEST el 30/10/2026, con sus capturas (C180 a C182). Sigue el paso 8 (SFAREGS).",
+        "avance": "Pasos 1 a 8 hechos en TEST el 30/10/2026, con sus capturas (C180 a C185). Sigue el paso 9 (Autoservicio: pasar lista y enviar al libro).",
         "pasos": [
           {
             "n": 1,
@@ -3228,9 +3228,109 @@
             "n": 8,
             "codigo": "SFAREGS",
             "accion": "revisar la matrícula",
-            "dato": "100582059 · plan 4 · RE",
+            "dato": "100582059 · plan 4 (CMEMC44) · RE",
             "quien": "El centro",
-            "cita": "Instructivo 5.4, diap. 35 · C156"
+            "cita": "Instructivo 5.4, diap. 35 · C86 · C156 · C158 · C185",
+            "resultado": "Solo consulta: el 10045 sigue con RE, parte X06, plan 4 (CMEMC44)",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "SOADEST (antes de SFAREGS)",
+                  "DATABASE en Horarios, Facturas, Históricos académicos, Ingresos y Cumplimiento",
+                  "Usuario",
+                  "Sale en una sesión nueva: «No se ha completado la configuración requerida». Basta llenarlos y abrir SFAREGS otra vez desde la lupa, sin guardar (C158, C185)"
+                ],
+                [
+                  "Periodo",
+                  "202656",
+                  "Usuario",
+                  "Primero el periodo, luego el ID (C86)"
+                ],
+                [
+                  "ID",
+                  "100582059",
+                  "Usuario",
+                  "Tab: Banner trae «DAGNER, CHUMAN/LLUEN A.»"
+                ],
+                [
+                  "Plan de estudios (encabezado)",
+                  "vacío",
+                  "—",
+                  "Para consultar no hace falta; para matricular va al final (C86)"
+                ],
+                [
+                  "Estatus del alumno",
+                  "EL «Inscripción Autorizada» (22-OCT-2026) · mínimas 1 · máximas 16",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "NRC del periodo",
+                  "10042 y 10043 (ESEP 02456, I10), 10044 (ESEC 00684) y 10045 (ESEC 00701)",
+                  "Banner",
+                  "Registro 1 de 4"
+                ],
+                [
+                  "Fila del 10045",
+                  "ESEC 00701 · sección A · modo V · 1 hora de crédito y de cobro",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Estatus · nivel · parte",
+                  "RE · C · X06",
+                  "Banner",
+                  "RE = inscrito; con X06, RE y DD valen hasta el 31-OCT-2026 (C156)"
+                ],
+                [
+                  "Método · campus · plan",
+                  "VIRT · S · 4",
+                  "Banner",
+                  "La rueda a la derecha muestra estas columnas"
+                ],
+                [
+                  "Currículos › registro 4 de 7",
+                  "Plan 4 · CMEMC44 «Acreditación Computación XP 07» · nivel C · campo ACXP · departamento EMCI · catálogo 202656",
+                  "Banner",
+                  "Es el programa del LIB_AREA MC44-01. Para ver otro registro, escriba su número abajo y pulse Intro"
+                ],
+                [
+                  "Guardar",
+                  "no se pulsa",
+                  "—",
+                  "Es solo una revisión"
+                ]
+              ]
+            },
+            "nota": "Los otros currículos del alumno: plan 1 y plan 3, pregrado 1PIAP11 Ing. Sist. Informática; plan 2, IMEMI05 «Programa Acreditación Inglés». El 10045 usa el plan 4, el de Computación.",
+            "capturas": [
+              {
+                "archivo": "08-sfaregs-matricula.png",
+                "texto": "Los cuatro NRC del alumno en 202656, con el 10045"
+              },
+              {
+                "archivo": "08-sfaregs-matricula-b.png",
+                "texto": "El 10045 con RE, parte X06 y plan 4"
+              },
+              {
+                "archivo": "08-sfaregs-matricula-c.png",
+                "texto": "Currículos: el plan 4 es CMEMC44 (XP 07)"
+              },
+              {
+                "archivo": "08-sfaregs-matricula-d.png",
+                "texto": "SOADEST pide la configuración al abrir SFAREGS"
+              },
+              {
+                "archivo": "08-sfaregs-matricula-e.png",
+                "texto": "SOADEST con DATABASE en los cinco campos"
+              }
+            ]
           },
           {
             "n": 9,

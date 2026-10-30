@@ -91,7 +91,7 @@ Probada el 30/10/2026 con el **NRC 10045** (202656, `ESEC 00701`, X06, sesión T
 7. Datos para la hoja de NRC (fila del 10045): PROGRAMA `CMEMC44`; LIB_AREA `MC44-01`, el área de la malla donde está el curso (C181; antes «no está en la malla», C178); CÓDIGO DOCENTE `100582059`; DOCENTE, el nombre completo; HORARIO y AMBIENTE, los que se guardaron. La tabla completa está en «Antes del NRC» de la Demostración 1.
 
 ## 5. Incidencias y salida
-- **SOADEST** al abrir SFAREGS en una sesión nueva: DATABASE en los cinco campos; GUARDAR da «Función inválida»; abrir SFAREGS otra vez desde la lupa (C158).
+- **SOADEST** al abrir SFAREGS en una sesión nueva: DATABASE en los cinco campos (Horarios, Facturas, Históricos académicos, Ingresos, Cumplimiento) y abrir SFAREGS otra vez desde la lupa. **No hace falta guardar** (GUARDAR da «Función inválida», C158; probado sin guardar en C185).
 - **«Otra sesión de inscripción está en progreso»:** alguien recargó con cambios pendientes; se esperan unos minutos (C158).
 - **«Llave inválida… LIMPIAR DATOS»** al volver al bloque clave con algo a medio cambiar: recargar la página sin guardar (se pierde solo lo no guardado) y esperar el candado si sale.
 - **Tras guardar en SFAREGS** la página puede volver sola al bloque clave con el aviso de inscritos: es normal.

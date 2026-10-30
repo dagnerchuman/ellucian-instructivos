@@ -16649,7 +16649,7 @@ html:not([data-theme="dark"]) .guia-diapo {
 .guia-diapo-visor {
   position: fixed;
   inset: 0;
-  z-index: 100000;
+  z-index: 1000000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16697,27 +16697,94 @@ html:not([data-theme="dark"]) .gdv-panel {
 .gdv-btn:hover { border-color: #8b5cf6; }
 .gdv-cuerpo {
   display: grid;
-  grid-template-columns: minmax(250px, 1fr) 3fr;
+  grid-template-columns: minmax(260px, 1fr) 3fr;
   gap: 0.75rem;
   min-height: 0;
   flex: 1 1 auto;
 }
-.gdv-pasos {
+.gdv-pasos-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
   max-height: calc(100vh - 9rem);
-  overflow-y: auto;
-  padding: 0.6rem 0.7rem;
+}
+.gdv-pasos {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  padding: 0.6rem 0.7rem 2rem;
   border-radius: 0.5rem;
   border: 1px solid rgba(148, 163, 184, 0.25);
   background: rgba(30, 41, 59, 0.55);
   font-size: 0.8rem;
   line-height: 1.45;
   scrollbar-width: thin;
-  scrollbar-color: #8b5cf6 transparent;
+  scrollbar-color: #7030A0 rgba(148, 163, 184, 0.2);
 }
 html:not([data-theme="dark"]) .gdv-pasos {
   background: #f8fafc;
   border-color: #e2e8f0;
+}
+/* Barra de scroll visible siempre para Mac / laptops */
+.gdv-pasos::-webkit-scrollbar {
+  width: 8px;
+}
+.gdv-pasos::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.15);
+  border-radius: 999px;
+}
+.gdv-pasos::-webkit-scrollbar-thumb {
+  background: #7030A0;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.gdv-pasos::-webkit-scrollbar-thumb:hover {
+  background: #5b21b6;
+}
+
+/* Aviso flotante animado para indicar que hay más pasos abajo */
+.gdv-scroll-aviso {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #7030A0;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(112, 48, 160, 0.5);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+.gdv-scroll-aviso.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  animation: gdv-rebote 2s infinite ease-in-out;
+}
+.gdv-scroll-aviso:hover {
+  background: #5b21b6;
+  transform: translateX(-50%) translateY(-2px);
+}
+@keyframes gdv-rebote {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
 }
 .gdv-bloque + .gdv-bloque {
   margin-top: 0.8rem;
@@ -16850,20 +16917,39 @@ html:not([data-theme="dark"]) .gdv-pasos {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 2.4rem;
-  height: 2.4rem;
+  z-index: 15;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 999px;
-  border: none;
-  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: #ffffff;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
 }
-.gdv-nav[data-gdv="ant"] { left: 0.4rem; }
-.gdv-nav[data-gdv="sig"] { right: 0.4rem; }
-.gdv-nav:disabled { opacity: 0.25; cursor: default; }
-.gdv-nav.gdv-nav-paso { background: #166534; color: #fff; box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.25); }
+.gdv-nav:hover:not(:disabled) {
+  background: #7030A0;
+  transform: translateY(-50%) scale(1.08);
+}
+.gdv-nav:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+.gdv-nav[data-gdv="ant"] { left: 0.75rem; }
+.gdv-nav[data-gdv="sig"] { right: 0.75rem; }
+.gdv-nav:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.gdv-nav.gdv-nav-paso { background: #166534; color: #fff; box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.35); }
 .gdv-pie { font-size: 0.8rem; text-align: center; opacity: 0.85; white-space: pre-wrap; }
 body.gdv-abierto { overflow: hidden; }
 
@@ -17112,6 +17198,16 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 }
 
 /* 1. Botón Flotante Ultra-Elegante (FAB) */
+body.gdv-abierto button.ai-fab,
+body.gdv-abierto #ai-fab-btn,
+body.modal-abierto button.ai-fab,
+body.modal-abierto #ai-fab-btn {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 button.ai-fab,
 #ai-fab-btn {
   all: unset !important;
@@ -18309,68 +18405,135 @@ button.ai-fab:active,
   touch-action: none;
   cursor: zoom-in;
 }
-.zi-zona > img {
+
+.zi-zona>img {
   transform-origin: 0 0;
   will-change: transform;
   user-select: none;
   -webkit-user-drag: none;
 }
-.zi-zona.zi-zoom { cursor: grab; }
-.zi-zona.zi-arrastrando { cursor: grabbing; }
-.zi-zona.zi-con-lupa { cursor: none; }
+
+.zi-zona.zi-zoom {
+  cursor: grab;
+}
+
+.zi-zona.zi-arrastrando {
+  cursor: grabbing;
+}
+
+.zi-zona.zi-con-lupa {
+  cursor: none;
+  overflow: visible;
+  /* La lente circular no se corta en los bordes de la lámina */
+}
+
 .zi-barra {
   position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  z-index: 3;
+  right: 4.5rem;
+  bottom: 1.5rem;
+  z-index: 10;
   display: flex;
-  gap: 0.2rem;
-  padding: 0.2rem;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.5rem;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.78);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   line-height: 1;
   white-space: nowrap;
   cursor: default;
+  user-select: none;
 }
+
 .zi-barra button {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  min-width: 1.9rem;
-  height: 1.9rem;
-  padding: 0 0.5rem;
+  gap: 0.3rem;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.55rem;
   border: none;
   border-radius: 999px;
   background: transparent;
   color: #ffffff;
   font: inherit;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   justify-content: center;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
+
 .zi-barra button:hover,
-.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
-.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
-.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
-.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-barra button:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+  outline: none;
+}
+
+.zi-barra button:active {
+  transform: scale(0.95);
+}
+
+.zi-barra .zi-pct {
+  min-width: 3.6rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.zi-barra .zi-lupa-btn {
+  padding: 0 1.6rem 0 0.85rem;
+  gap: 0.4rem;
+}
+
+.zi-barra .zi-lupa-btn svg {
+  flex-shrink: 0;
+}
+
+.zi-barra .zi-lupa-btn[aria-pressed="true"] {
+  background: #7030A0;
+  /* Morado institucional USS */
+  color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(112, 48, 160, 0.45);
+}
+
 .zi-lupa {
   position: absolute;
-  z-index: 2;
+  top: 0;
+  left: 0;
+  z-index: 20;
   width: 190px;
   height: 190px;
   border-radius: 50%;
-  border: 3px solid #8b5cf6;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border: 3px solid #7030A0;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), inset 0 0 0 2px rgba(255, 255, 255, 0.75);
   background-color: #ffffff;
   background-repeat: no-repeat;
   pointer-events: none;
-}
-@media (hover: none) {
-  .zi-barra .zi-lupa-btn { display: none; }
+  will-change: transform;
 }
 
+/* Retículo central de precisión */
+.zi-lupa::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(112, 48, 160, 0.85);
+  box-shadow: 0 0 0 1.5px #ffffff;
+  pointer-events: none;
+}
+
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn {
+    display: none;
+  }
+}
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18550,7 +18713,7 @@ button.ai-fab:active,
       '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
       '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
       '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
-      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Activar lupa (zoom flotante)" aria-pressed="false">' +
       '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
       '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
     zona.appendChild(barra);
@@ -18572,7 +18735,18 @@ button.ai-fab:active,
       limitar();
       img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
       zona.classList.toggle('zi-zoom', s > 1);
-      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+      actualizarPct();
+    }
+    function actualizarPct() {
+      var pct = barra.querySelector('.zi-pct');
+      if (!pct) return;
+      if (lupaOn) {
+        pct.textContent = Math.round(lupaK * 100) + ' %';
+        pct.title = 'Aumento de la lupa (rueda del mouse para cambiarlo)';
+      } else {
+        pct.textContent = Math.round(s * 100) + ' %';
+        pct.title = 'Tamaño original (tecla 0)';
+      }
     }
     function zoomEn(f, cx, cy) {
       var r = zona.getBoundingClientRect();
@@ -18588,13 +18762,21 @@ button.ai-fab:active,
     function reset() { s = 1; tx = 0; ty = 0; pintar(); }
 
     function moverLupa(e) {
+      if (e.target && e.target.closest && e.target.closest('.zi-barra')) {
+        lupa.hidden = true;
+        return;
+      }
+      var b = barra.getBoundingClientRect();
+      if (e.clientX >= b.left && e.clientX <= b.right && e.clientY >= b.top && e.clientY <= b.bottom) {
+        lupa.hidden = true;
+        return;
+      }
       var r = img.getBoundingClientRect();
       var x = e.clientX - r.left, y = e.clientY - r.top;
       if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
       var z = zona.getBoundingClientRect();
       lupa.hidden = false;
-      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
-      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.transform = 'translate3d(' + (e.clientX - z.left - LUPA_R) + 'px,' + (e.clientY - z.top - LUPA_R) + 'px, 0)';
       lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
       lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
       lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
@@ -18604,14 +18786,19 @@ button.ai-fab:active,
       if (lupaOn) reset();
       lupa.hidden = true;
       zona.classList.toggle('zi-con-lupa', lupaOn);
-      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+      var btn = barra.querySelector('[data-zi="lupa"]');
+      if (btn) {
+        btn.setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+        btn.title = lupaOn ? 'Desactivar lupa' : 'Activar lupa (zoom flotante)';
+      }
+      actualizarPct();
     }
 
     function accion(a) {
       if (lupaOn && a !== 'lupa') alternarLupa();
       if (a === 'mas') zoomEn(1.4);
       else if (a === 'menos') zoomEn(1 / 1.4);
-      else if (a === 'reset') reset();
+      else if (a === 'reset') { if (lupaOn) { lupaK = 2.5; actualizarPct(); } else { reset(); } }
       else if (a === 'lupa') alternarLupa();
     }
     // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
@@ -18628,6 +18815,7 @@ button.ai-fab:active,
       e.preventDefault();
       if (lupaOn) {
         lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        actualizarPct();
         moverLupa(e);
         return;
       }
@@ -18694,7 +18882,7 @@ button.ai-fab:active,
 })();
 
 (function () {
-  var GUIA_MAP = {"c0": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "CASO", "fase": "Situación: Desaprueba curso", "hito": "nota 08 en historia", "instrucciones": [{"campo": "Situación inicial", "valor": "Desaprueba curso", "ejemplo": "nota 08 en historia", "tipo": "Contexto", "detalle": "Punto de partida del script: nota 08 en historia."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/016.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=16", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 16, "texto": "SFASLST: la nota final desaprobatoria", "nota": "", "lineas": [{"num": "", "texto": "Registro de Calificaciones por backoffice"}, {"num": "3", "texto": "Registre las calificaciones parciales, en el campo destinado a tal fin, para cada uno delos estudiantes inscritos en el NRC. Recuerde que estas calificaciones no van a Historia Académica."}, {"num": "4", "texto": "Registre las calificaciones finales, en el campo destinado a tal fin, para cada uno delos estudiantes inscritos en el NRC. Estas son las calificaciones que irán a Historia Académica."}, {"num": "", "texto": "Nota: Aquellas calificaciones que tienen la casilla “Pasada” marcada, ya están en la historia académica delos estudiantes a quienes corresponde."}], "marcas": {}}]}, "c1": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "SMARQCM", "fase": "Paso 1: solicitud CAPP", "hito": "auditoría malla CMEMC38", "instrucciones": [{"campo": "Solicitud de Auditoría Curricular", "valor": "ID S00581108", "ejemplo": "-", "tipo": "Verificación", "detalle": "ID: S00581108, Programa: CMEMC38, inicio de auditoría general CAPP."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/030.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/030.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=30", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 30, "texto": "SMARQCM: ID del alumno", "nota": "", "lineas": [{"num": "1", "texto": "En la página SMARQCM digite el ID del estudiante al que se le ejecutará el CAPP."}, {"num": "2", "texto": "Presione el botón Ir."}, {"num": "", "texto": "Si el estudiante tiene Retenciones y desea sobrepasar la restricción, active la casilla correspondiente."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/032.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/032.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=32", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 32, "texto": "SMARQCM: nueva solicitud de cumplimiento", "nota": "", "lineas": [{"num": "3", "texto": "Para crear una nueva solicitud de verificación de cumplimiento, haga clic sobre la opción ‘+’."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/033.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/033.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=33", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 33, "texto": "SMARQCM: parámetros heredados de SMADFLT", "nota": "", "lineas": [{"num": "", "texto": "El nuevo registro de ejecución de CAPP hereda la configuración definida en SMADFLT para el código ONLINE."}, {"num": "4", "texto": "Si lo desea, puede ingresar/modificar el período de ejecución el cumplimiento."}, {"num": "5", "texto": "Pase al siguiente bloque"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/041.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/041.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=41", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 41, "texto": "SMARQCM: abrir los resultados en SMICRLT", "nota": "", "lineas": [{"num": "14", "texto": "Presione el ícono correspondiente al Menú Relacionado"}, {"num": "15", "texto": "Seleccionar la opción Desplegar resultados de cumplimiento (SMICRLT)"}, {"num": "", "texto": "El sistema va a la página SMICRLT, con el ID del estudiante y la solicitud que se acaba de ejecutar. A continuación, se explica cómo revisar los resultados del CAPP"}], "marcas": {}}]}, "c2": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "SMIPOUT", "fase": "Paso 2: regla nota mínima", "hito": "exige Nota ≥ 11 en área", "instrucciones": [{"campo": "Evaluación de Regla de Calificación Mínima", "valor": "SMIPOUT", "ejemplo": "-", "tipo": "Verificación", "detalle": "Validación de nota mínima aprobatoria (Nota ≥ 11)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/064.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/064.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=64", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 64, "texto": "SMICRLT: requerimientos generales del programa", "nota": "SMIPOUT no sale en los instructivos. Referencia: el cumplimiento de cada área se ve en SMICRLT (instructivo 7.2.4).", "lineas": [{"num": "", "texto": "Al acceder a Requerimientos generales se muestran los créditos y/o cursos requeridos por el Programa (según lo definido en la pantalla inicial SMAPROG) y los cursos y/o créditos usados por el estudiante, según lo que ha cursado y aprobado."}, {"num": "7", "texto": "Para regresar a la página principal de SMICRLT, presione Anular."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/069.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/069.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=69", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 69, "texto": "SMICRLT: áreas con créditos y cursos otorgados", "nota": "SMIPOUT no sale en los instructivos. Referencia: el cumplimiento de cada área se ve en SMICRLT (instructivo 7.2.4).", "lineas": [{"num": "", "texto": "Se muestra la lista de áreas asociadas al programa, según el CAPP ejecutado, con los créditos y cursos otorgados al estudiante en cada una de ellas."}], "marcas": {}}]}, "c3": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "SMICRLT", "fase": "Paso 3: segregación cursos", "hito": "ESEC 00650 a «Cursos no usados»", "instrucciones": [{"campo": "Segregación a Cursos No Usados", "valor": "SMICRLT", "ejemplo": "-", "tipo": "Acción", "detalle": "Desplazamiento de ESEC 00650 al bloque de cursos no usados / reprobados."}, {"campo": "Cómputo de Créditos y Avance", "valor": "SMIPOUT", "ejemplo": "-", "tipo": "Acción", "detalle": "(SMIPOUT) Requerimiento 0/4 cursos, registrando 0,000 créditos acumulados."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/061.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/061.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=61", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 61, "texto": "SMICRLT: alumno y solicitud", "nota": "", "lineas": [{"num": "", "texto": "Resultados de avance curricular de los alumnos"}, {"num": "1", "texto": "En la página SMICRLT digite el ID del estudiante al que se le consultarán los resultados del CAPP."}, {"num": "2", "texto": "Seleccione el Número de solicitud presionando los tres botones (si viene desde el menú relacionado de SMARQCM ya viene seleccionado)."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/064.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/064.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=64", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 64, "texto": "SMICRLT: programa y catálogo con que se evaluó", "nota": "", "lineas": [{"num": "", "texto": "Resultados de avance curricular de los alumnos"}, {"num": "", "texto": "Se puede observar el Programa y período catálogo según el cual fue ejecutado el CAPP para la solicitud."}, {"num": "", "texto": "Se visualizan las columnas Cumple y No cumple, según los resultados de la evaluación del CAPP del estudiante."}, {"num": "6", "texto": "Al presionar el botón se puede ver el detalle de cada requerimiento para el estudiante en la ejecución del CAPP que se está consultando:"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/080.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/080.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=80", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 80, "texto": "SMICRLT: cursos no usados", "nota": "", "lineas": [{"num": "", "texto": "Evaluar avance curricular de los alumnos: No usados"}, {"num": "", "texto": "Al acceder a Cursos/Atributos/Exámenes No usados desde SMICRLT, se muestran aquellos elementos, cursados por el estudiante que no son parte del CAPP del programa o que no se usan para el cumplimiento del mismo."}, {"num": "19", "texto": "Para ir a la página principal de SMICRLT, presione Regresar."}], "marcas": {}}]}, "c4": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "SMARQCM", "fase": "Paso 4: dictamen NO CUMPLE", "hito": "retorno obligatorio a cursar", "instrucciones": [{"campo": "Determinación de Cumplimiento", "valor": "SMARQCM", "ejemplo": "-", "tipo": "Acción", "detalle": "Dictamen curricular del área y requisitos en estado «NO CUMPLE»."}, {"campo": "Activación de Retorno Obligatorio", "valor": "SMIPOUT", "ejemplo": "-", "tipo": "Captura", "detalle": "(SMIPOUT / CAPP) Bloqueo de avance a siguientes ciclos y exigencia de recursado."}, {"campo": "Auditoría Final y Dictamen CAPP", "valor": "SMARQCM", "ejemplo": "-", "tipo": "Verificación", "detalle": "Reporte consolidado confirmando rechazo de créditos y plan incompleto."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/067.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/067.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=67", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 67, "texto": "Sin «Cumple» marcado, el alumno no cumple el requisito", "nota": "", "lineas": [{"num": "", "texto": "Se visualiza el o los requisitos no curso que debe cumplir el alumno para el programa. Al no tener la casilla cumple marcada, el estudiante no ha cumplido con este requisito."}, {"num": "9", "texto": "Para regresar a la página principal de SMICRLT, presione Anular"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/075.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/075.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=75", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 75, "texto": "Área: la columna «Cumple» de cada regla", "nota": "", "lineas": [{"num": "", "texto": "Evaluar avance curricular de los alumnos: Áreas"}, {"num": "15", "texto": "Pase al siguiente bloque y el sistema le mostrará la condición que cumple el estudiante (columna cumple marcada)."}, {"num": "16", "texto": "Presione el botón Anular para volver a la lista de Áreas"}], "marcas": {}}]}, "cr": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "RESULTADO", "fase": "Resultado: Curso no usado", "hito": "repite la asignatura", "instrucciones": [{"campo": "Resultado esperado", "valor": "Curso no usado", "ejemplo": "repite la asignatura", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/080.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/080.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=80", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 80, "texto": "SMICRLT: el curso desaprobado queda en «No usados»", "nota": "", "lineas": [{"num": "", "texto": "Evaluar avance curricular de los alumnos: No usados"}, {"num": "", "texto": "Al acceder a Cursos/Atributos/Exámenes No usados desde SMICRLT, se muestran aquellos elementos, cursados por el estudiante que no son parte del CAPP del programa o que no se usan para el cumplimiento del mismo."}, {"num": "19", "texto": "Para ir a la página principal de SMICRLT, presione Regresar."}], "marcas": {}}]}};
+  var GUIA_MAP = {"c0": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "CASO", "fase": "Situación: Desaprueba curso", "hito": "nota 08 en historia", "instrucciones": [{"campo": "Situación inicial", "valor": "Desaprueba curso", "ejemplo": "nota 08 en historia", "tipo": "Contexto", "detalle": "Punto de partida del script: nota 08 en historia."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.6_Ingresar_calificac_backoffice/016.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.6_Ingresar_calificac_backoffice&d=16", "fuente": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice", "n": 16, "texto": "SFASLST: la nota final desaprobatoria", "nota": "", "lineas": [], "marcas": {}}]}, "c1": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "SMARQCM", "fase": "Paso 1: solicitud CAPP", "hito": "auditoría malla CMEMC38", "instrucciones": [{"campo": "Solicitud de Auditoría Curricular", "valor": "ID S00581108", "ejemplo": "-", "tipo": "Verificación", "detalle": "ID: S00581108, Programa: CMEMC38, inicio de auditoría general CAPP."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/030.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/030.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=30", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 30, "texto": "SMARQCM: ID del alumno", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/032.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/032.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=32", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 32, "texto": "SMARQCM: nueva solicitud de cumplimiento", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/033.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/033.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=33", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 33, "texto": "SMARQCM: parámetros heredados de SMADFLT", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/041.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/041.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=41", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 41, "texto": "SMARQCM: abrir los resultados en SMICRLT", "nota": "", "lineas": [], "marcas": {}}]}, "c2": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "SMIPOUT", "fase": "Paso 2: regla nota mínima", "hito": "exige Nota ≥ 11 en área", "instrucciones": [{"campo": "Evaluación de Regla de Calificación Mínima", "valor": "SMIPOUT", "ejemplo": "-", "tipo": "Verificación", "detalle": "Validación de nota mínima aprobatoria (Nota ≥ 11)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/064.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/064.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=64", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 64, "texto": "SMICRLT: requerimientos generales del programa", "nota": "SMIPOUT no sale en los instructivos. Referencia: el cumplimiento de cada área se ve en SMICRLT (instructivo 7.2.4).", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/069.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/069.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=69", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 69, "texto": "SMICRLT: áreas con créditos y cursos otorgados", "nota": "SMIPOUT no sale en los instructivos. Referencia: el cumplimiento de cada área se ve en SMICRLT (instructivo 7.2.4).", "lineas": [], "marcas": {}}]}, "c3": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "SMICRLT", "fase": "Paso 3: segregación cursos", "hito": "ESEC 00650 a «Cursos no usados»", "instrucciones": [{"campo": "Segregación a Cursos No Usados", "valor": "SMICRLT", "ejemplo": "-", "tipo": "Acción", "detalle": "Desplazamiento de ESEC 00650 al bloque de cursos no usados / reprobados."}, {"campo": "Cómputo de Créditos y Avance", "valor": "SMIPOUT", "ejemplo": "-", "tipo": "Acción", "detalle": "(SMIPOUT) Requerimiento 0/4 cursos, registrando 0,000 créditos acumulados."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/061.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/061.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=61", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 61, "texto": "SMICRLT: alumno y solicitud", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/064.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/064.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=64", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 64, "texto": "SMICRLT: programa y catálogo con que se evaluó", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/080.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/080.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=80", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 80, "texto": "SMICRLT: cursos no usados", "nota": "", "lineas": [], "marcas": {}}]}, "c4": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "SMARQCM", "fase": "Paso 4: dictamen NO CUMPLE", "hito": "retorno obligatorio a cursar", "instrucciones": [{"campo": "Determinación de Cumplimiento", "valor": "SMARQCM", "ejemplo": "-", "tipo": "Acción", "detalle": "Dictamen curricular del área y requisitos en estado «NO CUMPLE»."}, {"campo": "Activación de Retorno Obligatorio", "valor": "SMIPOUT", "ejemplo": "-", "tipo": "Captura", "detalle": "(SMIPOUT / CAPP) Bloqueo de avance a siguientes ciclos y exigencia de recursado."}, {"campo": "Auditoría Final y Dictamen CAPP", "valor": "SMARQCM", "ejemplo": "-", "tipo": "Verificación", "detalle": "Reporte consolidado confirmando rechazo de créditos y plan incompleto."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/recortes/067.webp", "completa": "../../../../visor_instructivos/diapositivas/7.2.4_Ejecucio_n_del_CAPP/067.webp", "visor": "../../../../visor_instructivos/index.html?p=7.2.4_Ejecucio_n_del_CAPP&d=67", "fuente": "Instructivo 7.2.4 · Ejecución del CAPP", "n": 67, "texto": "Sin «Cumple» marcado, el alumno no cumple el requisito", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/075.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/075.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=75", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 75, "texto": "Área: la columna «Cumple» de cada regla", "nota": "", "lineas": [], "marcas": {}}]}, "cr": {"titulo": "Script 10 · Retorno por desaprobado", "pantalla": "RESULTADO", "fase": "Resultado: Curso no usado", "hito": "repite la asignatura", "instrucciones": [{"campo": "Resultado esperado", "valor": "Curso no usado", "ejemplo": "repite la asignatura", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/recortes/080.webp", "completa": "../../../../visor_instructivos/diapositivas/7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_/080.webp", "visor": "../../../../visor_instructivos/index.html?p=7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_&d=80", "fuente": "Instructivo 7.1.9 · Procesos de cierre del periodo académico", "n": 80, "texto": "SMICRLT: el curso desaprobado queda en «No usados»", "nota": "", "lineas": [], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 27, "slug": "script-12-cierre-de-periodo", "titulo": "Script 12 · Cierre de periodo", "cap": "Capacidad 7", "url": "../27-script-12-cierre-de-periodo/computacion-27-script-12-cierre-de-periodo.html", "is_curr": false};
   window.__ANTERIOR_FLUJO = {"num": 25, "slug": "script-14-cierre-de-curso", "titulo": "Script 14 · Cierre de curso", "cap": "Capacidad 5 y 7", "url": "../25-script-14-cierre-de-curso/computacion-25-script-14-cierre-de-curso.html", "is_curr": false};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-computacion";
@@ -19549,13 +19737,20 @@ button.ai-fab:active,
       '<button type="button" class="gdv-btn gdv-cerrar" data-gdv="cerrar" aria-label="Cerrar">✕</button>' +
       '</div></div>' +
       '<div class="gdv-cuerpo">' +
-      '<aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
+      '<div class="gdv-pasos-wrap"><aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
+      '<button type="button" class="gdv-scroll-aviso" data-gdv="scroll-abajo" aria-label="Deslizar hacia abajo">▾ Más pasos abajo</button></div>' +
       '<div class="gdv-lienzo"><button type="button" class="gdv-nav" data-gdv="ant" aria-label="Anterior">‹</button>' +
       '<img class="gdv-img" alt=""><button type="button" class="gdv-nav" data-gdv="sig" aria-label="Siguiente">›</button></div>' +
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
     if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    var pEl = v.querySelector('.gdv-pasos');
+    if (pEl) {
+      pEl.addEventListener('scroll', function () {
+        actualizarScrollAviso(v);
+      }, { passive: true });
+    }
     // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
     // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
     window.addEventListener('click', function (e) {
@@ -19592,6 +19787,20 @@ button.ai-fab:active,
     else if (tipo === 'sig') moverVisorDiapo(1);
     else if (tipo === 'completa') { visorDiapo.completa = !visorDiapo.completa; pintarVisorDiapo(); }
     else if (tipo === 'ir') { visorDiapo.idx = parseInt(accion.getAttribute('data-gdv-idx'), 10) || 0; pintarVisorDiapo(); }
+    else if (tipo === 'scroll-abajo') {
+      var p = v.querySelector('.gdv-pasos');
+      if (p) p.scrollBy({ top: 160, behavior: 'smooth' });
+    }
+  }
+
+  function actualizarScrollAviso(v) {
+    if (!v) v = document.getElementById('guia-diapo-visor');
+    if (!v) return;
+    var p = v.querySelector('.gdv-pasos');
+    var btn = v.querySelector('.gdv-scroll-aviso');
+    if (!p || !btn) return;
+    var hayMas = (p.scrollHeight - p.scrollTop - p.clientHeight) > 16;
+    btn.classList.toggle('visible', hayMas);
   }
 
   function pintarVisorDiapo() {
@@ -19604,23 +19813,35 @@ button.ai-fab:active,
     v.querySelector('.gdv-pie').textContent = (d.texto || '') + '  (' + (visorDiapo.idx + 1) + ' de ' + visorDiapo.lista.length + ')';
     v.querySelector('[data-gdv="completa"]').textContent = visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa';
     v.querySelector('[data-gdv="visor"]').href = d.visor;
-    // En la última lámina, «›» pasa al paso siguiente (y en la primera, «‹» vuelve al anterior).
-    var ultima = visorDiapo.idx === visorDiapo.lista.length - 1;
+    // Navegación de láminas: el carrusel es continuo y navegable siempre que haya más de 1 lámina
+    var totalLaminas = (visorDiapo.lista && visorDiapo.lista.length) || 0;
+    var ultima = visorDiapo.idx === totalLaminas - 1;
     var primera = visorDiapo.idx === 0;
     var sig = pasoVecino(1), ant = pasoVecino(-1);
     visorDiapo.vecinos = { '1': sig, '-1': ant };  // se guardan al pintar: al hacer clic el foco puede cambiar
     var bSig = v.querySelector('[data-gdv="sig"]'), bAnt = v.querySelector('[data-gdv="ant"]');
-    bSig.disabled = ultima && !sig;
-    bAnt.disabled = primera && !ant;
+    bSig.disabled = (totalLaminas <= 1 && !sig);
+    bAnt.disabled = (totalLaminas <= 1 && !ant);
     bSig.classList.toggle('gdv-nav-paso', ultima && !!sig);
     bAnt.classList.toggle('gdv-nav-paso', primera && !!ant);
-    bSig.title = ultima && sig ? 'Siguiente paso: ' + nombrePaso(sig) : 'Lámina siguiente';
-    bAnt.title = primera && ant ? 'Paso anterior: ' + nombrePaso(ant) : 'Lámina anterior';
+    if (primera && ant) {
+      bAnt.title = 'Paso anterior: ' + nombrePaso(ant);
+    } else if (primera && totalLaminas > 1) {
+      bAnt.title = 'Última lámina (' + totalLaminas + ' de ' + totalLaminas + ')';
+    } else {
+      bAnt.title = 'Lámina anterior';
+    }
     if (ultima && sig) {
+      bSig.title = 'Siguiente paso: ' + nombrePaso(sig);
       v.querySelector('.gdv-pie').textContent += '  ·  › Siguiente paso: ' + nombrePaso(sig);
+    } else if (ultima && totalLaminas > 1) {
+      bSig.title = 'Primera lámina (1 de ' + totalLaminas + ')';
+    } else {
+      bSig.title = 'Lámina siguiente';
     }
     v.querySelector('.gdv-pasos').innerHTML = pasosVisorDiapoHtml(d);
     v.querySelector('.gdv-pasos').scrollTop = 0;
+    setTimeout(function () { actualizarScrollAviso(v); }, 60);
   }
 
   function pasosVisorDiapoHtml(d) {
@@ -19729,8 +19950,30 @@ button.ai-fab:active,
   }
 
   function moverVisorDiapo(paso) {
+    var total = (visorDiapo.lista && visorDiapo.lista.length) || 0;
     var nuevo = visorDiapo.idx + paso;
-    if (nuevo < 0 || nuevo >= visorDiapo.lista.length) return irAPasoDesdeVisor(paso);
+    if (nuevo < 0) {
+      if (visorDiapo.vecinos && visorDiapo.vecinos['-1']) {
+        return irAPasoDesdeVisor(-1);
+      }
+      if (total > 1) {
+        visorDiapo.idx = total - 1;
+        pintarVisorDiapo();
+        return;
+      }
+      return;
+    }
+    if (nuevo >= total) {
+      if (visorDiapo.vecinos && visorDiapo.vecinos['1']) {
+        return irAPasoDesdeVisor(1);
+      }
+      if (total > 1) {
+        visorDiapo.idx = 0;
+        pintarVisorDiapo();
+        return;
+      }
+      return;
+    }
     visorDiapo.idx = nuevo;
     pintarVisorDiapo();
   }

@@ -16635,7 +16635,7 @@ html:not([data-theme="dark"]) .guia-diapo {
 .guia-diapo-visor {
   position: fixed;
   inset: 0;
-  z-index: 100000;
+  z-index: 1000000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16683,27 +16683,94 @@ html:not([data-theme="dark"]) .gdv-panel {
 .gdv-btn:hover { border-color: #8b5cf6; }
 .gdv-cuerpo {
   display: grid;
-  grid-template-columns: minmax(250px, 1fr) 3fr;
+  grid-template-columns: minmax(260px, 1fr) 3fr;
   gap: 0.75rem;
   min-height: 0;
   flex: 1 1 auto;
 }
-.gdv-pasos {
+.gdv-pasos-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
   max-height: calc(100vh - 9rem);
-  overflow-y: auto;
-  padding: 0.6rem 0.7rem;
+}
+.gdv-pasos {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  padding: 0.6rem 0.7rem 2rem;
   border-radius: 0.5rem;
   border: 1px solid rgba(148, 163, 184, 0.25);
   background: rgba(30, 41, 59, 0.55);
   font-size: 0.8rem;
   line-height: 1.45;
   scrollbar-width: thin;
-  scrollbar-color: #8b5cf6 transparent;
+  scrollbar-color: #7030A0 rgba(148, 163, 184, 0.2);
 }
 html:not([data-theme="dark"]) .gdv-pasos {
   background: #f8fafc;
   border-color: #e2e8f0;
+}
+/* Barra de scroll visible siempre para Mac / laptops */
+.gdv-pasos::-webkit-scrollbar {
+  width: 8px;
+}
+.gdv-pasos::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.15);
+  border-radius: 999px;
+}
+.gdv-pasos::-webkit-scrollbar-thumb {
+  background: #7030A0;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.gdv-pasos::-webkit-scrollbar-thumb:hover {
+  background: #5b21b6;
+}
+
+/* Aviso flotante animado para indicar que hay más pasos abajo */
+.gdv-scroll-aviso {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #7030A0;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(112, 48, 160, 0.5);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+.gdv-scroll-aviso.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  animation: gdv-rebote 2s infinite ease-in-out;
+}
+.gdv-scroll-aviso:hover {
+  background: #5b21b6;
+  transform: translateX(-50%) translateY(-2px);
+}
+@keyframes gdv-rebote {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
 }
 .gdv-bloque + .gdv-bloque {
   margin-top: 0.8rem;
@@ -16836,20 +16903,39 @@ html:not([data-theme="dark"]) .gdv-pasos {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 2.4rem;
-  height: 2.4rem;
+  z-index: 15;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 999px;
-  border: none;
-  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: #ffffff;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
 }
-.gdv-nav[data-gdv="ant"] { left: 0.4rem; }
-.gdv-nav[data-gdv="sig"] { right: 0.4rem; }
-.gdv-nav:disabled { opacity: 0.25; cursor: default; }
-.gdv-nav.gdv-nav-paso { background: #166534; color: #fff; box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.25); }
+.gdv-nav:hover:not(:disabled) {
+  background: #7030A0;
+  transform: translateY(-50%) scale(1.08);
+}
+.gdv-nav:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+.gdv-nav[data-gdv="ant"] { left: 0.75rem; }
+.gdv-nav[data-gdv="sig"] { right: 0.75rem; }
+.gdv-nav:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.gdv-nav.gdv-nav-paso { background: #166534; color: #fff; box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.35); }
 .gdv-pie { font-size: 0.8rem; text-align: center; opacity: 0.85; white-space: pre-wrap; }
 body.gdv-abierto { overflow: hidden; }
 
@@ -17098,6 +17184,16 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 }
 
 /* 1. Botón Flotante Ultra-Elegante (FAB) */
+body.gdv-abierto button.ai-fab,
+body.gdv-abierto #ai-fab-btn,
+body.modal-abierto button.ai-fab,
+body.modal-abierto #ai-fab-btn {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 button.ai-fab,
 #ai-fab-btn {
   all: unset !important;
@@ -18295,68 +18391,135 @@ button.ai-fab:active,
   touch-action: none;
   cursor: zoom-in;
 }
-.zi-zona > img {
+
+.zi-zona>img {
   transform-origin: 0 0;
   will-change: transform;
   user-select: none;
   -webkit-user-drag: none;
 }
-.zi-zona.zi-zoom { cursor: grab; }
-.zi-zona.zi-arrastrando { cursor: grabbing; }
-.zi-zona.zi-con-lupa { cursor: none; }
+
+.zi-zona.zi-zoom {
+  cursor: grab;
+}
+
+.zi-zona.zi-arrastrando {
+  cursor: grabbing;
+}
+
+.zi-zona.zi-con-lupa {
+  cursor: none;
+  overflow: visible;
+  /* La lente circular no se corta en los bordes de la lámina */
+}
+
 .zi-barra {
   position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  z-index: 3;
+  right: 4.5rem;
+  bottom: 1.5rem;
+  z-index: 10;
   display: flex;
-  gap: 0.2rem;
-  padding: 0.2rem;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.5rem;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.78);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   line-height: 1;
   white-space: nowrap;
   cursor: default;
+  user-select: none;
 }
+
 .zi-barra button {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  min-width: 1.9rem;
-  height: 1.9rem;
-  padding: 0 0.5rem;
+  gap: 0.3rem;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.55rem;
   border: none;
   border-radius: 999px;
   background: transparent;
   color: #ffffff;
   font: inherit;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   justify-content: center;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
+
 .zi-barra button:hover,
-.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
-.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
-.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
-.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-barra button:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+  outline: none;
+}
+
+.zi-barra button:active {
+  transform: scale(0.95);
+}
+
+.zi-barra .zi-pct {
+  min-width: 3.6rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.zi-barra .zi-lupa-btn {
+  padding: 0 1.6rem 0 0.85rem;
+  gap: 0.4rem;
+}
+
+.zi-barra .zi-lupa-btn svg {
+  flex-shrink: 0;
+}
+
+.zi-barra .zi-lupa-btn[aria-pressed="true"] {
+  background: #7030A0;
+  /* Morado institucional USS */
+  color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(112, 48, 160, 0.45);
+}
+
 .zi-lupa {
   position: absolute;
-  z-index: 2;
+  top: 0;
+  left: 0;
+  z-index: 20;
   width: 190px;
   height: 190px;
   border-radius: 50%;
-  border: 3px solid #8b5cf6;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border: 3px solid #7030A0;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), inset 0 0 0 2px rgba(255, 255, 255, 0.75);
   background-color: #ffffff;
   background-repeat: no-repeat;
   pointer-events: none;
-}
-@media (hover: none) {
-  .zi-barra .zi-lupa-btn { display: none; }
+  will-change: transform;
 }
 
+/* Retículo central de precisión */
+.zi-lupa::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(112, 48, 160, 0.85);
+  box-shadow: 0 0 0 1.5px #ffffff;
+  pointer-events: none;
+}
+
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn {
+    display: none;
+  }
+}
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18536,7 +18699,7 @@ button.ai-fab:active,
       '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
       '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
       '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
-      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Activar lupa (zoom flotante)" aria-pressed="false">' +
       '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
       '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
     zona.appendChild(barra);
@@ -18558,7 +18721,18 @@ button.ai-fab:active,
       limitar();
       img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
       zona.classList.toggle('zi-zoom', s > 1);
-      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+      actualizarPct();
+    }
+    function actualizarPct() {
+      var pct = barra.querySelector('.zi-pct');
+      if (!pct) return;
+      if (lupaOn) {
+        pct.textContent = Math.round(lupaK * 100) + ' %';
+        pct.title = 'Aumento de la lupa (rueda del mouse para cambiarlo)';
+      } else {
+        pct.textContent = Math.round(s * 100) + ' %';
+        pct.title = 'Tamaño original (tecla 0)';
+      }
     }
     function zoomEn(f, cx, cy) {
       var r = zona.getBoundingClientRect();
@@ -18574,13 +18748,21 @@ button.ai-fab:active,
     function reset() { s = 1; tx = 0; ty = 0; pintar(); }
 
     function moverLupa(e) {
+      if (e.target && e.target.closest && e.target.closest('.zi-barra')) {
+        lupa.hidden = true;
+        return;
+      }
+      var b = barra.getBoundingClientRect();
+      if (e.clientX >= b.left && e.clientX <= b.right && e.clientY >= b.top && e.clientY <= b.bottom) {
+        lupa.hidden = true;
+        return;
+      }
       var r = img.getBoundingClientRect();
       var x = e.clientX - r.left, y = e.clientY - r.top;
       if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
       var z = zona.getBoundingClientRect();
       lupa.hidden = false;
-      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
-      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.transform = 'translate3d(' + (e.clientX - z.left - LUPA_R) + 'px,' + (e.clientY - z.top - LUPA_R) + 'px, 0)';
       lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
       lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
       lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
@@ -18590,14 +18772,19 @@ button.ai-fab:active,
       if (lupaOn) reset();
       lupa.hidden = true;
       zona.classList.toggle('zi-con-lupa', lupaOn);
-      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+      var btn = barra.querySelector('[data-zi="lupa"]');
+      if (btn) {
+        btn.setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+        btn.title = lupaOn ? 'Desactivar lupa' : 'Activar lupa (zoom flotante)';
+      }
+      actualizarPct();
     }
 
     function accion(a) {
       if (lupaOn && a !== 'lupa') alternarLupa();
       if (a === 'mas') zoomEn(1.4);
       else if (a === 'menos') zoomEn(1 / 1.4);
-      else if (a === 'reset') reset();
+      else if (a === 'reset') { if (lupaOn) { lupaK = 2.5; actualizarPct(); } else { reset(); } }
       else if (a === 'lupa') alternarLupa();
     }
     // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
@@ -18614,6 +18801,7 @@ button.ai-fab:active,
       e.preventDefault();
       if (lupaOn) {
         lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        actualizarPct();
         moverLupa(e);
         return;
       }
@@ -18680,7 +18868,7 @@ button.ai-fab:active,
 })();
 
 (function () {
-  var GUIA_MAP = {"c0": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "CASO", "fase": "Situación: Solicitud o queja", "hito": "el alumno pide un servicio", "instrucciones": [{"campo": "Situación inicial", "valor": "Solicitud o queja", "ejemplo": "el alumno pide un servicio", "tipo": "Contexto", "detalle": "Punto de partida del script: el alumno pide un servicio."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/010.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/010.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=10", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 10, "texto": "Autoservicio: el alumno elige el servicio que pide", "nota": "", "lineas": [{"num": "", "texto": "Desde autoservicios, el estudiante accede a solicitar el servicio."}, {"num": "", "texto": "El estudiante selecciona la categoría y el servicio que desea solicitar y presiona el botón Continuar."}], "marcas": {}}]}, "c1": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "Autoservicio", "fase": "Paso 1: crear la solicitud", "hito": "servicio CER (no hay de queja)", "instrucciones": [{"campo": "Solicitud del alumno", "valor": "Autoservicio", "ejemplo": "-", "tipo": "Acción", "detalle": "El alumno elige la categoría y el servicio y pulsa Continuar (4.3.2, diap. 10). En TEST no hay servicio de queja (U14); el mecanismo se probó con CER (Certificado)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/010.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/010.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=10", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 10, "texto": "Autoservicio: el alumno elige la categoría y el servicio", "nota": "", "lineas": [{"num": "", "texto": "Desde autoservicios, el estudiante accede a solicitar el servicio."}, {"num": "", "texto": "El estudiante selecciona la categoría y el servicio que desea solicitar y presiona el botón Continuar."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/011.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/011.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=11", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 11, "texto": "Autoservicio: datos adicionales del servicio", "nota": "", "lineas": [{"num": "", "texto": "Si el servicio tiene asociados datos adicionales, el estudiante deberá seleccionar aquellos parámetros para los cuales corresponde el servicio. En el ejemplo de la imagen: Programa."}, {"num": "", "texto": "Puede agregar un comentario si así lo desea."}, {"num": "", "texto": "Al llenar todos los parámetros, deberá guardar la solicitud."}, {"num": "", "texto": "El sistema asigna un número de servicio a la solicitud del estudiante y muestra la lista de solicitudes que ha hecho el estudiante con sus datos. El estatus inicial es Recibido."}, {"num": "", "texto": "El Método de entrega, al estudiante se le desplegarán los diferentes métodos configurados por la institución y debe seleccionar el que desee para su solicitud."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/012.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/012.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=12", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 12, "texto": "Autoservicio: el alumno consulta su solicitud", "nota": "", "lineas": [{"num": "", "texto": "Mientras la solicitud de servicio tenga un estatus que no sea de fin, el estudiante puede consultar su servicio haciendo clic sobre el número e, inclusive, agregar comentarios al mismo."}], "marcas": {}}]}, "c2": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "SVASVPR", "fase": "Paso 2: buscar la solicitud", "hito": "número, servicio y estatus", "instrucciones": [{"campo": "Búsqueda", "valor": "SVASVPR", "ejemplo": "-", "tipo": "Acción", "detalle": "Ingrese al menos un criterio (ID, servicio, estatus) para ver las solicitudes; el número es el mismo que ve el alumno (4.3.2, diap. 17–18)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/017.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/017.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=17", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 17, "texto": "SVASVPR: criterios para buscar las solicitudes", "nota": "", "lineas": [{"num": "", "texto": "Administrar las solicitudes en SVASVPR"}, {"num": "", "texto": "La página SVASVPR es utilizada para la gestión y consulta de las solicitudes de servicio."}, {"num": "1", "texto": "Al acceder a la página, se debe ingresar, al menos, uno de los siguientes criterios para que se muestren las solicitudes, según el criterio ingresado (los criterios pueden combinarse):"}, {"num": "", "texto": "ID: si se ingresa el ID del estudiante, se mostrarán las solicitudes de este."}, {"num": "", "texto": "Servicio: si se ingresa el código de servicio, se mostrarán todas las solicitudes asociadas a dicho código."}, {"num": "", "texto": "Estatus: si se ingresa el código de estatus, se mostrarán las solicitudes que tengan, en el momento de entrar a los datos, dicho código."}, {"num": "2", "texto": "Presionar el botón Ir."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/018.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/018.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=18", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 18, "texto": "SVASVPR: lista de solicitudes con su número y estatus", "nota": "", "lineas": [{"num": "", "texto": "Administrar las solicitudes en SVASVPR"}, {"num": "", "texto": "El sistema muestra las características principales de las solicitudes de servicio en cada uno de los registros:"}, {"num": "", "texto": "Número (que coincide con el que el estudiante visualiza en el autoservicio)"}, {"num": "", "texto": "Código del servicio"}, {"num": "", "texto": "ID y Nombre del estudiante que realizó la solicitud"}, {"num": "", "texto": "Estatus del servicio"}, {"num": "", "texto": "Fecha de captura"}, {"num": "", "texto": "Fecha estimada de entrega"}, {"num": "", "texto": "Si el servicio está pagado, aparece marcada dicha opción"}, {"num": "3", "texto": "Presione el botón para ver mayor detalle de la solicitud del registro que desea consultar o gestionar."}], "marcas": {}}]}, "c3": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "SVASVPR", "fase": "Paso 3: atender y responder", "hito": "estatus y comentarios", "instrucciones": [{"campo": "Atención", "valor": "SVASVPR", "ejemplo": "-", "tipo": "Acción", "detalle": "Actualice el estatus según avance el servicio y registre el comentario interno y el comentario de respuesta (4.3.2, diap. 19–20). SVASVPR no deja crear la solicitud («Función inválida»): la crea el alumno."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/019.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=19", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 19, "texto": "SVASVPR: detalle y estatus de la solicitud", "nota": "", "lineas": [{"num": "", "texto": "Administrar las solicitudes en SVASVPR"}, {"num": "", "texto": "El sistema muestra los detalles de la solicitud que usted seleccionó en el apartado anterior. Usted puede modificar, o actualizar los registros según la evolución o resolución del servicio."}, {"num": "1", "texto": "Información de detalle de solicitud de servicio:"}, {"num": "", "texto": "Puede actualizar el Código de estatus de la solicitud al que corresponde en la etapa en la que usted está revisando. Por ejemplo, Aprobada, Rechazada o Finalizada, siempre que estos códigos estén configurados para el servicio en SVARSRV."}, {"num": "", "texto": "Puede ingresar o actualizar la fecha estimada de entrega o la fecha efectiva de entrega, si así lo desea."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/020.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/020.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=20", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 20, "texto": "SVASVPR: comentarios interno y de respuesta", "nota": "", "lineas": [{"num": "", "texto": "Administrar las solicitudes en SVASVPR"}, {"num": "2", "texto": "Comentarios:"}, {"num": "", "texto": "Si el estudiante dejó comentarios en el servicio, éstos se visualizarán en el campo Comentarios del alumno."}, {"num": "", "texto": "Puede ingresar o actualizar comentarios en el servicio con las siguientes características:"}, {"num": "", "texto": "Comentario interno: sólo lo pueden ver desde SVASVPR (el alumno no visualiza el comentario)."}, {"num": "", "texto": "Comentario de respuesta: lo puede ver el estudiante desde autoservicio."}, {"num": "", "texto": "Comentario de etapa: solo se puede visualizar en SVASVPR, puede usarse para dejar comentarios en cada revisión y resolución del servicio."}, {"num": "", "texto": "El botón permite ampliar la ventana para leer o ingresar de manera más cómoda los comentarios."}], "marcas": {}}]}, "cr": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "RESULTADO", "fase": "Resultado: Solicitud atendida", "hito": "queja: falta su servicio (U14)", "instrucciones": [{"campo": "Resultado esperado", "valor": "Solicitud atendida", "ejemplo": "queja: falta su servicio (U14)", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/015.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=15", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 15, "texto": "Autoservicio: el alumno ve el estatus y la respuesta", "nota": "", "lineas": [{"num": "", "texto": "Mientras el servicio no tenga un estatus de fin, el estudiante puede presionar ver el detalle de su solicitud e ingresar nuevos comentarios en la misma, haciendo clic sobre el número de servicio correspondiente:"}], "marcas": {}}]}};
+  var GUIA_MAP = {"c0": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "CASO", "fase": "Situación: Solicitud o queja", "hito": "el alumno pide un servicio", "instrucciones": [{"campo": "Situación inicial", "valor": "Solicitud o queja", "ejemplo": "el alumno pide un servicio", "tipo": "Contexto", "detalle": "Punto de partida del script: el alumno pide un servicio."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/010.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/010.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=10", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 10, "texto": "Autoservicio: el alumno elige el servicio que pide", "nota": "", "lineas": [], "marcas": {}}]}, "c1": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "Autoservicio", "fase": "Paso 1: crear la solicitud", "hito": "servicio CER (no hay de queja)", "instrucciones": [{"campo": "Solicitud del alumno", "valor": "Autoservicio", "ejemplo": "-", "tipo": "Acción", "detalle": "El alumno elige la categoría y el servicio y pulsa Continuar (4.3.2, diap. 10). En TEST no hay servicio de queja (U14); el mecanismo se probó con CER (Certificado)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/010.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/010.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=10", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 10, "texto": "Autoservicio: el alumno elige la categoría y el servicio", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/011.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/011.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=11", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 11, "texto": "Autoservicio: datos adicionales del servicio", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/012.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/012.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=12", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 12, "texto": "Autoservicio: el alumno consulta su solicitud", "nota": "", "lineas": [], "marcas": {}}]}, "c2": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "SVASVPR", "fase": "Paso 2: buscar la solicitud", "hito": "número, servicio y estatus", "instrucciones": [{"campo": "Búsqueda", "valor": "SVASVPR", "ejemplo": "-", "tipo": "Acción", "detalle": "Ingrese al menos un criterio (ID, servicio, estatus) para ver las solicitudes; el número es el mismo que ve el alumno (4.3.2, diap. 17–18)."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/017.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/017.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=17", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 17, "texto": "SVASVPR: criterios para buscar las solicitudes", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/018.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/018.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=18", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 18, "texto": "SVASVPR: lista de solicitudes con su número y estatus", "nota": "", "lineas": [], "marcas": {}}]}, "c3": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "SVASVPR", "fase": "Paso 3: atender y responder", "hito": "estatus y comentarios", "instrucciones": [{"campo": "Atención", "valor": "SVASVPR", "ejemplo": "-", "tipo": "Acción", "detalle": "Actualice el estatus según avance el servicio y registre el comentario interno y el comentario de respuesta (4.3.2, diap. 19–20). SVASVPR no deja crear la solicitud («Función inválida»): la crea el alumno."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/019.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=19", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 19, "texto": "SVASVPR: detalle y estatus de la solicitud", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/020.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/020.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=20", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 20, "texto": "SVASVPR: comentarios interno y de respuesta", "nota": "", "lineas": [], "marcas": {}}]}, "cr": {"titulo": "Script 18-C · Solicitud de servicio o queja", "pantalla": "RESULTADO", "fase": "Resultado: Solicitud atendida", "hito": "queja: falta su servicio (U14)", "instrucciones": [{"campo": "Resultado esperado", "valor": "Solicitud atendida", "ejemplo": "queja: falta su servicio (U14)", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/4.3.2_Gestionar_las_solicitudes_de_servicios/015.webp", "visor": "../../../../visor_instructivos/index.html?p=4.3.2_Gestionar_las_solicitudes_de_servicios&d=15", "fuente": "Instructivo 4.3.2 · Gestionar las solicitudes de servicios", "n": 15, "texto": "Autoservicio: el alumno ve el estatus y la respuesta", "nota": "", "lineas": [], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 25, "slug": "script-19-calendario-de-calificaciones-y-componente-attrgrd", "titulo": "Script 19 · Calendario de calificaciones y componente ATTRGRD", "cap": "Capacidad 7", "url": "../25-script-19-calendario-de-calificaciones-y-componente-attrgrd/idiomas-25-script-19-calendario-de-calificaciones-y-componente-attrgrd.html", "is_curr": false};
   window.__ANTERIOR_FLUJO = {"num": 23, "slug": "script-05-curso-especial-para-egresados", "titulo": "Script 05 · Curso especial para egresados", "cap": "Capacidad 5 y 8", "url": "../23-script-05-curso-especial-para-egresados/idiomas-23-script-05-curso-especial-para-egresados.html", "is_curr": false};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-idiomas";
@@ -19535,13 +19723,20 @@ button.ai-fab:active,
       '<button type="button" class="gdv-btn gdv-cerrar" data-gdv="cerrar" aria-label="Cerrar">✕</button>' +
       '</div></div>' +
       '<div class="gdv-cuerpo">' +
-      '<aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
+      '<div class="gdv-pasos-wrap"><aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
+      '<button type="button" class="gdv-scroll-aviso" data-gdv="scroll-abajo" aria-label="Deslizar hacia abajo">▾ Más pasos abajo</button></div>' +
       '<div class="gdv-lienzo"><button type="button" class="gdv-nav" data-gdv="ant" aria-label="Anterior">‹</button>' +
       '<img class="gdv-img" alt=""><button type="button" class="gdv-nav" data-gdv="sig" aria-label="Siguiente">›</button></div>' +
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
     if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    var pEl = v.querySelector('.gdv-pasos');
+    if (pEl) {
+      pEl.addEventListener('scroll', function () {
+        actualizarScrollAviso(v);
+      }, { passive: true });
+    }
     // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
     // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
     window.addEventListener('click', function (e) {
@@ -19578,6 +19773,20 @@ button.ai-fab:active,
     else if (tipo === 'sig') moverVisorDiapo(1);
     else if (tipo === 'completa') { visorDiapo.completa = !visorDiapo.completa; pintarVisorDiapo(); }
     else if (tipo === 'ir') { visorDiapo.idx = parseInt(accion.getAttribute('data-gdv-idx'), 10) || 0; pintarVisorDiapo(); }
+    else if (tipo === 'scroll-abajo') {
+      var p = v.querySelector('.gdv-pasos');
+      if (p) p.scrollBy({ top: 160, behavior: 'smooth' });
+    }
+  }
+
+  function actualizarScrollAviso(v) {
+    if (!v) v = document.getElementById('guia-diapo-visor');
+    if (!v) return;
+    var p = v.querySelector('.gdv-pasos');
+    var btn = v.querySelector('.gdv-scroll-aviso');
+    if (!p || !btn) return;
+    var hayMas = (p.scrollHeight - p.scrollTop - p.clientHeight) > 16;
+    btn.classList.toggle('visible', hayMas);
   }
 
   function pintarVisorDiapo() {
@@ -19590,23 +19799,35 @@ button.ai-fab:active,
     v.querySelector('.gdv-pie').textContent = (d.texto || '') + '  (' + (visorDiapo.idx + 1) + ' de ' + visorDiapo.lista.length + ')';
     v.querySelector('[data-gdv="completa"]').textContent = visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa';
     v.querySelector('[data-gdv="visor"]').href = d.visor;
-    // En la última lámina, «›» pasa al paso siguiente (y en la primera, «‹» vuelve al anterior).
-    var ultima = visorDiapo.idx === visorDiapo.lista.length - 1;
+    // Navegación de láminas: el carrusel es continuo y navegable siempre que haya más de 1 lámina
+    var totalLaminas = (visorDiapo.lista && visorDiapo.lista.length) || 0;
+    var ultima = visorDiapo.idx === totalLaminas - 1;
     var primera = visorDiapo.idx === 0;
     var sig = pasoVecino(1), ant = pasoVecino(-1);
     visorDiapo.vecinos = { '1': sig, '-1': ant };  // se guardan al pintar: al hacer clic el foco puede cambiar
     var bSig = v.querySelector('[data-gdv="sig"]'), bAnt = v.querySelector('[data-gdv="ant"]');
-    bSig.disabled = ultima && !sig;
-    bAnt.disabled = primera && !ant;
+    bSig.disabled = (totalLaminas <= 1 && !sig);
+    bAnt.disabled = (totalLaminas <= 1 && !ant);
     bSig.classList.toggle('gdv-nav-paso', ultima && !!sig);
     bAnt.classList.toggle('gdv-nav-paso', primera && !!ant);
-    bSig.title = ultima && sig ? 'Siguiente paso: ' + nombrePaso(sig) : 'Lámina siguiente';
-    bAnt.title = primera && ant ? 'Paso anterior: ' + nombrePaso(ant) : 'Lámina anterior';
+    if (primera && ant) {
+      bAnt.title = 'Paso anterior: ' + nombrePaso(ant);
+    } else if (primera && totalLaminas > 1) {
+      bAnt.title = 'Última lámina (' + totalLaminas + ' de ' + totalLaminas + ')';
+    } else {
+      bAnt.title = 'Lámina anterior';
+    }
     if (ultima && sig) {
+      bSig.title = 'Siguiente paso: ' + nombrePaso(sig);
       v.querySelector('.gdv-pie').textContent += '  ·  › Siguiente paso: ' + nombrePaso(sig);
+    } else if (ultima && totalLaminas > 1) {
+      bSig.title = 'Primera lámina (1 de ' + totalLaminas + ')';
+    } else {
+      bSig.title = 'Lámina siguiente';
     }
     v.querySelector('.gdv-pasos').innerHTML = pasosVisorDiapoHtml(d);
     v.querySelector('.gdv-pasos').scrollTop = 0;
+    setTimeout(function () { actualizarScrollAviso(v); }, 60);
   }
 
   function pasosVisorDiapoHtml(d) {
@@ -19715,8 +19936,30 @@ button.ai-fab:active,
   }
 
   function moverVisorDiapo(paso) {
+    var total = (visorDiapo.lista && visorDiapo.lista.length) || 0;
     var nuevo = visorDiapo.idx + paso;
-    if (nuevo < 0 || nuevo >= visorDiapo.lista.length) return irAPasoDesdeVisor(paso);
+    if (nuevo < 0) {
+      if (visorDiapo.vecinos && visorDiapo.vecinos['-1']) {
+        return irAPasoDesdeVisor(-1);
+      }
+      if (total > 1) {
+        visorDiapo.idx = total - 1;
+        pintarVisorDiapo();
+        return;
+      }
+      return;
+    }
+    if (nuevo >= total) {
+      if (visorDiapo.vecinos && visorDiapo.vecinos['1']) {
+        return irAPasoDesdeVisor(1);
+      }
+      if (total > 1) {
+        visorDiapo.idx = 0;
+        pintarVisorDiapo();
+        return;
+      }
+      return;
+    }
     visorDiapo.idx = nuevo;
     pintarVisorDiapo();
   }

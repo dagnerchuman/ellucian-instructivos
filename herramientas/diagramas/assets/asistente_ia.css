@@ -18,6 +18,16 @@
 }
 
 /* 1. Botón Flotante Ultra-Elegante (FAB) */
+body.gdv-abierto button.ai-fab,
+body.gdv-abierto #ai-fab-btn,
+body.modal-abierto button.ai-fab,
+body.modal-abierto #ai-fab-btn {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 button.ai-fab,
 #ai-fab-btn {
   all: unset !important;

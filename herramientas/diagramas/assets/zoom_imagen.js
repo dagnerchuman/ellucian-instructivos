@@ -20,7 +20,7 @@
       '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
       '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
       '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
-      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Activar lupa (zoom flotante)" aria-pressed="false">' +
       '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
       '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
     zona.appendChild(barra);
@@ -42,7 +42,18 @@
       limitar();
       img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
       zona.classList.toggle('zi-zoom', s > 1);
-      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+      actualizarPct();
+    }
+    function actualizarPct() {
+      var pct = barra.querySelector('.zi-pct');
+      if (!pct) return;
+      if (lupaOn) {
+        pct.textContent = Math.round(lupaK * 100) + ' %';
+        pct.title = 'Aumento de la lupa (rueda del mouse para cambiarlo)';
+      } else {
+        pct.textContent = Math.round(s * 100) + ' %';
+        pct.title = 'Tamaño original (tecla 0)';
+      }
     }
     function zoomEn(f, cx, cy) {
       var r = zona.getBoundingClientRect();
@@ -58,13 +69,21 @@
     function reset() { s = 1; tx = 0; ty = 0; pintar(); }
 
     function moverLupa(e) {
+      if (e.target && e.target.closest && e.target.closest('.zi-barra')) {
+        lupa.hidden = true;
+        return;
+      }
+      var b = barra.getBoundingClientRect();
+      if (e.clientX >= b.left && e.clientX <= b.right && e.clientY >= b.top && e.clientY <= b.bottom) {
+        lupa.hidden = true;
+        return;
+      }
       var r = img.getBoundingClientRect();
       var x = e.clientX - r.left, y = e.clientY - r.top;
       if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
       var z = zona.getBoundingClientRect();
       lupa.hidden = false;
-      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
-      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.transform = 'translate3d(' + (e.clientX - z.left - LUPA_R) + 'px,' + (e.clientY - z.top - LUPA_R) + 'px, 0)';
       lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
       lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
       lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
@@ -74,14 +93,19 @@
       if (lupaOn) reset();
       lupa.hidden = true;
       zona.classList.toggle('zi-con-lupa', lupaOn);
-      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+      var btn = barra.querySelector('[data-zi="lupa"]');
+      if (btn) {
+        btn.setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+        btn.title = lupaOn ? 'Desactivar lupa' : 'Activar lupa (zoom flotante)';
+      }
+      actualizarPct();
     }
 
     function accion(a) {
       if (lupaOn && a !== 'lupa') alternarLupa();
       if (a === 'mas') zoomEn(1.4);
       else if (a === 'menos') zoomEn(1 / 1.4);
-      else if (a === 'reset') reset();
+      else if (a === 'reset') { if (lupaOn) { lupaK = 2.5; actualizarPct(); } else { reset(); } }
       else if (a === 'lupa') alternarLupa();
     }
     // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
@@ -98,6 +122,7 @@
       e.preventDefault();
       if (lupaOn) {
         lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        actualizarPct();
         moverLupa(e);
         return;
       }

@@ -854,13 +854,20 @@
       '<button type="button" class="gdv-btn gdv-cerrar" data-gdv="cerrar" aria-label="Cerrar">✕</button>' +
       '</div></div>' +
       '<div class="gdv-cuerpo">' +
-      '<aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
+      '<div class="gdv-pasos-wrap"><aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
+      '<button type="button" class="gdv-scroll-aviso" data-gdv="scroll-abajo" aria-label="Deslizar hacia abajo">▾ Más pasos abajo</button></div>' +
       '<div class="gdv-lienzo"><button type="button" class="gdv-nav" data-gdv="ant" aria-label="Anterior">‹</button>' +
       '<img class="gdv-img" alt=""><button type="button" class="gdv-nav" data-gdv="sig" aria-label="Siguiente">›</button></div>' +
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
     if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    var pEl = v.querySelector('.gdv-pasos');
+    if (pEl) {
+      pEl.addEventListener('scroll', function () {
+        actualizarScrollAviso(v);
+      }, { passive: true });
+    }
     // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
     // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
     window.addEventListener('click', function (e) {
@@ -897,6 +904,20 @@
     else if (tipo === 'sig') moverVisorDiapo(1);
     else if (tipo === 'completa') { visorDiapo.completa = !visorDiapo.completa; pintarVisorDiapo(); }
     else if (tipo === 'ir') { visorDiapo.idx = parseInt(accion.getAttribute('data-gdv-idx'), 10) || 0; pintarVisorDiapo(); }
+    else if (tipo === 'scroll-abajo') {
+      var p = v.querySelector('.gdv-pasos');
+      if (p) p.scrollBy({ top: 160, behavior: 'smooth' });
+    }
+  }
+
+  function actualizarScrollAviso(v) {
+    if (!v) v = document.getElementById('guia-diapo-visor');
+    if (!v) return;
+    var p = v.querySelector('.gdv-pasos');
+    var btn = v.querySelector('.gdv-scroll-aviso');
+    if (!p || !btn) return;
+    var hayMas = (p.scrollHeight - p.scrollTop - p.clientHeight) > 16;
+    btn.classList.toggle('visible', hayMas);
   }
 
   function pintarVisorDiapo() {
@@ -909,23 +930,35 @@
     v.querySelector('.gdv-pie').textContent = (d.texto || '') + '  (' + (visorDiapo.idx + 1) + ' de ' + visorDiapo.lista.length + ')';
     v.querySelector('[data-gdv="completa"]').textContent = visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa';
     v.querySelector('[data-gdv="visor"]').href = d.visor;
-    // En la última lámina, «›» pasa al paso siguiente (y en la primera, «‹» vuelve al anterior).
-    var ultima = visorDiapo.idx === visorDiapo.lista.length - 1;
+    // Navegación de láminas: el carrusel es continuo y navegable siempre que haya más de 1 lámina
+    var totalLaminas = (visorDiapo.lista && visorDiapo.lista.length) || 0;
+    var ultima = visorDiapo.idx === totalLaminas - 1;
     var primera = visorDiapo.idx === 0;
     var sig = pasoVecino(1), ant = pasoVecino(-1);
     visorDiapo.vecinos = { '1': sig, '-1': ant };  // se guardan al pintar: al hacer clic el foco puede cambiar
     var bSig = v.querySelector('[data-gdv="sig"]'), bAnt = v.querySelector('[data-gdv="ant"]');
-    bSig.disabled = ultima && !sig;
-    bAnt.disabled = primera && !ant;
+    bSig.disabled = (totalLaminas <= 1 && !sig);
+    bAnt.disabled = (totalLaminas <= 1 && !ant);
     bSig.classList.toggle('gdv-nav-paso', ultima && !!sig);
     bAnt.classList.toggle('gdv-nav-paso', primera && !!ant);
-    bSig.title = ultima && sig ? 'Siguiente paso: ' + nombrePaso(sig) : 'Lámina siguiente';
-    bAnt.title = primera && ant ? 'Paso anterior: ' + nombrePaso(ant) : 'Lámina anterior';
+    if (primera && ant) {
+      bAnt.title = 'Paso anterior: ' + nombrePaso(ant);
+    } else if (primera && totalLaminas > 1) {
+      bAnt.title = 'Última lámina (' + totalLaminas + ' de ' + totalLaminas + ')';
+    } else {
+      bAnt.title = 'Lámina anterior';
+    }
     if (ultima && sig) {
+      bSig.title = 'Siguiente paso: ' + nombrePaso(sig);
       v.querySelector('.gdv-pie').textContent += '  ·  › Siguiente paso: ' + nombrePaso(sig);
+    } else if (ultima && totalLaminas > 1) {
+      bSig.title = 'Primera lámina (1 de ' + totalLaminas + ')';
+    } else {
+      bSig.title = 'Lámina siguiente';
     }
     v.querySelector('.gdv-pasos').innerHTML = pasosVisorDiapoHtml(d);
     v.querySelector('.gdv-pasos').scrollTop = 0;
+    setTimeout(function () { actualizarScrollAviso(v); }, 60);
   }
 
   function pasosVisorDiapoHtml(d) {
@@ -1034,8 +1067,30 @@
   }
 
   function moverVisorDiapo(paso) {
+    var total = (visorDiapo.lista && visorDiapo.lista.length) || 0;
     var nuevo = visorDiapo.idx + paso;
-    if (nuevo < 0 || nuevo >= visorDiapo.lista.length) return irAPasoDesdeVisor(paso);
+    if (nuevo < 0) {
+      if (visorDiapo.vecinos && visorDiapo.vecinos['-1']) {
+        return irAPasoDesdeVisor(-1);
+      }
+      if (total > 1) {
+        visorDiapo.idx = total - 1;
+        pintarVisorDiapo();
+        return;
+      }
+      return;
+    }
+    if (nuevo >= total) {
+      if (visorDiapo.vecinos && visorDiapo.vecinos['1']) {
+        return irAPasoDesdeVisor(1);
+      }
+      if (total > 1) {
+        visorDiapo.idx = 0;
+        pintarVisorDiapo();
+        return;
+      }
+      return;
+    }
     visorDiapo.idx = nuevo;
     pintarVisorDiapo();
   }

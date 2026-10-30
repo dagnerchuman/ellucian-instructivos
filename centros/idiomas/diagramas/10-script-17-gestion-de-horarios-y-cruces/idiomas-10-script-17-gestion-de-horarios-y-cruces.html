@@ -16649,7 +16649,7 @@ html:not([data-theme="dark"]) .guia-diapo {
 .guia-diapo-visor {
   position: fixed;
   inset: 0;
-  z-index: 100000;
+  z-index: 1000000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16697,27 +16697,94 @@ html:not([data-theme="dark"]) .gdv-panel {
 .gdv-btn:hover { border-color: #8b5cf6; }
 .gdv-cuerpo {
   display: grid;
-  grid-template-columns: minmax(250px, 1fr) 3fr;
+  grid-template-columns: minmax(260px, 1fr) 3fr;
   gap: 0.75rem;
   min-height: 0;
   flex: 1 1 auto;
 }
-.gdv-pasos {
+.gdv-pasos-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
   max-height: calc(100vh - 9rem);
-  overflow-y: auto;
-  padding: 0.6rem 0.7rem;
+}
+.gdv-pasos {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  padding: 0.6rem 0.7rem 2rem;
   border-radius: 0.5rem;
   border: 1px solid rgba(148, 163, 184, 0.25);
   background: rgba(30, 41, 59, 0.55);
   font-size: 0.8rem;
   line-height: 1.45;
   scrollbar-width: thin;
-  scrollbar-color: #8b5cf6 transparent;
+  scrollbar-color: #7030A0 rgba(148, 163, 184, 0.2);
 }
 html:not([data-theme="dark"]) .gdv-pasos {
   background: #f8fafc;
   border-color: #e2e8f0;
+}
+/* Barra de scroll visible siempre para Mac / laptops */
+.gdv-pasos::-webkit-scrollbar {
+  width: 8px;
+}
+.gdv-pasos::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.15);
+  border-radius: 999px;
+}
+.gdv-pasos::-webkit-scrollbar-thumb {
+  background: #7030A0;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.gdv-pasos::-webkit-scrollbar-thumb:hover {
+  background: #5b21b6;
+}
+
+/* Aviso flotante animado para indicar que hay más pasos abajo */
+.gdv-scroll-aviso {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #7030A0;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(112, 48, 160, 0.5);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+.gdv-scroll-aviso.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+  animation: gdv-rebote 2s infinite ease-in-out;
+}
+.gdv-scroll-aviso:hover {
+  background: #5b21b6;
+  transform: translateX(-50%) translateY(-2px);
+}
+@keyframes gdv-rebote {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
 }
 .gdv-bloque + .gdv-bloque {
   margin-top: 0.8rem;
@@ -16850,20 +16917,39 @@ html:not([data-theme="dark"]) .gdv-pasos {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 2.4rem;
-  height: 2.4rem;
+  z-index: 15;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 999px;
-  border: none;
-  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: #ffffff;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
 }
-.gdv-nav[data-gdv="ant"] { left: 0.4rem; }
-.gdv-nav[data-gdv="sig"] { right: 0.4rem; }
-.gdv-nav:disabled { opacity: 0.25; cursor: default; }
-.gdv-nav.gdv-nav-paso { background: #166534; color: #fff; box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.25); }
+.gdv-nav:hover:not(:disabled) {
+  background: #7030A0;
+  transform: translateY(-50%) scale(1.08);
+}
+.gdv-nav:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+.gdv-nav[data-gdv="ant"] { left: 0.75rem; }
+.gdv-nav[data-gdv="sig"] { right: 0.75rem; }
+.gdv-nav:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.gdv-nav.gdv-nav-paso { background: #166534; color: #fff; box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.35); }
 .gdv-pie { font-size: 0.8rem; text-align: center; opacity: 0.85; white-space: pre-wrap; }
 body.gdv-abierto { overflow: hidden; }
 
@@ -17112,6 +17198,16 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 }
 
 /* 1. Botón Flotante Ultra-Elegante (FAB) */
+body.gdv-abierto button.ai-fab,
+body.gdv-abierto #ai-fab-btn,
+body.modal-abierto button.ai-fab,
+body.modal-abierto #ai-fab-btn {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 button.ai-fab,
 #ai-fab-btn {
   all: unset !important;
@@ -18309,68 +18405,135 @@ button.ai-fab:active,
   touch-action: none;
   cursor: zoom-in;
 }
-.zi-zona > img {
+
+.zi-zona>img {
   transform-origin: 0 0;
   will-change: transform;
   user-select: none;
   -webkit-user-drag: none;
 }
-.zi-zona.zi-zoom { cursor: grab; }
-.zi-zona.zi-arrastrando { cursor: grabbing; }
-.zi-zona.zi-con-lupa { cursor: none; }
+
+.zi-zona.zi-zoom {
+  cursor: grab;
+}
+
+.zi-zona.zi-arrastrando {
+  cursor: grabbing;
+}
+
+.zi-zona.zi-con-lupa {
+  cursor: none;
+  overflow: visible;
+  /* La lente circular no se corta en los bordes de la lámina */
+}
+
 .zi-barra {
   position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  z-index: 3;
+  right: 4.5rem;
+  bottom: 1.5rem;
+  z-index: 10;
   display: flex;
-  gap: 0.2rem;
-  padding: 0.2rem;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.5rem;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.78);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   line-height: 1;
   white-space: nowrap;
   cursor: default;
+  user-select: none;
 }
+
 .zi-barra button {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  min-width: 1.9rem;
-  height: 1.9rem;
-  padding: 0 0.5rem;
+  gap: 0.3rem;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.55rem;
   border: none;
   border-radius: 999px;
   background: transparent;
   color: #ffffff;
   font: inherit;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   justify-content: center;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
+
 .zi-barra button:hover,
-.zi-barra button:focus-visible { background: rgba(255, 255, 255, 0.16); outline: none; }
-.zi-barra .zi-pct { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
-.zi-barra .zi-lupa-btn { padding-right: 0.7rem; }
-.zi-barra .zi-lupa-btn[aria-pressed="true"] { background: #8b5cf6; }
+.zi-barra button:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+  outline: none;
+}
+
+.zi-barra button:active {
+  transform: scale(0.95);
+}
+
+.zi-barra .zi-pct {
+  min-width: 3.6rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.zi-barra .zi-lupa-btn {
+  padding: 0 1.6rem 0 0.85rem;
+  gap: 0.4rem;
+}
+
+.zi-barra .zi-lupa-btn svg {
+  flex-shrink: 0;
+}
+
+.zi-barra .zi-lupa-btn[aria-pressed="true"] {
+  background: #7030A0;
+  /* Morado institucional USS */
+  color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(112, 48, 160, 0.45);
+}
+
 .zi-lupa {
   position: absolute;
-  z-index: 2;
+  top: 0;
+  left: 0;
+  z-index: 20;
   width: 190px;
   height: 190px;
   border-radius: 50%;
-  border: 3px solid #8b5cf6;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border: 3px solid #7030A0;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), inset 0 0 0 2px rgba(255, 255, 255, 0.75);
   background-color: #ffffff;
   background-repeat: no-repeat;
   pointer-events: none;
-}
-@media (hover: none) {
-  .zi-barra .zi-lupa-btn { display: none; }
+  will-change: transform;
 }
 
+/* Retículo central de precisión */
+.zi-lupa::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(112, 48, 160, 0.85);
+  box-shadow: 0 0 0 1.5px #ffffff;
+  pointer-events: none;
+}
+
+@media (hover: none) {
+  .zi-barra .zi-lupa-btn {
+    display: none;
+  }
+}
 </style>
 <!-- === ASISTENTE IA CENTROS EMPRESARIALES USS (WIDGET GLOBAL) === -->
 <button type="button" class="ai-fab" id="ai-fab-btn" aria-label="Abrir Asistente IA de Centros Empresariales" title="Asistente IA · Banner Student & Centros Empresariales USS">
@@ -18550,7 +18713,7 @@ button.ai-fab:active,
       '<button type="button" data-zi="menos" title="Alejar (tecla −)" aria-label="Alejar">−</button>' +
       '<button type="button" data-zi="reset" class="zi-pct" title="Tamaño original (tecla 0)">100 %</button>' +
       '<button type="button" data-zi="mas" title="Acercar (tecla +)" aria-label="Acercar">+</button>' +
-      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Lupa: pase el mouse sobre la imagen; la rueda cambia el aumento" aria-pressed="false">' +
+      '<button type="button" data-zi="lupa" class="zi-lupa-btn" title="Activar lupa (zoom flotante)" aria-pressed="false">' +
       '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/>' +
       '<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Lupa</button>';
     zona.appendChild(barra);
@@ -18572,7 +18735,18 @@ button.ai-fab:active,
       limitar();
       img.style.transform = s === 1 ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
       zona.classList.toggle('zi-zoom', s > 1);
-      barra.querySelector('.zi-pct').textContent = Math.round(s * 100) + ' %';
+      actualizarPct();
+    }
+    function actualizarPct() {
+      var pct = barra.querySelector('.zi-pct');
+      if (!pct) return;
+      if (lupaOn) {
+        pct.textContent = Math.round(lupaK * 100) + ' %';
+        pct.title = 'Aumento de la lupa (rueda del mouse para cambiarlo)';
+      } else {
+        pct.textContent = Math.round(s * 100) + ' %';
+        pct.title = 'Tamaño original (tecla 0)';
+      }
     }
     function zoomEn(f, cx, cy) {
       var r = zona.getBoundingClientRect();
@@ -18588,13 +18762,21 @@ button.ai-fab:active,
     function reset() { s = 1; tx = 0; ty = 0; pintar(); }
 
     function moverLupa(e) {
+      if (e.target && e.target.closest && e.target.closest('.zi-barra')) {
+        lupa.hidden = true;
+        return;
+      }
+      var b = barra.getBoundingClientRect();
+      if (e.clientX >= b.left && e.clientX <= b.right && e.clientY >= b.top && e.clientY <= b.bottom) {
+        lupa.hidden = true;
+        return;
+      }
       var r = img.getBoundingClientRect();
       var x = e.clientX - r.left, y = e.clientY - r.top;
       if (x < 0 || y < 0 || x > r.width || y > r.height) { lupa.hidden = true; return; }
       var z = zona.getBoundingClientRect();
       lupa.hidden = false;
-      lupa.style.left = (e.clientX - z.left - LUPA_R) + 'px';
-      lupa.style.top = (e.clientY - z.top - LUPA_R) + 'px';
+      lupa.style.transform = 'translate3d(' + (e.clientX - z.left - LUPA_R) + 'px,' + (e.clientY - z.top - LUPA_R) + 'px, 0)';
       lupa.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
       lupa.style.backgroundSize = (r.width * lupaK) + 'px ' + (r.height * lupaK) + 'px';
       lupa.style.backgroundPosition = (LUPA_R - x * lupaK) + 'px ' + (LUPA_R - y * lupaK) + 'px';
@@ -18604,14 +18786,19 @@ button.ai-fab:active,
       if (lupaOn) reset();
       lupa.hidden = true;
       zona.classList.toggle('zi-con-lupa', lupaOn);
-      barra.querySelector('[data-zi="lupa"]').setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+      var btn = barra.querySelector('[data-zi="lupa"]');
+      if (btn) {
+        btn.setAttribute('aria-pressed', lupaOn ? 'true' : 'false');
+        btn.title = lupaOn ? 'Desactivar lupa' : 'Activar lupa (zoom flotante)';
+      }
+      actualizarPct();
     }
 
     function accion(a) {
       if (lupaOn && a !== 'lupa') alternarLupa();
       if (a === 'mas') zoomEn(1.4);
       else if (a === 'menos') zoomEn(1 / 1.4);
-      else if (a === 'reset') reset();
+      else if (a === 'reset') { if (lupaOn) { lupaK = 2.5; actualizarPct(); } else { reset(); } }
       else if (a === 'lupa') alternarLupa();
     }
     // Si la página atiende los clics antes (captura), puede llamar a ctl.accion(data-zi) por su cuenta.
@@ -18628,6 +18815,7 @@ button.ai-fab:active,
       e.preventDefault();
       if (lupaOn) {
         lupaK = Math.min(6, Math.max(1.5, lupaK * Math.exp(-e.deltaY * 0.002)));
+        actualizarPct();
         moverLupa(e);
         return;
       }
@@ -18694,7 +18882,7 @@ button.ai-fab:active,
 })();
 
 (function () {
-  var GUIA_MAP = {"c0": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "CASO", "fase": "Situación: Conflicto horario", "hito": "mismo bloque y docente", "instrucciones": [{"campo": "Situación inicial", "valor": "Conflicto horario", "ejemplo": "mismo bloque y docente", "tipo": "Contexto", "detalle": "Punto de partida del script: mismo bloque y docente."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/012.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/012.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=12", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 12, "texto": "Premisa: el NRC tiene su bloque de horario en SSASECT", "nota": "", "lineas": [{"num": "", "texto": "Premisa: SSASECT Horario"}, {"num": "", "texto": "Se requiere que los NRC a los cuales se fuera a asignar un docente se encuentren programados y con al menos un bloque de horario definido (SSASECT)."}], "marcas": {}}]}, "c1": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "SSASECT", "fase": "Paso 1: horario sección A", "hito": "", "instrucciones": [{"campo": "Horario Sección Origen", "valor": "NRC 1021", "ejemplo": "-", "tipo": "Acción", "detalle": "Programación del NRC 1021 con bloque Lunes y Miércoles 08:00–12:00, docente 100582059."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/029.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=29", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 29, "texto": "SSASECT: horario de la sesión del NRC", "nota": "", "lineas": [{"num": "", "texto": "En la pestaña Instructor y horas de reunión, Subpestaña Fechas de reunión, ingrese la siguiente información:"}, {"num": "21", "texto": "Defina la Hora de reunión que corresponda a la sesión. Puede hacer esto de dos maneras:"}, {"num": "", "texto": "Seleccionando de la tabla de horas de reunión los horarios predefinidos. De esta manera se llenan automáticamente el tipo de reunión (CLAS por defecto, pero puede ser modificada), fechas de inicio y fin y hora de inicio y fin (formato de 24 horas)."}, {"num": "", "texto": "Ingresando en los campos Tipo de reunión, fechas de inicio y fin y hora de inicio y fin (formato de 24 horas)."}, {"num": "22", "texto": "Seleccione los días de la semana que corresponden al horario definido para la sesión de clases."}, {"num": "23", "texto": "En el campo Indicador de sesión, por defecto se muestra la sesión 01 siempre. Si el NRC va a ser dictado por más de un docente, en cada sesión que corresponda debe asignar un indicador diferente (02, 03, respectivamente) por cada docente que dicte la asignatura."}, {"num": "24", "texto": "Guarde la información."}, {"num": "", "texto": "Las fechas de inicio y fin, inicialmente, son heredadas de la parte de período en la que se ha programado el NRC, pero éstas pueden ser modificadas en cada registro que se ingrese."}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/030.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/030.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=30", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 30, "texto": "SSASECT: horas por semana del bloque", "nota": "", "lineas": [{"num": "", "texto": "En la pestaña Instructor y horas de reunión, Subpestaña Créditos y ubicación de reunión, se muestra la siguiente información:"}, {"num": "25", "texto": "En el campo Tipo de horario, se refleja el mismo tipo de horario que se ha declarado en la pestaña Información de sección de curso. Usted puede modificar el tipo de horario para la sesión que corresponda (si la asignatura tiene más de un tipo de horario asociado en el catálogo)."}, {"num": "26", "texto": "Según las horas que se cargan en el horario de cada sesión, el sistema muestra el cálculo automático de las horas por semana que tiene cada sesión. En Ellucian Student este cálculo se basa en una hora académica definida en SIATERM."}, {"num": "27", "texto": "En la primera sesión se muestran los créditos de la asignatura."}, {"num": "28", "texto": "Si agregó o modificó alguna información, guarde los cambios."}], "marcas": {}}]}, "c2": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "SSASECT", "fase": "Paso 2: asignar a sección B", "hito": "", "instrucciones": [{"campo": "Asignación a Sección Destino", "valor": "NRC 1026", "ejemplo": "-", "tipo": "Captura", "detalle": "Apertura de NRC 1026 en el mismo horario e ingreso del mismo docente."}, {"campo": "Detección de Conflicto", "valor": "SSASECT", "ejemplo": "-", "tipo": "Acción", "detalle": "Banner emite alerta: «ERROR: Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso?»."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/015.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=15", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 15, "texto": "Bloque Instructor: el mismo docente en el otro NRC", "nota": "", "lineas": [{"num": "", "texto": "En el bloque ‘Instructor’, según la sesión que corresponda:"}, {"num": "1", "texto": "Ingrese el ID del docente a través de dos opciones:"}, {"num": "", "texto": "Directamente en el campo ‘ID’, si lo conoce"}, {"num": "", "texto": "Por medio de la opción Consultar docentes disponibles desde el Menú Relacionado (se explica en las diapositivas 17 a 19)"}], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/016.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=16", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 16, "texto": "SIAFAVL: consultar docentes disponibles", "nota": "", "lineas": [{"num": "", "texto": "Consultar docentes disponibles:"}, {"num": "1", "texto": "Desde el Menú Relacionado, seleccione la opción Consultar docentes disponibles (SIAFAVL)"}, {"num": "2", "texto": "El sistema muestra la página Consulta de disponibilidad de docente (SIAFAVL) con el período y NRC heredados de la página SSASECT. Presione el botón Ir."}], "marcas": {}}]}, "c3": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "SSASECT", "fase": "Paso 3: alerta de conflicto", "hito": "alerta cruce horario instructor", "instrucciones": [{"campo": "Autorización de Sobrepaso", "valor": "SSASECT", "ejemplo": "-", "tipo": "Captura", "detalle": "Aceptación con OK, marcando automáticamente el «Indicador de sobrepaso»."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/020.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/020.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=20", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 20, "texto": "Banner impide asignar al docente por cruce de horario", "nota": "", "lineas": [{"num": "", "texto": "La imagen representa la notificación de Banner que impide la asignación de docentes cuando estos poseen algún conflicto de horario frente a la sesión programada. Para sobrepasar aquello es que se debe activar la casilla ‘indicador de sobrepaso’ permitiendo así la asignación de los docentes al NRC y sesión respectiva."}, {"num": "", "texto": "Al guardar los registros con el ‘indicador de sobrepaso’ activo, se omite la restricción asociada al conflicto de horario del docente."}], "marcas": {}}]}, "c4": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "SSASECT", "fase": "Paso 4: crear sobrepaso", "hito": "Indicador de sobrepaso docente", "instrucciones": [{"campo": "Auditoría de Carga", "valor": "SIAASGN", "ejemplo": "-", "tipo": "Verificación", "detalle": "(SIAASGN) Verificación de horas simultáneas asignadas al docente sin duplicidad de FTE."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/019.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=19", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 19, "texto": "Indicador de sobrepaso del docente y porcentaje", "nota": "", "lineas": [{"num": "", "texto": "Toda vez asignado el o los docentes:"}, {"num": "2", "texto": "Si hay más de un docente, puede ajustar el porcentaje de responsabilidad de los mismos sobre el NRC. Este concepto está asociado al porcentaje de la carga de trabajo que estaría asumiendo el docente durante el desarrollo de la actividad educativa del NRC."}, {"num": "3", "texto": "La casilla ‘Indicador de principal’ debe estar activa solamente para uno de los docentes, en caso de que haya más de uno."}, {"num": "4", "texto": "La casilla ‘Indicador de sobrepaso’ se deja activa cuando el docente, teniendo conflicto de horario con la sesión programada, de todas formas, deseamos quede asociado."}, {"num": "5", "texto": "El campo ‘porcentaje de sesión’ representa el porcentaje del tiempo de contacto que dedicará el docente a la sesión en la cual está siendo asociado. Puede ser ajustado para cada docente."}, {"num": "6", "texto": "Guarde la información ingresada."}], "marcas": {}}]}, "cr": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "RESULTADO", "fase": "Resultado: Conflicto resuelto", "hito": "docente con sobrepaso", "instrucciones": [{"campo": "Resultado esperado", "valor": "Conflicto resuelto", "ejemplo": "docente con sobrepaso", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/024.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=24", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 24, "texto": "SIAASGN: el docente con los dos NRC en su carga", "nota": "", "lineas": [{"num": "", "texto": "Configuraciones: SIAASGN Asignación de docente 2/6"}, {"num": "", "texto": "Si hicimos alguna modificación, guardamos"}, {"num": "", "texto": "En esta sección se visualiza la carga de trabajo por NRC que tenga asociado el docente. Inclusive podemos realizar algunas modificaciones a los porcentajes de sesión y responsabilidad. Adicionalmente podemos sobrepasar la carga de trabajo que viene de SCACRSE y también asignar o cambiar el tipo de contrato que tiene el docente (podemos predefinir que cargue un contrato por defecto en SIAINST)."}, {"num": "", "texto": "Bloque siguiente"}], "marcas": {}}]}};
+  var GUIA_MAP = {"c0": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "CASO", "fase": "Situación: Conflicto horario", "hito": "mismo bloque y docente", "instrucciones": [{"campo": "Situación inicial", "valor": "Conflicto horario", "ejemplo": "mismo bloque y docente", "tipo": "Contexto", "detalle": "Punto de partida del script: mismo bloque y docente."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/012.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/012.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=12", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 12, "texto": "Premisa: el NRC tiene su bloque de horario en SSASECT", "nota": "", "lineas": [], "marcas": {}}]}, "c1": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "SSASECT", "fase": "Paso 1: horario sección A", "hito": "", "instrucciones": [{"campo": "Horario Sección Origen", "valor": "NRC 1021", "ejemplo": "-", "tipo": "Acción", "detalle": "Programación del NRC 1021 con bloque Lunes y Miércoles 08:00–12:00, docente 100582059."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/029.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/029.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=29", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 29, "texto": "SSASECT: horario de la sesión del NRC", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/recortes/030.webp", "completa": "../../../../visor_instructivos/diapositivas/5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos/030.webp", "visor": "../../../../visor_instructivos/index.html?p=5.3_4.1.4.1.6_Instructivo_Registrar_la_oferta_horaria_de_los_cursos&d=30", "fuente": "Instructivo 5.3 · Registrar la oferta horaria de los cursos", "n": 30, "texto": "SSASECT: horas por semana del bloque", "nota": "", "lineas": [], "marcas": {}}]}, "c2": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "SSASECT", "fase": "Paso 2: asignar a sección B", "hito": "", "instrucciones": [{"campo": "Asignación a Sección Destino", "valor": "NRC 1026", "ejemplo": "-", "tipo": "Captura", "detalle": "Apertura de NRC 1026 en el mismo horario e ingreso del mismo docente."}, {"campo": "Detección de Conflicto", "valor": "SSASECT", "ejemplo": "-", "tipo": "Acción", "detalle": "Banner emite alerta: «ERROR: Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso?»."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/015.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/015.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=15", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 15, "texto": "Bloque Instructor: el mismo docente en el otro NRC", "nota": "", "lineas": [], "marcas": {}}, {"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/016.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/016.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=16", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 16, "texto": "SIAFAVL: consultar docentes disponibles", "nota": "", "lineas": [], "marcas": {}}]}, "c3": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "SSASECT", "fase": "Paso 3: alerta de conflicto", "hito": "alerta cruce horario instructor", "instrucciones": [{"campo": "Autorización de Sobrepaso", "valor": "SSASECT", "ejemplo": "-", "tipo": "Captura", "detalle": "Aceptación con OK, marcando automáticamente el «Indicador de sobrepaso»."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/020.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/020.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=20", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 20, "texto": "Banner impide asignar al docente por cruce de horario", "nota": "", "lineas": [], "marcas": {}}]}, "c4": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "SSASECT", "fase": "Paso 4: crear sobrepaso", "hito": "Indicador de sobrepaso docente", "instrucciones": [{"campo": "Auditoría de Carga", "valor": "SIAASGN", "ejemplo": "-", "tipo": "Verificación", "detalle": "(SIAASGN) Verificación de horas simultáneas asignadas al docente sin duplicidad de FTE."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/recortes/019.webp", "completa": "../../../../visor_instructivos/diapositivas/6.2.1_Asignar_Docentes/019.webp", "visor": "../../../../visor_instructivos/index.html?p=6.2.1_Asignar_Docentes&d=19", "fuente": "Instructivo 6.2.1 · Asignar docentes", "n": 19, "texto": "Indicador de sobrepaso del docente y porcentaje", "nota": "", "lineas": [], "marcas": {}}]}, "cr": {"titulo": "Script 17 · Gestión de horarios y cruces · referencia: prueba de Computación", "pantalla": "RESULTADO", "fase": "Resultado: Conflicto resuelto", "hito": "docente con sobrepaso", "instrucciones": [{"campo": "Resultado esperado", "valor": "Conflicto resuelto", "ejemplo": "docente con sobrepaso", "tipo": "Resultado", "detalle": "Estado final del caso una vez ejecutados todos los pasos anteriores."}], "diapositivas": [{"src": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/recortes/024.webp", "completa": "../../../../visor_instructivos/diapositivas/5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente/024.webp", "visor": "../../../../visor_instructivos/index.html?p=5.2_4.1.5.1_Instructivo_-_Carga_de_Trabajo_Docente&d=24", "fuente": "Instructivo 5.2 · Carga de trabajo docente", "n": 24, "texto": "SIAASGN: el docente con los dos NRC en su carga", "nota": "", "lineas": [], "marcas": {}}]}};
   window.__SIGUIENTE_FLUJO = {"num": 11, "slug": "script-18-a-auditoria-de-carga-docente", "titulo": "Script 18-A · Auditoría de carga docente", "cap": "Capacidad 5", "url": "../11-script-18-a-auditoria-de-carga-docente/idiomas-11-script-18-a-auditoria-de-carga-docente.html", "is_curr": false};
   window.__ANTERIOR_FLUJO = {"num": 9, "slug": "script-11-b-diseno-de-mallas-y-programas", "titulo": "Script 11-B · Diseño de mallas y programas", "cap": "Capacidad 1", "url": "../09-script-11-b-diseno-de-mallas-y-programas/idiomas-09-script-11-b-diseno-de-mallas-y-programas.html", "is_curr": false};
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-idiomas";
@@ -19549,13 +19737,20 @@ button.ai-fab:active,
       '<button type="button" class="gdv-btn gdv-cerrar" data-gdv="cerrar" aria-label="Cerrar">✕</button>' +
       '</div></div>' +
       '<div class="gdv-cuerpo">' +
-      '<aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
+      '<div class="gdv-pasos-wrap"><aside class="gdv-pasos" aria-label="Pasos de la diapositiva y de la guía"></aside>' +
+      '<button type="button" class="gdv-scroll-aviso" data-gdv="scroll-abajo" aria-label="Deslizar hacia abajo">▾ Más pasos abajo</button></div>' +
       '<div class="gdv-lienzo"><button type="button" class="gdv-nav" data-gdv="ant" aria-label="Anterior">‹</button>' +
       '<img class="gdv-img" alt=""><button type="button" class="gdv-nav" data-gdv="sig" aria-label="Siguiente">›</button></div>' +
       '</div>' +
       '<div class="gdv-pie"></div></div>';
     document.body.appendChild(v);
     if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.gdv-img'));
+    var pEl = v.querySelector('.gdv-pasos');
+    if (pEl) {
+      pEl.addEventListener('scroll', function () {
+        actualizarScrollAviso(v);
+      }, { passive: true });
+    }
     // Un clic fuera de la ficha del paso hace que Archify la cierre: los clics del visor se atienden aquí, en la
     // captura de window, y no siguen. Los toques (arrastrar, pellizcar) sí siguen, para el zoom de la lámina.
     window.addEventListener('click', function (e) {
@@ -19592,6 +19787,20 @@ button.ai-fab:active,
     else if (tipo === 'sig') moverVisorDiapo(1);
     else if (tipo === 'completa') { visorDiapo.completa = !visorDiapo.completa; pintarVisorDiapo(); }
     else if (tipo === 'ir') { visorDiapo.idx = parseInt(accion.getAttribute('data-gdv-idx'), 10) || 0; pintarVisorDiapo(); }
+    else if (tipo === 'scroll-abajo') {
+      var p = v.querySelector('.gdv-pasos');
+      if (p) p.scrollBy({ top: 160, behavior: 'smooth' });
+    }
+  }
+
+  function actualizarScrollAviso(v) {
+    if (!v) v = document.getElementById('guia-diapo-visor');
+    if (!v) return;
+    var p = v.querySelector('.gdv-pasos');
+    var btn = v.querySelector('.gdv-scroll-aviso');
+    if (!p || !btn) return;
+    var hayMas = (p.scrollHeight - p.scrollTop - p.clientHeight) > 16;
+    btn.classList.toggle('visible', hayMas);
   }
 
   function pintarVisorDiapo() {
@@ -19604,23 +19813,35 @@ button.ai-fab:active,
     v.querySelector('.gdv-pie').textContent = (d.texto || '') + '  (' + (visorDiapo.idx + 1) + ' de ' + visorDiapo.lista.length + ')';
     v.querySelector('[data-gdv="completa"]').textContent = visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa';
     v.querySelector('[data-gdv="visor"]').href = d.visor;
-    // En la última lámina, «›» pasa al paso siguiente (y en la primera, «‹» vuelve al anterior).
-    var ultima = visorDiapo.idx === visorDiapo.lista.length - 1;
+    // Navegación de láminas: el carrusel es continuo y navegable siempre que haya más de 1 lámina
+    var totalLaminas = (visorDiapo.lista && visorDiapo.lista.length) || 0;
+    var ultima = visorDiapo.idx === totalLaminas - 1;
     var primera = visorDiapo.idx === 0;
     var sig = pasoVecino(1), ant = pasoVecino(-1);
     visorDiapo.vecinos = { '1': sig, '-1': ant };  // se guardan al pintar: al hacer clic el foco puede cambiar
     var bSig = v.querySelector('[data-gdv="sig"]'), bAnt = v.querySelector('[data-gdv="ant"]');
-    bSig.disabled = ultima && !sig;
-    bAnt.disabled = primera && !ant;
+    bSig.disabled = (totalLaminas <= 1 && !sig);
+    bAnt.disabled = (totalLaminas <= 1 && !ant);
     bSig.classList.toggle('gdv-nav-paso', ultima && !!sig);
     bAnt.classList.toggle('gdv-nav-paso', primera && !!ant);
-    bSig.title = ultima && sig ? 'Siguiente paso: ' + nombrePaso(sig) : 'Lámina siguiente';
-    bAnt.title = primera && ant ? 'Paso anterior: ' + nombrePaso(ant) : 'Lámina anterior';
+    if (primera && ant) {
+      bAnt.title = 'Paso anterior: ' + nombrePaso(ant);
+    } else if (primera && totalLaminas > 1) {
+      bAnt.title = 'Última lámina (' + totalLaminas + ' de ' + totalLaminas + ')';
+    } else {
+      bAnt.title = 'Lámina anterior';
+    }
     if (ultima && sig) {
+      bSig.title = 'Siguiente paso: ' + nombrePaso(sig);
       v.querySelector('.gdv-pie').textContent += '  ·  › Siguiente paso: ' + nombrePaso(sig);
+    } else if (ultima && totalLaminas > 1) {
+      bSig.title = 'Primera lámina (1 de ' + totalLaminas + ')';
+    } else {
+      bSig.title = 'Lámina siguiente';
     }
     v.querySelector('.gdv-pasos').innerHTML = pasosVisorDiapoHtml(d);
     v.querySelector('.gdv-pasos').scrollTop = 0;
+    setTimeout(function () { actualizarScrollAviso(v); }, 60);
   }
 
   function pasosVisorDiapoHtml(d) {
@@ -19729,8 +19950,30 @@ button.ai-fab:active,
   }
 
   function moverVisorDiapo(paso) {
+    var total = (visorDiapo.lista && visorDiapo.lista.length) || 0;
     var nuevo = visorDiapo.idx + paso;
-    if (nuevo < 0 || nuevo >= visorDiapo.lista.length) return irAPasoDesdeVisor(paso);
+    if (nuevo < 0) {
+      if (visorDiapo.vecinos && visorDiapo.vecinos['-1']) {
+        return irAPasoDesdeVisor(-1);
+      }
+      if (total > 1) {
+        visorDiapo.idx = total - 1;
+        pintarVisorDiapo();
+        return;
+      }
+      return;
+    }
+    if (nuevo >= total) {
+      if (visorDiapo.vecinos && visorDiapo.vecinos['1']) {
+        return irAPasoDesdeVisor(1);
+      }
+      if (total > 1) {
+        visorDiapo.idx = 0;
+        pintarVisorDiapo();
+        return;
+      }
+      return;
+    }
     visorDiapo.idx = nuevo;
     pintarVisorDiapo();
   }

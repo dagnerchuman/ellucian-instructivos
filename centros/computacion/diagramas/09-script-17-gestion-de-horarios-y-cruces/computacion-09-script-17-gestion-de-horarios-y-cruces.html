@@ -16796,6 +16796,15 @@ html:not([data-theme="dark"]) .gdv-pasos {
   opacity: 1;
 }
 .gdv-ir:hover, .gdv-ir:focus-visible { background: rgba(139, 92, 246, 0.12); outline: none; }
+/* Fundamento de la fila («por_que» en datos.json): por qué se marca, se deja sin marcar o no se cambia (C182). */
+.gdv-porque {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  opacity: 0.78;
+}
+.guia-porque { display: block; margin-top: 0.3rem; }
 .gdv-aviso {
   margin: 0.55rem 0 0;
   font-size: 0.7rem;
@@ -19639,7 +19648,8 @@ button.ai-fab:active,
           : '';
         html += '<li class="gdv-item' + (num ? ' gdv-con-num' : '') + (otra >= 0 ? ' gdv-otra' : '') + (hecho ? ' gdv-hecho' : '') + '">' + marca +
           '<span><strong>' + escapeHtml(f.campo || '') + '</strong>' + (f.valor ? ': ' + escapeHtml(f.valor) : '') +
-          (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + ir + '</span></li>';
+          (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + ir +
+          (f.por_que ? '<small class="gdv-porque">' + escapeHtml(f.por_que) + '</small>' : '') + '</span></li>';
       });
       html += '</ul><p class="gdv-aviso">' + (hayMarcas
         ? 'Los números verdes son los mismos de la imagen.'
@@ -19871,7 +19881,8 @@ button.ai-fab:active,
         html += '<td><span class="' + valClass + '">' + valorDisplay + '</span></td>';
         html += '<td class="guia-ejemplo">' + (ejemploTxt && ejemploTxt !== '-' ? ('<span class="ejemplo-badge">' + escapeHtml(ejemploTxt) + '</span>') : '<span style="opacity:0.4;">—</span>') + '</td>';
         html += '<td><span class="' + tagClass + '">' + escapeHtml(item.tipo || '') + '</span></td>';
-        html += '<td class="guia-detalle">' + escapeHtml(item.detalle || '') + '</td>';
+        html += '<td class="guia-detalle">' + escapeHtml(item.detalle || '') +
+          (item.por_que ? '<span class="guia-porque"><strong>Por qué:</strong> ' + escapeHtml(item.por_que) + '</span>' : '') + '</td>';
         html += '</tr>';
       });
       html += '</tbody></table></div>';

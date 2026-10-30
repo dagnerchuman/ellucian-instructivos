@@ -3021,6 +3021,15 @@ html:not([data-theme="dark"]) .gdv-pasos {
   opacity: 1;
 }
 .gdv-ir:hover, .gdv-ir:focus-visible { background: rgba(139, 92, 246, 0.12); outline: none; }
+/* Fundamento de la fila («por_que» en datos.json): por qué se marca, se deja sin marcar o no se cambia (C182). */
+.gdv-porque {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  opacity: 0.78;
+}
+.guia-porque { display: block; margin-top: 0.3rem; }
 .gdv-aviso {
   margin: 0.55rem 0 0;
   font-size: 0.7rem;

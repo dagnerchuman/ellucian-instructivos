@@ -63,6 +63,12 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 - **Comprobar:** después de guardar, «Comenzar de nuevo» › misma área y periodo de la versión › Ir › regla › Regla. Si el usuario recargó la página, hay que volver a entrar a SMAAREA. También sirve **Regresar** › la misma regla › **Regla** (C181).
 - **El periodo se escribe a mano:** un doble o triple clic en el campo abre la lista «Códigos de periodos del catálogo», y su Intro elige la primera fila (999999). Clic › Fin › borrar › escribir (C181).
 
+### Regla de asistencia de un NRC (SOAATRK, C182)
+1. SOAATRK › periodo › Ir: salen las reglas del periodo (en 202656, la 2 del 10044 y la 3 del 10045).
+2. Clic en una fila › **+** del bloque › parte (X06) › Tab › materia › Tab › curso › Tab › NRC › Tab, esperando 1 a 2 s después de cada Tab. «Desplegar clase» y «Control de asistencia a clases» vienen marcadas.
+3. «Unidad de control» es una lista con búsqueda: escriba «P» y elija **Presente/Ausente**. La flecha abajo no cambia la opción: crea una fila vacía, que se quita con **–**.
+4. Las fechas las trae Banner de la parte. El usuario guarda; Banner pone el número de regla. Sin la regla, el NRC no sale en Faculty › Control de asistencia (C101).
+
 ### Cargar la fórmula de un NRC (SHAGCOM, C181)
 1. SHAGCOM › periodo y NRC › Ir. Si el plan está vacío, Banner pide primero la escala: «Ingresar la escala de calificación antes de continuar».
 2. Arriba, «Escala de calificación» **`VIG_11`** (no `AST_70`: con ella la final sale APRO, C120 y C123) › Tab › el usuario guarda.
@@ -97,6 +103,7 @@ Probada el 30/10/2026 con el **NRC 10045** (202656, `ESEC 00701`, X06, sesión T
 ## 6. Datos de prueba en TEST (29/10/2026)
 - **Alumno:** Arnold Vaca `S00912438` (Medicina `1PCSP15`, plan 1; `CMEMC38`; `IMEMI03` en el plan 4). En 202744 tiene los NRC 10001 a 10008 de otra persona: **no se tocan**.
 - **Otro alumno:** `100582059` (`CMEMC44`). **Alumno de Nidia:** `A00010005` (catálogo 202444; Basic I con 80 en 202646; en 202744 tiene 10023, 10024, 10022 y 10007; avisar a Nidia antes de usarlo).
-- **NRC:** 10045 (202656, X06, Computación; miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059, malla `MC44-01` › `ECOM-03` y fórmula en SHAGCOM desde el 30/10, C180 y C181), 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
+- **NRC:** 10045 (202656, X06, Computación; miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059, malla `MC44-01` › `ECOM-03`, fórmula en SHAGCOM y regla 3 de SOAATRK desde el 30/10, C180 a C182)
+- **SOATERM 202656** (solo consulta, C182): En progreso sin marcar, Permitir ✓, Plan de estudios requerido ✓; las demás casillas sin marcar; secuencia de inicio de NRC 10046., 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
 - **Acceso a TEST:** https://experience-test.elluciancloud.com/ussipantest, también en el botón «Banner TEST» de la galería y del visor del sitio (C178). Cada persona entra con su cuenta de Google.
 - Lo que quedó en TEST y falta limpiar: sección 4 de la guía de restricciones y C167.

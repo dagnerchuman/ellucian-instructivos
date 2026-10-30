@@ -963,7 +963,8 @@
           : '';
         html += '<li class="gdv-item' + (num ? ' gdv-con-num' : '') + (otra >= 0 ? ' gdv-otra' : '') + (hecho ? ' gdv-hecho' : '') + '">' + marca +
           '<span><strong>' + escapeHtml(f.campo || '') + '</strong>' + (f.valor ? ': ' + escapeHtml(f.valor) : '') +
-          (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + ir + '</span></li>';
+          (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + ir +
+          (f.por_que ? '<small class="gdv-porque">' + escapeHtml(f.por_que) + '</small>' : '') + '</span></li>';
       });
       html += '</ul><p class="gdv-aviso">' + (hayMarcas
         ? 'Los números verdes son los mismos de la imagen.'
@@ -1195,7 +1196,8 @@
         html += '<td><span class="' + valClass + '">' + valorDisplay + '</span></td>';
         html += '<td class="guia-ejemplo">' + (ejemploTxt && ejemploTxt !== '-' ? ('<span class="ejemplo-badge">' + escapeHtml(ejemploTxt) + '</span>') : '<span style="opacity:0.4;">—</span>') + '</td>';
         html += '<td><span class="' + tagClass + '">' + escapeHtml(item.tipo || '') + '</span></td>';
-        html += '<td class="guia-detalle">' + escapeHtml(item.detalle || '') + '</td>';
+        html += '<td class="guia-detalle">' + escapeHtml(item.detalle || '') +
+          (item.por_que ? '<span class="guia-porque"><strong>Por qué:</strong> ' + escapeHtml(item.por_que) + '</span>' : '') + '</td>';
         html += '</tr>';
       });
       html += '</tbody></table></div>';

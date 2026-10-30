@@ -77,13 +77,14 @@ Parte de periodo general: **CGE**.
 
 ## Mallas de las rutas en TEST (SMAPROG y SMAAREA, 30/10/2026, C172)
 - `CMEMC44` (XP 07): versión de 202454 a 999999, «Proyectada», «Cautivo», 4 cursos (Y); área **`MC44-01` «Ciclo I»** con reglas `ECOM-01` a `ECOM-04`, **las cuatro solo con `ESEC 00678`**.
-- `CMEMC42` (XP 05): `MC42-01`, `ECOM-04` solo con `ESEC 00682`.
+- `CMEMC42` (XP 05): `MC42-01` tenía las cuatro reglas `ECOM` solo con `ESEC 00682`. **Práctica en curso, modelo «3 de la ruta + 1 taller» (C174):** `ECOM-01` y `ECOM-02` con los 6 cursos de la ruta (`00682`, `00683`, `00684`, `00685`, `00686`, `00688`), guardadas; faltan `ECOM-03` (los mismos 6) y `ECOM-04` (quitar `00682`, poner los talleres `00696` a `00700`), y comprobar las cuatro al reabrir.
 - `CMEMC38` (XP 01): `MC38-01`, `ECOM-04` pide **4 de 11** (`00678`, `00679`, `00680`, `00682`, `00691`, `00694`, `00696` a `00700`).
 - **Diseño Web (`ESEC 00684`) no estaba en ninguna** de las áreas revisadas: se matricula por backoffice, pero no sale en Proyecciones del Autoservicio (C71) ni cuenta en CAPP. **Se agregó a `MC44-01`**, regla `ECOM-04`, condición 2 (C173). Quién completa las demás mallas: U52.
 - **Orden:** la malla (SMAAREA) va después de SCACRSE y antes de SSASECT (C173).
 
 ## Cursos conocidos en TEST
 Los de la hoja de NRC 202656 (ver `datos.json › cursos_conocidos`): ESEC 00678 Word 365, 00679 Excel 365, 00680 Canva, 00682 Excel Asociado, 00691 SPSS, 00694 Base de datos científicos (ruta 1), 00684 Diseño Web (rutas 5 y 7) y los talleres 00696 a 00700. ESEC 00650 es el curso de las primeras pruebas.
+En SCACRSE, sin NRC en la hoja (C174): 00681 Word Asociado, 00683 AutoCAD 2D, 00685 AutoCAD 3D, 00686 Software Bizagi, 00687 MS Project, 00688 Power BI y 00689 Sketchup.
 
 ## Escala de notas (SHAGRDE, Nivel C)
 

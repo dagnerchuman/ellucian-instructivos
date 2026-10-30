@@ -58,6 +58,9 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 - **SMAAREA** › área (por ejemplo `MC44-01`) › periodo › Ir › **⏫ una vez** desde el primer bloque lleva directo a «Anexo de curso/atributo de área» (las reglas). Con una regla seleccionada, botón **Regla**: el detalle muestra materia y curso de cada condición; **Regresar** vuelve. Si la tabla quedó corrida a la derecha, desplázala a la izquierda para ver Materia y curso (C172).
 - Para cambiar de área: «Comenzar de nuevo» (arriba a la derecha) › borrar el área › escribir la nueva › Tab › Ir.
 - **Agregar un curso a una regla** (C173): SMAAREA con el **periodo de la versión** (por ejemplo 202454, no el de la matrícula) › Anexo › regla › **Regla** › clic en una fila de Detalles › **+** de Detalles › Materia › Tab › curso › Tab › el usuario guarda. La columna «Condición» se numera sola al guardar.
+- **Varios cursos en una regla** (C174): un **+** por cada curso; la fila nueva sale debajo de la última (cada fila, unos 18 px más abajo). Después de cada Tab, espera 2 s a que Banner valide el curso. Antes de pedir el guardado, revisa con zoom que estén todas las filas («Registro n de n»). Una regla por guardado.
+- **Quitar un curso de una regla:** clic en la fila › **–** de Detalles (al lado del +) › el usuario guarda. Sin probar todavía: es lo que falta en `MC42-01` › `ECOM-04` (C174).
+- **Comprobar:** después de guardar, «Comenzar de nuevo» › misma área y periodo de la versión › Ir › regla › Regla. Si el usuario recargó la página, hay que volver a entrar a SMAAREA.
 
 ### Crear un NRC (SSASECT)
 - Ver la guía [ref-restricciones-y-prerrequisitos-por-programa.md](../../arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md), paso 2 de la sección 2.

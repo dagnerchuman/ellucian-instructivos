@@ -2204,7 +2204,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2625,7 +2625,7 @@
         "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existía y tenía alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059; cada página la deja escrita Claude, el usuario guarda y cada paso queda con su captura (C178 a C181).",
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Arnold Vaca (S00912438) también está con RE en el 10045 (C157). Antes del pase a historia, el usuario decide si se le da de baja (DD solo hasta el 31-OCT-2026) o si recibe nota.",
-        "avance": "Pasos 1 a 9 hechos en TEST el 30/10/2026, con sus capturas (C180 a C186). Sigue el paso 10 (Autoservicio: notas TA1, TA2, PA y EF).",
+        "avance": "Pasos 1 a 10 hechos en TEST el 30/10/2026, con sus capturas (C180 a C187). Sigue el paso 11 (SFASLST, revisar la nota final).",
         "pasos": [
           {
             "n": 1,
@@ -3443,9 +3443,102 @@
             "n": 10,
             "codigo": "Autoservicio",
             "accion": "ingresar las notas",
-            "dato": "TA1 · TA2 · PA · EF",
+            "dato": "TA1 · TA2 · PA · EF = 85 de 100 · final 17",
             "quien": "Docente",
-            "cita": "Instructivo 7.1.4, diap. 64 a 67 · C102"
+            "cita": "Instructivo 7.1.4, diap. 64 a 67 · C102 · C120 · C187",
+            "resultado": "Cada componente: 85 → 17. Calificaciones compuestas: 85 % y nota final 17 (Composite Calculation)",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Entrada",
+                  "…/FacultySelfService/ssb/gradeEntry#/gradebook › Libro de calificaciones",
+                  "Docente",
+                  "Botón «Ingresar calificaciones» de la tarjeta (C186)"
+                ],
+                [
+                  "Curso",
+                  "Buscar «10045» › clic en la fila › Componentes",
+                  "Docente",
+                  "La lista se duplica al recargar; con el buscador se elige bien (una vez abrió el 10044)"
+                ],
+                [
+                  "Componente",
+                  "TA1 › Lista de alumnos",
+                  "Docente",
+                  "Clic en el componente y espere a que se active «Lista de alumnos». Para el siguiente: atrás, buscar 10045 y Componentes otra vez"
+                ],
+                [
+                  "Puntaje",
+                  "85 (de 100)",
+                  "Docente",
+                  "La calificación no aparece hasta guardar"
+                ],
+                [
+                  "Guardar",
+                  "«Se guardó con éxito, la calificación para el NRC 10045 aún no se ha iniciado» (el último: «…todavía está en progreso»)",
+                  "Docente",
+                  "Con permiso del usuario"
+                ],
+                [
+                  "Porcentaje · calificación",
+                  "85 · 17",
+                  "Banner",
+                  "Escala VIG_11 (aprobatoria 55 = 11)"
+                ],
+                [
+                  "TA1 · TA2 · PA · EF",
+                  "85 · 85 · 85 · 85 → 17 cada uno",
+                  "Docente / Banner",
+                  "Pesos 0.15 · 0.15 · 0.40 · 0.30 (paso 6)"
+                ],
+                [
+                  "Calificaciones restantes",
+                  "1 en cada componente",
+                  "Banner",
+                  "Es Arnold Vaca, que no sale en la lista del componente"
+                ],
+                [
+                  "Calificaciones compuestas · 100582059",
+                  "Porcentaje final 85 · ATTRGRD 100 · calificación final 17 · Composite Calculation · 30-Oct-2026",
+                  "Banner",
+                  "Con VIG_11 arriba la final sale en número (17), no APRO como en el 10044 (C120, C123)"
+                ],
+                [
+                  "Calificaciones compuestas · Arnold",
+                  "N/D · ATTRGRD 0 · demás N.A. · sin final",
+                  "Banner",
+                  "Pendiente de la decisión del usuario"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "10-autoservicio-notas.png",
+                "texto": "Calificaciones compuestas: 85 % y final 17"
+              },
+              {
+                "archivo": "10-autoservicio-notas-b.png",
+                "texto": "Componentes del 10045 antes de las notas"
+              },
+              {
+                "archivo": "10-autoservicio-notas-c.png",
+                "texto": "TA1 con 85 escrito, antes de guardar"
+              },
+              {
+                "archivo": "10-autoservicio-notas-d.png",
+                "texto": "TA1 guardado: 85 % y calificación 17"
+              },
+              {
+                "archivo": "10-autoservicio-notas-e.png",
+                "texto": "EF guardado: «todavía está en progreso»"
+              }
+            ]
           },
           {
             "n": 11,

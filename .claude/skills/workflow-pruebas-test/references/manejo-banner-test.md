@@ -74,6 +74,7 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 2. Solo se marca la **columna de la fecha elegida** (resaltada a la derecha): pulse su encabezado o ‹ › y luego el círculo. Cada clic se guarda solo; el usuario autoriza las marcas antes.
 3. Clase › «Actualizar la asistencia en el libro de calificaciones» › el usuario pulsa **Sí**.
 4. Comprobar en `…/FacultySelfService/ssb/gradeEntry#/gradebook` › NRC › Componentes › ATTRGRD › Lista de alumnos.
+5. **Notas (C187):** en el libro, buscar el NRC (la lista se duplica al recargar) › Componentes › componente › esperar a que se active «Lista de alumnos» › puntaje › Guardar (con permiso). La calificación sale al guardar. Para el siguiente componente: atrás y otra vez. Al final, «Calificaciones compuestas» muestra el porcentaje y la nota final.
 
 ### Cargar la fórmula de un NRC (SHAGCOM, C181)
 1. SHAGCOM › periodo y NRC › Ir. Si el plan está vacío, Banner pide primero la escala: «Ingresar la escala de calificación antes de continuar».

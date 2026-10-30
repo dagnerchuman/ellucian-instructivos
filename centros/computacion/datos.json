@@ -536,7 +536,7 @@
       "slug": "demostracion-1-diseno-web",
       "titulo": "Demostración 1 · Diseño Web, nueva sección B (202656)",
       "capacidad": "Capacidades 1, 5 y 7",
-      "fuente": "C96 a C100, C119 a C124, C133",
+      "fuente": "C96 a C100, C119 a C124, C133, C172 a C175",
       "caso": "En la reunión se crea en vivo, en TEST, una sección nueva (B) de Diseño Web (ESEC 00684) en 202656, parte X06, igual que el NRC 10044 (sección A), que ya se probó de punta a punta. Se matricula un alumno de Ingeniería de Software (rutas 5 y 7) distinto del de la sección A.",
       "pasos": [
         {
@@ -786,9 +786,98 @@
           ]
         },
         {
+          "id": "dm",
+          "carril": "ra",
+          "col": 2,
+          "codigo": "SMAAREA",
+          "accion": "poner el curso en la malla",
+          "dato": "XP 07 · MC44-01 · ECOM-04",
+          "quien": "Registros Académicos (por confirmar, U52)",
+          "laminas": [
+            {
+              "instructivo": "1.2.1",
+              "n": 33,
+              "texto": "SMAPROG: anexos de área del programa"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 23,
+              "texto": "SMAAREA: requerimientos del área"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 24,
+              "texto": "SMAAREA: anexo de curso/atributo (reglas)"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 25,
+              "texto": "SMAAREA: detalle de la regla, materia y curso"
+            }
+          ],
+          "filas": [
+            {
+              "campo": "Área",
+              "valor": "MC44-01 · Ciclo I",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "SMAPROG › programa de la ruta (CMEMC44, «Acreditación Computación XP 07») › Anexos de área de programa: el área que debe aprobar (C172). Diseño Web es de las rutas 5 y 7 (C125)."
+            },
+            {
+              "campo": "Periodo",
+              "valor": "202454 (el de la versión)",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "SMAAREA › área MC44-01 › periodo de la versión de la malla, no el de la matrícula › Ir (C173)."
+            },
+            {
+              "campo": "Total requerido",
+              "valor": "4 cursos",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "La ruta pide 4 componentes de la Acreditación Protech XP: 3 cursos de la ruta + 1 taller (opción A) o 4 talleres (opción B), C175."
+            },
+            {
+              "campo": "Regla",
+              "valor": "ECOM-04",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Anexo de curso/atributo de área › clic en la regla › botón «Regla». ECOM-01 a ECOM-04 son los 4 componentes de la ruta."
+            },
+            {
+              "campo": "Descripción",
+              "valor": "«Computación IV» (no se cambia)",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Es un nombre heredado del Plan Tradicional (Computación I → II → III): no es un curso ni una ruta XP (C175, U53)."
+            },
+            {
+              "campo": "Número de condiciones requerido",
+              "valor": "1",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "La regla se cumple con cualquiera de sus cursos. Un curso no cuenta en dos reglas (reúso «Ninguno», C174)."
+            },
+            {
+              "campo": "Materia",
+              "valor": "ESEC · 00684",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Detalles › + (Insertar) › Materia ESEC › Tab › Número inferior de curso 00684 › Tab. La condición se numera sola al guardar."
+            },
+            {
+              "campo": "Guardar",
+              "valor": "una regla por guardado",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Ya hecho en TEST: Diseño Web quedó en MC44-01 › ECOM-04, condición 2 (C173). Sin la malla, el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP (C172)."
+            }
+          ]
+        },
+        {
           "id": "d3",
           "carril": "centro",
-          "col": 1,
+          "col": 2,
           "codigo": "SSASECT",
           "accion": "crear la sección",
           "dato": "NRC nuevo · ESEC 00684 B",
@@ -936,7 +1025,7 @@
         {
           "id": "d4",
           "carril": "centro",
-          "col": 2,
+          "col": 3,
           "codigo": "SSASECT",
           "accion": "cupo y horario",
           "dato": "cupo 40 · SAUVIR con O",
@@ -1049,7 +1138,7 @@
         {
           "id": "d5",
           "carril": "centro",
-          "col": 3,
+          "col": 4,
           "codigo": "SSASECT",
           "accion": "asignar el docente",
           "dato": "100582059 · principal 100 %",
@@ -1143,7 +1232,7 @@
         {
           "id": "d6",
           "carril": "ra",
-          "col": 3,
+          "col": 4,
           "codigo": "SHAGCOM",
           "accion": "cargar la fórmula",
           "dato": "TA1 · TA2 · PA · EF + ATTRGRD 0",
@@ -1286,7 +1375,7 @@
         {
           "id": "d7",
           "carril": "centro",
-          "col": 4,
+          "col": 5,
           "codigo": "SFAREGS",
           "accion": "matricular al alumno",
           "dato": "otro alumno · CMEMC44 · RE",
@@ -1592,6 +1681,7 @@
         "Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
         "Cuenta el caso: Diseño Web ya existe (SCACRSE) y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
         "Si preguntan por cursos nuevos: el paso SCACRSE muestra cómo se crea uno; lo crea Registros Académicos y el centro solo si le dan acceso; para el go-live se capacitará a todos (C147)",
+        "Malla: en SMAPROG y SMAAREA muestra que Diseño Web ya está en la ruta XP 07 (MC44-01 › ECOM-04). Las reglas «Computación I» a «IV» son los 4 componentes de la ruta Protech XP, no el Plan Tradicional (C173, C175)",
         "En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo y horario › docente",
         "En cada ficha, abre la lámina: cada fila de la guía tiene su número verde en la diapositiva",
         "En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
@@ -1599,6 +1689,7 @@
         "Cierra con el NRC 10044, ya probado: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"
       ],
       "aprendido": [
+        "Sin la malla de la ruta (SMAAREA), el NRC se crea y se matricula por backoffice, pero el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP (C172, C173)",
         "Arriba en SHAGCOM va la escala del curso (VIG_11), no la de asistencia (AST_70): con AST_70 la nota final salió APRO (C120, C123)",
         "Cada nota del nivel C necesita el modo V en SHAGRDE; si no, SHATCKN no acepta la corrección (C124)",
         "La asistencia no llega sola al libro: el docente la envía desde Pasar lista › Clase (C119)",
@@ -1610,7 +1701,7 @@
       "parte": "X06",
       "antes_del_nrc": {
         "titulo": "Antes del NRC: periodo, partes, curso y malla",
-        "intro": "Antes de crear el NRC tienen que existir el periodo, la parte en la que se dictará y el curso, y el curso tiene que estar en la malla de las rutas que lo llevan. Si ya existen, se pasa directo a SSASECT.",
+        "intro": "Antes de crear el NRC tienen que existir el periodo, la parte en la que se dictará y el curso, y el curso tiene que estar en la malla de las rutas Protech XP que lo llevan. Si ya existen, se pasa directo a SSASECT.",
         "orden": [
           {
             "pagina": "STVTERM",
@@ -1640,10 +1731,10 @@
           },
           {
             "pagina": "SMAAREA",
-            "detalle": "malla del programa (y SMAPROG para revisarla)",
-            "que": "Se pone el curso en la regla del área del programa de cada ruta que lo lleva. Diseño Web (ESEC 00684) se agregó en TEST a la ruta XP 07: área MC44-01, regla ECOM-04 «Computación IV», condición 2. Sin la malla, el NRC se crea y se matricula por backoffice, pero el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP.",
-            "cuando": "Solo si el curso no está en la malla. Después de SCACRSE: el curso tiene que existir antes.",
-            "cita": "Instructivo 1.2.1, diap. 23 a 25; 1.3.1, diap. 5 · R12 · C172, C173"
+            "detalle": "malla de la ruta XP (SMAPROG para revisarla)",
+            "que": "Se pone el curso en la malla de cada ruta Protech XP que lo lleva: SMAPROG muestra el área del programa «Acreditación Computación XP n» y en SMAAREA el curso se agrega a una de sus reglas. Diseño Web (ESEC 00684, rutas 5 y 7) ya quedó en TEST en MC44-01 › ECOM-04. Las reglas se describen «Computación I» a «IV», pero no son el Plan Tradicional: son los 4 componentes de la ruta. Sin la malla, el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP.",
+            "cuando": "Solo si el curso no está en la malla de la ruta. Después de SCACRSE (el curso tiene que existir) y antes de SSASECT.",
+            "cita": "Instructivo 1.2.1, diap. 23 a 25 y 33; 1.3.1, diap. 5 · R12 · C172 a C175"
           },
           {
             "pagina": "SSASECT",
@@ -1652,7 +1743,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -1951,6 +2042,15 @@
               ]
             },
             "nota": "En TEST, el curso de prueba ESEC 00701 se llenó así (C145, C148); para uno real, el periodo va 000000 (C146)."
+          },
+          {
+            "pregunta": "¿Por qué las reglas de la malla se llaman «Computación I» a «IV»?",
+            "lista": [
+              "Son nombres heredados del Plan Tradicional (Computación I → II → III, en secuencia, C62). Las rutas XP son la Acreditación Protech XP: programas «Acreditación Computación XP 01» a «07» (CMEMC38 a CMEMC44), C175.",
+              "En el área de cada ruta (por ejemplo MC44-01), las reglas ECOM-01 a ECOM-04 son los 4 componentes: opción A, 3 cursos de la ruta + 1 taller; opción B, 4 talleres (lámina 4).",
+              "Cada regla pide 1 condición: se cumple con cualquiera de sus cursos, y un curso no cuenta en dos reglas.",
+              "Si se cambia su descripción o lo hace Registros Académicos está por decidir (U52, U53)."
+            ]
           }
         ]
       }

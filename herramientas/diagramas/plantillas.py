@@ -1161,7 +1161,8 @@ CARRILES_DEMO = {"ra": "Registros Académicos", "centro": "El centro", "doc": "D
 def demostracion(c, d):
     """Un caso real de TEST para mostrar en una reunión, en el orden curso › NRC › docente › fórmula › alumno (C133).
 
-    Los pasos van en columnas 0 a 5 («col» en datos.json); dos pasos pueden compartir columna si van en carriles distintos."""
+    Los pasos van en columnas desde 0 («col» en datos.json); dos pasos pueden compartir columna si van en carriles distintos.
+    La fase «Matricular, dictar y cerrar» empieza en la columna de SFAREGS."""
     carriles = list(dict.fromkeys(p["carril"] for p in d["pasos"]))
     orden = ["ra", "centro", "doc"]
     carriles.sort(key=orden.index)
@@ -1169,6 +1170,8 @@ def demostracion(c, d):
              for i, p in enumerate(d["pasos"])]
     nodos[0]["icon"] = "start"
     nodos[-1]["icon"] = "success"
+    ultima = max(n["col"] for n in nodos)
+    cierre = next((n["col"] for n in nodos if n["label"] == "SFAREGS"), ultima - 1)
     cards = tarjetas(c, [d["caso"], d["resultado"]], [CITAS["periodo"], CITAS["nrc"], CITAS["docente"], CITAS["carga"],
                                                      CITAS["calendario"], CITAS["notas"], CITAS["asistencia_regla"],
                                                      CITAS["cierre"]],
@@ -1178,8 +1181,8 @@ def demostracion(c, d):
         c, 0, d["slug"],
         [{"id": k, "label": CARRILES_DEMO[k]} for k in carriles],
         nodos, cards,
-        fases=[{"id": "f0", "label": "Preparar: periodo, curso, sección, docente y fórmula", "fromCol": 0, "toCol": 3},
-               {"id": "f1", "label": "Matricular, dictar y cerrar", "fromCol": 4, "toCol": 5, "variant": "emphasis"}],
+        fases=[{"id": "f0", "label": "Preparar: periodo, curso, malla, sección, docente y fórmula", "fromCol": 0, "toCol": cierre - 1},
+               {"id": "f1", "label": "Matricular, dictar y cerrar", "fromCol": cierre, "toCol": ultima, "variant": "emphasis"}],
         title_override=f"{c.nombre} · {d['titulo']}",
         subtitle_override=c.subtitulo(d.get("capacidad")),
     )

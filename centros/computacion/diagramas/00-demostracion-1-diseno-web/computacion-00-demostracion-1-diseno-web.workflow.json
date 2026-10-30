@@ -492,14 +492,14 @@
   "phases": [
     {
       "id": "f0",
-      "label": "Preparar: periodo, curso, sección, docente y fórmula",
+      "label": "Preparar: periodo, curso, malla, sección, docente y fórmula",
       "fromCol": 0,
-      "toCol": 3
+      "toCol": 4
     },
     {
       "id": "f1",
       "label": "Matricular, dictar y cerrar",
-      "fromCol": 4,
+      "fromCol": 5,
       "toCol": 5,
       "variant": "emphasis"
     }
@@ -507,6 +507,7 @@
   "mainPath": [
     "d1",
     "d2",
+    "dm",
     "d3",
     "d4",
     "d5",
@@ -538,9 +539,19 @@
       "tag": "Diseño Web ya existe: 00684"
     },
     {
+      "id": "dm",
+      "lane": "ra",
+      "col": 2,
+      "type": "backend",
+      "label": "SMAAREA",
+      "sublabel": "poner el curso en la malla",
+      "width": 150,
+      "tag": "XP 07 · MC44-01 · ECOM-04"
+    },
+    {
       "id": "d3",
       "lane": "centro",
-      "col": 1,
+      "col": 2,
       "type": "backend",
       "label": "SSASECT",
       "sublabel": "crear la sección",
@@ -550,7 +561,7 @@
     {
       "id": "d4",
       "lane": "centro",
-      "col": 2,
+      "col": 3,
       "type": "backend",
       "label": "SSASECT",
       "sublabel": "cupo y horario",
@@ -560,7 +571,7 @@
     {
       "id": "d5",
       "lane": "centro",
-      "col": 3,
+      "col": 4,
       "type": "backend",
       "label": "SSASECT",
       "sublabel": "asignar el docente",
@@ -570,7 +581,7 @@
     {
       "id": "d6",
       "lane": "ra",
-      "col": 3,
+      "col": 4,
       "type": "backend",
       "label": "SHAGCOM",
       "sublabel": "cargar la fórmula",
@@ -580,7 +591,7 @@
     {
       "id": "d7",
       "lane": "centro",
-      "col": 4,
+      "col": 5,
       "type": "backend",
       "label": "SFAREGS",
       "sublabel": "matricular al alumno",
@@ -617,8 +628,14 @@
       "variant": "emphasis"
     },
     {
-      "id": "e-d2-d3",
+      "id": "e-d2-dm",
       "from": "d2",
+      "to": "dm",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-dm-d3",
+      "from": "dm",
       "to": "d3",
       "variant": "emphasis"
     },
@@ -675,17 +692,19 @@
         "1. Abre el sitio › Centros › Centro de Computación › «Demostración 1» (va primero en la lista)",
         "2. Cuenta el caso: Diseño Web ya existe (SCACRSE) y ya tiene la sección A (NRC 10044); hoy se abre la sección B",
         "3. Si preguntan por cursos nuevos: el paso SCACRSE muestra cómo se crea uno; lo crea Registros Académicos y el centro solo si le dan acceso; para el go-live se capacitará a todos (C147)",
-        "4. En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo y horario › docente",
-        "5. En cada ficha, abre la lámina: cada fila de la guía tiene su número verde en la diapositiva",
-        "6. En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
-        "7. Matricula a otro alumno (no el de la sección A): Banner no deja el mismo curso dos veces",
-        "8. Cierra con el NRC 10044, ya probado: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"
+        "4. Malla: en SMAPROG y SMAAREA muestra que Diseño Web ya está en la ruta XP 07 (MC44-01 › ECOM-04). Las reglas «Computación I» a «IV» son los 4 componentes de la ruta Protech XP, no el Plan Tradicional (C173, C175)",
+        "5. En TEST, en vivo: SSASECT 202656 › Crear NRC de ESEC 00684, sección B, parte X06 › cupo y horario › docente",
+        "6. En cada ficha, abre la lámina: cada fila de la guía tiene su número verde en la diapositiva",
+        "7. En la fórmula: 15 % + 15 % + 40 % + 30 %; la asistencia pesa 0, pero con menos de 70 % la nota es INH",
+        "8. Matricula a otro alumno (no el de la sección A): Banner no deja el mismo curso dos veces",
+        "9. Cierra con el NRC 10044, ya probado: 17 en la historia (SHACRSE) y lo que aprendimos (la escala de arriba)"
       ]
     },
     {
       "dot": "rose",
       "title": "Lo que aprendimos en TEST",
       "items": [
+        "Sin la malla de la ruta (SMAAREA), el NRC se crea y se matricula por backoffice, pero el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP (C172, C173)",
         "Arriba en SHAGCOM va la escala del curso (VIG_11), no la de asistencia (AST_70): con AST_70 la nota final salió APRO (C120, C123)",
         "Cada nota del nivel C necesita el modo V en SHAGRDE; si no, SHATCKN no acepta la corrección (C124)",
         "La asistencia no llega sola al libro: el docente la envía desde Pasar lista › Clase (C119)",

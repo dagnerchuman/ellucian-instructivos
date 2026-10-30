@@ -584,6 +584,20 @@
               "detalle": "Ya abierto y usado con el NRC 10044. Lo abre Registros Académicos, no el centro (C06)."
             },
             {
+              "campo": "Seleccionar",
+              "valor": "Ir",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Abre el periodo (1.1.2, diap. 16)."
+            },
+            {
+              "campo": "En progreso",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Si se marca, los cursos que se están llevando cuentan para prerrequisitos (1.1.2, diap. 18). Las casillas de 202656 no están anotadas en TEST: se miran en vivo, sin cambiarlas."
+            },
+            {
               "campo": "Permitir",
               "valor": "marcada",
               "ejemplo": "",
@@ -591,11 +605,67 @@
               "detalle": "La inscripción está permitida en el periodo."
             },
             {
+              "campo": "Calcular status de hora",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Banner calcula tiempo completo o medio tiempo en SFAREGS (1.1.2, diap. 18)."
+            },
+            {
+              "campo": "Incluir horas intentadas",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Horas de periodos anteriores para la ubicación académica (1.1.2, diap. 18)."
+            },
+            {
+              "campo": "Períodos futuros para repeticiones",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Valida la repetición de cursos en periodos anteriores y futuros (1.1.2, diap. 18)."
+            },
+            {
+              "campo": "Plan de estudios requerido",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Si el plan de estudios es obligatorio para matricular (1.1.2, diap. 18). En SFAREGS se elige el plan del centro (C86)."
+            },
+            {
+              "campo": "Contraseña de retención",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "La usa SFAREGS para sobrepasar una retención (1.1.2, diap. 18)."
+            },
+            {
+              "campo": "Readmitir",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Periodo en que el alumno debió estar matriculado para matricularse en este (1.1.2, diap. 18)."
+            },
+            {
+              "campo": "Crear nuevo registro",
+              "valor": "no: X06 ya está",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Con «+» se agrega una parte al periodo; X06 ya está en 202656 (C141). (1.1.2, diap. 20)"
+            },
+            {
               "campo": "Parte de periodo base",
               "valor": "X06",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Del 07-SEP al 31-OCT-2026, como el NRC 10044 (C97). Después del 31-OCT, la X07 (02-NOV al 13-DIC)."
+              "detalle": "La del NRC 10044 (C97). Después del 31-OCT, la X07 (02-NOV al 13-DIC), que aún no tiene reglas de estatus en SFARSTS: nadie se puede matricular en sus NRC (C154, C156, U48)."
+            },
+            {
+              "campo": "Fecha de inicio y fin",
+              "valor": "07-SEP-2026 al 31-OCT-2026",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Obligatorias (1.1.2, diap. 20). El NRC toma las fechas de la parte (C141)."
             },
             {
               "campo": "Número de semanas",
@@ -603,6 +673,27 @@
               "ejemplo": "",
               "tipo": "Verificación",
               "detalle": "La duración de la X06."
+            },
+            {
+              "campo": "Censo uno",
+              "valor": "14-SEP-2026",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "La única fecha de censo obligatoria (1.1.2, diap. 21). Es la del NRC 10044 (C97) y la que tomó el 10045 al pasar a X06 (C156)."
+            },
+            {
+              "campo": "Fecha de censo dos",
+              "valor": "opcional (no se cambia)",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Segundo control de matriculados (1.1.2, diap. 21)."
+            },
+            {
+              "campo": "Guardar el progreso",
+              "valor": "no hace falta: solo se revisa",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Solo si se crea o cambia una parte (1.1.2, diap. 21)."
             },
             {
               "campo": "Acceso docente",
@@ -625,7 +716,10 @@
             {
               "instructivo": "1.1.4",
               "n": 20,
-              "texto": "SCACRSE: materia, curso, periodo y «Copiar»"
+              "texto": "SCACRSE: materia, curso, periodo y «Copiar»",
+              "sin_marca": [
+                "Título"
+              ]
             },
             {
               "instructivo": "1.1.4",
@@ -658,11 +752,18 @@
           ],
           "filas": [
             {
+              "campo": "Materia",
+              "valor": "ESEC",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Estudios Específicos, la materia de Computación (tabla STVSUBJ; 1.1.4, diap. 20)."
+            },
+            {
               "campo": "Curso",
-              "valor": "ESEC 00684 ya existe",
+              "valor": "00684 ya existe",
               "ejemplo": "",
               "tipo": "Verificación",
-              "detalle": "Revísalo en «Cursos existentes» (•••): si ya está, este paso no se hace. El siguiente número libre es 00701 (C135)."
+              "detalle": "Diseño Web ya está en el catálogo: si el curso existe, este paso no se hace (C135)."
             },
             {
               "campo": "Período",
@@ -672,6 +773,13 @@
               "detalle": "Del periodo 000000 y A periodo 999999, igual que los cursos reales del catálogo (Basic I y Emprendimiento I, C146)."
             },
             {
+              "campo": "Título de curso",
+              "valor": "lo trae el curso",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Se llena al ingresar materia, curso y periodo (1.1.4, diap. 20)."
+            },
+            {
               "campo": "Copiar",
               "valor": "«Copiar» de ESEC 00684",
               "ejemplo": "",
@@ -679,11 +787,18 @@
               "detalle": "Lo más seguro: copia la configuración real de un curso de Computación; solo se cambia el título."
             },
             {
-              "campo": "Título de curso",
+              "campo": "Validar el consecutivo",
+              "valor": "«Cursos existentes» (•••)",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Para un curso nuevo, revise el último número: hay 700 cursos ESEC y el siguiente libre es 00701 (C135). (1.1.4, diap. 20)"
+            },
+            {
+              "campo": "Título",
               "valor": "el nombre del curso",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Obligatorio; el nombre completo del sílabo (hasta 30 caracteres)."
+              "detalle": "Obligatorio; el nombre completo del sílabo (hasta 30 caracteres). (1.1.4, diap. 21)"
             },
             {
               "campo": "Escuela",
@@ -705,6 +820,13 @@
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "Obligatorio; se elige con el •••."
+            },
+            {
+              "campo": "Duración",
+              "valor": "no se llena",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "El instructivo indica que no se ingresa (1.1.4, diap. 21)."
             },
             {
               "campo": "UEC o crédito",
@@ -735,6 +857,13 @@
               "detalle": "Horas de práctica del sílabo (HP 1). Emprendimiento I: 2; Basic I: 0 O 3."
             },
             {
+              "campo": "Otro",
+              "valor": "no se llena",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Otras horas del curso; Diseño Web solo tiene HT 1 y HP 1 (C96). (1.1.4, diap. 22)"
+            },
+            {
               "campo": "Contacto",
               "valor": "2",
               "ejemplo": "",
@@ -742,11 +871,25 @@
               "detalle": "Lo calcula Banner: teoría + laboratorio (Emprendimiento I: 3; Basic I: 0 O 7)."
             },
             {
+              "campo": "Límite",
+              "valor": "vacío",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Veces que se puede repetir el curso; en los cursos reales del catálogo está vacío (C145, C146). (1.1.4, diap. 22)"
+            },
+            {
               "campo": "Nivel",
               "valor": "C · Computación",
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "Pulse «Sección siguiente» (↓, abajo a la izquierda) › «Nivel de curso». CEU sin marcar (C148)."
+            },
+            {
+              "campo": "Insertar",
+              "valor": "solo el nivel C",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Un registro por nivel; Computación usa solo C (C148). (1.1.4, diap. 23)"
             },
             {
               "campo": "Modo de calificar",
@@ -770,6 +913,13 @@
               "detalle": "«Sección siguiente» › «Tipo de horario»: una fila Teórico y otra Práctico (con +), C148."
             },
             {
+              "campo": "Descripción",
+              "valor": "la trae Banner",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Teórico y Práctico, según el tipo de horario (C148). (1.1.4, diap. 25)"
+            },
+            {
               "campo": "Método educativo",
               "valor": "VIRT · Virtual",
               "ejemplo": "",
@@ -781,7 +931,21 @@
               "valor": "1 y 1",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "La que verá el docente en SSASECT. Sobrecarga de ingreso y carga ajustada, vacías. Guardar."
+              "detalle": "La que verá el docente en SSASECT (C148). (1.1.4, diap. 25)"
+            },
+            {
+              "campo": "Sobrecarga de ingreso",
+              "valor": "no se llena",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Vacía en el curso de prueba (C148). (1.1.4, diap. 25)"
+            },
+            {
+              "campo": "Carga de trabajo ajustada",
+              "valor": "no se llena",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Vacía (C148). Luego, Guardar. (1.1.4, diap. 25)"
             }
           ]
         },
@@ -812,7 +976,10 @@
             {
               "instructivo": "1.2.1",
               "n": 25,
-              "texto": "SMAAREA: detalle de la regla, materia y curso"
+              "texto": "SMAAREA: detalle de la regla, materia y curso",
+              "sin_marca": [
+                "Regla"
+              ]
             }
           ],
           "filas": [
@@ -824,6 +991,13 @@
               "detalle": "SMAPROG › programa de la ruta (CMEMC44, «Acreditación Computación XP 07») › Anexos de área de programa: el área que debe aprobar (C172). Diseño Web es de las rutas 5 y 7 (C125)."
             },
             {
+              "campo": "Prioridad",
+              "valor": "010",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Orden en que CAPP revisa las áreas del programa; CMEMC44 tiene una sola área, MC44-01, con prioridad 010 (C172). No se cambia. (1.2.1, diap. 33)"
+            },
+            {
               "campo": "Periodo",
               "valor": "202454 (el de la versión)",
               "ejemplo": "",
@@ -831,11 +1005,25 @@
               "detalle": "SMAAREA › área MC44-01 › periodo de la versión de la malla, no el de la matrícula › Ir (C173)."
             },
             {
+              "campo": "Activo",
+              "valor": "se verifica que esté marcada",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "El área tiene que estar activa para usarse (1.2.1, diap. 23)."
+            },
+            {
               "campo": "Total requerido",
               "valor": "4 cursos",
               "ejemplo": "",
               "tipo": "Verificación",
               "detalle": "La ruta pide 4 componentes de la Acreditación Protech XP: 3 cursos de la ruta + 1 taller (opción A) o 4 talleres (opción B), C175."
+            },
+            {
+              "campo": "Anexo",
+              "valor": "curso/atributo",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Lo que se anexa al área son cursos: por eso las reglas están en «Anexo de curso/atributo de área» (C173). (1.2.1, diap. 23)"
             },
             {
               "campo": "Regla",
@@ -864,6 +1052,27 @@
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "Detalles › + (Insertar) › Materia ESEC › Tab › Número inferior de curso 00684 › Tab. La condición se numera sola al guardar."
+            },
+            {
+              "campo": "Usar cursos divididos",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Para contar créditos adicionales (1.2.1, diap. 25). En TEST solo se llenaron materia y curso (C173)."
+            },
+            {
+              "campo": "Contar en GPA",
+              "valor": "no se cambia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Si el curso entra al promedio del alumno (1.2.1, diap. 25; la lámina dice «PGA»). En TEST solo se llenaron materia y curso (C173)."
+            },
+            {
+              "campo": "Insertar",
+              "valor": "una fila por curso",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Para otro curso en la misma regla: Insertar (+), materia y curso. En ECOM-04, Diseño Web quedó como condición 2, junto a Word 365 (C173). (1.2.1, diap. 25)"
             },
             {
               "campo": "Guardar",
@@ -1000,6 +1209,13 @@
               "detalle": "Las del curso."
             },
             {
+              "campo": "Desplace la página hacia abajo",
+              "valor": "hasta la casilla Calificable",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(5.3, diap. 23)"
+            },
+            {
               "campo": "Casilla Calificable",
               "valor": "marcada",
               "ejemplo": "",
@@ -1036,7 +1252,8 @@
               "n": 27,
               "texto": "Detalles de ingreso: cupo del NRC",
               "sin_marca": [
-                "Tercer guardado"
+                "Tercer guardado",
+                "Guardado de la reserva"
               ]
             },
             {
@@ -1053,7 +1270,8 @@
               "n": 29,
               "texto": "Fechas de reunión: hora, días y sesión",
               "sin_marca": [
-                "Segundo guardado"
+                "Segundo guardado",
+                "Guardado de la reserva"
               ]
             },
             {
@@ -1092,6 +1310,20 @@
               "detalle": "En «Lugares reservados»; sin reserva por programa."
             },
             {
+              "campo": "Inserte un registro",
+              "valor": "no: sin reserva por programa",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Una fila por cada regla de cupo reservado, por ejemplo para un programa (C66). La sección B no reserva cupos. (5.3, diap. 28)"
+            },
+            {
+              "campo": "Guardado de la reserva",
+              "valor": "Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Guarda la regla nula, que no se borra (C152). (5.3, diap. 28)"
+            },
+            {
               "campo": "Hora de reunión",
               "valor": "en 24 h, en un bloque libre",
               "ejemplo": "",
@@ -1120,18 +1352,39 @@
               "detalle": "Con el aula virtual va la O en «Indicador de sobrepaso» del horario (C97). (5.3, diap. 29)"
             },
             {
-              "campo": "Cálculo automático de horas",
+              "campo": "Tercer guardado",
+              "valor": "Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": ""
+            },
+            {
+              "campo": "Tipo de horario",
+              "valor": "TEO (lo trae del NRC)",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Subpestaña «Créditos y ubicación de reunión»: el mismo tipo de horario del NRC (5.3, diap. 30)."
+            },
+            {
+              "campo": "Cálculo automático",
               "valor": "lo hace Banner",
               "ejemplo": "",
               "tipo": "Verificación",
               "detalle": "Horas por semana según el horario. (5.3, diap. 30)"
             },
             {
-              "campo": "Tercer guardado",
-              "valor": "Guardar",
+              "campo": "Primera sesión",
+              "valor": "1 crédito",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "En la primera sesión se ven los créditos del curso (5.3, diap. 30); el NRC lleva 1 crédito (C97)."
+            },
+            {
+              "campo": "Guarde los cambios",
+              "valor": "solo si cambió algo",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": ""
+              "detalle": "(5.3, diap. 30)"
             }
           ]
         },
@@ -1241,17 +1494,28 @@
             {
               "instructivo": "7.1.4",
               "n": 40,
-              "texto": "SHAEGBC: calendario del periodo"
+              "texto": "SHAEGBC: calendario del periodo",
+              "sin_marca": [
+                "Botón Ir (SHAGCOM)",
+                "Botón Ir (SOAATRK)"
+              ]
             },
             {
               "instructivo": "7.1.4",
               "n": 43,
-              "texto": "SHAGCOM: periodo y NRC"
+              "texto": "SHAGCOM: periodo y NRC",
+              "sin_marca": [
+                "Botón Ir (SHAEGBC)",
+                "Botón Ir (SOAATRK)"
+              ]
             },
             {
               "instructivo": "7.1.4",
               "n": 44,
-              "texto": "SHAGCOM: escala del plan"
+              "texto": "SHAGCOM: escala del plan",
+              "sin_marca": [
+                "Guardado de la regla"
+              ]
             },
             {
               "instructivo": "7.1.4",
@@ -1276,12 +1540,19 @@
             {
               "instructivo": "7.1.1",
               "n": 34,
-              "texto": "SOAATRK: periodo de la regla"
+              "texto": "SOAATRK: periodo de la regla",
+              "sin_marca": [
+                "Botón Ir (SHAEGBC)",
+                "Botón Ir (SHAGCOM)"
+              ]
             },
             {
               "instructivo": "7.1.1",
               "n": 36,
-              "texto": "SOAATRK: regla por NRC"
+              "texto": "SOAATRK: regla por NRC",
+              "sin_marca": [
+                "Unidad de control"
+              ]
             },
             {
               "instructivo": "7.1.1",
@@ -1301,6 +1572,13 @@
               "detalle": "Sin el calendario, SHAGCOM da error (C91, C92)."
             },
             {
+              "campo": "Botón Ir (SHAEGBC)",
+              "valor": "clic",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(7.1.4, diap. 40)"
+            },
+            {
               "campo": "SHAGCOM",
               "valor": "202656 · NRC nuevo",
               "ejemplo": "",
@@ -1308,11 +1586,32 @@
               "detalle": "Periodo y NRC › Ir."
             },
             {
+              "campo": "Botón Ir (SHAGCOM)",
+              "valor": "clic",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Banner avisa que la escala es obligatoria: clic sobre el aviso para seguir (7.1.4, diap. 43 y 44)."
+            },
+            {
               "campo": "Escala de calificación",
               "valor": "VIG_11",
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "La del curso, no AST_70: si no, la nota final sale APRO (C120, C123)."
+            },
+            {
+              "campo": "Botón Guardar",
+              "valor": "clic",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Guarda la escala (7.1.4, diap. 44)."
+            },
+            {
+              "campo": "Pase al siguiente bloque",
+              "valor": "componentes",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(7.1.4, diap. 44)"
             },
             {
               "campo": "Número de secuencia",
@@ -1329,6 +1628,13 @@
               "detalle": "Del sílabo de Diseño Web, sección 8 (C96)."
             },
             {
+              "campo": "Descripción del componente",
+              "valor": "Taller Online TA1 · Taller Online TA2 · Participación en Aula · Examen Final EF · Asistencia",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "La ve el alumno en el Autoservicio; son las del NRC 10044 (C98). (7.1.4, diap. 46)"
+            },
+            {
               "campo": "Peso",
               "valor": "0.15 · 0.15 · 0.40 · 0.30 · 0.00",
               "ejemplo": "",
@@ -1341,6 +1647,13 @@
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "Cada componente entra en la nota final."
+            },
+            {
+              "campo": "Campo Secuencia Y/O",
+              "valor": "no se usa",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Solo si hay lógica y/o entre componentes; aquí la nota es la suma de los pesos (C98). (7.1.4, diap. 48)"
             },
             {
               "campo": "ATTRGRD",
@@ -1357,6 +1670,20 @@
               "detalle": "La regla de asistencia (C101)."
             },
             {
+              "campo": "Botón Ir (SOAATRK)",
+              "valor": "clic",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(7.1.1, diap. 34)"
+            },
+            {
+              "campo": "Por materia-número de curso",
+              "valor": "no se usa: va por NRC",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "La regla del 10044 se hizo por NRC (C101): materia y curso se llenan solos (7.1.1, diap. 36)."
+            },
+            {
               "campo": "Por NRC",
               "valor": "el NRC nuevo",
               "ejemplo": "",
@@ -1365,10 +1692,38 @@
             },
             {
               "campo": "Desplegar clase",
-              "valor": "marcada · control de asistencia",
+              "valor": "marcada",
               "ejemplo": "",
               "tipo": "Acción",
-              "detalle": "Para que el NRC salga en Pasar lista."
+              "detalle": "Para que el NRC salga en Pasar lista (C101). (7.1.1, diap. 37)"
+            },
+            {
+              "campo": "Unidad de control",
+              "valor": "Presente/Ausente",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Como la regla del 10044 (C101). (7.1.1, diap. 37)"
+            },
+            {
+              "campo": "Control de asistencia a clase",
+              "valor": "marcada",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Para que el docente pase lista en el Autoservicio (C101). (7.1.1, diap. 37)"
+            },
+            {
+              "campo": "Fecha de inicio de control",
+              "valor": "07-SEP-2026; fin 31-OCT-2026",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Fechas en que el docente puede pasar lista: las de la X06, como el 10044 (C101). (7.1.1, diap. 37)"
+            },
+            {
+              "campo": "Guardado de la regla",
+              "valor": "Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Banner le da un número de secuencia a la regla; la del 10044 fue la 2 (C101). (7.1.1, diap. 37)"
             }
           ]
         },
@@ -1404,7 +1759,10 @@
             {
               "instructivo": "5.4-inscripcion",
               "n": 43,
-              "texto": "SFAREGS: guardar la inscripción"
+              "texto": "SFAREGS: guardar la inscripción",
+              "sin_marca": [
+                "Presionar el botón"
+              ]
             }
           ],
           "filas": [
@@ -1437,11 +1795,32 @@
               "detalle": "El plan de estudios del centro, no asumir el 1 (C86)."
             },
             {
+              "campo": "Presionar el botón",
+              "valor": "Ir",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(5.4, diap. 35)"
+            },
+            {
               "campo": "Estatus",
               "valor": "EL",
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "En «Información de ingreso»."
+            },
+            {
+              "campo": "Mínimas y Máximas",
+              "valor": "las hereda de SFAMHRS",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Se pueden cambiar, pero no hace falta (5.4, diap. 36)."
+            },
+            {
+              "campo": "Pase al siguiente bloque",
+              "valor": "Plan de estudios de ingreso",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(5.4, diap. 36)"
             },
             {
               "campo": "Plan de estudios de ingreso",
@@ -1584,7 +1963,11 @@
             {
               "instructivo": "7.1.6",
               "n": 15,
-              "texto": "SFASLST: periodo y NRC"
+              "texto": "SFASLST: periodo y NRC",
+              "sin_marca": [
+                "Botón Ir (GJAPCTL)",
+                "Botón Ir (SHATCKN)"
+              ]
             },
             {
               "instructivo": "7.1.6",
@@ -1594,7 +1977,11 @@
             {
               "instructivo": "7.1.9",
               "n": 22,
-              "texto": "GJAPCTL: proceso SHRROLL"
+              "texto": "GJAPCTL: proceso SHRROLL",
+              "sin_marca": [
+                "Botón Ir (SFASLST)",
+                "Botón Ir (SHATCKN)"
+              ]
             },
             {
               "instructivo": "7.1.9",
@@ -1614,7 +2001,11 @@
             {
               "instructivo": "7.1.6",
               "n": 19,
-              "texto": "SHATCKN: corregir la nota en la historia"
+              "texto": "SHATCKN: corregir la nota en la historia",
+              "sin_marca": [
+                "Botón Ir (SFASLST)",
+                "Botón Ir (GJAPCTL)"
+              ]
             }
           ],
           "filas": [
@@ -1624,6 +2015,20 @@
               "ejemplo": "",
               "tipo": "Verificación",
               "detalle": "Revisar la nota final antes del pase."
+            },
+            {
+              "campo": "Botón Ir (SFASLST)",
+              "valor": "clic",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(7.1.6, diap. 15)"
+            },
+            {
+              "campo": "Calificaciones parciales",
+              "valor": "no van a la historia",
+              "ejemplo": "",
+              "tipo": "Verificación",
+              "detalle": "Solo las calificaciones finales pasan a la historia académica (7.1.6, diap. 16)."
             },
             {
               "campo": "Calificaciones finales",
@@ -1640,11 +2045,25 @@
               "detalle": "El proceso de pase a historia."
             },
             {
+              "campo": "Botón Ir (GJAPCTL)",
+              "valor": "clic",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(7.1.9, diap. 22)"
+            },
+            {
               "campo": "Impresora",
               "valor": "DATABASE",
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": ""
+            },
+            {
+              "campo": "Pase al siguiente bloque",
+              "valor": "parámetros",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(7.1.9, diap. 23)"
             },
             {
               "campo": "Parámetros",
@@ -1655,10 +2074,24 @@
             },
             {
               "campo": "Opción enviar",
-              "valor": "Enviar y Guardar",
+              "valor": "Enviar",
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": ""
+            },
+            {
+              "campo": "Guardado del proceso",
+              "valor": "Guardar",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "Con «Enviar» marcado, al guardar se ejecuta el proceso (7.1.9, diap. 25)."
+            },
+            {
+              "campo": "Relacionado",
+              "valor": "barra superior",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(7.1.9, diap. 27)"
             },
             {
               "campo": "Revisar salida",
@@ -1673,6 +2106,13 @@
               "ejemplo": "",
               "tipo": "Acción",
               "detalle": "Nueva secuencia con la nota y razón de cambio (C123, C124)."
+            },
+            {
+              "campo": "Botón Ir (SHATCKN)",
+              "valor": "clic",
+              "ejemplo": "",
+              "tipo": "Acción",
+              "detalle": "(7.1.6, diap. 19)"
             }
           ]
         }

@@ -124,9 +124,11 @@ def _normalizar(info):
     return out
 
 
-def _validar_y_ordenar(guia, ids_nodos, slug):
+def _validar_y_ordenar(guia, ids_nodos, slug, orden_propio=False):
     """Deja solo nodos que existen en el SVG y los ordena como el recorrido (c0, c1… cr). Así el botón
-    «Siguiente» nunca apunta a un paso sin nodo y el stepper no se queda trabado."""
+    «Siguiente» nunca apunta a un paso sin nodo y el stepper no se queda trabado.
+    Con `orden_propio`, conserva el orden de la guía: en las demostraciones es el de `datos.json › pasos`,
+    y un id sin número (`dm`, SMAAREA) no se va al final (C177)."""
     if not ids_nodos:
         return {k: _normalizar(v) for k, v in guia.items()}
     fuera = [k for k in guia if k not in ids_nodos]
@@ -146,6 +148,8 @@ def _validar_y_ordenar(guia, ids_nodos, slug):
         m = re.search(r"(\d+)$", k)
         return (int(m.group(1)) if m else 10 ** 6, ids_nodos.index(k))
 
+    if orden_propio:
+        return {k: _normalizar(guia[k]) for k in validas}
     return {k: _normalizar(guia[k]) for k in sorted(validas, key=orden)}
 
 
@@ -155,7 +159,8 @@ def obtener_guia_para_slug(slug, id_centro="", ids_nodos=None):
     if RE_PREFIJO.sub("", slug) == "recorrido-completo" and id_centro in ("idiomas", "computacion", "emprendimiento"):
         return _validar_y_ordenar(guia_recorrido(Centro(id_centro)), ids_nodos, slug)
     if RE_PREFIJO.sub("", slug).startswith("demostracion-"):
-        return _validar_y_ordenar(guia_demostracion(Centro(id_centro), RE_PREFIJO.sub("", slug)), ids_nodos, slug)
+        return _validar_y_ordenar(guia_demostracion(Centro(id_centro), RE_PREFIJO.sub("", slug)), ids_nodos, slug,
+                                  orden_propio=True)
     guia = dict(_guia_curada(slug, id_centro, sid) or {})
     if sid:  # casuísticas: se completan (o se imponen) desde plantillas.py
         generada = guia_casuistica_de(id_centro, sid)
@@ -366,6 +371,8 @@ def _claves_fila(fila):
     """Frases de una fila de la guía que pueden aparecer en el texto de la lámina."""
     campo = _sin_tildes(re.sub(r"\s*\(.*?\)", "", fila.get("campo", "")).strip())
     claves = [campo] if len(campo) >= 4 and campo not in GENERICAS else []
+    if campo in GENERICAS:
+        claves.append(campo + ":")  # «Horario: Se ingresa…»: el genérico cuenta solo si el paso empieza por él (C177)
     claves += [_sin_tildes(c) for c in re.findall(r"«([^»]{4,})»", fila.get("valor", ""))]
     if "guardado" in campo:
         claves.append("guard")  # «Guardar la información», «Guarde la información»
@@ -376,7 +383,7 @@ def _puntaje(clave, linea):
     """3: la lámina la nombra entre comillas · 2: al inicio del paso · 1: más adelante · 0: no aparece."""
     texto = _sin_tildes(linea["texto"])
     pos = texto.find(clave)
-    if pos == -1:
+    if pos == -1 or (clave.endswith(":") and pos > 0):
         return 0
     if any(clave == _sin_tildes(c).strip() for c in re.findall(COMILLAS, linea["texto"])):
         return 3

@@ -299,16 +299,18 @@ def _textos_presentacion(id_):
                 continue
             contador = None
             for p in forma.text_frame.paragraphs:
-                texto = " ".join("".join(r.text for r in p.runs).split())
                 ppr = p._p.pPr
                 auto = ppr.find(qn("a:buAutoNum")) if ppr is not None else None
                 if auto is not None:
                     contador = (contador + 1) if contador is not None else int(auto.get("startAt", "1"))
-                num = str(contador) if auto is not None else ""
-                escrito = re.match(r"^(\d{1,2})[.)]\s*(\S.*)$", texto)
-                if not num and escrito:  # número escrito a mano en la lámina («20.Guardar la información»)
-                    num, texto = escrito.group(1), escrito.group(2)
-                if texto:
+                # Un salto de línea dentro del párrafo (a:br) separa el paso numerado del texto de arriba:
+                # «Página destinada a la creación de los programas⏎⏎1.- Activo». Sin cortarlo, el 1 se perdía (C177).
+                trozos = [" ".join(t.split()) for t in re.split(r"[\v\n]", p.text)]
+                for k, texto in enumerate(t for t in trozos if t):
+                    num = str(contador) if auto is not None and k == 0 else ""
+                    escrito = re.match(r"^(\d{1,2})[.)]\s*(\S.*)$", texto)
+                    if not num and escrito:  # número escrito a mano en la lámina («20.Guardar la información»)
+                        num, texto = escrito.group(1), escrito.group(2)
                     parrafos.append({"num": num, "texto": texto, "nivel": p.level})
         por_lamina.append(parrafos)
     # Lo que aparece en muchas láminas es diseño (banda lateral, pie, logo): se descarta.

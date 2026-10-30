@@ -50,6 +50,9 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 ### Leer o cambiar SCAPPRQ
 - Programa + **periodo de la versión** (202444, 202644), no el de la matrícula (C164) › Ir › clic en el curso › ⏬ al bloque de prerrequisitos. Agregar: **+** › materia, curso, sin nivel ni calificación si basta haberlo cursado.
 
+### Buscar un alumno con un curso en su historia (SHACRSE)
+- SHACRSE › ID › **periodo vacío** › Ir: todos sus cursos con periodo, NRC, nota y modo. Así se encontró a `A00010005` con Basic I (C170). Solo consulta.
+
 ### Crear un NRC (SSASECT)
 - Ver la guía [ref-restricciones-y-prerrequisitos-por-programa.md](../../arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md), paso 2 de la sección 2.
 
@@ -58,9 +61,13 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 - **«Otra sesión de inscripción está en progreso»:** alguien recargó con cambios pendientes; se esperan unos minutos (C158).
 - **«Llave inválida… LIMPIAR DATOS»** al volver al bloque clave con algo a medio cambiar: recargar la página sin guardar (se pierde solo lo no guardado) y esperar el candado si sale.
 - **Tras guardar en SFAREGS** la página puede volver sola al bloque clave con el aviso de inscritos: es normal.
+- **«El uso de la página de inscripciones está prohibida para este periodo…»** al abrir SFAREGS: arrastró el periodo de la página anterior (por ejemplo 202444 de SCAPPRQ) y lo vació. Escribir el periodo de matrícula.
+- **«La persona no es alumno, no se puede inscribir»** con un ID correcto: el ID no se validó (no sale el nombre al lado). Clic en el ID, borrar el último carácter, escribirlo y Tab.
+- **Con «Ver currículos actuales/activos» marcado** desaparece el bloque «Plan de estudios de ingreso» y la fila nueva puede quedar **sin plan**: revisar la columna Plan de estudios antes de pedir el guardado (C170).
+- **Sesión de Banner vencida:** pide iniciar sesión con Google; lo hace el usuario, nunca el agente.
 
 ## 6. Datos de prueba en TEST (29/10/2026)
 - **Alumno:** Arnold Vaca `S00912438` (Medicina `1PCSP15`, plan 1; `CMEMC38`; `IMEMI03` en el plan 4). En 202744 tiene los NRC 10001 a 10008 de otra persona: **no se tocan**.
-- **Otro alumno:** `100582059` (`CMEMC44`). **Alumno de Nidia:** `A00010005` (catálogo 202444).
+- **Otro alumno:** `100582059` (`CMEMC44`). **Alumno de Nidia:** `A00010005` (catálogo 202444; Basic I con 80 en 202646; en 202744 tiene 10023, 10024, 10022 y 10007; avisar a Nidia antes de usarlo).
 - **NRC:** 10045 (202656, X06, Computación), 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
 - Lo que quedó en TEST y falta limpiar: sección 4 de la guía de restricciones y C167.

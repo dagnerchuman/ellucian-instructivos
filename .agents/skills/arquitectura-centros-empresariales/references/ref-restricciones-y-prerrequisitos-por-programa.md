@@ -1,13 +1,13 @@
 # Restricción por programa (SSARRES) y prerrequisito por programa (SCAPPRQ)
 
-Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora de Ellucian) en la reunión de ese día. Detalle y capturas en el registro: C149 a C168, R23, R25, E29, E31, E32, U49 y U50.
+Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora de Ellucian) en la reunión de ese día. Detalle y capturas en el registro: C149 a C170, R23, R25, E29, E31, E32, U49 y U50.
 
 ## Qué se usa para qué
 
 | Necesidad | Página | Estado |
 |---|---|---|
 | Que un NRC del centro solo lo lleven ciertos programas (por ejemplo, una ruta XP) | **SSARRES** (un NRC) o **SCARRES** (el curso) › Grado y programa › **Incluir** | Probado (C156, C157) |
-| Que un curso de pregrado exija antes un curso del centro (acreditación) | **SCAPPRQ** (por programa de pregrado y versión) | Probado: la fila de Idiomas, sola, bloquea (C163, C165); el Basic «en curso» no cuenta (C166); sin la fila, se inscribe (C167) |
+| Que un curso de pregrado exija antes un curso del centro (acreditación) | **SCAPPRQ** (por programa de pregrado y versión) | Probado: la fila de Idiomas, sola, bloquea (C163, C165); el Basic «en curso» no cuenta (C166); sin la fila, se inscribe (C167); con el Basic en la historia, se inscribe (C170) |
 | Amarrar el curso del centro como **correquisito** | SCADETL | **No sirve:** exige el mismo periodo y pregrado (terminación 44) y centros (terminación 54) van en periodos distintos (R22, R24, C159). Ellucian explorará un mismo periodo o partes de periodo (C168, U51): choca con el ADR-005 |
 
 ## 1. Restricción de programa en SSARRES
@@ -40,7 +40,7 @@ Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora
 ### Versiones: lo más importante (C162)
 - La regla de Nidia está **solo en la versión 202444** (de 202444 a 202544), la del catálogo 2024.
 - La **versión 202644** (de 202644 a 999999), la que abre SCAPPRQ para 202744 y la del catálogo de Arnold (202646), **no tiene el Basic**: Anatomía I solo pide `ESEC 00055`.
-- Hay que copiar la regla a cada versión (202544, 202644) y confirmar si la matrícula usa la versión del **catálogo del alumno** o la del **periodo de matrícula** (E32).
+- **La matrícula usa la versión del catálogo del alumno**, no la del periodo de matrícula (probado en C170): la regla de Nidia en 202444 solo vale para catálogos 2024. Hay que copiarla a cada versión (202544, 202644).
 
 ### Paso a paso de la prueba (C163, C164)
 1. **SOATERM 202744** › Verificación de errores › **Prerrequisitos en Fatal** (ya lo está). «En progreso» está sin marcar: un curso en curso no cuenta (R10).
@@ -62,7 +62,11 @@ Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora
    - SCAPPRQ `1PCSP15` 202644 › `ESEC 00044` › bloque de prerrequisitos › «–» en `ESEP 02456` › el usuario guarda; luego «–» en `ESEC 00044` › el usuario guarda (quedan 71 cursos).
    - SFAREGS 202744 › Arnold › NRC 10022 › el usuario guarda → **se inscribe sin error**. El bloqueo de los pasos 7 y 8 venía solo de la fila de Idiomas.
    - **La baja no se pudo hacer:** en 202744, parte 1, SFARSTS solo tiene **RE** (SFQRSTS); DD da *«El estatus “DD” es inválido…»* y un RE no se borra (sección 3). Para probar bajas en un periodo de pregrado, Registros tiene que agregar DD en SFARSTS.
-10. **Pendiente:** decidir si se marca «En progreso» en el SOATERM de pregrado (vale para todos los prerrequisitos del periodo); copiar la regla a las versiones 202544 y 202644 (E32).
+10. **Caso positivo y versión que aplica (C170).** Alumno de Nidia `A00010005` (catálogo 202444, Basic I con 80 en SHACRSE, periodo 202646):
+   - versión **202644** con `ESEC 00044` ← Basic II → NRC 10022: **se inscribe** (no es la versión de su catálogo);
+   - versión **202444** con `ESEC 00227` ← Basic II → NRC 10007: **«Prerequisite and Test Score error»**;
+   - mismo curso con **Basic I** → NRC 10007: **se inscribe**. Un curso del centro en la historia cumple el prerrequisito, aunque sea de otro periodo y nivel.
+11. **Pendiente:** decidir si se marca «En progreso» en el SOATERM de pregrado (vale para todos los prerrequisitos del periodo); copiar la regla a las versiones 202544 y 202644.
 
 ## 3. Incidencias de SFAREGS en el navegador integrado (C158)
 - **SOADEST** aparece al abrir SFAREGS en una sesión nueva: llenar los cinco campos con **DATABASE**. GUARDAR da «Función inválida» (no se guarda, queda en la sesión); después abrir SFAREGS desde el buscador de la misma página.
@@ -74,10 +78,11 @@ Lo probado en Banner TEST el 29/10/2026 y lo que dijo Nidia Beltrán (consultora
 - **NRC 10045** (202656, `ESEC 00701`): parte **X06** (no X07, que no tiene SFARSTS); SSARRES con Incluir `CMEMC44` y `1PCSP15`; Arnold Vaca y `100582059` inscritos con RE. En X06, RE y DD valen hasta el 31-OCT-2026.
 - **NRC 10020 y 10021** (202744, sección T1): sin alumnos. **10022**: Arnold Vaca (C167).
 - **Arnold Vaca** (`S00912438`): currículo `IMEMI03` (plan 4) y NRC **10042** y **10043** (Basic I) con RE en 202656 (C166); NRC **10022** con RE en 202744, sin poder darlo de baja (C167).
-- **SCAPPRQ `1PCSP15` 202644:** sin las filas temporales; se borraron el 29/10 (C167).
+- **SCAPPRQ `1PCSP15`:** sin las filas temporales de C165 (C167); las de C170 también se borraron: 202444 con 70 cursos y 202644 con 71.
+- **`A00010005`** (alumno de Nidia): NRC **10022** y **10007** con RE en 202744, sin DD en la parte 1 (C170).
 - **SOATERM 202656:** Programa en Fatal (C149 dice devolverlo a «No verificar» al terminar).
 - La limpieza espera la decisión del usuario.
 
 ## Preguntas abiertas
-- **Ellucian:** E29 (planes distintos), E31 (¿conviene marcar «En progreso»?, desaprobado), E32 (versión que aplica, concurrencia, calificación 75, bloque de área para Computación), E33 (recargo del 5 %, periodos compartidos, correquisito entre partes).
+- **Ellucian:** E29 (planes distintos), E31 (¿conviene marcar «En progreso»?, desaprobado), E32 (versión: resuelta en C170, rige el catálogo; concurrencia, calificación 75, bloque de área para Computación), E33 (recargo del 5 %, periodos compartidos, correquisito entre partes).
 - **USS:** U49 (qué nivel, desde qué ciclo, a qué cursos y con qué nota), U50 (primero paga y luego se inscribe: confirmado en C168, falta Faber), U51 (¿unificar periodos?, ADR-005), U43 (cómo se amarra la acreditación).

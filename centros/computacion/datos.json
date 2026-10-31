@@ -2204,7 +2204,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2624,8 +2624,8 @@
         "nrc": "10045",
         "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existía y tenía alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059; cada página la deja escrita Claude, el usuario guarda y cada paso queda con su captura (C178 a C181).",
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
-        "pendiente": "Arnold Vaca (S00912438) también está con RE en el 10045 (C157). Antes del pase a historia, el usuario decide si se le da de baja (DD solo hasta el 31-OCT-2026) o si recibe nota.",
-        "avance": "Pasos 1 a 11 hechos en TEST (30 y 31/10/2026), con sus capturas (C180 a C188). Sigue el paso 12 (SHRROLL, pase a historia).",
+        "pendiente": "Resuelto el 31-OCT-2026: Arnold Vaca (S00912438) se dio de baja del 10045 con DD antes del pase a historia (C189).",
+        "avance": "Pasos 1 a 12 hechos en TEST (30 y 31/10/2026), con sus capturas (C180 a C189). Sigue el paso 13 (SHRROLL, pase a historia).",
         "pasos": [
           {
             "n": 1,
@@ -3611,6 +3611,91 @@
           },
           {
             "n": 12,
+            "codigo": "SFAREGS",
+            "accion": "dar de baja al otro alumno (DD)",
+            "dato": "S00912438 (Arnold Vaca) · 10045 · RE → DD",
+            "quien": "El centro",
+            "cita": "Instructivo 5.4 Retiro de cursos · C156 · C158 · C189",
+            "resultado": "Estimación de cuota procesada · Los alumnos ya están inscritos · 10045 en DD con 0 horas",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Decisión",
+                  "Arnold sin notas en el 10045 → baja con DD",
+                  "Usuario",
+                  "Antes del pase a historia (31-OCT-2026, último día del DD en la X06, C156)"
+                ],
+                [
+                  "SOADEST",
+                  "DATABASE en los cinco campos, sin guardar",
+                  "Usuario",
+                  "Igual que en el paso 8 (C185)"
+                ],
+                [
+                  "Periodo · ID",
+                  "202656 · S00912438 › Ir",
+                  "Usuario",
+                  "Banner trae «Arnold, Vaca»"
+                ],
+                [
+                  "Cursos del alumno",
+                  "10045 (ESEC 00701, X06) · 10042 y 10043 (ESEP 02456, I10)",
+                  "Banner",
+                  "Solo se cambia el 10045"
+                ],
+                [
+                  "Foco",
+                  "⏬ hasta «Información de curso» y luego clic en Estatus",
+                  "Usuario",
+                  "Un clic en la tabla no movió el foco: se quedó en el estatus del alumno"
+                ],
+                [
+                  "Estatus del 10045",
+                  "RE → DD › Tab",
+                  "Usuario",
+                  "Sin error: DD vale en la X06 hasta el 31-OCT-2026. Las horas bajan a 0.000 y la fila queda «En progreso»"
+                ],
+                [
+                  "Guardar",
+                  "«Estimación de cuota procesada» · «Los alumnos ya están inscritos…»",
+                  "Usuario",
+                  "La página vuelve al bloque clave: es normal"
+                ],
+                [
+                  "Comprobar (Ir otra vez)",
+                  "10045: DD · 0.000 horas de crédito, cobro e intentadas · X06 · plan 1",
+                  "Banner",
+                  "10042 y 10043 siguen con RE"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "12-sfaregs-baja-dd.png",
+                "texto": "Al reabrir: el 10045 de Arnold en DD"
+              },
+              {
+                "archivo": "12-sfaregs-baja-dd-b.png",
+                "texto": "Antes: Arnold con el 10045, el 10042 y el 10043"
+              },
+              {
+                "archivo": "12-sfaregs-baja-dd-c.png",
+                "texto": "DD escrito: horas en 0.000, sin error"
+              },
+              {
+                "archivo": "12-sfaregs-baja-dd-d.png",
+                "texto": "Guardado: cuota procesada y alumnos inscritos"
+              }
+            ]
+          },
+          {
+            "n": 13,
             "codigo": "SHRROLL",
             "accion": "pase a historia",
             "dato": "GJAPCTL · modo A y luego U",
@@ -3618,7 +3703,7 @@
             "cita": "Instructivo 7.1.9, diap. 22 a 27 · C121, C122"
           },
           {
-            "n": 13,
+            "n": 14,
             "codigo": "SHACRSE",
             "accion": "nota en la historia",
             "dato": "100582059 · ESEC 00701",

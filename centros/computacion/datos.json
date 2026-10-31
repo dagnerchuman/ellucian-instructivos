@@ -2204,7 +2204,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2625,7 +2625,7 @@
         "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existía y tenía alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059; cada página la deja escrita Claude, el usuario guarda y cada paso queda con su captura (C178 a C181).",
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Arnold Vaca (S00912438) también está con RE en el 10045 (C157). Antes del pase a historia, el usuario decide si se le da de baja (DD solo hasta el 31-OCT-2026) o si recibe nota.",
-        "avance": "Pasos 1 a 10 hechos en TEST el 30/10/2026, con sus capturas (C180 a C187). Sigue el paso 11 (SFASLST, revisar la nota final).",
+        "avance": "Pasos 1 a 11 hechos en TEST (30 y 31/10/2026), con sus capturas (C180 a C188). Sigue el paso 12 (SHRROLL, pase a historia).",
         "pasos": [
           {
             "n": 1,
@@ -3546,7 +3546,68 @@
             "accion": "revisar la nota final",
             "dato": "202656 · 10045",
             "quien": "Registros Académicos",
-            "cita": "Instructivo 7.1.6, diap. 15 y 16 · C107"
+            "cita": "Instructivo 7.1.6, diap. 15 y 16 · C107 · C188",
+            "resultado": "Solo consulta: 100582059 con calificación final 17, modo V, «Pasada» sin marcar",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Periodo · NRC",
+                  "202656 · 10045 › Ir",
+                  "Usuario",
+                  "Banner muestra ESEC 00701, sección A"
+                ],
+                [
+                  "Aviso",
+                  "«Ya existen componentes calificables para esta sección. Las calificaciones ingresadas aquí se pueden sobrescribir a través del procesamiento del libro de calificaciones electrónicas.» › OK",
+                  "Banner",
+                  "La nota viene del libro del docente (paso 10); aquí no se escribe"
+                ],
+                [
+                  "Secuencia 1 · 100582059",
+                  "DAGNER, CHUMAN… · RE (29-OCT-2026) · calificación final 17 · modo V",
+                  "Banner",
+                  "La calificación compuesta pasa sola a la lista de clase (C107)"
+                ],
+                [
+                  "Secuencia 2 · Arnold Vaca",
+                  "S00912438 · RE (29-OCT-2026) · sin calificación final · modo V",
+                  "Banner",
+                  "Sin notas en el libro: pendiente de la decisión del usuario"
+                ],
+                [
+                  "Horas · Pasada",
+                  "1.000 · sin marcar",
+                  "Banner",
+                  "«Pasada» se marca después del pase a historia (SHRROLL, paso 12)"
+                ],
+                [
+                  "Guardar",
+                  "no se pulsa",
+                  "—",
+                  "Es solo una revisión. El foco queda dentro del 17: no escribir nada"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "11-sfaslst-nota-final.png",
+                "texto": "Lista de clase: 100582059 con 17 y Arnold sin nota"
+              },
+              {
+                "archivo": "11-sfaslst-nota-final-b.png",
+                "texto": "Aviso: hay componentes calificables en la sección"
+              },
+              {
+                "archivo": "11-sfaslst-nota-final-c.png",
+                "texto": "Horas 1.000 y «Pasada» sin marcar"
+              }
+            ]
           },
           {
             "n": 12,

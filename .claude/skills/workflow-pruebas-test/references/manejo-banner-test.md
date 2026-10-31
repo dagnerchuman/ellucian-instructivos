@@ -69,6 +69,12 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 3. «Unidad de control» es una lista con búsqueda: escriba «P» y elija **Presente/Ausente**. La flecha abajo no cambia la opción: crea una fila vacía, que se quita con **–**.
 4. Las fechas las trae Banner de la parte. El usuario guarda; Banner pone el número de regla. Sin la regla, el NRC no sale en Faculty › Control de asistencia (C101).
 
+### Pase a historia de un NRC (GJAPCTL › SHRROLL, C190)
+1. GJAPCTL › Proceso `SHRROLL` › Tab › Ir. ⏬ al bloque de parámetros › Tab al valor del 01 › flecha abajo para cada fila: 01 periodo, 04 `%`, 05 NRC, 06 usuario, 07 **A**, 08 `A`, 09 periodo de calificaciones, 10 `N`. Envío: «Enviar».
+2. El usuario pulsa GUARDAR: sale «Arc Log: shrroll_N.log Arch List: shrroll_N.lis».
+3. GJIREVO › SHRROLL › N › `shrroll_N.lis` › Ir: «Rolled to Academic History» por alumno y plan; en la página 2, Report Mode y RECORD COUNT.
+4. Si está bien, lo mismo con 07 = **U** (graba). Comprobar en SHACRSE (cambie el ID que arrastra) y en SFASLST («Comenzar de nuevo» › Ir para refrescar): «Pasada» ✓.
+
 ### Pasar lista y enviar la asistencia al libro (Autoservicio docente, C186)
 1. Abra `https://facultyssb-test.usspesaas.elluciancloud.com:8100/FacultySelfService/ssb/facultyAttendanceTracking` (el botón «Ingresar asistencia» abre una ventana aparte) › **Pasar lista** del NRC.
 2. Solo se marca la **columna de la fecha elegida** (resaltada a la derecha): pulse su encabezado o ‹ › y luego el círculo. Cada clic se guarda solo; el usuario autoriza las marcas antes.

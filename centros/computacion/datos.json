@@ -206,7 +206,7 @@
       "horario": "Miércoles 15:30–17:10, del 07-SEP al 31-OCT-2026, 2 horas por semana (C179, C180)",
       "aula": "SAUVIR / SALA-VIRT, con O en «Indicador de sobrepaso» (C180)",
       "programa": "CMEMC44 · área MC44-01, regla ECOM-03 (C181)",
-      "uso": "GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Horario y docente guardados en SSASECT y visibles en SIAASGN el 30/10 (C180); malla MC44-01 › ECOM-03 y fórmula en SHAGCOM con VIG_11 arriba (C181); sigue SOAATRK (ejemplo de prueba 2)"
+      "uso": "GOOGLE, curso de prueba. Restricción de programa en SSARRES (Incluir CMEMC44 y 1PCSP15) probada con Arnold Vaca y 100582059, los dos con RE (C151, C156, C157). Ejemplo de prueba 2 completo en TEST (C180 a C190): horario miércoles 15:30–17:10, docente 100582059, malla MC44-01 › ECOM-03, fórmula con VIG_11, asistencia 100 %, notas 85, final 17, SHRROLL jobs 7994 (A) y 7995 (U), 17 en SHACRSE. Arnold Vaca, baja con DD el 31-OCT."
     }
   ],
   "nrc_ejemplo": "1026",
@@ -2204,7 +2204,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2625,7 +2625,7 @@
         "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existía y tenía alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059; cada página la deja escrita Claude, el usuario guarda y cada paso queda con su captura (C178 a C181).",
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Resuelto el 31-OCT-2026: Arnold Vaca (S00912438) se dio de baja del 10045 con DD antes del pase a historia (C189).",
-        "avance": "Pasos 1 a 12 hechos en TEST (30 y 31/10/2026), con sus capturas (C180 a C189). Sigue el paso 13 (SHRROLL, pase a historia).",
+        "avance": "Completo: los 14 pasos hechos en TEST el 30 y el 31/10/2026, con sus capturas (C180 a C190). El NRC 10045 fue de punta a punta: horario, docente, malla, fórmula, asistencia, notas, pase a historia y nota 17 en la historia.",
         "pasos": [
           {
             "n": 1,
@@ -3698,9 +3698,109 @@
             "n": 13,
             "codigo": "SHRROLL",
             "accion": "pase a historia",
-            "dato": "GJAPCTL · modo A y luego U",
+            "dato": "GJAPCTL · SHRROLL · 10045 · modo A (job 7994) y luego U (job 7995)",
             "quien": "Registros Académicos",
-            "cita": "Instructivo 7.1.9, diap. 22 a 27 · C121, C122"
+            "cita": "Instructivo 7.1.9, diap. 22 a 27 · C121 · C122 · C190",
+            "resultado": "Job 7995 (modo U): 100582059 «Rolled to Academic History» en CMEMC44 · RECORD COUNT 1",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Página",
+                  "GJAPCTL › Proceso SHRROLL «Paso de calif. a hist. acad.» › Ir",
+                  "Registros Académicos",
+                  "Impresora DATABASE"
+                ],
+                [
+                  "Parámetros 01 · 04 · 05",
+                  "202656 · % · 10045",
+                  "Usuario",
+                  "Periodo, parte (todas) y NRC. Se baja con ⏬ al bloque; Tab al valor y flecha abajo para la fila siguiente"
+                ],
+                [
+                  "Parámetros 06 · 07 · 08",
+                  "DCHUMAN · A (primero) / U (después) · A",
+                  "Usuario",
+                  "07: A = auditoría, no graba; U = actualizar, graba en la historia"
+                ],
+                [
+                  "Parámetros 09 · 10",
+                  "202656 · N",
+                  "Usuario",
+                  "Periodo de calificaciones y título largo"
+                ],
+                [
+                  "Envío",
+                  "Enviar ✓ · «Guardar parámetros como» sin marcar",
+                  "Usuario",
+                  "Lo pulsa el usuario (GUARDAR)"
+                ],
+                [
+                  "Job modo A",
+                  "7994 · shrroll_7994.lis",
+                  "Banner",
+                  "Aviso: «Arc Log: shrroll_7994.log Arch List: shrroll_7994.lis»"
+                ],
+                [
+                  "Reporte (GJIREVO › SHRROLL › 7994 › shrroll_7994.lis › Ir)",
+                  "100582059: Rolled to Academic History en 1PIAP11, IMEMI05 y CMEMC44 (000000, C, EM, ACXP) · API Error «Invalid study path sequence for outcome» · Arnold no sale (DD)",
+                  "Banner",
+                  "El API Error es por un plan inactivo del alumno de prueba, igual que en C121; no impide el pase"
+                ],
+                [
+                  "Control del reporte",
+                  "Term 202656 · CRN 10045 · Report Mode A · RECORD COUNT 1",
+                  "Banner",
+                  "Página 2 del reporte"
+                ],
+                [
+                  "Job modo U",
+                  "7995 · Report Mode U · RECORD COUNT 1",
+                  "Banner",
+                  "Mismo resultado: el 17 pasa a la historia"
+                ]
+              ]
+            },
+            "nota": "Primero siempre en modo A y se lee el reporte; solo si sale bien, en modo U. Una corrección después del pase se hace en SHATCKN (C124).",
+            "capturas": [
+              {
+                "archivo": "13-shrroll-pase-historia.png",
+                "texto": "Reporte del job 7995 (modo U): Rolled to Academic History"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia-b.png",
+                "texto": "GJAPCTL con los parámetros en modo A"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia-c.png",
+                "texto": "Job 7994 enviado"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia-d.png",
+                "texto": "Reporte de la auditoría (job 7994)"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia-e.png",
+                "texto": "Control del reporte: Report Mode A, RECORD COUNT 1"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia-f.png",
+                "texto": "GJAPCTL con el modo U"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia-g.png",
+                "texto": "Job 7995 enviado"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia-h.png",
+                "texto": "Control del reporte: Report Mode U, RECORD COUNT 1"
+              }
+            ]
           },
           {
             "n": 14,
@@ -3708,7 +3808,60 @@
             "accion": "nota en la historia",
             "dato": "100582059 · ESEC 00701",
             "quien": "Registros Académicos",
-            "cita": "C124"
+            "cita": "C124 · C190",
+            "resultado": "SHACRSE: ESEC 00701 «Google» con 17, modo V · SFASLST: «Pasada» ✓",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "SHACRSE · ID · periodo",
+                  "100582059 · 202656 › Ir",
+                  "Usuario",
+                  "Ojo: SHACRSE arrastra el ID de la página anterior; cámbielo"
+                ],
+                [
+                  "Cursos en 202656",
+                  "10044 ESEC 00684 «Diseño Web» · 10045 ESEC 00701 «Google»",
+                  "Banner",
+                  "X06, nivel C, sección A"
+                ],
+                [
+                  "Calificación del 10045",
+                  "17 · modo V · 1.000 horas",
+                  "Banner",
+                  "Rueda a la derecha. Con VIG_11 arriba en SHAGCOM la nota llega en número (paso 6)"
+                ],
+                [
+                  "SFASLST otra vez",
+                  "Solo 100582059 · final 17 · «Pasada» ✓",
+                  "Banner",
+                  "La primera vez mostró la consulta anterior (Arnold con RE): «Comenzar de nuevo» › Ir la refresca. Arnold ya no sale por el DD"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "14-shacrse-historia.png",
+                "texto": "Historia académica: Google con 17"
+              },
+              {
+                "archivo": "14-shacrse-historia-b.png",
+                "texto": "SHACRSE: el 10044 y el 10045 en 202656"
+              },
+              {
+                "archivo": "14-shacrse-historia-c.png",
+                "texto": "SFASLST: solo 100582059 con final 17"
+              },
+              {
+                "archivo": "14-shacrse-historia-d.png",
+                "texto": "SFASLST: «Pasada» marcada"
+              }
+            ]
           }
         ]
       }

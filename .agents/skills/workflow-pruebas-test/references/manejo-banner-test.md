@@ -42,7 +42,7 @@ Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «
 5. Error: *«El horario del alumno tiene errores»*; el motivo está en la columna Mensaje («Program Restriction», «Prerequisite and Test Score error», «Prerequisite In Progress»). Esa fila ya no se puede quitar: recargar la página y esperar el candado (sección 5).
 
 ### Dar de baja (SFAREGS)
-- Columna Estatus › DD › Tab. Si sale *«El estatus “DD” es inválido…»*, la parte de periodo no tiene DD en SFARSTS. Con ••• en Estatus se abre SFQRSTS con los estatus permitidos (en 202744, parte 1, solo RE). Un RE no se borra (C158, C167).
+- ⏬ hasta «Información de curso» (un clic en la tabla no siempre mueve el foco) › columna Estatus › DD › Tab › el usuario guarda: *«Estimación de cuota procesada»* y *«Los alumnos ya están inscritos»*. Probado con Arnold en el 10045, X06 (C189). Si sale *«El estatus “DD” es inválido…»*, la parte de periodo no tiene DD en SFARSTS. Con ••• en Estatus se abre SFQRSTS con los estatus permitidos (en 202744, parte 1, solo RE). Un RE no se borra (C158, C167).
 
 ### Agregar el programa del centro a un alumno (SFAREGS › Currículos)
 - Fila nueva › programa desde **••• › «Reglas de currículo base por programa»** › fila del campus › OK; campo de estudio y departamento. Escribir el programa a mano y pulsar Intro arrastra datos de otro currículo (C153, C166).

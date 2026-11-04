@@ -1881,33 +1881,6 @@ html:not([data-theme="dark"]) .guia-fila-paso.completada:hover {
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.45) !important;
 }
 
-/* Atención de filas pendientes cuando se solicita seguir validando */
-@keyframes pulsoPendiente {
-  0% {
-    background-color: rgba(245, 158, 11, 0.4);
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(1.006);
-  }
-
-  50% {
-    background-color: rgba(245, 158, 11, 0.55);
-  }
-
-  100% {
-    background-color: rgba(245, 158, 11, 0.12);
-    transform: scale(1);
-  }
-}
-
-tr.guia-fila-paso.pendiente-atencion {
-  animation: pulsoPendiente 0.75s ease-in-out !important;
-  outline: 2px solid #f59e0b !important;
-  outline-offset: -2px !important;
-}
-
 .guia-campo {
   font-weight: 700 !important;
   color: #f8fafc !important;
@@ -3424,61 +3397,24 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 }
 .antes-nrc .an-sub > summary { justify-content: flex-start; }
 .antes-nrc .an-sub > summary::after { margin-left: auto; }
-/* Prueba en TEST: los pasos por fase; cada uno abre ese paso en el flujo (C192) */
-.antes-nrc .an-fases {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.9rem;
-}
-.antes-nrc .an-fase h4 {
-  margin: 0 0 0.45rem;
-  color: var(--text-muted, #475569);
-  font-size: 0.78rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-.antes-nrc .an-chips { display: grid; gap: 0.35rem; margin: 0; padding: 0; list-style: none; }
-.antes-nrc .an-chips li { margin: 0; }
-.antes-nrc .an-chips a {
-  display: grid;
-  grid-template-columns: 1.7rem 1fr;
-  column-gap: 0.55rem;
-  align-items: center;
-  padding: 0.45rem 0.65rem;
+/* Prueba en TEST: el flujo de Archify de los pasos hechos (copia del SVG); cada nodo abre su modal (C193) */
+.antes-nrc .an-flujo {
+  overflow-x: auto;
+  margin-top: 0.4rem;
+  padding: 0.6rem;
   border: 1px solid var(--panel-border, #e2e8f0);
-  border-radius: 0.6rem;
-  background: var(--panel, #ffffff);
-  color: inherit;
-  text-decoration: none;
-  transition: border-color 0.15s, transform 0.15s;
+  border-radius: 0.75rem;
+  background: var(--bg, #ffffff);
+  -webkit-overflow-scrolling: touch;
 }
-.antes-nrc .an-chips a:hover { border-color: #8b5cf6; transform: translateX(2px); }
-.antes-nrc .an-chip-n {
-  grid-row: span 2;
-  display: grid;
-  place-items: center;
-  width: 1.6rem;
-  height: 1.6rem;
-  border-radius: 50%;
-  background: #10b981;
-  color: #ffffff;
-  font-size: 0.78rem;
-  font-weight: 700;
+.antes-nrc .an-flujo svg { display: block; width: 100%; min-width: 760px; height: auto; }
+.antes-nrc .an-flujo [data-prueba-paso] { cursor: pointer; outline: none; }
+.antes-nrc .an-flujo [data-prueba-paso] > rect:not(.c-mask) { transition: stroke-width 0.15s, filter 0.15s; }
+.antes-nrc .an-flujo [data-prueba-paso]:hover > rect:not(.c-mask),
+.antes-nrc .an-flujo [data-prueba-paso]:focus-visible > rect:not(.c-mask) {
+  stroke-width: 2.6;
+  filter: drop-shadow(0 4px 10px rgba(124, 58, 237, 0.28));
 }
-.antes-nrc .an-chips strong { font-size: 0.86rem; }
-.antes-nrc .an-chips small { color: var(--text-muted, #475569); font-size: 0.78rem; line-height: 1.3; }
-.antes-nrc .an-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; margin: 1rem 0 0; }
-.antes-nrc .an-btn {
-  display: inline-block;
-  padding: 0.6rem 1.1rem;
-  border-radius: 0.6rem;
-  background: #7c3aed;
-  color: #ffffff;
-  font-weight: 700;
-  text-decoration: none;
-}
-.antes-nrc .an-btn:hover { background: #6d28d9; }
-.antes-nrc .an-cta span { flex: 1 1 260px; color: var(--text-muted, #475569); font-size: 0.8rem; }
 /* Número de la lámina sin fila en la guía: se resalta en el texto de la lámina (C177, C192) */
 .gdv-num.gdv-sin-fila { background: rgba(245, 158, 11, 0.12); border-radius: 0.35rem; }
 /* Capturas de TEST en la ficha de un paso (flujo del ejemplo de prueba, C192) */
@@ -3490,4 +3426,141 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 }
 @media print {
   .antes-nrc { break-inside: avoid; }
+}
+
+/* === Prueba en TEST en un modal de la misma demostración (pestaña «Prueba en TEST», C193) === */
+body.prueba-abierta { overflow: hidden; }
+body.prueba-abierta #ai-fab-btn { display: none !important; }  /* tapaba «Siguiente» */
+.prueba-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 2vw;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+}
+.prueba-modal[hidden] { display: none; }
+.prueba-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(1180px, 100%);
+  max-height: 96vh;
+  overflow: hidden;
+  border-radius: 0.9rem;
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.35);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.prueba-barra,
+.prueba-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+}
+.prueba-barra { border-bottom: 1px solid #e2e8f0; font-weight: 700; }
+.prueba-pie { border-top: 1px solid #e2e8f0; }
+.prueba-cerrar {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: inherit;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+}
+.prueba-pasos {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding: 0.55rem 1rem 0.9rem;  /* espacio para la barra de desplazamiento, que en macOS se dibuja encima */
+  border-bottom: 1px solid #e2e8f0;
+  scrollbar-width: thin;
+}
+.prueba-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.7rem 0.28rem 0.3rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.prueba-chip span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  color: #047857;
+  font-size: 0.72rem;
+}
+.prueba-chip:hover { border-color: #8b5cf6; }
+.prueba-chip.activo { border-color: #7c3aed; background: #7c3aed; color: #ffffff; }
+.prueba-chip.activo span { background: #ffffff; color: #6d28d9; }
+.prueba-cuerpo { flex: 1 1 auto; overflow: auto; padding: 0.85rem 1rem 1rem; }
+.prueba-encabezado { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.7rem; margin-bottom: 0.5rem; }
+.prueba-encabezado h3 { margin: 0; font-size: 1.05rem; }
+.prueba-quien { flex-basis: 100%; color: #475569; font-size: 0.82rem; }
+.prueba-modal .guia-diapos { background: #f8fafc; border-color: #e2e8f0; }
+.prueba-modal .guia-diapo { background: #ffffff; }
+.prueba-tabla-wrap { overflow-x: auto; margin: 0.6rem 0 0.8rem; border: 1px solid #e2e8f0; border-radius: 0.55rem; }
+.prueba-tabla { width: 100%; min-width: 620px; border-collapse: collapse; }
+.prueba-tabla th,
+.prueba-tabla td { padding: 0.45rem 0.6rem; border-bottom: 1px solid #e2e8f0; text-align: left; vertical-align: top; }
+.prueba-tabla th { background: #f1f5f9; color: #334155; font-size: 0.72rem; letter-spacing: 0.03em; text-transform: uppercase; }
+.prueba-tabla th:nth-child(1) { width: 22%; }
+.prueba-tabla th:nth-child(3) { width: 13%; }
+.prueba-tabla th:nth-child(4) { width: 27%; }
+.prueba-tabla td:nth-child(3),
+.prueba-tabla td:nth-child(4) { color: #475569; font-size: 0.82rem; }
+.prueba-tabla tr:last-child td { border-bottom: none; }
+.prueba-tabla tr.prueba-resultado td { background: rgba(16, 185, 129, 0.12); }
+.prueba-nav {
+  padding: 0.45rem 0.95rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.55rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.prueba-nav-sig { border-color: #2563eb; background: #2563eb; color: #ffffff; }
+.prueba-nav:disabled { opacity: 0.4; cursor: default; }
+.prueba-cuenta { color: #475569; font-size: 0.85rem; }
+html[data-theme="dark"] .prueba-panel { background: #0f172a; color: #e2e8f0; }
+html[data-theme="dark"] .prueba-barra,
+html[data-theme="dark"] .prueba-pie,
+html[data-theme="dark"] .prueba-pasos,
+html[data-theme="dark"] .prueba-chip,
+html[data-theme="dark"] .prueba-cerrar,
+html[data-theme="dark"] .prueba-nav,
+html[data-theme="dark"] .prueba-tabla-wrap,
+html[data-theme="dark"] .prueba-tabla th,
+html[data-theme="dark"] .prueba-tabla td { border-color: rgba(148, 163, 184, 0.25); }
+html[data-theme="dark"] .prueba-tabla th { background: #1e293b; color: #94a3b8; }
+html[data-theme="dark"] .prueba-quien,
+html[data-theme="dark"] .prueba-cuenta,
+html[data-theme="dark"] .prueba-tabla td:nth-child(3),
+html[data-theme="dark"] .prueba-tabla td:nth-child(4) { color: #94a3b8; }
+html[data-theme="dark"] .prueba-modal .guia-diapos { background: rgba(15, 23, 42, 0.35); border-color: rgba(148, 163, 184, 0.22); }
+html[data-theme="dark"] .prueba-modal .guia-diapo { background: transparent; }
+html[data-theme="dark"] .prueba-nav-sig { border-color: #2563eb; }
+@media (max-width: 640px) {
+  .prueba-modal { padding: 0; }
+  .prueba-panel { max-height: 100vh; height: 100vh; border-radius: 0; }
 }

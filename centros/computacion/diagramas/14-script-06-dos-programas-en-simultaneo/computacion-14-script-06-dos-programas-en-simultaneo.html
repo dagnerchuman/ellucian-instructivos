@@ -15648,33 +15648,6 @@ html:not([data-theme="dark"]) .guia-fila-paso.completada:hover {
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.45) !important;
 }
 
-/* Atención de filas pendientes cuando se solicita seguir validando */
-@keyframes pulsoPendiente {
-  0% {
-    background-color: rgba(245, 158, 11, 0.4);
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(1.006);
-  }
-
-  50% {
-    background-color: rgba(245, 158, 11, 0.55);
-  }
-
-  100% {
-    background-color: rgba(245, 158, 11, 0.12);
-    transform: scale(1);
-  }
-}
-
-tr.guia-fila-paso.pendiente-atencion {
-  animation: pulsoPendiente 0.75s ease-in-out !important;
-  outline: 2px solid #f59e0b !important;
-  outline-offset: -2px !important;
-}
-
 .guia-campo {
   font-weight: 700 !important;
   color: #f8fafc !important;
@@ -17191,61 +17164,24 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 }
 .antes-nrc .an-sub > summary { justify-content: flex-start; }
 .antes-nrc .an-sub > summary::after { margin-left: auto; }
-/* Prueba en TEST: los pasos por fase; cada uno abre ese paso en el flujo (C192) */
-.antes-nrc .an-fases {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.9rem;
-}
-.antes-nrc .an-fase h4 {
-  margin: 0 0 0.45rem;
-  color: var(--text-muted, #475569);
-  font-size: 0.78rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-.antes-nrc .an-chips { display: grid; gap: 0.35rem; margin: 0; padding: 0; list-style: none; }
-.antes-nrc .an-chips li { margin: 0; }
-.antes-nrc .an-chips a {
-  display: grid;
-  grid-template-columns: 1.7rem 1fr;
-  column-gap: 0.55rem;
-  align-items: center;
-  padding: 0.45rem 0.65rem;
+/* Prueba en TEST: el flujo de Archify de los pasos hechos (copia del SVG); cada nodo abre su modal (C193) */
+.antes-nrc .an-flujo {
+  overflow-x: auto;
+  margin-top: 0.4rem;
+  padding: 0.6rem;
   border: 1px solid var(--panel-border, #e2e8f0);
-  border-radius: 0.6rem;
-  background: var(--panel, #ffffff);
-  color: inherit;
-  text-decoration: none;
-  transition: border-color 0.15s, transform 0.15s;
+  border-radius: 0.75rem;
+  background: var(--bg, #ffffff);
+  -webkit-overflow-scrolling: touch;
 }
-.antes-nrc .an-chips a:hover { border-color: #8b5cf6; transform: translateX(2px); }
-.antes-nrc .an-chip-n {
-  grid-row: span 2;
-  display: grid;
-  place-items: center;
-  width: 1.6rem;
-  height: 1.6rem;
-  border-radius: 50%;
-  background: #10b981;
-  color: #ffffff;
-  font-size: 0.78rem;
-  font-weight: 700;
+.antes-nrc .an-flujo svg { display: block; width: 100%; min-width: 760px; height: auto; }
+.antes-nrc .an-flujo [data-prueba-paso] { cursor: pointer; outline: none; }
+.antes-nrc .an-flujo [data-prueba-paso] > rect:not(.c-mask) { transition: stroke-width 0.15s, filter 0.15s; }
+.antes-nrc .an-flujo [data-prueba-paso]:hover > rect:not(.c-mask),
+.antes-nrc .an-flujo [data-prueba-paso]:focus-visible > rect:not(.c-mask) {
+  stroke-width: 2.6;
+  filter: drop-shadow(0 4px 10px rgba(124, 58, 237, 0.28));
 }
-.antes-nrc .an-chips strong { font-size: 0.86rem; }
-.antes-nrc .an-chips small { color: var(--text-muted, #475569); font-size: 0.78rem; line-height: 1.3; }
-.antes-nrc .an-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; margin: 1rem 0 0; }
-.antes-nrc .an-btn {
-  display: inline-block;
-  padding: 0.6rem 1.1rem;
-  border-radius: 0.6rem;
-  background: #7c3aed;
-  color: #ffffff;
-  font-weight: 700;
-  text-decoration: none;
-}
-.antes-nrc .an-btn:hover { background: #6d28d9; }
-.antes-nrc .an-cta span { flex: 1 1 260px; color: var(--text-muted, #475569); font-size: 0.8rem; }
 /* Número de la lámina sin fila en la guía: se resalta en el texto de la lámina (C177, C192) */
 .gdv-num.gdv-sin-fila { background: rgba(245, 158, 11, 0.12); border-radius: 0.35rem; }
 /* Capturas de TEST en la ficha de un paso (flujo del ejemplo de prueba, C192) */
@@ -17257,6 +17193,143 @@ html[data-present="true"] .toolbar .tb-rec-extra { display: none; }
 }
 @media print {
   .antes-nrc { break-inside: avoid; }
+}
+
+/* === Prueba en TEST en un modal de la misma demostración (pestaña «Prueba en TEST», C193) === */
+body.prueba-abierta { overflow: hidden; }
+body.prueba-abierta #ai-fab-btn { display: none !important; }  /* tapaba «Siguiente» */
+.prueba-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 2vw;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+}
+.prueba-modal[hidden] { display: none; }
+.prueba-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(1180px, 100%);
+  max-height: 96vh;
+  overflow: hidden;
+  border-radius: 0.9rem;
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.35);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.prueba-barra,
+.prueba-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+}
+.prueba-barra { border-bottom: 1px solid #e2e8f0; font-weight: 700; }
+.prueba-pie { border-top: 1px solid #e2e8f0; }
+.prueba-cerrar {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: inherit;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+}
+.prueba-pasos {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding: 0.55rem 1rem 0.9rem;  /* espacio para la barra de desplazamiento, que en macOS se dibuja encima */
+  border-bottom: 1px solid #e2e8f0;
+  scrollbar-width: thin;
+}
+.prueba-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.7rem 0.28rem 0.3rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.prueba-chip span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  color: #047857;
+  font-size: 0.72rem;
+}
+.prueba-chip:hover { border-color: #8b5cf6; }
+.prueba-chip.activo { border-color: #7c3aed; background: #7c3aed; color: #ffffff; }
+.prueba-chip.activo span { background: #ffffff; color: #6d28d9; }
+.prueba-cuerpo { flex: 1 1 auto; overflow: auto; padding: 0.85rem 1rem 1rem; }
+.prueba-encabezado { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.7rem; margin-bottom: 0.5rem; }
+.prueba-encabezado h3 { margin: 0; font-size: 1.05rem; }
+.prueba-quien { flex-basis: 100%; color: #475569; font-size: 0.82rem; }
+.prueba-modal .guia-diapos { background: #f8fafc; border-color: #e2e8f0; }
+.prueba-modal .guia-diapo { background: #ffffff; }
+.prueba-tabla-wrap { overflow-x: auto; margin: 0.6rem 0 0.8rem; border: 1px solid #e2e8f0; border-radius: 0.55rem; }
+.prueba-tabla { width: 100%; min-width: 620px; border-collapse: collapse; }
+.prueba-tabla th,
+.prueba-tabla td { padding: 0.45rem 0.6rem; border-bottom: 1px solid #e2e8f0; text-align: left; vertical-align: top; }
+.prueba-tabla th { background: #f1f5f9; color: #334155; font-size: 0.72rem; letter-spacing: 0.03em; text-transform: uppercase; }
+.prueba-tabla th:nth-child(1) { width: 22%; }
+.prueba-tabla th:nth-child(3) { width: 13%; }
+.prueba-tabla th:nth-child(4) { width: 27%; }
+.prueba-tabla td:nth-child(3),
+.prueba-tabla td:nth-child(4) { color: #475569; font-size: 0.82rem; }
+.prueba-tabla tr:last-child td { border-bottom: none; }
+.prueba-tabla tr.prueba-resultado td { background: rgba(16, 185, 129, 0.12); }
+.prueba-nav {
+  padding: 0.45rem 0.95rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.55rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.prueba-nav-sig { border-color: #2563eb; background: #2563eb; color: #ffffff; }
+.prueba-nav:disabled { opacity: 0.4; cursor: default; }
+.prueba-cuenta { color: #475569; font-size: 0.85rem; }
+html[data-theme="dark"] .prueba-panel { background: #0f172a; color: #e2e8f0; }
+html[data-theme="dark"] .prueba-barra,
+html[data-theme="dark"] .prueba-pie,
+html[data-theme="dark"] .prueba-pasos,
+html[data-theme="dark"] .prueba-chip,
+html[data-theme="dark"] .prueba-cerrar,
+html[data-theme="dark"] .prueba-nav,
+html[data-theme="dark"] .prueba-tabla-wrap,
+html[data-theme="dark"] .prueba-tabla th,
+html[data-theme="dark"] .prueba-tabla td { border-color: rgba(148, 163, 184, 0.25); }
+html[data-theme="dark"] .prueba-tabla th { background: #1e293b; color: #94a3b8; }
+html[data-theme="dark"] .prueba-quien,
+html[data-theme="dark"] .prueba-cuenta,
+html[data-theme="dark"] .prueba-tabla td:nth-child(3),
+html[data-theme="dark"] .prueba-tabla td:nth-child(4) { color: #94a3b8; }
+html[data-theme="dark"] .prueba-modal .guia-diapos { background: rgba(15, 23, 42, 0.35); border-color: rgba(148, 163, 184, 0.22); }
+html[data-theme="dark"] .prueba-modal .guia-diapo { background: transparent; }
+html[data-theme="dark"] .prueba-nav-sig { border-color: #2563eb; }
+@media (max-width: 640px) {
+  .prueba-modal { padding: 0; }
+  .prueba-panel { max-height: 100vh; height: 100vh; border-radius: 0; }
 }
 
 
@@ -19324,7 +19397,7 @@ button.ai-fab:active,
       btnResume.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        window.irAPaso(targetMaxId, true);
+        window.irAPaso(targetMaxId);
       });
     }
   }
@@ -19419,8 +19492,7 @@ button.ai-fab:active,
     window.__guiaChecks = {};
     window.__ultimoPasoEscogido = null;
 
-    // 2. Cerrar el modal si estaba abierto y limpiar el foco de Archify SIN hacer clic en el Paso 1
-    cerrarModalConfirmacionValidacion();
+    // 2. Limpiar el foco de Archify SIN hacer clic en el Paso 1
     var chip = document.getElementById('focus-chip');
     var b = document.getElementById('guia-modal-backdrop');
     if (b) b.classList.remove('active');
@@ -19539,106 +19611,6 @@ button.ai-fab:active,
     };
   }
 
-  function asegurarOverlayConfirmacion(chip) {
-    var overlay = chip.querySelector(':scope > .guia-confirm-overlay');
-    if (overlay) return overlay;
-
-    var oldOverlay = chip.querySelector('.guia-confirm-overlay');
-    if (oldOverlay) oldOverlay.remove();
-
-    overlay = document.createElement('div');
-    overlay.className = 'guia-confirm-overlay';
-    overlay.hidden = true;
-    overlay.setAttribute('hidden', '');
-    overlay.innerHTML = '<div class="guia-confirm-modal" role="dialog" aria-modal="true">' +
-      '<div class="guia-confirm-header">' +
-      '<span class="guia-confirm-icon">⚠️</span>' +
-      '<h4 class="guia-confirm-title">Validación de pasos</h4>' +
-      '</div>' +
-      '<p class="guia-confirm-body">' +
-      'Aún tienes <strong id="guia-confirm-pendientes">0</strong> pasos sin marcar en esta etapa.' +
-      '</p>' +
-      '<p class="guia-confirm-question">¿Deseas pasar sin validar los pasos o quedarte para seguir validando?</p>' +
-      '<div class="guia-confirm-actions">' +
-      '<button type="button" class="btn-confirm-seguir" id="btn-confirm-seguir">Seguir validando</button>' +
-      '<button type="button" class="btn-confirm-pasar" id="btn-confirm-pasar">Pasar sin validar →</button>' +
-      '</div>' +
-      '</div>';
-
-    chip.appendChild(overlay);
-
-    var btnSeguir = overlay.querySelector('#btn-confirm-seguir');
-    if (btnSeguir) {
-      btnSeguir.addEventListener('click', function (e) {
-        e.stopPropagation();
-        cerrarModalConfirmacionValidacion();
-        resaltarFilasPendientes();
-      });
-    }
-
-    var btnPasar = overlay.querySelector('#btn-confirm-pasar');
-    if (btnPasar) {
-      btnPasar.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var callback = window.__confirmValidationCallback;
-        cerrarModalConfirmacionValidacion();
-        if (typeof callback === 'function') {
-          callback();
-        }
-      });
-    }
-
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) {
-        e.stopPropagation();
-        cerrarModalConfirmacionValidacion();
-        resaltarFilasPendientes();
-      }
-    });
-
-    return overlay;
-  }
-
-  function mostrarModalConfirmacionValidacion(pendientes, total, onConfirmPasar) {
-    var chip = document.getElementById('focus-chip');
-    if (!chip) return;
-    var overlay = asegurarOverlayConfirmacion(chip);
-    var pElem = overlay.querySelector('#guia-confirm-pendientes');
-    if (pElem) {
-      pElem.textContent = pendientes + (total ? (' de ' + total) : '');
-    }
-    window.__confirmValidationCallback = onConfirmPasar;
-    overlay.hidden = false;
-    overlay.removeAttribute('hidden');
-    var btnSeguir = overlay.querySelector('#btn-confirm-seguir');
-    if (btnSeguir) btnSeguir.focus();
-  }
-
-  function cerrarModalConfirmacionValidacion() {
-    var chip = document.getElementById('focus-chip');
-    if (!chip) return;
-    var overlay = chip.querySelector('.guia-confirm-overlay');
-    if (overlay) {
-      overlay.hidden = true;
-      overlay.setAttribute('hidden', '');
-    }
-    window.__confirmValidationCallback = null;
-  }
-
-  function resaltarFilasPendientes() {
-    var rows = document.querySelectorAll('.guia-fila-paso:not(.completada)');
-    rows.forEach(function (row) {
-      row.classList.remove('pendiente-atencion');
-      void row.offsetWidth;
-      row.classList.add('pendiente-atencion');
-    });
-    if (rows.length > 0) {
-      try {
-        rows[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } catch (_) { }
-    }
-  }
-
   function toggleValidarTodosPaso(nodeId) {
     if (!nodeId || !GUIA_MAP[nodeId]) return;
     var inst = GUIA_MAP[nodeId].instrucciones || [];
@@ -19653,30 +19625,13 @@ button.ai-fab:active,
     actualizarModalGuia();
   }
 
-  window.irAPaso = function (targetNodeId, forzarSinValidar) {
+  // Ir a un paso. Los ✓ de la guía son solo una ayuda: avanzar nunca pide validarlos (pedido del usuario, C193).
+  window.irAPaso = function (targetNodeId) {
     if (!targetNodeId) return;
-    var idElem = document.getElementById('focus-id');
-    var currentId = idElem ? (idElem.textContent || '').trim() : '';
-    var nodeIds = obtenerIdsNodosDiagrama();
-    if (!nodeIds.length) nodeIds = Object.keys(GUIA_MAP);
-    var currentIndex = nodeIds.indexOf(currentId);
-    var targetIndex = nodeIds.indexOf(targetNodeId);
 
     // Revelar automáticamente pasos posteriores si el objetivo es s5 o s6 en Crear el NRC
     if (esFlujoCrearNrc() && (targetNodeId === 's5' || targetNodeId === 's6')) {
       setPasosPosterioresVisibles(true);
-    }
-
-    var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
-    // Solo validar si se intenta avanzar a un paso NUEVO que no ha sido desbloqueado todavía
-    if (targetIndex > currentIndex && targetIndex > maxUnlocked && !forzarSinValidar) {
-      var val = obtenerEstadoValidacionPaso(currentId);
-      if (!val.completo) {
-        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function () {
-          window.irAPaso(targetNodeId, true);
-        });
-        return;
-      }
     }
 
     actualizarProgresoDiagrama(targetNodeId);
@@ -19691,7 +19646,7 @@ button.ai-fab:active,
     }
   };
 
-  window.navegarPaso = function (offset, forzarSinValidar) {
+  window.navegarPaso = function (offset) {
     var idElem = document.getElementById('focus-id');
     if (!idElem) return;
     var currentId = (idElem.textContent || '').trim();
@@ -19703,17 +19658,6 @@ button.ai-fab:active,
     // Al avanzar desde s4 en Crear el NRC, revelar los pasos posteriores
     if (offset > 0 && currentId === 's4' && esFlujoCrearNrc()) {
       setPasosPosterioresVisibles(true);
-    }
-
-    var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
-    if (offset > 0 && (currentIndex + offset) > maxUnlocked && !forzarSinValidar) {
-      var val = obtenerEstadoValidacionPaso(currentId);
-      if (!val.completo) {
-        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function () {
-          window.navegarPaso(offset, true);
-        });
-        return;
-      }
     }
 
     var nextIndex = currentIndex + offset;
@@ -19826,6 +19770,159 @@ button.ai-fab:active,
       return { src: d.src, completa: d.src, visor: d.src, fuente: 'Captura de TEST', n: d.n, texto: d.texto, captura: true };
     });
   }
+
+  // Pasos de la prueba en TEST en un modal de la misma demostración (pestaña «Prueba en TEST», C193): al hacer clic en
+  // un nodo del flujo, la misma ficha que en el flujo de la prueba (capturas, tabla y láminas) sin salir de la página.
+  // Datos: window.__PRUEBA_GUIA.
+  var prueba = { id: null };
+
+  function pruebaPasos() { return (window.__PRUEBA_GUIA && window.__PRUEBA_GUIA.pasos) || {}; }
+
+  function asegurarPruebaModal() {
+    var m = document.getElementById('prueba-modal');
+    if (m) return m;
+    m = document.createElement('div');
+    m.id = 'prueba-modal';
+    m.className = 'prueba-modal';
+    m.hidden = true;
+    m.setAttribute('role', 'dialog');
+    m.setAttribute('aria-modal', 'true');
+    m.innerHTML = '<div class="prueba-panel">' +
+      '<div class="prueba-barra"><span class="prueba-titulo"></span>' +
+      '<button type="button" class="prueba-cerrar" data-prueba="cerrar" aria-label="Cerrar">✕</button></div>' +
+      '<nav class="prueba-pasos" aria-label="Pasos de la prueba"></nav>' +
+      '<div class="prueba-cuerpo"></div>' +
+      '<div class="prueba-pie"><button type="button" class="prueba-nav" data-prueba="ant">← Anterior</button>' +
+      '<span class="prueba-cuenta"></span>' +
+      '<button type="button" class="prueba-nav prueba-nav-sig" data-prueba="sig">Siguiente →</button></div>' +
+      '</div>';
+    document.body.appendChild(m);
+    return m;
+  }
+
+  function tablaPruebaHtml(info) {
+    var limpio = function (v) { return v && v !== '—' ? v : ''; };
+    var html = '<div class="prueba-tabla-wrap"><table class="prueba-tabla"><thead><tr>' +
+      '<th>Campo</th><th>Valor en TEST</th><th>Quién</th><th>Nota</th></tr></thead><tbody>';
+    (info.instrucciones || []).forEach(function (f) {
+      html += '<tr' + (f.tipo === 'Resultado' ? ' class="prueba-resultado"' : '') + '><td><strong>' + escapeHtml(f.campo || '') +
+        '</strong></td><td>' + escapeHtml(f.valor || '') + '</td><td>' + escapeHtml(limpio(f.tipo)) + '</td><td>' +
+        escapeHtml(limpio(f.detalle)) + '</td></tr>';
+    });
+    return html + '</tbody></table></div>';
+  }
+
+  function pintarPrueba() {
+    var pasos = pruebaPasos();
+    var ids = Object.keys(pasos);
+    var i = ids.indexOf(prueba.id);
+    var info = pasos[prueba.id];
+    var m = asegurarPruebaModal();
+    if (!info) return;
+    m.querySelector('.prueba-titulo').textContent = window.__PRUEBA_GUIA.titulo || 'Prueba en TEST';
+    m.querySelector('.prueba-pasos').innerHTML = ids.map(function (id, k) {
+      return '<button type="button" class="prueba-chip' + (id === prueba.id ? ' activo' : '') + '" data-prueba-ir="' + id +
+        '" title="' + escapeHtml(pasos[id].fase || '') + '"><span>' + (k + 1) + '</span>' + escapeHtml(pasos[id].pantalla || '') + '</button>';
+    }).join('');
+    var cuerpo = m.querySelector('.prueba-cuerpo');
+    cuerpo.innerHTML = '<div class="prueba-encabezado"><span class="guia-pantalla-pill">' + escapeHtml(info.pantalla || '') + '</span>' +
+      '<h3>' + escapeHtml(info.fase || '') + '</h3><span class="prueba-quien">' + escapeHtml(info.hito || '') + '</span></div>' +
+      renderCapturasHtml(info) + tablaPruebaHtml(info) + renderDiapositivasHtml(info);
+    cuerpo.scrollTop = 0;
+    m.querySelector('.prueba-cuenta').textContent = 'Paso ' + (i + 1) + ' de ' + ids.length;
+    m.querySelector('[data-prueba="ant"]').disabled = i <= 0;
+    m.querySelector('[data-prueba="sig"]').disabled = i >= ids.length - 1;
+    var activo = m.querySelector('.prueba-chip.activo');
+    if (activo) activo.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
+
+  function irPasoPrueba(id) {
+    if (!pruebaPasos()[id]) return;
+    prueba.id = id;
+    pintarPrueba();
+  }
+
+  function abrirPrueba(id) {
+    if (!pruebaPasos()[id]) return;
+    var m = asegurarPruebaModal();
+    m.hidden = false;  // visible antes de pintar: así la ficha del paso se desplaza hasta quedar a la vista
+    document.body.classList.add('prueba-abierta');
+    irPasoPrueba(id);
+    var cerrar = m.querySelector('.prueba-cerrar');
+    if (cerrar) cerrar.focus();
+  }
+
+  function cerrarPrueba() {
+    var m = document.getElementById('prueba-modal');
+    if (m) m.hidden = true;
+    document.body.classList.remove('prueba-abierta');
+  }
+
+  function pruebaAbierta() {
+    var m = document.getElementById('prueba-modal');
+    return !!(m && !m.hidden);
+  }
+
+  function moverPrueba(delta) {
+    var ids = Object.keys(pruebaPasos());
+    var i = ids.indexOf(prueba.id) + delta;
+    if (i >= 0 && i < ids.length) irPasoPrueba(ids[i]);
+  }
+
+  // Los clics del modal se atienden en la captura de window y no siguen: Archify y la guía del diagrama no los ven.
+  window.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var abrir = t.closest('[data-prueba-paso]');
+    if (abrir) {
+      e.preventDefault();
+      e.stopPropagation();
+      abrirPrueba(abrir.getAttribute('data-prueba-paso'));
+      return;
+    }
+    var m = t.closest('#prueba-modal');
+    if (!m) return;
+    e.stopPropagation();
+    if (t === m) { cerrarPrueba(); return; }
+    var ir = t.closest('[data-prueba-ir]');
+    if (ir) { irPasoPrueba(ir.getAttribute('data-prueba-ir')); return; }
+    var accion = t.closest('[data-prueba]');
+    if (accion) {
+      var a = accion.getAttribute('data-prueba');
+      if (a === 'cerrar') cerrarPrueba();
+      else if (a === 'ant') moverPrueba(-1);
+      else if (a === 'sig') moverPrueba(1);
+      return;
+    }
+    var mover = t.closest('[data-diapos-mover]');
+    if (mover) {
+      var carril = mover.parentElement.querySelector('.guia-diapos-grid');
+      if (carril) carril.scrollBy({ left: parseInt(mover.getAttribute('data-diapos-mover'), 10) * carril.clientWidth * 0.8, behavior: 'smooth' });
+      return;
+    }
+    var info = pruebaPasos()[prueba.id];
+    var opciones = { paso: prueba.id, mapa: pruebaPasos(), irA: irPasoPrueba };
+    var cap = t.closest('[data-captura-idx]');
+    if (cap && info) { abrirVisorDiapo(capturasParaVisor(info), parseInt(cap.getAttribute('data-captura-idx'), 10) || 0, opciones); return; }
+    var dia = t.closest('[data-diapo-idx]');
+    if (dia && info) { abrirVisorDiapo(info.diapositivas || [], parseInt(dia.getAttribute('data-diapo-idx'), 10) || 0, opciones); }
+  }, true);
+
+  // Teclado: Enter o espacio sobre un paso del flujo abre su modal; con el modal abierto (y el visor cerrado),
+  // Esc lo cierra y las flechas cambian de paso.
+  window.addEventListener('keydown', function (e) {
+    var nodo = e.target && e.target.closest && e.target.closest('[data-prueba-paso]');
+    if (nodo && !pruebaAbierta() && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      e.stopPropagation();
+      abrirPrueba(nodo.getAttribute('data-prueba-paso'));
+      return;
+    }
+    if (!pruebaAbierta() || visorDiapoAbierto()) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); cerrarPrueba(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); e.stopPropagation(); moverPrueba(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); e.stopPropagation(); moverPrueba(-1); }
+  }, true);
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
   var visorDiapo = { lista: [], idx: 0, completa: true };
@@ -19962,7 +20059,7 @@ button.ai-fab:active,
   function pasosVisorDiapoHtml(d) {
     var html = d.nota ? '<p class="gdv-ref">' + escapeHtml(d.nota) + '</p>' : '';
     var paso = visorDiapo.paso || pasoEnFoco();
-    var info = GUIA_MAP[paso];
+    var info = (visorDiapo.mapa || GUIA_MAP)[paso];
     var filas = (info && info.instrucciones) || [];
     if (filas.length) {
       var checks = (window.__guiaChecks && window.__guiaChecks[paso]) || {};
@@ -20033,10 +20130,13 @@ button.ai-fab:active,
     return (idFoco ? idFoco.textContent : '').trim();
   }
 
-  function abrirVisorDiapo(lista, idx) {
+  function abrirVisorDiapo(lista, idx, opciones) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
     // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
-    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // `opciones` sirve para otra guía que no es la del diagrama: {paso, mapa, irA} (modal de la prueba, C193).
+    opciones = opciones || {};
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false,
+                   paso: opciones.paso || pasoEnFoco(), mapa: opciones.mapa || null, irA: opciones.irA || null };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -20044,13 +20144,13 @@ button.ai-fab:active,
   }
 
   function pasoVecino(delta) {
-    var claves = Object.keys(GUIA_MAP);
+    var claves = Object.keys(visorDiapo.mapa || GUIA_MAP);
     var i = claves.indexOf(visorDiapo.paso || pasoEnFoco());
     return i === -1 ? null : (claves[i + delta] || null);
   }
 
   function nombrePaso(id) {
-    var info = GUIA_MAP[id] || {};
+    var info = (visorDiapo.mapa || GUIA_MAP)[id] || {};
     return (info.fase || info.pantalla || id).replace(/^Paso\s*\d+:\s*/i, '');
   }
 
@@ -20059,6 +20159,15 @@ button.ai-fab:active,
     var destino = (visorDiapo.vecinos && visorDiapo.vecinos[String(delta)]) || pasoVecino(delta);
     var conCapturas = !!(visorDiapo.lista[0] && visorDiapo.lista[0].captura);  // se sigue con capturas si se venía con ellas
     if (!destino) return;
+    if (visorDiapo.irA) {  // otra guía (modal de la prueba): cambia de paso allí y reabre el visor
+      var mapa = visorDiapo.mapa, irA = visorDiapo.irA;
+      cerrarVisorDiapo();
+      irA(destino);
+      var otra = conCapturas ? capturasParaVisor(mapa[destino]) : [];
+      if (!otra.length) otra = (mapa[destino] || {}).diapositivas || [];
+      if (otra.length) abrirVisorDiapo(otra, delta > 0 ? 0 : otra.length - 1, { paso: destino, mapa: mapa, irA: irA });
+      return;
+    }
     cerrarVisorDiapo();
     window.irAPaso(destino);
     var intentos = 0;
@@ -20070,7 +20179,7 @@ button.ai-fab:active,
         if (lista.length) abrirVisorDiapo(lista, delta > 0 ? 0 : lista.length - 1);
         return;
       }
-      if (++intentos < 20) setTimeout(abrirCuandoLlegue, 150);  // si pide confirmar, el visor no se reabre
+      if (++intentos < 20) setTimeout(abrirCuandoLlegue, 150);
     })();
   }
 
@@ -20393,7 +20502,6 @@ button.ai-fab:active,
 
   function cerrarModalGuia() {
     if (recorrido.activo) detenerRecorrido();
-    cerrarModalConfirmacionValidacion();
     var chip = document.getElementById('focus-chip');
     var b = document.getElementById('guia-modal-backdrop');
     if (b) b.classList.remove('active');
@@ -20424,7 +20532,6 @@ button.ai-fab:active,
     if (!chip || !idElem) return;
 
     asegurarBarraControles(chip);
-    asegurarOverlayConfirmacion(chip);
 
     var nodeId = (idElem.textContent || '').trim();
     var card = document.getElementById('guia-operativa-box');
@@ -20576,7 +20683,7 @@ button.ai-fab:active,
     recorrido.pasos = pasos;
     recorrido.i = i;
     recorrido.restante = segundosRecorrido();
-    window.irAPaso(pasos[i], true);
+    window.irAPaso(pasos[i]);
     clearInterval(recorrido.tick);
     recorrido.tick = setInterval(function () {
       recorrido.restante -= 1;
@@ -20584,7 +20691,7 @@ button.ai-fab:active,
       recorrido.i += 1;
       if (recorrido.i >= recorrido.pasos.length) return detenerRecorrido();
       recorrido.restante = segundosRecorrido();
-      window.irAPaso(recorrido.pasos[recorrido.i], true);
+      window.irAPaso(recorrido.pasos[recorrido.i]);
       pintarRecorrido();
     }, 1000);
     pintarRecorrido();
@@ -20598,7 +20705,7 @@ button.ai-fab:active,
     if (quedarseEnPaso && paso) {
       setTimeout(function () {
         var idFoco = document.getElementById('focus-id');
-        if (!idFoco || idFoco.textContent.trim() !== paso) window.irAPaso(paso, true);
+        if (!idFoco || idFoco.textContent.trim() !== paso) window.irAPaso(paso);
       }, 120);
     }
   }
@@ -20780,18 +20887,18 @@ button.ai-fab:active,
           e.preventDefault();
           e.stopPropagation();
           setPasosPosterioresVisibles(true);
-          window.irAPaso('s5', true);
+          window.irAPaso('s5');
           return;
         } else if (kind === 'database') {
           e.preventDefault();
           e.stopPropagation();
           setPasosPosterioresVisibles(true);
-          window.irAPaso('s6', true);
+          window.irAPaso('s6');
           return;
         } else if (kind === 'backend') {
           e.preventDefault();
           e.stopPropagation();
-          window.irAPaso('s1', true);
+          window.irAPaso('s1');
           return;
         }
       }
@@ -20934,13 +21041,6 @@ button.ai-fab:active,
       if (e.key === 'Escape') {
         var chip = document.getElementById('focus-chip');
         if (chip) {
-          var confirmOverlay = chip.querySelector('.guia-confirm-overlay');
-          if (confirmOverlay && !confirmOverlay.hidden) {
-            e.preventDefault();
-            cerrarModalConfirmacionValidacion();
-            resaltarFilasPendientes();
-            return;
-          }
           if (!chip.hidden && chip.classList.contains('tiene-guia')) {
             e.preventDefault();
             cerrarModalGuia();

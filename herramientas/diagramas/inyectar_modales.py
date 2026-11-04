@@ -452,29 +452,54 @@ def _resolver_capturas(guia, carpeta_html, slug):
         info["capturas"] = resueltas
 
 
-def _html_prueba(demo, carpeta_html):
-    """Pestaña «Prueba en TEST»: los pasos del ejemplo por fase y el enlace a su flujo, donde cada paso abre su
-    tabla, sus capturas y sus láminas (C192). Antes iban aquí las 14 tablas con sus capturas sueltas (C181)."""
+def _guia_prueba_embebida(slug, id_centro, carpeta_html):
+    """Guía de los pasos del ejemplo de prueba con sus rutas resueltas desde la demostración, para abrirlos en un
+    modal sin salir de la página (pestaña «Prueba en TEST», C193). None si la demostración no tiene ejemplo."""
+    demo = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {})
+    if not demo.get("ejemplo_prueba_2") or not id_centro:
+        return None
+    guia = {k: _normalizar(v) for k, v in guia_demostracion(Centro(id_centro), slug_prueba(demo)).items()}
+    _resolver_diapositivas(guia, carpeta_html, f"{slug} › prueba")
+    _resolver_capturas(guia, carpeta_html, f"{slug} › prueba")
+    return {"titulo": demo["ejemplo_prueba_2"]["titulo"], "pasos": guia}
+
+
+def _svg_prueba(demo, carpeta_html, slug):
+    """El SVG del flujo de Archify de la prueba (`00-<slug_prueba>`), listo para ir dentro de la demostración (C193).
+
+    Sin los atributos data-* que leen los scripts de Archify y de la guía (data-node-id, data-edge-*, data-animate…),
+    para que no se mezcle con el diagrama de la página; cada nodo lleva data-prueba-paso y abre el modal del paso.
+    Los id llevan el prefijo «pr-». El flujo de la prueba se genera antes que la demostración (demostraciones_de)."""
+    sp = slug_prueba(demo)
+    centro = Path(carpeta_html).parents[1].name
+    ruta = Path(carpeta_html).parent / f"00-{sp}" / f"{centro}-00-{sp}.html"
+    if not ruta.exists():
+        ADVERTENCIAS.append(f"{slug}: falta el flujo de la prueba {ruta.name}; genéralo antes que la demostración")
+        return ""
+    t = ruta.read_text(encoding="utf-8")
+    m = re.search(r'<svg viewBox="[^"]*" data-layout-contract', t)
+    if not m:
+        ADVERTENCIAS.append(f"{slug}: no se encontró el diagrama en {ruta.name}")
+        return ""
+    svg = t[m.start():t.index("</svg>", m.start()) + 6]
+    svg = re.sub(r'\sdata-node-id="([^"]+)"', r' data-prueba-paso="\1"', svg)
+    svg = re.sub(r'\sdata-(?!prueba-paso)[a-z-]+="[^"]*"', "", svg)
+    svg = re.sub(r'\saria-pressed="[^"]*"', "", svg)
+    svg = re.sub(r'\sid="([^"]+)"', r' id="pr-\1"', svg)
+    svg = svg.replace("url(#", "url(#pr-").replace('aria-label="Enfocar ', 'aria-label="Ver el paso ')
+    svg = re.sub(r'aria-labelledby="([^"]+)"', lambda x: 'aria-labelledby="' + " ".join("pr-" + i for i in x.group(1).split()) + '"', svg)
+    return f'    <div class="an-flujo">{svg}</div>\n'
+
+
+def _html_prueba(demo, carpeta_html, slug):
+    """Pestaña «Prueba en TEST»: el flujo de Archify de los pasos hechos en TEST; cada paso abre su ficha (tabla,
+    capturas y láminas) en un modal de la misma página (pedido del usuario, C193)."""
     ej = demo.get("ejemplo_prueba_2")
-    if not ej:
+    if not ej or carpeta_html is None:
         return "", ""
     e = html.escape
-    sp = slug_prueba(demo)
-    centro = Path(carpeta_html).parents[1].name if carpeta_html is not None else ""
-    href = e(f"../00-{sp}/{centro}-00-{sp}.html")
-    pasos = {p["n"]: p for p in ej["pasos"]}
-    fases = ""
-    for f in ej["fases"]:
-        chips = "".join(
-            f'<li><a href="{href}#focus=e{n}" title="Abrir el paso {n} en el flujo">'
-            f'<span class="an-chip-n">{n}</span><strong>{e(pasos[n]["codigo"])}</strong>'
-            f'<small>{e(pasos[n]["accion"])}</small></a></li>'
-            for n in f["pasos"])
-        fases += f'      <div class="an-fase"><h4>{e(f["titulo"])}</h4><ol class="an-chips">{chips}</ol></div>\n'
-    panel = (f'    <p class="an-intro">{e(ej["caso"])}</p>\n'
-             f'    <div class="an-fases">\n{fases}    </div>\n'
-             f'    <p class="an-cta"><a class="an-btn" href="{href}">Abrir el flujo paso a paso ›</a>'
-             f'<span>{e(ej["avance"])}</span></p>\n')
+    panel = (f'    <p class="an-intro">{e(ej["caso"])} Haga clic en un paso para ver su tabla, sus capturas y la lámina.</p>\n'
+             + _svg_prueba(demo, carpeta_html, slug))
     return f"3 · Prueba en TEST · NRC {ej['nrc']}", panel
 
 
@@ -538,7 +563,7 @@ def _html_antes_nrc(slug, carpeta_html=None):
                       f'{cuerpo}  </details>\n')
     fundamentos = _html_fundamentos(demo, tabla, len(a.get("preguntas", [])) + 1)
     n_preguntas = len(a.get("preguntas", [])) + fundamentos.count('class="an-sub"')
-    titulo_prueba, panel_prueba = _html_prueba(demo, carpeta_html)
+    titulo_prueba, panel_prueba = _html_prueba(demo, carpeta_html, slug)
     pestanas = [("1 · Orden antes del NRC",
                  '    <div class="an-tabla"><table class="an-orden">\n'
                  '      <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'
@@ -559,7 +584,6 @@ def _html_antes_nrc(slug, carpeta_html=None):
         f'  <p class="an-intro">{e(a["intro"])}</p>\n'
         f'  <div class="an-tabs">{radios}\n  <div class="an-tab-bar">{barra}</div>\n'
         f'{paneles}  </div>\n'
-        f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
         '</details>\n'
         '<!-- === /ANTES DEL NRC === -->\n')
 
@@ -586,6 +610,9 @@ def inyectar_en_html(ruta_html, slug):
     ).replace(os.sep, "/")
 
     antes = _html_antes_nrc(slug, ruta_html.parent)
+    prueba = _guia_prueba_embebida(slug, id_centro, ruta_html.parent) if antes else None
+    if prueba:
+        antes += f"<script>window.__PRUEBA_GUIA = {_json_seguro(prueba)};</script>\n"
     if antes:
         i = contenido.find('<script id="archify-i18n-data"')
         if i == -1:

@@ -2167,7 +2167,7 @@
       "parte": "X06",
       "antes_del_nrc": {
         "titulo": "Para estudiar: el orden antes del NRC, las preguntas y la prueba en TEST",
-        "intro": "Tres pestañas: el orden en que deben existir las cosas antes de crear el NRC (periodo, partes, curso y malla), las preguntas para estudiar la teoría y la prueba completa del NRC 10045 en TEST, que se recorre como flujo paso a paso.",
+        "intro": "Tres pestañas: el orden en que deben existir las cosas antes de crear el NRC (periodo, partes, curso y malla), las preguntas para estudiar la teoría y la prueba completa del NRC 10045 en TEST, como flujo de Archify: cada paso abre su ficha con sus capturas.",
         "orden": [
           {
             "pagina": "STVTERM",
@@ -2209,7 +2209,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191, C192",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191, C192, C193",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",

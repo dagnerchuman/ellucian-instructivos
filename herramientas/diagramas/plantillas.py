@@ -1286,12 +1286,13 @@ def guia_prueba(c, slug_):
 
 
 def demostraciones_de(c):
-    """Las demostraciones del centro van primero (00-…), antes de los flujos base; su ejemplo de prueba, justo después."""
+    """Las demostraciones del centro van primero (00-…), antes de los flujos base. Su ejemplo de prueba se genera
+    antes que ella: la pestaña «Prueba en TEST» de la demostración copia el SVG de ese flujo (C193)."""
     lista = []
     for d in c.d.get("demostraciones", []):
-        lista.append((0, d["slug"], lambda c, d=d: demostracion(c, d)))
         if d.get("ejemplo_prueba_2"):
             lista.append((0, slug_prueba(d), lambda c, d=d: prueba(c, d)))
+        lista.append((0, d["slug"], lambda c, d=d: demostracion(c, d)))
     return lista
 
 

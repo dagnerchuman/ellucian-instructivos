@@ -359,7 +359,7 @@
       btnResume.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        window.irAPaso(targetMaxId, true);
+        window.irAPaso(targetMaxId);
       });
     }
   }
@@ -454,8 +454,7 @@
     window.__guiaChecks = {};
     window.__ultimoPasoEscogido = null;
 
-    // 2. Cerrar el modal si estaba abierto y limpiar el foco de Archify SIN hacer clic en el Paso 1
-    cerrarModalConfirmacionValidacion();
+    // 2. Limpiar el foco de Archify SIN hacer clic en el Paso 1
     var chip = document.getElementById('focus-chip');
     var b = document.getElementById('guia-modal-backdrop');
     if (b) b.classList.remove('active');
@@ -574,106 +573,6 @@
     };
   }
 
-  function asegurarOverlayConfirmacion(chip) {
-    var overlay = chip.querySelector(':scope > .guia-confirm-overlay');
-    if (overlay) return overlay;
-
-    var oldOverlay = chip.querySelector('.guia-confirm-overlay');
-    if (oldOverlay) oldOverlay.remove();
-
-    overlay = document.createElement('div');
-    overlay.className = 'guia-confirm-overlay';
-    overlay.hidden = true;
-    overlay.setAttribute('hidden', '');
-    overlay.innerHTML = '<div class="guia-confirm-modal" role="dialog" aria-modal="true">' +
-      '<div class="guia-confirm-header">' +
-      '<span class="guia-confirm-icon">⚠️</span>' +
-      '<h4 class="guia-confirm-title">Validación de pasos</h4>' +
-      '</div>' +
-      '<p class="guia-confirm-body">' +
-      'Aún tienes <strong id="guia-confirm-pendientes">0</strong> pasos sin marcar en esta etapa.' +
-      '</p>' +
-      '<p class="guia-confirm-question">¿Deseas pasar sin validar los pasos o quedarte para seguir validando?</p>' +
-      '<div class="guia-confirm-actions">' +
-      '<button type="button" class="btn-confirm-seguir" id="btn-confirm-seguir">Seguir validando</button>' +
-      '<button type="button" class="btn-confirm-pasar" id="btn-confirm-pasar">Pasar sin validar →</button>' +
-      '</div>' +
-      '</div>';
-
-    chip.appendChild(overlay);
-
-    var btnSeguir = overlay.querySelector('#btn-confirm-seguir');
-    if (btnSeguir) {
-      btnSeguir.addEventListener('click', function (e) {
-        e.stopPropagation();
-        cerrarModalConfirmacionValidacion();
-        resaltarFilasPendientes();
-      });
-    }
-
-    var btnPasar = overlay.querySelector('#btn-confirm-pasar');
-    if (btnPasar) {
-      btnPasar.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var callback = window.__confirmValidationCallback;
-        cerrarModalConfirmacionValidacion();
-        if (typeof callback === 'function') {
-          callback();
-        }
-      });
-    }
-
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) {
-        e.stopPropagation();
-        cerrarModalConfirmacionValidacion();
-        resaltarFilasPendientes();
-      }
-    });
-
-    return overlay;
-  }
-
-  function mostrarModalConfirmacionValidacion(pendientes, total, onConfirmPasar) {
-    var chip = document.getElementById('focus-chip');
-    if (!chip) return;
-    var overlay = asegurarOverlayConfirmacion(chip);
-    var pElem = overlay.querySelector('#guia-confirm-pendientes');
-    if (pElem) {
-      pElem.textContent = pendientes + (total ? (' de ' + total) : '');
-    }
-    window.__confirmValidationCallback = onConfirmPasar;
-    overlay.hidden = false;
-    overlay.removeAttribute('hidden');
-    var btnSeguir = overlay.querySelector('#btn-confirm-seguir');
-    if (btnSeguir) btnSeguir.focus();
-  }
-
-  function cerrarModalConfirmacionValidacion() {
-    var chip = document.getElementById('focus-chip');
-    if (!chip) return;
-    var overlay = chip.querySelector('.guia-confirm-overlay');
-    if (overlay) {
-      overlay.hidden = true;
-      overlay.setAttribute('hidden', '');
-    }
-    window.__confirmValidationCallback = null;
-  }
-
-  function resaltarFilasPendientes() {
-    var rows = document.querySelectorAll('.guia-fila-paso:not(.completada)');
-    rows.forEach(function (row) {
-      row.classList.remove('pendiente-atencion');
-      void row.offsetWidth;
-      row.classList.add('pendiente-atencion');
-    });
-    if (rows.length > 0) {
-      try {
-        rows[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } catch (_) { }
-    }
-  }
-
   function toggleValidarTodosPaso(nodeId) {
     if (!nodeId || !GUIA_MAP[nodeId]) return;
     var inst = GUIA_MAP[nodeId].instrucciones || [];
@@ -688,30 +587,13 @@
     actualizarModalGuia();
   }
 
-  window.irAPaso = function (targetNodeId, forzarSinValidar) {
+  // Ir a un paso. Los ✓ de la guía son solo una ayuda: avanzar nunca pide validarlos (pedido del usuario, C193).
+  window.irAPaso = function (targetNodeId) {
     if (!targetNodeId) return;
-    var idElem = document.getElementById('focus-id');
-    var currentId = idElem ? (idElem.textContent || '').trim() : '';
-    var nodeIds = obtenerIdsNodosDiagrama();
-    if (!nodeIds.length) nodeIds = Object.keys(GUIA_MAP);
-    var currentIndex = nodeIds.indexOf(currentId);
-    var targetIndex = nodeIds.indexOf(targetNodeId);
 
     // Revelar automáticamente pasos posteriores si el objetivo es s5 o s6 en Crear el NRC
     if (esFlujoCrearNrc() && (targetNodeId === 's5' || targetNodeId === 's6')) {
       setPasosPosterioresVisibles(true);
-    }
-
-    var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
-    // Solo validar si se intenta avanzar a un paso NUEVO que no ha sido desbloqueado todavía
-    if (targetIndex > currentIndex && targetIndex > maxUnlocked && !forzarSinValidar) {
-      var val = obtenerEstadoValidacionPaso(currentId);
-      if (!val.completo) {
-        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function () {
-          window.irAPaso(targetNodeId, true);
-        });
-        return;
-      }
     }
 
     actualizarProgresoDiagrama(targetNodeId);
@@ -726,7 +608,7 @@
     }
   };
 
-  window.navegarPaso = function (offset, forzarSinValidar) {
+  window.navegarPaso = function (offset) {
     var idElem = document.getElementById('focus-id');
     if (!idElem) return;
     var currentId = (idElem.textContent || '').trim();
@@ -738,17 +620,6 @@
     // Al avanzar desde s4 en Crear el NRC, revelar los pasos posteriores
     if (offset > 0 && currentId === 's4' && esFlujoCrearNrc()) {
       setPasosPosterioresVisibles(true);
-    }
-
-    var maxUnlocked = (typeof window.__guiaMaxUnlocked === 'number') ? window.__guiaMaxUnlocked : 0;
-    if (offset > 0 && (currentIndex + offset) > maxUnlocked && !forzarSinValidar) {
-      var val = obtenerEstadoValidacionPaso(currentId);
-      if (!val.completo) {
-        mostrarModalConfirmacionValidacion(val.pendientes, val.total, function () {
-          window.navegarPaso(offset, true);
-        });
-        return;
-      }
     }
 
     var nextIndex = currentIndex + offset;
@@ -861,6 +732,159 @@
       return { src: d.src, completa: d.src, visor: d.src, fuente: 'Captura de TEST', n: d.n, texto: d.texto, captura: true };
     });
   }
+
+  // Pasos de la prueba en TEST en un modal de la misma demostración (pestaña «Prueba en TEST», C193): al hacer clic en
+  // un nodo del flujo, la misma ficha que en el flujo de la prueba (capturas, tabla y láminas) sin salir de la página.
+  // Datos: window.__PRUEBA_GUIA.
+  var prueba = { id: null };
+
+  function pruebaPasos() { return (window.__PRUEBA_GUIA && window.__PRUEBA_GUIA.pasos) || {}; }
+
+  function asegurarPruebaModal() {
+    var m = document.getElementById('prueba-modal');
+    if (m) return m;
+    m = document.createElement('div');
+    m.id = 'prueba-modal';
+    m.className = 'prueba-modal';
+    m.hidden = true;
+    m.setAttribute('role', 'dialog');
+    m.setAttribute('aria-modal', 'true');
+    m.innerHTML = '<div class="prueba-panel">' +
+      '<div class="prueba-barra"><span class="prueba-titulo"></span>' +
+      '<button type="button" class="prueba-cerrar" data-prueba="cerrar" aria-label="Cerrar">✕</button></div>' +
+      '<nav class="prueba-pasos" aria-label="Pasos de la prueba"></nav>' +
+      '<div class="prueba-cuerpo"></div>' +
+      '<div class="prueba-pie"><button type="button" class="prueba-nav" data-prueba="ant">← Anterior</button>' +
+      '<span class="prueba-cuenta"></span>' +
+      '<button type="button" class="prueba-nav prueba-nav-sig" data-prueba="sig">Siguiente →</button></div>' +
+      '</div>';
+    document.body.appendChild(m);
+    return m;
+  }
+
+  function tablaPruebaHtml(info) {
+    var limpio = function (v) { return v && v !== '—' ? v : ''; };
+    var html = '<div class="prueba-tabla-wrap"><table class="prueba-tabla"><thead><tr>' +
+      '<th>Campo</th><th>Valor en TEST</th><th>Quién</th><th>Nota</th></tr></thead><tbody>';
+    (info.instrucciones || []).forEach(function (f) {
+      html += '<tr' + (f.tipo === 'Resultado' ? ' class="prueba-resultado"' : '') + '><td><strong>' + escapeHtml(f.campo || '') +
+        '</strong></td><td>' + escapeHtml(f.valor || '') + '</td><td>' + escapeHtml(limpio(f.tipo)) + '</td><td>' +
+        escapeHtml(limpio(f.detalle)) + '</td></tr>';
+    });
+    return html + '</tbody></table></div>';
+  }
+
+  function pintarPrueba() {
+    var pasos = pruebaPasos();
+    var ids = Object.keys(pasos);
+    var i = ids.indexOf(prueba.id);
+    var info = pasos[prueba.id];
+    var m = asegurarPruebaModal();
+    if (!info) return;
+    m.querySelector('.prueba-titulo').textContent = window.__PRUEBA_GUIA.titulo || 'Prueba en TEST';
+    m.querySelector('.prueba-pasos').innerHTML = ids.map(function (id, k) {
+      return '<button type="button" class="prueba-chip' + (id === prueba.id ? ' activo' : '') + '" data-prueba-ir="' + id +
+        '" title="' + escapeHtml(pasos[id].fase || '') + '"><span>' + (k + 1) + '</span>' + escapeHtml(pasos[id].pantalla || '') + '</button>';
+    }).join('');
+    var cuerpo = m.querySelector('.prueba-cuerpo');
+    cuerpo.innerHTML = '<div class="prueba-encabezado"><span class="guia-pantalla-pill">' + escapeHtml(info.pantalla || '') + '</span>' +
+      '<h3>' + escapeHtml(info.fase || '') + '</h3><span class="prueba-quien">' + escapeHtml(info.hito || '') + '</span></div>' +
+      renderCapturasHtml(info) + tablaPruebaHtml(info) + renderDiapositivasHtml(info);
+    cuerpo.scrollTop = 0;
+    m.querySelector('.prueba-cuenta').textContent = 'Paso ' + (i + 1) + ' de ' + ids.length;
+    m.querySelector('[data-prueba="ant"]').disabled = i <= 0;
+    m.querySelector('[data-prueba="sig"]').disabled = i >= ids.length - 1;
+    var activo = m.querySelector('.prueba-chip.activo');
+    if (activo) activo.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
+
+  function irPasoPrueba(id) {
+    if (!pruebaPasos()[id]) return;
+    prueba.id = id;
+    pintarPrueba();
+  }
+
+  function abrirPrueba(id) {
+    if (!pruebaPasos()[id]) return;
+    var m = asegurarPruebaModal();
+    m.hidden = false;  // visible antes de pintar: así la ficha del paso se desplaza hasta quedar a la vista
+    document.body.classList.add('prueba-abierta');
+    irPasoPrueba(id);
+    var cerrar = m.querySelector('.prueba-cerrar');
+    if (cerrar) cerrar.focus();
+  }
+
+  function cerrarPrueba() {
+    var m = document.getElementById('prueba-modal');
+    if (m) m.hidden = true;
+    document.body.classList.remove('prueba-abierta');
+  }
+
+  function pruebaAbierta() {
+    var m = document.getElementById('prueba-modal');
+    return !!(m && !m.hidden);
+  }
+
+  function moverPrueba(delta) {
+    var ids = Object.keys(pruebaPasos());
+    var i = ids.indexOf(prueba.id) + delta;
+    if (i >= 0 && i < ids.length) irPasoPrueba(ids[i]);
+  }
+
+  // Los clics del modal se atienden en la captura de window y no siguen: Archify y la guía del diagrama no los ven.
+  window.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var abrir = t.closest('[data-prueba-paso]');
+    if (abrir) {
+      e.preventDefault();
+      e.stopPropagation();
+      abrirPrueba(abrir.getAttribute('data-prueba-paso'));
+      return;
+    }
+    var m = t.closest('#prueba-modal');
+    if (!m) return;
+    e.stopPropagation();
+    if (t === m) { cerrarPrueba(); return; }
+    var ir = t.closest('[data-prueba-ir]');
+    if (ir) { irPasoPrueba(ir.getAttribute('data-prueba-ir')); return; }
+    var accion = t.closest('[data-prueba]');
+    if (accion) {
+      var a = accion.getAttribute('data-prueba');
+      if (a === 'cerrar') cerrarPrueba();
+      else if (a === 'ant') moverPrueba(-1);
+      else if (a === 'sig') moverPrueba(1);
+      return;
+    }
+    var mover = t.closest('[data-diapos-mover]');
+    if (mover) {
+      var carril = mover.parentElement.querySelector('.guia-diapos-grid');
+      if (carril) carril.scrollBy({ left: parseInt(mover.getAttribute('data-diapos-mover'), 10) * carril.clientWidth * 0.8, behavior: 'smooth' });
+      return;
+    }
+    var info = pruebaPasos()[prueba.id];
+    var opciones = { paso: prueba.id, mapa: pruebaPasos(), irA: irPasoPrueba };
+    var cap = t.closest('[data-captura-idx]');
+    if (cap && info) { abrirVisorDiapo(capturasParaVisor(info), parseInt(cap.getAttribute('data-captura-idx'), 10) || 0, opciones); return; }
+    var dia = t.closest('[data-diapo-idx]');
+    if (dia && info) { abrirVisorDiapo(info.diapositivas || [], parseInt(dia.getAttribute('data-diapo-idx'), 10) || 0, opciones); }
+  }, true);
+
+  // Teclado: Enter o espacio sobre un paso del flujo abre su modal; con el modal abierto (y el visor cerrado),
+  // Esc lo cierra y las flechas cambian de paso.
+  window.addEventListener('keydown', function (e) {
+    var nodo = e.target && e.target.closest && e.target.closest('[data-prueba-paso]');
+    if (nodo && !pruebaAbierta() && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      e.stopPropagation();
+      abrirPrueba(nodo.getAttribute('data-prueba-paso'));
+      return;
+    }
+    if (!pruebaAbierta() || visorDiapoAbierto()) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); cerrarPrueba(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); e.stopPropagation(); moverPrueba(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); e.stopPropagation(); moverPrueba(-1); }
+  }, true);
 
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
   var visorDiapo = { lista: [], idx: 0, completa: true };
@@ -997,7 +1021,7 @@
   function pasosVisorDiapoHtml(d) {
     var html = d.nota ? '<p class="gdv-ref">' + escapeHtml(d.nota) + '</p>' : '';
     var paso = visorDiapo.paso || pasoEnFoco();
-    var info = GUIA_MAP[paso];
+    var info = (visorDiapo.mapa || GUIA_MAP)[paso];
     var filas = (info && info.instrucciones) || [];
     if (filas.length) {
       var checks = (window.__guiaChecks && window.__guiaChecks[paso]) || {};
@@ -1068,10 +1092,13 @@
     return (idFoco ? idFoco.textContent : '').trim();
   }
 
-  function abrirVisorDiapo(lista, idx) {
+  function abrirVisorDiapo(lista, idx, opciones) {
     // El paso se guarda al abrir: al cambiar de lámina, el foco del diagrama puede perderse.
     // Se abre la diapositiva completa (el recorte queda a un clic); la elección se recuerda mientras se navega.
-    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false, paso: pasoEnFoco() };
+    // `opciones` sirve para otra guía que no es la del diagrama: {paso, mapa, irA} (modal de la prueba, C193).
+    opciones = opciones || {};
+    visorDiapo = { lista: lista, idx: idx, completa: visorDiapo.completa, textoAbierto: visorDiapo.textoAbierto || false,
+                   paso: opciones.paso || pasoEnFoco(), mapa: opciones.mapa || null, irA: opciones.irA || null };
     var v = asegurarVisorDiapo();
     pintarVisorDiapo();
     v.hidden = false;
@@ -1079,13 +1106,13 @@
   }
 
   function pasoVecino(delta) {
-    var claves = Object.keys(GUIA_MAP);
+    var claves = Object.keys(visorDiapo.mapa || GUIA_MAP);
     var i = claves.indexOf(visorDiapo.paso || pasoEnFoco());
     return i === -1 ? null : (claves[i + delta] || null);
   }
 
   function nombrePaso(id) {
-    var info = GUIA_MAP[id] || {};
+    var info = (visorDiapo.mapa || GUIA_MAP)[id] || {};
     return (info.fase || info.pantalla || id).replace(/^Paso\s*\d+:\s*/i, '');
   }
 
@@ -1094,6 +1121,15 @@
     var destino = (visorDiapo.vecinos && visorDiapo.vecinos[String(delta)]) || pasoVecino(delta);
     var conCapturas = !!(visorDiapo.lista[0] && visorDiapo.lista[0].captura);  // se sigue con capturas si se venía con ellas
     if (!destino) return;
+    if (visorDiapo.irA) {  // otra guía (modal de la prueba): cambia de paso allí y reabre el visor
+      var mapa = visorDiapo.mapa, irA = visorDiapo.irA;
+      cerrarVisorDiapo();
+      irA(destino);
+      var otra = conCapturas ? capturasParaVisor(mapa[destino]) : [];
+      if (!otra.length) otra = (mapa[destino] || {}).diapositivas || [];
+      if (otra.length) abrirVisorDiapo(otra, delta > 0 ? 0 : otra.length - 1, { paso: destino, mapa: mapa, irA: irA });
+      return;
+    }
     cerrarVisorDiapo();
     window.irAPaso(destino);
     var intentos = 0;
@@ -1105,7 +1141,7 @@
         if (lista.length) abrirVisorDiapo(lista, delta > 0 ? 0 : lista.length - 1);
         return;
       }
-      if (++intentos < 20) setTimeout(abrirCuandoLlegue, 150);  // si pide confirmar, el visor no se reabre
+      if (++intentos < 20) setTimeout(abrirCuandoLlegue, 150);
     })();
   }
 
@@ -1428,7 +1464,6 @@
 
   function cerrarModalGuia() {
     if (recorrido.activo) detenerRecorrido();
-    cerrarModalConfirmacionValidacion();
     var chip = document.getElementById('focus-chip');
     var b = document.getElementById('guia-modal-backdrop');
     if (b) b.classList.remove('active');
@@ -1459,7 +1494,6 @@
     if (!chip || !idElem) return;
 
     asegurarBarraControles(chip);
-    asegurarOverlayConfirmacion(chip);
 
     var nodeId = (idElem.textContent || '').trim();
     var card = document.getElementById('guia-operativa-box');
@@ -1611,7 +1645,7 @@
     recorrido.pasos = pasos;
     recorrido.i = i;
     recorrido.restante = segundosRecorrido();
-    window.irAPaso(pasos[i], true);
+    window.irAPaso(pasos[i]);
     clearInterval(recorrido.tick);
     recorrido.tick = setInterval(function () {
       recorrido.restante -= 1;
@@ -1619,7 +1653,7 @@
       recorrido.i += 1;
       if (recorrido.i >= recorrido.pasos.length) return detenerRecorrido();
       recorrido.restante = segundosRecorrido();
-      window.irAPaso(recorrido.pasos[recorrido.i], true);
+      window.irAPaso(recorrido.pasos[recorrido.i]);
       pintarRecorrido();
     }, 1000);
     pintarRecorrido();
@@ -1633,7 +1667,7 @@
     if (quedarseEnPaso && paso) {
       setTimeout(function () {
         var idFoco = document.getElementById('focus-id');
-        if (!idFoco || idFoco.textContent.trim() !== paso) window.irAPaso(paso, true);
+        if (!idFoco || idFoco.textContent.trim() !== paso) window.irAPaso(paso);
       }, 120);
     }
   }
@@ -1815,18 +1849,18 @@
           e.preventDefault();
           e.stopPropagation();
           setPasosPosterioresVisibles(true);
-          window.irAPaso('s5', true);
+          window.irAPaso('s5');
           return;
         } else if (kind === 'database') {
           e.preventDefault();
           e.stopPropagation();
           setPasosPosterioresVisibles(true);
-          window.irAPaso('s6', true);
+          window.irAPaso('s6');
           return;
         } else if (kind === 'backend') {
           e.preventDefault();
           e.stopPropagation();
-          window.irAPaso('s1', true);
+          window.irAPaso('s1');
           return;
         }
       }
@@ -1969,13 +2003,6 @@
       if (e.key === 'Escape') {
         var chip = document.getElementById('focus-chip');
         if (chip) {
-          var confirmOverlay = chip.querySelector('.guia-confirm-overlay');
-          if (confirmOverlay && !confirmOverlay.hidden) {
-            e.preventDefault();
-            cerrarModalConfirmacionValidacion();
-            resaltarFilasPendientes();
-            return;
-          }
           if (!chip.hidden && chip.classList.contains('tiene-guia')) {
             e.preventDefault();
             cerrarModalGuia();

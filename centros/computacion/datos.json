@@ -2209,7 +2209,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2517,6 +2517,127 @@
               "Cada regla pide 1 condición: se cumple con cualquiera de sus cursos, y un curso no cuenta en dos reglas.",
               "Si se cambia su descripción o lo hace Registros Académicos está por decidir (U52, U53)."
             ]
+          },
+          {
+            "pregunta": "¿Y los prerrequisitos? ¿Los cursos de Computación tienen orden?",
+            "intro": "Son dos preguntas distintas: si dentro del centro un curso exige otro, y cómo el pregrado le exige al alumno la acreditación. Lo de SCAPPRQ se probó en TEST con Idiomas (Basic I y Anatomía I, C159 a C170); para Computación la página es la misma, pero falta definir la regla (E30, U49).",
+            "tabla": {
+              "clase": "an-orden",
+              "resaltar": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "columnas": [
+                "Pregunta",
+                "Respuesta",
+                "Por qué",
+                "Página",
+                "Fuente"
+              ],
+              "filas": [
+                [
+                  "¿Un curso de la ruta exige aprobar otro antes?",
+                  "No. En Protech XP el alumno lleva 3 cursos de su ruta, en el orden que desee y en paralelo, + 1 taller de certificación.",
+                  "Así es la acreditación Protech XP. En TEST, 100582059 llevó Diseño Web (10044) y Google (10045) en el mismo periodo 202656.",
+                  "SCAPREQ: sin prerrequisito",
+                  "C62, C125, C190"
+                ],
+                [
+                  "¿Y Computación I, II y III?",
+                  "Eso era el Plan Tradicional: secuencial; quien reprueba no pasa al siguiente.",
+                  "Es otro producto, no las rutas XP. Las reglas ECOM-01 a 04 de las mallas XP conservan esos nombres.",
+                  "SMAAREA (nombres de las reglas)",
+                  "C62, C175, U53"
+                ],
+                [
+                  "Si no hay orden, ¿qué controla la ruta?",
+                  "La malla del programa XP: el curso tiene que estar en el área del programa (Google › MC44-01 › ECOM-03, paso 5).",
+                  "Sin la malla, el curso no sale en Proyecciones del Autoservicio ni cuenta en CAPP para la acreditación.",
+                  "SMAPROG, SMAAREA",
+                  "C172 a C175, C181"
+                ],
+                [
+                  "¿Puedo limitar un NRC a ciertos programas?",
+                  "Sí, pero es una restricción, no un prerrequisito: el 10045 tiene en SSARRES «Incluir» CMEMC44 y 1PCSP15.",
+                  "Necesita «Programa» en Fatal en SOATERM; a quien no tiene el programa, Banner le responde «Program Restriction». Si se usará en los NRC está preguntado a la USS.",
+                  "SSARRES (NRC) o SCARRES (curso)",
+                  "C149, C151, C156, C157, U41"
+                ],
+                [
+                  "¿Cómo exige el pregrado la acreditación?",
+                  "Con un prerrequisito restrictivo por programa: al curso de pregrado del ciclo se le suma el curso del centro («malla Y curso del centro»). Sin el curso, no se inscribe.",
+                  "El correquisito no sirve (fila siguiente). En la reunión del 29/10 se decidió que sea restrictivo.",
+                  "SCAPPRQ",
+                  "C159, C161, C168"
+                ],
+                [
+                  "¿Por qué no un correquisito?",
+                  "Porque obliga a llevar los dos cursos en el mismo periodo.",
+                  "Pregrado va en periodos que terminan en 44 y los centros en 54 (ADR-005); unificarlos afectaría cobros y planes de pago.",
+                  "SCADETL",
+                  "R22, R24, C168, U51"
+                ],
+                [
+                  "¿Por qué no un prerrequisito por curso para Computación?",
+                  "Habría que enumerar todas las combinaciones de 3 cursos de 6.",
+                  "La ruta no tiene un curso fijo: es «3 de 6» en cualquier orden + taller. Para Idiomas sí sirve, porque es secuencial.",
+                  "SCAPREQ",
+                  "R24"
+                ],
+                [
+                  "¿Desde qué ciclo se exige Computación?",
+                  "Desde el 5.º ciclo (Resolución Rectoral 175-2023: del 5.º al 6.º); es requisito para el bachiller.",
+                  "Lo dijo el resumen de Ellucian del 29/10 y coincide con la resolución. Falta que la USS defina nivel, cursos y nota.",
+                  "SCAPPRQ (por definir)",
+                  "C125, C168, U42, U49"
+                ],
+                [
+                  "¿Qué versión de SCAPPRQ aplica?",
+                  "La del catálogo del alumno, no la del periodo de matrícula.",
+                  "Probado: un alumno con catálogo 202444 no fue bloqueado por una fila de la versión 202644 y sí por una de la 202444. La regla hay que copiarla a cada versión.",
+                  "SCAPPRQ",
+                  "C170 (E32)"
+                ],
+                [
+                  "¿Y si está llevando el curso del centro?",
+                  "Banner responde «Prerequisite In Progress» (error fatal) y no lo inscribe.",
+                  "«En progreso» está sin marcar en SOATERM: un curso en curso no cuenta hasta tener nota. Marcarlo cambia todos los prerrequisitos del periodo (E31).",
+                  "SOATERM, SFAREGS",
+                  "C166, C182, R10"
+                ],
+                [
+                  "¿Un curso del centro de otro periodo cumple?",
+                  "Sí: Banner lo busca en la historia académica, sin importar el periodo ni el nivel.",
+                  "Por eso importa el pase a historia (SHRROLL, paso 13): si solo está inscrito, no cumple.",
+                  "SHACRSE",
+                  "C166, C170, C190"
+                ],
+                [
+                  "¿Qué error sale si no lo cumple?",
+                  "«Prerequisite and Test Score error».",
+                  "No dice qué fila falló, y SSAPREQ del NRC sale vacío: el bloqueo viene de SCAPPRQ.",
+                  "SFAREGS",
+                  "C163, C165"
+                ],
+                [
+                  "¿Y si lo desaprueba?",
+                  "Por confirmar con Ellucian. Sin calificación mínima en la fila basta haberlo cursado; con calificación, hay que alcanzar esa nota.",
+                  "Es lo que se dijo en la reunión del 29/10; no se ha probado en TEST.",
+                  "SCAPPRQ",
+                  "C159, E31"
+                ],
+                [
+                  "¿Qué falta para Computación?",
+                  "Cómo exigir «3 cursos de la ruta + taller»: con el método CAPP de SCACRSE, el requisito se evaluaría contra un área de la malla que cuente «N de M».",
+                  "Los instructivos no explican cómo se arma; está preguntado a Ellucian.",
+                  "SCACRSE › método CAPP",
+                  "R24, E30"
+                ]
+              ]
+            },
+            "nota": "Resaltadas: lo que ya vale para Computación. El resto se probó con Idiomas y aplica igual cuando se defina la regla de Computación. Detalle: arquitectura-centros-empresariales › ref-preguntas-complejas-prerrequisitos.md."
           },
           {
             "pregunta": "¿Qué va en la hoja de NRC? (fila del 10045)",

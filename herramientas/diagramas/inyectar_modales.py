@@ -321,7 +321,7 @@ def _limpiar_inyeccion_previa(contenido):
     contenido = re.sub(r"\s*<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?</script>", "", contenido, flags=re.DOTALL)
     contenido = re.sub(r'\s*<style>(?:(?!</style>).)*?ASISTENTE IA CENTROS EMPRESARIALES USS · DISEÑO ULTRA-PREMIUM(?:(?!</style>).)*?</style>', "", contenido, flags=re.DOTALL)
     contenido = re.sub(r'\s*<script src="[^"]*asistente_(?:conocimiento|diapositivas)\.js"></script>', "", contenido)
-    for marca in ("FLOW NAV TOP", "FLOW NAV BOTTOM", "ANTES DEL NRC"):
+    for marca in ("FLOW NAV TOP", "FLOW NAV BOTTOM", "ANTES DEL NRC", "EJEMPLO PRUEBA TEST"):
         contenido = re.sub(rf"\s*<!-- === {marca} === -->.*?<!-- === /{marca} === -->", "", contenido, flags=re.DOTALL)
     contenido = re.sub(r"\s*<!-- === ASISTENTE IA CENTROS EMPRESARIALES USS.*?<!-- === /ASISTENTE IA CENTROS EMPRESARIALES USS === -->", "", contenido, flags=re.DOTALL)
     # Limpiar cualquier residuo previo en etiquetas de nodos o flechas
@@ -497,6 +497,98 @@ def _html_fundamentos(demo, tabla):
     return out
 
 
+
+def _svg_flujo_antes_nrc():
+    """Diagrama de flujo SVG visual con estilo Archify para los pasos previos antes de crear el NRC."""
+    return '''    <div class="an-flujo-svg-wrap" style="margin: 0.85rem 0 1.25rem; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+      <svg viewBox="0 0 940 220" style="width: 100%; min-width: 840px; height: auto; display: block;" font-family="system-ui, -apple-system, sans-serif">
+        <defs>
+          <marker id="an-arrow-ra" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" />
+          </marker>
+          <marker id="an-arrow-ce" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#10b981" />
+          </marker>
+          <filter id="an-card-shadow" x="-5%" y="-5%" width="110%" height="118%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.06" />
+          </filter>
+        </defs>
+
+        <!-- Carril 01: Registros Académicos -->
+        <rect x="12" y="8" width="916" height="96" rx="8" fill="rgba(139, 92, 246, 0.04)" stroke="rgba(139, 92, 246, 0.22)" stroke-dasharray="4 3" />
+        <text x="24" y="24" font-size="10" font-weight="800" fill="#8b5cf6" letter-spacing="0.06em">01 / REGISTROS ACADÉMICOS (PASOS PREVIOS EN BANNER)</text>
+
+        <!-- Carril 02: El centro -->
+        <rect x="12" y="116" width="916" height="94" rx="8" fill="rgba(16, 185, 129, 0.04)" stroke="rgba(16, 185, 129, 0.22)" stroke-dasharray="4 3" />
+        <text x="24" y="132" font-size="10" font-weight="800" fill="#10b981" letter-spacing="0.06em">02 / EL CENTRO EMPRESARIAL</text>
+
+        <!-- Nodo 1: STVTERM -->
+        <g transform="translate(26, 34)" filter="url(#an-card-shadow)">
+          <rect width="138" height="60" rx="6" fill="var(--bg-card, #ffffff)" stroke="#8b5cf6" stroke-width="1.2" />
+          <text x="12" y="19" font-size="11" font-weight="800" font-family="'JetBrains Mono', monospace" fill="var(--fg, #1e293b)">STVTERM</text>
+          <text x="12" y="34" font-size="9" fill="var(--muted, #64748b)">Crear periodo</text>
+          <text x="12" y="49" font-size="8.5" font-weight="600" fill="#8b5cf6">202656 (si no existe)</text>
+        </g>
+
+        <!-- Flecha 1 -> 2 -->
+        <path d="M 164 64 L 192 64" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#an-arrow-ra)" />
+
+        <!-- Nodo 2: STVPTRM -->
+        <g transform="translate(194, 34)" filter="url(#an-card-shadow)">
+          <rect width="138" height="60" rx="6" fill="var(--bg-card, #ffffff)" stroke="#8b5cf6" stroke-width="1.2" />
+          <text x="12" y="19" font-size="11" font-weight="800" font-family="'JetBrains Mono', monospace" fill="var(--fg, #1e293b)">STVPTRM</text>
+          <text x="12" y="34" font-size="9" fill="var(--muted, #64748b)">Catálogo de partes</text>
+          <text x="12" y="49" font-size="8.5" font-weight="600" fill="#8b5cf6">X01..X12 (si no existe)</text>
+        </g>
+
+        <!-- Flecha 2 -> 3 -->
+        <path d="M 332 64 L 360 64" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#an-arrow-ra)" />
+
+        <!-- Nodo 3: SOATERM -->
+        <g transform="translate(362, 34)" filter="url(#an-card-shadow)">
+          <rect width="138" height="60" rx="6" fill="var(--bg-card, #ffffff)" stroke="#8b5cf6" stroke-width="1.6" />
+          <text x="12" y="19" font-size="11" font-weight="800" font-family="'JetBrains Mono', monospace" fill="var(--fg, #1e293b)">SOATERM</text>
+          <text x="12" y="34" font-size="9" fill="var(--muted, #64748b)">Partes en periodo</text>
+          <text x="12" y="49" font-size="8.5" font-weight="600" fill="#8b5cf6">X06 activa + fechas</text>
+        </g>
+
+        <!-- Flecha 3 -> 4 -->
+        <path d="M 500 64 L 528 64" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#an-arrow-ra)" />
+
+        <!-- Nodo 4: SCACRSE -->
+        <g transform="translate(530, 34)" filter="url(#an-card-shadow)">
+          <rect width="138" height="60" rx="6" fill="var(--bg-card, #ffffff)" stroke="#8b5cf6" stroke-width="1.2" />
+          <text x="12" y="19" font-size="11" font-weight="800" font-family="'JetBrains Mono', monospace" fill="var(--fg, #1e293b)">SCACRSE</text>
+          <text x="12" y="34" font-size="9" fill="var(--muted, #64748b)">Catálogo de curso</text>
+          <text x="12" y="49" font-size="8.5" font-weight="600" fill="#8b5cf6">ESEC 00684 (Diseño Web)</text>
+        </g>
+
+        <!-- Flecha 4 -> 5 -->
+        <path d="M 668 64 L 696 64" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#an-arrow-ra)" />
+
+        <!-- Nodo 5: SMAAREA -->
+        <g transform="translate(698, 34)" filter="url(#an-card-shadow)">
+          <rect width="138" height="60" rx="6" fill="var(--bg-card, #ffffff)" stroke="#8b5cf6" stroke-width="1.2" />
+          <text x="12" y="19" font-size="11" font-weight="800" font-family="'JetBrains Mono', monospace" fill="var(--fg, #1e293b)">SMAAREA</text>
+          <text x="12" y="34" font-size="9" fill="var(--muted, #64748b)">Poner curso en malla</text>
+          <text x="12" y="49" font-size="8.5" font-weight="600" fill="#8b5cf6">Rutas XP · MC44-01</text>
+        </g>
+
+        <!-- Flecha vertical 5 -> 6 (hacia abajo a El Centro) -->
+        <path d="M 767 94 L 767 141" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#an-arrow-ce)" stroke-dasharray="3 2" />
+
+        <!-- Nodo 6: SSASECT (Paso 1 del centro) -->
+        <g transform="translate(698, 142)" filter="url(#an-card-shadow)">
+          <rect width="138" height="58" rx="6" fill="var(--bg-card, #ffffff)" stroke="#10b981" stroke-width="1.8" />
+          <text x="12" y="19" font-size="11" font-weight="800" font-family="'JetBrains Mono', monospace" fill="#10b981">SSASECT</text>
+          <text x="12" y="33" font-size="9" fill="var(--muted, #64748b)">Crear sección / NRC</text>
+          <text x="12" y="47" font-size="8.5" font-weight="700" fill="#10b981">Comienza flujo del centro ▾</text>
+        </g>
+      </svg>
+    </div>
+'''
+
+
 def _html_antes_nrc(slug, carpeta_html=None):
     """Bloque «Antes del NRC» de una demostración: `antes_del_nrc` en datos.json (C141 a C144).
 
@@ -541,16 +633,16 @@ def _html_antes_nrc(slug, carpeta_html=None):
         '<!-- === ANTES DEL NRC === -->\n'
         '<details class="antes-nrc">\n'
         f'  <summary><span class="an-paso">Paso previo</span> {e(a["titulo"])}'
-        '<span class="an-abrir">Clic para ver la tabla</span></summary>\n'
+        '<span class="an-abrir">Clic para ver el flujo y la tabla</span></summary>\n'
         f'  <p class="an-intro">{e(a["intro"])}</p>\n'
-        '  <div class="an-tabla"><table class="an-orden">\n'
+        + _svg_flujo_antes_nrc()
+        + '  <div class="an-tabla"><table class="an-orden">\n'
         '    <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'
         f'    <tbody>{orden}</tbody>\n'
         '  </table></div>\n'
         + preguntas
         + _html_fundamentos(demo, tabla)
-        + _html_ejemplo_prueba(demo, tabla, carpeta_html, slug)
-        + f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
+                + f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
         '</details>\n'
         '<!-- === /ANTES DEL NRC === -->\n')
 
@@ -558,6 +650,70 @@ def _html_antes_nrc(slug, carpeta_html=None):
 def _json_seguro(obj):
     """JSON para incrustar en <script>: «</» se escapa para que un texto no cierre el script."""
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
+
+
+
+def _html_seccion_ejemplo_prueba(slug, carpeta_html=None):
+    demo = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {})
+    ej = demo.get("ejemplo_prueba_2")
+    if not ej:
+        return ""
+    e = html.escape
+    def tabla(t):
+        num = set(t.get("num", []))
+        cab = "".join(f"<th>{e(c)}</th>" for c in t["columnas"])
+        filas = "".join(
+            ('<tr class="an-demo">' if k in t.get("resaltar", []) else "<tr>")
+            + "".join((f'<td class="an-num">{e(v)}</td>' if c in num else
+                       f"<td><strong>{e(v)}</strong></td>" if c == 0 else f"<td>{e(v)}</td>")
+                      for c, v in enumerate(fila))
+            + "</tr>"
+            for k, fila in enumerate(t["filas"]))
+        clase = f' class="{e(t["clase"])}"' if t.get("clase") else ""
+        return f'    <div class="an-tabla"><table{clase}><thead><tr>{cab}</tr></thead><tbody>{filas}</tbody></table></div>\n'
+
+    cuerpo = _html_ejemplo_prueba(demo, tabla, carpeta_html, slug)
+    return (
+        '<!-- === EJEMPLO PRUEBA TEST === -->\n'
+        '<details class="antes-nrc ejemplo-prueba-seccion" id="ejemplo-prueba-2" style="border-left-color: #10b981;">\n'
+        f'  <summary><span class="an-paso" style="background:#10b981;">Validado en TEST</span> {e(ej["titulo"])}'
+        '<span class="an-abrir">Clic para abrir los 14 pasos con capturas</span></summary>\n'
+        + cuerpo + '\n'
+        '</details>\n'
+        '<!-- === /EJEMPLO PRUEBA TEST === -->\n'
+    )
+
+
+def _asociar_capturas_a_guia(guia, slug, carpeta_html):
+    demo = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {})
+    ej = demo.get("ejemplo_prueba_2")
+    if not ej or not guia:
+        return
+    carpeta = ej.get("carpeta", "")
+    mapa_nodos = {
+        "dm": [5],             # SMAAREA: poner el curso en la malla
+        "d3": [1],             # SSASECT sección: abrir el NRC
+        "d4": [2],             # SSASECT horario: cupo y horario
+        "d5": [3, 4],          # SSASECT docente y SIAASGN carga
+        "d6": [6],             # SHAGCOM: cargar la fórmula
+        "d7": [8, 12],         # SFAREGS: matrícula y baja DD
+        "d8": [7, 9, 10, 11],  # Autoservicio: regla asistencia, lista, notas, acta
+        "d9": [13, 14],        # SHRROLL: pase a historia y SHACRSE nota
+    }
+    pasos_por_n = {p["n"]: p for p in ej.get("pasos", [])}
+    for nid, indices in mapa_nodos.items():
+        if nid not in guia:
+            continue
+        caps_nodo = []
+        for n_paso in indices:
+            p = pasos_por_n.get(n_paso)
+            if not p:
+                continue
+            for c in p.get("capturas", []):
+                src = f"{quote(carpeta)}/{quote(c['archivo'])}"
+                caps_nodo.append({"src": src, "texto": f"Paso {p['n']} · {c.get('texto', '')}"})
+        if caps_nodo:
+            guia[nid]["capturas_test"] = caps_nodo
 
 
 def inyectar_en_html(ruta_html, slug):
@@ -570,6 +726,7 @@ def inyectar_en_html(ruta_html, slug):
     nodo_ids = ids_nodos_en_html(contenido)
     guia = obtener_guia_para_slug(slug, id_centro, nodo_ids)
     _resolver_diapositivas(guia, ruta_html.parent, slug)
+    _asociar_capturas_a_guia(guia, slug, ruta_html.parent)
     conocimiento_script = os.path.relpath(
         ASSETS_DIR / "asistente_conocimiento.js",
         ruta_html.parent,
@@ -600,6 +757,7 @@ def inyectar_en_html(ruta_html, slug):
         .replace("__VOLVER_CENTROS_URL__", nav["url_centros"])
         + "\n<!-- === ASISTENTE CCEE INTEGRADO END === -->"
     )
+    ejemplo_test = _html_seccion_ejemplo_prueba(slug, ruta_html.parent)
     extra = (nav["nav_bottom"] + "\n" if nav["nav_bottom"] else "") + bloque
     i = contenido.rfind("</body>")
     contenido = contenido[:i] + extra + "\n" + contenido[i:] if i != -1 else contenido + "\n" + extra
@@ -617,7 +775,7 @@ def inyectar_todos():
             cont += 1
     print(f"Inyección completada en {cont} diagramas HTML.")
     if ADVERTENCIAS:
-        print(f"\n⚠ {len(ADVERTENCIAS)} advertencias de guías:")
+        print(f"\n[!] {len(ADVERTENCIAS)} advertencias de guías:")
         for a in ADVERTENCIAS:
             print("  -", a)
     return cont

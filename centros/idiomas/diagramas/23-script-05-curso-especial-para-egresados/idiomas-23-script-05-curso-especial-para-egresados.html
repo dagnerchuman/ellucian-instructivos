@@ -19670,6 +19670,24 @@ button.ai-fab:active,
     return { valor: raw, ejemplo: '-' };
   }
 
+  
+  function renderCapturasTestHtml(info) {
+    var lista = (info && info.capturas_test) || [];
+    if (!lista.length) return '';
+    var html = '<section class="guia-diapos guia-capturas-test" aria-label="Capturas de prueba en TEST">' +
+      '<div class="guia-diapos-head"><span class="guia-diapos-titulo">🧪 Captura real en Banner TEST</span>' +
+      '<span class="guia-diapos-fuente">Ejemplo de prueba 2 (NRC 10045)</span></div>' +
+      '<div class="guia-diapos-carril"><div class="guia-diapos-grid">';
+    lista.forEach(function (c) {
+      html += '<a href="' + escapeHtml(c.src) + '" target="_blank" rel="noopener" class="guia-diapo" title="Ver captura: ' + escapeHtml(c.texto || '') + '" style="text-decoration:none;">' +
+        '<img loading="lazy" decoding="async" src="' + escapeHtml(c.src) + '" alt="' + escapeHtml(c.texto || '') + '">' +
+        '<span class="guia-diapo-pie" style="background:rgba(16,185,129,0.12); color:#10b981; font-weight:700;">TEST · ' + escapeHtml(c.texto || '') + '</span>' +
+        '</a>';
+    });
+    html += '</div></div></section>';
+    return html;
+  }
+
   function renderDiapositivasHtml(info) {
     var lista = (info && info.diapositivas) || [];
     if (!lista.length) {
@@ -20074,6 +20092,7 @@ button.ai-fab:active,
     }
 
     html += renderDiapositivasHtml(info);
+    html += renderCapturasTestHtml(info);
 
     if (info.instrucciones && info.instrucciones.length > 0) {
       html += '<div class="guia-tabla-wrap"><table class="guia-tabla">';

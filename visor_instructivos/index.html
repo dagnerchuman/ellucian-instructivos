@@ -11,7 +11,7 @@
       var tema = null;
       try { tema = localStorage.getItem('archify-theme'); } catch (_) {}
       if (tema !== 'light' && tema !== 'dark') {
-        tema = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        tema = 'light';
       }
       document.documentElement.setAttribute('data-theme', tema);
     })();

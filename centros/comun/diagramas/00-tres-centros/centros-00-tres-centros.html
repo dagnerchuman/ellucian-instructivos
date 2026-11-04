@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" data-preset="classic">
+<html lang="es" data-theme="light" data-preset="classic">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
           try { theme = localStorage.getItem('archify-theme'); } catch (_) {}
         }
         if (theme !== 'light' && theme !== 'dark') {
-          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          theme = 'light';
         }
         document.documentElement.setAttribute('data-theme', theme);
       } catch (_) {}
@@ -5756,7 +5756,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         if (fromUrl) return fromUrl;
         var saved = readStored();
         if (saved === 'light' || saved === 'dark') return saved;
-        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        return 'light';
       }
 
       function apply(theme) {
@@ -13896,15 +13896,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       }
     });
   </script>
-<!-- === FLOW NAV BOTTOM === -->
-<section class="flow-nav-bottom-section" aria-label="Navegación entre flujos">
-  <div class="flow-bottom-container">
-    <div class="flow-bottom-card prev placeholder"><span class="flow-card-badge">← Flujo anterior</span><span class="flow-card-title muted">Primer flujo del centro</span></div>
-    <a href="../../../index.html#sec-comun" class="flow-bottom-hub-btn" title="Volver a la galería de Centros">🏛️ Volver a Centros</a>
-    <div class="flow-bottom-card next placeholder"><span class="flow-card-badge">Flujo siguiente →</span><span class="flow-card-title muted">Último flujo del centro</span></div>
-  </div>
-</section>
-<!-- === /FLOW NAV BOTTOM === -->
 <!-- === ASISTENTE CCEE INTEGRADO START === -->
 <style>
 /* ASISTENTE CCEE: bloque generado */

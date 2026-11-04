@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" data-preset="classic">
+<html lang="es" data-theme="light" data-preset="classic">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
           try { theme = localStorage.getItem('archify-theme'); } catch (_) {}
         }
         if (theme !== 'light' && theme !== 'dark') {
-          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          theme = 'light';
         }
         document.documentElement.setAttribute('data-theme', theme);
       } catch (_) {}
@@ -5644,7 +5644,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         if (fromUrl) return fromUrl;
         var saved = readStored();
         if (saved === 'light' || saved === 'dark') return saved;
-        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        return 'light';
       }
 
       function apply(theme) {
@@ -13784,15 +13784,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       }
     });
   </script>
-<!-- === FLOW NAV BOTTOM === -->
-<section class="flow-nav-bottom-section" aria-label="Navegación entre flujos">
-  <div class="flow-bottom-container">
-    <a href="../06-notas-y-pase-a-historia/idiomas-06-notas-y-pase-a-historia.html" class="flow-bottom-card prev" title="06. Scripts 13 y 14 · Notas y pase a historia"><span class="flow-card-badge">← Flujo anterior</span><span class="flow-card-num-title"><span class="flow-card-num">06</span><span class="flow-card-title">Scripts 13 y 14 · Notas y pase a historia</span></span><span class="flow-card-meta">Capacidades 7 y 8</span></a>
-    <a href="../../../index.html#sec-idiomas" class="flow-bottom-hub-btn" title="Volver a la galería de Centros">🏛️ Volver a Centros</a>
-    <a href="../08-script-11-apertura-de-periodo/idiomas-08-script-11-apertura-de-periodo.html" class="flow-bottom-card next primary-accent" title="08. Script 11 · Apertura de periodo"><span class="flow-card-badge">Flujo siguiente →</span><span class="flow-card-num-title"><span class="flow-card-num">08</span><span class="flow-card-title">Script 11 · Apertura de periodo</span></span><span class="flow-card-meta">Capacidad 1</span></a>
-  </div>
-</section>
-<!-- === /FLOW NAV BOTTOM === -->
 <!-- === ASISTENTE CCEE INTEGRADO START === -->
 <style>
 /* ASISTENTE CCEE: bloque generado */

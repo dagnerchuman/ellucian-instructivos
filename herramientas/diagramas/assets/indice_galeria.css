@@ -1,4 +1,4 @@
-:root, [data-theme="dark"] {
+[data-theme="dark"] {
   --bg: #0b0813;
   --bg-card: #151022;
   --bg-card-hover: #1c152d;
@@ -14,7 +14,7 @@
   --header-bg: rgba(11, 8, 19, 0.85);
 }
 
-[data-theme="light"] {
+:root, [data-theme="light"] {
   --bg: #f8f6fb;
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;

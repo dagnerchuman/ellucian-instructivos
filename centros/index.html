@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Diagramas generados automáticamente. No editar a mano: modificar plantillas.py o datos.json y ejecutar herramientas/diagramas/generar.py -->
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -9,13 +9,13 @@
   (function () {
     try {
       var t = localStorage.getItem('archify-theme');
-      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (!t) t = 'light';
       document.documentElement.setAttribute('data-theme', t);
     } catch (_) {}
   })();
 </script>
 <style>
-:root, [data-theme="dark"] {
+[data-theme="dark"] {
   --bg: #0b0813;
   --bg-card: #151022;
   --bg-card-hover: #1c152d;
@@ -31,7 +31,7 @@
   --header-bg: rgba(11, 8, 19, 0.85);
 }
 
-[data-theme="light"] {
+:root, [data-theme="light"] {
   --bg: #f8f6fb;
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;
@@ -2283,7 +2283,7 @@ button.ai-fab:active,
 
   // Alternar tema
   themeBtn.addEventListener('click', function() {
-    var cur = document.documentElement.getAttribute('data-theme') || 'dark';
+    var cur = document.documentElement.getAttribute('data-theme') || 'light';
     var next = cur === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     try { localStorage.setItem('archify-theme', next); } catch (_) {}

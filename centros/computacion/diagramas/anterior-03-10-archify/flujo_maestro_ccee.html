@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-preset="classic">
+<html lang="en" data-theme="light" data-preset="classic">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
           try { theme = localStorage.getItem('archify-theme'); } catch (_) {}
         }
         if (theme !== 'light' && theme !== 'dark') {
-          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          theme = 'light';
         }
         document.documentElement.setAttribute('data-theme', theme);
       } catch (_) {}
@@ -5739,7 +5739,7 @@
         if (fromUrl) return fromUrl;
         var saved = readStored();
         if (saved === 'light' || saved === 'dark') return saved;
-        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        return 'light';
       }
 
       function apply(theme) {
@@ -14938,15 +14938,6 @@
       }
     });
   </script>
-<!-- === FLOW NAV BOTTOM === -->
-<section class="flow-nav-bottom-section" aria-label="Navegación entre flujos">
-  <div class="flow-bottom-container">
-    <div class="flow-bottom-card prev placeholder"><span class="flow-card-badge">← Flujo anterior</span><span class="flow-card-title muted">Primer flujo del centro</span></div>
-    <a href="../../../index.html#sec-computacion" class="flow-bottom-hub-btn" title="Volver a la galería de Centros">🏛️ Volver a Centros</a>
-    <a href="../01-recorrido-completo/computacion-01-recorrido-completo.html" class="flow-bottom-card next primary-accent" title="01. Recorrido completo en Banner"><span class="flow-card-badge">Flujo siguiente →</span><span class="flow-card-num-title"><span class="flow-card-num">01</span><span class="flow-card-title">Recorrido completo en Banner</span></span><span class="flow-card-meta">Capacidades 1 a 8</span></a>
-  </div>
-</section>
-<!-- === /FLOW NAV BOTTOM === -->
 <!-- === ASISTENTE CCEE INTEGRADO START === -->
 <style>
 /* ASISTENTE CCEE: bloque generado */

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" data-preset="classic">
+<html lang="es" data-theme="light" data-preset="classic">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
           try { theme = localStorage.getItem('archify-theme'); } catch (_) {}
         }
         if (theme !== 'light' && theme !== 'dark') {
-          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          theme = 'light';
         }
         document.documentElement.setAttribute('data-theme', theme);
       } catch (_) {}
@@ -5605,7 +5605,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         if (fromUrl) return fromUrl;
         var saved = readStored();
         if (saved === 'light' || saved === 'dark') return saved;
-        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        return 'light';
       }
 
       function apply(theme) {
@@ -13745,15 +13745,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       }
     });
   </script>
-<!-- === FLOW NAV BOTTOM === -->
-<section class="flow-nav-bottom-section" aria-label="Navegación entre flujos">
-  <div class="flow-bottom-container">
-    <a href="../24-script-13-procesamiento-de-calificaciones/computacion-24-script-13-procesamiento-de-calificaciones.html" class="flow-bottom-card prev" title="24. Script 13 · Procesamiento de calificaciones"><span class="flow-card-badge">← Flujo anterior</span><span class="flow-card-num-title"><span class="flow-card-num">24</span><span class="flow-card-title">Script 13 · Procesamiento de calificaciones</span></span><span class="flow-card-meta">Capacidad 7</span></a>
-    <a href="../../../index.html#sec-computacion" class="flow-bottom-hub-btn" title="Volver a la galería de Centros">🏛️ Volver a Centros</a>
-    <a href="../26-script-10-retorno-por-desaprobado/computacion-26-script-10-retorno-por-desaprobado.html" class="flow-bottom-card next primary-accent" title="26. Script 10 · Retorno por desaprobado"><span class="flow-card-badge">Flujo siguiente →</span><span class="flow-card-num-title"><span class="flow-card-num">26</span><span class="flow-card-title">Script 10 · Retorno por desaprobado</span></span><span class="flow-card-meta">Capacidad 7 y 8</span></a>
-  </div>
-</section>
-<!-- === /FLOW NAV BOTTOM === -->
 <!-- === ASISTENTE CCEE INTEGRADO START === -->
 <style>
 /* ASISTENTE CCEE: bloque generado */

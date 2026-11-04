@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Diagramas generados automáticamente. No editar a mano: modificar plantillas.py o datos.json y ejecutar herramientas/diagramas/generar.py -->
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -9,7 +9,7 @@
   (function () {
     try {
       var t = localStorage.getItem('archify-theme');
-      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (!t) t = 'light';
       document.documentElement.setAttribute('data-theme', t);
     } catch (_) {}
   })();

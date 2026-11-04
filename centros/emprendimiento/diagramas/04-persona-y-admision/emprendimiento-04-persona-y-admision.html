@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" data-preset="classic">
+<html lang="es" data-theme="light" data-preset="classic">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
           try { theme = localStorage.getItem('archify-theme'); } catch (_) {}
         }
         if (theme !== 'light' && theme !== 'dark') {
-          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          theme = 'light';
         }
         document.documentElement.setAttribute('data-theme', theme);
       } catch (_) {}
@@ -5622,7 +5622,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         if (fromUrl) return fromUrl;
         var saved = readStored();
         if (saved === 'light' || saved === 'dark') return saved;
-        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        return 'light';
       }
 
       function apply(theme) {
@@ -13762,15 +13762,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       }
     });
   </script>
-<!-- === FLOW NAV BOTTOM === -->
-<section class="flow-nav-bottom-section" aria-label="Navegación entre flujos">
-  <div class="flow-bottom-container">
-    <a href="../03-carga-lectiva/emprendimiento-03-carga-lectiva.html" class="flow-bottom-card prev" title="03. Script 18-A · Carga lectiva del docente"><span class="flow-card-badge">← Flujo anterior</span><span class="flow-card-num-title"><span class="flow-card-num">03</span><span class="flow-card-title">Script 18-A · Carga lectiva del docente</span></span><span class="flow-card-meta">Capacidad 5</span></a>
-    <a href="../../../index.html#sec-emprendimiento" class="flow-bottom-hub-btn" title="Volver a la galería de Centros">🏛️ Volver a Centros</a>
-    <a href="../05-matricula-en-el-nrc/emprendimiento-05-matricula-en-el-nrc.html" class="flow-bottom-card next primary-accent" title="05. Script 01 · Matrícula en el NRC"><span class="flow-card-badge">Flujo siguiente →</span><span class="flow-card-num-title"><span class="flow-card-num">05</span><span class="flow-card-title">Script 01 · Matrícula en el NRC</span></span><span class="flow-card-meta">Capacidades 5 y 11</span></a>
-  </div>
-</section>
-<!-- === /FLOW NAV BOTTOM === -->
 <!-- === ASISTENTE CCEE INTEGRADO START === -->
 <style>
 /* ASISTENTE CCEE: bloque generado */

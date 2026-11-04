@@ -200,28 +200,7 @@ def _destino_en_centro(c_id, carpeta_actual, carpeta_centros):
 
 
 def _html_nav_bottom(flujo_ant, flujo_sig, url_centros):
-    def tarjeta(f, clase, etiqueta):
-        if not f:
-            texto = "Primer flujo del centro" if clase == "prev" else "Último flujo del centro"
-            return (f'<div class="flow-bottom-card {clase} placeholder"><span class="flow-card-badge">{etiqueta}</span>'
-                    f'<span class="flow-card-title muted">{texto}</span></div>')
-        acento = " primary-accent" if clase == "next" else ""
-        meta = f'<span class="flow-card-meta">{html.escape(f["cap"])}</span>' if f["cap"] else ""
-        titulo = html.escape(f["titulo"])
-        return (f'<a href="{html.escape(f["url"])}" class="flow-bottom-card {clase}{acento}" title="{f["num"]:02d}. {titulo}">'
-                f'<span class="flow-card-badge">{etiqueta}</span>'
-                f'<span class="flow-card-num-title"><span class="flow-card-num">{f["num"]:02d}</span>'
-                f'<span class="flow-card-title">{titulo}</span></span>{meta}</a>')
-
-    return ('<!-- === FLOW NAV BOTTOM === -->\n'
-            '<section class="flow-nav-bottom-section" aria-label="Navegación entre flujos">\n'
-            '  <div class="flow-bottom-container">\n'
-            f'    {tarjeta(flujo_ant, "prev", "← Flujo anterior")}\n'
-            f'    <a href="{url_centros}" class="flow-bottom-hub-btn" title="Volver a la galería de Centros">🏛️ Volver a Centros</a>\n'
-            f'    {tarjeta(flujo_sig, "next", "Flujo siguiente →")}\n'
-            '  </div>\n'
-            '</section>\n'
-            '<!-- === /FLOW NAV BOTTOM === -->')
+    return ""
 
 
 def construir_navegacion_flujos(ruta_html):
@@ -621,7 +600,7 @@ def inyectar_en_html(ruta_html, slug):
         .replace("__VOLVER_CENTROS_URL__", nav["url_centros"])
         + "\n<!-- === ASISTENTE CCEE INTEGRADO END === -->"
     )
-    extra = nav["nav_bottom"] + "\n" + bloque
+    extra = (nav["nav_bottom"] + "\n" if nav["nav_bottom"] else "") + bloque
     i = contenido.rfind("</body>")
     contenido = contenido[:i] + extra + "\n" + contenido[i:] if i != -1 else contenido + "\n" + extra
 

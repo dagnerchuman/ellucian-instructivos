@@ -14,7 +14,8 @@ import sys
 from urllib.parse import quote
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
 from diapositivas_pasos import INSTRUCTIVOS, para as diapositivas_del_paso
-from plantillas import TITULOS, CAPACIDADES, DEMOSTRACIONES, guia_casuistica_de, guia_demostracion, guia_recorrido
+from plantillas import (TITULOS, CAPACIDADES, DEMOSTRACIONES, guia_casuistica_de, guia_demostracion,
+                        guia_recorrido, slug_prueba)
 from centro import Centro
 
 # "plantillas": la guía de las casuísticas sale de plantillas.py (CASOS + EXTRA_CASOS) y pisa a GUIAS_SCRIPTS.
@@ -435,74 +436,71 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
         vistas.setdefault(firma, paso)
 
 
-def _html_capturas(carpeta, capturas, carpeta_html, slug):
-    """Miniaturas de las capturas de TEST de un paso; cada una abre la imagen completa (C181)."""
-    e = html.escape
-    figuras = ""
-    for c in capturas:
-        if carpeta_html is not None and not (Path(carpeta_html) / carpeta / c["archivo"]).exists():
-            ADVERTENCIAS.append(f"{slug}: falta la captura {carpeta}/{c['archivo']}")
+def _resolver_capturas(guia, carpeta_html, slug):
+    """Capturas de TEST de cada paso (flujo del ejemplo de prueba, C192): ruta relativa al HTML y número."""
+    for paso, info in guia.items():
+        if "capturas" not in info:
             continue
-        src = e(quote(f"{carpeta}/{c['archivo']}"))
-        figuras += (f'<figure><a href="{src}" target="_blank" rel="noopener">'
-                    f'<img src="{src}" alt="{e(c["texto"])}" loading="lazy"></a>'
-                    f'<figcaption>{e(c["texto"])}</figcaption></figure>')
-    return f'    <div class="an-capturas">{figuras}</div>\n' if figuras else ""
+        resueltas = []
+        for x in info["capturas"]:
+            ruta = RAIZ_REPO / x["ruta"]
+            if not ruta.exists():
+                ADVERTENCIAS.append(f"{slug} · {paso}: falta la captura {x['ruta']}")
+                continue
+            resueltas.append({"src": quote(os.path.relpath(ruta, carpeta_html).replace(os.sep, "/")),
+                              "texto": x["texto"], "n": len(resueltas) + 1})
+        info["capturas"] = resueltas
 
 
-def _html_ejemplo_prueba(demo, tabla, carpeta_html, slug):
-    """Ejemplo de prueba (`ejemplo_prueba_2` en datos.json) dentro de «Antes del NRC»: la secuencia
-    completa y, por paso hecho, su tabla campo por campo y sus capturas de TEST (pedido del usuario, C181)."""
+def _html_prueba(demo, carpeta_html):
+    """Pestaña «Prueba en TEST»: los pasos del ejemplo por fase y el enlace a su flujo, donde cada paso abre su
+    tabla, sus capturas y sus láminas (C192). Antes iban aquí las 14 tablas con sus capturas sueltas (C181)."""
     ej = demo.get("ejemplo_prueba_2")
     if not ej:
-        return ""
+        return "", ""
     e = html.escape
-    pasos = ej["pasos"]
-    secuencia = tabla({
-        "columnas": ["N.º", "Página", "Qué se hace", "Dato", "Quién", "Banner respondió", "Fuente"],
-        "filas": [[str(p["n"]), p["codigo"], p["accion"], p["dato"], p["quien"],
-                   p.get("resultado", "Pendiente"), p["cita"]] for p in pasos],
-        "resaltar": [k for k, p in enumerate(pasos) if p.get("resultado")],
-        "clase": "an-secuencia",
-    })
-    detalle = ""
-    for p in pasos:
-        if not (p.get("tabla") or p.get("capturas")):
-            continue
-        cuerpo = tabla(p["tabla"]) if p.get("tabla") else ""
-        if p.get("nota"):
-            cuerpo += f'    <p class="an-fuente">{e(p["nota"])}</p>\n'
-        cuerpo += _html_capturas(ej["carpeta"], p.get("capturas", []), carpeta_html, slug)
-        detalle += (f'  <details class="an-sub">\n    <summary>Paso {p["n"]} · {e(p["codigo"])}: {e(p["accion"])}'
-                    f'</summary>\n{cuerpo}  </details>\n')
-    return (f'  <h3 id="ejemplo-prueba-2">{e(ej["titulo"])}</h3>\n'
-            f'  <p class="an-intro">{e(ej["caso"])}</p>\n'
-            + secuencia
-            + '  <p class="an-fuente">Resaltados: los pasos ya hechos en TEST. Abra cada paso para ver qué va en cada campo y las capturas.</p>\n'
-            + detalle)
+    sp = slug_prueba(demo)
+    centro = Path(carpeta_html).parents[1].name if carpeta_html is not None else ""
+    href = e(f"../00-{sp}/{centro}-00-{sp}.html")
+    pasos = {p["n"]: p for p in ej["pasos"]}
+    fases = ""
+    for f in ej["fases"]:
+        chips = "".join(
+            f'<li><a href="{href}#focus=e{n}" title="Abrir el paso {n} en el flujo">'
+            f'<span class="an-chip-n">{n}</span><strong>{e(pasos[n]["codigo"])}</strong>'
+            f'<small>{e(pasos[n]["accion"])}</small></a></li>'
+            for n in f["pasos"])
+        fases += f'      <div class="an-fase"><h4>{e(f["titulo"])}</h4><ol class="an-chips">{chips}</ol></div>\n'
+    panel = (f'    <p class="an-intro">{e(ej["caso"])}</p>\n'
+             f'    <div class="an-fases">\n{fases}    </div>\n'
+             f'    <p class="an-cta"><a class="an-btn" href="{href}">Abrir el flujo paso a paso ›</a>'
+             f'<span>{e(ej["avance"])}</span></p>\n')
+    return f"3 · Prueba en TEST · NRC {ej['nrc']}", panel
 
 
-def _html_fundamentos(demo, tabla):
+def _html_fundamentos(demo, tabla, desde=1):
     """Por qué de cada fila con `por_que` en los pasos de la demostración, en una tabla para estudiar (C183)."""
     e = html.escape
     out = ""
+    k = desde
     for p in demo.get("pasos", []):
         filas = [f for f in p.get("filas", []) if f.get("por_que")]
         if not filas:
             continue
         cuerpo = tabla({"columnas": ["Campo", "Valor en TEST", "Por qué"],
                         "filas": [[f["campo"], f["valor"], f["por_que"]] for f in filas]})
-        out += (f'  <details class="an-sub">\n    <summary>¿Por qué cada campo de {e(p["codigo"])} queda así? '
-                f'({e(p["dato"])})</summary>\n{cuerpo}  </details>\n')
+        out += (f'  <details class="an-sub">\n    <summary><span class="an-q-n">{k}</span>¿Por qué cada campo de '
+                f'{e(p["codigo"])} queda así? ({e(p["dato"])})</summary>\n{cuerpo}  </details>\n')
+        k += 1
     return out
 
 
 def _html_antes_nrc(slug, carpeta_html=None):
     """Bloque «Antes del NRC» de una demostración: `antes_del_nrc` en datos.json (C141 a C144).
 
-    Sale cerrado; al abrirlo se ve solo la tabla del orden y cada pregunta sigue cerrada hasta dar clic
-    (pedido del usuario, C142). Una pregunta lleva `lista` o `tabla` (columnas, filas, num, resaltar).
-    Al final va el ejemplo de prueba de la demostración, si lo tiene (C181)."""
+    Sale cerrado (C142) y, abierto, en tres pestañas (C192): el orden de las páginas, las preguntas para estudiar
+    (cada una cerrada hasta dar clic; llevan `lista` o `tabla` con columnas, filas, num, resaltar) y la prueba en TEST,
+    que enlaza al flujo propio del ejemplo de prueba. Las pestañas son radios con CSS: funcionan sin JavaScript."""
     demo = DEMOSTRACIONES.get(RE_PREFIJO.sub("", slug), {})
     a = demo.get("antes_del_nrc")
     if not a:
@@ -528,7 +526,7 @@ def _html_antes_nrc(slug, carpeta_html=None):
         return f'    <div class="an-tabla"><table{clase}><thead><tr>{cab}</tr></thead><tbody>{filas}</tbody></table></div>\n'
 
     preguntas = ""
-    for q in a.get("preguntas", []):
+    for k, q in enumerate(a.get("preguntas", []), 1):
         cuerpo = f'    <p class="an-intro">{e(q["intro"])}</p>\n' if q.get("intro") else ""
         if q.get("lista"):
             cuerpo += "    <ul>" + "".join(f"<li>{e(x)}</li>" for x in q["lista"]) + "</ul>\n"
@@ -536,21 +534,32 @@ def _html_antes_nrc(slug, carpeta_html=None):
             cuerpo += tabla(q["tabla"])
         if q.get("nota"):
             cuerpo += f'    <p class="an-fuente">{e(q["nota"])}</p>\n'
-        preguntas += f'  <details class="an-sub">\n    <summary>{e(q["pregunta"])}</summary>\n{cuerpo}  </details>\n'
+        preguntas += (f'  <details class="an-sub">\n    <summary><span class="an-q-n">{k}</span>{e(q["pregunta"])}</summary>\n'
+                      f'{cuerpo}  </details>\n')
+    fundamentos = _html_fundamentos(demo, tabla, len(a.get("preguntas", [])) + 1)
+    n_preguntas = len(a.get("preguntas", [])) + fundamentos.count('class="an-sub"')
+    titulo_prueba, panel_prueba = _html_prueba(demo, carpeta_html)
+    pestanas = [("1 · Orden antes del NRC",
+                 '    <div class="an-tabla"><table class="an-orden">\n'
+                 '      <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'
+                 f'      <tbody>{orden}</tbody>\n    </table></div>\n'),
+                (f"2 · Preguntas para estudiar ({n_preguntas})", preguntas + fundamentos)]
+    if panel_prueba:
+        pestanas.append((titulo_prueba, panel_prueba))
+    grupo = "an-" + re.sub(r"[^a-z0-9]+", "-", slug.lower())
+    radios = "".join(f'<input type="radio" class="an-radio an-radio-{i}" name="{grupo}" id="{grupo}-{i}"{" checked" if i == 1 else ""}>'
+                     for i in range(1, len(pestanas) + 1))
+    barra = "".join(f'<label for="{grupo}-{i}">{e(t)}</label>' for i, (t, _) in enumerate(pestanas, 1))
+    paneles = "".join(f'  <div class="an-panel an-panel-{i}">\n{c}  </div>\n' for i, (_, c) in enumerate(pestanas, 1))
     return (
         '<!-- === ANTES DEL NRC === -->\n'
         '<details class="antes-nrc">\n'
-        f'  <summary><span class="an-paso">Paso previo</span> {e(a["titulo"])}'
-        '<span class="an-abrir">Clic para ver la tabla</span></summary>\n'
+        f'  <summary><span class="an-paso">Para estudiar</span> {e(a["titulo"])}'
+        '<span class="an-abrir">Clic para abrir</span></summary>\n'
         f'  <p class="an-intro">{e(a["intro"])}</p>\n'
-        '  <div class="an-tabla"><table class="an-orden">\n'
-        '    <thead><tr><th>Orden</th><th>Página</th><th>Qué se hace</th><th>¿Cuándo?</th><th>Fuente</th></tr></thead>\n'
-        f'    <tbody>{orden}</tbody>\n'
-        '  </table></div>\n'
-        + preguntas
-        + _html_fundamentos(demo, tabla)
-        + _html_ejemplo_prueba(demo, tabla, carpeta_html, slug)
-        + f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
+        f'  <div class="an-tabs">{radios}\n  <div class="an-tab-bar">{barra}</div>\n'
+        f'{paneles}  </div>\n'
+        f'  <p class="an-fuente">Fuente: {e(a["fuente"])}.</p>\n'
         '</details>\n'
         '<!-- === /ANTES DEL NRC === -->\n')
 
@@ -570,6 +579,7 @@ def inyectar_en_html(ruta_html, slug):
     nodo_ids = ids_nodos_en_html(contenido)
     guia = obtener_guia_para_slug(slug, id_centro, nodo_ids)
     _resolver_diapositivas(guia, ruta_html.parent, slug)
+    _resolver_capturas(guia, ruta_html.parent, slug)
     conocimiento_script = os.path.relpath(
         ASSETS_DIR / "asistente_conocimiento.js",
         ruta_html.parent,

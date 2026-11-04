@@ -2166,8 +2166,8 @@
       "periodo": "202656",
       "parte": "X06",
       "antes_del_nrc": {
-        "titulo": "Antes del NRC: periodo, partes, curso y malla",
-        "intro": "Antes de crear el NRC tienen que existir el periodo, la parte en la que se dictará y el curso, y el curso tiene que estar en la malla de las rutas Protech XP que lo llevan. Si ya existen, se pasa directo a SSASECT. Al final, el ejemplo de prueba 2 (NRC 10045) con lo que se guardó en TEST en cada paso, campo por campo y con sus capturas.",
+        "titulo": "Para estudiar: el orden antes del NRC, las preguntas y la prueba en TEST",
+        "intro": "Tres pestañas: el orden en que deben existir las cosas antes de crear el NRC (periodo, partes, curso y malla), las preguntas para estudiar la teoría y la prueba completa del NRC 10045 en TEST, que se recorre como flujo paso a paso.",
         "orden": [
           {
             "pagina": "STVTERM",
@@ -2209,7 +2209,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191, C192",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2743,7 +2743,7 @@
         ]
       },
       "ejemplo_prueba_2": {
-        "_leeme": "Capturas reales de TEST, paso por paso. Cada captura se guarda en la carpeta con el nombre de «carpeta», junto al HTML de la demostración, y empieza con el número del paso (02-ssasect-horario.png; varias por paso: 02-…-b.png). Cada paso hecho lleva «resultado» (lo que respondió Banner), «tabla» (campo por campo) y «capturas»; generar.py los muestra en «Antes del NRC» de la demostración (C181).",
+        "_leeme": "Capturas reales de TEST, paso por paso. Cada captura se guarda en la carpeta con el nombre de «carpeta», junto al HTML de la demostración, y empieza con el número del paso (02-ssasect-horario.png; varias por paso: 02-…-b.png). Cada paso hecho lleva «resultado» (lo que respondió Banner), «tabla» (campo por campo) y «capturas»; generar.py los muestra en «Antes del NRC» de la demostración (C181). Cada paso es un nodo del flujo «Ejemplo de prueba 2 · NRC 10045 de punta a punta en TEST» (fases, etiqueta y láminas del instructivo); al abrirlo se ven su tabla, sus capturas y sus láminas (C192).",
         "titulo": "Ejemplo de prueba 2 · NRC 10045 de punta a punta en TEST",
         "boton": "Ir al ejemplo de prueba 2",
         "carpeta": "Centro de Computación · Demostración 1 · Diseño Web, nueva sección B (202656)",
@@ -2817,6 +2817,19 @@
               {
                 "archivo": "01-ssasect-abrir.png",
                 "texto": "El NRC 10045 abierto en SSASECT"
+              }
+            ],
+            "etiqueta": "202656 › 10045",
+            "laminas": [
+              {
+                "instructivo": "5.3",
+                "n": 19,
+                "texto": "SSASECT: periodo y NRC"
+              },
+              {
+                "instructivo": "5.3",
+                "n": 21,
+                "texto": "Materia, curso, sección, campus y estatus"
               }
             ]
           },
@@ -2923,6 +2936,19 @@
                 "archivo": "02-ssasect-horario-c.png",
                 "texto": "Al reabrir: 1530 a 1710, sesión 01 y el docente"
               }
+            ],
+            "etiqueta": "miércoles 15:30–17:10",
+            "laminas": [
+              {
+                "instructivo": "5.3",
+                "n": 29,
+                "texto": "Fechas de reunión: hora, días y sesión"
+              },
+              {
+                "instructivo": "5.3",
+                "n": 30,
+                "texto": "Horas por semana calculadas"
+              }
             ]
           },
           {
@@ -3006,6 +3032,29 @@
                 "archivo": "03-ssasect-docente-b.png",
                 "texto": "Principal y porcentaje de sesión 100"
               }
+            ],
+            "etiqueta": "100582059 · principal",
+            "laminas": [
+              {
+                "instructivo": "6.2.1",
+                "n": 14,
+                "texto": "Indicador de sesión del horario y del docente"
+              },
+              {
+                "instructivo": "6.2.1",
+                "n": 15,
+                "texto": "Bloque Instructor: ID del docente"
+              },
+              {
+                "instructivo": "6.2.1",
+                "n": 19,
+                "texto": "Responsabilidad, principal, sobrepaso y sesión"
+              },
+              {
+                "instructivo": "6.2.1",
+                "n": 20,
+                "texto": "Cruce de horario del docente"
+              }
             ]
           },
           {
@@ -3077,6 +3126,10 @@
                 "archivo": "04-siaasgn-carga-b.png",
                 "texto": "La alerta de reglas de carga"
               }
+            ],
+            "etiqueta": "carga de 100582059",
+            "laminas": [
+              "siaasgn"
             ]
           },
           {
@@ -3154,6 +3207,29 @@
               {
                 "archivo": "05-smaarea-malla-b.png",
                 "texto": "Al reabrir: condiciones 1 (00678) y 2 (00701)"
+              }
+            ],
+            "etiqueta": "MC44-01 › ECOM-03",
+            "laminas": [
+              {
+                "instructivo": "1.2.1",
+                "n": 33,
+                "texto": "SMAPROG: anexos de área del programa"
+              },
+              {
+                "instructivo": "1.2.1",
+                "n": 23,
+                "texto": "SMAAREA: requerimientos del área"
+              },
+              {
+                "instructivo": "1.2.1",
+                "n": 24,
+                "texto": "SMAAREA: anexo de curso/atributo (reglas)"
+              },
+              {
+                "instructivo": "1.2.1",
+                "n": 25,
+                "texto": "SMAAREA: detalle de la regla, materia y curso"
               }
             ]
           },
@@ -3253,6 +3329,39 @@
                 "archivo": "06-shagcom-formula-b.png",
                 "texto": "La escala de arriba VIG_11 guardada"
               }
+            ],
+            "etiqueta": "VIG_11 · TA1 TA2 PA EF",
+            "laminas": [
+              {
+                "instructivo": "7.1.4",
+                "n": 43,
+                "texto": "SHAGCOM: periodo y NRC"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 44,
+                "texto": "SHAGCOM: escala del plan"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 45,
+                "texto": "SHAGCOM: secuencia y nombre"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 46,
+                "texto": "SHAGCOM: descripción y peso"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 48,
+                "texto": "SHAGCOM: incluir en la calificación final"
+              },
+              {
+                "instructivo": "7.1.0",
+                "n": 29,
+                "texto": "ATTRGRD: peso 0 y Debe aprobar"
+              }
             ]
           },
           {
@@ -3348,6 +3457,10 @@
                 "archivo": "07-soaatrk-asistencia-b.png",
                 "texto": "Presente/Ausente, fechas de la X06 y aviso de guardado"
               }
+            ],
+            "etiqueta": "Presente / Ausente",
+            "laminas": [
+              "soaatrk"
             ]
           },
           {
@@ -3456,6 +3569,29 @@
                 "archivo": "08-sfaregs-matricula-e.png",
                 "texto": "SOADEST con DATABASE en los cinco campos"
               }
+            ],
+            "etiqueta": "100582059 · RE",
+            "laminas": [
+              {
+                "instructivo": "5.4-inscripcion",
+                "n": 35,
+                "texto": "SFAREGS: periodo, ID y plan"
+              },
+              {
+                "instructivo": "5.4-inscripcion",
+                "n": 36,
+                "texto": "SFAREGS: estatus de ingreso EL"
+              },
+              {
+                "instructivo": "5.4-inscripcion",
+                "n": 37,
+                "texto": "SFAREGS: plan de estudios y guardar"
+              },
+              {
+                "instructivo": "5.4-inscripcion",
+                "n": 38,
+                "texto": "SFAREGS: el NRC en «Información de curso»"
+              }
             ]
           },
           {
@@ -3563,6 +3699,24 @@
                 "archivo": "09-autoservicio-asistencia-h.png",
                 "texto": "ATTRGRD de 100582059: 100 de 100, APRO"
               }
+            ],
+            "etiqueta": "100 % › libro",
+            "laminas": [
+              {
+                "instructivo": "7.1.1",
+                "n": 44,
+                "texto": "Pasar lista del NRC y la sesión"
+              },
+              {
+                "instructivo": "7.1.1",
+                "n": 56,
+                "texto": "Clase › pasar la asistencia al libro"
+              },
+              {
+                "instructivo": "7.1.1",
+                "n": 57,
+                "texto": "Confirmar el envío"
+              }
             ]
           },
           {
@@ -3664,6 +3818,29 @@
                 "archivo": "10-autoservicio-notas-e.png",
                 "texto": "EF guardado: «todavía está en progreso»"
               }
+            ],
+            "etiqueta": "85 de 100 › final 17",
+            "laminas": [
+              {
+                "instructivo": "7.1.4",
+                "n": 64,
+                "texto": "Libro: el NRC y «Componentes»"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 66,
+                "texto": "Libro: elegir el componente"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 67,
+                "texto": "Libro: la nota de cada alumno"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 75,
+                "texto": "Calificaciones compuestas"
+              }
             ]
           },
           {
@@ -3733,6 +3910,10 @@
                 "archivo": "11-sfaslst-nota-final-c.png",
                 "texto": "Horas 1.000 y «Pasada» sin marcar"
               }
+            ],
+            "etiqueta": "final 17 · modo V",
+            "laminas": [
+              "sfaslst"
             ]
           },
           {
@@ -3818,6 +3999,10 @@
                 "archivo": "12-sfaregs-baja-dd-d.png",
                 "texto": "Guardado: cuota procesada y alumnos inscritos"
               }
+            ],
+            "etiqueta": "Arnold: RE › DD",
+            "laminas": [
+              "sfaregs_retiro"
             ]
           },
           {
@@ -3926,6 +4111,29 @@
                 "archivo": "13-shrroll-pase-historia-h.png",
                 "texto": "Control del reporte: Report Mode U, RECORD COUNT 1"
               }
+            ],
+            "etiqueta": "job 7994 A · 7995 U",
+            "laminas": [
+              {
+                "instructivo": "7.1.9",
+                "n": 22,
+                "texto": "GJAPCTL: proceso SHRROLL"
+              },
+              {
+                "instructivo": "7.1.9",
+                "n": 23,
+                "texto": "SHRROLL: impresora y parámetros"
+              },
+              {
+                "instructivo": "7.1.9",
+                "n": 25,
+                "texto": "SHRROLL: enviar y guardar"
+              },
+              {
+                "instructivo": "7.1.9",
+                "n": 27,
+                "texto": "Revisar la salida en GJIREVO"
+              }
             ]
           },
           {
@@ -3987,6 +4195,49 @@
                 "archivo": "14-shacrse-historia-d.png",
                 "texto": "SFASLST: «Pasada» marcada"
               }
+            ],
+            "etiqueta": "Google 17 · Pasada ✓",
+            "laminas": [
+              {
+                "instructivo": "7.1.6",
+                "n": 19,
+                "texto": "SHATCKN: la nota en la historia del periodo",
+                "nota": "SHACRSE no sale en los instructivos de Ellucian. Referencia: la nota del curso en la historia académica se ve en SHATCKN (instructivo 7.1.6, diap. 19)."
+              }
+            ]
+          }
+        ],
+        "fases": [
+          {
+            "id": "abrir",
+            "titulo": "1 · Abrir y preparar el NRC",
+            "pasos": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "id": "clases",
+            "titulo": "2 · Matrícula y clases",
+            "pasos": [
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          {
+            "id": "cierre",
+            "titulo": "3 · Notas y cierre",
+            "pasos": [
+              11,
+              12,
+              13,
+              14
             ]
           }
         ]

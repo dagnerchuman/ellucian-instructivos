@@ -141,6 +141,17 @@ DEMOSTRACIONES = {d["slug"]: d for _id in centros_disponibles()
 TITULOS.update({k: d["titulo"] for k, d in DEMOSTRACIONES.items()})
 CAPACIDADES.update({k: d.get("capacidad", "") for k, d in DEMOSTRACIONES.items()})
 
+
+def slug_prueba(d):
+    """«demostracion-1-diseno-web» con su ejemplo de prueba del NRC 10045 → «demostracion-1-prueba-nrc-10045»."""
+    return f"{'-'.join(d['slug'].split('-')[:2])}-prueba-nrc-{d['ejemplo_prueba_2']['nrc']}"
+
+
+# El ejemplo de prueba de una demostración (`ejemplo_prueba_2`) tiene su propio flujo, paso por paso (C192).
+PRUEBAS = {slug_prueba(d): d for d in DEMOSTRACIONES.values() if d.get("ejemplo_prueba_2")}
+TITULOS.update({k: d["ejemplo_prueba_2"]["titulo"] for k, d in PRUEBAS.items()})
+CAPACIDADES.update({k: d.get("capacidad", "") for k, d in PRUEBAS.items()})
+
 CAPACIDADES_DETALLE = {
     "tres-centros": "Capacidades 1 a 8 · Visión comparativa integral",
     "recorrido-completo": "Capacidades 1 a 8 · Ciclo integral en Banner",
@@ -193,7 +204,8 @@ def tarjeta_terminos(*claves):
     return {"dot": "violet", "title": "Términos", "items": [f"{k}: {TERMINOS[k]}" for k in claves]}
 
 
-def flujo(c, numero, slug_, carriles, nodos, cards, fases=None, vistas=None, title_override=None, subtitle_override=None):
+def flujo(c, numero, slug_, carriles, nodos, cards, fases=None, vistas=None, title_override=None, subtitle_override=None,
+          aristas=None, camino_principal=True):
     cap = CAPACIDADES.get(slug_, "")
     cap_sufijo = f" ({cap})" if cap and not slug_.startswith("script-") else ""
     title = title_override or f"{c.nombre} · {numero}. {TITULOS[slug_]}{cap_sufijo}"
@@ -213,8 +225,9 @@ def flujo(c, numero, slug_, carriles, nodos, cards, fases=None, vistas=None, tit
     spec = {"schema_version": 2, "diagram_type": "workflow", "meta": m, "lanes": carriles}
     if fases:
         spec["phases"] = fases
-    spec["mainPath"] = [n["id"] for n in nodos]
-    spec.update({"nodes": nodos, "edges": encadenar(nodos), "cards": cards})
+    if camino_principal:  # Archify exige que el camino principal no vuelva a una columna anterior
+        spec["mainPath"] = [n["id"] for n in nodos]
+    spec.update({"nodes": nodos, "edges": aristas or encadenar(nodos), "cards": cards})
     return "workflow", spec
 
 
@@ -1188,23 +1201,98 @@ def demostracion(c, d):
     )
 
 
+def _laminas(lista):
+    """Temas de diapositivas_pasos.py (texto) o láminas sueltas ({"instructivo", "n"})."""
+    from diapositivas_pasos import TEMAS
+    laminas = []
+    for x in lista:
+        laminas += TEMAS[x] if isinstance(x, str) else [x]
+    return laminas
+
+
 def guia_demostracion(c, slug_):
     """Guía de cada paso de la demostración, con sus láminas (temas de diapositivas_pasos.py o listas)."""
-    from diapositivas_pasos import TEMAS
+    if slug_ in PRUEBAS:
+        return guia_prueba(c, slug_)
     d = DEMOSTRACIONES[slug_]
     guia = {}
     for p in d["pasos"]:
-        laminas = []
-        for x in p["laminas"]:
-            laminas += TEMAS[x] if isinstance(x, str) else [x]
         guia[p["id"]] = {"titulo": d["titulo"], "pantalla": p["codigo"], "fase": f"{p['codigo']}: {p['accion']}",
-                         "hito": f"{p['quien']} · {p['dato']}", "instrucciones": p["filas"], "diapositivas": laminas}
+                         "hito": f"{p['quien']} · {p['dato']}", "instrucciones": p["filas"],
+                         "diapositivas": _laminas(p["laminas"])}
     return guia
 
 
+def prueba(c, d):
+    """El ejemplo de prueba de una demostración como flujo propio (pedido del usuario, C192): un nodo por paso hecho
+    en TEST y, al abrirlo, su tabla campo por campo, sus capturas de TEST y las láminas del instructivo.
+
+    Archify acepta columnas 0 a 5: cada fila es una fase (`fases` en datos.json) y sus pasos van de izquierda a derecha,
+    como renglones. Por eso no lleva `mainPath` (no admite volver a la columna 0) y la flecha que baja a la fase
+    siguiente sale por abajo y entra por arriba."""
+    ej = d["ejemplo_prueba_2"]
+    fase_de = {n: f for f in ej["fases"] for n in f["pasos"]}
+    tipos = {"Autoservicio": "frontend", "SHRROLL": "messagebus"}
+    nodos = []
+    for p in ej["pasos"]:
+        f = fase_de[p["n"]]
+        accion = re.sub(r"\s*\([^)]*\)", "", p["accion"])  # «(LIB_AREA)», «(DD)»: el detalle va en la guía
+        nodos.append(paso(f"e{p['n']}", f["id"], f["pasos"].index(p["n"]), p["codigo"], accion, p["etiqueta"],
+                          tipos.get(p["codigo"], "backend")))
+    nodos[0]["icon"] = "start"
+    nodos[-1]["icon"] = "success"
+    uso = {"dot": "violet", "title": "Cómo se recorre", "items": [
+        "Haga clic en un paso: se abre su tabla campo por campo, con quién pone cada valor",
+        "«Así quedó en TEST»: las capturas de ese paso; al ampliarlas, ‹ › recorre las capturas y luego el paso siguiente",
+        "«Así se ve en Banner»: las láminas del instructivo de Ellucian para ese paso",
+        f"La teoría (orden antes del NRC y preguntas) está en «{d['titulo']}» › «Para estudiar»"]}
+    cards = tarjetas(c, [ej["caso"], ej["avance"]],
+                     [CITAS["nrc"], CITAS["carga"], CITAS["notas"], CITAS["asistencia_regla"], CITAS["matricula"],
+                      CITAS["cierre"]], [uso])
+    aristas = encadenar(nodos)
+    for a, b, arista in zip(nodos, nodos[1:], aristas):
+        if a["lane"] != b["lane"]:
+            arista.update(fromSide="bottom", toSide="top")
+    return flujo(c, 0, slug_prueba(d), [{"id": f["id"], "label": f["titulo"]} for f in ej["fases"]], nodos, cards,
+                 title_override=f"{c.nombre} · {ej['titulo']}", subtitle_override=c.subtitulo(d.get("capacidad")),
+                 aristas=aristas, camino_principal=False)
+
+
+def _filas_prueba(p):
+    """Filas de la guía desde la tabla del paso: «Campo, Valor, Quién lo pone, Nota» o, en SHAGCOM, un componente por fila."""
+    cols, filas = p["tabla"]["columnas"], p["tabla"]["filas"]
+    if cols[:2] == ["Campo", "Valor"]:
+        out = [{"campo": f[0], "valor": f[1], "tipo": f[2] if len(f) > 2 else "", "detalle": f[3] if len(f) > 3 else ""}
+               for f in filas]
+    else:
+        out = [{"campo": f"{f[0]} · {f[1]}", "valor": f[2], "tipo": "Componente",
+                "detalle": " · ".join(f"{k}: {v}" for k, v in zip(cols[3:], f[3:]) if v)} for f in filas]
+    out.append({"campo": "Banner respondió", "valor": p["resultado"], "tipo": "Resultado", "detalle": p["cita"]})
+    if p.get("nota"):
+        out.append({"campo": "Nota", "valor": p["nota"], "tipo": "Nota", "detalle": p["cita"]})
+    return out
+
+
+def guia_prueba(c, slug_):
+    """Guía de cada paso del ejemplo de prueba: tabla, capturas de TEST (ruta desde la raíz) y láminas."""
+    d = PRUEBAS[slug_]
+    ej = d["ejemplo_prueba_2"]
+    carpeta = f"{salida(c, 0, d['slug']).rsplit('/', 1)[0]}/{ej['carpeta']}"
+    return {f"e{p['n']}": {
+        "titulo": ej["titulo"], "pantalla": p["codigo"], "fase": f"{p['codigo']}: {p['accion']}",
+        "hito": f"{p['quien']} · {p['dato']}", "instrucciones": _filas_prueba(p), "diapositivas": _laminas(p["laminas"]),
+        "capturas": [{"ruta": f"{carpeta}/{x['archivo']}", "texto": x["texto"]} for x in p.get("capturas", [])],
+    } for p in ej["pasos"]}
+
+
 def demostraciones_de(c):
-    """Las demostraciones del centro van primero (00-…), antes de los flujos base."""
-    return [(0, d["slug"], lambda c, d=d: demostracion(c, d)) for d in c.d.get("demostraciones", [])]
+    """Las demostraciones del centro van primero (00-…), antes de los flujos base; su ejemplo de prueba, justo después."""
+    lista = []
+    for d in c.d.get("demostraciones", []):
+        lista.append((0, d["slug"], lambda c, d=d: demostracion(c, d)))
+        if d.get("ejemplo_prueba_2"):
+            lista.append((0, slug_prueba(d), lambda c, d=d: prueba(c, d)))
+    return lista
 
 
 DIAGRAMAS_BASE = [

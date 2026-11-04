@@ -833,6 +833,35 @@
     return html;
   }
 
+  // Capturas de TEST del paso (flujo del ejemplo de prueba, C192): mismo carril y mismo visor que las láminas.
+  function renderCapturasHtml(info) {
+    var lista = (info && info.capturas) || [];
+    if (!lista.length) return '';
+    var html = '<section class="guia-diapos guia-capturas" aria-label="Capturas de TEST de este paso">';
+    html += '<div class="guia-diapos-head"><span class="guia-diapos-titulo">Así quedó en TEST</span>';
+    html += '<span class="guia-diapos-fuente">' + lista.length + (lista.length === 1 ? ' captura' : ' capturas') + ' · clic para ampliar</span></div>';
+    html += '<div class="guia-diapos-carril">';
+    html += '<button type="button" class="guia-diapos-mover" data-diapos-mover="-1" aria-label="Ver capturas anteriores">‹</button>';
+    html += '<div class="guia-diapos-grid">';
+    lista.forEach(function (d, i) {
+      html += '<button type="button" class="guia-diapo" data-captura-idx="' + i + '" title="Ampliar: ' + escapeHtml(d.texto) + '">';
+      html += '<img loading="lazy" decoding="async" src="' + escapeHtml(d.src) + '" alt="' + escapeHtml(d.texto) + '">';
+      html += '<span class="guia-diapo-pie"><strong>' + d.n + '</strong> ' + escapeHtml(d.texto) + '</span>';
+      html += '</button>';
+    });
+    html += '</div>';
+    html += '<button type="button" class="guia-diapos-mover" data-diapos-mover="1" aria-label="Ver más capturas">›</button>';
+    html += '</div></section>';
+    return html;
+  }
+
+  // Las capturas entran al visor de láminas como láminas sin recorte, sin números y con su propio título.
+  function capturasParaVisor(info) {
+    return ((info && info.capturas) || []).map(function (d) {
+      return { src: d.src, completa: d.src, visor: d.src, fuente: 'Captura de TEST', n: d.n, texto: d.texto, captura: true };
+    });
+  }
+
   // Visor ampliado de las diapositivas del paso (Esc cierra, flechas recorren)
   var visorDiapo = { lista: [], idx: 0, completa: true };
 
@@ -926,10 +955,14 @@
     if (!d) return;
     v.querySelector('.gdv-img').src = visorDiapo.completa ? d.completa : d.src;
     v.querySelector('.gdv-img').alt = d.texto || ('Diapositiva ' + d.n);
-    v.querySelector('.gdv-titulo').textContent = d.fuente + ' · diap. ' + d.n;
+    v.querySelector('.gdv-titulo').textContent = d.captura
+      ? d.fuente + ' ' + d.n + ' de ' + visorDiapo.lista.length
+      : d.fuente + ' · diap. ' + d.n;
     v.querySelector('.gdv-pie').textContent = (d.texto || '') + '  (' + (visorDiapo.idx + 1) + ' de ' + visorDiapo.lista.length + ')';
     v.querySelector('[data-gdv="completa"]').textContent = visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa';
     v.querySelector('[data-gdv="visor"]').href = d.visor;
+    v.querySelector('[data-gdv="visor"]').textContent = d.captura ? 'Abrir la imagen' : 'Abrir en el visor';
+    v.querySelector('[data-gdv="completa"]').hidden = !!d.captura;  // una captura no tiene recorte
     // Navegación de láminas: el carrusel es continuo y navegable siempre que haya más de 1 lámina
     var totalLaminas = (visorDiapo.lista && visorDiapo.lista.length) || 0;
     var ultima = visorDiapo.idx === totalLaminas - 1;
@@ -999,20 +1032,28 @@
           (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + ir +
           (f.por_que ? '<small class="gdv-porque">' + escapeHtml(f.por_que) + '</small>' : '') + '</span></li>';
       });
-      html += '</ul><p class="gdv-aviso">' + (hayMarcas
+      html += '</ul><p class="gdv-aviso">' + (d.captura
+        ? 'Captura real de TEST: compare lo que se ve con los valores de su guía.'
+        : hayMarcas
         ? 'Los números verdes son los mismos de la imagen.'
         : 'Esta diapositiva no numera los campos de su guía.') +
         (hayOtras ? ' Las filas en gris están en otra lámina de este paso: pulse «diap.» para verla.' : '') + '</p></section>';
     }
 
-    // El texto ya se lee en la imagen: queda plegado y solo se abre si se pide.
+    // El texto ya se lee en la imagen: queda plegado y solo se abre si se pide. Si un número de la lámina no tiene
+    // fila en la guía (en el flujo de una prueba, la guía son los valores de TEST), se abre y ese número se marca (C177).
     var lineas = d.lineas || [];
     if (lineas.length) {
-      html += '<details class="gdv-bloque gdv-texto"' + (visorDiapo.textoAbierto ? ' open' : '') + '>';
-      html += '<summary>Ver el texto de la diapositiva</summary><ol class="gdv-lista">';
+      var conFila = Object.keys(d.marcas || {}).map(function (k) { return String(d.marcas[k]); });
+      var sinFila = lineas.filter(function (l) { return l.num && conFila.indexOf(String(l.num)) === -1; }).length;
+      html += '<details class="gdv-bloque gdv-texto"' + (visorDiapo.textoAbierto || sinFila ? ' open' : '') + '>';
+      html += '<summary>' + (sinFila
+        ? 'Texto de la diapositiva · ' + sinFila + (sinFila === 1 ? ' número sin fila' : ' números sin fila') + ' en su guía'
+        : 'Ver el texto de la diapositiva') + '</summary><ol class="gdv-lista">';
       lineas.forEach(function (l) {
         if (l.num) {
-          html += '<li class="gdv-num"><span class="gdv-badge">' + escapeHtml(l.num) + '</span><span>' + escapeHtml(l.texto) + '</span></li>';
+          var falta = conFila.indexOf(String(l.num)) === -1;
+          html += '<li class="gdv-num' + (falta ? ' gdv-sin-fila' : '') + '"><span class="gdv-badge">' + escapeHtml(l.num) + '</span><span>' + escapeHtml(l.texto) + '</span></li>';
         } else {
           html += '<li class="gdv-nota">' + escapeHtml(l.texto) + '</li>';
         }
@@ -1051,6 +1092,7 @@
   // Al pasar de la última lámina de un paso, va al paso siguiente y abre su primera lámina (si tiene).
   function irAPasoDesdeVisor(delta) {
     var destino = (visorDiapo.vecinos && visorDiapo.vecinos[String(delta)]) || pasoVecino(delta);
+    var conCapturas = !!(visorDiapo.lista[0] && visorDiapo.lista[0].captura);  // se sigue con capturas si se venía con ellas
     if (!destino) return;
     cerrarVisorDiapo();
     window.irAPaso(destino);
@@ -1058,7 +1100,8 @@
     (function abrirCuandoLlegue() {
       var idFoco = document.getElementById('focus-id');
       if (idFoco && idFoco.textContent.trim() === destino) {
-        var lista = (GUIA_MAP[destino] || {}).diapositivas || [];
+        var lista = conCapturas ? capturasParaVisor(GUIA_MAP[destino]) : [];
+        if (!lista.length) lista = (GUIA_MAP[destino] || {}).diapositivas || [];
         if (lista.length) abrirVisorDiapo(lista, delta > 0 ? 0 : lista.length - 1);
         return;
       }
@@ -1206,6 +1249,7 @@
       html += '</div>';
     }
 
+    html += renderCapturasHtml(info);
     html += renderDiapositivasHtml(info);
 
     if (info.instrucciones && info.instrucciones.length > 0) {
@@ -1833,6 +1877,16 @@
         if (infoPaso && infoPaso.diapositivas) {
           abrirVisorDiapo(infoPaso.diapositivas, parseInt(btnDiapo.getAttribute('data-diapo-idx'), 10) || 0);
         }
+        return;
+      }
+
+      var btnCaptura = e.target.closest('[data-captura-idx]');
+      if (btnCaptura) {
+        e.preventDefault();
+        e.stopPropagation();
+        var idFocoCap = document.getElementById('focus-id');
+        var infoCap = GUIA_MAP[(idFocoCap ? idFocoCap.textContent : '').trim()];
+        if (infoCap) abrirVisorDiapo(capturasParaVisor(infoCap), parseInt(btnCaptura.getAttribute('data-captura-idx'), 10) || 0);
         return;
       }
 

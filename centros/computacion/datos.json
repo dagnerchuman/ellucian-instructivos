@@ -2209,7 +2209,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191, C192, C193, C194",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191, C192, C193, C194, C195",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2743,7 +2743,7 @@
         ]
       },
       "ejemplo_prueba_2": {
-        "_leeme": "Capturas reales de TEST, paso por paso. Cada captura se guarda en la carpeta con el nombre de «carpeta», junto al HTML de la demostración, y empieza con el número del paso (02-ssasect-horario.png; varias por paso: 02-…-b.png). Cada paso hecho lleva «resultado» (lo que respondió Banner), «tabla» (campo por campo) y «capturas»; generar.py los muestra en «Antes del NRC» de la demostración (C181). Cada paso es un nodo del flujo «Ejemplo de prueba 2 · NRC 10045 de punta a punta en TEST» (fases, etiqueta y láminas del instructivo); al abrirlo se ven su tabla, sus capturas y sus láminas (C192).",
+        "_leeme": "Capturas reales de TEST, paso por paso. Cada captura se guarda en la carpeta con el nombre de «carpeta», junto al HTML de la demostración, y empieza con el número del paso (02-ssasect-horario.png; varias por paso: 02-…-b.png). Cada paso hecho lleva «resultado» (lo que respondió Banner), «tabla» (campo por campo) y «capturas»; generar.py los muestra en «Antes del NRC» de la demostración (C181). Cada paso es un nodo del flujo «Ejemplo de prueba 2 · NRC 10045 de punta a punta en TEST» (fases, etiqueta y láminas del instructivo); al abrirlo se ven su tabla, sus capturas y sus láminas (C192). Cada captura puede llevar `cuadros` ({n, caja en píxeles}): anotar_capturas.py dibuja la copia en anotadas/ con el número de la fila de la tabla (C195).",
         "titulo": "Ejemplo de prueba 2 · NRC 10045 de punta a punta en TEST",
         "boton": "Ir al ejemplo de prueba 2",
         "carpeta": "Centro de Computación · Demostración 1 · Diseño Web, nueva sección B (202656)",
@@ -2816,11 +2816,87 @@
             "capturas": [
               {
                 "archivo": "01-ssasect-abrir-b.png",
-                "texto": "Bloque clave con 202656 y 10045 antes de Ir"
+                "texto": "Bloque clave con 202656 y 10045 antes de Ir",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      144,
+                      107,
+                      198,
+                      125
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      142,
+                      133,
+                      190,
+                      155
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      140,
+                      161,
+                      196,
+                      235
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "01-ssasect-abrir.png",
-                "texto": "El NRC 10045 abierto en SSASECT"
+                "texto": "El NRC 10045 abierto en SSASECT",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      112,
+                      173,
+                      158,
+                      255
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      86,
+                      254,
+                      164,
+                      276
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      114,
+                      340,
+                      488,
+                      358
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      680,
+                      195,
+                      782,
+                      211
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      418,
+                      173,
+                      574,
+                      255
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "202656 › 10045",
@@ -2930,15 +3006,156 @@
             "capturas": [
               {
                 "archivo": "02-ssasect-horario.png",
-                "texto": "Miércoles marcado y aviso de guardado"
+                "texto": "Miércoles marcado y aviso de guardado",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      344,
+                      129,
+                      483,
+                      147
+                    ]
+                  },
+                  {
+                    "n": 1,
+                    "caja": [
+                      8,
+                      167,
+                      104,
+                      183
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      106,
+                      229,
+                      138,
+                      245
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      200,
+                      226,
+                      374,
+                      245
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      535,
+                      207,
+                      593,
+                      247
+                    ]
+                  },
+                  {
+                    "n": 12,
+                    "caja": [
+                      524,
+                      87,
+                      738,
+                      107
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "02-ssasect-horario-b.png",
-                "texto": "Edificio, salón, horas por semana y la O"
+                "texto": "Edificio, salón, horas por semana y la O",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      114,
+                      167,
+                      257,
+                      183
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      126,
+                      239,
+                      170,
+                      257
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      180,
+                      239,
+                      246,
+                      257
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      256,
+                      239,
+                      288,
+                      257
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      464,
+                      239,
+                      499,
+                      257
+                    ]
+                  },
+                  {
+                    "n": 11,
+                    "caja": [
+                      497,
+                      239,
+                      512,
+                      257
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "02-ssasect-horario-c.png",
-                "texto": "Al reabrir: 1530 a 1710, sesión 01 y el docente"
+                "texto": "Al reabrir: 1530 a 1710, sesión 01 y el docente",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      142,
+                      206,
+                      214,
+                      248
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      520,
+                      229,
+                      654,
+                      245
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      718,
+                      229,
+                      744,
+                      245
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "miércoles 15:30–17:10",
@@ -3030,11 +3247,105 @@
             "capturas": [
               {
                 "archivo": "03-ssasect-docente.png",
-                "texto": "El docente guardado en la sesión 01"
+                "texto": "El docente guardado en la sesión 01",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      1,
+                      268,
+                      79,
+                      287
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      122,
+                      312,
+                      184,
+                      328
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      180,
+                      312,
+                      338,
+                      330
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      468,
+                      312,
+                      506,
+                      328
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      636,
+                      312,
+                      666,
+                      328
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      659,
+                      291,
+                      767,
+                      333
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      524,
+                      87,
+                      738,
+                      107
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "03-ssasect-docente-b.png",
-                "texto": "Principal y porcentaje de sesión 100"
+                "texto": "Principal y porcentaje de sesión 100",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      391,
+                      291,
+                      501,
+                      333
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      511,
+                      291,
+                      627,
+                      333
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      634,
+                      290,
+                      797,
+                      330
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "100582059 · principal",
@@ -3136,23 +3447,168 @@
             "capturas": [
               {
                 "archivo": "04-siaasgn-carga-c.png",
-                "texto": "Bloque clave con el docente 100582059 y 202656 antes de Ir"
+                "texto": "Bloque clave con el docente 100582059 y 202656 antes de Ir",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      144,
+                      107,
+                      218,
+                      125
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      140,
+                      133,
+                      198,
+                      155
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "04-siaasgn-carga.png",
-                "texto": "El 10045 en SIAASGN"
+                "texto": "El 10045 en SIAASGN",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      104,
+                      135,
+                      154,
+                      175
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      504,
+                      137,
+                      614,
+                      153
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      588,
+                      179,
+                      624,
+                      195
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      606,
+                      301,
+                      634,
+                      317
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      602,
+                      380,
+                      626,
+                      396
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      605,
+                      340,
+                      627,
+                      358
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      36,
+                      406,
+                      102,
+                      426
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "04-siaasgn-carga-b.png",
-                "texto": "La alerta de reglas de carga"
+                "texto": "La alerta de reglas de carga",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      244,
+                      87,
+                      790,
+                      107
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "04-siaasgn-carga-d.png",
-                "texto": "Resumen de la carga: 10 horas crédito, carga educativa 22"
+                "texto": "Resumen de la carga: 10 horas crédito, carga educativa 22",
+                "cuadros": [
+                  {
+                    "n": 8,
+                    "caja": [
+                      232,
+                      253,
+                      284,
+                      275
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      232,
+                      353,
+                      284,
+                      375
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      620,
+                      249,
+                      676,
+                      275
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      644,
+                      403,
+                      674,
+                      425
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "04-siaasgn-carga-e.png",
-                "texto": "Análisis por criterio: vacío, sin reglas de carga en 202656"
+                "texto": "Análisis por criterio: vacío, sin reglas de carga en 202656",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      196,
+                      290,
+                      796,
+                      604
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "carga de 100582059",
@@ -3242,19 +3698,180 @@
             "capturas": [
               {
                 "archivo": "05-smaarea-malla-c.png",
-                "texto": "SMAPROG CMEMC44: el área MC44-01, prioridad 010"
+                "texto": "SMAPROG CMEMC44: el área MC44-01, prioridad 010",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      73,
+                      107,
+                      137,
+                      129
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      132,
+                      199,
+                      196,
+                      217
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      2,
+                      251,
+                      203,
+                      276
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "05-smaarea-malla-d.png",
-                "texto": "SMAAREA MC44-01: activa, 4 créditos Y 4 cursos"
+                "texto": "SMAAREA MC44-01: activa, 4 créditos Y 4 cursos",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      44,
+                      107,
+                      99,
+                      127
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      212,
+                      107,
+                      260,
+                      127
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      135,
+                      229,
+                      208,
+                      252
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      580,
+                      231,
+                      644,
+                      252
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      250,
+                      291,
+                      294,
+                      309
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      374,
+                      284,
+                      566,
+                      306
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      664,
+                      284,
+                      720,
+                      306
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "05-smaarea-malla.png",
-                "texto": "ESEC 00701 en ECOM-03, con el aviso de guardado"
+                "texto": "ESEC 00701 en ECOM-03, con el aviso de guardado",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      49,
+                      171,
+                      109,
+                      193
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      158,
+                      305,
+                      234,
+                      327
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      378,
+                      579,
+                      528,
+                      601
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      418,
+                      175,
+                      712,
+                      202
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "05-smaarea-malla-b.png",
-                "texto": "Al reabrir: condiciones 1 (00678) y 2 (00701)"
+                "texto": "Al reabrir: condiciones 1 (00678) y 2 (00701)",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      158,
+                      305,
+                      234,
+                      327
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      106,
+                      576,
+                      128,
+                      598
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      378,
+                      579,
+                      528,
+                      601
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "MC44-01 › ECOM-03",
@@ -3375,15 +3992,147 @@
               },
               {
                 "archivo": "06-shagcom-formula-b.png",
-                "texto": "La escala de arriba VIG_11 guardada"
+                "texto": "La escala de arriba VIG_11 guardada",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      134,
+                      309,
+                      192,
+                      333
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      418,
+                      175,
+                      712,
+                      202
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "06-shagcom-formula.png",
-                "texto": "Los cinco componentes guardados, peso final 1.00"
+                "texto": "Los cinco componentes guardados, peso final 1.00",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      56,
+                      254,
+                      532,
+                      272
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      56,
+                      273,
+                      532,
+                      290
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      56,
+                      291,
+                      532,
+                      309
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      56,
+                      310,
+                      532,
+                      328
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      56,
+                      329,
+                      532,
+                      347
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      530,
+                      85,
+                      738,
+                      103
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      522,
+                      369,
+                      552,
+                      387
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "06-shagcom-formula-d.png",
-                "texto": "A la derecha: ATTRGRD con «Debe aprobar» y los cinco en FINAL"
+                "texto": "A la derecha: ATTRGRD con «Debe aprobar» y los cinco en FINAL",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      660,
+                      384,
+                      797,
+                      406
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      660,
+                      408,
+                      797,
+                      430
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      660,
+                      432,
+                      797,
+                      454
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      660,
+                      456,
+                      797,
+                      478
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      660,
+                      480,
+                      797,
+                      502
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "VIG_11 · TA1 TA2 PA EF",
@@ -3507,15 +4256,138 @@
             "capturas": [
               {
                 "archivo": "07-soaatrk-asistencia-c.png",
-                "texto": "Bloque clave con 202656 antes de Ir"
+                "texto": "Bloque clave con 202656 antes de Ir",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      138,
+                      107,
+                      198,
+                      125
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "07-soaatrk-asistencia.png",
-                "texto": "Regla 3 del NRC 10045 debajo de la del 10044"
+                "texto": "Regla 3 del NRC 10045 debajo de la del 10044",
+                "cuadros": [
+                  {
+                    "n": 10,
+                    "caja": [
+                      88,
+                      177,
+                      103,
+                      195
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      102,
+                      177,
+                      292,
+                      195
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      306,
+                      177,
+                      508,
+                      195
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      554,
+                      177,
+                      594,
+                      195
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      622,
+                      172,
+                      652,
+                      192
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      678,
+                      177,
+                      757,
+                      198
+                    ]
+                  },
+                  {
+                    "n": 11,
+                    "caja": [
+                      530,
+                      85,
+                      740,
+                      107
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "07-soaatrk-asistencia-b.png",
-                "texto": "Presente/Ausente, fechas de la X06 y aviso de guardado"
+                "texto": "Presente/Ausente, fechas de la X06 y aviso de guardado",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      342,
+                      174,
+                      368,
+                      194
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      517,
+                      174,
+                      543,
+                      194
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      392,
+                      177,
+                      468,
+                      195
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      590,
+                      175,
+                      766,
+                      195
+                    ]
+                  },
+                  {
+                    "n": 11,
+                    "caja": [
+                      530,
+                      85,
+                      740,
+                      105
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "Presente / Ausente",
@@ -3611,27 +4483,120 @@
             "capturas": [
               {
                 "archivo": "08-sfaregs-matricula-f.png",
-                "texto": "Bloque clave con 202656, 100582059 y plan 4 antes de Ir"
+                "texto": "Bloque clave con 202656, 100582059 y plan 4 antes de Ir",
+                "cuadros": [
+                  {
+                    "n": 2,
+                    "caja": [
+                      144,
+                      107,
+                      198,
+                      125
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      142,
+                      133,
+                      220,
+                      155
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "08-sfaregs-matricula.png",
-                "texto": "Los cuatro NRC del alumno en 202656, con el 10045"
+                "texto": "Los cuatro NRC del alumno en 202656, con el 10045",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      68,
+                      193,
+                      292,
+                      211
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      2,
+                      453,
+                      42,
+                      527
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      64,
+                      506,
+                      797,
+                      526
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "08-sfaregs-matricula-b.png",
-                "texto": "El 10045 con RE, parte X06 y plan 4"
+                "texto": "El 10045 con RE, parte X06 y plan 4",
+                "cuadros": [
+                  {
+                    "n": 8,
+                    "caja": [
+                      170,
+                      506,
+                      797,
+                      526
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "08-sfaregs-matricula-c.png",
-                "texto": "Currículos: el plan 4 es CMEMC44 (XP 07)"
+                "texto": "Currículos: el plan 4 es CMEMC44 (XP 07)",
+                "cuadros": [
+                  {
+                    "n": 10,
+                    "caja": [
+                      48,
+                      267,
+                      371,
+                      348
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "08-sfaregs-matricula-d.png",
-                "texto": "SOADEST pide la configuración al abrir SFAREGS"
+                "texto": "SOADEST pide la configuración al abrir SFAREGS",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      16,
+                      107,
+                      774,
+                      153
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "08-sfaregs-matricula-e.png",
-                "texto": "SOADEST con DATABASE en los cinco campos"
+                "texto": "SOADEST con DATABASE en los cinco campos",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      112,
+                      133,
+                      572,
+                      195
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "100582059 · RE",
@@ -3733,35 +4698,168 @@
             "capturas": [
               {
                 "archivo": "09-autoservicio-asistencia.png",
-                "texto": "Mis cursos: el 10045 junto al 10044"
+                "texto": "Mis cursos: el 10045 junto al 10044",
+                "cuadros": [
+                  {
+                    "n": 2,
+                    "caja": [
+                      2,
+                      240,
+                      670,
+                      272
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      678,
+                      253,
+                      746,
+                      271
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "09-autoservicio-asistencia-b.png",
-                "texto": "Pasar lista sin marcar: los dos alumnos en 0 %"
+                "texto": "Pasar lista sin marcar: los dos alumnos en 0 %",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      94,
+                      253,
+                      278,
+                      353
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      314,
+                      259,
+                      376,
+                      351
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "09-autoservicio-asistencia-c.png",
-                "texto": "Del 23-SEP al 21-OCT marcados: 100 %"
+                "texto": "Del 23-SEP al 21-OCT marcados: 100 %",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      396,
+                      250,
+                      760,
+                      288
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      314,
+                      261,
+                      364,
+                      279
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "09-autoservicio-asistencia-d.png",
-                "texto": "El 09 y el 16-SEP marcados, con el aviso de éxito"
+                "texto": "El 09 y el 16-SEP marcados, con el aviso de éxito",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      572,
+                      250,
+                      760,
+                      288
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      418,
+                      53,
+                      619,
+                      89
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      448,
+                      261,
+                      512,
+                      279
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "09-autoservicio-asistencia-e.png",
-                "texto": "Menú Clase: actualizar la asistencia en el libro"
+                "texto": "Menú Clase: actualizar la asistencia en el libro",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      154,
+                      325,
+                      236,
+                      391
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "09-autoservicio-asistencia-f.png",
-                "texto": "Confirmación antes de enviar al libro"
+                "texto": "Confirmación antes de enviar al libro",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      414,
+                      46,
+                      797,
+                      132
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "09-autoservicio-asistencia-g.png",
-                "texto": "Componentes del 10045: ATTRGRD sin calificaciones pendientes"
+                "texto": "Componentes del 10045: ATTRGRD sin calificaciones pendientes",
+                "cuadros": [
+                  {
+                    "n": 8,
+                    "caja": [
+                      14,
+                      232,
+                      560,
+                      258
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "09-autoservicio-asistencia-h.png",
-                "texto": "ATTRGRD de 100582059: 100 de 100, APRO"
+                "texto": "ATTRGRD de 100582059: 100 de 100, APRO",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      86,
+                      279,
+                      674,
+                      295
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "100 % › libro",
@@ -3864,27 +4962,147 @@
             "capturas": [
               {
                 "archivo": "10-autoservicio-notas-f.png",
-                "texto": "Libro de calificaciones: el 10045 elegido y «Componentes» activo"
+                "texto": "Libro de calificaciones: el 10045 elegido y «Componentes» activo",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      354,
+                      201,
+                      518,
+                      221
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      16,
+                      412,
+                      792,
+                      486
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      634,
+                      500,
+                      738,
+                      522
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "10-autoservicio-notas-b.png",
-                "texto": "Componentes del 10045 antes de las notas"
+                "texto": "Componentes del 10045 antes de las notas",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      10,
+                      244,
+                      330,
+                      274
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "10-autoservicio-notas-c.png",
-                "texto": "TA1 con 85 escrito, antes de guardar"
+                "texto": "TA1 con 85 escrito, antes de guardar",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      146,
+                      272,
+                      208,
+                      296
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "10-autoservicio-notas-d.png",
-                "texto": "TA1 guardado: 85 % y calificación 17"
+                "texto": "TA1 guardado: 85 % y calificación 17",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      412,
+                      42,
+                      797,
+                      90
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      290,
+                      277,
+                      318,
+                      297
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      374,
+                      270,
+                      476,
+                      294
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "10-autoservicio-notas-e.png",
-                "texto": "EF guardado: «todavía está en progreso»"
+                "texto": "EF guardado: «todavía está en progreso»",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      412,
+                      46,
+                      797,
+                      92
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      290,
+                      277,
+                      318,
+                      297
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "10-autoservicio-notas.png",
-                "texto": "Calificaciones compuestas: 85 % y final 17"
+                "texto": "Calificaciones compuestas: 85 % y final 17",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      354,
+                      306,
+                      592,
+                      428
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      354,
+                      451,
+                      430,
+                      567
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "85 de 100 › final 17",
@@ -3968,15 +5186,84 @@
             "capturas": [
               {
                 "archivo": "11-sfaslst-nota-final.png",
-                "texto": "Lista de clase: 100582059 con 17 y Arnold sin nota"
+                "texto": "Lista de clase: 100582059 con 17 y Arnold sin nota",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      60,
+                      184,
+                      600,
+                      202
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      60,
+                      203,
+                      600,
+                      221
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "11-sfaslst-nota-final-b.png",
-                "texto": "Aviso: hay componentes calificables en la sección"
+                "texto": "Aviso: hay componentes calificables en la sección",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      114,
+                      85,
+                      162,
+                      101
+                    ]
+                  },
+                  {
+                    "n": 1,
+                    "caja": [
+                      440,
+                      85,
+                      480,
+                      101
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      208,
+                      222,
+                      592,
+                      398
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "11-sfaslst-nota-final-c.png",
-                "texto": "Horas 1.000 y «Pasada» sin marcar"
+                "texto": "Horas 1.000 y «Pasada» sin marcar",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      244,
+                      189,
+                      284,
+                      225
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      275,
+                      153,
+                      327,
+                      231
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "final 17 · modo V",
@@ -4059,23 +5346,96 @@
             "capturas": [
               {
                 "archivo": "12-sfaregs-baja-dd-b.png",
-                "texto": "Antes: Arnold con el 10045, el 10042 y el 10043"
+                "texto": "Antes: Arnold con el 10045, el 10042 y el 10043",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      2,
+                      85,
+                      166,
+                      103
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      2,
+                      450,
+                      340,
+                      504
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "12-sfaregs-baja-dd-c.png",
-                "texto": "DD escrito: horas en 0.000, sin error"
+                "texto": "DD escrito: horas en 0.000, sin error",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      211,
+                      453,
+                      232,
+                      469
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "12-sfaregs-baja-dd-d.png",
-                "texto": "Guardado: cuota procesada y alumnos inscritos"
+                "texto": "Guardado: cuota procesada y alumnos inscritos",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      4,
+                      80,
+                      797,
+                      176
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "12-sfaregs-baja-dd.png",
-                "texto": "Al reabrir: el 10045 de Arnold en DD"
+                "texto": "Al reabrir: el 10045 de Arnold en DD",
+                "cuadros": [
+                  {
+                    "n": 8,
+                    "caja": [
+                      2,
+                      450,
+                      797,
+                      468
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "12-sfaregs-baja-dd-e.png",
-                "texto": "Total de ingreso: cuotas Y, 1.000 horas; el 10045 «Eliminado»"
+                "texto": "Total de ingreso: cuotas Y, 1.000 horas; el 10045 «Eliminado»",
+                "cuadros": [
+                  {
+                    "n": 8,
+                    "caja": [
+                      142,
+                      439,
+                      276,
+                      485
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      144,
+                      548,
+                      606,
+                      600
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "Arnold: RE › DD",
@@ -4165,39 +5525,201 @@
             "capturas": [
               {
                 "archivo": "13-shrroll-pase-historia-b.png",
-                "texto": "GJAPCTL con los parámetros en modo A"
+                "texto": "GJAPCTL con los parámetros en modo A",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      51,
+                      89,
+                      97,
+                      109
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      424,
+                      312,
+                      560,
+                      330
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      424,
+                      372,
+                      560,
+                      410
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      424,
+                      413,
+                      560,
+                      471
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      424,
+                      474,
+                      560,
+                      511
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "13-shrroll-pase-historia-c.png",
-                "texto": "Job 7994 enviado"
+                "texto": "Job 7994 enviado",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      420,
+                      89,
+                      788,
+                      119
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "13-shrroll-pase-historia-i.png",
-                "texto": "GJAPCTL › ⋮ › Relacionado: Revisar salida [GJIREVO]"
+                "texto": "GJAPCTL › ⋮ › Relacionado: Revisar salida [GJIREVO]",
+                "cuadros": [
+                  {
+                    "n": 10,
+                    "caja": [
+                      514,
+                      151,
+                      692,
+                      175
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "13-shrroll-pase-historia-d.png",
-                "texto": "Reporte de la auditoría (job 7994)"
+                "texto": "Reporte de la auditoría (job 7994)",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      2,
+                      344,
+                      700,
+                      506
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "13-shrroll-pase-historia-e.png",
-                "texto": "Control del reporte: Report Mode A, RECORD COUNT 1"
+                "texto": "Control del reporte: Report Mode A, RECORD COUNT 1",
+                "cuadros": [
+                  {
+                    "n": 8,
+                    "caja": [
+                      1,
+                      287,
+                      198,
+                      305
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      1,
+                      326,
+                      106,
+                      346
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      1,
+                      430,
+                      110,
+                      446
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "13-shrroll-pase-historia-f.png",
-                "texto": "GJAPCTL con el modo U"
+                "texto": "GJAPCTL con el modo U",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      424,
+                      433,
+                      560,
+                      452
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "13-shrroll-pase-historia-g.png",
-                "texto": "Job 7995 enviado"
+                "texto": "Job 7995 enviado",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      420,
+                      89,
+                      788,
+                      119
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "13-shrroll-pase-historia.png",
-                "texto": "Reporte del job 7995 (modo U): Rolled to Academic History"
+                "texto": "Reporte del job 7995 (modo U): Rolled to Academic History",
+                "cuadros": [
+                  {
+                    "n": 11,
+                    "caja": [
+                      2,
+                      487,
+                      797,
+                      507
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "13-shrroll-pase-historia-h.png",
-                "texto": "Control del reporte: Report Mode U, RECORD COUNT 1"
+                "texto": "Control del reporte: Report Mode U, RECORD COUNT 1",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      1,
+                      328,
+                      106,
+                      346
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      1,
+                      430,
+                      110,
+                      446
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "job 7994 A · 7995 U",
@@ -4275,27 +5797,120 @@
             "capturas": [
               {
                 "archivo": "14-shacrse-historia.png",
-                "texto": "Historia académica: Google con 17"
+                "texto": "Historia académica: Google con 17",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      60,
+                      180,
+                      560,
+                      200
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "14-shacrse-historia-b.png",
-                "texto": "SHACRSE: el 10044 y el 10045 en 202656"
+                "texto": "SHACRSE: el 10044 y el 10045 en 202656",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      19,
+                      89,
+                      92,
+                      109
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      324,
+                      163,
+                      518,
+                      201
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "14-shacrse-historia-e.png",
-                "texto": "SHATCKN: 100582059 y 202656 antes de Ir"
+                "texto": "SHATCKN: 100582059 y 202656 antes de Ir",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      144,
+                      107,
+                      218,
+                      126
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      140,
+                      159,
+                      198,
+                      181
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "14-shacrse-historia-f.png",
-                "texto": "SHATCKN: el 10045 con secuencia 1, 17 y modo V"
+                "texto": "SHATCKN: el 10045 con secuencia 1, 17 y modo V",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      4,
+                      288,
+                      560,
+                      306
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      150,
+                      408,
+                      797,
+                      428
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "14-shacrse-historia-c.png",
-                "texto": "SFASLST: solo 100582059 con final 17"
+                "texto": "SFASLST: solo 100582059 con final 17",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      60,
+                      192,
+                      560,
+                      212
+                    ]
+                  }
+                ]
               },
               {
                 "archivo": "14-shacrse-historia-d.png",
-                "texto": "SFASLST: «Pasada» marcada"
+                "texto": "SFASLST: «Pasada» marcada",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      251,
+                      163,
+                      309,
+                      225
+                    ]
+                  }
+                ]
               }
             ],
             "etiqueta": "Google 17 · Pasada ✓",

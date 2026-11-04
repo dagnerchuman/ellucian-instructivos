@@ -1273,6 +1273,15 @@ def _filas_prueba(p):
     return out
 
 
+def _captura_guia(carpeta, x):
+    """Captura de TEST para la guía. Con `cuadros`, la copia anotada (anotar_capturas.py) y la original para «Ver sin
+    cuadros»; `marcas` da a cada fila de la guía el número verde de su cuadro, como en las láminas (C195)."""
+    if not x.get("cuadros"):
+        return {"ruta": f"{carpeta}/{x['archivo']}", "texto": x["texto"]}
+    return {"ruta": f"{carpeta}/anotadas/{x['archivo']}", "original": f"{carpeta}/{x['archivo']}", "texto": x["texto"],
+            "marcas": {str(q["n"] - 1): str(q["n"]) for q in x["cuadros"]}}
+
+
 def guia_prueba(c, slug_):
     """Guía de cada paso del ejemplo de prueba: tabla, capturas de TEST (ruta desde la raíz) y láminas."""
     d = PRUEBAS[slug_]
@@ -1281,7 +1290,7 @@ def guia_prueba(c, slug_):
     return {f"e{p['n']}": {
         "titulo": ej["titulo"], "pantalla": p["codigo"], "fase": f"{p['codigo']}: {p['accion']}",
         "hito": f"{p['quien']} · {p['dato']}", "instrucciones": _filas_prueba(p), "diapositivas": _laminas(p["laminas"]),
-        "capturas": [{"ruta": f"{carpeta}/{x['archivo']}", "texto": x["texto"]} for x in p.get("capturas", [])],
+        "capturas": [_captura_guia(carpeta, x) for x in p.get("capturas", [])],
     } for p in ej["pasos"]}
 
 

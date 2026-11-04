@@ -125,6 +125,10 @@ def main():
         sys.exit("Falta python-pptx: sin él las láminas quedan sin texto ni números verdes. "
                  "Ejecuta: python3 -m pip install --user python-pptx")
 
+    from anotar_capturas import anotar_todas
+    escritas, con_cuadros = anotar_todas()
+    print(f"CAPTURAS {con_cuadros} con cuadros y números · {escritas} redibujadas")
+
     subprocess.run(
         [sys.executable, str(AQUI / "generar_conocimiento_asistente.py")],
         cwd=RAIZ,

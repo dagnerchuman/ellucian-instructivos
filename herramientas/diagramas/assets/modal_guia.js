@@ -729,7 +729,9 @@
   // Las capturas entran al visor de láminas como láminas sin recorte, sin números y con su propio título.
   function capturasParaVisor(info) {
     return ((info && info.capturas) || []).map(function (d) {
-      return { src: d.src, completa: d.src, visor: d.src, fuente: 'Captura de TEST', n: d.n, texto: d.texto, captura: true };
+      // Con cuadros: se abre la anotada («completa») y el botón alterna con la original («src»), C195.
+      return { src: d.original || d.src, completa: d.src, visor: d.src, fuente: 'Captura de TEST', n: d.n, texto: d.texto,
+               captura: true, conCuadros: !!d.original, marcas: d.marcas || {} };
     });
   }
 
@@ -765,9 +767,11 @@
   function tablaPruebaHtml(info) {
     var limpio = function (v) { return v && v !== '—' ? v : ''; };
     var html = '<div class="prueba-tabla-wrap"><table class="prueba-tabla"><thead><tr>' +
-      '<th>Campo</th><th>Valor en TEST</th><th>Quién</th><th>Nota</th></tr></thead><tbody>';
-    (info.instrucciones || []).forEach(function (f) {
-      html += '<tr' + (f.tipo === 'Resultado' ? ' class="prueba-resultado"' : '') + '><td><strong>' + escapeHtml(f.campo || '') +
+      '<th class="prueba-n">#</th><th>Campo</th><th>Valor en TEST</th><th>Quién</th><th>Nota</th></tr></thead><tbody>';
+    (info.instrucciones || []).forEach(function (f, i) {
+      // El número de la fila es el de los cuadros verdes de las capturas (C195)
+      html += '<tr' + (f.tipo === 'Resultado' ? ' class="prueba-resultado"' : '') + '><td class="prueba-n"><span>' + (i + 1) +
+        '</span></td><td><strong>' + escapeHtml(f.campo || '') +
         '</strong></td><td>' + escapeHtml(f.valor || '') + '</td><td>' + escapeHtml(limpio(f.tipo)) + '</td><td>' +
         escapeHtml(limpio(f.detalle)) + '</td></tr>';
     });
@@ -983,10 +987,12 @@
       ? d.fuente + ' ' + d.n + ' de ' + visorDiapo.lista.length
       : d.fuente + ' · diap. ' + d.n;
     v.querySelector('.gdv-pie').textContent = (d.texto || '') + '  (' + (visorDiapo.idx + 1) + ' de ' + visorDiapo.lista.length + ')';
-    v.querySelector('[data-gdv="completa"]').textContent = visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa';
+    v.querySelector('[data-gdv="completa"]').textContent = d.captura
+      ? (visorDiapo.completa ? 'Ver sin cuadros' : 'Ver con cuadros')
+      : (visorDiapo.completa ? 'Ver recorte' : 'Ver diapositiva completa');
     v.querySelector('[data-gdv="visor"]').href = d.visor;
     v.querySelector('[data-gdv="visor"]').textContent = d.captura ? 'Abrir la imagen' : 'Abrir en el visor';
-    v.querySelector('[data-gdv="completa"]').hidden = !!d.captura;  // una captura no tiene recorte
+    v.querySelector('[data-gdv="completa"]').hidden = !!d.captura && !d.conCuadros;  // sin cuadros no hay qué alternar
     // Navegación de láminas: el carrusel es continuo y navegable siempre que haya más de 1 lámina
     var totalLaminas = (visorDiapo.lista && visorDiapo.lista.length) || 0;
     var ultima = visorDiapo.idx === totalLaminas - 1;
@@ -1048,7 +1054,8 @@
           ? '<span class="gdv-badge" title="Número ' + escapeHtml(num) + ' en la imagen">' + escapeHtml(num) + '</span>'
           : '<span class="gdv-marca">' + (hecho ? '✓' : '') + '</span>';
         var ir = otra >= 0
-          ? ' <button type="button" class="gdv-ir" data-gdv="ir" data-gdv-idx="' + otra + '" title="Ver la lámina de esta fila">diap. ' +
+          ? ' <button type="button" class="gdv-ir" data-gdv="ir" data-gdv-idx="' + otra + '" title="Ver la imagen de esta fila">' +
+            (lista[otra].captura ? 'captura ' : 'diap. ') +
             escapeHtml(String(lista[otra].n)) + ' ›</button>'
           : '';
         html += '<li class="gdv-item' + (num ? ' gdv-con-num' : '') + (otra >= 0 ? ' gdv-otra' : '') + (hecho ? ' gdv-hecho' : '') + '">' + marca +
@@ -1057,11 +1064,12 @@
           (f.por_que ? '<small class="gdv-porque">' + escapeHtml(f.por_que) + '</small>' : '') + '</span></li>';
       });
       html += '</ul><p class="gdv-aviso">' + (d.captura
-        ? 'Captura real de TEST: compare lo que se ve con los valores de su guía.'
+        ? (hayMarcas ? 'Los números verdes son los mismos de la captura.' : 'Captura real de TEST: compare lo que se ve con los valores de su guía.')
         : hayMarcas
         ? 'Los números verdes son los mismos de la imagen.'
         : 'Esta diapositiva no numera los campos de su guía.') +
-        (hayOtras ? ' Las filas en gris están en otra lámina de este paso: pulse «diap.» para verla.' : '') + '</p></section>';
+        (hayOtras ? (d.captura ? ' Las filas en gris están en otra captura de este paso: pulse «captura» para verla.'
+                               : ' Las filas en gris están en otra lámina de este paso: pulse «diap.» para verla.') : '') + '</p></section>';
     }
 
     // El texto ya se lee en la imagen: queda plegado y solo se abre si se pide. Si un número de la lámina no tiene

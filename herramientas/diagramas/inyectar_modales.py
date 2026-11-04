@@ -447,8 +447,10 @@ def _resolver_capturas(guia, carpeta_html, slug):
             if not ruta.exists():
                 ADVERTENCIAS.append(f"{slug} · {paso}: falta la captura {x['ruta']}")
                 continue
-            resueltas.append({"src": quote(os.path.relpath(ruta, carpeta_html).replace(os.sep, "/")),
-                              "texto": x["texto"], "n": len(resueltas) + 1})
+            rel = lambda r: quote(os.path.relpath(r, carpeta_html).replace(os.sep, "/"))  # noqa: E731
+            resueltas.append({"src": rel(ruta), "texto": x["texto"], "n": len(resueltas) + 1})
+            if x.get("original"):  # captura con cuadros: la original sirve para «Ver sin cuadros» (C195)
+                resueltas[-1].update(original=rel(RAIZ_REPO / x["original"]), marcas=x["marcas"])
         info["capturas"] = resueltas
 
 

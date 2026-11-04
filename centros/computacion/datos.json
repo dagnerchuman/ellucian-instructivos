@@ -2209,7 +2209,7 @@
             "cita": "Instructivo 5.3, diap. 19 a 23"
           }
         ],
-        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191, C192, C193",
+        "fuente": "C135, C140, C141, C146, E27, C147, C148, E28, C172, C173, C174, C175, C179, C180, C181, C182, C185, C186, C187, C188, C189, C190, C191, C192, C193, C194",
         "preguntas": [
           {
             "pregunta": "¿Por qué en SOATERM solo salen algunas partes?",
@@ -2751,7 +2751,7 @@
         "caso": "El NRC 10045 (202656, ESEC 00701 «Google», sección A, X06) ya existía y tenía alumnos con RE (C151, C156, C157). Se completa en TEST hasta el pase a historia, con el docente y alumno 100582059; cada página la deja escrita Claude, el usuario guarda y cada paso queda con su captura (C178 a C181).",
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Resuelto el 31-OCT-2026: Arnold Vaca (S00912438) se dio de baja del 10045 con DD antes del pase a historia (C189).",
-        "avance": "Completo: los 14 pasos hechos en TEST el 30 y el 31/10/2026, con sus capturas (C180 a C190). El NRC 10045 fue de punta a punta: horario, docente, malla, fórmula, asistencia, notas, pase a historia y nota 17 en la historia.",
+        "avance": "Completo: los 14 pasos hechos en TEST el 30 y el 31/10/2026, con sus capturas (C180 a C190). El NRC 10045 fue de punta a punta: horario, docente, malla, fórmula, asistencia, notas, pase a historia y nota 17 en la historia. El 04/11/2026 se sumaron 15 capturas para cubrir cada lámina del instructivo (C194).",
         "pasos": [
           {
             "n": 1,
@@ -2814,6 +2814,10 @@
               ]
             },
             "capturas": [
+              {
+                "archivo": "01-ssasect-abrir-b.png",
+                "texto": "Bloque clave con 202656 y 10045 antes de Ir"
+              },
               {
                 "archivo": "01-ssasect-abrir.png",
                 "texto": "El NRC 10045 abierto en SSASECT"
@@ -3114,10 +3118,26 @@
                   "«Reglas activas de carga de trabajo del docente no definidas para este periodo»",
                   "Banner",
                   "No impide consultar; las reglas de carga son la prueba del ADR-020"
+                ],
+                [
+                  "Resumen de la carga (⏬ dos veces)",
+                  "Horas crédito 10.000 · carga educativa 22.000 · contacto semanal 26.920 · periodo FTE 22",
+                  "Banner",
+                  "El primer ⏬ lleva a «Asignación no educativa» (vacía); el segundo, al resumen (C194)"
+                ],
+                [
+                  "Análisis por criterio",
+                  "Vacío: sin regla de carga de trabajo",
+                  "Banner",
+                  "Es lo que avisa la alerta: 202656 no tiene reglas de carga activas; están preguntadas a Ellucian (E20)"
                 ]
               ]
             },
             "capturas": [
+              {
+                "archivo": "04-siaasgn-carga-c.png",
+                "texto": "Bloque clave con el docente 100582059 y 202656 antes de Ir"
+              },
               {
                 "archivo": "04-siaasgn-carga.png",
                 "texto": "El 10045 en SIAASGN"
@@ -3125,6 +3145,14 @@
               {
                 "archivo": "04-siaasgn-carga-b.png",
                 "texto": "La alerta de reglas de carga"
+              },
+              {
+                "archivo": "04-siaasgn-carga-d.png",
+                "texto": "Resumen de la carga: 10 horas crédito, carga educativa 22"
+              },
+              {
+                "archivo": "04-siaasgn-carga-e.png",
+                "texto": "Análisis por criterio: vacío, sin reglas de carga en 202656"
               }
             ],
             "etiqueta": "carga de 100582059",
@@ -3195,11 +3223,31 @@
                   "Saved successfully (1 rows saved)",
                   "Usuario",
                   ""
+                ],
+                [
+                  "SMAPROG CMEMC44 · 202656 › Ir › ⏬ 8 veces",
+                  "Anexos de área: MC44-01, prioridad 010 (versión 202454)",
+                  "Banner",
+                  "La única área del programa: el curso tiene que estar en ella (C172, C194)"
+                ],
+                [
+                  "Requerimientos del área (SMAAREA, primer bloque)",
+                  "Activo · anexo por Curso",
+                  "Banner",
+                  "Antes de ⏫ a las reglas (C194)"
                 ]
               ]
             },
             "nota": "Reglas de MC44-01 después del cambio: ECOM-01 y ECOM-02, ESEC 00678; ECOM-03, ESEC 00678 y 00701; ECOM-04, ESEC 00678 y 00684. Cada regla pide 1 condición (C172 a C174).",
             "capturas": [
+              {
+                "archivo": "05-smaarea-malla-c.png",
+                "texto": "SMAPROG CMEMC44: el área MC44-01, prioridad 010"
+              },
+              {
+                "archivo": "05-smaarea-malla-d.png",
+                "texto": "SMAAREA MC44-01: activa, 4 créditos Y 4 cursos"
+              },
               {
                 "archivo": "05-smaarea-malla.png",
                 "texto": "ESEC 00701 en ECOM-03, con el aviso de guardado"
@@ -3322,12 +3370,20 @@
             "nota": "Primero la escala de arriba («Asignación de escala de calificación»): VIG_11 «Vigesimal 0-20 aprueba 11», y se guarda; sin ella Banner dice «Ingresar la escala de calificación antes de continuar». Con AST_70 arriba la nota final salió APRO y no 17 (C120, C123). Cada componente hereda VIG_11 y su aprobatoria (55); en ATTRGRD se cambia a AST_70 y la aprobatoria pasa sola a 70. Se avanza con Tab y se espera 1 a 2 segundos: un clic en otra celda no mueve el foco.",
             "capturas": [
               {
-                "archivo": "06-shagcom-formula.png",
-                "texto": "Los cinco componentes guardados, peso final 1.00"
+                "archivo": "06-shagcom-formula-c.png",
+                "texto": "Bloque clave con 202656 y 10045 antes de Ir"
               },
               {
                 "archivo": "06-shagcom-formula-b.png",
                 "texto": "La escala de arriba VIG_11 guardada"
+              },
+              {
+                "archivo": "06-shagcom-formula.png",
+                "texto": "Los cinco componentes guardados, peso final 1.00"
+              },
+              {
+                "archivo": "06-shagcom-formula-d.png",
+                "texto": "A la derecha: ATTRGRD con «Debe aprobar» y los cinco en FINAL"
               }
             ],
             "etiqueta": "VIG_11 · TA1 TA2 PA EF",
@@ -3450,6 +3506,10 @@
             },
             "capturas": [
               {
+                "archivo": "07-soaatrk-asistencia-c.png",
+                "texto": "Bloque clave con 202656 antes de Ir"
+              },
+              {
                 "archivo": "07-soaatrk-asistencia.png",
                 "texto": "Regla 3 del NRC 10045 debajo de la del 10044"
               },
@@ -3549,6 +3609,10 @@
             },
             "nota": "Los otros currículos del alumno: plan 1 y plan 3, pregrado 1PIAP11 Ing. Sist. Informática; plan 2, IMEMI05 «Programa Acreditación Inglés». El 10045 usa el plan 4, el de Computación.",
             "capturas": [
+              {
+                "archivo": "08-sfaregs-matricula-f.png",
+                "texto": "Bloque clave con 202656, 100582059 y plan 4 antes de Ir"
+              },
               {
                 "archivo": "08-sfaregs-matricula.png",
                 "texto": "Los cuatro NRC del alumno en 202656, con el 10045"
@@ -3799,8 +3863,8 @@
             },
             "capturas": [
               {
-                "archivo": "10-autoservicio-notas.png",
-                "texto": "Calificaciones compuestas: 85 % y final 17"
+                "archivo": "10-autoservicio-notas-f.png",
+                "texto": "Libro de calificaciones: el 10045 elegido y «Componentes» activo"
               },
               {
                 "archivo": "10-autoservicio-notas-b.png",
@@ -3817,6 +3881,10 @@
               {
                 "archivo": "10-autoservicio-notas-e.png",
                 "texto": "EF guardado: «todavía está en progreso»"
+              },
+              {
+                "archivo": "10-autoservicio-notas.png",
+                "texto": "Calificaciones compuestas: 85 % y final 17"
               }
             ],
             "etiqueta": "85 de 100 › final 17",
@@ -3979,14 +4047,16 @@
                   "10045: DD · 0.000 horas de crédito, cobro e intentadas · X06 · plan 1",
                   "Banner",
                   "10042 y 10043 siguen con RE"
+                ],
+                [
+                  "Total de ingreso (bajar con la rueda)",
+                  "Cuotas «Y - Estimación inmediata» · 31-OCT-2026 · horas crédito 1.000 · cobro 1.000",
+                  "Banner",
+                  "⏬ desde «Información de curso» da «Función inválida». La fila del 10045 dice «No contar en ingreso» y «Eliminado» (C194)"
                 ]
               ]
             },
             "capturas": [
-              {
-                "archivo": "12-sfaregs-baja-dd.png",
-                "texto": "Al reabrir: el 10045 de Arnold en DD"
-              },
               {
                 "archivo": "12-sfaregs-baja-dd-b.png",
                 "texto": "Antes: Arnold con el 10045, el 10042 y el 10043"
@@ -3998,6 +4068,14 @@
               {
                 "archivo": "12-sfaregs-baja-dd-d.png",
                 "texto": "Guardado: cuota procesada y alumnos inscritos"
+              },
+              {
+                "archivo": "12-sfaregs-baja-dd.png",
+                "texto": "Al reabrir: el 10045 de Arnold en DD"
+              },
+              {
+                "archivo": "12-sfaregs-baja-dd-e.png",
+                "texto": "Total de ingreso: cuotas Y, 1.000 horas; el 10045 «Eliminado»"
               }
             ],
             "etiqueta": "Arnold: RE › DD",
@@ -4074,15 +4152,17 @@
                   "7995 · Report Mode U · RECORD COUNT 1",
                   "Banner",
                   "Mismo resultado: el 17 pasa a la historia"
+                ],
+                [
+                  "⋮ › Relacionado",
+                  "Revisar salida [GJIREVO]",
+                  "Usuario",
+                  "El icono de la hoja con + es BDM: da la advertencia de ApplicationXtender (EXAINST); Relacionado está en ⋮ (C194)"
                 ]
               ]
             },
             "nota": "Primero siempre en modo A y se lee el reporte; solo si sale bien, en modo U. Una corrección después del pase se hace en SHATCKN (C124).",
             "capturas": [
-              {
-                "archivo": "13-shrroll-pase-historia.png",
-                "texto": "Reporte del job 7995 (modo U): Rolled to Academic History"
-              },
               {
                 "archivo": "13-shrroll-pase-historia-b.png",
                 "texto": "GJAPCTL con los parámetros en modo A"
@@ -4090,6 +4170,10 @@
               {
                 "archivo": "13-shrroll-pase-historia-c.png",
                 "texto": "Job 7994 enviado"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia-i.png",
+                "texto": "GJAPCTL › ⋮ › Relacionado: Revisar salida [GJIREVO]"
               },
               {
                 "archivo": "13-shrroll-pase-historia-d.png",
@@ -4106,6 +4190,10 @@
               {
                 "archivo": "13-shrroll-pase-historia-g.png",
                 "texto": "Job 7995 enviado"
+              },
+              {
+                "archivo": "13-shrroll-pase-historia.png",
+                "texto": "Reporte del job 7995 (modo U): Rolled to Academic History"
               },
               {
                 "archivo": "13-shrroll-pase-historia-h.png",
@@ -4175,6 +4263,12 @@
                   "Solo 100582059 · final 17 · «Pasada» ✓",
                   "Banner",
                   "La primera vez mostró la consulta anterior (Arnold con RE): «Comenzar de nuevo» › Ir la refresca. Arnold ya no sale por el DD"
+                ],
+                [
+                  "SHATCKN · ID · periodo (referencia del instructivo 7.1.6)",
+                  "100582059 · 202656 › Ir: 10045 con secuencia 1, nota 17, modo V, 1.000 horas",
+                  "Banner",
+                  "La misma nota de SHACRSE, en la página que muestra el instructivo; aquí solo se consulta (C194)"
                 ]
               ]
             },
@@ -4186,6 +4280,14 @@
               {
                 "archivo": "14-shacrse-historia-b.png",
                 "texto": "SHACRSE: el 10044 y el 10045 en 202656"
+              },
+              {
+                "archivo": "14-shacrse-historia-e.png",
+                "texto": "SHATCKN: 100582059 y 202656 antes de Ir"
+              },
+              {
+                "archivo": "14-shacrse-historia-f.png",
+                "texto": "SHATCKN: el 10045 con secuencia 1, 17 y modo V"
               },
               {
                 "archivo": "14-shacrse-historia-c.png",

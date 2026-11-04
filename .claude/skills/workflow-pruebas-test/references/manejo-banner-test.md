@@ -29,6 +29,8 @@ Método con el que se hicieron las pruebas del 28 y 29/10/2026 (C153 a C167) en 
 | Ver el error de una fila | Clic en la fila: debajo salen «Bandera de error», «Tipo de estatus» y «Mensaje». «Ver detalle de resultados» casi nunca dice más (C163, C166) |
 | Lista de valores | **•••** del campo. Doble clic también la abre. **Intro** dentro de la lista elige la primera fila, aunque no sea la buscada (C164). **ANULAR** cierra sin elegir |
 | Cerrar un aviso | Clic sobre el aviso |
+| Menú «Relacionado» (por ejemplo GJAPCTL › Revisar salida [GJIREVO]) | **⋮** de arriba › Relacionado. El icono de la hoja con + es BDM y da una advertencia de ApplicationXtender (C194) |
+| Bloque que ⏬ no alcanza («Función inválida») | Bajar con la rueda: así se ve «Total de ingreso» en SFAREGS (C194) |
 
 Referencia en una ventana de 800 × 670 (comprobar siempre con captura): Ir y «Comenzar de nuevo» ≈ (767, 102); ⏬ ≈ (67, 657); ⏫ ≈ (21, 657); GUARDAR ≈ (760, 657); en SFAREGS, + del bloque «Información de curso» ≈ (695, 406).
 
@@ -104,7 +106,7 @@ Probada el 30/10/2026 con el **NRC 10045** (202656, `ESEC 00701`, X06, sesión T
 7. Datos para la hoja de NRC (fila del 10045): PROGRAMA `CMEMC44`; LIB_AREA `MC44-01`, el área de la malla donde está el curso (C181; antes «no está en la malla», C178); CÓDIGO DOCENTE `100582059`; DOCENTE, el nombre completo; HORARIO y AMBIENTE, los que se guardaron. La tabla completa está en «Antes del NRC» de la Demostración 1.
 
 ## 5. Incidencias y salida
-- **SOADEST** al abrir SFAREGS en una sesión nueva: DATABASE en los cinco campos (Horarios, Facturas, Históricos académicos, Ingresos, Cumplimiento) y abrir SFAREGS otra vez desde la lupa. **No hace falta guardar** (GUARDAR da «Función inválida», C158; probado sin guardar en C185).
+- **SOADEST** al abrir SFAREGS en una sesión nueva (clic, 1 s, escribir, Tab y 2 s por campo: escrito de corrido solo toma el primero, C194): DATABASE en los cinco campos (Horarios, Facturas, Históricos académicos, Ingresos, Cumplimiento) y abrir SFAREGS otra vez desde la lupa. **No hace falta guardar** (GUARDAR da «Función inválida», C158; probado sin guardar en C185).
 - **«Otra sesión de inscripción está en progreso»:** alguien recargó con cambios pendientes; se esperan unos minutos (C158).
 - **«Llave inválida… LIMPIAR DATOS»** al volver al bloque clave con algo a medio cambiar: recargar la página sin guardar (se pierde solo lo no guardado) y esperar el candado si sale.
 - **Tras guardar en SFAREGS** la página puede volver sola al bloque clave con el aviso de inscritos: es normal.

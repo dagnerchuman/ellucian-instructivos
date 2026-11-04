@@ -3,7 +3,8 @@ name: centro-computacion
 description: >-
   Qué hace: datos y pruebas del Centro de Computación (Informática, Protech XP) en Banner: nivel C,
   programas XP 01 a 07 (rutas de aprendizaje, CMEMC38 a CMEMC44), materia ESEC, partes X01 a X07,
-  NRC 10018, 10019 y 10044, flujo validado en TEST, acreditación, costos y errores frecuentes de los
+  NRC 10018, 10019, 10044 y 10045 (prueba completa con capturas), flujo validado en TEST, acreditación,
+  costos y errores frecuentes de los
   usuarios finales; sus datos están en centros/computacion/datos.json. Cuándo usarla: la tarea es
   solo de Computación o Informática (rutas, NRC 10044, CMEMC, ESEC, reunión con el jefe del Centro de
   Informática). Cuándo no usarla: lo que vale igual para los tres centros
@@ -103,6 +104,7 @@ En SCACRSE, sin NRC en la hoja (C174): 00681 Word Asociado, 00683 AutoCAD 2D, 00
 | **1024** | ESEC 00650 | C | — | — | Dagner Chuman (100582059) | Activo (auditado en SIAASGN) |
 | **1026** | ESEC 00650 | D | X07 | 4 | Dagner Chuman (100582059) | Script 15 validado (aforo 1 a 4). 2 inscritos: S00581109 y S00581108 |
 | **10044** | ESEC 00684 «Diseño Web» | A | X06 | 40 | Dagner Chuman (100582059) | Flujo completo en curso (C96–C103). Alumno inscrito: 100582059 (plan 4, CMEMC44) |
+| **10045** | ESEC 00701 «Google» | A | X06 | 10 | Dagner Chuman (100582059), principal 100 % | **Prueba de punta a punta con capturas (C180–C195)**: miércoles 15:30–17:10, SAUVIR / SALA-VIRT, malla `MC44-01` › `ECOM-03`, fórmula con `VIG_11` arriba, regla 3 de SOAATRK, 17 en la historia. Restricción SSARRES (CMEMC44 y 1PCSP15, C151) |
 
 ## Alumnos creados / usados en TEST
 
@@ -114,7 +116,8 @@ En SCACRSE, sin NRC en la hoja (C174): 00681 Word Asociado, 00683 AutoCAD 2D, 00
 | **S00581109** | MARIA RAMIREZ GARCIA | Admitida CMEMC38 / Matriculada 1026 | 01, 15 (inscrita en NRC 1026 - Casuística Aprueba) |
 | **S00581110** | JUAN FLORES CASTILLO | Creado en GOAMTCH | Casuística Inhabilitado (INH) |
 | **S00581111** | ANA ROJAS VERA | Creada en GOAMTCH | Casuística Convalidación Externa (SHATRNS) |
-| **100582059** | Dagner Chuman (DCHUMAN) | Usuario institucional / docente; además alumno del NRC 10044 (plan de estudios 4, `CMEMC44`) | 18-A, autoservicio, docente principal, flujo de Diseño Web (C99–C103) |
+| **100582059** | Dagner Chuman (DCHUMAN) | Usuario institucional / docente; además alumno de los NRC 10044 y 10045 (plan de estudios 4, `CMEMC44`). **Desde el 04/11/2026 SFAREGS le muestra «Retenciones: Y»** (el 31/10 salía vacío; no se revisó cuál es, C194) | 18-A, autoservicio, docente principal, flujos de Diseño Web y de Google (C99–C103, C180–C190) |
+| **S00912438** | Arnold Vaca | Pregrado Medicina `1PCSP15` (plan 1); `CMEMC38`; `IMEMI03` en el plan 4 | Restricción de programa del 10045 (C151), prerrequisitos (C165–C167) y **baja con DD del 10045** el 31-OCT-2026 (C189) |
 
 ## Matriz de Scripts de Computación (actualizada al 23/10/2026)
 
@@ -160,9 +163,26 @@ Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuari
 | 7 | Notas por componente | Faculty › Libro de calificaciones › Componentes | ✅ | TA1, TA2, PA y EF con 85 de 100 (→ 17), visibles en el Autoservicio del alumno (C102, C103, C105) |
 | 8 | Asistencia a `ATTRGRD` | Pasar lista › **Clase › «Actualizar la asistencia en el libro de calificaciones»** › Sí | ✅ | No pasa sola: la envía el docente. Al enviarla, `ATTRGRD` tomó 57,14 → INH y luego 85,71 → APRO (C119; U32 resuelta). Requiere GORICCR en Y, GORRSQL activa y STVGCHG con CA (C104) |
 | 9 | Nota final | Calificaciones compuestas → `SFASLST` | ✅ | Compuesta: porcentaje 85 y **INH** (C105). «Calificaciones finales» no pide nada: la nota pasa sola al backoffice y **SFASLST muestra INH** (C106, C107) |
-| 9b | Escala de arriba en SHAGCOM | `SHAGCOM` › Asignación de escala de calificación | ⚠️ | Con `AST_70` arriba, la nota final salió **APRO** en SFASLST (C120). Cambiar a `VIG_11` y comprobar: asistencia ≥ 70 % → 17; menor → INH |
+| 9b | Escala de arriba en SHAGCOM | `SHAGCOM` › Asignación de escala de calificación | ✅ | Con `AST_70` arriba, la nota final salió **APRO** en SFASLST (C120). **Comprobado con el NRC 10045:** con `VIG_11` arriba y asistencia 100 %, la final llega **17** (C181, C188) |
 | 10 | Pase a historia | `GJAPCTL` › `SHRROLL`; salida en `GJIREVO` | ✅ | Modo A (job 7761) y modo U (job **7762**): «Rolled to Academic History» y «Deg Created» por cada plan del alumno, más un «API Error» por un plan inactivo (C121, C122). Por confirmar la nota que quedó (17 o APRO, C120) |
 | 11 | Corregir la nota en la historia | `SHATCKN` (Insertar secuencia: 17, modo V, razón de corrección) | ✅ | Primero se agregó el modo `V` al 17 del nivel C en `SHAGRDE` (solo tenía `P`). SHACRSE muestra **17** (C124) |
+
+## ✅ Prueba completa con capturas: Google, NRC 10045 (30/10 a 04/11/2026)
+El «ejemplo de prueba 2» de la Demostración 1 (`datos.json › demostraciones › ejemplo_prueba_2`): 14 pasos hechos en TEST, con su tabla campo por campo y 66 capturas, 65 con cuadros morados y números verdes como las láminas (C180–C195). En el sitio: Demostración 1 › «Para estudiar» › «Prueba en TEST» (flujo de Archify, cada nodo abre su ficha en un modal) y la página propia `00-demostracion-1-prueba-nrc-10045`.
+
+| # | Página | Lo que quedó |
+|---|---|---|
+| 1–3 | `SSASECT` | 202656 › 10045 › Ir; miércoles 15:30–17:10, SAUVIR / SALA-VIRT con `O`; docente 100582059, principal, 100 % (C180) |
+| 4 | `SIAASGN` | El 10045 es la asignación 10 de 10; resumen: 10 horas crédito, carga educativa 22; sin reglas de carga en 202656 (C180, C194) |
+| 5 | `SMAAREA` | `ESEC 00701` en `MC44-01` › `ECOM-03` (versión 202454), condición 2; SMAPROG CMEMC44 tiene solo esa área (C181, C194) |
+| 6 | `SHAGCOM` | `VIG_11` arriba; TA1 0.15 · TA2 0.15 · PA 0.40 · EF 0.30 + `ATTRGRD` 0.00, Debe aprobar, `AST_70` (C181) |
+| 7 | `SOAATRK` | Regla 3: X06, ESEC 00701, NRC 10045, Presente/Ausente, del 07-SEP al 31-OCT-2026 (C182) |
+| 8 | `SFAREGS` | 100582059 con RE, plan 4 (CMEMC44); SOADEST con DATABASE sin guardar (C185) |
+| 9–10 | Autoservicio | Asistencia 100 % enviada al libro (ATTRGRD APRO); TA1, TA2, PA y EF 85 → 17 cada uno (C186, C187) |
+| 11 | `SFASLST` | Final **17**, modo V (C188) |
+| 12 | `SFAREGS` | Arnold Vaca: RE → **DD** el 31-OCT-2026 (último día del DD en la X06), «No contar en ingreso» / «Eliminado» (C189, C194) |
+| 13 | `GJAPCTL` › `SHRROLL` | Job 7994 en modo A y 7995 en modo U: «Rolled to Academic History», RECORD COUNT 1 (C190) |
+| 14 | `SHACRSE` | ESEC 00701 «Google» con **17**, modo V; en SFASLST, «Pasada» ✓; en SHATCKN, secuencia 1 con 17 (C190, C194) |
 
 ## ▶️ Dónde quedamos (05/10/2026)
 - **19 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07.

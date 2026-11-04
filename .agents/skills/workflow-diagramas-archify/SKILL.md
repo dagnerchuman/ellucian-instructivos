@@ -5,7 +5,8 @@ description: >-
   Archify, PNG claro y oscuro, SVG) desde centros/<centro>/datos.json y
   herramientas/diagramas/plantillas.py, sin editarlos a mano. Cuándo usarla: pide un diagrama, flujo,
   mapa de estados o casuística del sitio, dice «Archify» o «diagramas_flujo», cambia un dato de un
-  centro que sale en los diagramas, o hay que actualizar las imágenes o el asistente del sitio.
+  centro que sale en los diagramas, hay que actualizar las imágenes o el asistente del sitio, o
+  poner cuadros y números en las capturas de TEST de una prueba (anotar_capturas.py).
   Cuándo no usarla: un BPM o flujo dentro de un PDF o PPT (documentos-uss) ni las diapositivas de los
   instructivos (herramientas/diapositivas.py).
 ---

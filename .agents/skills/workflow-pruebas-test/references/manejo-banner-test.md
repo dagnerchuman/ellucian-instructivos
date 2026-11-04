@@ -115,10 +115,11 @@ Probada el 30/10/2026 con el **NRC 10045** (202656, `ESEC 00701`, X06, sesión T
 - **Con «Ver currículos actuales/activos» marcado** desaparece el bloque «Plan de estudios de ingreso» y la fila nueva puede quedar **sin plan**: revisar la columna Plan de estudios antes de pedir el guardado (C170).
 - **Sesión de Banner vencida:** pide iniciar sesión con Google; lo hace el usuario, nunca el agente.
 
-## 6. Datos de prueba en TEST (29/10/2026)
+## 6. Datos de prueba en TEST (29/10/2026, actualizado el 04/11/2026)
 - **Alumno:** Arnold Vaca `S00912438` (Medicina `1PCSP15`, plan 1; `CMEMC38`; `IMEMI03` en el plan 4). En 202744 tiene los NRC 10001 a 10008 de otra persona: **no se tocan**.
-- **Otro alumno:** `100582059` (`CMEMC44`). **Alumno de Nidia:** `A00010005` (catálogo 202444; Basic I con 80 en 202646; en 202744 tiene 10023, 10024, 10022 y 10007; avisar a Nidia antes de usarlo).
-- **NRC:** 10045 (202656, X06, Computación; miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059, malla `MC44-01` › `ECOM-03`, fórmula en SHAGCOM y regla 3 de SOAATRK desde el 30/10, C180 a C182)
+- **Arnold Vaca en 202656:** el 10045 quedó en **DD** el 31-OCT-2026 (C189); el 10042 y el 10043 siguen con RE.
+- **Otro alumno:** `100582059` (`CMEMC44`); desde el 04/11/2026 SFAREGS le muestra «Retenciones: Y» (C194). **Alumno de Nidia:** `A00010005` (catálogo 202444; Basic I con 80 en 202646; en 202744 tiene 10023, 10024, 10022 y 10007; avisar a Nidia antes de usarlo).
+- **NRC:** 10045 (202656, X06, Computación; miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059, malla `MC44-01` › `ECOM-03`, fórmula en SHAGCOM y regla 3 de SOAATRK desde el 30/10, C180 a C182). **Prueba completa:** notas 85 → 17, pase a historia (jobs 7994 y 7995) y 17 en SHACRSE (C188 a C190)
 - **SOATERM 202656** (solo consulta, C182): En progreso sin marcar, Permitir ✓, Plan de estudios requerido ✓; las demás casillas sin marcar; secuencia de inicio de NRC 10046., 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
 - **Acceso a TEST:** https://experience-test.elluciancloud.com/ussipantest, también en el botón «Banner TEST» de la galería y del visor del sitio (C178). Cada persona entra con su cuenta de Google.
 - Lo que quedó en TEST y falta limpiar: sección 4 de la guía de restricciones y C167.

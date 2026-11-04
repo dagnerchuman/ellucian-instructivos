@@ -6,7 +6,8 @@ description: >-
   a historia y casuísticas de docentes, quejas y sanciones, y cómo operar TEST con el navegador
   (references/manejo-banner-test.md). Cuándo usarla: el usuario va a entrar a TEST, pide «los pasos
   de lo que tenemos que validar», un checklist, el orden de una prueba de punta a punta o «hazlo tú
-  en TEST con el navegador». Cuándo no usarla: explicar un campo o un error de una pantalla
+  en TEST con el navegador», o documentar una prueba con capturas para el sitio. Cuándo no usarla:
+  explicar un campo o un error de una pantalla
   (workflow-consultas-banner) ni datos ya validados de un centro (centro-*).
 ---
 
@@ -56,10 +57,10 @@ Este workflow guía y audita la ejecución de pruebas en el ambiente **TEST de E
 - [x] **Faculty › Captura de calificaciones › Libro de calificaciones › Componentes** abre el NRC 10044 y guarda notas: TA1 85 de 100 → **17**, visible en el Autoservicio del alumno › Ver calificaciones › Componentes (C102, C103).
 - [x] Completar TA2, PA y EF y revisar «Calificaciones compuestas»: con los cuatro en 85 y `ATTRGRD` en 43, porcentaje final 85 y **calificación final INH** (C105).
 - [x] La nota compuesta pasa sola a la lista de clase: **SFASLST muestra INH** (C107). «Calificaciones finales» sale «Completado» y sin alumnos para escribir (C106).
-- [ ] Rolar con `SHRROLL`. Opcional: `ATTRGRD` en 70 o más con razón de cambio → la final debe salir 17.
+- [x] Rolar con `SHRROLL`: NRC 10044 (jobs 7761 y 7762, C121) y NRC 10045 (jobs 7994 en modo A y 7995 en modo U, C190). Con `VIG_11` arriba en SHAGCOM y asistencia ≥ 70 %, la final sale 17 (C188).
 - [x] **`ATTRGRD`:** el porcentaje de Pasar lista **no pasa solo**: el docente lo envía con **Clase › «Actualizar la asistencia en el libro de calificaciones» › Sí** (7.1.1, diap. 56–57). Validado con el NRC 10044: 57,14 → INH y 85,71 → APRO (C119). Requiere `GORICCR`, `GORRSQL` y `STVGCHG` con CA (C104).
 - [x] Probar impacto de inasistencia: con `ATTRGRD` 43 (< 70 %), la calificación compuesta del NRC 10044 salió **INH** aunque los componentes daban 85 (C105).
-- [ ] Ejecutar pase a historia académica con **SHRROLL**.
+- [x] Ejecutar pase a historia académica con **SHRROLL** (C121, C190): primero modo A, se lee el reporte en GJIREVO, y luego modo U.
 - [ ] Ejecutar CAPP masivo con **SMRBCMP** para verificar actualización del estatus del alumno.
 
 ## 3. Casuísticas Complejas para Pruebas Integrales
@@ -132,3 +133,12 @@ Guía completa: [ref-restricciones-y-prerrequisitos-por-programa.md](../arquitec
 - [x] Caso positivo: con Basic I en la historia, el alumno de Nidia se inscribe; la matrícula usa la versión de SCAPPRQ de su catálogo (C170, E32).
 - [ ] Copiar la regla de Nidia de la versión 202444 a 202544 y 202644 (C170).
 - **Antes de empezar:** SFARSTS de la parte del NRC (C154); SOADEST con DATABASE si SFAREGS lo pide; no recargar la página con una fila en error (C158).
+
+## 7. Documentar una prueba con capturas para el sitio (C181, C192–C195)
+Así se documentó la prueba del NRC 10045; sirve para cualquier prueba nueva.
+1. **Ventana de 800 × 670** en el navegador (las capturas quedan de 800 px de ancho) y **una captura por pantalla**: el bloque clave escrito **antes de pulsar Ir**, cada bloque que se llena, el aviso de Banner y la comprobación al reabrir. Todo lo que muestre una lámina del instructivo de ese paso debe tener su captura (C194).
+2. Se guarda como `NN-tema.png`, `NN-tema-b.png`… en la carpeta del ejemplo, junto al HTML de la demostración (`sips -s format png` desde la captura del navegador).
+3. En `datos.json › demostraciones › ejemplo_prueba_2 › pasos`, cada paso lleva `tabla` (Campo, Valor, Quién lo pone, Nota), `resultado`, `cita`, `capturas` en el orden de las láminas, `laminas` y `etiqueta`; las `fases` agrupan los pasos en filas del flujo (C192).
+4. **Cuadros y números** (C195): cada captura lleva `cuadros` `{n, caja}`, donde `n` es la fila de la tabla del paso. Para ubicarlos, usa el OCR de `herramientas/diagramas/ocr_capturas.swift` y revisa una hoja de contacto por paso antes de subir. `generar.py` dibuja las copias en `anotadas/`.
+5. Regenera con `python3 herramientas/diagramas/generar.py` y abre el paso en el modal de «Prueba en TEST»: las capturas cargan, «Ver sin cuadros» alterna y los números de «Su guía» coinciden con los de la imagen.
+6. Solo consulta en las capturas de complemento: no se guarda nada en Banner sin que el usuario lo pida (sección 1 de `references/manejo-banner-test.md`).

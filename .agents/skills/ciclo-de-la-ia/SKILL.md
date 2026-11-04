@@ -56,3 +56,6 @@ Di qué verificaste y cómo, con resultados concretos («85 diagramas, 0 fallas�
 | Se citó C60 para las horas de Diseño Web, pero la fuente era C96 (C144) | Abrir la cita y confirmar que dice lo afirmado |
 | El pie del modal se cortaba en celular (C132) | Mirar la captura a 390 px de ancho |
 | `datos.json` se escribió con sangría 1 y el diff fue enorme | Revisar `git diff --stat` antes de subir |
+| Al regenerar se perdió el tema blanco que se había puesto a mano en los HTML (C191) | Llevar el cambio al generador (`inyectar_modales.py`) y revisar en el diff que la regeneración no deshaga nada |
+| El validador tomó por contraseña un texto con la palabra «clave», dos puntos y un valor (C194) | En `datos.json`, escribir «Bloque clave con 202656…», sin dos puntos después de «clave» |
+| Cuadros en la fila equivocada: el 4 en «Jueves» y el 3 en el «Pasar lista» del 10044 (C195) | Revisar una hoja de contacto por paso con las capturas anotadas antes de subir |

@@ -604,6 +604,14 @@ def inyectar_en_html(ruta_html, slug):
     i = contenido.rfind("</body>")
     contenido = contenido[:i] + extra + "\n" + contenido[i:] if i != -1 else contenido + "\n" + extra
 
+    # Tema blanco por defecto (commit c5a6696): Archify sigue el tema del sistema; aquí se fija «light»
+    # salvo que el visitante haya elegido otro con el botón (localStorage) o la URL.
+    contenido = contenido.replace('<html lang="es" data-theme="dark"', '<html lang="es" data-theme="light"', 1)
+    contenido = contenido.replace("theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';",
+                                  "theme = 'light';")
+    contenido = contenido.replace("return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';",
+                                  "return 'light';")
+
     ruta_html.write_text(contenido, encoding="utf-8")
     return True
 

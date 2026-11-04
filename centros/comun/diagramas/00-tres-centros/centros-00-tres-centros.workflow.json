@@ -629,9 +629,9 @@
       "col": 3,
       "type": "backend",
       "label": "SFAREGS",
-      "sublabel": "orden por confirmar",
+      "sublabel": "cursos sin orden",
       "width": 150,
-      "tag": "U02"
+      "tag": "ruta XP · C62"
     },
     {
       "id": "computacion_4",

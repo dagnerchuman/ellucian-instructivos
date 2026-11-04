@@ -101,7 +101,9 @@ class Centro:
 
     @property
     def prerrequisito_fatal(self):
-        return self.d["prerrequisitos"]["estado"] == "confirmado"
+        """Prerrequisito Fatal entre los cursos del centro (Idiomas). Computación está confirmado sin orden (C62)."""
+        p = self.d["prerrequisitos"]
+        return p["estado"] == "confirmado" and p.get("tipo", "secuencial") == "secuencial"
 
     # ---- textos de cabecera ----------------------------------------------
     def subtitulo(self, capacidad=None):

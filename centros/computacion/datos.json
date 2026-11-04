@@ -123,8 +123,13 @@
     "fuente": "C36"
   },
   "prerrequisitos": {
-    "estado": "por confirmar",
-    "duda": "U02"
+    "estado": "confirmado",
+    "tipo": "ruta",
+    "fuente": "C62, C125, R24, C159 a C170, C191",
+    "regla": "Protech XP: los cursos de la ruta no tienen orden entre sí. El alumno lleva 3 cursos de su ruta, en el orden que desee y en paralelo, + 1 taller de certificación (C62, C125). Solo el Plan Tradicional (Computación I → II → III) era secuencial (C62, C175).",
+    "en_banner": "Entre los cursos de la ruta no va prerrequisito en SCAPREQ: la ruta se controla con la malla de cada programa XP (SMAAREA, C172 a C175). Hacia pregrado, la acreditación se exige con un prerrequisito restrictivo por programa en SCAPPRQ, probado en TEST con Idiomas (C159 a C170). Para Computación, exigir «3 cursos de la ruta + taller» con el método CAPP de SCACRSE sigue preguntado a Ellucian (E30, R24).",
+    "corto": "cursos sin orden",
+    "etiqueta": "ruta XP · C62"
   },
   "nrc_test": [
     {

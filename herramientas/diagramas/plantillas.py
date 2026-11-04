@@ -1233,6 +1233,8 @@ def tres_centros(centros, tr):
         total = sum(1 for s in d["scripts"].values() if s["estado"] != "no aplica")
         if c.prerrequisito_fatal:
             avanzar, tag_av = "BASIC I antes que II", "prerrequisito Fatal"
+        elif d["prerrequisitos"]["estado"] == "confirmado":
+            avanzar, tag_av = d["prerrequisitos"]["corto"], d["prerrequisitos"]["etiqueta"]
         else:
             avanzar, tag_av = "orden por confirmar", d["prerrequisitos"].get("duda", "")
         cursos = {"idiomas": "BASIC I … INTERM. III", "computacion": "ESEC 00650 a 00657"}.get(

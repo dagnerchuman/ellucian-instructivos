@@ -228,4 +228,7 @@ Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuari
 
 ## Prerrequisitos y orden de cursos
 
-> **Duda U02 abierta:** No se sabe si los cursos de Informática tienen orden (uno requiere aprobar otro) o son todos independientes. A diferencia de Inglés, no hay confirmación de prerrequisitos secuenciales.
+- **U02 resuelta (C62, C191):** en Protech XP los cursos de la ruta **no tienen orden**: 3 cursos de la ruta, en el orden que desee y en paralelo, + 1 taller (C125). Solo el Plan Tradicional (Computación I → II → III) era secuencial.
+- **En Banner:** entre los cursos de la ruta no va prerrequisito en SCAPREQ; la ruta la controla la malla de cada programa XP (SMAAREA, C172 a C175). Datos: `centros/computacion/datos.json › prerrequisitos`.
+- **Hacia pregrado (la acreditación como requisito):** prerrequisito restrictivo por programa en **SCAPPRQ**, probado en TEST con Idiomas (C159 a C170): rige la versión del catálogo del alumno, con «En progreso» sin marcar sale «Prerequisite In Progress» y un curso del centro en la historia cumple. El correquisito no sirve y SCAPREQ por curso no es práctico para «3 de 6» (R24). **Abierto:** cómo exigir la ruta de Computación con el método CAPP de SCACRSE (E30).
+- Detalle: `arquitectura-centros-empresariales/references/ref-preguntas-complejas-prerrequisitos.md` y `ref-restricciones-y-prerrequisitos-por-programa.md`.

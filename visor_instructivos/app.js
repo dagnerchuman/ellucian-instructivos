@@ -529,8 +529,9 @@ function initApp() {
 
     // Ensure path is NFC normalized for standard Linux/Netlify web servers
     const normalizedPath = (pres.path || '').normalize('NFC');
-    const fileUrl = '/' + encodeURI(normalizedPath);
-    elements.btnDownloadPptx.href = fileUrl;
+    const relativeUrl = '../' + encodeURI(normalizedPath);
+    const rootUrl = '/' + encodeURI(normalizedPath);
+    elements.btnDownloadPptx.href = relativeUrl;
     elements.btnDownloadPptx.download = pres.name;
 
     // Show loading spinner
@@ -561,20 +562,20 @@ function initApp() {
         return;
       }
 
-      // Fetch the PPTX file with automatic fallback handling
-      let res = await fetch(fileUrl);
+      // Fetch the PPTX file with automatic fallback handling (try relative first, then root / NFD)
+      let res = await fetch(relativeUrl);
       if (!res.ok) {
-        // Fallback 1: relative to parent (if running inside /visor_instructivos/)
-        const fallbackRelative = '../' + encodeURI(normalizedPath);
-        const resFb1 = await fetch(fallbackRelative);
+        const resFb1 = await fetch(rootUrl);
         if (resFb1.ok) {
           res = resFb1;
+          elements.btnDownloadPptx.href = rootUrl;
         } else {
           // Fallback 2: try NFD normalized
-          const fallbackNfd = '/' + encodeURI((pres.path || '').normalize('NFD'));
+          const fallbackNfd = '../' + encodeURI((pres.path || '').normalize('NFD'));
           const resFb2 = await fetch(fallbackNfd);
           if (resFb2.ok) {
             res = resFb2;
+            elements.btnDownloadPptx.href = fallbackNfd;
           }
         }
       }

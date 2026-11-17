@@ -6,8 +6,12 @@
   <title>Ellucian Instructivos — Visor de Presentaciones PPTX</title>
   <meta name="description" content="Visor interactivo en alta definición de instructivos y procesos de Ellucian Banner.">
   <script>
-    // Tema claro u oscuro antes de pintar: el que se eligió en el sitio (archify-theme) o el del sistema.
     (function () {
+      if (!window.location.pathname.endsWith('/') && !window.location.pathname.endsWith('.html')) {
+        window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+        return;
+      }
+      // Tema claro u oscuro antes de pintar: el que se eligió en el sitio (archify-theme) o el del sistema.
       var tema = null;
       try { tema = localStorage.getItem('archify-theme'); } catch (_) {}
       if (tema !== 'light' && tema !== 'dark') {

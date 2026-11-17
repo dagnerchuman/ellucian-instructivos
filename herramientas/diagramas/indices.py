@@ -190,7 +190,7 @@ def galeria(ids):
         cap_badge = f'<span class="cap">{html.escape(cap)}</span>' if cap else ""
         return (
             f'<article class="card" data-center="{html.escape(centro_id)}" data-title="{html.escape(titulo.lower())}" data-cap="{html.escape(cap.lower())}" data-num="{numero}">'
-            f'<a class="thumb" href="{b}.html" title="Abrir diagrama interactivo"><img loading="lazy" src="{b}.svg" alt="{html.escape(titulo)}"></a>'
+            f'<a class="thumb" href="{b}.html" title="Abrir diagrama interactivo"><img loading="lazy" data-src="{b}.svg" src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 10\'%3E%3C/svg%3E" alt="{html.escape(titulo)}"></a>'
             f'<div class="meta"><span class="num">{numero}</span>{cap_badge}<a href="{b}.html" class="title-link">{html.escape(titulo)}</a></div>'
             f'<div class="files"><a href="{b}.html" class="file-btn primary">HTML interactivo</a><a href="{b}-claro.png" class="file-btn">PNG claro</a>'
             f'<a href="{b}-oscuro.png" class="file-btn">PNG oscuro</a><a href="{b}.svg" class="file-btn">SVG</a></div></article>')

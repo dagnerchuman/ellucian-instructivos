@@ -7,6 +7,10 @@
 <title>Diagramas de los Centros Empresariales · USS en Banner</title>
 <script>
   (function () {
+    if (!window.location.pathname.endsWith('/') && !window.location.pathname.endsWith('.html')) {
+      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+      return;
+    }
     try {
       var t = localStorage.getItem('archify-theme');
       if (!t) t = 'light';
@@ -51,7 +55,7 @@
 
       <div class="search-box">
         <span class="search-icon">🔍</span>
-        <input type="search" class="search-input" id="search-input" placeholder="Buscar por título, número, capacidad..." autocomplete="off">
+        <input type="search" class="search-input" id="search-input" name="ccee_search_term" placeholder="Buscar por título, número, capacidad..." autocomplete="one-time-code" data-lpignore="true">
       </div>
     </div>
   </div>

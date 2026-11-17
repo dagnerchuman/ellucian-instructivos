@@ -288,15 +288,72 @@ main {
   border-bottom: 1px solid var(--line);
   position: relative;
 }
+/* Shimmer esqueleto mientras carga el SVG */
+.thumb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(112, 48, 160, 0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: thumb-shimmer 1.6s ease-in-out infinite;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+[data-theme="dark"] .thumb::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(185, 138, 224, 0.1) 50%, transparent 100%);
+}
+/* Spinner minimalista de carga */
+.thumb::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border: 2px solid var(--line);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: thumb-spin 0.75s linear infinite;
+  opacity: 0.7;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.thumb.loaded::before,
+.thumb.loaded::after {
+  opacity: 0;
+  animation: none;
+}
 .thumb img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: transform 0.25s ease;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.25s ease;
+  position: relative;
+  z-index: 3;
+}
+.thumb.loaded img,
+.thumb img.is-loaded {
+  opacity: 1;
+}
+@keyframes thumb-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes thumb-spin {
+  to { transform: rotate(360deg); }
 }
 .card:hover .thumb img {
   transform: scale(1.025);
+}
+.ai-token-masked {
+  -webkit-text-security: disc !important;
+  text-security: disc !important;
 }
 
 .meta {

@@ -483,6 +483,11 @@ button.ai-fab:active,
   outline: none;
 }
 
+.ai-token-masked {
+  -webkit-text-security: disc !important;
+  text-security: disc !important;
+}
+
 .ai-field input:focus {
   border-color: #b98ae0;
 }

@@ -17878,6 +17878,11 @@ button.ai-fab:active,
   outline: none;
 }
 
+.ai-token-masked {
+  -webkit-text-security: disc !important;
+  text-security: disc !important;
+}
+
 .ai-field input:focus {
   border-color: #b98ae0;
 }
@@ -18812,7 +18817,7 @@ button.ai-fab:active,
       <p class="ai-config-help">El asistente recupera primero evidencia local del proyecto. Para redactar la respuesta con IA usa tu clave personal de Groq; nunca ingreses datos reales de alumnos.</p>
       <div class="ai-field">
         <label for="ai-groq-token">Clave de Groq:</label>
-        <input type="password" id="ai-groq-token" placeholder="gsk_..." autocomplete="off">
+        <input type="text" id="ai-groq-token" class="ai-token-masked" placeholder="gsk_..." autocomplete="off" spellcheck="false" data-lpignore="true">
       </div>
       <div class="ai-config-buttons">
         <button type="button" class="ai-btn-pill primary" id="ai-btn-save-keys">Guardar</button>

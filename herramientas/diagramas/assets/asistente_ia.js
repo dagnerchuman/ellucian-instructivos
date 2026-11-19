@@ -459,6 +459,18 @@
         if (consultaInh && (contieneTermino(contenido, 'inh') || contieneTermino(contenido, 'debe aprobar'))) puntos += 8;
         if (consultaRegistroAsistencia && contieneTermino(contenido, 'soaatrk')) puntos += 6;
         if (consultaCalendarioGradebook && fuente.indexOf('ref-busqueda-asistencia-banner.md') === -1) puntos = 0;
+        // Guías de preguntas (ref-preguntas-*.md): un fragmento por «### pregunta». Si la pregunta del usuario se parece
+        // al título, ese fragmento es la respuesta preparada y va primero (C197).
+        if (fuente.indexOf('ref-preguntas-') !== -1) {
+          var titulo = (fragmento.texto.match(/^###\s+(.+)$/m) || [])[1];
+          if (titulo) {
+            var enTitulo = terminosDe(normalizar(titulo));
+            var comunes = terminos.filter(function (t) {
+              return enTitulo.some(function (u) { return u === t || (t.length > 4 && u.slice(0, 5) === t.slice(0, 5)); });
+            }).length;
+            if (comunes >= 2) puntos += comunes * 4 + (comunes >= Math.ceil(terminos.length * 0.6) ? 10 : 0);
+          }
+        }
         if (consultaPrerreq && puntos > 0) {
           if (fuente.indexOf('ref-preguntas-complejas-prerrequisitos.md') !== -1) puntos += 14;
           if (fuente.indexOf('ref-restricciones-y-prerrequisitos-por-programa.md') !== -1) puntos += 8;
@@ -559,7 +571,8 @@
       if ((m = archivo.match(/^(ADR-\d+)/))) return 'Decisión ' + m[1];
       if ((m = r.match(/centros\/([a-z]+)\/datos\.json$/))) return 'Datos del centro: ' + m[1];
       if (/references\//.test(r)) {
-        return 'Guía: ' + archivo.replace(/\.md$/, '').replace(/^\d+-|^ref-/, '').replace(/-/g, ' ');
+        var titulos = { 'ref-preguntas-frecuentes-operacion.md': 'preguntas frecuentes de operación', 'ref-preguntas-complejas-prerrequisitos.md': 'preguntas complejas de prerrequisitos' };
+        return 'Guía: ' + (titulos[archivo] || archivo.replace(/\.md$/, '').replace(/^\d+-|^ref-/, '').replace(/-/g, ' '));
       }
       return archivo;
     }
@@ -635,7 +648,15 @@
     // -------------------------------------------------------------
     // Qwen 3.8 en Groq, probado antes de integrarlo.
     // -------------------------------------------------------------
+    var origenRespuesta = 'local';
+    var tarjetaEnCurso = null;
+    function mostrarEspera(segundos) {
+      if (!tarjetaEnCurso) return;
+      tarjetaEnCurso.innerHTML = '<div class="ai-msg-header"><span class="ai-msg-author">Asistente CCEE</span><span class="ai-msg-tag">Esperando a Groq</span></div>' +
+        renderizarTexto('Groq pidió esperar ' + segundos + ' s por el límite de uso por minuto. Se reintenta solo.');
+    }
     async function resolverRemoto(engine, query, consulta, turnos) {
+      origenRespuesta = 'local';
       var token = (localStorage.getItem('ccee_groq_token') || '').trim();
       var fragmentos = recuperarEvidencia(consulta || query);
       if (!token) {
@@ -670,46 +691,61 @@
       var headers = { 'Content-Type': 'application/json' };
       headers['Authorization'] = 'Bearer ' + token;
 
-      try {
-        var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({
-            model: 'qwen/qwen3.8-27b',
-            messages: [
-              { role: 'system', content: sysPrompt },
-              { role: 'system', content: 'BASE LOCAL RECUPERADA:\n\n' + contexto }
-            ].concat(turnosPrevios(turnos)).concat([
-              { role: 'user', content: query }
-            ]),
-            max_tokens: 1200,
-            temperature: 0.1
-          })
-        });
+      var cuerpo = JSON.stringify({
+        model: 'qwen/qwen3.8-27b',
+        messages: [
+          { role: 'system', content: sysPrompt },
+          { role: 'system', content: 'BASE LOCAL RECUPERADA:\n\n' + contexto }
+        ].concat(turnosPrevios(turnos)).concat([
+          { role: 'user', content: query }
+        ]),
+        max_tokens: 1200,
+        temperature: 0.1
+      });
 
-        if (!res.ok) {
-          var detalle = await res.json().catch(function() { return {}; });
-          throw new Error('HTTP ' + res.status + (detalle.error && detalle.error.message ? ': ' + detalle.error.message : ''));
-        }
-        var data = await res.json();
-        if (data && data.choices && data.choices[0] && data.choices[0].message) {
-          var respuesta = String(data.choices[0].message.content || '').trim();
-          var pantallasInventadas = pantallasNoSustentadas(respuesta, fragmentos);
-          if (!respuesta || pantallasInventadas.length) {
-            console.warn('Groq devolvió una respuesta no sustentada; se usará evidencia local.', pantallasInventadas);
-            return respuestaConEvidencia(
-              query,
-              "*Modo seguro: la respuesta redactada por IA mencionó una pantalla sin respaldo en la base, por eso se muestran solo los extractos locales.*",
-              consulta
-            );
+      var motivo = 'sin respuesta';
+      for (var intento = 0; intento < 2; intento++) {
+        try {
+          var res = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: headers, body: cuerpo });
+          if (res.status === 429 && intento === 0) {
+            // Límite por minuto: si Groq pide esperar poco, se reintenta una vez.
+            var aviso = await res.json().catch(function() { return {}; });
+            var espera = parseFloat(((aviso.error && aviso.error.message) || '').replace(/.*try again in\s*/i, '')) || 0;
+            var retry = parseFloat(res.headers.get('retry-after') || '') || 0;
+            espera = Math.max(espera, retry);
+            if (espera > 0 && espera <= 35) {
+              mostrarEspera(Math.ceil(espera));
+              await new Promise(function(resolve) { setTimeout(resolve, Math.ceil(espera) * 1000 + 500); });
+              continue;
+            }
+            motivo = 'límite de uso por minuto';
+            break;
           }
-          return respuesta + "\n\n**Fuentes consultadas**\n" + listaFuentes(fragmentos);
+          if (!res.ok) {
+            // No se muestra el mensaje crudo de Groq: puede traer datos de la organización.
+            motivo = res.status === 429 ? 'límite de uso por minuto'
+              : (res.status === 401 || res.status === 403) ? 'clave no válida'
+              : 'error ' + res.status;
+            break;
+          }
+          var data = await res.json();
+          var respuesta = data && data.choices && data.choices[0] && data.choices[0].message
+            ? String(data.choices[0].message.content || '').replace(/<think>[\s\S]*?<\/think>/g, '').trim() : '';
+          if (!respuesta) { motivo = 'respuesta vacía'; break; }
+          // Groq respondió: se muestra su redacción. Si nombra una página que no está en la base, se avisa sin ocultarla.
+          var pantallasInventadas = pantallasNoSustentadas(respuesta, fragmentos);
+          var nota = pantallasInventadas.length
+            ? "\n\n*Revise: " + pantallasInventadas.join(', ') + " no aparece en la base local consultada; verifíquelo antes de usarlo.*"
+            : '';
+          origenRespuesta = 'ia';
+          return respuesta + nota + "\n\n**Fuentes consultadas**\n" + listaFuentes(fragmentos);
+        } catch (err) {
+          console.warn('Groq no respondió:', err.message);
+          motivo = 'sin conexión';
+          break;
         }
-        throw new Error('Respuesta inválida');
-      } catch (err) {
-        console.warn('Respuesta local por error de Groq:', err.message);
-        return respuestaConEvidencia(query, "*No fue posible consultar Groq (" + err.message + "). Se muestran solo los extractos locales.*", consulta);
       }
+      return respuestaConEvidencia(query, "*Groq no respondió (" + motivo + "). Se muestran los extractos de la base local.*", consulta);
     }
 
     // -------------------------------------------------------------
@@ -804,15 +840,65 @@
           if (pts > mejorPts) { mejorPts = pts; mejor = i; }
         });
         if (mejorPts < 2) mejor = -1;  // una sola palabra suelta en el texto de la lámina no basta
+        var porDescarte = mejor < 0;  // la lámina se hereda del paso anterior: no se le busca número verde (C197)
         if (mejor < 0 && pool.length) {
           mejor = (previo !== null && pool.indexOf(previo) !== -1) ? previo : pool[0];
         }
         if (mejor >= 0) previo = mejor;
-        return { num: paso.num, texto: paso.texto, codigo: codigo, lamina: mejor >= 0 ? mejor : null };
+        return { num: paso.num, texto: paso.texto, codigo: codigo, lamina: mejor >= 0 ? mejor : null, porDescarte: porDescarte };
       });
     }
 
-    var visorPasos = { pasos: [], idx: 0, completa: true };  // la diapositiva completa; el recorte, a un clic
+    // El visor recorre LÁMINAS, no los pasos de la respuesta (C197): al costado van los pasos numerados de la lámina,
+    // con el mismo número verde que se ve en la imagen, y los pasos de la respuesta quedan plegados debajo.
+    var visorPasos = { grupos: [], idx: 0, completa: true, marcada: '' };
+
+    function numeroEnLamina(paso, lamina, minimo) {
+      // Número verde de la lámina que corresponde a un paso de la respuesta ('' si ninguno se parece lo suficiente).
+      // Dentro de una sola lámina basta una raíz en común; las siglas cortas (ID, NRC, EL…) también cuentan.
+      var propias = raices(paso.texto, (paso.codigo || '').toLowerCase());
+      var siglas = function (t) { return String(t).match(/\b(ID|NRC|EL|RE|DD|CRN|PIDM)\b/g) || []; };
+      var siglasPaso = siglas(paso.texto);
+      var mejor = '', mejorPts = (minimo || 1) - 0.01;
+      (lamina.lineas || []).forEach(function (linea) {
+        if (!linea.num) return;
+        var suyas = raices(linea.texto);
+        var pts = propias.filter(function (t) { return suyas.indexOf(t) !== -1; }).length +
+          2 * siglas(linea.texto).filter(function (s) { return siglasPaso.indexOf(s) !== -1; }).length +
+          (propias.length && suyas.indexOf(propias[0]) !== -1 ? 0.5 : 0);  // la primera palabra es la acción («guardar»)
+        if (pts > mejorPts) { mejorPts = pts; mejor = linea.num; }
+      });
+      return mejor;
+    }
+
+    function gruposPorLamina(pasos) {
+      // Una entrada por lámina, en el orden en que la respuesta la usa; los pasos sin lámina van al final.
+      var grupos = [], porLamina = {}, sinLamina = null;
+      pasos.forEach(function (p) {
+        if (p.lamina === null) {
+          if (!sinLamina) sinLamina = { lamina: null, pasos: [] };
+          sinLamina.pasos.push(p);
+          return;
+        }
+        if (!porLamina[p.lamina]) {
+          porLamina[p.lamina] = { lamina: p.lamina, pasos: [] };
+          grupos.push(porLamina[p.lamina]);
+        }
+        porLamina[p.lamina].pasos.push(Object.assign({}, p, { marca: numeroEnLamina(p, LAMINAS.laminas[p.lamina], p.porDescarte ? 2 : 1) }));
+      });
+      // Dentro de un mismo instructivo, las láminas van en su orden (35, 36, 37…), no en el de la respuesta.
+      var ordenFuente = {};
+      grupos.forEach(function (g, i) {
+        var f = LAMINAS.laminas[g.lamina].fuente;
+        if (!(f in ordenFuente)) ordenFuente[f] = i;
+      });
+      grupos.sort(function (a, b) {
+        var la = LAMINAS.laminas[a.lamina], lb = LAMINAS.laminas[b.lamina];
+        return (ordenFuente[la.fuente] - ordenFuente[lb.fuente]) || (la.n - lb.n);
+      });
+      if (sinLamina) grupos.push(sinLamina);
+      return grupos;
+    }
 
     function asegurarVisorPasos() {
       var v = document.getElementById('ai-pasos-visor');
@@ -830,23 +916,32 @@
         '<button type="button" class="aipv-btn" data-aipv="completa">Ver diapositiva completa</button>' +
         '<a class="aipv-btn" data-aipv="visor" target="_blank" rel="noopener">Abrir en el visor</a>' +
         '<button type="button" class="aipv-btn aipv-cerrar" data-aipv="cerrar" aria-label="Cerrar">×</button></div></div>' +
-        '<div class="aipv-cuerpo"><ol class="aipv-pasos"></ol>' +
+        '<div class="aipv-cuerpo"><aside class="aipv-lado">' +
+        '<p class="aipv-lado-titulo"></p><p class="aipv-intro" hidden></p><ol class="aipv-pasos"></ol>' +
+        '<details class="aipv-resp"><summary></summary><ol class="aipv-resp-lista"></ol></details>' +
+        '<nav class="aipv-laminas" aria-label="Láminas de la respuesta"></nav></aside>' +
         '<div class="aipv-lienzo"><p class="aipv-ref" hidden></p><div class="aipv-marco">' +
-        '<button type="button" class="aipv-nav" data-aipv="ant" aria-label="Paso anterior">‹</button>' +
-        '<img class="aipv-img" alt=""><p class="aipv-vacio" hidden>Este paso no tiene una lámina en los instructivos.</p>' +
-        '<button type="button" class="aipv-nav" data-aipv="sig" aria-label="Paso siguiente">›</button></div>' +
+        '<button type="button" class="aipv-nav" data-aipv="ant" aria-label="Lámina anterior">‹</button>' +
+        '<img class="aipv-img" alt=""><p class="aipv-vacio" hidden>Estos pasos no tienen una lámina en los instructivos.</p>' +
+        '<button type="button" class="aipv-nav" data-aipv="sig" aria-label="Lámina siguiente">›</button></div>' +
         '<p class="aipv-pie"></p></div></div></div>';
       v.addEventListener('click', function (e) {
         if (e.target === v) return cerrarVisorPasos();
+        var ir = e.target.closest('[data-aipv-lamina]');
+        if (ir) return pintarVisorPasos(Number(ir.getAttribute('data-aipv-lamina')));
+        var marca = e.target.closest('[data-aipv-marca]');
+        if (marca) {
+          var m = marca.getAttribute('data-aipv-marca');
+          visorPasos.marcada = visorPasos.marcada === m ? '' : m;
+          return pintarVisorPasos(visorPasos.idx, true);
+        }
         var accion = e.target.closest('[data-aipv]');
-        var item = e.target.closest('[data-aipv-paso]');
-        if (item) return pintarVisorPasos(Number(item.getAttribute('data-aipv-paso')));
         if (!accion) return;
         var a = accion.getAttribute('data-aipv');
         if (a === 'cerrar') cerrarVisorPasos();
         else if (a === 'ant') pintarVisorPasos(visorPasos.idx - 1);
         else if (a === 'sig') pintarVisorPasos(visorPasos.idx + 1);
-        else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx); }
+        else if (a === 'completa') { visorPasos.completa = !visorPasos.completa; pintarVisorPasos(visorPasos.idx, true); }
       });
       document.body.appendChild(v);
       if (window.CCEEZoom) window.CCEEZoom(v.querySelector('.aipv-img'));
@@ -857,22 +952,59 @@
       return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    function pintarVisorPasos(idx) {
+    function rangoDePasos(pasos) {
+      var nums = pasos.map(function (p) { return p.num; });
+      if (nums.length === 1) return 'paso ' + nums[0];
+      var seguidos = nums.every(function (n, i) { return i === 0 || Number(n) === Number(nums[i - 1]) + 1; });
+      return 'pasos ' + (seguidos ? nums[0] + ' a ' + nums[nums.length - 1] : nums.join(', '));
+    }
+
+    function pintarVisorPasos(idx, mismaLamina) {
       var v = asegurarVisorPasos();
-      var pasos = visorPasos.pasos;
-      if (!pasos.length) return;
-      visorPasos.idx = Math.max(0, Math.min(pasos.length - 1, idx));
-      var paso = pasos[visorPasos.idx];
-      var l = paso.lamina !== null ? LAMINAS.laminas[paso.lamina] : null;
-      v.querySelector('.aipv-pasos').innerHTML = pasos.map(function (p, i) {
-        return '<li class="aipv-paso' + (i === visorPasos.idx ? ' activo' : '') + (p.lamina === null ? ' sin-img' : '') +
-          '" data-aipv-paso="' + i + '" title="' + (p.lamina === null ? 'Sin lámina en los instructivos' : 'Ver la lámina de este paso') + '">' +
-          '<span class="aipv-num">' + escaparHtml(p.num) + '</span><span class="aipv-texto">' +
-          (p.codigo && /^[A-Z]{6,8}$/.test(p.codigo) ? '<span class="ai-pill-screen">' + p.codigo + '</span> ' : '') +
-          escaparHtml(p.texto.replace(new RegExp('^\\s*' + (p.codigo || '#') + '\\s*:?\\s*'), '')) + '</span></li>';
+      var grupos = visorPasos.grupos;
+      if (!grupos.length) return;
+      visorPasos.idx = Math.max(0, Math.min(grupos.length - 1, idx));
+      if (!mismaLamina) visorPasos.marcada = '';
+      var g = grupos[visorPasos.idx];
+      var l = g.lamina !== null ? LAMINAS.laminas[g.lamina] : null;
+      var lineas = l ? (l.lineas || []) : [];
+      var numeradas = lineas.filter(function (x) { return x.num; });
+      var intro = l && numeradas.length ? lineas.filter(function (x) { return !x.num; }).map(function (x) { return x.texto; }).join(' ') : '';
+      var marcada = visorPasos.marcada;
+
+      // 1. Los pasos de la lámina, con su número verde (lo mismo que se ve en la imagen).
+      v.querySelector('.aipv-lado-titulo').textContent = l ? 'En esta lámina · diap. ' + l.n : 'Sin lámina en los instructivos';
+      var pIntro = v.querySelector('.aipv-intro');
+      pIntro.hidden = !intro;
+      pIntro.textContent = intro;
+      var lista = v.querySelector('.aipv-pasos');
+      lista.hidden = !l;
+      lista.innerHTML = numeradas.length ? numeradas.map(function (x) {
+        return '<li class="aipv-paso' + (x.num === marcada ? ' activo' : '') + '" data-aipv-marca="' + escaparHtml(x.num) + '">' +
+          '<span class="aipv-num">' + escaparHtml(x.num) + '</span><span class="aipv-texto">' + escaparHtml(x.texto) + '</span></li>';
+      }).join('') : (l ? '<li class="aipv-paso sin-num"><span class="aipv-texto">' + escaparHtml(l.texto) + '</span></li>' : '');
+
+      // 2. Los pasos de la respuesta que usan esta lámina: plegados, salvo que la lámina no tenga números.
+      var resp = v.querySelector('.aipv-resp');
+      if (!mismaLamina) resp.open = !numeradas.length;
+      resp.querySelector('summary').textContent = 'En la respuesta: ' + rangoDePasos(g.pasos);
+      resp.querySelector('.aipv-resp-lista').innerHTML = g.pasos.map(function (p) {
+        var texto = p.texto.replace(new RegExp('^\\s*' + (p.codigo || '#') + '\\s*:?\\s*'), '');
+        return '<li class="aipv-resp-paso' + (p.marca && p.marca === marcada ? ' activo' : '') + '"' +
+          (p.marca ? ' data-aipv-marca="' + escaparHtml(p.marca) + '" title="Corresponde al número ' + escaparHtml(p.marca) + ' de la lámina"' : '') + '>' +
+          '<span class="aipv-resp-num">' + escaparHtml(p.num) + '.</span><span class="aipv-texto">' + escaparHtml(texto) +
+          (p.marca ? ' <span class="aipv-marca">' + escaparHtml(p.marca) + '</span>' : '') + '</span></li>';
       }).join('');
-      var activo = v.querySelector('.aipv-paso.activo');
-      if (activo && activo.scrollIntoView) activo.scrollIntoView({ block: 'nearest' });
+
+      // 3. Las láminas de la respuesta, para saltar entre ellas.
+      var nav = v.querySelector('.aipv-laminas');
+      nav.hidden = grupos.length < 2;
+      nav.innerHTML = grupos.map(function (x, i) {
+        var lx = x.lamina !== null ? LAMINAS.laminas[x.lamina] : null;
+        return '<button type="button" class="aipv-chip' + (i === visorPasos.idx ? ' activo' : '') + '" data-aipv-lamina="' + i + '"' +
+          ' title="' + escaparHtml(lx ? lx.texto : 'Sin lámina') + '">' + (lx ? 'Diap. ' + lx.n : 'Sin lámina') + '</button>';
+      }).join('');
+
       var img = v.querySelector('.aipv-img');
       var vacio = v.querySelector('.aipv-vacio');
       var ref = v.querySelector('.aipv-ref');
@@ -886,24 +1018,23 @@
       ref.hidden = !(l && l.nota);
       ref.textContent = l && l.nota ? l.nota : '';
       if (l) {
-        img.src = new URL(visorPasos.completa ? l.completa : l.src, RAIZ_REPO).href;
+        var src = new URL(visorPasos.completa ? l.completa : l.src, RAIZ_REPO).href;
+        if (img.src !== src) img.src = src;
         img.alt = l.texto;
         visor.href = new URL(l.visor, RAIZ_REPO).href;
         completa.textContent = visorPasos.completa ? 'Ver solo el recorte' : 'Ver diapositiva completa';
       }
       v.querySelector('.aipv-fuente').textContent = l ? l.fuente + ' · diap. ' + l.n : '';
-      v.querySelector('.aipv-pie').textContent = 'Paso ' + paso.num + ' de ' + pasos[pasos.length - 1].num +
+      v.querySelector('.aipv-pie').textContent = 'Lámina ' + (visorPasos.idx + 1) + ' de ' + grupos.length +
         (l ? ' · ' + l.texto : ' · sin lámina en los instructivos');
       v.querySelector('[data-aipv="ant"]').disabled = visorPasos.idx === 0;
-      v.querySelector('[data-aipv="sig"]').disabled = visorPasos.idx === pasos.length - 1;
+      v.querySelector('[data-aipv="sig"]').disabled = visorPasos.idx === grupos.length - 1;
     }
 
     function abrirVisorPasos(pasos) {
-      visorPasos.pasos = pasos;
-      var primero = 0;
-      for (var i = 0; i < pasos.length; i++) { if (pasos[i].lamina !== null) { primero = i; break; } }
+      visorPasos.grupos = gruposPorLamina(pasos);
       asegurarVisorPasos().hidden = false;
-      pintarVisorPasos(primero);
+      pintarVisorPasos(0);
     }
 
     function cerrarVisorPasos() {
@@ -911,7 +1042,7 @@
       if (v) v.hidden = true;
     }
 
-    // El visor va antes que el drawer: Esc lo cierra a él solo y las flechas recorren los pasos.
+    // El visor va antes que el drawer: Esc lo cierra a él solo y las flechas recorren las láminas.
     document.addEventListener('keydown', function (e) {
       var v = document.getElementById('ai-pasos-visor');
       if (!v || v.hidden) return;
@@ -925,14 +1056,13 @@
 
     function agregarBotonPasos(card, respuesta) {
       var pasos = pasosConLaminas(respuesta);
-      var conImagen = pasos.filter(function (p) { return p.lamina !== null; }).length;
-      if (!conImagen) return;
+      var laminas = gruposPorLamina(pasos).filter(function (g) { return g.lamina !== null; }).length;
+      if (!laminas) return;
       var caja = document.createElement('div');
       caja.className = 'ai-pasos-img';
       caja.innerHTML = '<button type="button" class="ai-btn-pasos-img">' +
-        '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 17l-5-5-7 7"></path></svg>' +
-        '<span>Ver los pasos en imágenes</span><span class="ai-btn-pasos-cuenta">' + conImagen + ' de ' + pasos.length + ' pasos</span></button>';
+        '<svg xmlns="http://www.w3.org/2000/svg" class="ic" data-icon="ui:image" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></g></svg>' +
+        '<span>Ver los pasos en imágenes</span><span class="ai-btn-pasos-cuenta">' + laminas + (laminas === 1 ? ' lámina' : ' láminas') + '</span></button>';
       caja.querySelector('button').addEventListener('click', function () { abrirVisorPasos(pasos); });
       card.appendChild(caja);
     }
@@ -946,6 +1076,7 @@
       promptInput.style.height = 'auto';
 
       var tempCard = registrarMensaje('bot', 'Consultando la base de conocimiento…');
+      tarjetaEnCurso = tempCard;
 
       // Un seguimiento corto («pero dime cuáles son») sin conversación previa: se pide el tema.
       if (!historial.length && esSeguimiento(txt) && !tieneTema(txt)) {
@@ -963,6 +1094,7 @@
       var consulta = consultaConContexto(txt, previo ? previo.tema : '');
       var res = '';
 
+      origenRespuesta = 'local';
       if (modelo === 'local-ccee') {
         await new Promise(function(resolve) { setTimeout(resolve, 280); });
         res = resolverLocal(txt, consulta);
@@ -973,11 +1105,10 @@
       historial.push({ pregunta: txt, tema: consulta.split(' ').slice(-40).join(' '), respuesta: res });
       if (historial.length > 6) historial.shift();
 
-      var estado = /no hay evidencia local suficiente/i.test(res)
-        ? 'Por confirmar'
-        : (/fuentes/i.test(res) ? 'Con fuentes' : 'Revisar evidencia');
-      tempCard.innerHTML = '<div class="ai-msg-header"><span class="ai-msg-author">Asistente CCEE</span><span class="ai-msg-tag">' + estado + '</span></div>' + renderizarTexto(res);
-      if (estado !== 'Por confirmar') agregarBotonPasos(tempCard, res);
+      var sinEvidencia = /no hay evidencia local suficiente/i.test(res);
+      var estado = sinEvidencia ? 'Por confirmar' : (origenRespuesta === 'ia' ? 'Respuesta IA · Groq' : 'Base local');
+      tempCard.innerHTML = '<div class="ai-msg-header"><span class="ai-msg-author">Asistente CCEE</span><span class="ai-msg-tag' + (origenRespuesta === 'ia' && !sinEvidencia ? ' ia' : '') + '">' + estado + '</span></div>' + renderizarTexto(res);
+      if (!sinEvidencia) agregarBotonPasos(tempCard, res);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 

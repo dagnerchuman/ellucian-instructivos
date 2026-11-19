@@ -45,6 +45,14 @@ def _cargar_asset(nombre: str) -> str:
         raise FileNotFoundError(f"Asset no encontrado: {ruta}")
     return ruta.read_text(encoding="utf-8")
 
+
+def _icono(nombre: str, tam: int) -> str:
+    """Glifo lucide escrito por icons.mjs de design-taste-frontend (assets/icons); no se dibuja a mano."""
+    svg = _cargar_asset(f"icons/ui-{nombre}.svg").strip()
+    return svg.replace(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"',
+        f'<svg xmlns="http://www.w3.org/2000/svg" class="ic" data-icon="ui:{nombre}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="{tam}" height="{tam}"', 1)
+
 CSS_MODAL = _cargar_asset("modal_guia.css")
 _JS_LOGIC = _cargar_asset("modal_guia.js")
 CSS_AI = _cargar_asset("asistente_ia.css")
@@ -246,8 +254,8 @@ def construir_navegacion_flujos(ruta_html):
         opciones_flujos.append(f'<option value="{f["url"]}"{sel}>{f["num"]:02d}. {html.escape(f["titulo"])}</option>')
     select_flujos = "\n          ".join(opciones_flujos)
 
-    chevron_izq = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>'
-    chevron_der = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>'
+    chevron_izq = _icono("chevron-left", 13)
+    chevron_der = _icono("chevron-right", 13)
     if flujo_ant:
         t = html.escape(flujo_ant["titulo"])
         btn_prev = (f'<a href="{flujo_ant["url"]}" class="flow-btn-top prev" title="Flujo anterior: {flujo_ant["num"]:02d}. {t}">'
@@ -267,7 +275,7 @@ def construir_navegacion_flujos(ruta_html):
     <nav class="flow-nav-top" aria-label="Navegación entre flujos">
       <div class="flow-nav-left">
         <a href="{url_centros}" class="btn-flow-centros" title="Volver a la galería principal de Centros Empresariales">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          {_icono("arrow-left", 14)}
           <span>Volver a Centros</span>
         </a>
         <span class="flow-nav-sep">/</span>

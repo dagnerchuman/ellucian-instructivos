@@ -471,12 +471,16 @@ def indice_asistente():
                 if not recorte:
                     continue
                 posicion[lamina_id] = len(laminas)
-                contenido = " ".join(l["texto"] for l in diapositivas.texto_diapositiva(inst["id"], d["n"]))
+                parrafos = diapositivas.texto_diapositiva(inst["id"], d["n"])
+                contenido = " ".join(l["texto"] for l in parrafos)
                 laminas.append({
                     "src": recorte, "completa": diapositivas.diapositiva(inst["id"], d["n"]),
                     "visor": f"visor_instructivos/index.html?p={inst['id']}&d={d['n']}",
                     "fuente": inst["titulo"], "n": d["n"], "texto": d["texto"], "nota": d.get("nota", ""),
                     "contenido": contenido[:600],
+                    # Los pasos con su número verde, tal como salen en la imagen: el visor del asistente los
+                    # lista al costado con el mismo número (C197).
+                    "lineas": [{"num": l["num"], "texto": l["texto"][:260]} for l in parrafos if l["texto"].strip()],
                 })
             for codigo in sorted(codigos):
                 indices = paginas.setdefault(codigo, [])

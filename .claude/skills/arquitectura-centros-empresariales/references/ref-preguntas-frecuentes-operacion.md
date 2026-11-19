@@ -29,6 +29,24 @@ La auditoría es correr **SHRROLL en modo A** (auditoría): revisa el pase a his
 ### ¿Dónde veo la nota en la historia académica del alumno?
 En **SHACRSE** › ID › periodo › Ir: muestra cada curso con su calificación, modo y horas. Ojo: SHACRSE arrastra el ID de la página anterior; cámbielo (C190). Con el periodo vacío lista toda la historia del alumno. La misma nota se ve en **SHATCKN**, que es la página que muestra el instructivo 7.1.6 (diap. 19); una corrección después del pase a historia se hace ahí (C124, C194). En **SFASLST**, después del pase, la casilla «Pasada» queda marcada (C190).
 
+### ¿Qué pasa en la historia académica cuando un alumno repite un curso? ¿Se borra la nota desaprobada?
+No se borra: Banner **incluye o excluye** cada intento según las reglas de repetidos (C200). Ejemplo explicado por Registros: desaprueba Matemática I en el periodo I y la aprueba en el periodo II; en la historia, el intento desaprobado queda marcado para **no contar en el PGA** (promedio general acumulado) y el aprobado sí cuenta. Lo marca el proceso **SHRRPTS** (Identificar cursos repetidos, GJAPCTL; instructivo 7.2.2, diap. 15 a 22) según las reglas de **SHARPTR** (Reglas de curso repetido/múltiple, por periodo y nivel: qué cursos se consideran repetidos y cuál cuenta, Primera aprobatoria, Máxima, Última o Mayor o última, y si en el PGA cuentan Todo o Seleccionado; 7.2.2, diap. 9 a 14). En **SHATCKN** cada curso muestra el indicador de repetición con las opciones **Ninguno, Excluir, Incluir e Incluir PGA**, y el **plan de estudios** al que pertenece (más a la derecha del bloque Detalle de curso); el plan sale de los currículos del alumno en **SGASTDN** (C200). Después, **SHRCGPA** calcula los promedios (7.2.2, diap. 24 a 31). Ninguno de estos procesos se ha probado aún con un NRC de los centros (U54).
+
+### ¿Cuántas veces puede llevar un alumno el mismo curso?
+Lo define el campo **Límite** (de repetición) del curso en **SCACRSE**: «la cantidad de veces que el estudiante podrá repetir las asignaturas» (instructivo 1.1.4, diap. 22, punto 17). La regla de SHARPTR decide cuál de los intentos cuenta cuando se llega a ese límite (7.2.2, diap. 11). En los cursos de los centros revisados en TEST (ESEC 00701, Basic I, Emprendimiento I) el Límite está **vacío** (C145, C146). Cuántas veces se permite en los centros sigue por confirmar (U54).
+
+### ¿Cómo calculo el PGA en GJAPCTL (SHRCGPA)?
+El PGA (promedio general acumulado) lo calcula Registros Académicos con el proceso **SHRCGPA** en **GJAPCTL**, después del cierre de periodo, del pase a historia (SHRROLL) y de marcar los repetidos (SHRRPTS) (C200; instructivo 7.2.2, diap. 24 a 34). Pasos:
+1. **GJAPCTL** › proceso `SHRCGPA` › **Ir** (diap. 25).
+2. Impresora **DATABASE** y pase al bloque de parámetros (diap. 26).
+3. **Valores de parámetro** (diap. 27): 01 periodo (R); **02 población** (R): `a` todos los alumnos del periodo, `r` solo los alumnos cuyas historias ya se pasaron, `c` los de un archivo colector; 03 identificador de selección, 04 código de aplicación y 05 ID del creador (O), solo si se corre para una selección de población.
+4. Pase al siguiente bloque, **Enviar** y **Guardar** (diap. 28): Banner da el número de proceso.
+5. ⋮ › **Relacionado** › **Revisar salida (GJIREVO)** › el archivo `.lis` › Ir (diap. 29 a 31).
+El resultado se consulta en SHATERM (ver la pregunta siguiente). No se ha corrido aún en TEST con un NRC de los centros (U54).
+
+### ¿Dónde veo el PGA (promedio general acumulado) del alumno?
+Según Registros Académicos, en **SHATERM** se ve el PGA del periodo y el global del alumno, **por plan de estudios** (C200). Que Banner lo lleve por plan de estudios depende de **SHACTRL** › «Procesar PGA por plan de estudios» (instructivo 7.1.9, diap. 19). El promedio lo calcula **SHRCGPA** después del cierre de periodo y del pase a historia (7.2.2, diap. 24 a 34). SHATERM no aparece en los instructivos de Ellucian.
+
 ### ¿Cómo asigno el docente a un NRC en SSASECT?
 SSASECT › periodo › NRC › **Ir** › pestaña «Instructor y horas de reunión». Primero el horario (bloque «Fechas de reunión»: día, hora en 24 horas sin dos puntos, por ejemplo 1530 a 1710; el indicador de sesión 01 lo pone Banner). Luego, en el bloque **Instructor**, sesión 01 › **ID** del docente › Tab: Banner trae el nombre, carga 1.000, responsabilidad 100 y marca **principal**; porcentaje de sesión 100. Guardar: «Saved successfully» (C180; instructivo 6.2.1, diap. 15 y 19). El indicador de sobrepaso del docente se marca solo si sale «Conflicto de horario del instructor» y se revisó la hoja (6.2.1, diap. 20).
 

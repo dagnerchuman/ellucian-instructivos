@@ -42,6 +42,7 @@ INSTRUCTIVOS = {
     "7.1.4": {"id": "7.1.4_Ingresar_calificaci_autoservicio", "titulo": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio"},
     "7.1.6": {"id": "7.1.6_Ingresar_calificac_backoffice", "titulo": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice"},
     "7.1.9": {"id": "7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_", "titulo": "Instructivo 7.1.9 · Procesos de cierre del periodo académico"},
+    "7.2.2": {"id": "7.2.2_Gestionar_el_promedio_de_estudiantes", "titulo": "Instructivo 7.2.2 · Gestionar el promedio de estudiantes"},
     "7.2.4": {"id": "7.2.4_Ejecucio_n_del_CAPP", "titulo": "Instructivo 7.2.4 · Ejecución del CAPP"},
     "11.2.1": {"id": "11.2.1_-_Gestionar_la_matri_cula", "titulo": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)"},
     "08-graduacion": {"id": "08_4.1.4.1.5_Inst._Validar_el_cumplimiento_de_los_requisitos_de_graduacio_n",
@@ -188,6 +189,19 @@ TEMAS = {
     "sfaslst": _l("7.1.6", (15, "SFASLST: periodo y NRC"), (16, "SFASLST: calificaciones de cada alumno"),
                   (17, "SFASLST: comentario y guardar")),
     "sfaslst_lista": _l("7.1.6", (15, "SFASLST: periodo y NRC")),
+    "shatckn": _l("7.1.6", (19, "SHATCKN: ID del alumno y periodo"), (20, "SHATCKN: detalle de curso (plan de estudios)"),
+                  (21, "SHATCKN: calificaciones del curso, la de mayor secuencia es la actual"), (22, "SHATCKN: nueva calificación y modo"),
+                  (23, "SHATCKN: razón de cambio y comentario"), (24, "SHATCKN: comentario libre"), (25, "SHATCKN: guardar la corrección")),
+    "sharptr": _l("7.2.2", (9, "SHARPTR: qué cursos cuentan como repetidos"), (10, "SHARPTR: periodo y nivel de la regla"),
+                  (11, "SHARPTR: regla del límite de repetición (Última, Máxima…)"), (12, "SHARPTR: cálculo de PGA del límite de repetición"),
+                  (13, "SHARPTR: regla de horas repetidas"), (14, "SHARPTR: cálculo de PGA de horas repetidas y guardar")),
+    "shrrpts": _l("7.2.2", (16, "SHRRPTS: ejecutar el proceso desde GJAPCTL"), (17, "SHRRPTS: impresora y parámetros"),
+                  (18, "SHRRPTS: valores de parámetro 01 a 10 (03: R reporte, U actualizar)"), (19, "SHRRPTS: enviar y guardar"),
+                  (20, "GJIREVO: revisar la salida de SHRRPTS"), (21, "GJIREVO: archivo .lis de SHRRPTS"), (22, "GJIREVO: resultados de SHRRPTS")),
+    "shrcgpa": _l("7.2.2", (25, "SHRCGPA: ejecutar el cálculo de promedios desde GJAPCTL"), (26, "SHRCGPA: impresora y parámetros"),
+                  (27, "SHRCGPA: valores de parámetro del cálculo de promedio"), (28, "SHRCGPA: enviar y guardar"),
+                  (29, "GJIREVO: revisar la salida de SHRCGPA"), (30, "GJIREVO: archivo .lis de SHRCGPA"), (31, "GJIREVO: resultados de SHRCGPA")),
+    "shactrl": _l("7.1.9", (19, "SHACTRL: procesar PGA por plan de estudios")),
     "shadegr": _l("08-grado", (23, "SHADEGR: ID y secuencia de grado"), (24, "SHADEGR: registro de grado creado"),
                   (26, "SHADEGR: el registro masivo sale del pase de calificaciones"), (27, "SHADEGR: SHRROLL crea el registro en el cierre (Deg created)")),
     "shrroll": _l("7.1.9", (22, "GJAPCTL: proceso SHRROLL"), (23, "SHRROLL: impresora y parámetros"),
@@ -453,7 +467,7 @@ EXTRA_PAGINAS = {
     "AUTOSERVICIO": ["pasar_lista", "libro", "solicitud_autoservicio", "ligas_inscripcion"],
     "FACULTY": ["pasar_lista", "libro"],
     "STVTERM": ["periodo"], "STVPTRM": ["partes"],
-    "GJAPCTL": ["shrroll"], "SHRROLL": ["shrroll"], "GJIREVO": ["shrroll"], "SHADEGR": ["shadegr"],
+    "GJAPCTL": ["shrroll", "shrrpts", "shrcgpa"], "SHRROLL": ["shrroll"], "GJIREVO": ["shrroll", "shrrpts", "shrcgpa"], "SHADEGR": ["shadegr"],
 }
 
 
@@ -496,6 +510,8 @@ def indice_asistente():
                 if posicion[lamina_id] not in indices:
                     indices.append(posicion[lamina_id])
     paginas = {k: v for k, v in paginas.items() if re.fullmatch(r"[A-Z]{6,8}|AUTOSERVICIO|FACULTY", k)}
+    # SHATERM no sale en los instructivos: su tema es una referencia para los diagramas, no la lámina de la página.
+    paginas.pop("SHATERM", None)
     return {"laminas": laminas, "paginas": paginas}
 
 

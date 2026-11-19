@@ -15,6 +15,8 @@ description: >-
 
 Este workflow guía y audita la ejecución de pruebas en el ambiente **TEST de Ellucian Banner** (`experience-test.elluciancloud.com/ussipantest`).
 
+> **Plan de Pruebas Integrales V7.0 (USS y Ellucian):** qué pruebas hay (A a H), cuáles pasaron y cuáles faltan, y la parte de los Centros Empresariales (H28 a H38), en [references/plan-pruebas-integrales-v7.md](references/plan-pruebas-integrales-v7.md). El usuario dice qué paso toca; no se ejecuta por cuenta propia (C201).
+
 > **Si el agente opera TEST con el navegador** (Claude, Antigravity u otro): primero lee [references/manejo-banner-test.md](references/manejo-banner-test.md). Ahí están el reparto «el agente deja escrito, el usuario guarda», cómo moverse entre bloques, las recetas probadas (matrícula, baja, currículo, SCAPPRQ) y las incidencias (C169).
 
 ## 1. Alcance de Pruebas de los Centros

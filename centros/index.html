@@ -3475,9 +3475,22 @@ button.ai-fab:active,
         var codigo = codigoDelPaso(paso.texto) || codigoPrevio;
         codigoPrevio = codigo;
         var pool = LAMINAS.paginas[codigo] || [];
+        var nombradas = (paso.texto.match(/\b[A-Z]{6,8}\b/g) || []).filter(function (c) { return c !== codigo && LAMINAS.paginas[c]; });
+        // GJAPCTL y GJIREVO sirven a varios procesos: el que nombra el paso (SHRROLL, SHRRPTS, SHRCGPA) elige su instructivo.
+        if (codigo === 'GJAPCTL' || codigo === 'GJIREVO') {
+          var proceso = nombradas.filter(function (c) { return /^SHR|^SMR|^TSP/.test(c); })[0];
+          if (!proceso && previo !== null) {
+            // Sin proceso nombrado, sigue el del paso anterior (mismo instructivo).
+            var mismo = pool.filter(function (i) { return LAMINAS.laminas[i].fuente === LAMINAS.laminas[previo].fuente; });
+            if (mismo.length) pool = mismo;
+          }
+          if (proceso) {
+            var delProceso = pool.filter(function (i) { return LAMINAS.paginas[proceso].indexOf(i) !== -1; });
+            if (delProceso.length) pool = delProceso;
+          }
+        }
         // Otra página nombrada en el paso («el reporte que generó SHRROLL», en un paso de GJIREVO) no elige la lámina.
-        var otras = (paso.texto.match(/\b[A-Z]{6,8}\b/g) || []).filter(function (c) { return c !== codigo && LAMINAS.paginas[c]; })
-          .map(function (c) { return c.toLowerCase().slice(0, 5); });
+        var otras = nombradas.map(function (c) { return c.toLowerCase().slice(0, 5); });
         var propias = raices(paso.texto, codigo.toLowerCase()).filter(function (r) { return otras.indexOf(r) === -1; });
         var mejor = -1, mejorPts = 0;
         pool.forEach(function (i) {
@@ -3608,6 +3621,23 @@ button.ai-fab:active,
           grupos.push({ lamina: i, pasos: [], complemento: true });
         });
       });
+      // Como máximo 12 láminas en total: si sobran, salen las agregadas más lejanas a las que usa la respuesta.
+      var MAXIMO = 12;
+      var complementos = grupos.filter(function (g) { return g.complemento; });
+      if (grupos.length > MAXIMO && complementos.length) {
+        var lejania = function (g) {
+          var l = LAMINAS.laminas[g.lamina], d = 99;
+          grupos.forEach(function (o) {
+            if (o.complemento) return;
+            var lo = LAMINAS.laminas[o.lamina];
+            if (lo.fuente === l.fuente) d = Math.min(d, Math.abs(lo.n - l.n) - (l.n > lo.n ? 0.5 : 0));
+          });
+          return d;
+        };
+        complementos.sort(function (a, b) { return lejania(b) - lejania(a); });
+        var quitar = complementos.slice(0, Math.min(complementos.length, grupos.length - MAXIMO));
+        for (var q = grupos.length - 1; q >= 0; q--) if (quitar.indexOf(grupos[q]) !== -1) grupos.splice(q, 1);
+      }
       var ordenFuente = {};
       grupos.forEach(function (g, i) {
         var f = LAMINAS.laminas[g.lamina].fuente;

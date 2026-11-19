@@ -22060,13 +22060,21 @@ button.ai-fab:active,
             if (r.contenido.indexOf(t) !== -1) pts += 1;
           });
           var l = LAMINAS.laminas[i];
-          if (pts && previo !== null && LAMINAS.laminas[previo].fuente === l.fuente && l.n >= LAMINAS.laminas[previo].n) pts += 0.5;
+          // Un procedimiento sigue en el mismo instructivo: la lámina que viene después de la del paso anterior pesa más.
+          if (pts && previo !== null && LAMINAS.laminas[previo].fuente === l.fuente) {
+            pts += l.n >= LAMINAS.laminas[previo].n ? 2 : -2;  // y no vuelve atrás por una palabra suelta (SHRROLL en la diap. 22)
+          }
           if (pts > mejorPts) { mejorPts = pts; mejor = i; }
         });
         if (mejorPts < 2) mejor = -1;  // una sola palabra suelta en el texto de la lámina no basta
         var porDescarte = mejor < 0;  // la lámina se hereda del paso anterior: no se le busca número verde (C197)
         if (mejor < 0 && pool.length) {
-          mejor = (previo !== null && pool.indexOf(previo) !== -1) ? previo : pool[0];
+          var siguiente = -1;
+          if (previo !== null) pool.forEach(function (i) {
+            var l = LAMINAS.laminas[i], lp = LAMINAS.laminas[previo];
+            if (l.fuente === lp.fuente && l.n >= lp.n && (siguiente < 0 || l.n < LAMINAS.laminas[siguiente].n)) siguiente = i;
+          });
+          mejor = siguiente >= 0 ? siguiente : pool[0];
         }
         if (mejor >= 0) previo = mejor;
         return { num: paso.num, texto: paso.texto, codigo: codigo, lamina: mejor >= 0 ? mejor : null, porDescarte: porDescarte };
@@ -22120,8 +22128,53 @@ button.ai-fab:active,
         var la = LAMINAS.laminas[a.lamina], lb = LAMINAS.laminas[b.lamina];
         return (ordenFuente[la.fuente] - ordenFuente[lb.fuente]) || (la.n - lb.n);
       });
+      completarProcedimiento(grupos);
       if (sinLamina) grupos.push(sinLamina);
       return grupos;
+    }
+
+    function tituloProcedimiento(l) {
+      // Primera línea sin número de la lámina: el nombre del procedimiento («Procesar cierre de calificaciones: Proceso masivo»).
+      var t = (l.lineas || []).filter(function (x) { return !x.num; })[0];
+      return t ? normalizar(t.texto) : '';
+    }
+
+    function completarProcedimiento(grupos) {
+      // Si la respuesta toca una lámina de un procedimiento, el visor muestra el procedimiento entero del instructivo
+      // (por ejemplo GJAPCTL › SHRROLL › enviar › GJIREVO, 7.1.9 diap. 22 a 29), no solo la lámina nombrada.
+      var usadas = {}, procs = {};
+      grupos.forEach(function (g) {
+        usadas[g.lamina] = true;
+        var l = LAMINAS.laminas[g.lamina];
+        var t = tituloProcedimiento(l);
+        if (!t) return;
+        var k = l.fuente + '|' + t;
+        (procs[k] = procs[k] || { fuente: l.fuente, titulo: t, ns: [] }).ns.push(l.n);
+      });
+      Object.keys(procs).forEach(function (k) {
+        var pr = procs[k];
+        var centro = pr.ns.reduce(function (a, b) { return a + b; }, 0) / pr.ns.length;
+        var extra = [];
+        LAMINAS.laminas.forEach(function (l, i) {
+          if (usadas[i] || l.fuente !== pr.fuente || tituloProcedimiento(l) !== pr.titulo) return;
+          extra.push(i);
+        });
+        // Como máximo 10 láminas por procedimiento, las más cercanas a las que usa la respuesta.
+        extra.sort(function (a, b) { return Math.abs(LAMINAS.laminas[a].n - centro) - Math.abs(LAMINAS.laminas[b].n - centro); });
+        extra.slice(0, Math.max(0, 10 - pr.ns.length)).forEach(function (i) {
+          usadas[i] = true;
+          grupos.push({ lamina: i, pasos: [], complemento: true });
+        });
+      });
+      var ordenFuente = {};
+      grupos.forEach(function (g, i) {
+        var f = LAMINAS.laminas[g.lamina].fuente;
+        if (!(f in ordenFuente)) ordenFuente[f] = i;
+      });
+      grupos.sort(function (a, b) {
+        var la = LAMINAS.laminas[a.lamina], lb = LAMINAS.laminas[b.lamina];
+        return (ordenFuente[la.fuente] - ordenFuente[lb.fuente]) || (la.n - lb.n);
+      });
     }
 
     function asegurarVisorPasos() {
@@ -22210,6 +22263,7 @@ button.ai-fab:active,
 
       // 2. Los pasos de la respuesta que usan esta lámina: plegados, salvo que la lámina no tenga números.
       var resp = v.querySelector('.aipv-resp');
+      resp.hidden = !g.pasos.length;  // lámina del mismo procedimiento que la respuesta no nombró
       if (!mismaLamina) resp.open = !numeradas.length;
       resp.querySelector('summary').textContent = 'En la respuesta: ' + rangoDePasos(g.pasos);
       resp.querySelector('.aipv-resp-lista').innerHTML = g.pasos.map(function (p) {
@@ -22239,8 +22293,12 @@ button.ai-fab:active,
       vacio.hidden = !!l;
       completa.hidden = !l;
       visor.hidden = !l;
-      ref.hidden = !(l && l.nota);
-      ref.textContent = l && l.nota ? l.nota : '';
+      // La nota de la lámina viene de un diagrama; solo se muestra si la respuesta nombra la página de la que habla.
+      var textoResp = grupos.map(function (x) { return x.pasos.map(function (p) { return p.texto; }).join(' '); }).join(' ');
+      var codigosNota = l && l.nota ? (l.nota.match(/\b[A-Z]{6,8}\b/g) || []) : [];
+      var notaVale = !!(l && l.nota) && (!codigosNota.length || codigosNota.some(function (c) { return textoResp.indexOf(c) !== -1; }));
+      ref.hidden = !notaVale;
+      ref.textContent = notaVale ? l.nota : '';
       if (l) {
         var src = new URL(visorPasos.completa ? l.completa : l.src, RAIZ_REPO).href;
         if (img.src !== src) img.src = src;

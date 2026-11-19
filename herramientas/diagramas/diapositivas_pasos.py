@@ -46,6 +46,7 @@ INSTRUCTIVOS = {
     "11.2.1": {"id": "11.2.1_-_Gestionar_la_matri_cula", "titulo": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)"},
     "08-graduacion": {"id": "08_4.1.4.1.5_Inst._Validar_el_cumplimiento_de_los_requisitos_de_graduacio_n",
                       "titulo": "Instructivo 8 · Validar el cumplimiento de los requisitos de graduación"},
+    "08-grado": {"id": "08_4.4.4.1.5_Inst._Gestionar_el_otorgam._y_regist._de_grado", "titulo": "Instructivo 4.4.4.1.5 · Otorgamiento y registro de grado"},
 }
 
 
@@ -120,6 +121,9 @@ TEMAS = {
                   (35, "SHATRNS: institución de procedencia"), (36, "SHATRNS: periodo de asistencia"),
                   (37, "SHATAEQ: asignaturas convalidadas")),
     # Ligas
+    "scacrse": _l("1.1.4", (20, "SCACRSE: materia, curso y periodo"), (21, "SCACRSE: título, escuela, departamento y estatus"),
+                  (22, "SCACRSE: créditos, cobro y horas"), (23, "SCACRSE: nivel del curso"),
+                  (24, "SCACRSE: modo de calificar"), (25, "SCACRSE: tipo de horario")),
     "scacrse_ligas": _l("5.3-ligas", (11, "Premisa: el curso tiene más de un tipo de horario en SCACRSE"),
                         (12, "Premisa: horas crédito del NRC teórico")),
     "ssasect_sobrepaso_docente": _l("6.2.1", (19, "Indicador de sobrepaso del docente"),
@@ -184,8 +188,13 @@ TEMAS = {
     "sfaslst": _l("7.1.6", (15, "SFASLST: periodo y NRC"), (16, "SFASLST: calificaciones de cada alumno"),
                   (17, "SFASLST: comentario y guardar")),
     "sfaslst_lista": _l("7.1.6", (15, "SFASLST: periodo y NRC")),
+    "shadegr": _l("08-grado", (23, "SHADEGR: ID y secuencia de grado"), (24, "SHADEGR: registro de grado creado"),
+                  (26, "SHADEGR: el registro masivo sale del pase de calificaciones"), (27, "SHADEGR: SHRROLL crea el registro en el cierre (Deg created)")),
     "shrroll": _l("7.1.9", (22, "GJAPCTL: proceso SHRROLL"), (23, "SHRROLL: impresora y parámetros"),
-                  (25, "SHRROLL: enviar y guardar"), (27, "Revisar la salida en GJIREVO")),
+                  (24, "SHRROLL: valores de parámetro 01 a 10 (07: A auditoría, U actualizar)"),
+                  (25, "SHRROLL: enviar y guardar"), (26, "GJAPCTL: número de proceso (job) asignado"),
+                  (27, "Revisar la salida en GJIREVO"), (28, "GJIREVO: elegir el archivo .lis del job"),
+                  (29, "GJIREVO: resultados del pase a historia")),
     "smarqcm": _l("7.2.4", (30, "SMARQCM: ID del alumno"), (32, "SMARQCM: nueva solicitud de cumplimiento"),
                   (33, "SMARQCM: parámetros heredados de SMADFLT"), (41, "SMARQCM: abrir los resultados en SMICRLT")),
     "smicrlt": _l("7.1.9", (61, "SMICRLT: alumno y solicitud"), (64, "SMICRLT: programa y catálogo con que se evaluó"),
@@ -444,7 +453,7 @@ EXTRA_PAGINAS = {
     "AUTOSERVICIO": ["pasar_lista", "libro", "solicitud_autoservicio", "ligas_inscripcion"],
     "FACULTY": ["pasar_lista", "libro"],
     "STVTERM": ["periodo"], "STVPTRM": ["partes"],
-    "GJAPCTL": ["shrroll"], "SHRROLL": ["shrroll"], "GJIREVO": ["shrroll"],
+    "GJAPCTL": ["shrroll"], "SHRROLL": ["shrroll"], "GJIREVO": ["shrroll"], "SHADEGR": ["shadegr"],
 }
 
 

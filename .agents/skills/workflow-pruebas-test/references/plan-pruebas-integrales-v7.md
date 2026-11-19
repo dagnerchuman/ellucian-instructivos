@@ -31,9 +31,11 @@ No se copian aquí las hojas con datos de alumnos («Estudiantes», «Val Estudi
 | B4 | Pase a historia | SFASLST, SHRROLL | Exitoso | C199 (NRC 10173, «Pasada» marcada, «Deg Created») |
 | B5 | Verificación de cursos repetidos | SHRRPTS | Exitoso | C200; instructivo 7.2.2, diap. 15 a 22 |
 | B6 | Cálculo del promedio (PGA) | SHRCGPA (GJAPCTL) | **Pendiente** | 7.2.2, diap. 24 a 31; parámetro 02: `a`, `r` o `c` |
-| B7 | CAPP masivo o individual | SMRBCMP, SMARQCM | **Pendiente** | 7.1.9 (SMRBCMP); 7.2.4 (SMARQCM, resultado en SMICRLT) |
+| B7 | CAPP masivo o individual | SMRBCMP, SMARQCM | **En curso** (19/11: SMRBCMP en modo P con `POB_CICLO_B`, periodo 202744, C204) | 7.1.9 (SMRBCMP); 7.2.4 (SMARQCM, resultado en SMICRLT) |
 | B8 | Proyecciones | SFPPROJ | **Pendiente** | por cargar en la base |
 | B9 | Validación de promedios y proyecciones | SHATERM | **Pendiente** | C200 (PGA global y por plan de estudios) |
+
+**Selección de población de la prueba B:** el 19/11/2026 Registros cargó por CSV la selección `POB_CICLO_B` (aplicación `STUDENT`) con 11 alumnos, sin duplicados ni inválidos (C203). Pasos en `arquitectura-centros-empresariales/references/ref-preguntas-frecuentes-operacion.md`. Se usó en B7 (SMRBCMP, modo P, C204); por confirmar si también en B6 (SHRCGPA, parámetros 03 a 05).
 
 El orden de fin de periodo se repite en D, E, F y G: SGAMSTU (ingresante a regular) › **SHRRPTS** › **SHRCGPA** › **SMRBCMP / SMARQCM** › **SFPPROJ** › **SHATERM** (promedios, estados académicos y proyecciones).
 

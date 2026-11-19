@@ -42,6 +42,7 @@ INSTRUCTIVOS = {
     "7.1.4": {"id": "7.1.4_Ingresar_calificaci_autoservicio", "titulo": "Instructivo 7.1.4 · Ingresar calificaciones por autoservicio"},
     "7.1.6": {"id": "7.1.6_Ingresar_calificac_backoffice", "titulo": "Instructivo 7.1.6 · Ingresar calificaciones por backoffice"},
     "7.1.9": {"id": "7.1.9_Ejecutar_procesos_de_cierre_de_per_acade_", "titulo": "Instructivo 7.1.9 · Procesos de cierre del periodo académico"},
+    "7.1.10": {"id": "7.1.10_Generar_Selecciones_de_Poblacio_n", "titulo": "Instructivo 7.1.10 · Generar selecciones de población"},
     "7.2.2": {"id": "7.2.2_Gestionar_el_promedio_de_estudiantes", "titulo": "Instructivo 7.2.2 · Gestionar el promedio de estudiantes"},
     "7.2.4": {"id": "7.2.4_Ejecucio_n_del_CAPP", "titulo": "Instructivo 7.2.4 · Ejecución del CAPP"},
     "11.2.1": {"id": "11.2.1_-_Gestionar_la_matri_cula", "titulo": "Instructivo 11.2.1 · Gestionar la matrícula (cobros)"},
@@ -209,6 +210,31 @@ TEMAS = {
                   (25, "SHRROLL: enviar y guardar"), (26, "GJAPCTL: número de proceso (job) asignado"),
                   (27, "Revisar la salida en GJIREVO"), (28, "GJIREVO: elegir el archivo .lis del job"),
                   (29, "GJIREVO: resultados del pase a historia")),
+    # Selección de población (7.1.10, C202): GLRAPPL › GLRSLCT › carga manual (GLAEXTR), por CSV
+    # (GJAJFLU sube el archivo, GJRPSIM carga los ID) o por reglas (GLRSLCT + GLBDATAJ); se revisa en GLAEXTR.
+    "glrappl": _l("7.1.10", (9, "GLRAPPL: crear el código de aplicación (ej. CAPP)"), (10, "GLRAPPL: descripción y origen de datos (student)")),
+    "glrslct": _l("7.1.10", (11, "GLRSLCT: crear el ID de selección con su aplicación"), (12, "GLRSLCT: descripción de la selección")),
+    "glaextr_manual": _l("7.1.10", (14, "GLAEXTR: aplicación, ID de selección y creador"), (15, "GLAEXTR: agregar los ID a mano y guardar")),
+    "gjajflu": _l("7.1.10", (17, "Carga por CSV: se parte de una selección de GLRSLCT"), (18, "GJAJFLU: elegir el trabajo GJRPSIM"),
+                  (19, "GJAJFLU: cargar el archivo .csv, guardar y anotar la ruta")),
+    "gjrpsim": _l("7.1.10", (20, "GJRPSIM: ejecutar el proceso desde GJAPCTL"), (21, "GJRPSIM: impresora DATABASE"),
+                  (22, "GJRPSIM: valores de parámetro 01 a 09 (06: nombre del .csv)"),
+                  (23, "GJRPSIM: tabla de parámetros (S/M, I/P, depurar Y/N)"), (24, "GJRPSIM: enviar y guardar")),
+    "glaextr_revision": _l("7.1.10", (25, "GLAEXTR: verificar los ID cargados por CSV (aplicación, selección y creador)"), (37, "GLAEXTR: revisar la selección generada por reglas")),
+    "glrslct_reglas": _l("7.1.10", (27, "GLRSLCT: regla Seleccionar SORLCUR_PIDM De SORLCUR"), (28, "GLRSLCT: buscar el elemento de datos"),
+                         (29, "GLRSLCT: elegir SORLCUR_PROGRAM"), (30, "GLRSLCT: condición programa = valor y guardar"),
+                         (31, "GLRSLCT: cerrar la página después de guardar")),
+    "glbdataj": _l("7.1.10", (32, "GLBDATAJ: ejecutar la extracción desde GJAPCTL"), (33, "GLBDATAJ: impresora DATABASE y parámetros 01, 06, 07 y 08"),
+                   (34, "GLBDATAJ: tabla de parámetros (el título de la lámina dice GJRPSIM)"), (35, "GLBDATAJ: enviar y guardar"),
+                   (36, "GJIREVO: cuántos ID seleccionó GLBDATAJ")),
+    # CAPP masivo (C204): SMRBCMP en GJAPCTL, en modo P sobre una selección de población (7.2.4, diap. 43 a 53).
+    "smrbcmp": _l("7.2.4", (43, "SMRBCMP: ejecutar el CAPP masivo desde GJAPCTL"), (44, "SMRBCMP: impresora DATABASE"),
+                  (45, "SMRBCMP: ver los 20 parámetros (ampliar registros por página)"),
+                  (46, "SMRBCMP: parámetros 01 a 10 (02: P población, C compilación, H impresión)"),
+                  (47, "SMRBCMP: parámetros 11 a 20 (12 N, 17 N, 19 BATCH, 20 N)"), (48, "SMRBCMP: pasar al bloque de envío"),
+                  (49, "SMRBCMP: enviar y guardar"), (50, "SMRBCMP: número de proceso asignado"),
+                  (51, "GJIREVO: revisar la salida de SMRBCMP"), (52, "GJIREVO: archivo .lis de SMRBCMP (puede tardar)"),
+                  (53, "GJIREVO: resultados de SMRBCMP")),
     "smarqcm": _l("7.2.4", (30, "SMARQCM: ID del alumno"), (32, "SMARQCM: nueva solicitud de cumplimiento"),
                   (33, "SMARQCM: parámetros heredados de SMADFLT"), (41, "SMARQCM: abrir los resultados en SMICRLT")),
     "smicrlt": _l("7.1.9", (61, "SMICRLT: alumno y solicitud"), (64, "SMICRLT: programa y catálogo con que se evaluó"),
@@ -467,7 +493,9 @@ EXTRA_PAGINAS = {
     "AUTOSERVICIO": ["pasar_lista", "libro", "solicitud_autoservicio", "ligas_inscripcion"],
     "FACULTY": ["pasar_lista", "libro"],
     "STVTERM": ["periodo"], "STVPTRM": ["partes"],
-    "GJAPCTL": ["shrroll", "shrrpts", "shrcgpa"], "SHRROLL": ["shrroll"], "GJIREVO": ["shrroll", "shrrpts", "shrcgpa"], "SHADEGR": ["shadegr"],
+    "GJAPCTL": ["shrroll", "shrrpts", "shrcgpa", "smrbcmp", "gjrpsim", "glbdataj"], "SHRROLL": ["shrroll"], "GJIREVO": ["shrroll", "shrrpts", "shrcgpa", "smrbcmp", "glbdataj"], "SHADEGR": ["shadegr"],
+    "GLAEXTR": ["glaextr_manual", "glaextr_revision"], "GLRSLCT": ["glrslct", "glrslct_reglas"],
+    "GJAJFLU": ["gjajflu"], "GJRPSIM": ["gjrpsim"], "GLBDATAJ": ["glbdataj"], "GLBDATA": ["glbdataj"], "GLRAPPL": ["glrappl"],
 }
 
 
@@ -500,6 +528,8 @@ def indice_asistente():
                     "src": recorte, "completa": diapositivas.diapositiva(inst["id"], d["n"]),
                     "visor": f"visor_instructivos/index.html?p={inst['id']}&d={d['n']}",
                     "fuente": inst["titulo"], "n": d["n"], "texto": d["texto"], "nota": d.get("nota", ""),
+                    # El tema curado: el visor completa con él un procedimiento cuyas láminas no traen título (SMRBCMP; C204).
+                    "tema": tema,
                     "contenido": contenido[:600],
                     # Los pasos con su número verde, tal como salen en la imagen: el visor del asistente los
                     # lista al costado con el mismo número (C197).

@@ -15,6 +15,14 @@ description: >-
 
 Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salida. Si cambia un dato o un paso, se cambia la fuente y se regenera.
 
+## Mapa de la skill: abre solo el archivo que necesitas
+
+| Si necesitas… | Abre |
+|---|---|
+| Regenerar los diagramas (`generar.py`) y los errores de Archify que ya se aprendieron | [references/regenerar-y-reglas-archify.md](references/regenerar-y-reglas-archify.md) |
+| Qué diagramas tiene cada centro y cómo está ordenada la galería por fases | [references/diagramas-por-centro.md](references/diagramas-por-centro.md) |
+| Láminas de los instructivos en cada paso, números verdes, «Pasos en imágenes» del asistente (`diapositivas_pasos.py`) | [references/diapositivas-y-laminas.md](references/diapositivas-y-laminas.md) |
+
 ## Dónde está cada cosa
 | Qué | Dónde |
 |---|---|
@@ -35,60 +43,6 @@ Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salid
 2. **Un solo código por paso.** El título del nodo es una sola página de Banner (`SSASECT`) o, fuera de Banner, un solo término (`Oficio`, `Autoservicio`). Debajo va la acción (verbo + objeto) y en la etiqueta el dato de TEST. Nunca «SCACRSE · SMAAREA».
 3. **Un solo término por concepto** (`TERMINOS` en `plantillas.py`): alumno (no participante ni estudiante), NRC (no sección ni grupo), parte (X07), matrícula (no inscripción), cupo (no vacante), pase a historia (no cierre de actas), retención, carga lectiva.
 
-## Diagramas por centro
-| N.º | Tema | Tipo Archify |
-|---|---|---|
-| 0 | **Demostraciones para reuniones** (`datos.json › demostraciones`): un caso real de TEST en el orden curso › NRC › docente › fórmula › alumno, con su guion. Van primero (`00-demostracion-…`) y la galería les da su grupo. Hoy: Computación, «Demostración 1 · Diseño Web de punta a punta (NRC 10044)» (C134) | workflow |
-| 0 | **Prueba en TEST de una demostración** (`demostraciones › ejemplo_prueba_2`): su propio flujo, `00-demostracion-N-prueba-nrc-<NRC>`, justo después de la demostración (C192). Una fila por fase (`fases`), un nodo por paso con su `etiqueta` y sus `laminas`; al abrir el paso, su tabla (`tabla`, más «Banner respondió» y la `nota`), «Así quedó en TEST» con las `capturas` (mismo visor con zoom de las láminas) y «Así se ve en Banner». Hoy: NRC 10045, 14 pasos | workflow |
-| 0 | El mismo flujo en los tres centros (`centros/comun`) | workflow |
-| 1 | Recorrido completo: quién hace cada paso (alumno, asistente, jefe, Banner, docente, Registros, Vicerrectorado) | sequence |
-| 2 | Crear el NRC (SOATERM → SCACRSE → SSASECT ×3 → SSASECQ) | workflow |
-| 3 | Carga lectiva (SIAINST → SSASECT → SIAASGN → Oficio → Resolución) | workflow |
-| 4 | Persona y admisión (GOAMTCH → SAAQUIK → SGASTDN) | workflow |
-| 5 | Matrícula en el NRC (SSASECQ → SFAREGS → TSAAREV → SFASLST) | workflow |
-| 6 | Notas y pase a historia, flujo probado con el NRC 10044 (SHAEGBC → SHAGCOM → SOAATRK → Autoservicio: pasar lista → Autoservicio: notas → SFASLST → SHRROLL). Los datos de la prueba salen de `datos.json › flujo_notas_test` | workflow |
-| 7 | Solo si el centro tiene `ligas` en `datos.json` (hoy, Idiomas): Ligas, NRC teórico + club (SCACRSE → SSASECT ×2 → SSADETL → SFAREGS) | workflow |
-| 7 u 8+ | Un script por diagrama: **todos los que aplican al centro** (no van los «no aplica» ni los «por definir»), agrupados por fase y en el orden del proceso: `datos.json › casuisticas` tiene `periodo`, `matricula` y `notas` (C113) | workflow |
-
-**Datos de Computación en otros centros (C113):** las plantillas de los scripts (`CASOS`, `EXTRA_CASOS`) traen los datos con que se probó en Computación. En Idiomas y Emprendimiento, `plantillas.caso()` quita la etiqueta del paso si trae un dato de esas pruebas (`RE_DATO_COMPUTACION`: alumnos S005…, NRC 10xx, CMEMC…, jobs, docente) o la escala vigesimal donde la escala es otra (`RE_ESCALA_V`), y la guía de Excel se muestra como «Referencia: así se probó en Computación (TEST)». Los casos que en un centro son otra cosa tienen flujo propio y no llevan esa guía (`CASO_PROPIO`: Idiomas 02, 05 y 10). El 13 y el 19 toman la escala del centro (`escala_calificacion`).
-
-## Galería ordenada por fases
-`centros/index.html` y las tablas de los README muestran cada centro en cuatro grupos: **Flujos base** (1 a 6, más ligas), **Abrir el periodo**, **Matrícula** y **Notas y cierre**. La fase de cada script sale de `datos.json › casuisticas`; para mover un script de fase o de orden, se cambia allí y se regenera con imágenes.
-
-`generar.py` borra solo las carpetas `NN-tema` que ya no corresponden a ninguna plantilla (no toca `anterior-…`).
-
-## Regenerar
-```bash
-bash herramientas/diagramas/instalar_archify.sh            # una vez por máquina o sesión
-python3 herramientas/diagramas/generar.py                  # todo: 84 diagramas (JSON + HTML + índices, sin imágenes)
-python3 herramientas/diagramas/generar.py idiomas --solo 4 # un diagrama de un centro
-python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar también PNG y SVG (lento)
-```
-- Cada diagrama pasa por `archify finalize` con calidad *showcase*: esquema, geometría, legibilidad, revisión estricta y prueba en Chromium.
-- Si falla, `generar.py` imprime el diagnóstico y el arreglo sugerido. Corrige la plantilla, no el HTML.
-- En Windows (Antigravity) funciona igual con `python` y `node`. Para la prueba en navegador, define `ARCHIFY_CHROME` con la ruta de Chrome. En la nube de Claude Code: `ARCHIFY_CHROME=/opt/pw-browsers/chromium-*/chrome-linux64/chrome`; sin esa variable, `finalize` falla y deja HTML incompletos (no los subas: `git checkout -- centros/*/diagramas`).
-- Si cambia la numeración (se agrega, quita o reordena una casuística), regenera **con imágenes**: las carpetas nuevas no traen PNG ni SVG y la galería las muestra vacías.
-- **Requisito Playwright para `--con-imagenes`** (C176): en la Mac del usuario no está instalado. Se instala fuera del repositorio (`PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install playwright` en el scratchpad) y se exporta con `NODE_PATH=<carpeta>/node_modules node herramientas/diagramas/exportar.mjs <html>`; usa el Google Chrome del sistema.
-- **Archify acepta columnas 0 a 5** (`col` y `toCol` ≤ 5, C176): con más pasos, dos o tres comparten columna en carriles distintos. En la Demostración 1, SFAREGS, Autoservicio y SHRROLL van en la columna 5 y la fase «Matricular, dictar y cerrar» empieza en la columna de SFAREGS.
-- **`mainPath` no puede volver a una columna anterior** (C192): un flujo en renglones (una fila por fase, cada una desde la columna 0) va sin `mainPath` (`flujo(..., camino_principal=False)`) y la flecha que baja de una fila a la siguiente lleva `fromSide: bottom` y `toSide: top`; si no, Archify da «moves backward» y «ambiguous-corridor». Así está el flujo de la prueba del NRC 10045.
-- **Requisito `python-pptx`** (`pip install python-pptx`): sin él, `generar.py` deja **vacías las líneas de las láminas** en las guías de los diagramas, sin avisar (`texto_diapositiva` devuelve `[]`). En la Mac del usuario faltaba (30/10/2026, C171); revisa el diff de `GUIA_MAP` antes de subir. Si además cambian las WebP de `visor_instructivos/diapositivas` sin haber tocado los instructivos, son recodificaciones: `git checkout -- visor_instructivos`.
-- **Si solo cambió el asistente** (`assets/asistente_ia.js`), no hace falta regenerar todo: reemplaza en cada `centros/**/*.html` el bloque anterior del asistente (el de `git show HEAD:herramientas/diagramas/assets/asistente_ia.js`) por el nuevo, y ejecuta `python3 herramientas/diagramas/generar_conocimiento_asistente.py` para la base (C171).
-
-## Reglas de Archify aprendidas (para no romper la validación)
-- **Rejilla:** columnas `0..5` en flujos y `0..4` en estados (lifecycle, con 4 carriles como máximo). Un nodo por carril y columna; para apilar dos, usa `yOffset` (±46).
-- **Textos:**
-  - título del nodo de hasta unos 20 caracteres con `ancho=140`;
-  - las etiquetas (`tag`) cortas: no caben más de unos 38 caracteres;
-  - etiquetas de flecha de 1 a 3 palabras.
-- **Tamaño:**
-  - **ancho** total ≤ 1240 px (≤ 1162 si hay texto de 7,5 px);
-  - **alto:** si el lienzo es alto y angosto, ensánchalo (nodos más anchos) o agrega una pila con `yOffset`, que activa el desplazamiento vertical.
-- **Flechas:**
-  - ni cruces ni corredores compartidos;
-  - primero deja la ruta automática; fija `fromSide`/`toSide` solo cuando haga falta;
-  - si Archify dice que una ruta fijada es inviable, quita el lado que indica.
-- **Secuencia:** ancho ≤ 1085 px y relación ancho/alto ≥ 1,55; mensajes cada 28 px, sin notas (se superponen con la etiqueta siguiente). Lo que hace cada paso va en la tarjeta «Qué hace cada paso».
-
 ## Reglas del proyecto que los diagramas cumplen
 - **El centro siempre visible:** en el nombre del archivo, en el título («Centro de Computación · 2. …») y en el subtítulo (nivel, programa, materia, grupos). Nunca un diagrama «de los tres» con datos de uno solo.
 - **Autor:** «Elaborado por: Dagner Anibal Chuman Lluen» en el subtítulo.
@@ -96,36 +50,9 @@ python3 herramientas/diagramas/generar.py --con-imagenes   # opcional: exportar 
 - **No inventar códigos:** lo que no está en `datos.json` se muestra «por confirmar». Los datos de ejemplo se marcan «(ejemplo)».
 - **Interfaz en español:** `meta.locale = "es"` con el catálogo `examples/locales/es.json` de Archify.
 
-## Diapositivas en cada paso de la guía (ADR-022)
-- `python3 herramientas/diapositivas.py` convierte los instructivos a WebP en `visor_instructivos/diapositivas/<id>/` (solo los que faltan o cambiaron; `--solo <texto>` para uno). El visor las usa en lugar del PPTX.
-- **Qué lámina va en cada paso (C112):** `herramientas/diagramas/diapositivas_pasos.py`. `INSTRUCTIVOS` da el `<id>` de cada instructivo; `TEMAS` agrupa las láminas por tema (`ssasect_crear`, `sfaregs_retiro`, `pasar_lista`…); `BASE` asigna temas a los pasos de los flujos base (`crear-el-nrc` › `s1`…) y `REGLAS` a los pasos de las casuísticas según la pantalla y palabras de la fase o el hito (por ejemplo, SFAREGS con «retiro» → `sfaregs_retiro`). Una guía también puede traer su propia lista `"diapositivas": [{"instructivo": "5.3", "n": 21}]`, que manda sobre las reglas.
-- **Recorte:** `inyectar_modales.py` llama a `diapositivas.recorte()`, que guarda `recortes/NNN.webp` y su firma `NNN.caja`. La caja sale de la posición de los elementos de la lámina (`caja_contenido`): sin título, banda lateral ni pie. Si un recuadro desborda su forma, el borde de abajo baja; si un borde parte las letras de un título, lo baja hasta una fila limpia o mete el título entero. Si cambias la forma de recortar, sube `VERSION_RECORTE` para rehacer todos.
-- Si aun así una lámina sale mal, agrega `"caja": [izquierda, arriba, derecha, abajo]` (proporciones) a esa diapositiva. Ese recorte se guarda aparte (`NNN-<caja>.webp`) para no pisar el automático, que otros pasos pueden usar con la misma lámina. Hoy ninguna lámina lo necesita. Revisa los recortes con una hoja de contacto antes de subirlos.
-- **Cómo se ve (C110):** fila de láminas con ‹ ›, barra visible y rueda horizontal. Al ampliar: imagen en 3/4 y, a la izquierda, «Su guía»: la fila cuyo campo es un paso numerado de la lámina lleva **el mismo número verde de la captura** (`inyectar_modales._marcas`, C111); las demás llevan círculo y ✓ al validarse. Para evitar un número equivocado, usa `"sin_marca": [campo]` en la diapositiva. El texto numerado de la lámina (`diapositivas.texto_diapositiva`) va plegado en «Ver el texto de la diapositiva»: ya se lee en la imagen.
-- **Cobertura (C114):** todos los pasos en Banner de los 84 diagramas tienen lámina. Las páginas que no salen en ningún instructivo (SSASECQ, SHATFAC, SHASMRY, SHATERM, SMIPOUT) usan una lámina de **referencia** con su nota (`_ref(nota, láminas)` en `TEMAS`; el modal la muestra en una franja ámbar). Un paso sin lámina recibe `sin_lamina` en `inyectar_modales._resolver_diapositivas` y el modal explica el motivo (hoy solo los 12 pasos fuera de Banner). Para un tema nuevo, busca las láminas con `buscar_instructivos.py`, agrégalas a `TEMAS` y enlázalas en `BASE` o `REGLAS`.
-- **Recorrido completo (C114):** la guía de cada actor sale de `plantillas.guia_recorrido()` (pasos que hace o recibe, en orden) y sus láminas de `diapositivas_pasos.RECORRIDO`.
-- **Asistente (C114):** `generar.py` escribe `assets/asistente_diapositivas.js` (`diapositivas_pasos.escribir_indice_asistente()`): las láminas por página de Banner. Debajo de una respuesta con pasos, el asistente muestra «Ver los pasos en imágenes» y elige la lámina de cada paso por su página y las palabras del texto.
-- **Memoria del asistente (C117):** `asistente_ia.js` guarda `historial` (pregunta, tema y respuesta). `consultaConContexto()` une la pregunta al tema anterior si es un seguimiento (`esSeguimiento()`: «y», «pero», «eso», «cuáles son», «dime»…) o si es corta y sola no encuentra evidencia; `turnosPrevios()` manda a Groq los 3 últimos turnos. Al cambiar la búsqueda (`recuperarEvidencia`, `sinonimosBusqueda`), compara las fuentes de un banco de preguntas antes y después: ninguna respuesta que ya funcionaba debe perder su fuente.
-- **«Para estudiar» (antes «Antes del NRC», C142, C192 y C193):** una demostración con `antes_del_nrc` en `datos.json` muestra arriba del diagrama una sección plegable, cerrada por defecto, con **tres pestañas** hechas con radios y CSS: «Orden antes del NRC» (`orden`), «Preguntas para estudiar» (`preguntas` numeradas, cada una cerrada hasta dar clic, más los fundamentos de SOATERM) y «Prueba en TEST». La pestaña 3 trae **el flujo de Archify de la prueba** (copia del SVG de `00-demostracion-N-prueba-nrc-<NRC>`, `inyectar_modales._svg_prueba`): sin los `data-*` que leen Archify y la guía, con ids `pr-…` y `data-prueba-paso` en cada nodo. Un clic (o Enter) abre la ficha del paso en un **modal de la misma página** (`#prueba-modal` en `modal_guia.js`, datos en `window.__PRUEBA_GUIA`): fila de los 14 pasos, «Así quedó en TEST», la tabla y «Así se ve en Banner», con Anterior y Siguiente; el visor ampliado recorre los pasos de la prueba (`abrirVisorDiapo(lista, idx, {paso, mapa, irA})`). Por eso el flujo de la prueba se genera **antes** que la demostración (`demostraciones_de`). Pedido del usuario (C193): sin tarjetas, sin botón «Ver la prueba paso a paso», sin el texto de avance, sin el enlace al diagrama y sin la línea «Fuente» al pie. Las tarjetas de Archify solo aceptan listas de texto; por eso las tablas se inyectan aparte.
-- **Diapositiva completa, zoom y lupa (C139):** los visores (guía y asistente) abren la lámina completa; «Ver recorte» alterna. `assets/zoom_imagen.js` (`window.CCEEZoom(img)`) envuelve la imagen y atiende rueda, pellizco (ctrl + rueda y el gesto de Safari), arrastre, doble clic, botones − 100 % + y Lupa, solo sobre la imagen, para que la página no se agrande. `inyectar_modales.py` e `indices.py` lo incrustan con su CSS. Como el visor atiende sus clics en la captura de `window`, los botones `[data-zi]` se envían a `img.__cceeZoom.accion()` desde `clicEnVisor`. Tope 4×: las láminas miden 1600 px.
-- **Recorrido automático (C116):** `modal_guia.js › iniciarRecorrido()` abre los pasos con `irAPaso(paso, true)` cada N segundos (`#sel-recorrido-seg`); el control flotante `#recorrido-flotante` atiende el clic en la fase de captura de `window`, porque Archify cierra el paso con un clic fuera de la guía. En pantalla completa, `ajustarGuiaPresentacion()` sube la guía hasta la leyenda.
-- **Avanzar no pide validar (C193):** los ✓ de la guía («Validar todo», un ✓ por fila) son solo una ayuda; «Siguiente», los pasos de arriba y `irAPaso` avanzan sin el aviso «¿Pasar sin validar?», que se quitó a pedido del usuario.
-- **Auditoría:** antes de subir, abre cada diagrama en Chromium y haz clic en cada paso: debe haber filas de guía, láminas que cargan (o el aviso de paso fuera de Banner) y ningún error de JavaScript.
-
 ## Tono de las guías y del asistente (pedido del usuario, 24/10)
 - **Guías paso a paso:** lenguaje profesional, imperativo formal (ingrese, pulse, verifique), sin emojis, sin exclamaciones ni palabras completas en mayúsculas. Cada fila cita su fuente (C##, U##, instructivo y diapositiva).
 - **Asistente:** responde primero en una o dos oraciones; luego, si aplica, «Pasos» numerados con la página de Banner al inicio de cada paso, «Validado en TEST», «Según el instructivo» y «Por confirmar». Siempre con fuentes; sin evidencia local, no consulta al modelo (ADR-021).
-
-## Láminas de cada paso (ADR-022)
-- **Todo paso lleva su lámina**, también la situación (`c0`) y el resultado (`cr`) de las casuísticas, y nunca la misma que otro paso del diagrama. Se definen en `herramientas/diagramas/diapositivas_pasos.py`: `TEMAS` (láminas por tema), `BASE` (flujos base), `REGLAS` (casuísticas, por página y fase) y `SCRIPTS` (láminas propias de un paso, del caso y del resultado).
-- **Paso fuera de Banner** (intranet, Vicerrectorado, plataforma): lámina de referencia con `_ref(nota, …)`, que dice dónde se ve en Banner lo que ese paso revisa o aprueba.
-- **Cada fila de la guía con el nombre del campo de la lámina**, en el orden de la lámina: así toma el mismo número verde de la imagen. Si una fila toma un número que no es el suyo, agrega `"sin_marca": [campo]` a esa lámina. En el visor, las filas que están en otra lámina del paso salen en gris con «diap. N ›».
-- **Todo número de la lámina tiene su fila (C177):** si la imagen numera 1 y 2 y la guía solo tiene el 1, el usuario lo nota en la reunión. Después de generar, lee `GUIA_MAP` del HTML y compara, por lámina, los `lineas` con `num` contra los valores de `marcas`: deben quedar 0 sin fila y 0 repetidos. Los botones que se repiten en varias láminas del paso («Presione el botón Ir») van en filas distintas, `Botón Ir (SHAEGBC)`, `Botón Ir (SHAGCOM)`…, cada una con `sin_marca` en las otras láminas. Un valor que no está anotado en TEST va como «no se cambia», nunca inventado. Un campo genérico (`GENERICAS`: «Horario»…) toma número solo si el paso de la lámina empieza por él.
-- **En el flujo de una prueba la guía son los valores de TEST** (C192), no los pasos del instructivo: si un número de la lámina no tiene fila, el visor abre «Texto de la diapositiva · N números sin fila» y los resalta en ámbar, en lugar de inventar filas. En la prueba del NRC 10045 son 61 números.
-- **Cuadros y números en las capturas de TEST (C195):** como en las láminas de Ellucian, cada captura de `ejemplo_prueba_2` puede llevar `cuadros: [{"n": 3, "caja": [x0, y0, x1, y1]}]` en píxeles de la imagen; `n` es el número de la fila de la tabla del paso (el mismo de «Su guía» y de la columna # del modal). `anotar_capturas.py` (lo llama `generar.py`) dibuja una copia en `<carpeta>/anotadas/` con recuadro morado #8830E8 y cuadrado verde #3A6C54; el número va al lado del cuadro donde tape menos texto. La original no se toca: el visor abre la anotada y el botón «Ver sin cuadros» alterna; `marcas` pone los mismos números verdes en «Su guía» y las filas de otra captura salen en gris con «captura N ›». Para ubicar los cuadros: `ocr_capturas.swift` (Vision de macOS) da la posición de cada texto; las casillas y botones se ubican desde su etiqueta. Después de marcar, revisa una hoja de contacto por paso: un cuadro en la fila equivocada no salta en ninguna validación.
-- **Texto de la lámina (C177):** `diapositivas._textos_presentacion` corta cada párrafo por sus saltos de línea (`a:br`); antes se perdía el número de «…de los programas⏎⏎1.- Activo».
-- **Orden de la ficha en las demostraciones (C177):** sigue el de `datos.json › pasos` (`orden_propio` en `inyectar_modales._validar_y_ordenar`), no el número final del id: un id como `dm` no se va al final.
-- `generar.py` avisa al final si un paso queda sin lámina o repite las de otro: deben quedar **0 advertencias**. Elige la lámina leyendo su texto y mirando el recorte (`visor_instructivos/diapositivas/`), no solo por el título.
 
 ## Al terminar
 1. Mira al menos el PNG claro de cada diagrama cambiado (Read).

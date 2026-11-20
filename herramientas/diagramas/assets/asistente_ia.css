@@ -718,9 +718,13 @@ button.ai-fab:active,
 }
 
 .ai-chips-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.45rem;
+}
+
+@media (max-width: 360px) {
+  .ai-chips-list { grid-template-columns: 1fr; }
 }
 
 .ai-chip {
@@ -733,10 +737,16 @@ button.ai-fab:active,
   border-radius: 0.6rem;
   cursor: pointer;
   text-align: left;
+  line-height: 1.3;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-height: 2.9rem;
   transition: all 0.18s ease;
+}
+
+.ai-chip:active {
+  transform: translateY(0) scale(0.98);
 }
 
 [data-theme="light"] .ai-chip {
@@ -749,7 +759,7 @@ button.ai-fab:active,
   background: rgba(112, 48, 160, 0.25);
   border-color: #b98ae0;
   color: #ffffff;
-  transform: translateX(3px);
+  transform: translateY(-2px);
 }
 
 [data-theme="light"] .ai-chip:hover {
@@ -1291,3 +1301,15 @@ button.ai-fab:active,
 
 /* Íconos lucide (design-taste-frontend, icons.mjs): toman el color del texto. */
 .ai-fab-icon-box .ai-fab-sparkle { color: #FACC15; }
+
+/* Respuesta limpia (20/11/2026): fuentes plegadas y pie sin texto */
+.ai-fuentes { margin-top: 0.7rem; font-size: 0.78rem; color: var(--ai-muted, #6b7280); }
+.ai-fuentes summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0; }
+.ai-fuentes summary::-webkit-details-marker { display: none; }
+.ai-fuentes summary::before { content: "›"; display: inline-block; transition: transform 0.15s ease; }
+.ai-fuentes[open] summary::before { transform: rotate(90deg); }
+.ai-fuentes summary:hover { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.ai-fuentes ul { margin: 0.35rem 0 0; padding-left: 1.1rem; }
+.ai-fuentes li { margin: 0.1rem 0; }
+.ai-dock-footnote { justify-content: flex-end; }
+.ai-config-panel .ai-engine-select { width: 100%; max-width: none; }

@@ -19,23 +19,23 @@ No se copian aquí las hojas con datos de alumnos («Estudiantes», «Val Estudi
 | Prueba G | Periodo regular de posgrado |
 | Prueba H - USS | Casos propios de la USS: programa nuevo, admisión y **Capacidad 05: Idiomas, Computación y Emprendimiento** (H28 a H38) |
 | Periodos | Periodo de cierre regular **202646**; periodo de matrícula regular **202746**, parte **PGE**, del 08-oct-2026 al 07-mar-2027 |
-| Programas Cursos, Estudiantes, Val Estudiantes, Est Ciclo Cierre | Datos de prueba (alumnos y cursos). Est Ciclo Cierre: los 11 alumnos del NRC **10173** (ESEC 00642, periodo 202646) de varios programas de pregrado |
+| Programas Cursos, Estudiantes, Val Estudiantes, Est Ciclo Cierre | Datos de prueba (alumnos y cursos). Est Ciclo Cierre: los 11 alumnos del NRC **10173** (ESEC 00642, periodo 202646) de varios programas de pregrado; los 5 NRC de 202744 creados para las pruebas (10038 a 10042, C213) y los turnos (C209) |
 
 ## Prueba B: calificaciones y cierre de periodo (la que está en curso)
 
 | Paso | Qué | Páginas | Estado al 19/11 | Dónde está en la base |
 |---|---|---|---|---|
 | B1 | NRC del periodo 202646 | SSASECT, SSARRES, SSADETL, SSAXLST, SHAGCOM | Exitoso | 01-creacion-nrc.md |
-| B2 | Inscribir 10 alumnos antiguos de varios programas, sin afectar la cuenta corriente | SFAREGS | Exitoso | ref-preguntas-frecuentes-operacion.md |
+| B2 | Inscribir 10 alumnos antiguos de varios programas, sin afectar la cuenta corriente | SFAREGS | Exitoso | ref-preguntas-frecuentes-matricula.md |
 | B3 | Notas finales de los 10 alumnos | SFASLST | Exitoso | instructivo 7.1.6 |
 | B4 | Pase a historia | SFASLST, SHRROLL | Exitoso | C199 (NRC 10173, «Pasada» marcada, «Deg Created») |
 | B5 | Verificación de cursos repetidos | SHRRPTS | Exitoso | C200; instructivo 7.2.2, diap. 15 a 22 |
 | B6 | Cálculo del promedio (PGA) | SHRCGPA (GJAPCTL) | **Pendiente** | 7.2.2, diap. 24 a 31; parámetro 02: `a`, `r` o `c` |
-| B7 | CAPP masivo o individual | SMRBCMP, SMARQCM | **En curso** (19/11: SMRBCMP en modo P con `POB_CICLO_B`, periodo 202744, C204) | 7.1.9 (SMRBCMP); 7.2.4 (SMARQCM, resultado en SMICRLT) |
-| B8 | Proyecciones | SFPPROJ | **Pendiente** | por cargar en la base |
+| B7 | CAPP masivo o individual | SMRBCMP, SMARQCM | **Ejecutado** el 19/11 (SMRBCMP modo P con `POB_CICLO_B`, 202744, job 8395: 11 alumnos con «Compliance run», REQ# 3; C204, C205); el estado oficial lo dice el usuario | 7.1.9 (SMRBCMP); 7.2.4 (SMARQCM, resultado en SMICRLT) |
+| B8 | Proyecciones | SFPPROJ | **Ejecutado** el 19/11 (SFPPROJ con `POB_CICLO_B`, 202744, job 8399: 11 alumnos con cursos proyectados, 2 a 15 cada uno; C205, C207); el estado oficial lo dice el usuario | instructivo 5.4 «Ejecutar la proyección académica», diap. 30 a 47 |
 | B9 | Validación de promedios y proyecciones | SHATERM | **Pendiente** | C200 (PGA global y por plan de estudios) |
 
-**Selección de población de la prueba B:** el 19/11/2026 Registros cargó por CSV la selección `POB_CICLO_B` (aplicación `STUDENT`) con 11 alumnos, sin duplicados ni inválidos (C203). Pasos en `arquitectura-centros-empresariales/references/ref-preguntas-frecuentes-operacion.md`. Se usó en B7 (SMRBCMP, modo P, C204); por confirmar si también en B6 (SHRCGPA, parámetros 03 a 05).
+**Selección de población de la prueba B:** el 19/11/2026 Registros cargó por CSV la selección `POB_CICLO_B` (aplicación `STUDENT`) con 11 alumnos, sin duplicados ni inválidos (C203). Pasos en `arquitectura-centros-empresariales/references/ref-preguntas-frecuentes-poblacion-y-procesos-masivos.md`. Se usó en B7 (SMRBCMP, modo P, C204); por confirmar si también en B6 (SHRCGPA, parámetros 03 a 05).
 
 El orden de fin de periodo se repite en D, E, F y G: SGAMSTU (ingresante a regular) › **SHRRPTS** › **SHRCGPA** › **SMRBCMP / SMARQCM** › **SFPPROJ** › **SHATERM** (promedios, estados académicos y proyecciones).
 
@@ -62,5 +62,5 @@ H1 a H15 crean un programa nuevo de punta a punta (STVTERM, partes, SOATERM, STV
 
 ## Cómo usar esta guía
 
-- Cuando el usuario diga «vamos con la B6» (o cualquier paso), abre la fila, busca en el registro y en las preguntas frecuentes lo ya probado, y prepara el checklist con la lámina del instructivo. No ejecutes ni guardes en TEST sin que lo pida (sección 1 de `manejo-banner-test.md`).
+- Cuando el usuario diga «vamos con la B6» (o cualquier paso), abre la fila, busca en el registro y en las preguntas frecuentes del tema (`ref-preguntas-frecuentes-*.md`) lo ya probado, y prepara el checklist con la lámina del instructivo. No ejecutes ni guardes en TEST sin que lo pida (sección 1 de `manejo-banner-test.md`).
 - Lo que se pruebe se devuelve al registro con su C## y, si sirve al asistente, como pregunta frecuente.

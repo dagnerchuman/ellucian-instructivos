@@ -12,6 +12,14 @@ description: >-
 
 # Entregables con formato USS
 
+## Mapa de la skill: abre solo el archivo que necesitas
+
+| Si necesitas… | Abre |
+|---|---|
+| Hacer o corregir un PDF (plantilla, fuentes, `common.py`, revisión visual) | [references/pdf.md](references/pdf.md) |
+| Hacer o corregir un PPTX (`ussdeck.py`, `pptlib.py`) | [references/pptx.md](references/pptx.md) |
+| El Word de preguntas para responder y devolver, un Excel, o un diagrama paso a paso (que va por Archify) | [references/word-excel-y-diagramas.md](references/word-excel-y-diagramas.md) |
+
 ## Lo que el usuario pide (preferencias aprendidas)
 - **Idioma:** español, sencillo y directo. El usuario escribe informal y con apuro; entiende lo que quiere decir.
 - **«Mientras más resumido, mejor»** y **«poco a poco»**: un tema por entrega.
@@ -42,103 +50,6 @@ description: >-
 - **Datos inventados:** márcalos siempre «de ejemplo». Nunca los presentes como datos de la USS.
 - **Nombre de archivo en MAYÚSCULAS:** `TEMA - SUBTEMA - CENTROS EMPRESARIALES.pdf`. Entrégalo con SendUserFile para que lo vea en el panel.
 - **Antes de escribir,** carga las skills `arquitectura-centros-empresariales` (datos) y `preguntas-y-dudas-centros` (qué está confirmado y qué no).
-
-## PDF: HTML impreso con Chromium
-Todo está en `scripts/pdf/`:
-
-| Archivo | Qué hace |
-|---|---|
-| `common.py` | `header()` (portada), `section()`, `table()`, `fmt()`, `chips()`, `explicar()` y `glosario_html()` (significado de siglas y páginas), `render()` (HTML → PDF + metadatos), `check_pdf()` (control de calidad) |
-| `base.css` | Estilos base (variables de color, portada, secciones, tablas) |
-| `render.js` | Playwright/Chromium; A4 (o `A3-horizontal` para diagramas); pie con título, autor y página |
-| `fonts/` | InterStatic (Inter estático 400/500/600/700) y Montserrat (400/700), licencia OFL. Se cargan con @font-face y no hace falta instalarlas |
-| `img/` | Logos USS y Ellucian |
-| `ejemplo_centros.py` | **Ejemplo completo** del estilo preferido: tarjetas SEUSS/Ellucian, ejemplos por centro, cálculo de notas, flujos y dudas al final. Cópialo como punto de partida |
-
-```bash
-cd .claude/skills/documentos-uss/scripts/pdf
-python3 ejemplo_centros.py /ruta/salida.pdf     # genera el ejemplo y corre check_pdf()
-```
-Para un documento nuevo, copia `ejemplo_centros.py` a tu carpeta de trabajo, fuera del repositorio. Agrega `scripts/pdf` a `sys.path` para importar `common`, y cambia los datos y el CSS extra.
-
-Requisitos: `node` con `playwright` (Chromium en /opt/pw-browsers) y `pymupdf` (`pip install pymupdf` si falta).
-
-**En la Mac del usuario** (30/10/2026) no hay ninguno de los dos. Sin tocar el sistema, en una carpeta de trabajo:
-```bash
-npm install playwright-core                                   # en la carpeta de trabajo
-PLAYWRIGHT_BROWSERS_PATH=$PWD/browsers node node_modules/playwright-core/cli.js install chromium
-python3 -m venv venv && venv/bin/pip install pymupdf
-PLAYWRIGHT_BROWSERS_PATH=<carpeta>/browsers NODE_PATH=<carpeta>/node_modules <carpeta>/venv/bin/python generador.py
-```
-`render.js` acepta `playwright-core` y, si no hay Chromium, usa el Google Chrome instalado; pero con Chrome el **pie sale en Times** (no carga la fuente incrustada) y `check_pdf` lo marca: usa el Chromium de Playwright.
-
-### Control de calidad (siempre, antes de entregar)
-1. `check_pdf(ruta, png_dir=...)`:
-   - Revisa las páginas y el autor.
-   - Avisa si algún texto salió con otra fuente: significa que Inter no tiene ese glifo.
-   - Genera un PNG por página.
-2. **Mira los PNG** con Read. Busca:
-   - títulos huérfanos al pie de página: usa `<div class="keep">` para mantenerlos juntos;
-   - tarjetas cortadas;
-   - textos desbordados;
-   - páginas casi vacías.
-3. **Glifos que Inter NO tiene:** → ① ② ✓ ✗ ≥ ▲.
-   - Usa texto, «›», el SVG `ARROW` del ejemplo o formas CSS.
-   - Sí funcionan: « » – — · × ÷ ›.
-4. **En grids de CSS,** envuelve el texto mixto en `<div>`. Si no, cada `<b>` se vuelve una celda aparte.
-5. **Nombres de clase CSS:** no reutilices los de `base.css` con otro significado. Ya pasó dos veces:
-   - `.st` chocó y se renombró a `.stp`;
-   - `.sub` volvió oscuro el subtítulo de la portada y se renombró a `.subn`.
-
-## Presentaciones PPTX
-En `scripts/pptx/`:
-- **`ussdeck.py`:** arma la estructura desde la plantilla.
-  - `build_structure`, `build_cover`, `build_div`, `set_flow_boxes`, `finalize`, `to_pdf`.
-  - Diapositivas base: portada = slide1, flujo = slide5, texto = slide3, divisor = slide6, configuración = slide7, cierre = slide23.
-- **`pptlib.py`:** piezas nativas y editables.
-  - Texto enriquecido; tablas nativas `a:tbl` con tamaño de letra automático (`fit_sz`).
-  - Tarjetas, chevrones y conectores (polilínea `custGeom` con flecha).
-  - Clase `Slide`.
-
-**Requisitos:**
-- **La plantilla del usuario no está en el repositorio.** Pídela o usa `USS_PPT_TEMPLATE`.
-- Los scripts de la skill `pptx`, que se detectan solos.
-
-**Geometría de la plantilla:**
-- Título en y 0,24 M EMU.
-- Área útil de y 0,9 M a 5,85 M.
-- Logo USS abajo a la izquierda (y 6,15 M) y logo Ellucian abajo a la derecha (x 10,2 M).
-
-**Para que abra sin «reparar»,** `finalize()` ya hace lo siguiente:
-- limpia con `clean.py`;
-- quita `xml:space`;
-- da `creationId` únicos;
-- escribe `[Content_Types].xml` primero en el zip;
-- no incluye entradas de carpeta;
-- reemplaza el pie «Elaborado por: …» por el autor.
-
-**Después de generar:**
-- Valida con `validate.py` de la skill pptx.
-- Convierte a PDF (`to_pdf`) y revisa los PNG.
-- Avisa al usuario de que no se pudo abrir en PowerPoint real.
-
-## Word de preguntas (para responder y devolver)
-- Cuando pida las preguntas para una reunión en Word: `fuentes/preguntas/build_preguntas.py` arma un `.docx` con un título por pregunta (su código E## o U##), «Lo que ya sabemos» y un recuadro «Respuesta». Los textos salen del registro; solo se eligen y ordenan los bloques.
-- Va en `docs/dudas/` con nombre en mayúsculas. Revisa el PDF que sale de LibreOffice y valida con `validate.py` de la skill docx.
-- Cuando lo devuelva respondido: `fuentes/preguntas/leer_respuestas.py` lista las respuestas por código; pásalas al registro (skill `preguntas-y-dudas-centros`).
-
-## Excel
-- Genera con `openpyxl` y fórmulas reales: COUNTIFS, fechas con TODAY.
-- Las listas desplegables van en una hoja oculta «Listas».
-- Recalcula con LibreOffice: `recalc.py` de la skill xlsx. Si falta, instala con `apt-get install -y libreoffice-calc`.
-- Verifica que haya **0 errores** de fórmula.
-- **No** mates `soffice` con `pkill -f soffice`: mata también la shell.
-
-## Diagramas interactivos paso a paso (Archify)
-- Cuando el usuario pida un diagrama, un flujo o un mapa de estados, primero revisa los que ya existen en `centros/<centro>/diagramas/`. Hay 7 por centro y un comparativo; el índice está en `centros/README.md`.
-- Se entregan en **HTML interactivo** (claro y oscuro, animación, vistas guiadas, menú «Exportar»), **PNG claro**, **PNG oscuro** y **SVG**. Para un PDF o una presentación, usa el PNG claro.
-- **No se editan a mano.** Se cambia `centros/<centro>/datos.json` o `herramientas/diagramas/plantillas.py` y se regenera; el detalle está en la skill `workflow-diagramas-archify`.
-- El diagrama A3 en PDF (`fuentes/diag/build_diagrama.py`) es la versión anterior, común a los tres centros. Para trabajar por centro, usa los de Archify.
 
 ## Generadores originales
 En `fuentes/` están los scripts con los que se hizo cada entregable, con todos sus datos y textos. Úsalos para corregir o regenerar un entregable. Lee antes `fuentes/LEEME.md`: hay rutas que ajustar.

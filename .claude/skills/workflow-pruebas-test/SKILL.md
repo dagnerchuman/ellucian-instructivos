@@ -17,130 +17,20 @@ Este workflow guía y audita la ejecución de pruebas en el ambiente **TEST de E
 
 > **Plan de Pruebas Integrales V7.0 (USS y Ellucian):** qué pruebas hay (A a H), cuáles pasaron y cuáles faltan, y la parte de los Centros Empresariales (H28 a H38), en [references/plan-pruebas-integrales-v7.md](references/plan-pruebas-integrales-v7.md). El usuario dice qué paso toca; no se ejecuta por cuenta propia (C201).
 
-> **Si el agente opera TEST con el navegador** (Claude, Antigravity u otro): primero lee [references/manejo-banner-test.md](references/manejo-banner-test.md). Ahí están el reparto «el agente deja escrito, el usuario guarda», cómo moverse entre bloques, las recetas probadas (matrícula, baja, currículo, SCAPPRQ) y las incidencias (C169).
+> **Pruebas preparadas, por hacer cuando el usuario lo diga:** atributos de curso con STVATTR, SCADETL y SMAAREA ([references/prueba-atributos-stvattr.md](references/prueba-atributos-stvattr.md), C208) y turnos de inscripción con SFARCTT, SFARCTL, SFARGRP y SFRGRUP ([references/prueba-turnos-inscripcion.md](references/prueba-turnos-inscripcion.md), C209) y la evaluación docente con la encuesta TESS, desde la configuración hasta los resultados ([references/prueba-evaluacion-docente-tess.md](references/prueba-evaluacion-docente-tess.md), C211). Solo lo que le toca a la jefatura de los centros.
+
+> **Si el agente opera TEST con el navegador** (Claude, Antigravity u otro): primero lee [references/manejo-banner-test.md](references/manejo-banner-test.md). Ahí están el reparto «el agente deja escrito, el usuario guarda», cómo moverse entre bloques, las incidencias (C169) y el índice de recetas. Cada receta está en `references/recetas/`, un archivo por tema (matrícula, mallas, NRC, notas y cierre, encuesta docente): abre solo el del tema que vas a probar.
+
+## Mapa de la skill: abre solo el archivo que necesitas
+
+| Si necesitas… | Abre |
+|---|---|
+| Checklist A a D (catálogo, NRC, admisión, enseñanza y cierre), casuísticas complejas y scripts oficiales de los centros | [references/checklist-pruebas-basicas.md](references/checklist-pruebas-basicas.md) |
+| Carga masiva de alumnos de un contrato (ADR-020) | [references/prueba-carga-por-contrato.md](references/prueba-carga-por-contrato.md) |
+| Restricción por programa (SSARRES) y acreditación como prerrequisito, prueba del 29/10 | [references/prueba-restriccion-por-programa.md](references/prueba-restriccion-por-programa.md) |
+| Llevar las capturas de una prueba al sitio (cuadros morados, números verdes, flujo de Archify) | [references/documentar-prueba-con-capturas.md](references/documentar-prueba-con-capturas.md) |
 
 ## 1. Alcance de Pruebas de los Centros
 - **Periodos activos:** 202651 (verano), 202654 (semestre I), 202656 (semestre II).
 - **Entidades:** Participantes regulares y de pregrado (que subsanan requisitos de egreso).
 - **Centros:** Idiomas (Inglés), Computación (Informática) y Emprendimiento.
-
-## 2. Checklist de Pruebas Básicas
-
-### A. Catálogo y Reglas CAPP
-- [ ] Verificar existencia del curso en **SCACRSE** (ej. ESEC 00650 «Ofimática Word 365»).
-- [ ] Verificar prerrequisitos en **SCAPREQ** (si exige curso previo o examen de suficiencia).
-- [ ] Verificar mallas y reglas en **SMAAREA** (ej. MC38-01 «Ciclo I», regla ECOM-01 «Computación I»).
-
-### B. Programación del NRC (SSASECT)
-- [ ] Elegir el periodo correspondiente según fecha de inicio (ej. 202656).
-- [ ] Asignar la parte de periodo correcta (X05..X07 para Computación, I08..I12 para Idiomas, P05..P06 para Emprendimiento).
-- [ ] Verificar créditos fijos y horas de cobro (sin marcar dispensa).
-- [ ] Definir cupo máximo en «Información de ingreso de sección».
-- [ ] Registrar bloque de reunión (días, horas inicio/fin en 24h, sesión 01).
-- [ ] Asignar docente activo en **SIAINST** con su % de responsabilidad y marca de principal.
-- [ ] Guardar y anotar el número de NRC generado.
-
-### C. Admisión e Inscripción
-- [ ] Buscar persona en **GOAMTCH** para evitar duplicados de ID.
-- [ ] Crear admisión rápida con **SAAQUIK** o solicitud formal en **SAAADMS**.
-- [ ] Crear/actualizar registro de estudiante en **SGASTDN**.
-- [ ] Inscribir en el NRC mediante **SFAREGS**:
-  - Probar caso regular: inscripción exitosa.
-  - Probar bloqueo de prerrequisito (Fatal): estudiante sin BASIC I no debe permitir inscribir BASIC II.
-  - Probar convalidación/suficiencia: ingresar puntaje en **SOATEST** y reintentar inscripción en SFAREGS.
-
-### D. Enseñanza-Aprendizaje y Cierre
-- [ ] Configurar plan de evaluación en **SHAGCOM** (componentes y pesos).
-- [ ] Si **SHAGCOM** muestra «Debe configurar los controles del libro de calificaciones en SHAEGBC», buscar **SHAEGBC**, ingresar el periodo, pulsar **Ir**, y configurar fecha abierta/fecha de corte autorizadas antes de volver a SHAGCOM. No inventar fechas. (Instructivo 7.1.4, diap. 40–43.)
-- [x] **Script 19 — Computación (validado 23/10/2026):** el usuario confirma que completó y validó en TEST el flujo **SHAEGBC** → **SHAGCOM** para 202656 / NRC 10026 (ESEC 00697, X06). `ATTRGRD`: peso 0.00, **Debe Pasar**, escala propia de asistencia del 70 %; la escala regular `VIG_11` mantiene la nota mínima 11. (Instructivos 7.1.0, diap. 29–30; 7.1.4, diap. 40–43 y 55; C27, C63, C95.)
-- [x] **Regla de asistencia en `SOAATRK` (C101, 23/10):** sin una regla del periodo para la parte, el curso o el NRC, el NRC no aparece en Faculty › Control de asistencia. Ejemplo que funcionó: 202656, X06, ESEC 00684, NRC 10044, Desplegar clase ✓, unidad Presente/Ausente, Control de asistencia ✓, del 07-SEP al 31-OCT-2026.
-- [ ] **Asistencia docente (referencia):** desde **Banner Search Card** con perfil **Super Role Admin**, buscar `SOAATMT` (reglas por NRC/sesión), `SOAATRK` (reglas por periodo/parte/curso/NRC) y `ENTERATTEND` (proceso de acceso a Autoservicio). Son términos respaldados por el instructivo, pero su disponibilidad en TEST debe comprobarse; no guardar cambios sin verificar periodo y NRC.
-- [x] **Faculty › Control de asistencia › Pasar lista** funciona con el NRC 10044 una vez creada la regla en SOAATRK (C101): calcula el porcentaje (86 %).
-- [x] **Faculty › Captura de calificaciones › Libro de calificaciones › Componentes** abre el NRC 10044 y guarda notas: TA1 85 de 100 → **17**, visible en el Autoservicio del alumno › Ver calificaciones › Componentes (C102, C103).
-- [x] Completar TA2, PA y EF y revisar «Calificaciones compuestas»: con los cuatro en 85 y `ATTRGRD` en 43, porcentaje final 85 y **calificación final INH** (C105).
-- [x] La nota compuesta pasa sola a la lista de clase: **SFASLST muestra INH** (C107). «Calificaciones finales» sale «Completado» y sin alumnos para escribir (C106).
-- [x] Rolar con `SHRROLL`: NRC 10044 (jobs 7761 y 7762, C121) y NRC 10045 (jobs 7994 en modo A y 7995 en modo U, C190). Con `VIG_11` arriba en SHAGCOM y asistencia ≥ 70 %, la final sale 17 (C188).
-- [x] **`ATTRGRD`:** el porcentaje de Pasar lista **no pasa solo**: el docente lo envía con **Clase › «Actualizar la asistencia en el libro de calificaciones» › Sí** (7.1.1, diap. 56–57). Validado con el NRC 10044: 57,14 → INH y 85,71 → APRO (C119). Requiere `GORICCR`, `GORRSQL` y `STVGCHG` con CA (C104).
-- [x] Probar impacto de inasistencia: con `ATTRGRD` 43 (< 70 %), la calificación compuesta del NRC 10044 salió **INH** aunque los componentes daban 85 (C105).
-- [x] Ejecutar pase a historia académica con **SHRROLL** (C121, C190): primero modo A, se lee el reporte en GJIREVO, y luego modo U.
-- [ ] Ejecutar CAPP masivo con **SMRBCMP** para verificar actualización del estatus del alumno.
-
-## 3. Casuísticas Complejas para Pruebas Integrales
-- **Caso D-1 (Fallecimiento de docente a mitad de curso):** Marcar fallecido en SPAIDEN, inactivar en SIAINST, reasignar nuevo docente en SSASECT, verificar traspaso de notas y carga en SIAASGN.
-- **Caso D-2 (Docente separado por medida disciplinaria):** Inactivar estatus en SIAINST, desvincular de SSASECT con reemplazo inmediato, registrar retención administrativa.
-- **Caso E-1 / Q-1 (Quejas de estudiantes contra docente):** Registrar solicitud de servicio en autoservicio, tramitar en **SVASVPR** con comentarios confidenciales.
-- **Caso Q-3 (Sanción disciplinaria a estudiante):** Cambiar estado en **SGASTDN** a «Suspendido» o «Expulsado», registrar retención en **SOAHOLD**. Verificar que SFAREGS bloquee cualquier intento de matrícula.
-
-## 4. Scripts Oficiales de Centros Empresariales (CCEE)
-Documento de referencia exhaustivo: `ref-scripts-ccee-casuisticas.md`.
-
-1. **Matrícula regular** (`SFAREGS` / Autoservicio Alumnos) - *Validado en TEST (29/09 y 01/10)*.
-2. **Matrícula especial** (`SFASRPO` → `SFAREGS`).
-3. **Matrícula por convalidación** (`SHATRNS` → `SHATFAC` → `CAPP`).
-4. **Matrícula por examen de suficiencia** (`SOATEST` → `SCAPREQ` / `SSAPREQ` → `SFAREGS`).
-5. **Curso especial para egresados** (`SSASECT` → `SGASTDN` → `SFAREGS`).
-6. **Matrículas para dos programas en simultáneo** (`SGASTDN` → `SFAREGS`) - *Validado en TEST*.
-7. **Matrículas para tres programas en simultáneo** (`SGASTDN` → `SFAREGS`).
-8. **Eliminación / Retiro de matrícula** (`SFAREGS` con código `DD`/`DW`).
-9. **Reactivación de matrícula** (`SGASTDN` → `SFAREGS`).
-10. **Retorno automático a un ciclo anterior** (`SFASLST` → `SHRROLL` → `SFPPROJ`).
-11. **Apertura de periodo** (`SOATERM` → `STVTERM` → `SOAPRPT`).
-12. **Cierre de periodo** (`SOATERM` → `SHRROLL` → `SMRBCMP`).
-13. **Procesamiento de calificaciones** (`SHAGCOM` → `SFASLST` / Autoservicio Docente).
-14. **Cierre de curso** (`SSASECT` → `SFASLST`).
-15. **Ampliación de cupos** (`SSASECT` `Enrollment Details` / `Reserved Seats`) - *Validado en TEST*.
-16. **División de grupos** (`SSASECT` → `SFAREGS`).
-17. **Gestión de horarios** (`SSASECT` → `SIAFAVL` → `SLARSLT`).
-18. **Otros requerimientos especiales** (`SIAASGN`, `SVASVPR`, `SOAHOLD`).
-
-## 5. Prueba de carga por contrato (ADR-020, propuesto)
-Cubre lo que falta del script 5.2: la labor no educativa y SIACONA. Sirve también para decidir si se mide por contrato o por regla de carga (U28-d).
-1. **Tablas:**
-   - en STVFCNT ya están `ES` y `FC` (C57);
-   - en STVCNTR crea un código de regla para cada uno (6 caracteres; por ejemplo `ESP48` y `FAC23`, **de ejemplo**);
-   - en STVNIST crea los tipos de labor no educativa (4 caracteres; por ejemplo `MATR` matrícula, `COOR` coordinación y `ATEN` atención a estudiantes, **de ejemplo**).
-2. **SIATERM:** en el periodo de Centros (por ejemplo 202656), el factor FTE en 48.
-3. **SIAFLCT (cómo llenarlo; instructivo 5.2 Carga de trabajo, diap. 29 a 32):**
-   - **Antes:** el código de regla debe existir en STVCNTR, o SIAFLCT no lo acepta.
-   - **Bloque llave:**
-     - Periodo `202656`;
-     - «Copiar «De periodo»» **vacío**: en SFAROVR, poner algo ahí dio error (C42);
-     - Tipo de contrato `ES`;
-     - **Ir**.
-   - **Bloque «Reglas de periodo de contrato de docente»:** marca **Activo** y en **Código de regla de contrato** pon `ESP48`.
-   - **Rangos:** solo **«Total de carga de trabajo»**, con Inferior 48 y Superior 48. Lo demás queda vacío; en el ejemplo del instructivo, el rango FTE va vacío. **GUARDAR.**
-   - **Facilitador:**
-     - vuelve al bloque llave con ⟲ y pon el tipo de contrato `FC`;
-     - Activo y regla `FAC23`;
-     - solo **«Horas de contacto semanal»**, con Inferior 14 y Superior 23. **GUARDAR.**
-   - **Si Banner exige los demás rangos,** pon 0 en Inferior y el tope (48 o 23) en Superior.
-   - **Siguiente pantalla:** **SIAFCTR**, para indicar qué periodos cuenta cada contrato (diap. 33 y 34).
-4. **SIAINST:** al docente `100582059`, en el bloque «Contrato de docente», el contrato `ES` con su regla y la marca de predefinido.
-5. **SIAASGN:**
-   - en cada NRC, «Tipo de contrato» `ES`;
-   - en la labor no educativa, una fila por función (`MATR`, `COOR`, `ATEN`), con su «Carga de trabajo» y su «Contacto semanal».
-6. **SIACONA:** con contrato `ES`, el periodo y el docente:
-   - ¿queda debajo (U), dentro o encima (O) de las 48 horas?
-   - ¿la carga educativa que viene del catálogo cuadra con las horas por semana?
-7. **Para comparar:** en SIAASGN mira también el análisis por regla de carga (SIAFLRT). Con las dos pantallas a la vista se decide cuál es más clara para el jefe, que revisa la carga y da el visto bueno (ADR-011).
-
-## 6. Restricción por programa y acreditación como prerrequisito (29/10/2026)
-Guía completa: [ref-restricciones-y-prerrequisitos-por-programa.md](../arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md).
-- [x] **SSARRES › Incluir programa** bloquea con «Program Restriction» (Error fatal) a quien no lo tiene, **solo si** SOATERM tiene Programa en Fatal (C149, C156).
-- [x] El **currículo de pregrado** también cuenta para la restricción de programa, con los dos currículos en el mismo plan (C157, E29).
-- [x] **SCAPPRQ** bloquea la matrícula con «Prerequisite and Test Score error» (Error fatal) a quien no cumple (NRC 10020, C163).
-- [x] La parte de Idiomas **sola** bloquea: `ESEC 00044` con solo `ESEP 02456` en SCAPPRQ 202644; Arnold rechazado en el NRC 10022 (C165). En SCAPPRQ guarda el usuario; Claude deja escrito.
-- [x] Borrar las dos filas temporales de SCAPPRQ 202644 (`ESEC 00044` y `ESEP 02456`) y hacer la prueba de control: sin la fila, Arnold se inscribe en el 10022 (C167). En 202744 no hay DD en SFARSTS: el 10022 quedó con RE.
-- [x] Basic «en curso» en un periodo de centros: Arnold con 10042 y 10043 en 202656; en el 10022 de 202744 sale «Prerequisite In Progress» (Error fatal), porque «En progreso» está sin marcar en SOATERM 202744 (C166, R10).
-- [x] Caso positivo: con Basic I en la historia, el alumno de Nidia se inscribe; la matrícula usa la versión de SCAPPRQ de su catálogo (C170, E32).
-- [ ] Copiar la regla de Nidia de la versión 202444 a 202544 y 202644 (C170).
-- **Antes de empezar:** SFARSTS de la parte del NRC (C154); SOADEST con DATABASE si SFAREGS lo pide; no recargar la página con una fila en error (C158).
-
-## 7. Documentar una prueba con capturas para el sitio (C181, C192–C195)
-Así se documentó la prueba del NRC 10045; sirve para cualquier prueba nueva.
-1. **Ventana de 800 × 670** en el navegador (las capturas quedan de 800 px de ancho) y **una captura por pantalla**: el bloque clave escrito **antes de pulsar Ir**, cada bloque que se llena, el aviso de Banner y la comprobación al reabrir. Todo lo que muestre una lámina del instructivo de ese paso debe tener su captura (C194).
-2. Se guarda como `NN-tema.png`, `NN-tema-b.png`… en la carpeta del ejemplo, junto al HTML de la demostración (`sips -s format png` desde la captura del navegador).
-3. En `datos.json › demostraciones › ejemplo_prueba_2 › pasos`, cada paso lleva `tabla` (Campo, Valor, Quién lo pone, Nota), `resultado`, `cita`, `capturas` en el orden de las láminas, `laminas` y `etiqueta`; las `fases` agrupan los pasos en filas del flujo (C192).
-4. **Cuadros y números** (C195): cada captura lleva `cuadros` `{n, caja}`, donde `n` es la fila de la tabla del paso. Para ubicarlos, usa el OCR de `herramientas/diagramas/ocr_capturas.swift` y revisa una hoja de contacto por paso antes de subir. `generar.py` dibuja las copias en `anotadas/`.
-5. Regenera con `python3 herramientas/diagramas/generar.py` y abre el paso en el modal de «Prueba en TEST»: las capturas cargan, «Ver sin cuadros» alterna y los números de «Su guía» coinciden con los de la imagen.
-6. Solo consulta en las capturas de complemento: no se guarda nada en Banner sin que el usuario lo pida (sección 1 de `references/manejo-banner-test.md`).

@@ -20,6 +20,15 @@ description: >-
 > - `datos.json` es la **fuente única** de los datos de esta página (códigos, grupos, NRC, personas de TEST, estado de los scripts y dudas). Si un dato cambia, cámbialo allí y en esta skill, y regenera los diagramas.
 > - `diagramas/` tiene 27 flujos paso a paso en HTML interactivo, PNG claro y oscuro, y SVG: seis flujos base y los 21 scripts que aplican (el 04 no aplica, C36). Ver la skill `workflow-diagramas-archify`.
 
+## Mapa de la skill: abre solo el archivo que necesitas
+
+| Si necesitas… | Abre |
+|---|---|
+| Rutas de aprendizaje XP, costos y certificados; mallas `MC42`/`MC44` en SMAPROG y SMAAREA; prerrequisitos y orden de cursos | [references/acreditacion-protech-xp-y-mallas.md](references/acreditacion-protech-xp-y-mallas.md) |
+| Qué cursos, NRC (10044, 10045…) y alumnos de prueba hay en TEST | [references/datos-de-test.md](references/datos-de-test.md) |
+| Cómo se validó el NRC 10044 (Diseño Web) y el 10045 (Google) con capturas, e incidencias resueltas | [references/pruebas-validadas.md](references/pruebas-validadas.md) |
+| Estado de cada script de Computación, dónde quedamos y qué falta probar | [references/scripts-y-pendientes.md](references/scripts-y-pendientes.md) |
+
 ## Identificadores en Banner
 
 | Concepto | Código | Descripción |
@@ -53,41 +62,6 @@ Lo crea **Registros Académicos**; el centro, solo si le dan acceso (C147). Peri
 
 Parte de periodo general: **CGE**.
 
-## Acreditación en Computación (Protech XP): rutas de aprendizaje (C125)
-> Detalle completo (escuelas, cursos, costos, pagos y certificados): `arquitectura-centros-empresariales/references/ref-acreditacion-computacion.md`. Datos en `centros/computacion/datos.json › rutas_aprendizaje` y `› acreditacion`. Fuente: carpeta `acreditaciones-uss/`.
-
-- **Cuándo:** 5.º y 6.º ciclo de pregrado (Resolución Rectoral 175-2023/USS); requisito para el bachiller. Ellucian lo pondría como **prerrequisito restrictivo desde el 5.º ciclo** en SCAPPRQ (C168, U49); guía en `arquitectura-centros-empresariales/references/ref-restricciones-y-prerrequisitos-por-programa.md`.
-- **No confundir (C175):** Computación I, II y III son el **Plan Tradicional** (secuencial, C62; hoy II y III a S/ 330, solo en Chiclayo). Las **rutas XP** son la **Acreditación Protech XP** (programas «Acreditación Computación XP 01» a «07»). Las reglas `ECOM-01` a `ECOM-04` de las áreas XP se describen «Computación I» a «IV» en TEST: son nombres heredados, no rutas (U53).
-- **Cómo (Protech XP, lámina 4):** 4 componentes. **Opción A:** 3 cursos de su ruta, en el orden que desee y en paralelo, + 1 Taller de Certificación Internacional. **Opción B:** 4 talleres (así lo usa el chatbot CINF del usuario; cómo va en CAPP, U35). Certificación Microsoft Office Specialist.
-- **Cada ruta es un programa en Banner** (SMAPRLE, TEST, C150): `CMEMC38` XP 01 · `CMEMC39` XP 02 · `CMEMC40` XP 03 · `CMEMC41` XP 04 · `CMEMC42` XP 05 · `CMEMC43` XP 06 · `CMEMC44` XP 07. Todos nivel C, escuela EM, grado 000000, web Y, no bloqueados. XP n = agrupación n va por el número.
-- **Programas antiguos:** `CMEMC01` a `CMEMC37`, también activos (por ejemplo, CMEMC01 «Acr. Comp. Administración», CMEMC08–12 «Pac Ing. …», CMEMC17 «Cursos Libres Cinf», CMEMC21–23 Cisco, CMEMC37 «Suficiencia Pac»); si se siguen usando, U46. Lista completa: `docs/fuentes/banner-test/SMAPRLE-programas-computacion-CMEM-28-10-2026.csv`.
-- **Dónde se ven:** SMAPRLE › filtro Programa `CMEM%` (Idiomas `IMEM%`, Emprendimiento `MMEM%`); también SOACURR o el ••• de Programa en SFAREGS › Currículos.
-
-| Ruta | Escuelas | Cursos (más el taller) |
-|---|---|---|
-| 1 (XP 01, `CMEMC38`) | Salud: Enfermería, Estomatología, Medicina, Tecnología Médica | Word 365, Excel 365, Canva, Excel Asociado, SPSS, Base de datos científicos |
-| 2 | Derecho, Psicología, Trabajo Social | Word 365, Excel 365, Canva, Word Asociado, Excel Asociado, SPSS |
-| 3 | Administración, Contabilidad, Negocios, Turismo, Agroindustrial | Word 365, Excel 365, Canva, Excel Asociado, Project, Power BI |
-| 4 | Arquitectura, Civil, Diseño de Interiores | Excel Asociado, AutoCAD 2D y 3D, Sketchup, Project, Revit |
-| 5 | Sistemas, Software, Industrial | Excel Asociado, AutoCAD 2D y 3D, Bizagi, Diseño Web, Power BI |
-| 6 | Mecánica Eléctrica, Civil, Arquitectura | Excel Asociado, AutoCAD 2D y 3D, SolidWorks, MatLab, Diseño Mecánico |
-| 7 (XP 07, `CMEMC44`) | Artes y Diseño Gráfico, Comunicación, Sistemas, Software | Word 365, Excel 365, Canva, Word Asociado, Excel Asociado, Diseño Web |
-
-- **Costos por curso o taller:** Chiclayo S/ 420 y S/ 340; filiales S/ 240 y S/ 280. Duración (chatbot CINF, C175): regular **8 semanas** y súper intensivo **4** (el taller, siempre 4); las láminas decían regular 3 meses, intensivo 2, súper intensivo 1. Plan Tradicional: S/ 330.
-- **Pago:** contado (−5 %, paga antes), 3 cuotas (paga la 1.ª), 2 cuotas o diferido (+5 %); no se anula una vez programado.
-- **Sin retiro ni reserva** (Acuerdo de Directorio 0453-2013), salvo salud: el alumno queda INH (U38).
-
-## Mallas de las rutas en TEST (SMAPROG y SMAAREA, 30/10/2026, C172)
-- `CMEMC44` (XP 07): versión de 202454 a 999999, «Proyectada», «Cautivo», 4 cursos (Y); área **`MC44-01` «Ciclo I»** con reglas `ECOM-01` a `ECOM-04`, **las cuatro solo con `ESEC 00678`**.
-- `CMEMC42` (XP 05): `MC42-01` tenía las cuatro reglas `ECOM` solo con `ESEC 00682`. **Práctica en pausa, opción A «3 cursos de la ruta + 1 taller» (C174):** las reglas se usan como componentes, no como Computación I a IV (C175); qué hacer con sus nombres, U53. `ECOM-01` y `ECOM-02` con los 6 cursos de la ruta (`00682`, `00683`, `00684`, `00685`, `00686`, `00688`), guardadas; faltan `ECOM-03` (los mismos 6) y `ECOM-04` (quitar `00682`, poner los talleres `00696` a `00700`), y comprobar las cuatro al reabrir.
-- `CMEMC38` (XP 01): `MC38-01`, `ECOM-04` pide **4 de 11** (`00678`, `00679`, `00680`, `00682`, `00691`, `00694`, `00696` a `00700`).
-- **Diseño Web (`ESEC 00684`) no estaba en ninguna** de las áreas revisadas: se matricula por backoffice, pero no sale en Proyecciones del Autoservicio (C71) ni cuenta en CAPP. **Se agregó a `MC44-01`**, regla `ECOM-04`, condición 2 (C173). Quién completa las demás mallas: U52.
-- **Orden:** la malla (SMAAREA) va después de SCACRSE y antes de SSASECT (C173).
-
-## Cursos conocidos en TEST
-Los de la hoja de NRC 202656 (ver `datos.json › cursos_conocidos`): ESEC 00678 Word 365, 00679 Excel 365, 00680 Canva, 00682 Excel Asociado, 00691 SPSS, 00694 Base de datos científicos (ruta 1), 00684 Diseño Web (rutas 5 y 7) y los talleres 00696 a 00700. ESEC 00650 es el curso de las primeras pruebas.
-En SCACRSE, sin NRC en la hoja (C174): 00681 Word Asociado, 00683 AutoCAD 2D, 00685 AutoCAD 3D, 00686 Software Bizagi, 00687 MS Project, 00688 Power BI y 00689 Sketchup.
-
 ## Escala de notas (SHAGRDE, Nivel C)
 
 | Nota | Aprueba | Gana créditos | Observación |
@@ -95,147 +69,6 @@ En SCACRSE, sin NRC en la hoja (C174): 00681 Word Asociado, 00683 AutoCAD 2D, 00
 | 11–20 | ✅ Sí | ✅ Sí | Nota mínima aprobatoria: **11** |
 | 00–10 | ❌ No | ❌ No | Desaprobado |
 | INH | ❌ No | ❌ No | Inhabilitado por inasistencia (< 70%) |
-
-## NRCs creados en TEST (periodo 202656)
-
-| NRC | Materia/Curso | Sección | Parte | Cupo | Docente | Estado |
-|---|---|---|---|---|---|---|
-| **1021** | ESEC 00650 | B | X07 | 2 | Dagner Chuman (100582059) | Validado: matrícula, notas, retiro |
-| **1024** | ESEC 00650 | C | — | — | Dagner Chuman (100582059) | Activo (auditado en SIAASGN) |
-| **1026** | ESEC 00650 | D | X07 | 4 | Dagner Chuman (100582059) | Script 15 validado (aforo 1 a 4). 2 inscritos: S00581109 y S00581108 |
-| **10044** | ESEC 00684 «Diseño Web» | A | X06 | 40 | Dagner Chuman (100582059) | Flujo completo en curso (C96–C103). Alumno inscrito: 100582059 (plan 4, CMEMC44) |
-| **10045** | ESEC 00701 «Google» | A | X06 | 10 | Dagner Chuman (100582059), principal 100 % | **Prueba de punta a punta con capturas (C180–C195)**: miércoles 15:30–17:10, SAUVIR / SALA-VIRT, malla `MC44-01` › `ECOM-03`, fórmula con `VIG_11` arriba, regla 3 de SOAATRK, 17 en la historia. Restricción SSARRES (CMEMC44 y 1PCSP15, C151) |
-
-## Alumnos creados / usados en TEST
-
-| ID Banner | Nombre | Tipo | Scripts donde participó |
-|---|---|---|---|
-| **S00581081** | (Alumno 1 - Centros) | Alumno regular de Computación | 01, 06, 13 (nota 16 = Aprobado) |
-| **S00581091** | (Alumno 2 - Pregrado+Centros) | Doble programa (pregrado + centros) | 01, 06, 08 (retirado DD), 13 (nota 10 = Desaprobado), 18-B (retención TT) |
-| **S00581108** | CARLOS TORRES MENDOZA | Admitido CMEMC38 / Matriculado 1026 | 01, 15 (inscrito en NRC 1026 - Casuística Desaprueba) |
-| **S00581109** | MARIA RAMIREZ GARCIA | Admitida CMEMC38 / Matriculada 1026 | 01, 15 (inscrita en NRC 1026 - Casuística Aprueba) |
-| **S00581110** | JUAN FLORES CASTILLO | Creado en GOAMTCH | Casuística Inhabilitado (INH) |
-| **S00581111** | ANA ROJAS VERA | Creada en GOAMTCH | Casuística Convalidación Externa (SHATRNS) |
-| **100582059** | Dagner Chuman (DCHUMAN) | Usuario institucional / docente; además alumno de los NRC 10044 y 10045 (plan de estudios 4, `CMEMC44`). **Desde el 04/11/2026 SFAREGS le muestra «Retenciones: Y»** (el 31/10 salía vacío; no se revisó cuál es, C194) | 18-A, autoservicio, docente principal, flujos de Diseño Web y de Google (C99–C103, C180–C190) |
-| **S00912438** | Arnold Vaca | Pregrado Medicina `1PCSP15` (plan 1); `CMEMC38`; `IMEMI03` en el plan 4 | Restricción de programa del 10045 (C151), prerrequisitos (C165–C167) y **baja con DD del 10045** el 31-OCT-2026 (C189) |
-
-## Matriz de Scripts de Computación (actualizada al 23/10/2026)
-
-| # | Script / Casuística | Páginas Banner | Estado | Evidencia en TEST |
-|---|---|---|---|---|
-| **01** | Matrícula regular | `SFAREGS` | ✅ Validado | NRC 1021 (S00581081/S00581091) y NRC 1026 (S00581109/S00581108). |
-| **02** | Matrícula especial (sobrepasos) | `SFAROVR` → `SFASRPO` → `SFAREGS` | ✅ **Validado (05/10)** | Regla `CAPACIDAD` (casilla *Capacidad*) en `SFAROVR` 202656. `S00581110` (Juan Flores), admitido con `CMEMC38` y con permiso `CAPACIDAD` en `SFASRPO`, quedó inscrito con **RE** en el NRC 1021 lleno (2/2). Con `S00581108` salió *«Duplicate Course with Section 1026»* porque ya tenía ESEC 00650. |
-| **03** | Matrícula por convalidación | `SHATRNS` → `SHATFAC` | ✅ Validado | S00581111 (Ana Rojas) convalidada con IST150 (nota 16, modo P) y rolada a historia. |
-| **04** | Matrícula por examen suficiencia | `SOATEST` → `SFAREGS` | 🚫 **NO APLICA** | Confirmado por usuario (C36): Computación **NO** rinde examen de suficiencia (exclusivo de Idiomas). |
-| **05** | Curso especial para egresados | `SSASECT` → `SFAREGS` | ⏳ **PENDIENTE** | Sección modular/intensiva para alumnos bachilleres/egresados. |
-| **06** | Doble programa simultáneo | `SGASTDN` → `SFAREGS` | ✅ Validado | S00581091 con Pregrado (L1) y Computación (LC) en paralelo. |
-| **07** | Tres programas simultáneos | `SGASTDN` → `SFAREGS` | ⏳ **PENDIENTE** | Alumno activo en Pregrado (L1), Idiomas (LI) y Computación (LC). |
-| **08** | Retiro de matrícula (DD) | `SFAREGS` | ✅ Validado | S00581091 retirado DD del NRC 1021; vacante liberada automáticamente. |
-| **09** | Reactivación de matrícula | `SGASTDN` → `SFAREGS` | ✅ **Validado** | Probado ciclo de suspensión en `SGASTDN`/`SFAREGS` (bloqueo por inactivo y reactivación inmediata a `AS`). |
-| **10** | Retorno obligatorio por desaprobado | `SMARQCM` → `SMICRLT` | ✅ **Validado** | S00581108 (nota 08 rolada) auditado en CAPP: Requerimientos y Áreas en «No cumple», créditos usados 0/4, curso `ESEC 00650` clasificado como «Curso no usado» (reprobado). |
-| **11** | Apertura de nuevo periodo | `STVTERM` → `SOATERM` → `SSASECT` | ✅ **Validado (05/10)** | `202751` («2027-V Verano Idi.Com.Emp.») ya existía: inscripción permitida, modelo básico + proyectado, web maestro activo, primer NRC 1000, inscripción web del 20-SEP-2026 al 15-MAR-2027 y acceso docente del 03-ENE al 05-ABR-2027. Partes: **X01 12-ENE→22-FEB-2027 (6 sem)**, P01, I01 y 1. Se creó un NRC de prueba ESEC 00650 A en X01. **Falta X02** (U22). |
-| **12** | Cierre de periodo / actas | `GJAPCTL` (`SHRROLL`) | ✅ Validado | Jobs 8113 y 8114 exitosos con pase masivo a historia académica. |
-| **13** | Procesamiento de calificaciones | `SFASLST` | ✅ Validado | Registro de notas 16, 10, 08 e INH en actas de NRC 1021 y 1026. |
-| **14** | Cierre de curso | `SSASECT` → `SFASLST` | ✅ Validado | Cierre y paso oficial a historia completado con `SHRROLL`. |
-| **15** | Ampliación de cupos y reservas | `SSASECT` (Detalles de ingreso / Lugares reservados) | ✅ Validado | NRC 1021 (aforo 2/2) y NRC 1026 (error *Closed*, ampliación 1 a 4). |
-| **16** | División de grupos / Traslado | `SSASECT` → `SFAREGS` | ✅ **Validado** | María Ramírez (`S00581109`) trasladada de NRC 1026 (`DD`) a NRC 1021 (`RE`), resolviendo `Reserve Closed` ampliando cupo CMEMC38 y confirmada en `SFASLST`. |
-| **17** | Gestión de horarios y cruces | `SSASECT` | ✅ **Validado (05/10)** | NRC 1021 y 1026 con el mismo bloque y docente: SSASECT dio «*ERROR* Conflicto de horario del instructor para 100582059. ¿Crear sobrepaso?»; con OK quedó «Indicador de sobrepaso». El cruce del alumno en SFAREGS no se pudo probar (ver C41). |
-| **18-A** | Auditoría de carga docente | `SIAASGN` | ✅ Validado | Docente DCHUMAN con 4 NRCs (horas semanales, contacto y FTE nativos). |
-| **18-B** | Retenciones y bloqueo fatal | `SOAHOLD` / `STVHLDD` | ✅ Validado | Retención TT bloqueando matrícula en SFAREGS (*ERROR*). |
-| **18-C** | Solicitud de servicio / queja | Autoservicio → `SVASVPR` | ✅ **Validado (05/10)** | Mecanismo validado con `CER` (Certificado): el alumno (100582059) crea la solicitud en el Autoservicio y se atiende en `SVASVPR` (estatus, comentario interno y comentario de respuesta). `SVASVPR` no deja crear solicitudes (*«Función inválida»*). **No existe un servicio de queja**: hay 17 en SVVSRVC, todos de carpetas, certificado y constancia (U14). |
-| **19** | Calendario de calificaciones y componente `ATTRGRD` | `SHAEGBC` → `SHAGCOM` | ✅ **Validado (23/10)** | El usuario confirma que completó y validó en TEST el flujo para el periodo 202656, NRC 10026 (`ESEC 00697`, X06). `ATTRGRD`: peso 0.00, **Debe aprobar** y escala de asistencia del 70 %, separada de `VIG_11`. Nota mínima regular del curso: 11 (C95). |
-
----
-
-## ✅ Flujo completo validado: Diseño Web, NRC 10044 (23–26/10/2026)
-> **Dónde está «Faculty»:** pestaña **Autoservicio Docentes**, tarjeta **«Detalle de Notas y Asistencia»**: **Ingresar asistencia** (Pasar lista) e **Ingresar calificaciones** (Libro de calificaciones). La tarjeta «Faculty Grading» da error y no hace falta (C119).
-
-Prueba de punta a punta, desde la creación del NRC hasta la nota, con el usuario como docente **y** alumno (C96–C103).
-
-| # | Paso | Página | Estado | Evidencia |
-|---|---|---|---|---|
-| 1 | Crear NRC | `SSASECT` | ✅ | NRC **10044**: ESEC 00684 «Diseño Web», A, X06, sesión M, VIRT, modo V, cupo 40 (Proyectado antes de «Lugares reservados»). SAUVIR / SALA-VIRT con `O` en «Indicador de sobrepaso» (C97). Horario cambiado a jueves por la tarde por el cruce con el 10042 |
-| 2 | Plan de evaluación | `SHAGCOM` | ✅ | TA1 0.15 · TA2 0.15 · PA 0.40 · EF 0.30 con `VIG_11` (aprobatoria 55 de 100) + `ATTRGRD` 0.00, Debe aprobar, `AST_70` (aprobatoria 70). Peso final 1.00 (C98). Por revisar: el bloque superior quedó en `AST_70` |
-| 3 | Programa del alumno | `SFAREGS › Currículos` | ✅ | A `100582059` se le agregó con `+`, programa y Tab el plan de estudios 4: `CMEMC44` «Acreditación Computación XP 07», nivel C (C100; U31: ¿CMEMC44 o CMEMC38?) |
-| 4 | Matrícula | `SFAREGS` | ✅ | Plan 4 en `EL` y NRC 10044 en RE. «Estimación de cuota procesada» |
-| 5 | Regla de asistencia | `SOAATRK` | ✅ | **Va primero**: 202656, X06, ESEC 00684, NRC 10044, Desplegar clase, Presente/Ausente, Control de asistencia, del 07-SEP al 31-OCT-2026 (C101) |
-| 6 | Pasar lista | Faculty › Control de asistencia | ✅ | 86 % (ausente el jueves 22-OCT) (C101) |
-| 7 | Notas por componente | Faculty › Libro de calificaciones › Componentes | ✅ | TA1, TA2, PA y EF con 85 de 100 (→ 17), visibles en el Autoservicio del alumno (C102, C103, C105) |
-| 8 | Asistencia a `ATTRGRD` | Pasar lista › **Clase › «Actualizar la asistencia en el libro de calificaciones»** › Sí | ✅ | No pasa sola: la envía el docente. Al enviarla, `ATTRGRD` tomó 57,14 → INH y luego 85,71 → APRO (C119; U32 resuelta). Requiere GORICCR en Y, GORRSQL activa y STVGCHG con CA (C104) |
-| 9 | Nota final | Calificaciones compuestas → `SFASLST` | ✅ | Compuesta: porcentaje 85 y **INH** (C105). «Calificaciones finales» no pide nada: la nota pasa sola al backoffice y **SFASLST muestra INH** (C106, C107) |
-| 9b | Escala de arriba en SHAGCOM | `SHAGCOM` › Asignación de escala de calificación | ✅ | Con `AST_70` arriba, la nota final salió **APRO** en SFASLST (C120). **Comprobado con el NRC 10045:** con `VIG_11` arriba y asistencia 100 %, la final llega **17** (C181, C188) |
-| 10 | Pase a historia | `GJAPCTL` › `SHRROLL`; salida en `GJIREVO` | ✅ | Modo A (job 7761) y modo U (job **7762**): «Rolled to Academic History» y «Deg Created» por cada plan del alumno, más un «API Error» por un plan inactivo (C121, C122). Por confirmar la nota que quedó (17 o APRO, C120) |
-| 11 | Corregir la nota en la historia | `SHATCKN` (Insertar secuencia: 17, modo V, razón de corrección) | ✅ | Primero se agregó el modo `V` al 17 del nivel C en `SHAGRDE` (solo tenía `P`). SHACRSE muestra **17** (C124) |
-
-## ✅ Prueba completa con capturas: Google, NRC 10045 (30/10 a 04/11/2026)
-El «ejemplo de prueba 2» de la Demostración 1 (`datos.json › demostraciones › ejemplo_prueba_2`): 14 pasos hechos en TEST, con su tabla campo por campo y 66 capturas, 65 con cuadros morados y números verdes como las láminas (C180–C195). En el sitio: Demostración 1 › «Para estudiar» › «Prueba en TEST» (flujo de Archify, cada nodo abre su ficha en un modal) y la página propia `00-demostracion-1-prueba-nrc-10045`.
-
-| # | Página | Lo que quedó |
-|---|---|---|
-| 1–3 | `SSASECT` | 202656 › 10045 › Ir; miércoles 15:30–17:10, SAUVIR / SALA-VIRT con `O`; docente 100582059, principal, 100 % (C180) |
-| 4 | `SIAASGN` | El 10045 es la asignación 10 de 10; resumen: 10 horas crédito, carga educativa 22; sin reglas de carga en 202656 (C180, C194) |
-| 5 | `SMAAREA` | `ESEC 00701` en `MC44-01` › `ECOM-03` (versión 202454), condición 2; SMAPROG CMEMC44 tiene solo esa área (C181, C194) |
-| 6 | `SHAGCOM` | `VIG_11` arriba; TA1 0.15 · TA2 0.15 · PA 0.40 · EF 0.30 + `ATTRGRD` 0.00, Debe aprobar, `AST_70` (C181) |
-| 7 | `SOAATRK` | Regla 3: X06, ESEC 00701, NRC 10045, Presente/Ausente, del 07-SEP al 31-OCT-2026 (C182) |
-| 8 | `SFAREGS` | 100582059 con RE, plan 4 (CMEMC44); SOADEST con DATABASE sin guardar (C185) |
-| 9–10 | Autoservicio | Asistencia 100 % enviada al libro (ATTRGRD APRO); TA1, TA2, PA y EF 85 → 17 cada uno (C186, C187) |
-| 11 | `SFASLST` | Final **17**, modo V (C188) |
-| 12 | `SFAREGS` | Arnold Vaca: RE → **DD** el 31-OCT-2026 (último día del DD en la X06), «No contar en ingreso» / «Eliminado» (C189, C194) |
-| 13 | `GJAPCTL` › `SHRROLL` | Job 7994 en modo A y 7995 en modo U: «Rolled to Academic History», RECORD COUNT 1 (C190) |
-| 14 | `SHACRSE` | ESEC 00701 «Google» con **17**, modo V; en SFASLST, «Pasada» ✓; en SHATCKN, secuencia 1 con 17 (C190, C194) |
-
-## ▶️ Dónde quedamos (05/10/2026)
-- **19 de 21 scripts aplicables validados** (el 04 no aplica). Pendientes: 05 y 07.
-- **Faltan 05 y 07:**
-  1. Script 05: en Idiomas el egresado no lleva el curso (C50, ADR-012). ¿Computación trabaja igual? (U24)
-  2. Script 07: ya no hay que esperar a la USS. Se cierra en el **bloque 2 de `centros/idiomas/pruebas-test.md`**, al agregar el programa de Idiomas a `S00581091`.
-  3. U22: ¿se agregan X02 y los demás grupos del verano 2027 en 202751?
-  4. U14: ¿quién crea el servicio de quejas en SVVSRVC?
-- **Para ordenar en TEST:**
-  - retención de S00581081;
-  - estatus de S00581109 en SGASTDN;
-  - el NRC 1021 sigue con máximo 2 y reserva general 0 desde el Script 02;
-  - NRC de prueba en 202751/X01 (número por anotar).
-- **Al retomar:** seguir con las pruebas de Idiomas (`centros/idiomas/pruebas-test.md`); cierran también el Script 07 de Computación.
-
-## 📋 Checklist de Scripts Pendientes para Próximas Sesiones
-
-> **Instrucción para el agente:** A medida que se ejecute cada prueba, marca con `[x]` el script correspondiente y actualiza la evidencia arriba.
-
-- [x] **Script 10 — Retorno obligatorio tras desaprobado (`SMARQCM` → `SMICRLT`):**
-  - *Contexto:* Carlos Torres Mendoza (`S00581108`) con nota `08` rolada en `ESEC 00650`.
-  - *Evidencia:* CAPP individual arrojó «No cumple» en requerimientos y áreas, 0 créditos obtenidos y curso enviado a «Cursos no usados» (02/10/2026).
-- [x] **Script 16 — División de grupos / Traslado de sección (`SFAREGS`):**
-  - *Contexto:* Reubicación de participantes de una sección saturada a una sección espejo o cambio de horario.
-  - *Evidencia:* María Ramírez (`S00581109`) retirada con `DD` del NRC 1026 e inscrita con `RE` en NRC 1021, auditada en `SFASLST` (02/10/2026).
-- [x] **Script 02 — Matrícula especial con sobrepasos (`SFAROVR` → `SFASRPO` → `SFAREGS`):**
-  - *Evidencia (05/10):* `S00581110` inscrito con RE en el NRC 1021 lleno gracias al sobrepaso `CAPACIDAD`.
-  - *Opcional:* prueba de control con un alumno sin permiso («Closed»); devolver el 1021 a máximo 3 y reserva general 1.
-- [ ] **Script 07 — Tres programas en simultáneo (`SGASTDN` → `SFAREGS`):**
-  - *Contexto:* Alumno multiescuela (Pregrado + Idiomas + Computación).
-  - *Paso:* Crear Study Path 1 (Pregrado `1`), Study Path 2 (Idiomas `I`) y Study Path 3 (Computación `C`) en `SGASTDN`. Inscribir un NRC en cada programa en `SFAREGS`.
-- [x] **Script 09 — Reactivación de matrícula (`SGASTDN` → `SFAREGS`):**
-  - *Contexto:* Participante que suspendió estudios y retorna.
-  - *Evidencia:* Bloqueo de inscripción con estatus inactivo (`IS`/`SU`) y reactivación inmediata a `AS` en `SGASTDN` / `SFAREGS` (02/10/2026).
-- [ ] **Pendiente del Script 16:** verificar que el traslado no duplique ni pierda el cobro (TSAAREV).
-- [ ] **Script 05 — Curso especial para egresados (`SSASECT` → `SFAREGS`):**
-  - *Contexto:* Módulo intensivo de acreditación rápida para graduandos.
-  - *Paso:* Programar NRC en parte de periodo intensiva y matricular bachiller.
-- [x] **Script 11 — Apertura de periodo (`SOATERM` → `SSASECT`):**
-  - *Evidencia (05/10):* 202751 con la parte X01; NRC de prueba creado en X01. No se usó «Copiar de periodo» porque el periodo ya estaba configurado.
-  - *Duda U22:* falta X02 (y I02, I03, P02, P03) en 202751.
-- [x] **Script 17 — Gestión de horarios y cruces (`SSASECT`):**
-  - *Evidencia (05/10):* conflicto del docente detectado en el NRC 1021; se resolvió con el sobrepaso del instructor.
-  - *Pendiente opcional:* cruce del alumno en SFAREGS con un alumno sin retención, con estatus activo y con ambos NRC sin rolar.
-- [x] **Script 18-C — Solicitudes de servicio (Autoservicio → `SVASVPR`):**
-  - *Evidencia (05/10):* solicitud CER creada en el Autoservicio y atendida en SVASVPR. Falta que la USS cree el servicio de quejas (U14).
----
-
-## Incidencias resueltas
-
-| ID | Descripción | Solución aplicada y confirmada |
-|---|---|---|
-| **U20** | Modo de calificación V (catálogo) vs P (SHAGRDE Nivel C) | **RESUELTA (02/10):** Se añadió el Modo `V` (*Vigesimal Regular*) a las notas del Nivel `C` en `SHAGRDE` (Instructivo 7.1.3 diap. 16). `SHRROLL` procesó de inmediato el cierre del NRC 1026 con 100% de éxito. |
 
 ## Errores frecuentes de los usuarios finales (no son dudas)
 | Mensaje o síntoma | Causa | Qué hacer |
@@ -245,10 +78,3 @@ El «ejemplo de prueba 2» de la Demostración 1 (`datos.json › demostraciones
 | «El modo de calificar no es válido para la calificación ingresada» (SHATCKN, SFASLST) o «No Substitute Grade Found» (SHRROLL) | En SHAGRDE, esa nota del nivel C no tiene el modo `V` | Agregar `V` en «Modos de calificar válidos» de esa nota (C34, C124) |
 | «El elemento está protegido contra actualización» en SFASLST | La nota ya pasó a la historia | Corregir en SHATCKN con una secuencia nueva (C123) |
 | «API Error: Invalid study path sequence for outcome» en el .lis de SHRROLL | El alumno tiene un plan de estudios inactivo | No impide el pase de la nota (C121) |
-
-## Prerrequisitos y orden de cursos
-
-- **U02 resuelta (C62, C191):** en Protech XP los cursos de la ruta **no tienen orden**: 3 cursos de la ruta, en el orden que desee y en paralelo, + 1 taller (C125). Solo el Plan Tradicional (Computación I → II → III) era secuencial.
-- **En Banner:** entre los cursos de la ruta no va prerrequisito en SCAPREQ; la ruta la controla la malla de cada programa XP (SMAAREA, C172 a C175). Datos: `centros/computacion/datos.json › prerrequisitos`.
-- **Hacia pregrado (la acreditación como requisito):** prerrequisito restrictivo por programa en **SCAPPRQ**, probado en TEST con Idiomas (C159 a C170): rige la versión del catálogo del alumno, con «En progreso» sin marcar sale «Prerequisite In Progress» y un curso del centro en la historia cumple. El correquisito no sirve y SCAPREQ por curso no es práctico para «3 de 6» (R24). **Abierto:** cómo exigir la ruta de Computación con el método CAPP de SCACRSE (E30).
-- Detalle: `arquitectura-centros-empresariales/references/ref-preguntas-complejas-prerrequisitos.md` y `ref-restricciones-y-prerrequisitos-por-programa.md`.

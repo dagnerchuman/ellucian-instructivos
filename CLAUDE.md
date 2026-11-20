@@ -44,6 +44,7 @@ Antes de actuar, cruza el pedido con esta tabla. Elige **una skill principal**; 
 - **Antes de afirmar** algo del proyecto, busca en `registro.md` (C##, U##…), no lo leas completo.
 - **Respuestas limpias:** no copies el contenido de una skill en la respuesta. Di la decisión, la acción y la cita («instructivo 5.3, diap. 23», «C124», «ADR-009»); los archivos, con enlace relativo del repositorio.
 - **Validación final:** `python3 herramientas/validar_conocimiento.py` con 0 errores; además, la de la skill usada (`generar.py` para diagramas, revisión visual para PDF y PPTX).
+- **Tamaño de las skills (C215):** el `SKILL.md` queda corto (hasta unos 6 KB) con un mapa «si necesitas… abre…»; el detalle va en `references/`, un archivo por tema de hasta unos 10 KB. Lo nuevo se escribe en el archivo de su tema; si crece de más, se parte. El registro no se lee entero: se busca la entrada.
 - **Descripción de una skill nueva:** fórmula «Qué hace… Cuándo usarla… Cuándo no usarla…» en el `description` del `SKILL.md`, con las palabras que diría el usuario.
 
 **Skills:** se editan en `.claude/skills/` y luego se copian a `.agents/skills/` con `python3 herramientas/sincronizar_skills.py --desde claude`. Si las editó Antigravity, usa `--desde agents`. Para comprobar que estén iguales, usa `--check`.

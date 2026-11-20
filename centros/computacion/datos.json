@@ -4482,6 +4482,36 @@
             "nota": "Los otros currículos del alumno: plan 1 y plan 3, pregrado 1PIAP11 Ing. Sist. Informática; plan 2, IMEMI05 «Programa Acreditación Inglés». El 10045 usa el plan 4, el de Computación.",
             "capturas": [
               {
+                "archivo": "08-sfaregs-matricula-d.png",
+                "texto": "SOADEST pide la configuración al abrir SFAREGS",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      16,
+                      107,
+                      774,
+                      153
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "08-sfaregs-matricula-e.png",
+                "texto": "SOADEST con DATABASE en los cinco campos",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      112,
+                      133,
+                      572,
+                      195
+                    ]
+                  }
+                ]
+              },
+              {
                 "archivo": "08-sfaregs-matricula-f.png",
                 "texto": "Bloque clave con 202656, 100582059 y plan 4 antes de Ir",
                 "cuadros": [
@@ -4564,36 +4594,6 @@
                       267,
                       371,
                       348
-                    ]
-                  }
-                ]
-              },
-              {
-                "archivo": "08-sfaregs-matricula-d.png",
-                "texto": "SOADEST pide la configuración al abrir SFAREGS",
-                "cuadros": [
-                  {
-                    "n": 1,
-                    "caja": [
-                      16,
-                      107,
-                      774,
-                      153
-                    ]
-                  }
-                ]
-              },
-              {
-                "archivo": "08-sfaregs-matricula-e.png",
-                "texto": "SOADEST con DATABASE en los cinco campos",
-                "cuadros": [
-                  {
-                    "n": 1,
-                    "caja": [
-                      112,
-                      133,
-                      572,
-                      195
                     ]
                   }
                 ]
@@ -5185,30 +5185,6 @@
             },
             "capturas": [
               {
-                "archivo": "11-sfaslst-nota-final.png",
-                "texto": "Lista de clase: 100582059 con 17 y Arnold sin nota",
-                "cuadros": [
-                  {
-                    "n": 3,
-                    "caja": [
-                      60,
-                      184,
-                      600,
-                      202
-                    ]
-                  },
-                  {
-                    "n": 4,
-                    "caja": [
-                      60,
-                      203,
-                      600,
-                      221
-                    ]
-                  }
-                ]
-              },
-              {
                 "archivo": "11-sfaslst-nota-final-b.png",
                 "texto": "Aviso: hay componentes calificables en la sección",
                 "cuadros": [
@@ -5237,6 +5213,30 @@
                       222,
                       592,
                       398
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "11-sfaslst-nota-final.png",
+                "texto": "Lista de clase: 100582059 con 17 y Arnold sin nota",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      60,
+                      184,
+                      600,
+                      202
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      60,
+                      203,
+                      600,
+                      221
                     ]
                   }
                 ]
@@ -5796,21 +5796,6 @@
             },
             "capturas": [
               {
-                "archivo": "14-shacrse-historia.png",
-                "texto": "Historia académica: Google con 17",
-                "cuadros": [
-                  {
-                    "n": 3,
-                    "caja": [
-                      60,
-                      180,
-                      560,
-                      200
-                    ]
-                  }
-                ]
-              },
-              {
                 "archivo": "14-shacrse-historia-b.png",
                 "texto": "SHACRSE: el 10044 y el 10045 en 202656",
                 "cuadros": [
@@ -5830,6 +5815,51 @@
                       163,
                       518,
                       201
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-shacrse-historia.png",
+                "texto": "Historia académica: Google con 17",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      60,
+                      180,
+                      560,
+                      200
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-shacrse-historia-c.png",
+                "texto": "SFASLST: solo 100582059 con final 17",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      60,
+                      192,
+                      560,
+                      212
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-shacrse-historia-d.png",
+                "texto": "SFASLST: «Pasada» marcada",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      251,
+                      163,
+                      309,
+                      225
                     ]
                   }
                 ]
@@ -5878,36 +5908,6 @@
                       408,
                       797,
                       428
-                    ]
-                  }
-                ]
-              },
-              {
-                "archivo": "14-shacrse-historia-c.png",
-                "texto": "SFASLST: solo 100582059 con final 17",
-                "cuadros": [
-                  {
-                    "n": 4,
-                    "caja": [
-                      60,
-                      192,
-                      560,
-                      212
-                    ]
-                  }
-                ]
-              },
-              {
-                "archivo": "14-shacrse-historia-d.png",
-                "texto": "SFASLST: «Pasada» marcada",
-                "cuadros": [
-                  {
-                    "n": 4,
-                    "caja": [
-                      251,
-                      163,
-                      309,
-                      225
                     ]
                   }
                 ]

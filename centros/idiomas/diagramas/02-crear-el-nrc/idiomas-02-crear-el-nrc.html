@@ -20207,12 +20207,22 @@ button.ai-fab:active,
         return -1;
       };
       var hayOtras = false;
+      // Con números en la imagen, solo se listan las filas que salen en ella; las demás se resumen
+      // en enlaces a la captura o lámina donde están (pedido del usuario: «ocultes lo que no sale»).
+      var ocultas = 0;
+      // Una captura sin cuadros, en un paso cuyas otras capturas sí los tienen, no lista filas: solo enlaza.
+      var filtrar = hayMarcas || (!!d.captura && lista.some(function (x) { return Object.keys(x.marcas || {}).length > 0; }));
+      var inicioGuia = html.length;
       html += '<section class="gdv-bloque"><h4>Su guía · ' + escapeHtml((info.fase || '').replace(/^Paso\s*\d+:\s*/i, '')) + '</h4><ul class="gdv-lista gdv-guia">';
       filas.forEach(function (f, i) {
         var hecho = !!checks[i];
         var num = marcas[String(i)];
         var otra = num ? -1 : laminaDe(i);
         if (otra >= 0) hayOtras = true;
+        if (filtrar && !num) {
+          ocultas++;
+          return;
+        }
         var marca = num
           ? '<span class="gdv-badge" title="Número ' + escapeHtml(num) + ' en la imagen">' + escapeHtml(num) + '</span>'
           : '<span class="gdv-marca">' + (hecho ? '✓' : '') + '</span>';
@@ -20226,13 +20236,17 @@ button.ai-fab:active,
           (hecho && num ? ' <span class="gdv-ok" aria-label="Validado">✓</span>' : '') + ir +
           (f.por_que ? '<small class="gdv-porque">' + escapeHtml(f.por_que) + '</small>' : '') + '</span></li>';
       });
-      html += '</ul><p class="gdv-aviso">' + (d.captura
+      html += '</ul>';
+      // Lo que no tiene número verde en esta imagen no se muestra (C219); se llega con ‹ ›.
+      if (ocultas) hayOtras = false;
+      html += '<p class="gdv-aviso">' + (d.captura
         ? (hayMarcas ? 'Los números verdes son los mismos de la captura.' : 'Captura real de TEST: compare lo que se ve con los valores de su guía.')
         : hayMarcas
         ? 'Los números verdes son los mismos de la imagen.'
         : 'Esta diapositiva no numera los campos de su guía.') +
         (hayOtras ? (d.captura ? ' Las filas en gris están en otra captura de este paso: pulse «captura» para verla.'
                                : ' Las filas en gris están en otra lámina de este paso: pulse «diap.» para verla.') : '') + '</p></section>';
+      if (filtrar && ocultas === filas.length) html = html.slice(0, inicioGuia);
     }
 
     // El texto ya se lee en la imagen: queda plegado y solo se abre si se pide. Si un número de la lámina no tiene

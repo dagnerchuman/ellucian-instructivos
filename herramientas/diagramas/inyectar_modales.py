@@ -13,7 +13,7 @@ from pathlib import Path
 import sys
 from urllib.parse import quote
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
-from diapositivas_pasos import INSTRUCTIVOS, para as diapositivas_del_paso
+from diapositivas_pasos import INSTRUCTIVOS, SIN_LAMINA, para as diapositivas_del_paso
 from plantillas import (TITULOS, CAPACIDADES, DEMOSTRACIONES, guia_casuistica_de, guia_demostracion,
                         guia_recorrido, slug_prueba)
 from centro import Centro
@@ -55,18 +55,19 @@ def _icono(nombre: str, tam: int) -> str:
 
 CSS_MODAL = _cargar_asset("modal_guia.css")
 _JS_LOGIC = _cargar_asset("modal_guia.js")
-CSS_AI = _cargar_asset("asistente_ia.css")
-_JS_AI = _cargar_asset("asistente_ia.js")
 HTML_AI = _cargar_asset("asistente_ia_snippet.html")
 CSS_ZOOM = _cargar_asset("zoom_imagen.css")
 _JS_ZOOM = _cargar_asset("zoom_imagen.js")
+# El asistente (asistente_ia.css y asistente_ia.js) se carga como archivo, igual que su base: si cambia, ninguna
+# página cambia y no hay que regenerar nada (C234). Lo que va dentro de la página es lo propio de cada diagrama.
+ASSETS_EXTERNOS = ("asistente_ia.css", "asistente_ia.js", "asistente_conocimiento.js", "asistente_diapositivas.js")
 
 JS_SCRIPT_TEMPLATE = f"""<style>
 /* ASISTENTE CCEE: bloque generado */
 __CSS__
-
-{CSS_AI}
-
+</style>
+<link rel="stylesheet" href="__HOJA_ASISTENTE__">
+<style>
 {CSS_ZOOM}
 </style>
 {HTML_AI}
@@ -75,8 +76,8 @@ __CSS__
 <script>
 {_JS_ZOOM}
 {_JS_LOGIC}
-{_JS_AI}
-</script>"""
+</script>
+<script src="__CODIGO_ASISTENTE__"></script>"""
 
 # ======================= BLOQUE 2: resolución de la guía (reemplaza obtener_guia_para_slug) =======================
 def detectar_script(slug):
@@ -312,31 +313,47 @@ def construir_navegacion_flujos(ruta_html):
 
 
 # ======================= BLOQUE 4: inyección (reemplaza inyectar_en_html e inyectar_todos) =======================
+# Lo que pone esta versión se quita tal como se puso, sin comerse el espacio de alrededor: así reinyectar una página
+# da lo mismo, byte a byte, que compilarla de nuevo con Archify (C234). Las demás reglas quedan para páginas con
+# inyecciones de versiones anteriores. Cada regla lleva un texto que debe estar en la página para probarla: las de
+# formatos viejos recorrían 1,3 MB de HTML por página aunque ese formato ya no estuviera (0,3 s cada página).
+_LIMPIEZA = [
+    ("<!-- === ANTES DEL NRC === -->",
+     r'<!-- === ANTES DEL NRC === -->\n.*?<!-- === /ANTES DEL NRC === -->\n'
+     r'(?:<script>window\.__PRUEBA_GUIA = .*?</script>\n)?    (?=<script id="archify-i18n-data")', 1),
+    ("<!-- === FLOW NAV TOP === -->",
+     r'<!-- === FLOW NAV TOP === -->\n.*?<!-- === /FLOW NAV TOP === -->\n    (?=<div class="header")', 1),
+    ("ASISTENTE CCEE INTEGRADO START",
+     r'<!-- === ASISTENTE CCEE INTEGRADO START === -->\n.*?<!-- === ASISTENTE CCEE INTEGRADO END === -->\n(?=</body>)', 1),
+    ("ASISTENTE CCEE INTEGRADO START",
+     r"\s*<!-- === ASISTENTE CCEE INTEGRADO START === -->.*?<!-- === ASISTENTE CCEE INTEGRADO END === -->", 0),
+    ("ASISTENTE IA CENTROS EMPRESARIALES USS · BASE LOCAL + GROQ",
+     r"\s*<script\b(?![^>]*\bsrc=)[^>]*>(?:(?!</script>).)*?ASISTENTE IA CENTROS EMPRESARIALES USS · BASE LOCAL \+ GROQ"
+     r"(?:(?!</script>).)*?</script>", 0),
+    ("/* === DISEÑO RESPONSIVO", r"\s*<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?</script>", 0),
+    ("/* === GUÍA OPERATIVA", r"\s*<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?</script>", 0),
+    ("DISEÑO ULTRA-PREMIUM",
+     r'\s*<style>(?:(?!</style>).)*?ASISTENTE IA CENTROS EMPRESARIALES USS · DISEÑO ULTRA-PREMIUM(?:(?!</style>).)*?</style>', 0),
+    ("asistente_", r'\s*<script src="[^"]*asistente_(?:conocimiento|diapositivas|ia)\.js"></script>', 0),
+    ("<!-- === FLOW NAV TOP === -->", r"\s*<!-- === FLOW NAV TOP === -->.*?<!-- === /FLOW NAV TOP === -->", 0),
+    ("<!-- === FLOW NAV BOTTOM === -->", r"\s*<!-- === FLOW NAV BOTTOM === -->.*?<!-- === /FLOW NAV BOTTOM === -->", 0),
+    ("<!-- === ANTES DEL NRC === -->", r"\s*<!-- === ANTES DEL NRC === -->.*?<!-- === /ANTES DEL NRC === -->", 0),
+    # Va después de «Antes del NRC», fuera de sus marcas: sin esto, reinyectar la página la duplicaba.
+    ("window.__PRUEBA_GUIA = ", r"\s*<script>window\.__PRUEBA_GUIA = .*?</script>", 0),
+    ("<!-- === ASISTENTE IA CENTROS EMPRESARIALES USS",
+     r"\s*<!-- === ASISTENTE IA CENTROS EMPRESARIALES USS.*?<!-- === /ASISTENTE IA CENTROS EMPRESARIALES USS === -->", 0),
+    # Residuos previos en etiquetas de nodos o flechas.
+    ('data-step-state="', r'\s+data-step-state="[^"]*"', 0),
+    ('data-ultimo-escogido="', r'\s+data-ultimo-escogido="[^"]*"', 0),
+    ('data-step-edge="', r'\s+data-step-edge="[^"]*"', 0),
+]
+_LIMPIEZA = [(marca, re.compile(patron, re.DOTALL), veces) for marca, patron, veces in _LIMPIEZA]
+
+
 def _limpiar_inyeccion_previa(contenido):
-    contenido = re.sub(
-        r"\s*<!-- === ASISTENTE CCEE INTEGRADO START === -->.*?<!-- === ASISTENTE CCEE INTEGRADO END === -->",
-        "",
-        contenido,
-        flags=re.DOTALL,
-    )
-    contenido = re.sub(
-        r"\s*<script\b(?![^>]*\bsrc=)[^>]*>(?:(?!</script>).)*?"
-        r"ASISTENTE IA CENTROS EMPRESARIALES USS · BASE LOCAL \+ GROQ"
-        r"(?:(?!</script>).)*?</script>",
-        "",
-        contenido,
-        flags=re.DOTALL,
-    )
-    contenido = re.sub(r"\s*<style>\s*/\* === (?:DISEÑO RESPONSIVO|GUÍA OPERATIVA).*?</script>", "", contenido, flags=re.DOTALL)
-    contenido = re.sub(r'\s*<style>(?:(?!</style>).)*?ASISTENTE IA CENTROS EMPRESARIALES USS · DISEÑO ULTRA-PREMIUM(?:(?!</style>).)*?</style>', "", contenido, flags=re.DOTALL)
-    contenido = re.sub(r'\s*<script src="[^"]*asistente_(?:conocimiento|diapositivas)\.js"></script>', "", contenido)
-    for marca in ("FLOW NAV TOP", "FLOW NAV BOTTOM", "ANTES DEL NRC"):
-        contenido = re.sub(rf"\s*<!-- === {marca} === -->.*?<!-- === /{marca} === -->", "", contenido, flags=re.DOTALL)
-    contenido = re.sub(r"\s*<!-- === ASISTENTE IA CENTROS EMPRESARIALES USS.*?<!-- === /ASISTENTE IA CENTROS EMPRESARIALES USS === -->", "", contenido, flags=re.DOTALL)
-    # Limpiar cualquier residuo previo en etiquetas de nodos o flechas
-    contenido = re.sub(r'\s+data-step-state="[^"]*"', '', contenido)
-    contenido = re.sub(r'\s+data-ultimo-escogido="[^"]*"', '', contenido)
-    contenido = re.sub(r'\s+data-step-edge="[^"]*"', '', contenido)
+    for marca, patron, veces in _LIMPIEZA:
+        if marca in contenido:
+            contenido = patron.sub("", contenido, count=veces)
     return contenido
 
 
@@ -408,7 +425,9 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
         lista = info.get("diapositivas") or diapositivas_del_paso(slug_limpio, paso, info)
         if not lista:
             pantalla = (info.get("pantalla") or "").strip()
-            if pantalla and pantalla not in ("CASO", "RESULTADO"):
+            if pantalla in SIN_LAMINA:
+                info["sin_lamina"] = SIN_LAMINA[pantalla]
+            elif pantalla and pantalla not in ("CASO", "RESULTADO"):
                 info["sin_lamina"] = (
                     f"La página {pantalla} no sale en los instructivos de Ellucian: no hay lámina para mostrar."
                     if re.fullmatch(r"[A-Z]{6,8}", pantalla) else
@@ -436,7 +455,8 @@ def _resolver_diapositivas(guia, carpeta_html, slug):
     for paso, info in guia.items():
         lista = info.get("diapositivas") or []
         if not lista:
-            ADVERTENCIAS.append(f"{slug} · {paso}: paso sin lámina (agrégala en diapositivas_pasos.py)")
+            if (info.get("pantalla") or "").strip() not in SIN_LAMINA:  # sin lámina a propósito: no se avisa
+                ADVERTENCIAS.append(f"{slug} · {paso}: paso sin lámina (agrégala en diapositivas_pasos.py)")
             continue
         firma = tuple((d["fuente"], d["n"]) for d in lista)
         if firma in vistas:
@@ -604,20 +624,20 @@ def _json_seguro(obj):
 
 
 def inyectar_en_html(ruta_html, slug):
-    """Inyecta CSS, navegación superior/inferior y la guía operativa; se puede ejecutar varias veces."""
+    """Inyecta CSS, navegación superior/inferior y la guía operativa; se puede ejecutar varias veces.
+    Escribe el archivo solo si cambió; devuelve True si lo escribió."""
     nombre = ruta_html.parents[2].name
     id_centro = nombre if nombre in ("idiomas", "computacion", "emprendimiento") else ""
     nav = construir_navegacion_flujos(ruta_html)
 
-    contenido = _limpiar_inyeccion_previa(ruta_html.read_text(encoding="utf-8"))
+    previo = ruta_html.read_text(encoding="utf-8")
+    contenido = _limpiar_inyeccion_previa(previo)
     nodo_ids = ids_nodos_en_html(contenido)
     guia = obtener_guia_para_slug(slug, id_centro, nodo_ids)
     _resolver_diapositivas(guia, ruta_html.parent, slug)
     _resolver_capturas(guia, ruta_html.parent, slug)
-    conocimiento_script = os.path.relpath(
-        ASSETS_DIR / "asistente_conocimiento.js",
-        ruta_html.parent,
-    ).replace(os.sep, "/")
+    def ruta_asset(nombre_asset):
+        return html.escape(os.path.relpath(ASSETS_DIR / nombre_asset, ruta_html.parent).replace(os.sep, "/"), quote=True)
 
     antes = _html_antes_nrc(slug, ruta_html.parent)
     prueba = _guia_prueba_embebida(slug, id_centro, ruta_html.parent) if antes else None
@@ -639,8 +659,10 @@ def inyectar_en_html(ruta_html, slug):
         "<!-- === ASISTENTE CCEE INTEGRADO START === -->\n"
         + JS_SCRIPT_TEMPLATE
         .replace("__CSS__", CSS_MODAL)
-        .replace("__KNOWLEDGE_SCRIPT__", html.escape(conocimiento_script, quote=True))
-        .replace("__DIAPOS_SCRIPT__", html.escape(conocimiento_script.replace("asistente_conocimiento.js", "asistente_diapositivas.js"), quote=True))
+        .replace("__HOJA_ASISTENTE__", ruta_asset("asistente_ia.css"))
+        .replace("__CODIGO_ASISTENTE__", ruta_asset("asistente_ia.js"))
+        .replace("__KNOWLEDGE_SCRIPT__", ruta_asset("asistente_conocimiento.js"))
+        .replace("__DIAPOS_SCRIPT__", ruta_asset("asistente_diapositivas.js"))
         .replace("__GUIA_JSON__", _json_seguro(guia))
         .replace("__SIGUIENTE_FLUJO_JSON__", _json_seguro(nav["flujo_sig"]))
         .replace("__ANTERIOR_FLUJO_JSON__", _json_seguro(nav["flujo_ant"]))
@@ -659,18 +681,21 @@ def inyectar_en_html(ruta_html, slug):
     contenido = contenido.replace("return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';",
                                   "return 'light';")
 
+    if contenido == previo:
+        return False
     ruta_html.write_text(contenido, encoding="utf-8")
     return True
 
 
 def inyectar_todos():
     raiz = Path(__file__).resolve().parent.parent.parent
-    cont = 0
+    cont = total = 0
     ADVERTENCIAS.clear()
     for html_file in sorted((raiz / "centros").glob("**/diagramas/**/*.html")):
+        total += 1
         if inyectar_en_html(html_file, html_file.stem):
             cont += 1
-    print(f"Inyección completada en {cont} diagramas HTML.")
+    print(f"Inyección completada: {cont} de {total} diagramas HTML cambiaron.")
     if ADVERTENCIAS:
         print(f"\n⚠ {len(ADVERTENCIAS)} advertencias de guías:")
         for a in ADVERTENCIAS:

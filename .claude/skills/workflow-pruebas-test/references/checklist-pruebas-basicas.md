@@ -6,7 +6,7 @@ Parte de la skill `workflow-pruebas-test` (el mapa está en su `SKILL.md`).
 
 ### A. Catálogo y Reglas CAPP
 - [ ] Verificar existencia del curso en **SCACRSE** (ej. ESEC 00650 «Ofimática Word 365»).
-- [ ] Verificar prerrequisitos en **SCAPREQ** (si exige curso previo o examen de suficiencia).
+- [ ] Verificar prerrequisitos en **SCAPPRQ**, por programa y periodo de la versión (si exige curso previo o examen de suficiencia). La USS los configura ahí, no en SCAPREQ como enseña el instructivo 1.1.5 (C233).
 - [ ] Verificar mallas y reglas en **SMAAREA** (ej. MC38-01 «Ciclo I», regla ECOM-01 «Computación I»).
 
 ### B. Programación del NRC (SSASECT)
@@ -55,7 +55,7 @@ Documento de referencia exhaustivo: `ref-scripts-ccee-casuisticas.md`.
 1. **Matrícula regular** (`SFAREGS` / Autoservicio Alumnos) - *Validado en TEST (29/09 y 01/10)*.
 2. **Matrícula especial** (`SFASRPO` → `SFAREGS`).
 3. **Matrícula por convalidación** (`SHATRNS` → `SHATFAC` → `CAPP`).
-4. **Matrícula por examen de suficiencia** (`SOATEST` → `SCAPREQ` / `SSAPREQ` → `SFAREGS`).
+4. **Matrícula por examen de suficiencia** (`SOATEST` → `SCAPPRQ` → `SFAREGS`).
 5. **Curso especial para egresados** (`SSASECT` → `SGASTDN` → `SFAREGS`).
 6. **Matrículas para dos programas en simultáneo** (`SGASTDN` → `SFAREGS`) - *Validado en TEST*.
 7. **Matrículas para tres programas en simultáneo** (`SGASTDN` → `SFAREGS`).

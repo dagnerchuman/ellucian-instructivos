@@ -26,6 +26,16 @@ SCACRSE es el catálogo de cursos: el curso se crea una sola vez y rige hasta 99
 4. Con **«Sección siguiente»** (↓): **Nivel de curso** `C` Computación (diap. 23); **Modo de calificar** `V` Vigesimal, marcado como Predefinido (diap. 24); **Tipo de horario** `TEO` y `PRA`, método educativo `VIRT`, carga de trabajo 1.000 (diap. 25) (C148).
 Lo más seguro es **Copiar** un curso real del mismo centro y cambiar lo propio (C146). Hoy los cursos los crea Registros Académicos (C147). Las horas de Diseño Web (ESEC 00684) siguen por confirmar (U45).
 
+### ¿Cuáles son los pasos para subir el sílabo (syllabus) de un curso en SCASYLB?
+El sílabo se registra en **SCASYLB** (Syllabus de curso), por curso y periodo, y se ve en el Autoservicio del alumno (instructivo 6.1.1, diap. 13). No se adjunta un archivo: se escribe el texto en cada campo o se pone una URL. Pasos (diap. 9 a 12):
+1. **SCASYLB:** ingrese **Materia** (por ejemplo ESEC), **Curso** (00684) y el **Periodo** del sílabo; pulse **Ir** (diap. 9).
+2. **Título** (hasta 100 caracteres): el nombre completo del curso (diap. 10).
+3. **URL:** la dirección donde se consulta el curso, por ejemplo el PDF del sílabo; se muestra en Autoservicio (diap. 10).
+4. **Objetivos de aprendizaje** (diap. 10).
+5. **Materiales requeridos** (diap. 11).
+6. **Requerimientos técnicos** (diap. 12). Guarde.
+Por confirmar: no se ha probado en TEST, y no está definido si el sílabo lo sube el centro o Registros Académicos. El plan de evaluación del sílabo (pesos y componentes) no va aquí, va en **SHAGCOM** (C98).
+
 ### ¿Quién crea los cursos nuevos en SCACRSE?
 Hoy los crea **Registros Académicos**; el centro solo si le dan acceso. Para el go-live se capacitará a todos por la cantidad de mallas a actualizar (C147, chat con Liliana Ocampo de Ellucian; U40 resuelta). El centro crea el **NRC** (SSASECT) de un curso que ya existe.
 
@@ -36,4 +46,4 @@ Es una de las partes del periodo 202656 que usa Computación («Computación Gru
 Los centros tienen periodos propios, que terminan en 51, 54 y 56: **202651** (2026-0, verano, grupos de enero a marzo), **202654** (2026-I, abril a julio) y **202656** (2026-II, agosto a diciembre); en 2027, 202751 y 202754 (datos.json común; ADR-005). Pregrado usa otros (por ejemplo 202644).
 
 ### ¿Cuál es el orden de los cursos de Inglés y tienen prerrequisito?
-Sí. Idiomas usa **prerrequisito Fatal**: quien desaprueba BASIC I no pasa a BASIC II, salvo con **examen de suficiencia** (C11, R09). La cadena es BASIC I → BASIC II → BASIC III → INTERMEDIATE I → INTERMEDIATE II → INTERMEDIATE III; BASIC I → BASIC II está confirmado y el resto se asume igual (datos.json de Idiomas). En Banner va en SCAPREQ/SSAPREQ con la verificación en Fatal en SOATERM. Computación, en cambio, no tiene orden entre los cursos de la ruta (C191).
+Sí. Idiomas usa **prerrequisito Fatal**: quien desaprueba BASIC I no pasa a BASIC II, salvo con **examen de suficiencia** (C11, R09). La cadena es BASIC I → BASIC II → BASIC III → INTERMEDIATE I → INTERMEDIATE II → INTERMEDIATE III; BASIC I → BASIC II está confirmado y el resto se asume igual (datos.json de Idiomas). En Banner va en SCAPPRQ, por programa y periodo de la versión (C233), con la verificación en Fatal en SOATERM. Computación, en cambio, no tiene orden entre los cursos de la ruta (C191).

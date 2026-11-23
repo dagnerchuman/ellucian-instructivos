@@ -7,8 +7,14 @@
 <title>Diagramas de los Centros Empresariales · USS en Banner</title>
 <script>
   (function () {
-    if (!window.location.pathname.endsWith('/') && !window.location.pathname.endsWith('.html')) {
-      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    var ruta = window.location.pathname;
+    // «index.html/» (barra de más): el navegador toma el archivo por carpeta y rompe miniaturas y enlaces.
+    if (/\.html\/+$/.test(ruta)) {
+      window.location.replace(ruta.replace(/\/+$/, '') + window.location.search + window.location.hash);
+      return;
+    }
+    if (!ruta.endsWith('/') && !ruta.endsWith('.html')) {
+      window.location.replace(ruta + '/' + window.location.search + window.location.hash);
       return;
     }
     try {
@@ -21,6 +27,7 @@
 <style>
 /*__CSS__*/
 </style>
+<link rel="stylesheet" href="../herramientas/diagramas/assets/asistente_ia.css">
 </head>
 <body>
 
@@ -75,5 +82,6 @@
   <script>
   /*__JS__*/
   </script>
+  <script src="../herramientas/diagramas/assets/asistente_ia.js"></script>
 </body>
 </html>

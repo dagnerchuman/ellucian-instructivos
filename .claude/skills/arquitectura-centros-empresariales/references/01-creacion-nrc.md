@@ -7,7 +7,7 @@ El usuario creó su primer NRC en **TEST** (`experience-test.elluciancloud.com/u
 ## El NRC no es lo primero: orden
 0. **Códigos base:** STVPTRM (partes de periodo), STVACYR, STVTRMT. *(1.1.1)*
 1. **Periodo:** STVTERM y SOATERM, con fechas, partes de periodo habilitadas para programar (5.3, diap. 16), número inicial de NRC (5.3, diap. 15) y fechas web. Feriados en SSAEXCL.
-2. **Catálogo:** curso en SCACRSE (1.1.4) y prerrequisitos en SCAPREQ (1.1.5). Sin el curso no hay NRC (5.3, diap. 53).
+2. **Catálogo:** curso en SCACRSE (1.1.4); los prerrequisitos van en SCAPPRQ, por programa y periodo de la versión (C233). Sin el curso no hay NRC (5.3, diap. 53).
 3. **Programa y malla:** SOACURR y SMAPROG/SMAAREA. No bloquean el NRC, pero sí la admisión y el CAPP.
 4. **Docente:** SPAIDEN, SIAINST (activo en el periodo) y el factor de SIATERM.
 5. **NRC:** SSASECT.

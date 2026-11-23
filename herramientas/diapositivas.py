@@ -17,6 +17,7 @@ Necesita LibreOffice (soffice), pdftoppm (poppler) y Pillow con WebP. Los <id> s
 visor_instructivos/data.js; las carpetas CAPACIDAD n/ no se mueven (ADR-015).
 """
 import argparse
+import hashlib
 import json
 import re
 import shutil
@@ -36,6 +37,8 @@ CALIDAD = 72
 # Proporciones que se quitan en los recortes: banda lateral izquierda y título superior (diseño Ellucian).
 CAJA_RECORTE = (0.034, 0.118, 0.0, 0.075)
 VERSION_RECORTE = 2  # súbelo si cambia la forma de recortar: obliga a rehacer los recortes
+# Lo que se saca de cada PPTX (cajas, textos, párrafos), guardado en disco; no se sube (.gitignore).
+CACHE_PPTX = RAIZ / "herramientas" / ".cache" / "pptx"
 
 
 def presentaciones():
@@ -45,6 +48,47 @@ def presentaciones():
     i = texto.index(marca) + len(marca)
     j = texto.index("\n};", i) + 2
     return json.loads(texto[i:j])
+
+
+_RUTAS_PPTX = {}
+_FIRMAS_CODIGO = {}
+
+
+def _ruta_pptx(id_):
+    if not _RUTAS_PPTX:
+        _RUTAS_PPTX.update({i: RAIZ / info["path"] for i, info in presentaciones().items()})
+    return _RUTAS_PPTX[id_]
+
+
+def _firma_codigo(ruta):
+    ruta = Path(ruta).resolve()
+    if ruta not in _FIRMAS_CODIGO:
+        _FIRMAS_CODIGO[ruta] = hashlib.sha1(ruta.read_bytes()).hexdigest()[:12]
+    return _FIRMAS_CODIGO[ruta]
+
+
+def en_cache(id_, clave, calcular, codigo=__file__):
+    """Resultado de calcular() para el PPTX id_, guardado en herramientas/.cache/pptx.
+
+    Abrir un PPTX con python-pptx cuesta décimas de segundo y la regeneración lo hacía cientos de veces
+    (cada página, la base del asistente y sus láminas). Se vuelve a calcular si cambia el PPTX (tamaño o
+    fecha) o el archivo de código que lo calcula. Devuelve siempre datos de JSON (listas, no tuplas)."""
+    st = _ruta_pptx(id_).stat()
+    firma = f"{_firma_codigo(codigo)}:{st.st_size}:{st.st_mtime_ns}"
+    archivo = CACHE_PPTX / f"{clave}-{re.sub(r'[^0-9A-Za-z._-]+', '_', id_)}.json"
+    try:
+        guardado = json.loads(archivo.read_text(encoding="utf-8"))
+        if guardado.get("firma") == firma:
+            return guardado["datos"]
+    except (OSError, ValueError):
+        pass
+    datos = json.loads(json.dumps(calcular(), ensure_ascii=False))
+    try:
+        CACHE_PPTX.mkdir(parents=True, exist_ok=True)
+        archivo.write_text(json.dumps({"firma": firma, "datos": datos}, ensure_ascii=False), encoding="utf-8")
+    except OSError:
+        pass  # sin caché igual funciona, solo más lento
+    return datos
 
 
 def leer_indice():
@@ -130,11 +174,15 @@ def _cajas_presentacion(id_):
 
     La caja deja fuera el título, la banda lateral y el pie. Los títulos quitados se guardan como
     (x0, y0, x1, y1) en fracciones de la lámina: recorte() los vuelve a meter si el borde los parte."""
-    if id_ in _CAJAS:
-        return _CAJAS[id_]
+    if id_ not in _CAJAS:
+        _CAJAS[id_] = en_cache(id_, "cajas", lambda: _calcular_cajas(id_))
+    return _CAJAS[id_]
+
+
+def _calcular_cajas(id_):
     from pptx import Presentation
     from pptx.enum.shapes import PP_PLACEHOLDER
-    pres = Presentation(RAIZ / presentaciones()[id_]["path"])
+    pres = Presentation(_ruta_pptx(id_))
     W, H = pres.slide_width, pres.slide_height
     textos = _textos_presentacion(id_)
     cajas = []
@@ -176,7 +224,6 @@ def _cajas_presentacion(id_):
         margen_x, margen_y = 0.008 * W, 0.012 * H
         cajas.append(((max(0, (x0 - margen_x) / W), max(0, (y0 - margen_y) / H),
                        max(0, 1 - (x1 + margen_x) / W), max(0, 1 - (y1 + margen_y) / H)), titulos))
-    _CAJAS[id_] = cajas
     return cajas
 
 
@@ -285,12 +332,16 @@ _TEXTOS = {}
 
 def _textos_presentacion(id_):
     """Por diapositiva: lista de párrafos [{"num", "texto", "nivel"}] sin el texto que se repite en el diseño."""
-    if id_ in _TEXTOS:
-        return _TEXTOS[id_]
+    if id_ not in _TEXTOS:
+        _TEXTOS[id_] = en_cache(id_, "textos", lambda: _calcular_textos(id_))
+    return _TEXTOS[id_]
+
+
+def _calcular_textos(id_):
     from collections import Counter
     from pptx import Presentation
     from pptx.oxml.ns import qn
-    pres = Presentation(RAIZ / presentaciones()[id_]["path"])
+    pres = Presentation(_ruta_pptx(id_))
     por_lamina = []
     for lamina in pres.slides:
         parrafos = []
@@ -317,10 +368,9 @@ def _textos_presentacion(id_):
     frecuencia = Counter(p["texto"] for ps in por_lamina for p in {x["texto"]: x for x in ps}.values())
     limite = max(3, len(por_lamina) * 0.3)
     es_titulo = re.compile(r"^[^.]{3,50}\([A-Z]{6,8}\)$")  # «Programar NRC (SSASECT)»: título de la lámina
-    _TEXTOS[id_] = [[p for p in ps if frecuencia[p["texto"]] < limite and len(p["texto"]) > 3
-                     and not p["texto"].isdigit() and not (not p["num"] and es_titulo.match(p["texto"]))]
-                    for ps in por_lamina]
-    return _TEXTOS[id_]
+    return [[p for p in ps if frecuencia[p["texto"]] < limite and len(p["texto"]) > 3
+             and not p["texto"].isdigit() and not (not p["num"] and es_titulo.match(p["texto"]))]
+            for ps in por_lamina]
 
 
 def texto_diapositiva(id_, n):

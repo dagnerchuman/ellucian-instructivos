@@ -36,7 +36,7 @@ Los diagramas se **generan**: no se editan a mano ni el HTML ni el JSON de salid
 | Salida | `centros/<centro>/diagramas/NN-tema/<centro>-NN-tema.{workflow,sequence}.json`, `.html`, `-claro.png`, `-oscuro.png`, `.svg` |
 | Índices | `centros/README.md`, `centros/index.html` y `centros/<centro>/README.md`, generados por `generar.py` (`indices.py`) |
 | Guías paso a paso (modal de cada nodo) | `herramientas/diagramas/guias_operativas.py`: las claves (`n1`, `s3`, `c2`…) son los `id` de los nodos de la plantilla |
-| Asistente IA de las páginas | `herramientas/diagramas/assets/asistente_ia.js` (instrucciones, formato y modo seguro) y `asistente_conocimiento.js` (base local, se regenera sola) |
+| Asistente IA de las páginas | `herramientas/diagramas/assets/asistente_ia.js` y `.css` (instrucciones, formato y modo seguro; las páginas los cargan como archivos, así que cambiarlos no regenera nada, C234) y `asistente_conocimiento.js` (base local, se regenera sola) |
 
 ## Tres reglas de diseño (pedido del usuario, 05/10)
 1. **Un solo flujo por diagrama.** Los pasos van en una línea, sin ramas ni casos en paralelo. Los errores y las variantes van en las tarjetas («Si sale un error», «Si no deja matricular»). Cada casuística tiene su propio diagrama.

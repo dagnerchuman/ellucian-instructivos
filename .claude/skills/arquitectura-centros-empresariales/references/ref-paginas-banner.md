@@ -15,8 +15,8 @@ Columna «Dónde»: el instructivo que más la menciona (búsqueda en los 83 PPT
 | Página | Para qué | Dónde |
 |---|---|---|
 | SCACRSE | Catálogo de cursos | 1.1.4 |
-| SCAPREQ | Prerrequisitos y exámenes del catálogo | 1.1.5 |
-| SCAPPRQ | Prerrequisitos por **programa** y versión del programa (acreditación como prerrequisito de pregrado) | No está en los 83 instructivos; probado en TEST (C160 a C164) |
+| SCAPREQ | Prerrequisitos y exámenes del catálogo, como enseña el instructivo. **La USS no lo usa:** configura los prerrequisitos en SCAPPRQ (C233) | 1.1.5 |
+| SCAPPRQ | Prerrequisitos y puntajes de examen por **programa** y versión del programa: **aquí configura la USS todos los prerrequisitos** (C233), incluida la acreditación como prerrequisito de pregrado | No está en los 83 instructivos; probado en TEST (C160 a C164) |
 | SMAPRLE, SOACURR | Programa y reglas de currículo | 1.1.3 |
 | SMAPROG, SMAAREA | Malla del programa y áreas (CAPP) | 1.2.1, 1.3.1 |
 

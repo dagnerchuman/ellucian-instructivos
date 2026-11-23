@@ -15,6 +15,19 @@ def leer_json(ruta):
         return json.load(f)
 
 
+def escribir_si_cambia(ruta, texto):
+    """Escribe el archivo solo si su contenido cambia: una regeneración sin cambios no toca ningún archivo (ni
+    dispara la recarga del servidor local). Devuelve True si lo escribió."""
+    ruta = Path(ruta)
+    try:
+        if ruta.read_text(encoding="utf-8") == texto:
+            return False
+    except OSError:
+        pass
+    ruta.write_text(texto, encoding="utf-8")
+    return True
+
+
 def codigo(valor, defecto=POR_CONFIRMAR):
     """Código de un campo de datos.json ({"codigo": ...} o texto); «por confirmar» si falta."""
     if isinstance(valor, dict):

@@ -51,7 +51,7 @@ description: >-
 | Preguntas frecuentes: notas, historia y PGA (SHRROLL, historia, repetidos, SHRCGPA, copiar SHAGCOM, suficiencia); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-notas-e-historia.md](references/ref-preguntas-frecuentes-notas-e-historia.md) |
 | Preguntas frecuentes: selección de población y procesos masivos (GLRSLCT, GJAJFLU, GJRPSIM, SMRBCMP); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-poblacion-y-procesos-masivos.md](references/ref-preguntas-frecuentes-poblacion-y-procesos-masivos.md) |
 | Preguntas frecuentes: docente y asistencia (SSASECT, SIAASGN, Pasar lista, notas en Autoservicio, encuesta TESS); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-docente-y-asistencia.md](references/ref-preguntas-frecuentes-docente-y-asistencia.md) |
-| Preguntas frecuentes: cursos, malla y periodos (SCACRSE, SMAAREA, atributos STVATTR, X06, periodos, Inglés); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-cursos-nrc-y-malla.md](references/ref-preguntas-frecuentes-cursos-nrc-y-malla.md) |
+| Preguntas frecuentes: cursos, malla y periodos (SCACRSE, SMAAREA, sílabo SCASYLB, atributos STVATTR, X06, periodos, Inglés); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-cursos-nrc-y-malla.md](references/ref-preguntas-frecuentes-cursos-nrc-y-malla.md) |
 
 ## Buscar evidencia en los instructivos
 ```bash

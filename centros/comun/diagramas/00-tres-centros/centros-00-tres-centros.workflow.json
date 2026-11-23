@@ -692,8 +692,7 @@
       "type": "backend",
       "label": "SFAREGS",
       "sublabel": "orden por confirmar",
-      "width": 150,
-      "tag": "U02"
+      "width": 150
     },
     {
       "id": "emprendimiento_4",

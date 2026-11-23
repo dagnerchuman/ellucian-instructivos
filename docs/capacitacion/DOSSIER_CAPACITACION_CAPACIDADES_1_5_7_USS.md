@@ -61,13 +61,12 @@
 
 ### 2.3 Prerrequisitos, Corequisitos y Restricciones
 
-- **`SCAPREQ` (Prerrequisitos de Catálogo):**
+- **`SCAPPRQ` (Prerrequisitos por programa):** en la USS todos los prerrequisitos se configuran aquí, por programa y periodo de la versión (C233, C236).
   - Define qué asignaturas deben estar aprobadas antes de cursar la materia.
   - Calificación mínima requerida (ej. 11 en modo V).
-  - Combinación lógica con operadores booleanos `AND` / `OR` y paréntesis.
+  - Combinación lógica con `Y` / `O` y paréntesis (probado en SCAPPRQ, C161; R25).
   - Incorporación de pruebas de suficiencia o exámenes de nivelación (`SOATEST`, ej. suficiencia en idiomas).
-- **`SSAPREQ` (Prerrequisitos del NRC):**
-  - Permite heredar o ajustar las restricciones curriculares a nivel de sección específica.
+- El instructivo 1.1.5 enseña `SCAPREQ` (catálogo) y `SSAPREQ` (NRC); la USS no los usa.
 
 ### 2.4 Programas Académicos y Mallas Curriculares (CAPP)
 
@@ -175,7 +174,7 @@
 ```
 [1. SOATERM] Apertura de Periodo y Fechas
       ↓
-[2. SCACRSE / SCAPREQ] Catálogo de Cursos y Prerrequisitos
+[2. SCACRSE / SCAPPRQ] Catálogo de Cursos y Prerrequisitos por Programa
       ↓
 [3. SIAINST / SIAASGN] Registro y Asignación de Docentes
       ↓

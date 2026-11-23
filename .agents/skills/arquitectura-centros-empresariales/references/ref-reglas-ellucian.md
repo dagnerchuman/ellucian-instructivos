@@ -39,7 +39,8 @@ Todas las citas se verificaron con `scripts/buscar_instructivos.py`. Formato: in
 ## Prerrequisitos, exámenes y sobrepasos
 - «La inscripción de un curso puede estar condicionada por una o más asignaturas que deben haber sido cursadas y/o **aprobadas** antes de inscribirlos». *(1.1.5, diap. 5)*
 - «**Examen de curso**: elemento que no es un curso pero que se constituye como prerequisito de una asignatura. Por ejemplo: **suficiencia en idioma**». *(1.1.5, diap. 8)*
-- **SCAPREQ** (prerrequisitos y puntajes de examen del catálogo) combina:
+- **En la USS los prerrequisitos van en SCAPPRQ**, por programa y periodo de la versión: curso con calificación mínima, Y/O y paréntesis (C161, C221) y, por su nombre, puntaje de examen (C160). No está en los instructivos; lo que sigue (SCAPREQ y SSAPREQ) es lo que enseña Ellucian y la USS no lo usa para configurar (C233).
+- **SCAPREQ** (prerrequisitos y puntajes de examen del catálogo, según el instructivo) combina:
   - código de examen con puntaje;
   - curso con **calificación mínima**;
   - «Y/O» y paréntesis. *(1.1.5, diap. 18 y 19)*
@@ -49,7 +50,7 @@ Todas las citas se verificaron con `scripts/buscar_instructivos.py`. Formato: in
   - SFAREGS muestra el error en el campo «Mensaje» del NRC. *(5.4 Sobrepasos, diap. 37)*
 - **SOATERM, casilla «En progreso»:** si se marca, el curso que se está llevando cuenta como completo para el prerrequisito. «Una vez que un curso es calificado, ya no es considerado en progreso, y luego es verificado contra las reglas en SSAPREQ». *(1.1.2, diap. 18 y 19)* Importa en los grupos seguidos de Inglés (duda E13).
 - **Correquisito:** «cursos que deben ser matriculados en el **mismo período académico**, sin posibilidad de que se tome uno y en otro período académico otro». Se define en **SCADETL** › Correquisitos y equivalentes. *(1.1.5, diap. 8, 21 y 28)*
-  - **Amarrar una acreditación a un curso de pregrado** (C131, R22): como correquisito no funciona mientras los centros tengan periodos propios (ADR-005). Como prerrequisito en SCAPREQ, sí, porque revisa la historia; con «En progreso», también cuenta el curso que está llevando. Cuál se usa (o si no se amarra y queda solo para el egreso en CAPP, R08) lo decide la USS (U43, E25).
+  - **Amarrar una acreditación a un curso de pregrado** (C131, R22): como correquisito no funciona mientras los centros tengan periodos propios (ADR-005). Como prerrequisito restrictivo por programa en SCAPPRQ, sí (probado en TEST, C159 a C170), porque revisa la historia; con «En progreso», también cuenta el curso que está llevando. Cuál se usa (o si no se amarra y queda solo para el egreso en CAPP, R08) lo decide la USS (U43, E25).
 - **Proyección:** SFPPROJ tiene el parámetro «¿Verif de prerrequisito? Y/N». *(5.4 Proyección, diap. 34)*
 - **SOATEST** (puntajes de examen del estudiante): código, puntaje y fecha del examen. *(3.2.2, diap. 14)* Los códigos de examen están en STVTESC.
 - **SFAROVR** (permisos de sobrepaso de inscripción): permite inscribir a pesar de un error Fatal (prerrequisito, horas, nivel, programa…). Se da por NRC o por materia-curso. *(5.4 Sobrepasos, diap. 19 a 21 y 42)*

@@ -1,6 +1,18 @@
 # Preguntas complejas: prerrequisito, correquisito y restricción por programa
 
-Respuestas cortas para el asistente IA y para cualquier agente: qué hace Banner, por qué y con qué prueba (C##) o instructivo. Cada pregunta es un fragmento de la base del asistente. El detalle está en [ref-restricciones-y-prerrequisitos-por-programa.md](ref-restricciones-y-prerrequisitos-por-programa.md) y en el registro (C156 a C170).
+Respuestas cortas para el asistente IA y para cualquier agente: qué hace Banner, por qué y con qué prueba (C##) o instructivo. Cada pregunta es un fragmento de la base del asistente. El detalle está en [ref-restricciones-y-prerrequisitos-por-programa.md](ref-restricciones-y-prerrequisitos-por-programa.md) y en el registro (C156 a C170, C221 y C233).
+
+### ¿Cómo configuro un prerrequisito en los centros? (SCAPPRQ)
+En la USS todos los prerrequisitos se configuran en **SCAPPRQ**, por programa y periodo de la versión (C233, C236). Esta página no figura en los 83 instructivos (C160). Pasos, con valores de TEST:
+1. **SCAPPRQ** › bloque clave: **Programa** y **Periodo de la versión** (su «De periodo»), no el de la matrícula › Ir (C164). Ejemplos: Emprendimiento `MMEMM01` + `202251`; Medicina `1PCSP15` + `202444` o `202644`. Con otro periodo (`202656`) Banner avisa «De periodo no es igual…» y el bloque de prerrequisitos sale vacío (C162, C221).
+2. **Información de curso:** clic en el curso que exigirá el prerrequisito (Emprendimiento II `ESGE 00118`). Si no está en la lista: `+` › materia y curso (`ESEC` `00044`), método Básico › GUARDAR (C165).
+3. ⏬ al **bloque de prerrequisitos** › `+` (si está vacío, clic en «Materia») › el curso exigido:
+   - **aprobado con nota:** `ESGE` `00117` (Emprendimiento I), nivel `M`, calificación `11` (C221);
+   - **basta haberlo cursado:** `ESEP` `02456` (Basic I), sin nivel ni calificación (C161, C165).
+4. **Varias filas:** «Y» exige las dos, «O» basta una, la primera fila va sin conector y los paréntesis agrupan (R25). Anatomía I `ESEC 00017` = `ESEC 00055` (nivel 1, nota 11) **Y (** `ESEP 02456` **O** `02457` **O** `02458` **)** (C161).
+5. **GUARDAR** (*Saved successfully*).
+6. **Cada versión:** Banner usa la versión del **catálogo del alumno** (C170); la regla debe estar en cada una (`202444`, `202544`, `202644`).
+7. **Prueba:** SFAREGS con un alumno que no tiene el curso → **«Prerequisite and Test Score error»**, no se guarda (C163, C165).
 
 ### ¿Se puede poner el curso del centro (por ejemplo Basic I) como correquisito de un curso de pregrado (por ejemplo Anatomía I)?
 **No.** El correquisito (SCADETL) obliga a llevar los dos cursos **en el mismo periodo** (instructivo 1.1.5, diap. 8 y 21; R22, R24). Pregrado usa periodos que terminan en 44 (202644) y los centros en 54 (202654); los centros tienen periodos propios (ADR-005). Por eso Nidia Beltrán indicó el **prerrequisito restrictivo en SCAPPRQ** (C159). Ellucian explorará un mismo periodo o partes de periodo (C168), pero choca con el ADR-005 y lo decide la USS (U51).
@@ -24,11 +36,11 @@ Porque Banner aplica la **versión de SCAPPRQ del catálogo del alumno**, no la 
 ### ¿Qué diferencia hay entre SCAPREQ, SSAPREQ y SCAPPRQ?
 - **SCAPREQ:** prerrequisitos del curso en el catálogo; valen para todos los que llevan el curso (instructivo 1.1.5).
 - **SSAPREQ:** prerrequisitos de un NRC.
-- **SCAPPRQ:** prerrequisitos por **programa**: el curso exige otro solo a los alumnos de ese programa y versión (C160). No está en los 83 instructivos.
+- **SCAPPRQ:** prerrequisitos por **programa**: el curso exige otro solo a los alumnos de ese programa y versión (C160). No está en los 83 instructivos, pero **es el que usa la USS** (C221, C233).
 En las pruebas, SSAPREQ del NRC estaba vacío y el bloqueo venía de SCAPPRQ (C163).
 
 ### ¿Qué significan «Y», «O» y los paréntesis en una regla de prerrequisitos?
-«**Y**» exige las dos filas; «**O**» basta una; la primera fila no lleva conector; los **paréntesis** agrupan filas para que el conector de afuera valga para todo el grupo (instructivo 1.1.5, diap. 18 y 19; R25). Ejemplo: Anatomía I = `ESEC 00055` **Y** ( Basic I **O** Basic II **O** Basic III ): debe tener Bioquímica y además uno de los tres Basic (C161). Con «Y» en lugar de «O» tendría que haber llevado los tres.
+«**Y**» exige las dos filas; «**O**» basta una; la primera fila no lleva conector; los **paréntesis** agrupan filas para que el conector de afuera valga para todo el grupo (probado en SCAPPRQ, C161; R25). Ejemplo: Anatomía I = `ESEC 00055` **Y** ( Basic I **O** Basic II **O** Basic III ): debe tener Bioquímica y además uno de los tres Basic (C161). Con «Y» en lugar de «O» tendría que haber llevado los tres.
 
 ### Si el alumno desaprueba Basic I, ¿puede llevar el curso de pregrado?
 **Por confirmar con Ellucian** (E31, punto d). Lo dicho en la reunión: sin calificación en la fila basta haber cursado el curso; con calificación hay que aprobarlo con esa nota (C159). Dentro del centro, quien desaprueba Basic I no pasa a Basic II (prerrequisito Fatal, ADR-008).

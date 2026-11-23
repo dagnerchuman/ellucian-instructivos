@@ -63,9 +63,9 @@ ELLUCIAN = [
              sabemos="Además de la hora de clase existe una hora presencial de 60 min, como la hora de trabajo (C05)."),
         dict(id="E13", titulo="«En progreso» con grupos seguidos",
              sabemos="Con «En progreso» marcado en SOATERM, el curso en curso cuenta como completo para el prerrequisito; "
-                     "se revisa contra SSAPREQ al calificar (R10; 1.1.2, diap. 18 y 19)."),
+                     "se vuelve a revisar al calificar (R10; 1.1.2, diap. 18 y 19)."),
         dict(id="E04", titulo="BASIC I después de pasar con examen de suficiencia",
-             sabemos="El prerrequisito «BASIC I aprobado o suficiencia con puntaje mínimo» va en SCAPREQ y el puntaje en "
+             sabemos="El prerrequisito «BASIC I aprobado o suficiencia con puntaje mínimo» va en SCAPPRQ, en la regla del programa de Idiomas (C233), y el puntaje en "
                      "SOATEST (R03, R09). En Idiomas, quien desaprueba no avanza salvo con suficiencia (C11)."),
     ]),
     ("Mallas y CAPP", [

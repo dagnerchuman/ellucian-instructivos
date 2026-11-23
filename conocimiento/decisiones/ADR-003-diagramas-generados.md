@@ -3,7 +3,7 @@ id: ADR-003
 titulo: Los diagramas se generan con Archify y tienen un solo flujo, un código por paso y un término por concepto
 estado: aceptado
 fecha: 2026-10-05
-fuentes: [C40, C49]
+fuentes: [C40, C49, C234]
 temas: [diagramas]
 ---
 # ADR-003 · Diagramas generados: un flujo, un código, un término
@@ -18,6 +18,7 @@ La primera versión tenía nodos con dos códigos («SCACRSE · SMAAREA»), vari
 - **Un solo término por concepto,** según [ADR-004](ADR-004-glosario-unico.md).
 - El recorrido completo es una **secuencia** que muestra quién hace cada paso.
 - Todo diagrama pasa la validación `showcase` de Archify antes de subirse.
+- **Se regenera solo lo que cambió (23/11/2026, C234):** `generar.py` compila con Archify únicamente los diagramas cuya especificación cambió (un diagrama que no cambió conserva la validación que ya pasó) y solo reescribe las páginas cuyo contenido cambia; `--forzar` rehace todo. La memoria de cada página queda en `herramientas/.cache/` y no se sube.
 
 ## Alternativas descartadas
 - **Diagramas a mano** (draw.io, PowerPoint): se desactualizan cuando cambia un dato.

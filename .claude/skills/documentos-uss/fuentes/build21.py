@@ -39,7 +39,7 @@ CFG = [
     ], 'l'),
     (41, 'PRERREQUISITOS DE SECCIÓN - SSAPREQ', [
         para('En la pestaña ', G('Restricciones de puntaje de examen y de prerrequisitos de sección'),
-             ' se muestran los prerrequisitos ', B('heredados del catálogo (SCAPREQ)'), '.'),
+             ' se muestran los prerrequisitos ', B('heredados del catálogo'), '.'),
         para('Con las opciones ', G('Insertar, Eliminar o Copiar'), ' (resaltadas) se ajustan solo para este NRC.'),
     ], 'ctr'),
     (42, 'PRERREQUISITOS DE SECCIÓN - SSAPREQ', [
@@ -120,7 +120,7 @@ def build_herencia(slide_path):
                                              para(B('Ligas '), 'de sección.'),
                                              para(B('Atributos '), 'del curso.')], 'SCADETL'),
         ('SSAPREQ', 'Prerrequisitos', [para('Cursos o puntajes de examen que el alumno debe tener ', B('aprobados'), '.'),
-                                         para(G('Ejemplo Idiomas: '), 'BASIC II requiere BASIC I.')], 'SCAPREQ'),
+                                         para(G('En la USS: '), 'van en SCAPPRQ, por programa (C233). Ej.: BASIC II requiere BASIC I.')], 'catálogo'),
         ('SSARRES', 'Restricciones', [para('Quién puede inscribirse en el NRC: ', B('nivel, programa, campus, atributo o cohorte'), '.'),
                                         para('Con ', B('Incluir'), ' o ', B('Excluir'), '.')], 'SCARRES'),
     ]
@@ -176,7 +176,7 @@ def main():
         elif kind == 'resumen':
             build_bullets(path, 'RESUMEN', [
                 para(B('SSADETL'), ': complementa el NRC con correquisitos, ligas de sección y atributos heredados del catálogo.'),
-                para(B('SSAPREQ'), ': muestra los prerrequisitos heredados de SCAPREQ; se pueden insertar, eliminar o copiar solo para ese NRC.'),
+                para(B('SSAPREQ'), ': muestra los prerrequisitos heredados del catálogo. En la USS no se usa: los prerrequisitos van en SCAPPRQ, por programa y periodo de la versión (C233).'),
                 para(B('SSARRES'), ': define quién puede inscribirse en el NRC (nivel, programa, campus, atributo o cohorte) con Incluir o Excluir.'),
                 para(B('Acceso'), ': desde el Menú relacionado de SSASECT o desde la búsqueda de Experience, indicando Periodo y NRC.'),
                 para(B('Recuerde'), ': los cambios posteriores en el catálogo no se aplican a los NRC ya creados.'),

@@ -514,10 +514,10 @@
       "lane": "caso",
       "col": 2,
       "type": "backend",
-      "label": "SCAPREQ",
+      "label": "SCAPPRQ",
       "sublabel": "validar prerrequisito",
       "width": 170,
-      "tag": "equivalencia a BASIC I"
+      "tag": "regla del programa: BASIC I o examen"
     },
     {
       "id": "c3",
@@ -597,7 +597,7 @@
       "items": [
         "Paso 01 (SOAINST): Verificación de Evaluación — Consulta de código de examen de suficiencia institucional.",
         "Paso 02 (SOATEST): Registro de Calificación — Ingreso de ID del alumno, código de prueba (U01) y puntaje aprobatorio.",
-        "Paso 03 (SCAPREQ): Evaluación de Prerrequisitos — El motor valida el examen como prerrequisito equivalente de BASIC I.",
+        "Paso 03 (SCAPPRQ): Evaluación de Prerrequisitos — La regla del programa (por programa y periodo de la versión) acepta el examen como equivalente de BASIC I.",
         "Paso 04 (SFAREGS): Matrícula en Nivel Siguiente — Inscripción directa en BASIC II sin bloqueo fatal.",
         "Paso 05 (SFAREGS): Asentamiento de Matrícula — Código RE guardado y vacante asignada en el NRC de destino."
       ]
@@ -606,7 +606,7 @@
       "dot": "cyan",
       "title": "En Ellucian (instructivos)",
       "items": [
-        "Catálogo y prerrequisitos: instructivos 1.1.4 (SCACRSE) y 1.1.5 (SCAPREQ)"
+        "Catálogo: instructivo 1.1.4 (SCACRSE). Prerrequisitos: en la USS, SCAPPRQ por programa (C233)"
       ]
     },
     {

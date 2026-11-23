@@ -7,14 +7,12 @@
 import html
 from pathlib import Path
 
-from centro import CENTROS, POR_CONFIRMAR, Centro, centros_disponibles
+from centro import CENTROS, POR_CONFIRMAR, Centro, centros_disponibles, escribir_si_cambia
 from plantillas import TITULOS, CAPACIDADES, FASES_CASUISTICAS, slug_script
 ASSETS_DIR = Path(__file__).resolve().parent / "assets"
 TEMPLATE_GALERIA = (ASSETS_DIR / "indice_galeria.html").read_text(encoding="utf-8")
 CSS_GALERIA = (ASSETS_DIR / "indice_galeria.css").read_text(encoding="utf-8")
 JS_GALERIA = (ASSETS_DIR / "indice_galeria.js").read_text(encoding="utf-8")
-CSS_AI = (ASSETS_DIR / "asistente_ia.css").read_text(encoding="utf-8")
-JS_AI = (ASSETS_DIR / "asistente_ia.js").read_text(encoding="utf-8")
 HTML_AI = (ASSETS_DIR / "asistente_ia_snippet.html").read_text(encoding="utf-8")
 CSS_ZOOM = (ASSETS_DIR / "zoom_imagen.css").read_text(encoding="utf-8")
 JS_ZOOM = (ASSETS_DIR / "zoom_imagen.js").read_text(encoding="utf-8")
@@ -113,7 +111,7 @@ def readme_general(ids):
                "bash herramientas/diagramas/instalar_archify.sh",
                "python3 herramientas/diagramas/generar.py", "```",
                "Detalle en la skill `workflow-diagramas-archify`.", ""]
-    (CENTROS / "README.md").write_text("\n".join(partes), encoding="utf-8")
+    return escribir_si_cambia(CENTROS / "README.md", "\n".join(partes))
 
 
 def ficha_centro(c):
@@ -181,7 +179,7 @@ def ficha_centro(c):
         *[f"- **{x['id']}**: {x['texto']}" for x in d["dudas"]],
         "",
     ]
-    (carpeta / "README.md").write_text("\n".join(partes), encoding="utf-8")
+    return escribir_si_cambia(carpeta / "README.md", "\n".join(partes))
 
 
 def galeria(ids):
@@ -228,20 +226,24 @@ def galeria(ids):
     url_test = html.escape(test if test.startswith("http") else "https://" + test)
     pagina = (
         TEMPLATE_GALERIA
-        .replace("/*__CSS__*/", CSS_GALERIA + "\n\n" + CSS_AI + "\n\n" + CSS_ZOOM)
-        .replace("/*__JS__*/", JS_ZOOM + "\n\n" + JS_GALERIA + "\n\n" + JS_AI)
+        # El asistente (asistente_ia.css y .js) se carga como archivo desde la plantilla, igual que en los
+        # diagramas: si cambia, la galería no se regenera (C234).
+        .replace("/*__CSS__*/", CSS_GALERIA + "\n\n" + CSS_ZOOM)
+        .replace("/*__JS__*/", JS_ZOOM + "\n\n" + JS_GALERIA)
         .replace("<!--__KNOWLEDGE_SCRIPT__-->", SCRIPT_CONOCIMIENTO_AI)
         .replace("{autor}", autor)
         .replace("{url_test}", url_test)
         .replace("{secciones}", "\n".join(secciones))
         .replace("{asistente_ia_html}", HTML_AI)
     )
-    (CENTROS / "index.html").write_text(pagina, encoding="utf-8")
+    return escribir_si_cambia(CENTROS / "index.html", pagina)
 
 def generar_indices():
+    """Escribe los índices de centros/ y devuelve solo los que cambiaron (C234)."""
     ids = centros_disponibles()
-    for i in ids:
-        ficha_centro(Centro(i))
-    readme_general(ids)
-    galeria(ids)
-    return [CENTROS / "README.md", CENTROS / "index.html", *[CENTROS / i / "README.md" for i in ids]]
+    escritos = [CENTROS / i / "README.md" for i in ids if ficha_centro(Centro(i))]
+    if readme_general(ids):
+        escritos.append(CENTROS / "README.md")
+    if galeria(ids):
+        escritos.append(CENTROS / "index.html")
+    return escritos

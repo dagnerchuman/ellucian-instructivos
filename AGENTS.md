@@ -116,7 +116,7 @@ Cita así: «instructivo 5.3, diap. 23».
 
 ## Mapa Mental de Capacidades e Instructivos (Cap 1 al 11)
 
-- **CAPACIDAD 1: Diseño Curricular** → Periodos (`STVTERM`, `SOATERM`), Cursos catálogo (`SCACRSE`, `SCADETL`), Prerrequisitos y suficiencia (`SCAPREQ`, `SOATEST`), Mallas y programas (`SMAPROG`, `SMAAREA`).
+- **CAPACIDAD 1: Diseño Curricular** → Periodos (`STVTERM`, `SOATERM`), Cursos catálogo (`SCACRSE`, `SCADETL`), Prerrequisitos y suficiencia (`SCAPPRQ`, `SOATEST`), Mallas y programas (`SMAPROG`, `SMAAREA`).
 - **CAPACIDAD 3: Admisión y Convalidaciones** → Solicitudes de admisión (`SAAADMS`, `SAAQUIK`), Requisitos de ingreso, Convalidación y equivalencias externas (`SHATRNS`).
 - **CAPACIDAD 4: Gestión del Estudiante** → Estados de permanencia (`SGASTDN`), Retenciones administrativas (`SOAHOLD`, `STVHLDD`), Solicitudes de servicio (`SVASVPR`).
 - **CAPACIDAD 5: Carga Docente, Programación e Inscripción** → Personas naturales (`GOAMTCH`, `SPAIDEN`), Información docente (`SIAINST`), Carga lectiva (`SIAASGN`), Programar NRC (`SSASECT`, `SSADETL`, `SSARRES`, `SSAPREQ`), Inscripción backoffice (`SFAREGS`).

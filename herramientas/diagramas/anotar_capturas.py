@@ -96,7 +96,8 @@ def anotar_todas():
             ej = demo.get("ejemplo_prueba_2")
             if not ej:
                 continue
-            carpeta = CENTROS / id_centro / "diagramas" / f"00-{demo['slug']}" / ej["carpeta"]
+            sub = demo["slug"] if demo.get("pasos") else "-".join(demo["slug"].split("-")[:2]) + f"-prueba-nrc-{ej['nrc']}"
+            carpeta = CENTROS / id_centro / "diagramas" / f"00-{sub}" / ej["carpeta"]  # como plantillas.slug_capturas
             ruta_firmas = carpeta / "anotadas" / "firmas.json"
             firmas = json.loads(ruta_firmas.read_text(encoding="utf-8")) if ruta_firmas.exists() else {}
             nuevas = {}

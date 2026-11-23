@@ -35,7 +35,7 @@ RESPUESTAS = [
     {
         't': 'Inglés: BASIC I desaprobado',
         'ev': [('1.1.5 Prerrequisitos', 'El «examen de curso» es un prerrequisito que no es curso; el ejemplo del instructivo es la '
-                                        '**suficiencia en idioma**. En SCAPREQ (catálogo) y SSAPREQ (NRC) se combinan examen con puntaje mínimo '
+                                        '**suficiencia en idioma**. En la USS el prerrequisito va en SCAPPRQ, por programa y periodo de la versión (C233), y ahí se combinan examen con puntaje mínimo '
                                         'y curso aprobado usando **Y / O**.'),
                ('Exámenes', 'El puntaje del examen se registra en SOATEST; el código del examen se crea en STVTESC.'),
                ('CAPP', 'Si BASIC I no está aprobado, CAPP lo marca pendiente y la proyección vuelve a ofrecer BASIC I.')],
@@ -106,7 +106,7 @@ PRUEBAS = [
     ('CAPP de un participante con BASIC I aprobado.', 'BASIC I cumple; BASIC II pendiente.', 'SMARQCM, SMICRLT'),
     ('grp', 'Creación de NRC'),
     ('Crear un NRC de BASIC II en la parte del mes, con cupo y horario.', 'Se genera el NRC con la secuencia del periodo.', 'SSASECT'),
-    ('Prerrequisito: BASIC I o examen de suficiencia.', 'El NRC hereda la regla del catálogo.', 'SSAPREQ, SCAPREQ'),
+    ('Prerrequisito: BASIC I o examen de suficiencia.', 'La regla va en SCAPPRQ, por programa y periodo de la versión (C233).', 'SCAPPRQ'),
     ('Asignar dos docentes (sesiones 01 y 02, uno principal).', 'Ambos asignados; carga visible en SIAASGN.', 'SSASECT, SIAASGN'),
     ('Horas por semana de un NRC de día y otro de noche.', 'Coinciden con la hora académica acordada.', 'SSASECT, SIATERM'),
     ('grp', 'Matrícula por backoffice'),

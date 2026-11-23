@@ -32,7 +32,7 @@ Todavía no se sabe con qué códigos está Idiomas en TEST. Sin esto no se pued
 - [ ] **SCACRSE (catálogo de cursos):** busca **BASIC I** y **BASIC II** por título. Anota:
   - la **materia y el número** de cada uno, y su **modo de calificación**;
   - en **«Tipo de horario»**, si BASIC I tiene **dos** tipos: Teoría (`TEO`) y el del club, por ejemplo Práctica (`PRA`). Sin dos tipos no se puede hacer la liga (U27).
-- [ ] **SCAPREQ (prerrequisitos y puntajes de examen del catálogo)** de BASIC II: ¿pide BASIC I? ¿Tiene un **código de examen** con puntaje? *(instructivo 1.1.5, diap. 17 y 18)*
+- [ ] **SCAPPRQ (restricciones de prerrequisito y de puntaje de examen por programa)**, con el programa de Idiomas y el periodo de su versión, en la fila de BASIC II: ¿pide BASIC I? ¿Tiene un **código de examen** con puntaje? La USS configura aquí los prerrequisitos (C233).
 - [ ] **SOATERM (Control de periodo)** de 202656:
   - ¿existen las partes **I10** (05/10 – 29/11) e **I11** (02/11 – 27/12)? Si no, usa las partes I que existan y avísame;
   - en «Verificación de errores de inscripción», ¿**Prerrequisitos** y **Ligas** están en **Fatal**? *(5.4, diap. 14 y 15)*
@@ -131,11 +131,11 @@ Todo se hace en **SFAREGS (matrícula del alumno)**: plan `1`, estatus `EL`, gua
    - vuelve a `AS`.
 8. [ ] **Script 04 ✅** con **I-3:**
    - intenta matricularlo **directo en BASIC II** (NRC **C**). Debe salir el **error Fatal de prerrequisito**;
-   - en **SOATEST (puntajes de examen del estudiante)** registra el examen de suficiencia: código del bloque 0 y un puntaje **de ejemplo** que alcance el mínimo de SCAPREQ;
+   - en **SOATEST (puntajes de examen del estudiante)** registra el examen de suficiencia: código del bloque 0 y un puntaje **de ejemplo** que alcance el mínimo de SCAPPRQ;
    - reintenta en C: ahora debe matricularse.
 
 > **Si en el paso 8 no sale ningún error:**
-> - si SCAPREQ no tiene prerrequisito, el prerrequisito de BASIC II no está configurado;
+> - si SCAPPRQ (programa de Idiomas, periodo de la versión) no tiene la fila de BASIC II, el prerrequisito no está configurado;
 > - si SOATERM no está en Fatal, la verificación no está activa.
 >
 > Mándame la captura igual: es un hallazgo para Registros Académicos (R09).

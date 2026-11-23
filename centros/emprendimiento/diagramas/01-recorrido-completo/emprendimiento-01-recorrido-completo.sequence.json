@@ -732,7 +732,7 @@
       "title": "Por confirmar",
       "items": [
         "U02: ¿Los cursos tienen orden o son independientes?",
-        "U05: Nombres oficiales de los cursos, pesos de evaluación y nota aprobatoria",
+        "U05: Nombres oficiales de los cursos, pesos de evaluación y nota aprobatoria. En TEST, SHAGCOM de los NRC 10007 y 10012 (202656) está vacío; el usuario pedirá el sílabo (C230).",
         "U21: ¿Rinde examen de suficiencia o solo aplica a Idiomas?",
         "U25: Programa, mayor, departamento y escala de notas del nivel M: verificar en TEST"
       ]

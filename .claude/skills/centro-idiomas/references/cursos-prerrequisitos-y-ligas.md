@@ -15,11 +15,13 @@ Parte de la skill `centro-idiomas` (el mapa está en su `SKILL.md`).
 
 > Modo de calificar oficial en catálogo SSASECT: **Modo `C` (Escala Centesimal)** (confirmado C60).
 
+> **Prerrequisitos en SCAPPRQ** (programa `IMEMI03`, periodo de la versión), como todos los de la USS (C233, C236). El nivel y la nota mínima de la fila de BASIC I aún no se revisaron en TEST: no se toman los de otro centro (Emprendimiento usa `ESGE 00117`, nivel `M`, nota `11`; en Medicina, `ESEP 02456` va sin nivel ni nota porque basta haberlo cursado).
+
 ## Regla de prerrequisitos (CONFIRMADA — C11, R09)
 
 En SEUSS, quien desaprueba BASIC I **NO puede pasar a BASIC II** salvo con examen de suficiencia. En Ellucian:
 
-1. **SCAPREQ / SSAPREQ:** se configura el prerrequisito «BASIC I aprobado **o** examen de suficiencia con puntaje mínimo».
+1. **SCAPPRQ** (por programa): se configura el prerrequisito «BASIC I aprobado **o** examen de suficiencia con puntaje mínimo». La USS configura todos los prerrequisitos en SCAPPRQ, no en SCAPREQ (C233, C236; así está Emprendimiento, C221). La regla de Idiomas en SCAPPRQ (`IMEMI03`), con su nivel y su nota mínima, aún no se revisó en TEST.
 2. **SOATERM:** la verificación de prerrequisitos se pone en **Fatal** → SFAREGS bloquea la inscripción.
 3. **SOATEST:** se registra el puntaje del examen de suficiencia.
 4. **SFPPROJ:** la proyección con verificación de prerrequisitos **no ofrece** BASIC II si no hay BASIC I aprobado o examen.

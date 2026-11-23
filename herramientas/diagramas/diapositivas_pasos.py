@@ -38,6 +38,7 @@ INSTRUCTIVOS = {
     "5.4-sobrepasos": {"id": "5.4_4.1.4.1.15_Instructivo_-_Gestionar_los_sobrepasos_de_inscripcio_n", "titulo": "Instructivo 5.4 · Gestionar los sobrepasos de inscripción"},
     "5.4-retiro": {"id": "5.4_4.1.4.1.16_Instructivo_-__Gestionar_retiro_de_cursos", "titulo": "Instructivo 5.4 · Gestionar el retiro de cursos"},
     "5.4-espera": {"id": "5.4_4.1.4.1.14_Instructivo_-_Inscripcio_n_de_cursos_por_Lista_de_Espera", "titulo": "Instructivo 5.4 · Inscripción por lista de espera y turnos"},
+    "6.1.1": {"id": "6.1.1_Asignar_Syllabus", "titulo": "Instructivo 6.1.1 · Asignar syllabus"},
     "6.2.1": {"id": "6.2.1_Asignar_Docentes", "titulo": "Instructivo 6.2.1 · Asignar docentes"},
     "6.2.5": {"id": "6.2.5_Gestiona_la_evaluacio_n_docente", "titulo": "Instructivo 6.2.5 · Gestionar la evaluación docente"},
     "7.1.0": {"id": "7.1.0_Usar_Componente_Asistencia", "titulo": "Instructivo 7.1.0 · Usar el componente de asistencia"},
@@ -67,6 +68,15 @@ def _ref(nota, laminas):
     return [{**d, "nota": nota} for d in laminas]
 
 
+# Páginas propias de la USS que no salen en ningún instructivo y que no se ilustran con otra página: el paso va
+# sin lámina a propósito (sin aviso al generar) y el modal dice por qué. SCAPPRQ no se ilustra con SCAPREQ porque
+# la USS no usa SCAPREQ (C233, C236).
+SIN_LAMINA = {
+    "SCAPPRQ": "SCAPPRQ no sale en los instructivos de Ellucian: es la página donde la USS configura los prerrequisitos, "
+               "por programa y periodo de la versión (C233). No hay lámina para mostrar.",
+}
+
+
 TEMAS = {
     # Periodo, programas y mallas
     "periodo": _l("1.1.1", (18, "STVTERM: crear y definir el periodo académico")),
@@ -83,6 +93,10 @@ TEMAS = {
                   (29, "SOACURR: carreras y departamentos")),
     "smaprog": _l("1.2.1", (27, "SMAPROG: requerimientos del programa"), (28, "SMAPROG: requerimientos generales"),
                   (33, "SMAPROG: anexos de área del programa")),
+    # Sílabo del curso (por curso y periodo; se ve en Autoservicio)
+    "scasylb": _l("6.1.1", (9, "SCASYLB: materia, curso y periodo del sílabo"),
+                  (10, "SCASYLB: título, URL y objetivos de aprendizaje"),
+                  (11, "SCASYLB: materiales requeridos"), (12, "SCASYLB: requerimientos técnicos")),
     # NRC y docente
     "ssasect_crear": _l("5.3", (19, "Ingresar el periodo y pulsar «Crear NRC»"), (21, "Materia, curso, sección, campus y estatus")),
     "ssasect_cupo": _l("5.3", (27, "Detalles de ingreso: cupo del NRC"), (28, "Lugares reservados: regla nula y regla por criterio")),
@@ -598,7 +612,11 @@ def indice_asistente():
     """{"laminas": [...], "paginas": {código: [índices de laminas]}} con rutas relativas a la raíz del repositorio."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     import diapositivas
+    from catalogo_instructivos import catalogo
 
+    # El asistente nombra cada instructivo como el catálogo («Instructivo 8.1 · Validar el cumplimiento…»), igual que
+    # en sus fuentes; los títulos cortos de INSTRUCTIVOS quedan para las tarjetas de los diagramas.
+    etiquetas = {c_id: c["etiqueta"] for c_id, c in catalogo().items()}
     laminas, posicion, paginas = [], {}, {}
     for tema, lista in TEMAS.items():
         codigos = {p for p, _, t in REGLAS if t == tema} | {p for p, temas in EXTRA_PAGINAS.items() if tema in temas}
@@ -622,7 +640,7 @@ def indice_asistente():
                 laminas.append({
                     "src": recorte, "completa": diapositivas.diapositiva(inst["id"], d["n"]),
                     "visor": f"visor_instructivos/index.html?p={inst['id']}&d={d['n']}",
-                    "fuente": inst["titulo"], "n": d["n"], "texto": d["texto"], "nota": d.get("nota", ""),
+                    "fuente": etiquetas.get(inst["id"], inst["titulo"]), "n": d["n"], "texto": d["texto"], "nota": d.get("nota", ""),
                     # El tema curado: el visor completa con él un procedimiento cuyas láminas no traen título (SMRBCMP; C204).
                     "tema": tema,
                     "contenido": contenido[:600],
@@ -643,9 +661,10 @@ def indice_asistente():
 def escribir_indice_asistente():
     """Escribe assets/asistente_diapositivas.js; devuelve (ruta, número de láminas)."""
     datos = indice_asistente()
-    ASISTENTE_JS.write_text(
+    from centro import escribir_si_cambia
+    escribir_si_cambia(
+        ASISTENTE_JS,
         "/* Generado por herramientas/diagramas/diapositivas_pasos.py (ADR-022). No se edita a mano.\n"
         "   Láminas de los instructivos por página de Banner, para las respuestas del asistente. */\n"
-        "window.CCEE_DIAPOSITIVAS = " + json.dumps(datos, ensure_ascii=False, separators=(",", ":")) + ";\n",
-        encoding="utf-8")
+        "window.CCEE_DIAPOSITIVAS = " + json.dumps(datos, ensure_ascii=False, separators=(",", ":")) + ";\n")
     return ASISTENTE_JS, len(datos["laminas"])

@@ -86,7 +86,7 @@ En las coordinaciones institucionales suele generarse confusión cuando se mezcl
 * **Pregunta frecuente:** *«Si un alumno de Ingeniería o Derecho desaprueba Basic I en Idiomas, ¿se le bloquea la matrícula en su carrera de Pregrado?»*
 * **Respuesta oficial y técnica:** **¡NO, EN ABSOLUTO!**
   - **Aislamiento por Nivel (STVLEVL):** Pregrado es Nivel **`1`** e Idiomas es Nivel **`I`**.
-  - La regla de prerrequisito en condición **Fatal** configurada en **SOATERM** / **SCAPREQ** opera estrictamente dentro del programa de Idiomas: solo le impide inscribirse a **Basic II (`ESEP 02457`)** hasta que apruebe Basic I o rinda suficiencia en **SOATEST**.
+  - La regla de prerrequisito se configura en **SCAPPRQ** para el programa de Idiomas (por programa y periodo de la versión, C233) y se verifica en condición **Fatal** en **SOATERM**: opera estrictamente dentro de ese programa y solo le impide inscribirse a **Basic II (`ESEP 02457`)** hasta que apruebe Basic I o rinda suficiencia en **SOATEST**.
   - En Pregrado, el estudiante puede matricularse normalmente en sus cursos de 4.º, 5.º o 6.º ciclo de carrera.
   - **El único punto de contacto es al Egreso (Graduación):** La malla curricular de Pregrado exige en CAPP la acreditación del idioma para tramitar la Carpeta de Grado de Bachiller en **SHADEGR** (Grados y reconocimientos de estudiante, R20). Si no culminó el idioma exigido, CAPP de Pregrado marcará *«Requisito de acreditación de idiomas: No cumple»*, frenando la emisión del grado hasta que regularice su situación en el Centro de Idiomas.
 

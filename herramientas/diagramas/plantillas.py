@@ -51,7 +51,7 @@ ESTADO_TEXTO = {
 CITAS = {
     "periodo": "Periodo y partes: instructivos 1.1.1 y 1.1.2",
     "mallas": "Programas y mallas: instructivos 1.1.3 (STVMAJR, SOACURR) y 1.2.1 (SMAPROG, SMAAREA)",
-    "catalogo": "Catálogo y prerrequisitos: instructivos 1.1.4 (SCACRSE) y 1.1.5 (SCAPREQ)",
+    "catalogo": "Catálogo: instructivo 1.1.4 (SCACRSE). Prerrequisitos: en la USS, SCAPPRQ por programa (C233)",
     "nrc": "NRC en SSASECT: instructivo 5.3, diap. 19 a 32",
     "docente": "Docente en SIAINST: instructivo 5.2 Información de docentes, diap. 16 a 20",
     "carga": "Carga lectiva en SIAASGN: instructivo 5.2 Carga de trabajo, diap. 21 a 27",
@@ -145,6 +145,12 @@ CAPACIDADES.update({k: d.get("capacidad", "") for k, d in DEMOSTRACIONES.items()
 def slug_prueba(d):
     """«demostracion-1-diseno-web» con su ejemplo de prueba del NRC 10045 → «demostracion-1-prueba-nrc-10045»."""
     return f"{'-'.join(d['slug'].split('-')[:2])}-prueba-nrc-{d['ejemplo_prueba_2']['nrc']}"
+
+
+def slug_capturas(d):
+    """Carpeta (sin «00-») donde van las capturas del ejemplo de prueba: la de la demostración o, si la demostración
+    solo tiene su prueba en TEST (sin «pasos»), la del flujo de la prueba; generar.py borra las carpetas que no genera (C223)."""
+    return d["slug"] if d.get("pasos") else slug_prueba(d)
 
 
 # El ejemplo de prueba de una demostración (`ejemplo_prueba_2`) tiene su propio flujo, paso por paso (C192).
@@ -589,7 +595,7 @@ CASOS = {
            ("Convalidado al 100%", "CAPP acredita créditos"), "convalidacion"),
     "04": (("Suficiencia", "conocimientos previos"),
            [("SOATEST", "registrar puntaje", "código U01 · nota aprobatoria"),
-            ("SCAPREQ", "validar prerrequisito", "equivalencia a BASIC I"),
+            ("SCAPPRQ", "validar prerrequisito", "regla del programa: BASIC I o examen"),
             ("SFAREGS", "inscripción directa", "matrícula en BASIC II"),
             ("SFAREGS", "asignación de cupo", "código RE en sección")],
            ("En BASIC II", "prerrequisito superado"), "catalogo"),
@@ -738,7 +744,7 @@ EXTRA_CASOS = {
         "items": [
             "Paso 01 (SOAINST): Verificación de Evaluación — Consulta de código de examen de suficiencia institucional.",
             "Paso 02 (SOATEST): Registro de Calificación — Ingreso de ID del alumno, código de prueba (U01) y puntaje aprobatorio.",
-            "Paso 03 (SCAPREQ): Evaluación de Prerrequisitos — El motor valida el examen como prerrequisito equivalente de BASIC I.",
+            "Paso 03 (SCAPPRQ): Evaluación de Prerrequisitos — La regla del programa (por programa y periodo de la versión) acepta el examen como equivalente de BASIC I.",
             "Paso 04 (SFAREGS): Matrícula en Nivel Siguiente — Inscripción directa en BASIC II sin bloqueo fatal.",
             "Paso 05 (SFAREGS): Asentamiento de Matrícula — Código RE guardado y vacante asignada en el NRC de destino.",
         ],
@@ -1231,7 +1237,11 @@ def prueba(c, d):
     como renglones. Por eso no lleva `mainPath` (no admite volver a la columna 0) y la flecha que baja a la fase
     siguiente sale por abajo y entra por arriba."""
     ej = d["ejemplo_prueba_2"]
-    fase_de = {n: f for f in ej["fases"] for n in f["pasos"]}
+    # Una prueba en curso solo dibuja los pasos ya hechos; las fases sin pasos todavía no salen (C223).
+    hechos = {p["n"] for p in ej["pasos"]}
+    fases = [dict(f, pasos=[n for n in f["pasos"] if n in hechos]) for f in ej["fases"]]
+    fases = [f for f in fases if f["pasos"]]
+    fase_de = {n: f for f in fases for n in f["pasos"]}
     tipos = {"Autoservicio": "frontend", "SHRROLL": "messagebus"}
     nodos = []
     for p in ej["pasos"]:
@@ -1245,7 +1255,8 @@ def prueba(c, d):
         "Haga clic en un paso: se abre su tabla campo por campo, con quién pone cada valor",
         "«Así quedó en TEST»: las capturas de ese paso; al ampliarlas, ‹ › recorre las capturas y luego el paso siguiente",
         "«Así se ve en Banner»: las láminas del instructivo de Ellucian para ese paso",
-        f"La teoría (orden antes del NRC y preguntas) está en «{d['titulo']}» › «Para estudiar»"]}
+        (f"La teoría (orden antes del NRC y preguntas) está en «{d['titulo']}» › «Para estudiar»" if d.get("pasos")
+         else "Los pasos que faltan se agregan a medida que se hacen en TEST")]}
     cards = tarjetas(c, [ej["caso"], ej["avance"]],
                      [CITAS["nrc"], CITAS["carga"], CITAS["notas"], CITAS["asistencia_regla"], CITAS["matricula"],
                       CITAS["cierre"]], [uso])
@@ -1253,7 +1264,7 @@ def prueba(c, d):
     for a, b, arista in zip(nodos, nodos[1:], aristas):
         if a["lane"] != b["lane"]:
             arista.update(fromSide="bottom", toSide="top")
-    return flujo(c, 0, slug_prueba(d), [{"id": f["id"], "label": f["titulo"]} for f in ej["fases"]], nodos, cards,
+    return flujo(c, 0, slug_prueba(d), [{"id": f["id"], "label": f["titulo"]} for f in fases], nodos, cards,
                  title_override=f"{c.nombre} · {ej['titulo']}", subtitle_override=c.subtitulo(d.get("capacidad")),
                  aristas=aristas, camino_principal=False)
 
@@ -1286,7 +1297,7 @@ def guia_prueba(c, slug_):
     """Guía de cada paso del ejemplo de prueba: tabla, capturas de TEST (ruta desde la raíz) y láminas."""
     d = PRUEBAS[slug_]
     ej = d["ejemplo_prueba_2"]
-    carpeta = f"{salida(c, 0, d['slug']).rsplit('/', 1)[0]}/{ej['carpeta']}"
+    carpeta = f"{salida(c, 0, slug_capturas(d)).rsplit('/', 1)[0]}/{ej['carpeta']}"
     return {f"e{p['n']}": {
         "titulo": ej["titulo"], "pantalla": p["codigo"], "fase": f"{p['codigo']}: {p['accion']}",
         "hito": f"{p['quien']} · {p['dato']}", "instrucciones": _filas_prueba(p), "diapositivas": _laminas(p["laminas"]),
@@ -1301,7 +1312,8 @@ def demostraciones_de(c):
     for d in c.d.get("demostraciones", []):
         if d.get("ejemplo_prueba_2"):
             lista.append((0, slug_prueba(d), lambda c, d=d: prueba(c, d)))
-        lista.append((0, d["slug"], lambda c, d=d: demostracion(c, d)))
+        if d.get("pasos"):  # una demostración solo con su prueba en TEST no lleva el flujo de la reunión (C223)
+            lista.append((0, d["slug"], lambda c, d=d: demostracion(c, d)))
     return lista
 
 

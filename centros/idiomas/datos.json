@@ -165,7 +165,7 @@
     "estado": "confirmado",
     "fuente": "C11, R09",
     "regla": "Quien desaprueba BASIC I no pasa a BASIC II, salvo con examen de suficiencia",
-    "en_banner": "Prerrequisito en SCAPREQ/SSAPREQ: BASIC I aprobado o puntaje de suficiencia; verificación en Fatal en SOATERM",
+    "en_banner": "Prerrequisito en SCAPPRQ, por programa y periodo de la versión: BASIC I aprobado o puntaje de suficiencia; verificación en Fatal en SOATERM",
     "cadena": [
       "BASIC I",
       "BASIC II",

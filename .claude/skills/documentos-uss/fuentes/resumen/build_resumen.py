@@ -112,7 +112,7 @@ PROGRAMACION = [
     ('SSASECT, STVMEET, GTVMTYP', 'Horario y docente.', 'Pestaña Instructor y horas de reunión: hora de reunión, tipo (CLAS), fechas, horas (24 h) y días. Docente: ver tema 3.'),
     ('grp', 'Tema 2.1 · Reglas del NRC (Menú relacionado de SSASECT)'),
     ('SSADETL', 'Correquisitos, ligas y atributos.', 'Hereda de **SCADETL**. Se ajusta solo para ese NRC.'),
-    ('SSAPREQ', 'Prerrequisitos.', 'Hereda de **SCAPREQ**. Materia, curso, nivel y calificación mínima; combinar con Y / O. Ej.: BASIC II requiere BASIC I.'),
+    ('SSAPREQ', 'Prerrequisitos.', 'En la USS no se usa: los prerrequisitos van en **SCAPPRQ**, por programa y periodo de la versión (C233). Materia, curso, nivel y calificación mínima; combinar con Y / O. Ej.: BASIC II requiere BASIC I.'),
     ('SSARRES', 'Restricciones.', 'Hereda de **SCARRES**. **Incluir** o **Excluir** por nivel, programa, campus, atributo o cohorte.'),
 ]
 
@@ -167,7 +167,7 @@ INDICE = [
     ('SAAQUIK', 'Captura rápida', 'Admisión y estudiante en una sola página', '4'),
     ('SCACRSE', 'Catálogo de cursos', 'Curso base del NRC', '2'),
     ('SCADETL', 'Detalle de curso (catálogo)', 'Origen de correquisitos y atributos', '2.1'),
-    ('SCAPREQ', 'Prerrequisitos (catálogo)', 'Origen de prerrequisitos', '2.1'),
+    ('SCAPPRQ', 'Prerrequisitos por programa', 'Donde la USS configura los prerrequisitos', '2.1'),
     ('SCARRES', 'Restricciones (catálogo)', 'Origen de restricciones', '2.1'),
     ('SGASTDN', 'General de alumnos', 'Estatus, tipo y programa del estudiante', '4'),
     ('SIAASGN', 'Asignaciones del docente', 'Carga del docente y análisis O/U', '3'),

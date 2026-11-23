@@ -191,8 +191,8 @@ def caminos():
 
 
 def config_prerreq():
-    pasos = [('En SCAPREQ, BASIC II lleva el prerrequisito «BASIC I aprobado **o** examen de suficiencia con puntaje mínimo». '
-              'Cada NRC de BASIC II lo hereda en SSAPREQ.', '1.1.5, diap. 18; 5.3, diap. 41 y 42'),
+    pasos = [('En SCAPPRQ, la regla del programa de Inglés pide para BASIC II «BASIC I aprobado **o** examen de suficiencia con puntaje mínimo». '
+              'Se configura por programa y periodo de la versión, no en cada NRC.', 'C233'),
              ('En SOATERM, la verificación de «Prerrequisitos» se pone en **Fatal**: Banner no deja inscribir a quien no lo cumple.',
               '5.4 Inscripción por backoffice, diap. 14 y 15'),
              ('El puntaje del examen de suficiencia se registra en SOATEST.', '3.2.2, diap. 14'),
@@ -355,7 +355,7 @@ def build():
                 'salvo que se marque el **indicador de sobrepaso**.'),
     ]))
     b.append(ex('X-5', 'inf', 'Curso que pide otro', '**Excel Intermedio** pide haber aprobado **Excel Básico** (nombres de ejemplo).', [
-        ('ell', 'Igual que en Inglés (ejemplo I-4): en SCAPREQ se pone Excel Básico como prerrequisito, o «Excel Básico **o** examen con puntaje mínimo».'),
+        ('ell', 'Igual que en Inglés (ejemplo I-4): en SCAPPRQ, la regla del programa pone Excel Básico como prerrequisito, o «Excel Básico **o** examen con puntaje mínimo».'),
         ('res', 'Quien ya sabe Excel rinde el examen (puntaje en SOATEST) y entra directo al intermedio. '
                 'Si los cursos no tienen orden, no se configura nada.'),
     ]))

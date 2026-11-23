@@ -127,7 +127,7 @@
     "tipo": "ruta",
     "fuente": "C62, C125, R24, C159 a C170, C191",
     "regla": "Protech XP: los cursos de la ruta no tienen orden entre sí. El alumno lleva 3 cursos de su ruta, en el orden que desee y en paralelo, + 1 taller de certificación (C62, C125). Solo el Plan Tradicional (Computación I → II → III) era secuencial (C62, C175).",
-    "en_banner": "Entre los cursos de la ruta no va prerrequisito en SCAPREQ: la ruta se controla con la malla de cada programa XP (SMAAREA, C172 a C175). Hacia pregrado, la acreditación se exige con un prerrequisito restrictivo por programa en SCAPPRQ, probado en TEST con Idiomas (C159 a C170). Para Computación, exigir «3 cursos de la ruta + taller» con el método CAPP de SCACRSE sigue preguntado a Ellucian (E30, R24).",
+    "en_banner": "Entre los cursos de la ruta no va prerrequisito: la ruta se controla con la malla de cada programa XP (SMAAREA, C172 a C175). Hacia pregrado, la acreditación se exige con un prerrequisito restrictivo por programa en SCAPPRQ, probado en TEST con Idiomas (C159 a C170). Para Computación, exigir «3 cursos de la ruta + taller» con el método CAPP de SCACRSE sigue preguntado a Ellucian (E30, R24).",
     "corto": "cursos sin orden",
     "etiqueta": "ruta XP · C62"
   },
@@ -2541,7 +2541,7 @@
                   "¿Un curso de la ruta exige aprobar otro antes?",
                   "No. En Protech XP el alumno lleva 3 cursos de su ruta, en el orden que desee y en paralelo, + 1 taller de certificación.",
                   "Así es la acreditación Protech XP. En TEST, 100582059 llevó Diseño Web (10044) y Google (10045) en el mismo periodo 202656.",
-                  "SCAPREQ: sin prerrequisito",
+                  "SCAPPRQ: sin prerrequisito",
                   "C62, C125, C190"
                 ],
                 [
@@ -2583,7 +2583,7 @@
                   "¿Por qué no un prerrequisito por curso para Computación?",
                   "Habría que enumerar todas las combinaciones de 3 cursos de 6.",
                   "La ruta no tiene un curso fijo: es «3 de 6» en cualquier orden + taller. Para Idiomas sí sirve, porque es secuencial.",
-                  "SCAPREQ",
+                  "SCAPPRQ",
                   "R24"
                 ],
                 [
@@ -4398,11 +4398,11 @@
           {
             "n": 8,
             "codigo": "SFAREGS",
-            "accion": "revisar la matrícula",
+            "accion": "matricular en el NRC",
             "dato": "100582059 · plan 4 (CMEMC44) · RE",
             "quien": "El centro",
             "cita": "Instructivo 5.4, diap. 35 · C86 · C156 · C158 · C185",
-            "resultado": "Solo consulta: el 10045 sigue con RE, parte X06, plan 4 (CMEMC44)",
+            "resultado": "El 10045 quedó inscrito con RE (29-OCT-2026), parte X06, plan 4 (CMEMC44)",
             "tabla": {
               "columnas": [
                 "Campo",
@@ -4433,7 +4433,7 @@
                   "Plan de estudios (encabezado)",
                   "vacío",
                   "—",
-                  "Para consultar no hace falta; para matricular va al final (C86)"
+                  "Para matricular va el plan del alumno (4, CMEMC44) (C86)"
                 ],
                 [
                   "Estatus del alumno",
@@ -4473,13 +4473,13 @@
                 ],
                 [
                   "Guardar",
-                  "no se pulsa",
-                  "—",
-                  "Es solo una revisión"
+                  "al matricular (queda RE)",
+                  "Usuario",
+                  "Las capturas son de la revisión del 30/10: el alumno ya estaba RE, no se volvió a guardar (C185)"
                 ]
               ]
             },
-            "nota": "Los otros currículos del alumno: plan 1 y plan 3, pregrado 1PIAP11 Ing. Sist. Informática; plan 2, IMEMI05 «Programa Acreditación Inglés». El 10045 usa el plan 4, el de Computación.",
+            "nota": "SFAREGS es la página para matricular: inscribir (RE) o dar de baja (DD). Para solo ver la inscripción está SFAREGQ «Consulta de inscripción» (C72). Los otros currículos del alumno: plan 1 y plan 3, pregrado 1PIAP11 Ing. Sist. Informática; plan 2, IMEMI05 «Programa Acreditación Inglés». El 10045 usa el plan 4, el de Computación.",
             "capturas": [
               {
                 "archivo": "08-sfaregs-matricula-d.png",
@@ -4599,7 +4599,7 @@
                 ]
               }
             ],
-            "etiqueta": "100582059 · RE",
+            "etiqueta": "100582059 › 10045 · RE",
             "laminas": [
               {
                 "instructivo": "5.4-inscripcion",

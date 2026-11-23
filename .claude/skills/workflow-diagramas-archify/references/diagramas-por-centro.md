@@ -23,3 +23,5 @@ Parte de la skill `workflow-diagramas-archify` (el mapa está en su `SKILL.md`).
 `centros/index.html` y las tablas de los README muestran cada centro en cuatro grupos: **Flujos base** (1 a 6, más ligas), **Abrir el periodo**, **Matrícula** y **Notas y cierre**. La fase de cada script sale de `datos.json › casuisticas`; para mover un script de fase o de orden, se cambia allí y se regenera con imágenes.
 
 `generar.py` borra solo las carpetas `NN-tema` que ya no corresponden a ninguna plantilla (no toca `anterior-…`).
+
+**Dirección de la galería (C235):** se abre como `centros/index.html` o `centros/`. Con una barra de más (`index.html/`), el navegador toma el archivo por carpeta: miniaturas en blanco, y «HTML interactivo» lleva a `index.html/computacion/…`, que Five Server responde con «[object Object]». La galería quita esa barra sola al cargar (script del `<head>` en `assets/indice_galeria.html`).

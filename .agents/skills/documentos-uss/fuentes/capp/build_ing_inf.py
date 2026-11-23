@@ -169,7 +169,7 @@ def factores():
 def caminos():
     items = [('A', 'Repite BASIC I', 'Se inscribe en BASIC I del siguiente grupo.', 'ok', 'Camino normal'),
              ('B', 'Examen de suficiencia', 'Registros Académicos registra el puntaje en SOATEST. Si llega al mínimo, Banner lo deja '
-                                            'inscribirse en BASIC II. Se configura en SCAPREQ: «BASIC I aprobado **o** examen con puntaje mínimo».',
+                                            'inscribirse en BASIC II. Se configura en SCAPPRQ, en la regla del programa: «BASIC I aprobado **o** examen con puntaje mínimo».',
               'ok', 'Banner lo permite'),
              ('C', 'Pasa sin examen', 'No hay una regla así en los instructivos. Solo con un **sobrepaso de prerrequisito** (SFAROVR) '
                                       'dado caso por caso, o quitando el prerrequisito. En CAPP, BASIC I seguiría pendiente.',
@@ -325,7 +325,7 @@ def build():
                 'salvo que se marque el **indicador de sobrepaso**.'),
     ]))
     b.append(ex('X-5', 'inf', 'Curso que pide otro', '**Excel Intermedio** pide haber aprobado **Excel Básico** (nombres de ejemplo).', [
-        ('ell', 'Igual que en Inglés: en SCAPREQ se pone Excel Básico como prerrequisito, o «Excel Básico **o** examen con puntaje mínimo».'),
+        ('ell', 'Igual que en Inglés: en SCAPPRQ, la regla del programa pone Excel Básico como prerrequisito, o «Excel Básico **o** examen con puntaje mínimo».'),
         ('res', 'Quien ya sabe Excel rinde el examen (puntaje en SOATEST) y entra directo al intermedio. '
                 'Si los cursos no tienen orden, no se configura nada.'),
     ]))

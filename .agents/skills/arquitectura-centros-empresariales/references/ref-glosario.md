@@ -40,7 +40,8 @@ Este archivo sale de los diccionarios `SIGLAS` y `PAGINAS` de ese mismo archivo.
 | SAAQUIK | Admisión rápida |
 | SCACRSE | Catálogo de cursos |
 | SCADETL | Detalle del curso: correquisitos y equivalentes |
-| SCAPREQ | Prerrequisitos y puntajes de examen del catálogo |
+| SCAPPRQ | Restricciones de prerrequisito y de puntaje de examen por programa y periodo de la versión: donde la USS configura los prerrequisitos (C160, C233) |
+| SCAPREQ | Prerrequisitos y puntajes de examen del catálogo (instructivo 1.1.5); la USS no lo usa, usa SCAPPRQ |
 | SCARRES | Restricciones de inscripción del curso |
 | SFAPROJ | Proyección del estudiante |
 | SFAREGS | Inscripción de curso del alumno |

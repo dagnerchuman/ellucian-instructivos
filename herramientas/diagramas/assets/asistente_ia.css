@@ -1313,3 +1313,70 @@ button.ai-fab:active,
 .ai-fuentes li { margin: 0.1rem 0; }
 .ai-dock-footnote { justify-content: flex-end; }
 .ai-config-panel .ai-engine-select { width: 100%; max-width: none; }
+
+/* Fuentes agrupadas (23/11/2026): «Base de la USS» e «Instructivos de Ellucian», con título real, la parte
+   usada y, en los instructivos, enlace al visor en la diapositiva citada. */
+.ai-fuentes { color: #b3a9c6; }
+[data-theme="light"] .ai-fuentes { color: #5c5470; }
+.ai-fuentes-grupo { margin-top: 0.55rem; }
+.ai-fuentes-titulo {
+  margin: 0 0 0.15rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.ai-fuentes .ai-fuentes-grupo ul { list-style: none; margin: 0; padding: 0; }
+.ai-fuentes .ai-fuentes-grupo li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  margin: 0.35rem 0 0;
+  padding-left: 0.65rem;
+  border-left: 2px solid rgba(185, 138, 224, 0.35);
+}
+[data-theme="light"] .ai-fuentes .ai-fuentes-grupo li { border-left-color: rgba(112, 48, 160, 0.25); }
+.ai-fuente-nombre { font-weight: 600; color: #ece6f5; }
+[data-theme="light"] .ai-fuente-nombre { color: #2a1f3d; }
+a.ai-fuente-nombre {
+  align-self: flex-start;
+  color: #cfa9f0;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+[data-theme="light"] a.ai-fuente-nombre { color: #7030A0; }
+a.ai-fuente-nombre:hover,
+a.ai-fuente-nombre:focus-visible { text-decoration-color: currentColor; outline: none; }
+a.ai-fuente-nombre::after { content: "\2009\2197"; font-size: 0.85em; }
+.ai-fuente-detalle { font-size: 0.74rem; line-height: 1.4; }
+
+/* Etiquetas de origen en fila: «Base local, sin IA» y, si toda la evidencia es del manual de Ellucian, la ámbar. */
+.ai-msg-etiquetas { justify-content: flex-start; flex-wrap: wrap; gap: 0.35rem; }
+.ai-msg-tag.ellucian { background: rgba(245, 158, 11, 0.16); color: #fbbf24; cursor: help; }
+[data-theme="light"] .ai-msg-tag.ellucian { background: rgba(217, 119, 6, 0.12); color: #92400e; }
+
+/* Viñetas anidadas (subcapacidad › instructivos). */
+.ai-msg-card li > ul { margin: 0.3rem 0 0.2rem; padding-left: 1.1rem; }
+.ai-msg-card li > ul > li { margin-bottom: 0.2rem; }
+
+/* Botón de láminas: en tema oscuro (la base del asistente) el texto morado oscuro no se leía; el claro queda igual.
+   Sube 1px al pasar el cursor y se hunde al pulsarlo. */
+.ai-btn-pasos-img {
+  color: #e0c3fc;
+  background: rgba(167, 139, 250, 0.12);
+  border-color: rgba(192, 132, 252, 0.5);
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.ai-btn-pasos-img:hover,
+.ai-btn-pasos-img:focus-visible { background: rgba(167, 139, 250, 0.22); border-color: #c084fc; transform: translateY(-1px); }
+.ai-btn-pasos-img:active { transform: translateY(0) scale(0.98); }
+.ai-btn-pasos-cuenta { background: rgba(192, 132, 252, 0.22); color: #f5edff; }
+[data-theme="light"] .ai-btn-pasos-img { color: #6d28d9; background: rgba(124, 58, 237, 0.08); border-color: rgba(124, 58, 237, 0.45); }
+[data-theme="light"] .ai-btn-pasos-img:hover,
+[data-theme="light"] .ai-btn-pasos-img:focus-visible { background: rgba(124, 58, 237, 0.16); border-color: #7c3aed; }
+[data-theme="light"] .ai-btn-pasos-cuenta { background: #ede9fe; color: #5b21b6; }
+@media (prefers-reduced-motion: reduce) {
+  .ai-btn-pasos-img, .ai-btn-pasos-img:hover, .ai-btn-pasos-img:active { transform: none; }
+}

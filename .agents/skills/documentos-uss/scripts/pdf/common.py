@@ -149,7 +149,7 @@ PAGINAS = {
     'STVTERM': 'códigos de periodo', 'STVPTRM': 'códigos de parte de periodo', 'SOATERM': 'Control de periodo',
     'SSAEXCL': 'feriados y excepciones de clases', 'SIATERM': 'Control de periodo de carga docente',
     'SIAINST': 'datos del docente', 'SIAASGN': 'Asignación de docente, su carga', 'SIAFAVL': 'disponibilidad del docente',
-    'SIAFLRT': 'reglas de carga docente', 'SCACRSE': 'catálogo de cursos', 'SCAPREQ': 'prerrequisitos y puntajes de examen del catálogo',
+    'SIAFLRT': 'reglas de carga docente', 'SCACRSE': 'catálogo de cursos', 'SCAPREQ': 'prerrequisitos y puntajes de examen del catálogo; la USS no lo usa',
     'SCAPPRQ': 'prerrequisitos de catálogo por programa', 'SFARSTS': 'estatus de inscripción permitidos por parte de periodo',
     'SFQRSTS': 'consulta de estatus de inscripción',
     'SCADETL': 'detalle del curso: correquisitos y equivalentes', 'SCARRES': 'restricciones de inscripción del curso',

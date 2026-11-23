@@ -33,6 +33,8 @@ description: >-
 ### Curso en SCACRSE: así está Emprendimiento I (C146)
 `ESGE 00117` «Emprendimiento I» (materia ESGE «Estudios generales»), cargado por la migración (usuario MIGRACION, 31-Ago-2026): Del periodo `000000` · A periodo `999999`; Escuela `EM`; Departamento `EMEM`; Estatus `A`; prerrequisito «Básico o ninguno»; UEC o crédito `0 O 4` y Cobro `0 O 4` (variables); Teoría `1`, Laboratorio `2`, Contacto `3` (fijas, Ninguno); Límite vacío. Es el modelo para un curso nuevo de Emprendimiento: **Copiar** de él y cambiar el título.
 
+**⚠ Carga del docente (C227, C228):** en SCACRSE › Tipo de horario, ESGE 00117 trae carga TEO `1.000` y PRA `2.000`. Un NRC TEO de 2 horas hereda carga 1: después de asignar al docente, revisa SIAASGN y deja la carga en **2** con «Sobrepasar carga de trabajo». Detalle en `arquitectura-centros-empresariales/references/05-notas-asigna-docente.md` (paso 3).
+
 > ⚠ Los identificadores exactos de Programa, Campo de Estudio y Departamento para Emprendimiento **no han sido verificados completamente en TEST** todavía. Lo que sí se confirmó es que la materia es `ESGE` y el Nivel es `M`.
 
 ## Partes de periodo (Emprendimiento)

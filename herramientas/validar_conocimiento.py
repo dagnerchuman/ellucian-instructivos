@@ -31,7 +31,7 @@ MANIFEST = CONOCIMIENTO / "manifest.json"
 ESTADOS_ADR = {"propuesto", "aceptado", "reemplazado", "descartado"}
 CAMPOS_ADR = ["id", "titulo", "estado", "fecha", "fuentes", "temas"]
 SECCIONES_ADR = ["## Contexto", "## Decisión", "## Alternativas descartadas", "## Consecuencias", "## Criterio de salida"]
-ID_FUENTE = re.compile(r"\b([CREUS]\d{2})\b")
+ID_FUENTE = re.compile(r"\b([CREUS]\d{2,3})\b")  # C01 a C999: desde C100 el registro usa tres dígitos (C236)
 
 # Markdown que forman la memoria (donde se revisan los enlaces).
 MEMORIA = ["conocimiento/**/*.md", "CLAUDE.md", "AGENTS.md", ".claude/skills/**/*.md", ".agents/rules/*.md",
@@ -69,7 +69,7 @@ def leer_json(ruta):
 
 def ids_registro():
     texto = REGISTRO.read_text(encoding="utf-8")
-    return set(re.findall(r"^\| ([CREUS]\d{2}) \|", texto, re.M))
+    return set(re.findall(r"^\| ([CREUS]\d{2,3}) \|", texto, re.M))
 
 
 # --------------------------------------------------------------------------- 1. enlaces
@@ -217,7 +217,7 @@ def revisar_manifest(adrs, registro):
                 error(donde, f"script {sid}: estado inválido «{s.get('estado')}»")
         for duda in d.get("dudas", []):
             if not ID_FUENTE.fullmatch(duda["id"]):
-                aviso(donde, f"duda con id «{duda['id']}»: no es un ID del registro (C/R/E/U/S + 2 dígitos)")
+                aviso(donde, f"duda con id «{duda['id']}»: no es un ID del registro (C/R/E/U/S + 2 o 3 dígitos)")
             elif duda["id"] not in registro:
                 error(donde, f"duda {duda['id']}, que no existe en registro.md")
         for lista in ("periodo", "matricula", "notas"):
@@ -249,7 +249,7 @@ def revisar_sensibles():
         for p in archivos:
             if p.suffix.lower() not in {".md", ".json", ".py", ".txt", ".yml", ".yaml", ".mjs", ".sh", ".html"}:
                 continue
-            if any(x in p.parts for x in (".archify", "node_modules", "__pycache__", "fonts")):
+            if any(x in p.parts for x in (".archify", ".cache", "node_modules", "__pycache__", "fonts")):  # .cache: copia local de los PPTX, no se sube
                 continue
             if p.suffix == ".html" and "diagramas" in p.parts:
                 continue

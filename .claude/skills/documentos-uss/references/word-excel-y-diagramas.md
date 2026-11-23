@@ -6,6 +6,7 @@ Parte de la skill `documentos-uss` (el mapa está en su `SKILL.md`).
 - Cuando pida las preguntas para una reunión en Word: `fuentes/preguntas/build_preguntas.py` arma un `.docx` con un título por pregunta (su código E## o U##), «Lo que ya sabemos» y un recuadro «Respuesta». Los textos salen del registro; solo se eligen y ordenan los bloques.
 - Va en `docs/dudas/` con nombre en mayúsculas. Revisa el PDF que sale de LibreOffice y valida con `validate.py` de la skill docx.
 - Cuando lo devuelva respondido: `fuentes/preguntas/leer_respuestas.py` lista las respuestas por código; pásalas al registro (skill `preguntas-y-dudas-centros`).
+- **Corregir un dato en un Word ya entregado** (el de una reunión con fecha): no lo regeneres. El generador toma los textos del registro de hoy y cambia las preguntas que se resolvieron después. Corrige el generador y aplica al `.docx` solo esas líneas (los `<w:t>` del párrafo y la fila del glosario); compara el texto antes y después con `textutil -convert txt` (C236).
 
 ## Excel
 - Genera con `openpyxl` y fórmulas reales: COUNTIFS, fechas con TODAY.

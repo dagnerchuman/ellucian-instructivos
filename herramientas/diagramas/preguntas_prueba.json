@@ -1,0 +1,938 @@
+{
+  "_nota": "Banco de preguntas del asistente (probar_asistente.mjs). «espera»: una o más partes de la ruta de la fuente; basta que una salga entre las «top» primeras. Las preguntas automáticas (preguntas frecuentes, instructivos, páginas de Banner) las arma el script.",
+  "preguntas": [
+    {
+      "q": "¿La auditoría de CAPP se realiza por curso individual o por el programa completo?",
+      "espera": [
+        "ref-admision-capp",
+        "7.2.4 Ejecuci",
+        "ref-preguntas-frecuentes-poblacion"
+      ],
+      "top": 2,
+      "boton": true
+    },
+    {
+      "q": "¿Por qué en Centros Empresariales el alumno se inscribe sin pagar primero? ¿Cómo interviene Finanzas?",
+      "espera": [
+        "ref-preguntas-frecuentes-matricula",
+        "ref-preguntas-complejas-prerrequisitos"
+      ],
+      "top": 2,
+      "boton": true
+    },
+    {
+      "q": "¿Qué pasos debo seguir para crear y matricular un alumno en un NRC de prueba?",
+      "espera": [
+        "04-matricula",
+        "01-creacion-nrc",
+        "ref-preguntas-frecuentes-matricula",
+        "00-flujo"
+      ],
+      "top": 2,
+      "boton": true
+    },
+    {
+      "q": "¿Cuáles son los pasos para subir el sílabo de un curso en SCASYLB?",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos-nrc-y-malla",
+        "6.1.1 Asignar Syllabus"
+      ],
+      "top": 1,
+      "boton": true
+    },
+    {
+      "q": "¿Por qué un alumno queda INH aunque su promedio apruebe?",
+      "espera": [
+        "ref-preguntas-frecuentes-notas",
+        "ref-asistencia-docente",
+        "05-notas",
+        "registro.md"
+      ],
+      "top": 2,
+      "boton": true
+    },
+    {
+      "q": "¿Qué se configura para que el docente pueda pasar lista y registrar notas en Autoservicio?",
+      "espera": [
+        "ref-registro-asistencia",
+        "ref-asistencia-docente",
+        "ref-preguntas-frecuentes-docente",
+        "05-notas-asigna-docente"
+      ],
+      "top": 2,
+      "boton": true
+    },
+    {
+      "q": "capacidad 01 de que trata",
+      "espera": [
+        "ref-mapa-instructivos"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que instructivos tiene la capacidad 7",
+      "espera": [
+        "ref-mapa-instructivos"
+      ],
+      "top": 1
+    },
+    {
+      "q": "de que trata la capacidad 11",
+      "espera": [
+        "ref-mapa-instructivos"
+      ],
+      "top": 1
+    },
+    {
+      "q": "dame los pasos de subir los silabos",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos",
+        "6.1.1 Asignar Syllabus"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como registro el syllabus de un curso",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos",
+        "6.1.1 Asignar Syllabus"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como creo un nrc",
+      "espera": [
+        "01-creacion-nrc",
+        "ref-preguntas-frecuentes",
+        "5.3_4.1.4.1.6",
+        "nrc-ssasect"
+      ],
+      "top": 1
+    },
+    {
+      "q": "pasos para crear un nrc en ssasect",
+      "espera": [
+        "01-creacion-nrc",
+        "nrc-ssasect",
+        "5.3_4.1.4.1.6"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como asigno el docente al nrc",
+      "espera": [
+        "05-notas-asigna-docente",
+        "6.2.1 Asignar Docentes",
+        "ref-preguntas-frecuentes-docente"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como matriculo a un alumno en el nrc",
+      "espera": [
+        "04-matricula-en-el-nrc",
+        "ref-preguntas-frecuentes-matricula"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como doy de baja a un alumno de un curso",
+      "espera": [
+        "ref-preguntas-frecuentes-matricula",
+        "Gestionar retiro de cursos",
+        "04-matricula"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo un periodo academico",
+      "espera": [
+        "1.1.1 Definir la estructura",
+        "ref-periodos",
+        "1.1.2 Programar"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que es soaterm",
+      "espera": [
+        "1.1.2 Programar",
+        "ref-periodos",
+        "ref-glosario",
+        "ref-paginas-banner"
+      ],
+      "top": 3
+    },
+    {
+      "q": "como creo una parte de periodo",
+      "espera": [
+        "1.1.1 Definir",
+        "1.1.2 Programar",
+        "ref-periodos",
+        "ref-preguntas-frecuentes-cursos"
+      ],
+      "top": 3
+    },
+    {
+      "q": "como creo un curso nuevo en scacrse",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos",
+        "1.1.4 Dise",
+        "ref-ruta-inscripcion"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como pongo un curso en la malla",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos",
+        "1.2.1 Crear las mallas"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como creo un programa academico",
+      "espera": [
+        "1.1.3 Dise",
+        "ref-preguntas-frecuentes-cursos",
+        "ref-ruta-inscripcion"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo una malla curricular capp",
+      "espera": [
+        "1.2.1 Crear las mallas",
+        "ref-admision-capp",
+        "ref-preguntas-frecuentes-cursos"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como actualizo una malla para el nuevo periodo",
+      "espera": [
+        "1.3.1 Actualizar las mallas",
+        "ref-preguntas-frecuentes-cursos"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como asigno equivalencias entre cursos",
+      "espera": [
+        "1.2.3 Asignar equivalencias"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como pongo un prerrequisito a un curso",
+      "espera": [
+        "ref-preguntas-complejas-prerrequisitos",
+        "ref-restricciones-y-prerrequisitos",
+        "1.1.5 Asignar"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como configuro un prerrequisito",
+      "espera": [
+        "ref-preguntas-complejas-prerrequisitos#configuro un prerrequisito"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como configuro un prerequisito",
+      "espera": [
+        "ref-preguntas-complejas-prerrequisitos#configuro un prerrequisito"
+      ],
+      "top": 1
+    },
+    {
+      "q": "donde se configuran los prerrequisitos",
+      "espera": [
+        "ref-preguntas-complejas-prerrequisitos#configuro un prerrequisito"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como asigno prerrequisitos a un curso",
+      "espera": [
+        "ref-preguntas-complejas-prerrequisitos#configuro un prerrequisito"
+      ],
+      "top": 1
+    },
+    {
+      "q": "el correquisito sirve para los centros",
+      "espera": [
+        "ref-preguntas-complejas-prerrequisitos",
+        "ref-restricciones-y-prerrequisitos"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como restrinjo un nrc por programa",
+      "espera": [
+        "ref-restricciones-y-prerrequisitos",
+        "ref-preguntas-complejas"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como se registra la asistencia del docente",
+      "espera": [
+        "ref-registro-asistencia-docente",
+        "ref-asistencia-docente",
+        "7.1.1 Gestionar la asistencia"
+      ],
+      "top": 1
+    },
+    {
+      "q": "donde configuro la regla de asistencia soaatrk",
+      "espera": [
+        "ref-registro-asistencia",
+        "ref-asistencia-docente",
+        "7.1.0 Usar Componente",
+        "7.1.1 Gestionar"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como sale la nota inh por inasistencia",
+      "espera": [
+        "ref-preguntas-frecuentes-notas",
+        "ref-asistencia-docente",
+        "05-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como configuro el libro de calificaciones shagcom",
+      "espera": [
+        "05-notas-asigna-docente",
+        "ref-busqueda-asistencia-banner",
+        "ref-preguntas-frecuentes-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que es shaegbc",
+      "espera": [
+        "ref-busqueda-asistencia-banner",
+        "05-notas",
+        "ref-glosario",
+        "ref-paginas-banner"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como ingreso notas por autoservicio",
+      "espera": [
+        "7.1.4 Ingresar calificaci",
+        "ref-preguntas-frecuentes-docente",
+        "ref-preguntas-frecuentes-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como ingreso notas por backoffice sfaslst",
+      "espera": [
+        "7.1.6 Ingresar calificac",
+        "ref-preguntas-frecuentes-notas",
+        "05-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como hago el pase a historia",
+      "espera": [
+        "ref-preguntas-frecuentes-notas",
+        "7.1.9 Ejecutar procesos",
+        "05-notas"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como calculo el promedio del alumno shrcgpa",
+      "espera": [
+        "ref-preguntas-frecuentes-notas",
+        "7.2.2 Gestionar el promedio"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como configuro una escala de calificacion",
+      "espera": [
+        "7.1.3 Configurar escalas",
+        "ref-preguntas-frecuentes-notas",
+        "ADR-009"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que escala usa computacion",
+      "espera": [
+        "ADR-009",
+        "computacion/datos.json",
+        "centro-computacion"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo una persona en banner",
+      "espera": [
+        "02-creacion-de-persona",
+        "5.1.1 Instructivo - Gestionar persona natural"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como registro una empresa persona juridica",
+      "espera": [
+        "5.1.2 Instructivo - Gestionar persona juridica"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como pongo una retencion a un alumno",
+      "espera": [
+        "5.2.1 Instructivo - Gestionar retenciones",
+        "5.2.2 Instructivo",
+        "4.1.3 Asignar o actualizar retenciones",
+        "ref-scripts-ccee"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como admito a un alumno en un programa",
+      "espera": [
+        "03-admision",
+        "ref-admision-capp",
+        "3.2.1 Procedimiento Crear Solicitudes",
+        "ref-ruta-inscripcion",
+        "matricula-sfaregs"
+      ],
+      "top": 3
+    },
+    {
+      "q": "como funciona saaquik",
+      "espera": [
+        "03-admision",
+        "ref-ruta-inscripcion",
+        "3.2.1 Procedimiento",
+        "ref-admision-capp"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como cambio el estado del estudiante en sgastdn",
+      "espera": [
+        "4.1.1 Actualizar estado del estudiante",
+        "03-admision",
+        "ref-ruta-inscripcion"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo una liga entre teoria y practica",
+      "espera": [
+        "5.3_4.1.4.1.9_Instructivo_Crear Ligas",
+        "ADR-019",
+        "ref-preguntas-frecuentes"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo listas cruzadas",
+      "espera": [
+        "Crear Listas Cruzadas"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como asigno un aula o espacio fisico",
+      "espera": [
+        "Gestionar los espacios f",
+        "6.2.1 Asig Esp Fisicos"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que es la proyeccion academica sfpproj",
+      "espera": [
+        "Ejecutar Proyecci",
+        "ref-preguntas-frecuentes-matricula"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como doy un sobrepaso de inscripcion",
+      "espera": [
+        "Gestionar los sobrepasos",
+        "ref-preguntas-frecuentes-matricula"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como funciona la lista de espera",
+      "espera": [
+        "Lista de Espera"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como se matricula un alumno por autoservicio",
+      "espera": [
+        "ref-autoservicio-matricula",
+        "ref-preguntas-frecuentes-matricula"
+      ],
+      "top": 1
+    },
+    {
+      "q": "matricula sin pago previo y finanzas",
+      "espera": [
+        "ref-preguntas-frecuentes-matricula",
+        "ref-preguntas-complejas-prerrequisitos"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como cobra la caja tvacaja",
+      "espera": [
+        "ref-preguntas-frecuentes-matricula",
+        "11.2.2 - Gestionar los pagos"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como se configura la cuenta corriente",
+      "espera": [
+        "11.1.1 - Gest. Config Cuenta Corriente",
+        "11.3.1 Gestionar la cuenta corriente"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo un plan de pagos",
+      "espera": [
+        "11.1.3 - Gestionar los planes de pago"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como registro un beneficio o beca",
+      "espera": [
+        "11.1.2 -  Gestionar los beneficios"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como genero una seleccion de poblacion glrslct",
+      "espera": [
+        "7.1.10 Generar Selecciones",
+        "ref-preguntas-frecuentes-poblacion"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como ejecuto un proceso masivo con gjapctl",
+      "espera": [
+        "ref-preguntas-frecuentes-poblacion",
+        "7.1.10 Generar",
+        "7.1.9 Ejecutar"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como ejecuto el capp smrbcmp",
+      "espera": [
+        "7.2.4 Ejecuci",
+        "ref-admision-capp",
+        "ref-preguntas-frecuentes-poblacion"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como veo la historia academica del alumno",
+      "espera": [
+        "7.2.1 Gestionar la historia",
+        "ref-preguntas-frecuentes-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como cambio una nota ya pasada a historia",
+      "espera": [
+        "7.1.8 Ges ingreso Cal extraord",
+        "ref-preguntas-frecuentes-notas",
+        "7.2.1"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que es una calificacion incompleta",
+      "espera": [
+        "7.1.7 Gestionar calificaciones incompletas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "sustitutorios vs aplazados en banner",
+      "top": 3,
+      "vacio": true
+    },
+    {
+      "q": "como se hace la evaluacion docente",
+      "espera": [
+        "6.2.5 Gestiona la evaluaci",
+        "ref-preguntas-frecuentes-docente"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como registro la informacion del docente siainst",
+      "espera": [
+        "Información de Docentes",
+        "ref-preguntas-frecuentes-docente",
+        "05-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como veo la carga del docente siaasgn",
+      "espera": [
+        "Carga de Trabajo Docente",
+        "ref-preguntas-frecuentes-docente",
+        "ADR-011"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo una solicitud de servicio",
+      "espera": [
+        "4.3.1 Configuracion de Solicitudes",
+        "4.3.2 Gestionar las solicitudes",
+        "ref-scripts-ccee"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como se valida el requisito de graduacion",
+      "espera": [
+        "Validar el cumplimiento de los requisitos de graduaci"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como se registra el grado otorgado",
+      "espera": [
+        "Gestionar el otorgam"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como programo una comunicacion masiva",
+      "espera": [
+        "Programar Comunicaciones Masivas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como configuro el autoservicio",
+      "espera": [
+        "Configuración de Autoservicio",
+        "ref-autoservicio"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como registro informacion medica del alumno",
+      "espera": [
+        "Registrar y mantener información médica"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como asigno bibliografia a un curso",
+      "espera": [
+        "6.1.3 Asignar bibliografia"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como asigno recursos virtuales elearning",
+      "espera": [
+        "6.2.4 Asi Rec Vir-eLearning"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como gestiono la homologacion y convalidacion",
+      "espera": [
+        "3.3.1 Gestionar homologaci",
+        "ref-scripts-ccee"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como se reincorpora un alumno reingreso",
+      "espera": [
+        "3.2.7 Procedimiento Gestionar Reingresos",
+        "ref-scripts-ccee"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que periodos usan los centros",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos",
+        "ref-periodos-y-cronograma"
+      ],
+      "top": 1
+    },
+    {
+      "q": "cual es el cronograma 2026 de idiomas",
+      "espera": [
+        "ref-periodos-y-cronograma",
+        "idiomas/datos.json",
+        "centro-idiomas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "cual es el orden de los cursos de ingles",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos",
+        "centro-idiomas",
+        "idiomas/datos.json"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que son las rutas xp de computacion",
+      "espera": [
+        "centro-computacion",
+        "ref-acreditacion-computacion",
+        "computacion/datos.json"
+      ],
+      "top": 2
+    },
+    {
+      "q": "cuanto cuesta la acreditacion de computacion",
+      "espera": [
+        "ref-acreditacion-computacion",
+        "centro-computacion"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que cursos tiene emprendimiento",
+      "espera": [
+        "emprendimiento/datos.json",
+        "centro-emprendimiento"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como entro a banner test",
+      "espera": [
+        "workflow-pruebas-test",
+        "manejo-banner-test"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como busco un nrc en ssasecq",
+      "espera": [
+        "ref-busqueda-nrc",
+        "workflow-pruebas-test"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que es el nrc 10045",
+      "espera": [
+        "registro.md",
+        "computacion/datos.json",
+        "centro-computacion",
+        "ref-preguntas-frecuentes"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que es la parte x06",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos",
+        "ref-periodos"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que es un atributo de curso",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos",
+        "1.2.2 Crear las mallas"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como se divide un grupo y se traslada alumnos",
+      "espera": [
+        "ref-scripts-ccee",
+        "centro-idiomas",
+        "registro.md"
+      ],
+      "top": 3
+    },
+    {
+      "q": "que pasa si el alumno desaprueba y vuelve",
+      "espera": [
+        "ref-scripts-ccee",
+        "registro.md",
+        "ref-preguntas-complejas"
+      ],
+      "top": 3
+    },
+    {
+      "q": "que es la migracion r2",
+      "espera": [
+        "ref-migracion-r2"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que significa la y y la o en la regla",
+      "espera": [
+        "ref-preguntas-complejas-prerrequisitos",
+        "ref-restricciones"
+      ],
+      "top": 1
+    },
+    {
+      "q": "Banner me sale Prerequisite and Test Score error",
+      "espera": [
+        "ref-preguntas-complejas-prerrequisitos",
+        "ref-restricciones"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como uso el componente de asistencia attrgrd",
+      "espera": [
+        "ref-asistencia-docente",
+        "7.1.0 Usar Componente",
+        "ref-preguntas-frecuentes-notas",
+        "05-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "donde ve el alumno sus notas en autoservicio",
+      "espera": [
+        "7.1.5 Revisar las calificaciones",
+        "ref-preguntas-frecuentes-docente",
+        "ref-preguntas-frecuentes-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como revisa el alumno su asistencia",
+      "espera": [
+        "7.1.2 Revisar la asistencia",
+        "ref-asistencia"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo una encuesta para estudiantes",
+      "espera": [
+        "Gestionar encuestas generales"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como defino un evento",
+      "espera": [
+        "Definir y Diseñar Eventos",
+        "Gestión de Eventos y ceremon"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como asigno un asesor al estudiante",
+      "espera": [
+        "9.1.1 Definición y gestión de la asesoría"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como registro las practicas preprofesionales",
+      "espera": [
+        "9.2.1 Gestión Exp Formativa",
+        "plan-pruebas-integrales"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como genero documentos de venta boletas",
+      "espera": [
+        "11.2.3  Gestionar los documentos de venta"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que es el estado academico del alumno",
+      "espera": [
+        "7.2.3 Gestionar el estado académico"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como se cierra el periodo academico",
+      "espera": [
+        "7.1.9 Ejecutar procesos de cierre",
+        "ref-scripts-ccee",
+        "ref-preguntas-frecuentes-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como gestiono textos o cartas",
+      "espera": [
+        "7.1.11 Gestionar Textos"
+      ],
+      "top": 1
+    },
+    {
+      "q": "instructivo 5.3 diapositiva 27 que dice",
+      "espera": [
+        "5.3_4.1.4.1.6"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que dice el instructivo 1.1.4",
+      "espera": [
+        "1.1.4 Dise"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como crear horario del nrc",
+      "espera": [
+        "01-creacion-nrc",
+        "5.3_4.1.4.1.6",
+        "nrc-ssasect"
+      ],
+      "top": 2
+    },
+    {
+      "q": "cuantos alumnos caben en el nrc cupo",
+      "espera": [
+        "01-creacion-nrc",
+        "5.3_4.1.4.1.6",
+        "nrc-ssasect",
+        "ref-preguntas-frecuentes"
+      ],
+      "top": 2
+    }
+  ]
+}

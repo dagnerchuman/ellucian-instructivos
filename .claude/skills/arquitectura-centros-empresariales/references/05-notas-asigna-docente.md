@@ -48,6 +48,9 @@ Esta guía documenta el procedimiento y los requisitos para la asignación de do
   * Horas semanales de contacto frente a grupo.
   * Horas crédito acumuladas.
   * Control contra sobrecarga o cruces de horario.
+* **⚠ Cuidado al asignar docente (regla del usuario, C227 y C228): la carga de trabajo debe ser igual a las horas que dicta.** Banner no la saca del horario: la toma del catálogo, **SCACRSE › Tipo de horario › Carga de trabajo**. En ESGE 00117 (teoría 1, laboratorio 2, contacto 3) un NRC solo `TEO` hereda carga **1**, aunque dicte **2** horas: el docente cobraría 1 y regalaría 1. Banner espera las horas repartidas en dos NRC (uno TEO con carga 1 y otro PRA con carga 2, en total 3); si el centro dicta todo en un NRC TEO, hay que corregirlo.
+  * **Siempre, después de asignar en SSASECT:** abrir **SIAASGN** › docente › periodo › el NRC y comparar «Carga de trabajo calculada» con las horas que dicta (no con el «Contacto semanal», que va en horas de 50 minutos: 2 horas salen 2.4).
+  * Si no coincide: **«Sobrepasar carga de trabajo»** con las horas reales (en Emprendimiento, **2**) › Tab › GUARDAR. Comprobar que la carga calculada y el FTE den lo mismo.
 
 ### Paso 4: Configuración de Componentes de Evaluación en SHAGCOM
 * **Página:** **SHAGCOM (Componentes de Calificación de Sección)**.

@@ -600,7 +600,7 @@ GUIAS_SCRIPTS = {
     "04": {
         "c0": {"fase": "Condición Previa", "pantalla": "Idiomas USS", "hito": "Estudiante con dominio previo que busca exonerar BASIC I para cursar BASIC II"},
         "c1": {"fase": "Paso 1: Registro de Calificación", "pantalla": "SOATEST", "hito": "Ingreso de código de prueba U01 con puntaje aprobatorio del estudiante"},
-        "c2": {"fase": "Paso 2: Validación de Prerrequisito", "pantalla": "SCAPREQ", "hito": "El motor de reglas valida el examen como prerrequisito equivalente de BASIC I"},
+        "c2": {"fase": "Paso 2: Validación de Prerrequisito", "pantalla": "SCAPPRQ", "hito": "La regla del programa en SCAPPRQ acepta el examen como equivalente de BASIC I"},
         "c3": {"fase": "Paso 3: Matrícula Directa en BASIC II", "pantalla": "SFAREGS", "hito": "Inscripción en NRC de BASIC II permitida sin error fatal de prerrequisito"},
         "c4": {"fase": "Paso 4: Asignación de Vacante", "pantalla": "SFAREGS", "hito": "Guardado con código RE y consumo regular de cupo en la sección"},
         "cr": {"fase": "Resultado Validado", "pantalla": "TEST USS", "hito": "Matrícula por suficiencia validada y habilitada al 100%"}

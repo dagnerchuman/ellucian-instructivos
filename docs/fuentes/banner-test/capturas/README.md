@@ -39,3 +39,6 @@ Pantallas de TEST que el usuario compartió o que Claude tomó en solo consulta 
 | `2026-11-20-c218-scadetl-esec-00684-sin-atributo` | SCADETL | Diseño Web › Atributos de grado vacío | C218 |
 | `2026-11-20-c218-ssadetl-10001-cuotas-de-seccion-vacias` | SSADETL | NRC 10001 (202754) › Cuotas de sección vacías | C218 |
 | `2026-11-20-c218-ssadetl-10001-atributo-c011` | SSADETL | NRC 10001 › atributo `C011` «Computación I», distinto del `ING1` del curso | C218 |
+| `2026-11-20-c221-scapprq-mmemm01-esge-00118-pide-00117` | SCAPPRQ | MMEMM01 (202251): Emprendimiento II pide ESGE 00117, nivel M, 11 | C221 |
+| `2026-11-20-c221-scapprq-mmemm01-esge-00119-pide-00118` | SCAPPRQ | MMEMM01 (202251): Emprendimiento III pide ESGE 00118, nivel M, 11 | C221 |
+| `2026-11-20-c222-ssasect-10047-esge-00117-creado` | SSASECT | NRC 10047 creado: ESGE 00117, sección C, SCH, TEO, VIRT, OPLMS, P06 | C222 |

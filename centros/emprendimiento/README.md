@@ -6,6 +6,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 ## Diagramas paso a paso
 | N.º | Fase | Capacidad Banner | Diagrama | Archivos |
 |---|---|---|---|---|
+| 0 | Demostraciones para la reunión | Capacidades 1, 5 y 7 | Ejemplo de prueba 2 · NRC 10047 de punta a punta en TEST | [HTML](diagramas/00-demostracion-1-prueba-nrc-10047/emprendimiento-00-demostracion-1-prueba-nrc-10047.html) · [PNG claro](diagramas/00-demostracion-1-prueba-nrc-10047/emprendimiento-00-demostracion-1-prueba-nrc-10047-claro.png) · [PNG oscuro](diagramas/00-demostracion-1-prueba-nrc-10047/emprendimiento-00-demostracion-1-prueba-nrc-10047-oscuro.png) · [SVG](diagramas/00-demostracion-1-prueba-nrc-10047/emprendimiento-00-demostracion-1-prueba-nrc-10047.svg) |
 | 1 | Flujos base | Capacidades 1 a 8 | Recorrido completo en Banner | [HTML](diagramas/01-recorrido-completo/emprendimiento-01-recorrido-completo.html) · [PNG claro](diagramas/01-recorrido-completo/emprendimiento-01-recorrido-completo-claro.png) · [PNG oscuro](diagramas/01-recorrido-completo/emprendimiento-01-recorrido-completo-oscuro.png) · [SVG](diagramas/01-recorrido-completo/emprendimiento-01-recorrido-completo.svg) |
 | 2 | Flujos base | Capacidades 1 y 5 | Crear el NRC | [HTML](diagramas/02-crear-el-nrc/emprendimiento-02-crear-el-nrc.html) · [PNG claro](diagramas/02-crear-el-nrc/emprendimiento-02-crear-el-nrc-claro.png) · [PNG oscuro](diagramas/02-crear-el-nrc/emprendimiento-02-crear-el-nrc-oscuro.png) · [SVG](diagramas/02-crear-el-nrc/emprendimiento-02-crear-el-nrc.svg) |
 | 3 | Flujos base | Capacidad 5 | Script 18-A · Carga lectiva del docente | [HTML](diagramas/03-carga-lectiva/emprendimiento-03-carga-lectiva.html) · [PNG claro](diagramas/03-carga-lectiva/emprendimiento-03-carga-lectiva-claro.png) · [PNG oscuro](diagramas/03-carga-lectiva/emprendimiento-03-carga-lectiva-oscuro.png) · [SVG](diagramas/03-carga-lectiva/emprendimiento-03-carga-lectiva.svg) |
@@ -64,7 +65,7 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 | P06 | 202656 | 30/09 – 06/12/2026 | 10 |
 
 ## NRC en TEST
-- NRC **1025**: ESGE 00117, sección A. Solo carga docente: sesión 02, no principal (1,98 h/sem, 19,8 h, FTE 0,04).
+- NRC **10047**: ESGE 00117, sección C, parte P06. NRC de prueba de punta a punta, creado el 20/11/2026 (C222).
 
 ## Scripts de prueba (18 por probar · 2 validado · 1 por definir · 1 pendiente)
 | Script | Nombre | Estado | Evidencia o pendiente |
@@ -94,6 +95,6 @@ Ficha generada desde [`datos.json`](datos.json), que es la fuente única de los 
 
 ## Por confirmar
 - **U02**: ¿Los cursos tienen orden o son independientes?
-- **U05**: Nombres oficiales de los cursos, pesos de evaluación y nota aprobatoria
+- **U05**: Nombres oficiales de los cursos, pesos de evaluación y nota aprobatoria. En TEST, SHAGCOM de los NRC 10007 y 10012 (202656) está vacío; el usuario pedirá el sílabo (C230).
 - **U21**: ¿Rinde examen de suficiencia o solo aplica a Idiomas?
 - **U25**: Programa, mayor, departamento y escala de notas del nivel M: verificar en TEST

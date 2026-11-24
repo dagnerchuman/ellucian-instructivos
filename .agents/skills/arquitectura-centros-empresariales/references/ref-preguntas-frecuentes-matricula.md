@@ -2,13 +2,22 @@
 
 Respuestas cortas para el asistente IA y para cualquier agente, tomadas de lo probado en TEST (NRC 10044 y 10045) y del registro. Cada pregunta es un fragmento de la base del asistente (C197). Si la respuesta no está aquí ni en el registro, se dice «No lo sé» (ruta de escape).
 
-Tema de este archivo: SFAREGS, baja DD, prerrequisitos por programa, proyección SFPPROJ y turnos. Los otros temas están en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
+Tema de este archivo: SFAREGS, baja DD, división de grupos y traslado de sección (Script 16), prerrequisitos por programa, proyección SFPPROJ y turnos. Los otros temas están en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
 
 ### En SFAREGS sale «No se ha completado la configuración requerida». ¿Qué hago?
 Banner pide **SOADEST** la primera vez que se abre SFAREGS en una sesión nueva. Escriba **DATABASE** en los cinco campos (Horarios, Facturas, Históricos académicos, Ingresos y Cumplimiento) y abra SFAREGS otra vez desde la lupa, **sin guardar SOADEST**: así entra (C185). Si pulsa GUARDAR en SOADEST, Banner responde «\*ERROR\* Función inválida»; no hace falta guardar (C158).
 
 ### ¿Cómo doy de baja a un alumno de un NRC con DD y hasta cuándo se puede?
 SFAREGS › periodo › ID › **Ir** (si sale SOADEST, ver la pregunta anterior). Baje con **⏬** hasta «Información de curso» (un clic en la tabla no mueve el foco), cambie el **Estatus** del NRC de **RE a DD** y pulse Tab: las horas bajan a 0.000. Al guardar salen «Estimación de cuota procesada» y «Los alumnos ya están inscritos…»; al reabrir, el NRC queda en DD (C189). El DD vale mientras la **parte de periodo** lo permita en SFARSTS: en 202656, la **X06** tiene DD, DW, RE y RW del **07-SEP al 31-OCT-2026** y la X07 no tiene reglas (C156). Si sale «El estatus "DD" es inválido…», esa parte no tiene DD. Un RE no se borra: se cambia a DD.
+
+### ¿Cómo se divide un grupo y se traslada a un alumno a otra sección?
+Es el **Script 16**, probado en TEST el 02/10/2026 (C38). Cuando un grupo pasa el aforo del aula, se abre otra **sección** del mismo curso (B o C) con los datos del NRC original y los alumnos pasan de un NRC al otro (`ref-scripts-ccee-casuisticas.md`, Script 16).
+1. **SSASECT:** cree el NRC de la nueva sección, con su cupo (ver «¿Cómo creo un NRC en SSASECT?» en la guía de cursos y malla).
+2. **SFAREGS** › periodo › ID del alumno › **Ir:** el NRC de origen pasa de **RE a DD** (baja, ver la pregunta del DD) y el NRC de destino se agrega con **RE**. Guarde.
+3. Si sale **«Reserve Closed»**, el cupo reservado del NRC de destino está lleno: amplíelo en SSASECT › «Lugares reservados» y el máximo en «Detalles de ingreso». En la prueba, la reserva del programa `CMEMC38` pasó de 1 a 2 y el aforo, a 3 (C38).
+4. Confirme en **SFASLST** (lista de clase) que el alumno sale en el NRC nuevo.
+
+En TEST se trasladó un alumno del NRC 1026 al 1021 (C38). Falta confirmar quién lo hace, el centro o Registros, y hasta qué fecha del curso se permite (U44), y que el traslado no duplique ni pierda el cobro en TSAAREV.
 
 ### ¿Qué hace SFPPROJ? ¿Simula la proyección del alumno?
 No es solo una simulación: **calcula y guarda** la proyección. Con el último **CAPP** del periodo (SMRBCMP o SMARQCM), SFPPROJ arma para cada alumno la lista de cursos que aún no aprobó y que puede inscribir en ese periodo según su avance curricular. La lista queda en **SFAPROJ**, donde se consulta y se puede corregir (+ y −). Esa lista es la que el alumno ve en la pestaña Proyecciones de la planificación y la inscripción por autoservicio; si SOATERM tiene «Restringir a cursos proyectados», solo puede inscribir esos cursos (instructivo 5.4 «Ejecutar la proyección académica», diap. 10, 47 y 51; C205).

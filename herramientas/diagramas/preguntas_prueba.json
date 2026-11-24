@@ -1,5 +1,5 @@
 {
-  "_nota": "Banco de preguntas del asistente (probar_asistente.mjs). «espera»: una o más partes de la ruta de la fuente; basta que una salga entre las «top» primeras. Las preguntas automáticas (preguntas frecuentes, instructivos, páginas de Banner) las arma el script.",
+  "_nota": "Banco de preguntas del asistente (probar_asistente.mjs). «espera»: una o más partes de la ruta de la fuente; basta que una salga entre las «top» primeras (con «todas», deben salir todas: una pregunta con dos temas, como «textos o cartas»). Las preguntas automáticas (preguntas frecuentes, instructivos, páginas de Banner) las arma el script.",
   "preguntas": [
     {
       "q": "¿La auditoría de CAPP se realiza por curso individual o por el programa completo?",
@@ -102,16 +102,14 @@
     {
       "q": "como creo un nrc",
       "espera": [
-        "01-creacion-nrc",
-        "ref-preguntas-frecuentes",
-        "5.3_4.1.4.1.6",
-        "nrc-ssasect"
+        "ref-preguntas-frecuentes-cursos-nrc-y-malla.md#como creo un nrc en ssasect"
       ],
       "top": 1
     },
     {
       "q": "pasos para crear un nrc en ssasect",
       "espera": [
+        "ref-preguntas-frecuentes-cursos-nrc-y-malla.md#como creo un nrc en ssasect",
         "01-creacion-nrc",
         "nrc-ssasect",
         "5.3_4.1.4.1.6"
@@ -772,11 +770,9 @@
     {
       "q": "como se divide un grupo y se traslada alumnos",
       "espera": [
-        "ref-scripts-ccee",
-        "centro-idiomas",
-        "registro.md"
+        "ref-preguntas-frecuentes-matricula.md#como se divide un grupo"
       ],
-      "top": 3
+      "top": 1
     },
     {
       "q": "que pasa si el alumno desaprueba y vuelve",
@@ -893,9 +889,11 @@
     {
       "q": "como gestiono textos o cartas",
       "espera": [
-        "7.1.11 Gestionar Textos"
+        "7.1.11 Gestionar Textos",
+        "Gestionar Solicitudes de Graduación"
       ],
-      "top": 1
+      "todas": true,
+      "top": 2
     },
     {
       "q": "instructivo 5.3 diapositiva 27 que dice",
@@ -1124,6 +1122,34 @@
         "ref-preguntas-frecuentes-periodo-202721.md#que sigue despues"
       ],
       "top": 2
+    },
+    {
+      "q": "crear nrc",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos-nrc-y-malla.md#como creo un nrc en ssasect"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como creo un nrc en el periodo 202721",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos-nrc-y-malla.md#como creo un nrc en ssasect"
+      ],
+      "top": 1
+    },
+    {
+      "q": "crear un nrc de idiomas en 202721",
+      "espera": [
+        "ref-preguntas-frecuentes-cursos-nrc-y-malla.md#como creo un nrc en ssasect"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que se configura antes del nrc",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#que se configura antes del nrc"
+      ],
+      "top": 1
     }
   ]
 }

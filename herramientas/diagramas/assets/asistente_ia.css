@@ -1380,3 +1380,80 @@ a.ai-fuente-nombre::after { content: "\2009\2197"; font-size: 0.85em; }
 @media (prefers-reduced-motion: reduce) {
   .ai-btn-pasos-img, .ai-btn-pasos-img:hover, .ai-btn-pasos-img:active { transform: none; }
 }
+
+/* ==========================================================================
+   Lo que va antes y después (C239): al final de la respuesta, una pregunta y un botón por etapa vecina.
+   Cada botón tiene dos líneas: «Sí, lo que va antes» y el nombre de la etapa. Sube 1px y se hunde al pulsarlo.
+   ========================================================================== */
+.ai-flujo {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(124, 58, 237, 0.18);
+}
+.ai-pasos-img + .ai-flujo { margin-top: 0.7rem; padding-top: 0; border-top: 0; }
+.ai-flujo-pregunta { margin: 0 0 0.5rem !important; font-size: 0.84rem; font-weight: 600; }
+.ai-flujo-botones { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ai-flujo-btn {
+  display: inline-flex;
+  flex: 1 1 12rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12rem;
+  min-width: 0;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid rgba(192, 132, 252, 0.38);
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: #f3f0f9;
+  font-family: inherit;
+  text-align: left;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+.ai-flujo-dir { font-size: 0.72rem; font-weight: 600; color: #c4b5fd; }
+.ai-flujo-nombre { font-size: 0.86rem; font-weight: 600; }
+.ai-flujo-btn:hover:not([disabled]) { background: rgba(167, 139, 250, 0.14); border-color: #c084fc; transform: translateY(-1px); }
+.ai-flujo-btn:active:not([disabled]) { transform: translateY(0) scale(0.98); }
+.ai-flujo-btn:focus-visible { outline: 2px solid #c084fc; outline-offset: 2px; }
+.ai-flujo-btn[disabled] { cursor: default; opacity: 0.5; }
+.ai-flujo-btn.elegido { opacity: 1; background: rgba(167, 139, 250, 0.18); border-color: #c084fc; }
+[data-theme="light"] .ai-flujo-btn { border-color: rgba(124, 58, 237, 0.35); background: #ffffff; color: #1a1426; }
+[data-theme="light"] .ai-flujo-dir { color: #6d28d9; }
+[data-theme="light"] .ai-flujo-btn:hover:not([disabled]) { background: rgba(124, 58, 237, 0.07); border-color: #7c3aed; }
+[data-theme="light"] .ai-flujo-btn:focus-visible { outline-color: #7c3aed; }
+[data-theme="light"] .ai-flujo-btn.elegido { background: rgba(124, 58, 237, 0.1); border-color: #7c3aed; }
+@media (prefers-reduced-motion: reduce) {
+  .ai-flujo-btn, .ai-flujo-btn:hover:not([disabled]), .ai-flujo-btn:active:not([disabled]) { transform: none; }
+}
+
+/* Visor de láminas: el dato de los centros bajo cada número verde (datos.json › valores_laminas, C239). El visor es
+   siempre claro. */
+.aipv-valor {
+  display: block;
+  margin-top: 0.3rem;
+  padding: 0.3rem 0.45rem;
+  border-radius: 0.35rem;
+  background: #ecfdf5;
+  box-shadow: inset 3px 0 0 #3a6c54;
+  color: #14532d;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+.aipv-valor-rotulo {
+  display: block;
+  margin-bottom: 0.08rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #3a6c54;
+}
+.aipv-valor code {
+  padding: 0 0.25rem;
+  border-radius: 0.2rem;
+  background: #d1fae5;
+  color: #064e3b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.76rem;
+}

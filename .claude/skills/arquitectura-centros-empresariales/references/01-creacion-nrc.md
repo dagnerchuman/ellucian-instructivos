@@ -13,29 +13,27 @@ El usuario creó su primer NRC en **TEST** (`experience-test.elluciancloud.com/u
 5. **NRC:** SSASECT.
 
 ## Qué periodo poner
-Se decide por la **fecha de inicio del grupo**:
+Se decide por la **fecha de inicio del grupo** (ADR-026):
 
 | Grupos que empiezan… | Periodo |
 |---|---|
-| enero a marzo 2026 | 202651 |
-| abril a julio 2026 | 202654 |
-| agosto a diciembre 2026 | 202656 |
-| enero a marzo 2027 | 202751 |
+| enero a marzo 2027 | **202721**, el primero de producción (C238) |
+| abril a julio 2027 | 202724 en TEST; por confirmar para producción (U56) |
 
-En TEST existe **202656** (el usuario lo usó).
+Los periodos de 2026 fueron de TEST: 202651 (enero a marzo), 202654 (abril a julio) y 202656 (agosto a diciembre). Los NRC de prueba se crearon en 202656.
 
 ## SSASECT campo por campo (5.3, diap. 19 a 32)
 1. **Encabezado:** Periodo (con «•••» se ve la lista) · NRC vacío · botón **«Crear NRC»**. El NRC queda en «ADD» hasta guardar. «Copiar NRC» duplica uno que ya existe.
 2. **Pestaña «Información de sección de curso»:**
    - **Materia / Número de curso:** en «•••», la opción «cursos existentes» abre el catálogo; la opción «horas crédito» busca por créditos.
    - Sección: letra (A, B…) no repetida. Con «•••» se abre SSASECQ, que sirve para ver las secciones que ya existen.
-   - **Campus:** el de dictado. En la lista, elige por la descripción; los códigos de la USS no están confirmados.
+   - **Campus:** `S` «Sede Chiclayo» (U17); el NRC 10047 se creó con `SCH` (C222).
    - **Estatus:** Activo.
    - **Tipo de horario:** del catálogo (Teoría). El método educativo se llena solo.
    - **Modo de calificar:** obligatorio.
    - **Sesión:** jornada.
    - Aprobación especial, duración, socio de integración y lista cruzada: vacíos, salvo que se usen.
-   - **Clase tradicional › Parte de periodo:** el grupo del mes (Informática en 202656: X05, X06, **X07**). Las fechas se llenan solas. «Clase de aprendizaje abierto» va vacía.
+   - **Clase tradicional › Parte de periodo:** el grupo del mes. En 202721: I01 a I04, X01 a X03, P01 y P02 (C238); en TEST 202656, Informática usó X05, X06 y X07. Las fechas se llenan solas. «Clase de aprendizaje abierto» va vacía.
    - **Horas crédito** (5.3, diap. 23 a 25):
      - Vienen del catálogo; no se inventan. Con créditos fijos se dejan igual; solo se cambian si el curso tiene créditos variables en SCACRSE.
      - Se revisan también las **horas de cobro**.

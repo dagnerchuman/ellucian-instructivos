@@ -101,6 +101,10 @@ TEMAS = {
                   (11, "SCASYLB: materiales requeridos"), (12, "SCASYLB: requerimientos técnicos")),
     # NRC y docente
     "ssasect_crear": _l("5.3", (19, "Ingresar el periodo y pulsar «Crear NRC»"), (21, "Materia, curso, sección, campus y estatus")),
+    # Solo para el asistente (ningún diagrama lo usa): los campos 7 a 13 de crear el NRC, para que «crear un NRC» muestre
+    # todas sus láminas (C239).
+    "ssasect_campos": _l("5.3", (22, "Tipo de horario, método, modo de calificar y sesión"),
+                         (23, "Parte de periodo y horas crédito y de cobro")),
     "ssasect_cupo": _l("5.3", (27, "Detalles de ingreso: cupo del NRC"), (28, "Lugares reservados: regla nula y regla por criterio")),
     "ssasect_horario": _l("5.3", (29, "Fechas de reunión: horario de la sesión")) +
                        _l("6.2.1", (20, "Conflicto de horario del docente: indicador de sobrepaso")),
@@ -610,11 +614,24 @@ EXTRA_PAGINAS = {
 }
 
 
+def _linea(parrafo, valor):
+    """Un número verde de la lámina; con `valor`, el dato de los centros para ese número (C239)."""
+    linea = {"num": parrafo["num"], "texto": parrafo["texto"][:260]}
+    if valor:
+        linea["valor"] = valor
+    return linea
+
+
 def indice_asistente():
     """{"laminas": [...], "paginas": {código: [índices de laminas]}} con rutas relativas a la raíz del repositorio."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     import diapositivas
     from catalogo_instructivos import catalogo
+    from centro import CENTROS, leer_json
+
+    # Dato de los centros por número verde (centros/comun/datos.json › valores_laminas): instructivo › diapositiva › número.
+    valores = {k: v for k, v in leer_json(CENTROS / "comun" / "datos.json").get("valores_laminas", {}).items() if k != "_leeme"}
+    sin_usar = {(i, n, num) for i, ds in valores.items() for n, nums in ds.items() for num in nums}
 
     # El asistente nombra cada instructivo como el catálogo («Instructivo 8.1 · Validar el cumplimiento…»), igual que
     # en sus fuentes; los títulos cortos de INSTRUCTIVOS quedan para las tarjetas de los diagramas.
@@ -648,12 +665,18 @@ def indice_asistente():
                     "contenido": contenido[:600],
                     # Los pasos con su número verde, tal como salen en la imagen: el visor del asistente los
                     # lista al costado con el mismo número (C197).
-                    "lineas": [{"num": l["num"], "texto": l["texto"][:260]} for l in parrafos if l["texto"].strip()],
+                    "lineas": [_linea(l, valores.get(d["instructivo"], {}).get(str(d["n"]), {}).get(str(l["num"]), "") if l["num"] else "")
+                               for l in parrafos if l["texto"].strip()],
                 })
+                for l in parrafos:
+                    sin_usar.discard((d["instructivo"], str(d["n"]), str(l["num"])))
             for codigo in sorted(codigos):
                 indices = paginas.setdefault(codigo, [])
                 if posicion[lamina_id] not in indices:
                     indices.append(posicion[lamina_id])
+    # Un valor cuyo número no está en la lámina (o cuya lámina no entra al índice) no se vería: se avisa.
+    for i, n, num in sorted(sin_usar):
+        print(f"AVISO  valores_laminas: {i} diap. {n}, número {num}: la lámina no tiene ese número o no está en el índice")
     paginas = {k: v for k, v in paginas.items() if re.fullmatch(r"[A-Z]{6,8}|AUTOSERVICIO|FACULTY", k)}
     # SHATERM no sale en los instructivos: su tema es una referencia para los diagramas, no la lámina de la página.
     paginas.pop("SHATERM", None)

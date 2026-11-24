@@ -69,7 +69,8 @@ for (const p of preguntas) {
   const ok = p.vacio ? r.length === 0 : p.codigo
     ? tope.some((f) => f.texto.includes(p.codigo))
     // «archivo#texto»: además del archivo, el fragmento debe traer ese texto (una pregunta frecuente concreta).
-    : tope.some((f) => p.espera.some((e) => { const [archivo, trozo] = e.split('#');
+    // Con «todas», cada fuente esperada debe salir (una pregunta con dos temas: «textos o cartas»).
+    : p.espera[p.todas ? 'every' : 'some']((e) => tope.some((f) => { const [archivo, trozo] = e.split('#');
       return f.fuente.includes(archivo) && (!trozo || ctx.normalizar(f.texto).includes(trozo)); }));
   const c = (porCat[p.cat] ||= { ok: 0, total: 0 });
   c.total++;

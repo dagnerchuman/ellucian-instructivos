@@ -2,7 +2,7 @@
 
 Respuestas cortas para el asistente IA y para cualquier agente, tomadas de lo probado en TEST (NRC 10044 y 10045) y del registro. Cada pregunta es un fragmento de la base del asistente (C197). Si la respuesta no está aquí ni en el registro, se dice «No lo sé» (ruta de escape).
 
-Tema de este archivo: SCACRSE, SMAAREA, atributos, sílabo e Inglés. Los periodos y las partes de periodo (X06 incluida) están en `ref-preguntas-frecuentes-periodos.md`; los otros temas, en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
+Tema de este archivo: SCACRSE, crear el NRC en SSASECT, SMAAREA, atributos, sílabo e Inglés. Los periodos y las partes de periodo (X06 incluida) están en `ref-preguntas-frecuentes-periodos.md`; los otros temas, en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
 
 ### ¿Qué es un atributo de curso (STVATTR) y para qué sirve en la malla?
 Es un código de 4 caracteres que marca cursos que comparten algo (por ejemplo «electivo» o «taller»). Se crea en **STVATTR** (código y descripción de hasta 30 caracteres), se pone a cada curso en **SCADETL** › pestaña **«Atributos de grado»** (materia, curso y periodo desde el que rige › insertar › guardar) y la malla lo pide en **SMAAREA** › regla › Detalles, columna **«Atributo de curso»**, sin poner materia ni curso. Así el CAPP cuenta cualquier curso con ese atributo **sin listar curso por curso** en la regla (instructivo 1.2.2, diap. 5, 11, 14 y 18 a 22; 6.1.2, diap. 9, 20 y 21). El NRC hereda los atributos del catálogo en SSADETL (5.3, diap. 37). No es lo mismo que el **atributo de alumno** (otra columna de SMAAREA, y el parámetro 07 de SFRGRUP). **En TEST (C218):** STVATTR ya tiene 65 códigos de los centros (`COM1` a `COM3`, `C011` a `C074`, `ING1` a `ING6`, `NIV1` a `NIV4`…), así que no hace falta crear uno. La prueba propuesta es marcar los talleres de Computación y pedir el atributo en `ECOM-04` de `MC42-01` (C174, C208); quién crea códigos en STVATTR está por confirmar.
@@ -25,6 +25,16 @@ SCACRSE es el catálogo de cursos: el curso se crea una sola vez y rige hasta 99
 3. Horas: **UEC o crédito** y **Cobro** siempre variables: inferior 0, indicador **O** y superior = créditos (Computación 0 O 1); Teoría, Laboratorio y Contacto según el sílabo (Computación 1, 1 y 2) (C146; diap. 22).
 4. Con **«Sección siguiente»** (↓): **Nivel de curso** `C` Computación (diap. 23); **Modo de calificar** `V` Vigesimal, marcado como Predefinido (diap. 24); **Tipo de horario** `TEO` y `PRA`, método educativo `VIRT`, carga de trabajo 1.000 (diap. 25) (C148).
 Lo más seguro es **Copiar** un curso real del mismo centro y cambiar lo propio (C146). Hoy los cursos los crea Registros Académicos (C147). Las horas de Diseño Web (ESEC 00684) siguen por confirmar (U45).
+
+### ¿Cómo creo un NRC en SSASECT?
+Todo se hace en **SSASECT** (instructivo 5.3, diap. 19 a 27; probado en TEST con el NRC 10047, C222). Llene un campo a la vez y revíselo antes de pasar al siguiente (C222).
+1. **Periodo** `202721` (verano 2027 de los centros, ADR-026) › **Crear NRC**. El NRC queda en «ADD» hasta guardar (diap. 19 y 20).
+2. **Materia** y **curso** del catálogo: Idiomas `ESEP`, Computación `ESEC` y Emprendimiento `ESGE` (C59). Banner trae el título y las horas (diap. 21).
+3. **Sección**: la siguiente letra libre (A, B, C…). **Campus** `S` «Sede Chiclayo» (U17; el 10047 se creó con `SCH`). **Estatus** `A` (diap. 21).
+4. **Tipo de horario** `TEO`, **método educativo** `VIRT` (Banner propone `SEMI`), **socio de integración** `OPLMS`, **modo de calificar** `V` y **sesión** `M` o `T` (diap. 22; C222).
+5. **Parte de periodo** del grupo: Banner trae sus fechas y semanas. En 202721 son Idiomas `I01` a `I04`, Computación `X01` a `X03` y Emprendimiento `P01` y `P02` (diap. 23; C238).
+6. **Horas** crédito y de cobro: las del curso; si el indicador es O, uno de sus valores (en `ESGE 00117`, crédito 0 o 4). **GUARDAR**: Banner da el número de NRC (diap. 23 y 26).
+7. **Cupo:** pestaña «Información de ingreso de sección» › **Proyectado** y **Máximo** (por ejemplo, 40), antes de «Lugares reservados». Guardar (diap. 27; C97).
 
 ### ¿Cuáles son los pasos para subir el sílabo (syllabus) de un curso en SCASYLB?
 El sílabo se registra en **SCASYLB** (Syllabus de curso), por curso y periodo, y se ve en el Autoservicio del alumno (instructivo 6.1.1, diap. 13). No se adjunta un archivo: se escribe el texto en cada campo o se pone una URL. Pasos (diap. 9 a 12):

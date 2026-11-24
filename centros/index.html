@@ -1199,10 +1199,11 @@ main {
     aplicarFiltros();
     if (updateUrl) {
       var newHash = (currentFilter === 'all') ? '' : '#sec-' + currentFilter;
-      var curPath = window.location.pathname.endsWith('/') ? window.location.pathname : (window.location.pathname + '/');
+      // Solo cambia el «#»; la ruta queda igual. Antes se agregaba «/» a «index.html» y la dirección quedaba en
+      // «index.html/#sec-…»: cada diagrama y cada miniatura apuntaba a una carpeta que no existe (404) hasta pulsar F5 (C240).
       if (window.location.hash !== newHash) {
         if (history.replaceState) {
-          history.replaceState(null, '', curPath + (newHash ? newHash : ''));
+          history.replaceState(null, '', window.location.pathname + window.location.search + newHash);
         } else {
           window.location.hash = newHash;
         }

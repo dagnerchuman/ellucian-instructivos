@@ -15,9 +15,8 @@ Parte de la skill `arquitectura-centros-empresariales` (el mapa está en su `SKI
   - Todo lo demás es una **duda**. Regístrala con la skill `preguntas-y-dudas-centros`.
 
 ## El modelo en un minuto
-- **Periodo:** año + nivel 5 + secuencia (1 = verano, 4 = semestre I, 6 = semestre II).
-  - SEUSS 2026-0, 2026-I y 2026-II equivalen a **202651, 202654 y 202656**.
-  - El verano 2027 será **202751**.
+- **Periodo:** desde 2027 (producción), año + 2 + secuencia; **202721** es el verano 2027, compartido por los tres centros y creado por Registros (ADR-026, C238).
+  - En TEST 2026 fue año + 5 + secuencia (1 = verano, 4 = semestre I, 6 = semestre II): SEUSS 2026-0, 2026-I y 2026-II equivalen a 202651, 202654 y 202656 (ADR-005, reemplazado).
 - **Parte de periodo:** cada grupo que empieza en un mes es una parte de periodo con sus propias fechas (STVPTRM, SOATERM).
   - Idiomas: I01 a I12 en 2026 (parte general IGE).
   - Computación: X01 a X07 en 2026 (CGE).

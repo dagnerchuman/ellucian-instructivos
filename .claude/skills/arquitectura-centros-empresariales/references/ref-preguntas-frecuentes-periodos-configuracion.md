@@ -21,7 +21,7 @@ Las demás pestañas: Verificación de errores de inscripción (5.4, diap. 14 a 
 
 La parte **1** («Periodo completo») siempre debe estar (diap. 20). Agregue solo las partes que usará el periodo, porque SSASECT ofrece solo esas (C141).
 
-### ¿En qué orden se configura el periodo antes de crear el NRC?
+### ¿Qué se configura antes del NRC y en qué orden?
 Este es el orden (C141, C144):
 1. **STVTERM**: el código del periodo, solo si no existe.
 2. **STVPTRM**: el código de la parte, solo si no existe.

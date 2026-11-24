@@ -3240,5 +3240,84 @@
         }
       ]
     }
-  ]
+  ],
+  "valores_laminas": {
+    "_leeme": "Dato de los centros para cada número verde de una lámina: el asistente lo muestra en la barra izquierda de «Pasos en imágenes» (pedido del usuario, C239). Orden: instructivo › diapositiva › número. Cada valor cita su C## o ADR; lo visto en TEST dice «en TEST». Lo arma herramientas/diagramas/diapositivas_pasos.py.",
+    "1.1.1": {
+      "18": {
+        "2": "`202721` (ADR-026)",
+        "3": "En TEST: «Verano 2027 - Cent.Empresarial» (C238)",
+        "4": "En TEST: `01-ENE-2027` a `31-MAR-2027` (C238)",
+        "5": "`2027` (C238)"
+      }
+    },
+    "1.1.2": {
+      "16": {
+        "1": "`202721` (ADR-026)"
+      },
+      "20": {
+        "2": "En 202721: `I01` a `I04`, `X01` a `X03`, `P01`, `P02` y `1` (C238)",
+        "3": "Las de la malla de cada jefatura (C238, U58)"
+      },
+      "21": {
+        "4": "Las de cada parte: en TEST, de 4 a 13 semanas (C238)",
+        "5": "La fecha de inicio de la parte (C238)",
+        "6": "Vacía en 202721 (E38)"
+      },
+      "23": {
+        "2": "En TEST: web del `16-NOV-2026` al `14-MAR-2027`; docente del `01-ENE` al `06-JUN-2027` (C238)"
+      }
+    },
+    "5.3": {
+      "19": {
+        "1": "`202721`, el verano 2027 (ADR-026)"
+      },
+      "21": {
+        "3": "Idiomas `ESEP` · Computación `ESEC` · Emprendimiento `ESGE` (C59)",
+        "4": "La siguiente letra libre: A, B, C…",
+        "5": "`S` «Sede Chiclayo» (U17); el NRC 10047 usó `SCH` (C222)",
+        "6": "`A`, activo"
+      },
+      "22": {
+        "7": "`TEO`, teoría (C222)",
+        "8": "`VIRT`; Banner propone `SEMI` (C222)",
+        "9": "`V`, vigesimal (C222)",
+        "10": "`M` mañana o `T` tarde (C97, C151)"
+      },
+      "23": {
+        "11": "En 202721: `I01` a `I04`, `X01` a `X03`, `P01` o `P02` (C238)",
+        "12": "Las del curso; con indicador O, uno de sus valores (C222)"
+      },
+      "27": {
+        "16": "Proyectado y Máximo: el cupo del grupo, por ejemplo `40` (C97)"
+      },
+      "28": {
+        "18": "Se conserva: Banner no deja borrarla (C152)"
+      },
+      "29": {
+        "21": "Tipo `CLAS`; hora en 24 h, por ejemplo `1530` a `1710` (C180)",
+        "22": "Los de la hoja de NRC (C180)",
+        "23": "`01`: lo pone Banner (C180)"
+      }
+    },
+    "5.3-ligas": {
+      "14": {
+        "1": "`202721` y el NRC (ADR-026)"
+      },
+      "15": {
+        "1": "`202721` y el NRC (ADR-026)"
+      }
+    },
+    "6.2.1": {
+      "15": {
+        "1": "El ID del docente › Tab: Banner trae el nombre (C225)"
+      },
+      "19": {
+        "2": "`100` (C180)",
+        "3": "Marcado: lo pone Banner (C180)",
+        "4": "Solo si sale «Conflicto de horario del instructor» (C225)",
+        "5": "`100` (C180)"
+      }
+    }
+  }
 }

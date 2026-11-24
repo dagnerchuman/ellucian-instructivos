@@ -11,10 +11,12 @@ Diagramas interactivos de cómo trabaja cada centro en Ellucian Banner, hechos c
 
 La galería con todos los diagramas está en [`index.html`](index.html).
 
-## Comparativo de los tres centros
+## Los tres centros (comparativo y recorridos comunes)
 | N.º | Fase | Capacidad Banner | Diagrama | Archivos |
 |---|---|---|---|---|
 | 0 | Comparativo | Capacidades 1 a 8 | El mismo flujo en los tres centros | [HTML](comun/diagramas/00-tres-centros/centros-00-tres-centros.html) · [PNG claro](comun/diagramas/00-tres-centros/centros-00-tres-centros-claro.png) · [PNG oscuro](comun/diagramas/00-tres-centros/centros-00-tres-centros-oscuro.png) · [SVG](comun/diagramas/00-tres-centros/centros-00-tres-centros.svg) |
+| 1 | Común | Capacidad 1 · Instructivos 1.1.1 y 1.1.2 | Capacidad 1 · Periodo 202721 en TEST, paso a paso | [HTML](comun/diagramas/01-capacidad-1-periodo-202721/centros-01-capacidad-1-periodo-202721.html) · [PNG claro](comun/diagramas/01-capacidad-1-periodo-202721/centros-01-capacidad-1-periodo-202721-claro.png) · [PNG oscuro](comun/diagramas/01-capacidad-1-periodo-202721/centros-01-capacidad-1-periodo-202721-oscuro.png) · [SVG](comun/diagramas/01-capacidad-1-periodo-202721/centros-01-capacidad-1-periodo-202721.svg) |
+| 2 | Común | Capacidad 1 · Instructivos 1.1.1 a 1.3.1 | Capacidad 1 · Lo que sigue después del periodo | [HTML](comun/diagramas/02-capacidad-1-ruta-despues-del-periodo/centros-02-capacidad-1-ruta-despues-del-periodo.html) · [PNG claro](comun/diagramas/02-capacidad-1-ruta-despues-del-periodo/centros-02-capacidad-1-ruta-despues-del-periodo-claro.png) · [PNG oscuro](comun/diagramas/02-capacidad-1-ruta-despues-del-periodo/centros-02-capacidad-1-ruta-despues-del-periodo-oscuro.png) · [SVG](comun/diagramas/02-capacidad-1-ruta-despues-del-periodo/centros-02-capacidad-1-ruta-despues-del-periodo.svg) |
 
 ## Centro de Idiomas
 Ficha del centro: [`idiomas/README.md`](idiomas/README.md) · datos: [`idiomas/datos.json`](idiomas/datos.json)

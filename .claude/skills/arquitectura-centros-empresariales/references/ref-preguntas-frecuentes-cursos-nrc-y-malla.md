@@ -1,8 +1,8 @@
-# Preguntas frecuentes de operación: Cursos, malla y periodos
+# Preguntas frecuentes de operación: Cursos y malla
 
 Respuestas cortas para el asistente IA y para cualquier agente, tomadas de lo probado en TEST (NRC 10044 y 10045) y del registro. Cada pregunta es un fragmento de la base del asistente (C197). Si la respuesta no está aquí ni en el registro, se dice «No lo sé» (ruta de escape).
 
-Tema de este archivo: SCACRSE, SMAAREA, atributos, parte X06, periodos e Inglés. Los otros temas están en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
+Tema de este archivo: SCACRSE, SMAAREA, atributos, sílabo e Inglés. Los periodos y las partes de periodo (X06 incluida) están en `ref-preguntas-frecuentes-periodos.md`; los otros temas, en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
 
 ### ¿Qué es un atributo de curso (STVATTR) y para qué sirve en la malla?
 Es un código de 4 caracteres que marca cursos que comparten algo (por ejemplo «electivo» o «taller»). Se crea en **STVATTR** (código y descripción de hasta 30 caracteres), se pone a cada curso en **SCADETL** › pestaña **«Atributos de grado»** (materia, curso y periodo desde el que rige › insertar › guardar) y la malla lo pide en **SMAAREA** › regla › Detalles, columna **«Atributo de curso»**, sin poner materia ni curso. Así el CAPP cuenta cualquier curso con ese atributo **sin listar curso por curso** en la regla (instructivo 1.2.2, diap. 5, 11, 14 y 18 a 22; 6.1.2, diap. 9, 20 y 21). El NRC hereda los atributos del catálogo en SSADETL (5.3, diap. 37). No es lo mismo que el **atributo de alumno** (otra columna de SMAAREA, y el parámetro 07 de SFRGRUP). **En TEST (C218):** STVATTR ya tiene 65 códigos de los centros (`COM1` a `COM3`, `C011` a `C074`, `ING1` a `ING6`, `NIV1` a `NIV4`…), así que no hace falta crear uno. La prueba propuesta es marcar los talleres de Computación y pedir el atributo en `ECOM-04` de `MC42-01` (C174, C208); quién crea códigos en STVATTR está por confirmar.
@@ -38,12 +38,6 @@ Por confirmar: no se ha probado en TEST, y no está definido si el sílabo lo su
 
 ### ¿Quién crea los cursos nuevos en SCACRSE?
 Hoy los crea **Registros Académicos**; el centro solo si le dan acceso. Para el go-live se capacitará a todos por la cantidad de mallas a actualizar (C147, chat con Liliana Ocampo de Ellucian; U40 resuelta). El centro crea el **NRC** (SSASECT) de un curso que ya existe.
-
-### ¿Qué es la parte de periodo X06 y qué fechas tiene?
-Es una de las partes del periodo 202656 que usa Computación («Computación Grupo 06»): del **07-SEP al 31-OCT-2026**, 8 semanas. En SFARSTS tiene los estatus DD, DW, RE y RW en esas fechas; la X07 no tiene reglas (C154, C156). Las partes se definen en STVPTRM y sus fechas en SOATERM (C140).
-
-### ¿Qué periodos usan los centros?
-Los centros tienen periodos propios, que terminan en 51, 54 y 56: **202651** (2026-0, verano, grupos de enero a marzo), **202654** (2026-I, abril a julio) y **202656** (2026-II, agosto a diciembre); en 2027, 202751 y 202754 (datos.json común; ADR-005). Pregrado usa otros (por ejemplo 202644).
 
 ### ¿Cuál es el orden de los cursos de Inglés y tienen prerrequisito?
 Sí. Idiomas usa **prerrequisito Fatal**: quien desaprueba BASIC I no pasa a BASIC II, salvo con **examen de suficiencia** (C11, R09). La cadena es BASIC I → BASIC II → BASIC III → INTERMEDIATE I → INTERMEDIATE II → INTERMEDIATE III; BASIC I → BASIC II está confirmado y el resto se asume igual (datos.json de Idiomas). En Banner va en SCAPPRQ, por programa y periodo de la versión (C233), con la verificación en Fatal en SOATERM. Computación, en cambio, no tiene orden entre los cursos de la ruta (C191).

@@ -88,6 +88,30 @@ def _firma(origen, cuadros):
     return h.hexdigest()
 
 
+def _anotar_carpeta(carpeta, pasos):
+    """Copias anotadas de las capturas con cuadros de una carpeta. Devuelve (escritas, total).
+    Una captura va en un solo paso: la copia anotada se guarda con su nombre de archivo."""
+    escritas = total = 0
+    ruta_firmas = carpeta / "anotadas" / "firmas.json"
+    firmas = json.loads(ruta_firmas.read_text(encoding="utf-8")) if ruta_firmas.exists() else {}
+    nuevas = {}
+    for p in pasos:
+        for c in p.get("capturas", []):
+            if not c.get("cuadros"):
+                continue
+            total += 1
+            destino = carpeta / "anotadas" / c["archivo"]
+            firma = nuevas[c["archivo"]] = _firma(carpeta / c["archivo"], c["cuadros"])
+            if destino.exists() and firmas.get(c["archivo"]) == firma:
+                continue
+            destino.parent.mkdir(exist_ok=True)
+            destino.write_bytes(dibujar(carpeta / c["archivo"], c["cuadros"]))
+            escritas += 1
+    if nuevas and nuevas != firmas:
+        ruta_firmas.write_text(json.dumps(nuevas, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+    return escritas, total
+
+
 def anotar_todas():
     """Escribe las copias anotadas que cambiaron. Devuelve cuántas se escribieron y cuántas hay."""
     escritas = total = 0
@@ -98,23 +122,13 @@ def anotar_todas():
                 continue
             sub = demo["slug"] if demo.get("pasos") else "-".join(demo["slug"].split("-")[:2]) + f"-prueba-nrc-{ej['nrc']}"
             carpeta = CENTROS / id_centro / "diagramas" / f"00-{sub}" / ej["carpeta"]  # como plantillas.slug_capturas
-            ruta_firmas = carpeta / "anotadas" / "firmas.json"
-            firmas = json.loads(ruta_firmas.read_text(encoding="utf-8")) if ruta_firmas.exists() else {}
-            nuevas = {}
-            for p in ej["pasos"]:
-                for c in p.get("capturas", []):
-                    if not c.get("cuadros"):
-                        continue
-                    total += 1
-                    destino = carpeta / "anotadas" / c["archivo"]
-                    firma = nuevas[c["archivo"]] = _firma(carpeta / c["archivo"], c["cuadros"])
-                    if destino.exists() and firmas.get(c["archivo"]) == firma:
-                        continue
-                    destino.parent.mkdir(exist_ok=True)
-                    destino.write_bytes(dibujar(carpeta / c["archivo"], c["cuadros"]))
-                    escritas += 1
-            if nuevas and nuevas != firmas:
-                ruta_firmas.write_text(json.dumps(nuevas, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+            e, t = _anotar_carpeta(carpeta, ej["pasos"])
+            escritas, total = escritas + e, total + t
+    # Recorridos comunes a los tres centros (centros/comun/datos.json › recorridos, C238), como plantillas.carpeta_capturas_comun
+    for r in leer_json(CENTROS / "comun" / "datos.json").get("recorridos", []):
+        carpeta = CENTROS / "comun" / "diagramas" / f"{r['numero']:02d}-{r['slug']}" / r.get("carpeta", "capturas")
+        e, t = _anotar_carpeta(carpeta, r["pasos"])
+        escritas, total = escritas + e, total + t
     return escritas, total
 
 

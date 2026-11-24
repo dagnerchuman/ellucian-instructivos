@@ -38,7 +38,7 @@ Memoria compartida de las personas y los agentes (Claude Code, Antigravity u otr
 | [ADR-002](decisiones/ADR-002-fuente-unica-por-centro.md) | Cada centro tiene una sola fuente de datos y nada se inventa | aceptado |
 | [ADR-003](decisiones/ADR-003-diagramas-generados.md) | Diagramas generados: un flujo, un código, un término | aceptado |
 | [ADR-004](decisiones/ADR-004-glosario-unico.md) | Un solo término por concepto y siglas con su significado | aceptado |
-| [ADR-005](decisiones/ADR-005-periodos.md) | Periodos de seis dígitos y tres periodos al año | aceptado |
+| [ADR-005](decisiones/ADR-005-periodos.md) | Periodos de seis dígitos y tres periodos al año (TEST 2026) | reemplazado por ADR-026 |
 | [ADR-006](decisiones/ADR-006-partes-de-periodo.md) | Los grupos de cada centro son partes de periodo | aceptado |
 | [ADR-007](decisiones/ADR-007-hora-de-clase.md) | La hora de clase es de 45 minutos de día y 50 de noche | aceptado |
 | [ADR-008](decisiones/ADR-008-idiomas-prerrequisito-fatal.md) | En Idiomas, BASIC II exige BASIC I aprobado o examen de suficiencia | aceptado |
@@ -59,5 +59,6 @@ Memoria compartida de las personas y los agentes (Claude Code, Antigravity u otr
 | [ADR-023](decisiones/ADR-023-estructura-del-repositorio.md) | Cada tipo de archivo tiene su carpeta y la raíz solo guarda instrucciones y publicación | aceptado |
 | [ADR-024](decisiones/ADR-024-enrutamiento-de-skills.md) | Las skills se eligen con una tabla de enrutamiento y se cargan por partes | aceptado |
 | [ADR-025](decisiones/ADR-025-ciclo-de-la-ia-y-ruta-de-escape.md) | Todo archivo se abre y se evalúa antes de entregarlo, y todo dato lleva su fuente o un «No lo sé» | aceptado |
+| [ADR-026](decisiones/ADR-026-periodo-202721.md) | Desde 2027 el periodo de los centros es año + 2 + secuencia (202721) | aceptado |
 
 Para una decisión nueva, copia [`decisiones/plantilla-adr.md`](decisiones/plantilla-adr.md).

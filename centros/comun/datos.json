@@ -3,7 +3,7 @@
   "autor": "Dagner Anibal Chuman Lluen",
   "institucion": "Universidad Señor de Sipán (USS)",
   "ambiente_test": "experience-test.elluciancloud.com/ussipantest",
-  "actualizado": "2026-10-05",
+  "actualizado": "2026-11-24",
   "escuela": {
     "codigo": "EM",
     "nombre": "Centros Empresariales",
@@ -20,37 +20,60 @@
   },
   "periodos": [
     {
+      "codigo": "202721",
+      "seuss": "2027-0",
+      "nombre": "Verano 2027 - Cent.Empresarial",
+      "grupos_que_empiezan": "enero a marzo 2027",
+      "fechas": "01-ENE-2027 a 31-MAR-2027",
+      "ambiente": "Producción desde 2027 (visto en TEST)",
+      "fuente": "C238"
+    },
+    {
+      "codigo": "202724",
+      "seuss": "2027-I",
+      "nombre": "2027-I Centro Empresariales",
+      "grupos_que_empiezan": "abril a julio 2027",
+      "fechas": "01-ABR-2027 a 31-JUL-2027",
+      "ambiente": "Visto en TEST; por confirmar para producción (U56)",
+      "fuente": "C238"
+    },
+    {
       "codigo": "202651",
       "seuss": "2026-0",
       "nombre": "Verano 2026",
-      "grupos_que_empiezan": "enero a marzo 2026"
+      "grupos_que_empiezan": "enero a marzo 2026",
+      "ambiente": "Solo TEST 2026 (ADR-005, reemplazado)"
     },
     {
       "codigo": "202654",
       "seuss": "2026-I",
       "nombre": "Semestre 2026-I",
-      "grupos_que_empiezan": "abril a julio 2026"
+      "grupos_que_empiezan": "abril a julio 2026",
+      "ambiente": "Solo TEST 2026 (ADR-005, reemplazado)"
     },
     {
       "codigo": "202656",
       "seuss": "2026-II",
       "nombre": "Semestre 2026-II",
-      "grupos_que_empiezan": "agosto a diciembre 2026"
+      "grupos_que_empiezan": "agosto a diciembre 2026",
+      "ambiente": "Solo TEST 2026 (ADR-005, reemplazado)"
     },
     {
       "codigo": "202751",
       "seuss": "2027-0",
-      "nombre": "Verano 2027",
-      "grupos_que_empiezan": "enero a marzo 2027"
+      "nombre": "2027-V Periodo verano Idiomas",
+      "grupos_que_empiezan": "enero a marzo 2027",
+      "ambiente": "Solo TEST: regla de 2026; en producción es 202721 (ADR-026)"
     },
     {
       "codigo": "202754",
       "seuss": "2027-I",
-      "nombre": "Semestre 2027-I",
-      "grupos_que_empiezan": "abril a agosto 2027"
+      "nombre": "2027 - I Pri. Per.Idi.Com.Emp",
+      "grupos_que_empiezan": "abril a agosto 2027",
+      "ambiente": "Solo TEST: regla de 2026 (ADR-026)"
     }
   ],
-  "regla_periodo": "Año + 5 (Centros) + secuencia: 1 verano, 4 semestre I, 6 semestre II. El periodo lo decide la fecha de inicio del grupo, no la de fin.",
+  "regla_periodo": "Desde 2027 (producción): año + 2 (Centros Empresariales) + secuencia; 1 es verano (202721, C238). En TEST 2026 se usó año + 5 (202651, 202654, 202656; ADR-005, reemplazado por ADR-026). El periodo lo decide la fecha de inicio del grupo, no la de fin.",
   "asistencia_minima_porcentaje": {
     "valor": 70,
     "fuente": "C63"
@@ -280,5 +303,2942 @@
     "idiomas",
     "computacion",
     "emprendimiento"
+  ],
+  "recorridos": [
+    {
+      "numero": 1,
+      "slug": "capacidad-1-periodo-202721",
+      "titulo": "Capacidad 1 · Periodo 202721 en TEST, paso a paso",
+      "capacidad": "Capacidad 1 · Instructivos 1.1.1 y 1.1.2",
+      "carpeta": "capturas",
+      "_leeme": "Visto en TEST por Experience el 24/11/2026, sin guardar (C238). Producción empieza con 202721; los datos de PROD los dan Registros y las jefaturas.",
+      "probado": [
+        "202721 «Verano 2027 - Cent.Empresarial»: 01-ENE a 31-MAR-2027, tipo S, año 2027",
+        "SOATERM: 10 partes (I01–I04, P01–P02, X01–X03 y 1); web del 16-NOV-2026 al 14-MAR-2027",
+        "Solo lectura en TEST por Experience: no se guardó nada (C238)",
+        "24 capturas en la carpeta capturas/ de este diagrama"
+      ],
+      "uso": [
+        "Un carril por fase: tablas previas, SOATERM y lo que se configura al final",
+        "Pulsa un paso: tabla con números, captura con cuadros y láminas del instructivo",
+        "El número verde de la captura es la fila de la tabla",
+        "Lo que sigue después del periodo está en el diagrama 2"
+      ],
+      "ellucian": [
+        "1.1.1: STVPTRM, STVACYR, STVTRMT y STVTERM (diap. 14 a 21)",
+        "1.1.2: SOATERM (diap. 16 a 32) y SSAEXCL (diap. 34 a 37)",
+        "5.4: verificación de errores (diap. 14 a 16) y proyección (diap. 16 y 17)"
+      ],
+      "por_confirmar": [
+        "E34 · I04, P02 y X03 terminan después del 31-MAR-2027",
+        "E35 · Web del docente sin marcar en las 10 partes",
+        "E36 · Prerrequisitos en No verificar",
+        "E39 · Feriados 2027 sin cargar en SSAEXCL",
+        "U58 · Partes y fechas de producción: las dan las jefaturas"
+      ],
+      "fases": [
+        {
+          "id": "f1",
+          "titulo": "1 · Tablas previas (1.1.1)",
+          "pasos": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "id": "f2",
+          "titulo": "2 · SOATERM (1.1.2)",
+          "pasos": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "id": "f3",
+          "titulo": "3 · Modelos y feriados",
+          "pasos": [
+            11,
+            12,
+            13
+          ]
+        }
+      ],
+      "pasos": [
+        {
+          "n": 1,
+          "codigo": "STVACYR",
+          "accion": "año académico",
+          "etiqueta": "2027 · año calendario",
+          "dato": "Año 2027",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.1.1, diap. 15 · C238",
+          "resultado": "El año 2027 ya existe: «Año 2027», del 01-ENE-2027 al 31-DIC-2027, sin «Requerido por el sistema»",
+          "nota": "Es la primera tabla: STVTERM pide el año académico del periodo (paso 4)",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Año",
+                "2027",
+                "Registros",
+                "Cuatro dígitos"
+              ],
+              [
+                "Descripción",
+                "Año 2027",
+                "Registros",
+                ""
+              ],
+              [
+                "Requerido por el sistema",
+                "Sin marcar",
+                "Registros",
+                "Igual que los demás años"
+              ],
+              [
+                "Fechas de inicio y fin",
+                "01-ENE-2027 a 31-DIC-2027",
+                "Registros",
+                "Año calendario"
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "stvacyr-2027.png",
+              "texto": "STVACYR, página 2: la fila del año 2027",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    2,
+                    214,
+                    105,
+                    232
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    106,
+                    214,
+                    382,
+                    232
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    441,
+                    214,
+                    462,
+                    232
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    519,
+                    214,
+                    796,
+                    232
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.1",
+              "n": 15,
+              "texto": "STVACYR: crear y validar el año académico"
+            }
+          ]
+        },
+        {
+          "n": 2,
+          "codigo": "STVTRMT",
+          "accion": "tipo de periodo",
+          "etiqueta": "S · Semestral",
+          "dato": "Tipo S",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.1.1, diap. 16 y 19 · C238",
+          "resultado": "STVTRMT tiene 6 tipos: A Anual, B Bimestral, C Cuatrimestral, M Mensual, S Semestral y T Trimestral. 202721 usa S",
+          "nota": "202721 es un verano de tres meses y lleva el tipo S: ver E37",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Tipo de periodo de 202721",
+                "S «Semestral»",
+                "Registros",
+                "STVTERM lo pide como opcional (diap. 19)"
+              ],
+              [
+                "Otros tipos",
+                "A Anual · B Bimestral · C Cuatrimestral · M Mensual · T Trimestral",
+                "Registros",
+                "No hay un tipo «Verano»"
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "stvtrmt.png",
+              "texto": "STVTRMT: los 6 tipos de periodo de TEST",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    2,
+                    156,
+                    420,
+                    171
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    2,
+                    96,
+                    420,
+                    155
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    2,
+                    172,
+                    420,
+                    186
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.1",
+              "n": 16,
+              "texto": "STVTRMT: crear el tipo de periodo"
+            }
+          ]
+        },
+        {
+          "n": 3,
+          "codigo": "STVPTRM",
+          "accion": "partes de periodo",
+          "etiqueta": "10 códigos para 202721",
+          "dato": "Códigos de parte",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.1.1, diap. 14 · C140 · C238",
+          "resultado": "STVPTRM tiene 69 códigos. De los centros: IGE e I01 a I12 (Idiomas), EGE y P01 a P12 (Emprendimiento), CGE y X01 a X12 (Computación). La parte 1 «Período Completo» es requerida por el sistema",
+          "nota": "Aquí solo se crea el código. Las fechas de cada parte van en SOATERM (paso 8)",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Parte general de cada centro",
+                "IGE Idiomas · CGE Computación · EGE Emprendimiento",
+                "Registros",
+                "202721 no las usa"
+              ],
+              [
+                "Partes de Idiomas",
+                "I01 a I12 «Idiomas Grupo 01…12»",
+                "Registros",
+                "202721 usa I01 a I04"
+              ],
+              [
+                "Partes de Emprendimiento",
+                "P01 a P12 «Emprendimiento Grupo 01…12»",
+                "Registros",
+                "202721 usa P01 y P02"
+              ],
+              [
+                "Partes de Computación",
+                "X01 a X12 «Computación Grupo 01…12»",
+                "Registros",
+                "202721 usa X01 a X03"
+              ],
+              [
+                "Parte 1",
+                "«Período Completo», requerida por el sistema",
+                "Banner",
+                "Siempre debe estar en SOATERM (1.1.2, diap. 20)"
+              ],
+              [
+                "Código y descripción",
+                "Hasta 3 caracteres y hasta 30",
+                "Registros",
+                "Diap. 14"
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "stvptrm-1.png",
+              "texto": "STVPTRM, página 1: CGE y EGE, partes generales",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    2,
+                    121,
+                    400,
+                    135
+                  ]
+                },
+                {
+                  "n": 1,
+                  "caja": [
+                    2,
+                    361,
+                    400,
+                    375
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "stvptrm-2.png",
+              "texto": "STVPTRM, página 2: IGE e I01 a I12",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    2,
+                    136,
+                    400,
+                    150
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    2,
+                    151,
+                    400,
+                    210
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "stvptrm-3.png",
+              "texto": "STVPTRM, página 3: P01 a P12 y X01 a X04",
+              "cuadros": [
+                {
+                  "n": 3,
+                  "caja": [
+                    2,
+                    136,
+                    400,
+                    165
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    2,
+                    346,
+                    400,
+                    390
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "stvptrm-4.png",
+              "texto": "STVPTRM, página 4: X05 a X12 y la parte 1",
+              "cuadros": [
+                {
+                  "n": 5,
+                  "caja": [
+                    2,
+                    226,
+                    770,
+                    240
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.1",
+              "n": 14,
+              "texto": "STVPTRM: código y descripción de la parte"
+            }
+          ]
+        },
+        {
+          "n": 4,
+          "codigo": "STVTERM",
+          "accion": "crear el periodo",
+          "etiqueta": "202721 · ENE–MAR 2027",
+          "dato": "Periodo 202721",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.1.1, diap. 18 a 21 · C238",
+          "resultado": "202721 «Verano 2027 - Cent.Empresarial», del 01-ENE-2027 al 31-MAR-2027, tipo S, año 2027; alojamiento con las mismas fechas; ayuda financiera 2027; fecha de actividad 16-Nov-2026",
+          "nota": "Un solo periodo para los tres centros (ADR-026). En la misma lista está 202724 «2027-I Centro Empresariales», del 01-ABR-2027 al 31-JUL-2027 (U56)",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Periodo",
+                "202721",
+                "Registros",
+                "Año 2027 + 2 (centros) + 1 (verano)"
+              ],
+              [
+                "Descripción",
+                "Verano 2027 - Cent.Empresarial",
+                "Registros",
+                "Hasta 30 caracteres"
+              ],
+              [
+                "Fechas del periodo",
+                "01-ENE-2027 a 31-MAR-2027",
+                "Registros",
+                ""
+              ],
+              [
+                "Tipo de periodo",
+                "S «Semestral»",
+                "Registros",
+                "De STVTRMT (paso 2)"
+              ],
+              [
+                "Año académico",
+                "2027",
+                "Registros",
+                "De STVACYR (paso 1)"
+              ],
+              [
+                "Fechas de alojamiento",
+                "01-ENE-2027 a 31-MAR-2027",
+                "Registros",
+                "Requeridas aunque no haya alojamiento: las del periodo (diap. 19)"
+              ],
+              [
+                "Año de proceso de ayuda financiera",
+                "2027",
+                "Registros",
+                "Requerido aunque no se use ayuda financiera (diap. 20)"
+              ],
+              [
+                "Verano",
+                "Sin marcar",
+                "Registros",
+                "Opcional: marca un periodo de vacaciones (diap. 20). Ver E37"
+              ],
+              [
+                "Periodo, periodo de inicio y periodo de fin",
+                "Vacíos",
+                "Registros",
+                "Son de ayuda financiera y opcionales (diap. 20 y 21)"
+              ],
+              [
+                "Requerido por el sistema",
+                "Sin marcar",
+                "Registros",
+                "Solo para 000000 y 999999 (diap. 21)"
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "stvterm-2027.png",
+              "texto": "STVTERM filtrado por 2027%: 13 periodos; 202721 en la fila 12",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    2,
+                    451,
+                    74,
+                    473
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    76,
+                    451,
+                    262,
+                    473
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    264,
+                    451,
+                    527,
+                    473
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    529,
+                    451,
+                    602,
+                    473
+                  ]
+                },
+                {
+                  "n": 5,
+                  "caja": [
+                    604,
+                    451,
+                    716,
+                    473
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "stvterm-202721-alojamiento.png",
+              "texto": "202721: alojamiento, ayuda financiera y casilla Verano",
+              "cuadros": [
+                {
+                  "n": 6,
+                  "caja": [
+                    55,
+                    451,
+                    367,
+                    473
+                  ]
+                },
+                {
+                  "n": 7,
+                  "caja": [
+                    369,
+                    451,
+                    556,
+                    473
+                  ]
+                },
+                {
+                  "n": 8,
+                  "caja": [
+                    584,
+                    451,
+                    609,
+                    473
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "stvterm-202721-ayuda-financiera.png",
+              "texto": "202721: periodos de ayuda financiera y Requerido por el sistema",
+              "cuadros": [
+                {
+                  "n": 9,
+                  "caja": [
+                    349,
+                    451,
+                    668,
+                    473
+                  ]
+                },
+                {
+                  "n": 10,
+                  "caja": [
+                    722,
+                    451,
+                    747,
+                    473
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.1",
+              "n": 18,
+              "texto": "STVTERM: periodo, descripción y fechas"
+            },
+            {
+              "instructivo": "1.1.1",
+              "n": 19,
+              "texto": "STVTERM: tipo de periodo y fechas de alojamiento"
+            },
+            {
+              "instructivo": "1.1.1",
+              "n": 20,
+              "texto": "STVTERM: ayuda financiera y casilla Verano"
+            },
+            {
+              "instructivo": "1.1.1",
+              "n": 21,
+              "texto": "STVTERM: periodo de fin y Requerido por el sistema"
+            }
+          ]
+        },
+        {
+          "n": 5,
+          "codigo": "SOATERM",
+          "accion": "pestaña Inscripción",
+          "etiqueta": "NRC 10012 · Permitir",
+          "dato": "Inscripción",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.1.2, diap. 16 a 19 · C182 · C238",
+          "resultado": "NRC desde 10012; Permitir y Plan de estudios requerido marcados; corte del cargo 01-ENE-2027; modelo Básico y Proyectado; Título IV por fecha de periodo; cuota de autoservicio solo por lotes",
+          "nota": "El número inicial del NRC lo da el sistema (el usuario, 24/11/2026). La contraseña de retención existe y no se publica (C182)",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Número de secuencia de inicio de NRC",
+                "10012",
+                "Banner",
+                "Lo genera el sistema"
+              ],
+              [
+                "Permitir",
+                "Marcado",
+                "Registros",
+                "Abre la inscripción del periodo (diap. 18)"
+              ],
+              [
+                "Plan de estudios requerido",
+                "Marcado",
+                "Registros",
+                "El alumno necesita su plan para inscribirse"
+              ],
+              [
+                "Contraseña de retención",
+                "Tiene una; no se publica",
+                "Registros",
+                "C182"
+              ],
+              [
+                "Estimación en línea",
+                "Sin marcar",
+                "Registros",
+                "Ver E23"
+              ],
+              [
+                "Seguimiento por NRC, Permitir intercambio, Cuotas de sección por plan y Revertir cargos",
+                "Marcados",
+                "Registros",
+                ""
+              ],
+              [
+                "Fecha de corte de cargo original",
+                "01-ENE-2027",
+                "Registros",
+                "El inicio del periodo"
+              ],
+              [
+                "Modelo de inscripción",
+                "Básico y Proyectado",
+                "Registros",
+                "Estructurado sin marcar (pasos 11 y 12)"
+              ],
+              [
+                "Origen de fecha de Título IV",
+                "Fecha de periodo",
+                "Registros",
+                ""
+              ],
+              [
+                "Estimación de cuota de autoservicio",
+                "Solo por lotes",
+                "Registros",
+                ""
+              ],
+              [
+                "Control de periodo en web maestro",
+                "Marcado",
+                "Registros",
+                ""
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "soaterm-202721-inscripcion-a.png",
+              "texto": "SOATERM 202721, pestaña Inscripción (parte de arriba)",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    131,
+                    173,
+                    267,
+                    193
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    130,
+                    304,
+                    196,
+                    323
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    374,
+                    347,
+                    482,
+                    387
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    622,
+                    302,
+                    760,
+                    324
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "soaterm-202721-inscripcion-b.png",
+              "texto": "SOATERM 202721, pestaña Inscripción (parte de abajo)",
+              "cuadros": [
+                {
+                  "n": 5,
+                  "caja": [
+                    133,
+                    186,
+                    252,
+                    206
+                  ]
+                },
+                {
+                  "n": 6,
+                  "caja": [
+                    133,
+                    277,
+                    243,
+                    310
+                  ]
+                },
+                {
+                  "n": 6,
+                  "caja": [
+                    380,
+                    231,
+                    470,
+                    268
+                  ]
+                },
+                {
+                  "n": 6,
+                  "caja": [
+                    380,
+                    277,
+                    494,
+                    334
+                  ]
+                },
+                {
+                  "n": 6,
+                  "caja": [
+                    623,
+                    186,
+                    782,
+                    224
+                  ]
+                },
+                {
+                  "n": 7,
+                  "caja": [
+                    624,
+                    276,
+                    780,
+                    298
+                  ]
+                },
+                {
+                  "n": 8,
+                  "caja": [
+                    132,
+                    376,
+                    438,
+                    396
+                  ]
+                },
+                {
+                  "n": 9,
+                  "caja": [
+                    134,
+                    434,
+                    252,
+                    454
+                  ]
+                },
+                {
+                  "n": 10,
+                  "caja": [
+                    262,
+                    493,
+                    384,
+                    513
+                  ]
+                },
+                {
+                  "n": 11,
+                  "caja": [
+                    268,
+                    570,
+                    462,
+                    590
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.2",
+              "n": 16,
+              "texto": "SOATERM: ingresar el periodo creado en STVTERM"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 17,
+              "texto": "Número de secuencia de inicio de NRC"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 18,
+              "texto": "Casillas de inscripción: En progreso, Permitir, Plan de estudios requerido"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 19,
+              "texto": "En progreso, Permitir, Calcular estatus de hora e Incluir horas intentadas"
+            }
+          ]
+        },
+        {
+          "n": 6,
+          "codigo": "SOATERM",
+          "accion": "verificación de errores",
+          "etiqueta": "Prerreq. sin verificar",
+          "dato": "Verificación de errores",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 5.4 (inscripción por backoffice), diap. 14 a 16 · C149 · C238",
+          "resultado": "Alumno: Duplicados, Ligas, Correquisitos, Horas mínimas y Hora en Fatal; Prerrequisitos, Horas máximas y Exclusión mutua en No verificar. Sección: 7 opciones en Fatal y 8 en No verificar",
+          "nota": "Frente a 202656 (C149) pasaron de Fatal a No verificar: Prerrequisitos, Horas repetidas, Límite de repetición y Campus. Ver E36",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Duplicados, Ligas y Correquisitos",
+                "Fatal",
+                "Registros",
+                "Opciones de alumno"
+              ],
+              [
+                "Prerrequisitos",
+                "No verificar",
+                "Registros",
+                "En 202656 era Fatal (C149)"
+              ],
+              [
+                "Horas mínimas y Hora · Horas máximas y Exclusión mutua",
+                "Fatal · No verificar",
+                "Registros",
+                ""
+              ],
+              [
+                "Aprobación, Capacidad, Campo de estudio, Escuela, Nivel, Clase y Retenciones",
+                "Fatal",
+                "Registros",
+                "Opciones de sección"
+              ],
+              [
+                "Departamento, Horas repetidas, Límite de repetición, Campus, Grado, Programa, Atributo de alumno y Cohorte",
+                "No verificar",
+                "Registros",
+                "Horas repetidas, Límite de repetición y Campus eran Fatal en 202656"
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "soaterm-202721-verificacion.png",
+              "texto": "SOATERM 202721, pestaña Verificación de errores de inscripción",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    10,
+                    189,
+                    180,
+                    258
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    10,
+                    262,
+                    272,
+                    282
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    436,
+                    189,
+                    682,
+                    282
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    10,
+                    306,
+                    180,
+                    375
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    10,
+                    404,
+                    180,
+                    473
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    486,
+                    306,
+                    660,
+                    326
+                  ]
+                },
+                {
+                  "n": 5,
+                  "caja": [
+                    10,
+                    380,
+                    340,
+                    400
+                  ]
+                },
+                {
+                  "n": 5,
+                  "caja": [
+                    10,
+                    478,
+                    340,
+                    498
+                  ]
+                },
+                {
+                  "n": 5,
+                  "caja": [
+                    486,
+                    331,
+                    798,
+                    473
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "5.4-inscripcion",
+              "n": 14,
+              "texto": "SOATERM: qué hace Banner con cada error de inscripción"
+            },
+            {
+              "instructivo": "5.4-inscripcion",
+              "n": 15,
+              "texto": "Duplicados, Ligas, Correquisitos, Prerrequisitos y horas: Fatal o No verificar"
+            },
+            {
+              "instructivo": "5.4-inscripcion",
+              "n": 16,
+              "texto": "Hora, Exclusión mutua y opciones de sección: Fatal, Alerta o No verificar"
+            }
+          ]
+        },
+        {
+          "n": 7,
+          "codigo": "SOATERM",
+          "accion": "controles web",
+          "etiqueta": "Planificación · 1 plan",
+          "dato": "Controles de procesamiento web",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.1.2, diap. 25 a 32 · C238",
+          "resultado": "Despliegue de notas, horario y lista de clases, webcapp, búsqueda de catálogo y de horario marcados; cambio de opción de clase y autorizaciones sin marcar; planificación abierta con 1 plan como máximo",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Cambio de opción de clase (nivel, modo de calificar, horas crédito, plan)",
+                "Sin marcar",
+                "Registros",
+                "Diap. 25"
+              ],
+              [
+                "Despliegue de calificación (detalles, parciales y finales)",
+                "Marcados",
+                "Registros",
+                "Diap. 26"
+              ],
+              [
+                "Docente y asesor",
+                "Desplegar horario y lista de clases marcados; aprobaciones y agregar/eliminar sin marcar",
+                "Registros",
+                "Diap. 27"
+              ],
+              [
+                "Webcapp",
+                "Periodo de evaluación web y de catálogo web marcados",
+                "Registros",
+                "Diap. 28"
+              ],
+              [
+                "Buscar catálogo",
+                "Todo marcado",
+                "Registros",
+                "Diap. 29"
+              ],
+              [
+                "Buscar horario",
+                "Todo marcado menos «Buscar por duración»",
+                "Registros",
+                "Diap. 30"
+              ],
+              [
+                "Opciones de autoservicio",
+                "Eliminar/agregar condicional marcado; eliminar sus últimas clases sin marcar; «Confirmar para eliminar» y «No eliminar curso, existe reporte en la tabla de errores»",
+                "Registros",
+                "Diap. 31"
+              ],
+              [
+                "Planificación en autoservicio",
+                "Periodo abierto, desplegar planes y agregar secciones marcados; 1 plan como máximo",
+                "Registros",
+                "Diap. 32"
+              ],
+              [
+                "Agregar autorizaciones",
+                "Sin marcar y sin días ni código de sobrepaso",
+                "Registros",
+                ""
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "soaterm-202721-web-a.png",
+              "texto": "Controles de procesamiento web: cambio de clase, notas, docente, webcapp y catálogo",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    126,
+                    172,
+                    668,
+                    218
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    128,
+                    250,
+                    778,
+                    310
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    128,
+                    350,
+                    712,
+                    395
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    128,
+                    432,
+                    668,
+                    453
+                  ]
+                },
+                {
+                  "n": 5,
+                  "caja": [
+                    128,
+                    490,
+                    782,
+                    640
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "soaterm-202721-web-b.png",
+              "texto": "Controles de procesamiento web: horario y opciones de autoservicio",
+              "cuadros": [
+                {
+                  "n": 6,
+                  "caja": [
+                    128,
+                    186,
+                    782,
+                    404
+                  ]
+                },
+                {
+                  "n": 7,
+                  "caja": [
+                    128,
+                    444,
+                    782,
+                    612
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "soaterm-202721-web-c.png",
+              "texto": "Controles de procesamiento web: planificación y autorizaciones",
+              "cuadros": [
+                {
+                  "n": 8,
+                  "caja": [
+                    128,
+                    286,
+                    782,
+                    440
+                  ]
+                },
+                {
+                  "n": 9,
+                  "caja": [
+                    126,
+                    480,
+                    628,
+                    632
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.2",
+              "n": 25,
+              "texto": "Panel 1: cambio de opción de clase"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 26,
+              "texto": "Panel 2: despliegue de calificación"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 27,
+              "texto": "Panel 3: docente y asesor"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 28,
+              "texto": "Panel 4: webcapp"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 29,
+              "texto": "Panel 5: buscar catálogo"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 30,
+              "texto": "Panel 6: buscar horario"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 31,
+              "texto": "Panel 7: opciones de autoservicio"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 32,
+              "texto": "Panel 8: planificación en autoservicio"
+            }
+          ]
+        },
+        {
+          "n": 8,
+          "codigo": "SOATERM",
+          "accion": "partes y fechas",
+          "etiqueta": "10 partes · censo uno",
+          "dato": "Parte de periodo base",
+          "quien": "Registros Académicos, con las fechas de cada jefatura",
+          "cita": "Instructivo 1.1.2, diap. 20 y 21 · C238",
+          "resultado": "10 partes: I01 a I04, P01 y P02, X01 a X03 y 1 (04-ENE a 31-MAR-2027). El censo uno es la fecha de inicio de cada parte; el censo dos y las últimas fechas están vacíos",
+          "nota": "I04 (30-ABR), P02 (11-ABR) y X03 (03-ABR) terminan después del 31-MAR-2027, fin del periodo: E34. Las semanas coinciden con los días entre 7, redondeados hacia arriba; se observa, no es una regla",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Idiomas",
+                "I01 04-ENE a 28-FEB (8 sem.) · I02 04-ENE a 31-MAR (13) · I03 01-FEB a 31-MAR (9) · I04 01-FEB a 30-ABR (13)",
+                "Jefatura de Idiomas",
+                "Las fechas salen de su malla"
+              ],
+              [
+                "Emprendimiento",
+                "P01 06-ENE a 14-MAR (10 sem.) · P02 03-FEB a 11-ABR (10)",
+                "Jefatura de Emprendimiento",
+                ""
+              ],
+              [
+                "Computación",
+                "X01 04-ENE a 27-FEB (8 sem.) · X02 01-FEB a 27-MAR (8) · X03 08-MAR a 03-ABR (4)",
+                "Jefatura de Computación",
+                ""
+              ],
+              [
+                "Parte 1",
+                "«Período Completo», 04-ENE a 31-MAR-2027 (13 sem.)",
+                "Registros",
+                "Siempre debe existir (diap. 20)"
+              ],
+              [
+                "Número de semanas",
+                "De 4 a 13",
+                "Registros",
+                "Duración de la parte (diap. 21)"
+              ],
+              [
+                "Fecha de censo uno",
+                "La fecha de inicio de cada parte",
+                "Registros",
+                "Requerida (diap. 21)"
+              ],
+              [
+                "Fecha de censo dos",
+                "Vacía",
+                "Registros",
+                "Opcional (diap. 21)"
+              ],
+              [
+                "Últimas fechas: ingresar, historia académica, reembolso y eliminar sin multa",
+                "Vacías",
+                "Registros",
+                "Ver E38"
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "soaterm-202721-partes-y-web.png",
+              "texto": "Parte de periodo base de 202721: las 10 partes y sus fechas",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    2,
+                    204,
+                    664,
+                    291
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    2,
+                    292,
+                    664,
+                    335
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    2,
+                    336,
+                    664,
+                    400
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    2,
+                    401,
+                    664,
+                    421
+                  ]
+                },
+                {
+                  "n": 8,
+                  "caja": [
+                    10,
+                    446,
+                    680,
+                    556
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "soaterm-202721-partes-semanas-censo.png",
+              "texto": "Las mismas partes: semanas y fechas de censo",
+              "cuadros": [
+                {
+                  "n": 5,
+                  "caja": [
+                    460,
+                    141,
+                    570,
+                    290
+                  ]
+                },
+                {
+                  "n": 6,
+                  "caja": [
+                    572,
+                    141,
+                    655,
+                    290
+                  ]
+                },
+                {
+                  "n": 7,
+                  "caja": [
+                    657,
+                    141,
+                    740,
+                    290
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.2",
+              "n": 20,
+              "texto": "Partes de periodo: crear el registro de la parte"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 21,
+              "texto": "Semanas y fechas de censo de la parte"
+            }
+          ]
+        },
+        {
+          "n": 9,
+          "codigo": "SOATERM",
+          "accion": "sobrepaso y web docente",
+          "etiqueta": "Web docente sin marcar",
+          "dato": "Columnas de la parte",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.1.2, diap. 22 · C238",
+          "resultado": "Sobrepaso de sección marcado en las 10 partes. Web del docente (calificaciones parciales, finales y lista de espera) sin marcar en las 10. Fecha de extensión incompleta vacía",
+          "nota": "La diap. 22 dice que las tres casillas de Web del docente deben estar marcadas para cargar notas por web: E35",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Sobrepaso de sección",
+                "Marcado en las 10 partes",
+                "Registros",
+                ""
+              ],
+              [
+                "Web del docente: calificaciones parciales",
+                "Sin marcar",
+                "Registros",
+                "Diap. 22: marcada para cargar notas por web"
+              ],
+              [
+                "Web del docente: calificaciones finales",
+                "Sin marcar",
+                "Registros",
+                ""
+              ],
+              [
+                "Web del docente: lista de espera",
+                "Sin marcar",
+                "Registros",
+                ""
+              ],
+              [
+                "Fecha de extensión incompleta",
+                "Vacía",
+                "Registros",
+                ""
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "soaterm-202721-partes-sobrepaso.png",
+              "texto": "Columnas Sobrepaso de sección y Web del docente de las 10 partes",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    628,
+                    141,
+                    720,
+                    290
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    722,
+                    141,
+                    798,
+                    290
+                  ]
+                },
+                {
+                  "n": 5,
+                  "caja": [
+                    514,
+                    141,
+                    626,
+                    290
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "soaterm-202721-web-docente.png",
+              "texto": "Acercamiento: las tres casillas de Web del docente, sin marcar",
+              "cuadros": [
+                {
+                  "n": 2,
+                  "caja": [
+                    168,
+                    27,
+                    268,
+                    178
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    270,
+                    27,
+                    372,
+                    178
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    374,
+                    27,
+                    482,
+                    178
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.2",
+              "n": 22,
+              "texto": "Web del docente: calificaciones parciales, finales y lista de espera"
+            }
+          ]
+        },
+        {
+          "n": 10,
+          "codigo": "SOATERM",
+          "accion": "fechas web y docente",
+          "etiqueta": "Web 16-NOV a 14-MAR",
+          "dato": "Fechas web",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.1.2, diap. 23 y 24 · C238",
+          "resultado": "Inscripción web del 16-NOV-2026 al 14-MAR-2027; acceso de docente y asesor del 01-ENE-2027 al 06-JUN-2027, con Menú y Selección de periodo marcados",
+          "nota": "La inscripción web abre el 16-NOV-2026, el día en que se creó 202721; el acceso docente sigue después del fin del periodo",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Fechas de inscripción web",
+                "16-NOV-2026 a 14-MAR-2027",
+                "Registros",
+                "Rango del autoservicio; puede haber varios (diap. 23)"
+              ],
+              [
+                "Fechas de acceso de docente y asesor",
+                "01-ENE-2027 a 06-JUN-2027",
+                "Registros",
+                "Diap. 24"
+              ],
+              [
+                "Menú y Selección de periodo",
+                "Marcados",
+                "Registros",
+                ""
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "soaterm-202721-acceso-docente.png",
+              "texto": "Fechas de inscripción web y de acceso de docente y asesor",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    2,
+                    368,
+                    560,
+                    384
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    2,
+                    432,
+                    336,
+                    448
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    444,
+                    432,
+                    694,
+                    448
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.2",
+              "n": 23,
+              "texto": "Fechas de inscripción web: insertar el rango y guardar"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 24,
+              "texto": "Los mismos pasos sirven para el acceso de docente y asesor"
+            }
+          ]
+        },
+        {
+          "n": 11,
+          "codigo": "SOATERM",
+          "accion": "inscripción estructurada",
+          "etiqueta": "Severidad: Ninguno",
+          "dato": "Inscripción estructurada",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 1.2.1, diap. 13 y 28 · C238",
+          "resultado": "Severidad de error Ninguno; Revisar historia académica No; Obligatorio, Opcional y Electivo sin activar y sin claves de regla",
+          "nota": "Coincide con la pestaña Inscripción: el modelo Estructurado está sin marcar (paso 5)",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Severidad de error",
+                "Ninguno",
+                "Registros",
+                "Puede ser Fatal, Alerta o Ninguno"
+              ],
+              [
+                "Revisar historia académica",
+                "No",
+                "Registros",
+                ""
+              ],
+              [
+                "Revisar cursos en progreso · Evaluar calificaciones no pasadas",
+                "Sin marcar",
+                "Registros",
+                ""
+              ],
+              [
+                "Obligatorio, Opcional y Electivo activo",
+                "Sin marcar y sin clave de regla",
+                "Registros",
+                ""
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "soaterm-202721-inscripcion-estructurada.png",
+              "texto": "SOATERM 202721, pestaña Inscripción estructurada",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    86,
+                    129,
+                    224,
+                    146
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    86,
+                    160,
+                    318,
+                    177
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    424,
+                    160,
+                    520,
+                    177
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    646,
+                    160,
+                    792,
+                    188
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    88,
+                    204,
+                    168,
+                    220
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    88,
+                    250,
+                    162,
+                    266
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    88,
+                    295,
+                    162,
+                    311
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.2.1",
+              "n": 13,
+              "texto": "SMAALIB: el atributo de inscripción estructurada no se configura"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 28,
+              "texto": "SMAPROG: modelo de inscripción Básica, Estructurada o Proyectada"
+            }
+          ]
+        },
+        {
+          "n": 12,
+          "codigo": "SOATERM",
+          "accion": "inscripción proyectada",
+          "etiqueta": "Proyección abierta",
+          "dato": "Inscripción proyectada",
+          "quien": "Registros Académicos",
+          "cita": "Instructivo 5.4 (proyección académica), diap. 16 y 17 · C238",
+          "resultado": "Restricciones marcadas (periodo abierto para proyecciones, restringir a proyectados y a proyecciones nulas); incluir y marcar cursos reprobados; Obligatorio y Electivo activos sin clave de regla",
+          "nota": "Va con el modelo Proyectado marcado en la pestaña Inscripción. Ver E40",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Restricciones",
+                "Periodo abierto para proyecciones en autoservicio, restringir a cursos proyectados y a proyecciones nulas: marcados",
+                "Registros",
+                ""
+              ],
+              [
+                "Proyección de alumno",
+                "Incluir cursos reprobados y marcarlos como más probables: marcados",
+                "Registros",
+                ""
+              ],
+              [
+                "Obligatorio",
+                "Activo, sin clave de regla",
+                "Registros",
+                ""
+              ],
+              [
+                "Electivo",
+                "Activo, sin clave de regla; pasar el atributo de sección a la historia académica, marcado",
+                "Registros",
+                ""
+              ],
+              [
+                "Ocultar cursos transferidos, en progreso y aprobados",
+                "Sin marcar",
+                "Registros",
+                ""
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "soaterm-202721-inscripcion-proyectada.png",
+              "texto": "SOATERM 202721, pestaña Inscripción proyectada",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    88,
+                    130,
+                    742,
+                    156
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    88,
+                    174,
+                    662,
+                    191
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    480,
+                    205,
+                    560,
+                    221
+                  ]
+                },
+                {
+                  "n": 4,
+                  "caja": [
+                    88,
+                    295,
+                    266,
+                    342
+                  ]
+                },
+                {
+                  "n": 5,
+                  "caja": [
+                    350,
+                    250,
+                    462,
+                    328
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            "soaterm_proyeccion"
+          ]
+        },
+        {
+          "n": 13,
+          "codigo": "SSAEXCL",
+          "accion": "feriados del año",
+          "etiqueta": "2027 sin feriados",
+          "dato": "Exclusión de horario",
+          "quien": "Registros Académicos (por confirmar, E39)",
+          "cita": "Instructivo 1.1.2, diap. 34 a 37 · C238",
+          "resultado": "Año 2027, parte 1: «Query caused no records», todavía no hay feriados. En 2026, parte 1, hay 13, de Año nuevo a Navidad",
+          "nota": "Los feriados se cargan por año y parte. «Predefinir exclusiones de horario» los copia de una parte a otra (diap. 36 y 37). Ver E39",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Quién lo pone",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Año",
+                "2027",
+                "Usuario",
+                "Bloque clave (diap. 34)"
+              ],
+              [
+                "Parte de periodo",
+                "1 «Período Completo»",
+                "Usuario",
+                ""
+              ],
+              [
+                "Feriados de 2027",
+                "Ninguno todavía",
+                "Registros",
+                "TEST: «Query caused no records»"
+              ],
+              [
+                "Feriados de 2026 (referencia)",
+                "13: 01-ENE · 02, 03 y 05-ABR · 01-MAY · 29-JUN · 28 y 29-JUL · 30-AGO · 08-OCT · 01-NOV · 08-DIC · 25-DIC",
+                "Registros",
+                "Fecha, día y descripción (diap. 35)"
+              ],
+              [
+                "Copiar a otras partes",
+                "Herramientas › Predefinir exclusiones de horario",
+                "Registros",
+                "Diap. 36 y 37"
+              ]
+            ]
+          },
+          "capturas": [
+            {
+              "archivo": "ssaexcl-2027-parte-1.png",
+              "texto": "SSAEXCL 2027, parte 1: sin registros",
+              "cuadros": [
+                {
+                  "n": 1,
+                  "caja": [
+                    3,
+                    66,
+                    47,
+                    80
+                  ]
+                },
+                {
+                  "n": 2,
+                  "caja": [
+                    49,
+                    66,
+                    196,
+                    80
+                  ]
+                },
+                {
+                  "n": 3,
+                  "caja": [
+                    513,
+                    59,
+                    798,
+                    90
+                  ]
+                }
+              ]
+            },
+            {
+              "archivo": "ssaexcl-2026-parte-1.png",
+              "texto": "SSAEXCL 2026, parte 1: los 13 feriados de referencia",
+              "cuadros": [
+                {
+                  "n": 4,
+                  "caja": [
+                    2,
+                    118,
+                    330,
+                    312
+                  ]
+                }
+              ]
+            }
+          ],
+          "laminas": [
+            {
+              "instructivo": "1.1.2",
+              "n": 34,
+              "texto": "SSAEXCL: año y parte de periodo"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 35,
+              "texto": "SSAEXCL: fecha y descripción del feriado"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 36,
+              "texto": "Predefinir exclusiones de horario"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 37,
+              "texto": "Copiar las exclusiones de una parte a otra"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "slug": "capacidad-1-ruta-despues-del-periodo",
+      "titulo": "Capacidad 1 · Lo que sigue después del periodo",
+      "capacidad": "Capacidad 1 · Instructivos 1.1.1 a 1.3.1",
+      "carpeta": "capturas",
+      "_leeme": "Ruta de la Capacidad 1 en el orden de los instructivos, con los datos de los tres centros (C238). Sin capturas: los pasos 4 a 15 aún no se recorrieron en TEST para 2027.",
+      "probado": [
+        "Periodo 202721 visto en TEST el 24/11/2026 (diagrama 1)",
+        "NRC, SCAPPRQ y reglas CAPP de los centros, probados en TEST en 2026 (C151, C163, C221)"
+      ],
+      "uso": [
+        "La Capacidad 1 en el orden de los instructivos, de 1.1.1 a 1.3.1",
+        "Cada paso dice qué se hace, el dato de cada centro, quién lo hace y qué va antes y después",
+        "El último paso entrega a la Capacidad 5: oferta y matrícula"
+      ],
+      "ellucian": [
+        "1.1.3 programas · 1.1.4 cursos · 1.1.5 requisitos y restricciones",
+        "1.2.1 mallas (CAPP) · 1.2.3 equivalencias · 1.3.1 actualizar mallas",
+        "5.3 oferta horaria: SSASECT (diap. 19 y 23)"
+      ],
+      "por_confirmar": [
+        "U57 · Quién hace cada paso en producción",
+        "U58 · Partes, fechas y mallas 2027 de cada jefatura",
+        "E36 · Prerrequisitos en No verificar en SOATERM 202721"
+      ],
+      "fases": [
+        {
+          "id": "r1",
+          "titulo": "1 · Periodo (1.1.1–1.1.2)",
+          "pasos": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "r2",
+          "titulo": "2 · Programa y curso",
+          "pasos": [
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "r3",
+          "titulo": "3 · Requisitos y malla",
+          "pasos": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "r4",
+          "titulo": "4 · Cambios y oferta",
+          "pasos": [
+            14,
+            15,
+            16
+          ]
+        }
+      ],
+      "pasos": [
+        {
+          "n": 1,
+          "codigo": "STVTERM",
+          "accion": "crear el periodo",
+          "etiqueta": "202721 · Registros",
+          "dato": "Periodo",
+          "quien": "Registros Académicos, como hasta ahora",
+          "cita": "Instructivo 1.1.1, diap. 18 · C238 · ADR-026",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Crear el código del periodo con sus fechas, tipo y año académico",
+                "Instructivo 1.1.1, diap. 18",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "202721 Verano 2027 (01-ENE a 31-MAR-2027) y 202724 2027-I (01-ABR a 31-JUL-2027), compartidos por los tres centros",
+                "C238",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Registros Académicos, como hasta ahora",
+                "U57",
+                ""
+              ],
+              [
+                "Antes y después",
+                "Antes: STVACYR, STVTRMT y STVPTRM · Después: SOATERM. Paso a paso en el diagrama 1",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            "periodo"
+          ]
+        },
+        {
+          "n": 2,
+          "codigo": "SOATERM",
+          "accion": "controlar el periodo",
+          "etiqueta": "10 partes · fechas",
+          "dato": "Control del periodo",
+          "quien": "Registros Académicos, con las fechas de cada jefatura",
+          "cita": "Instructivo 1.1.2, diap. 16 a 23 · C238",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Abrir la inscripción y cargar las partes con sus fechas, censo, fechas web y acceso docente",
+                "Instructivo 1.1.2, diap. 16 a 23",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "I01–I04 (Idiomas), P01–P02 (Emprendimiento), X01–X03 (Computación) y 1",
+                "C238",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Registros Académicos, con las fechas de cada jefatura",
+                "U57",
+                ""
+              ],
+              [
+                "Antes y después",
+                "Antes: STVTERM y STVPTRM · Después: SSAEXCL y la oferta (SSASECT)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            "soaterm"
+          ]
+        },
+        {
+          "n": 3,
+          "codigo": "SSAEXCL",
+          "accion": "feriados del año",
+          "etiqueta": "2027 · por cargar",
+          "dato": "Feriados",
+          "quien": "Por confirmar (E39)",
+          "cita": "Instructivo 1.1.2, diap. 34 y 35 · C238",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Cargar los feriados del año por parte de periodo, para excluirlos de la programación de horarios",
+                "Instructivo 1.1.2, diap. 34 y 35",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "2027 sin feriados en TEST; 2026 tiene 13 en la parte 1",
+                "C238",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (E39)",
+                "U57",
+                ""
+              ],
+              [
+                "Antes y después",
+                "Antes: SOATERM (las partes deben existir) · Después: horarios del NRC (SSASECT)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "1.1.2",
+              "n": 34,
+              "texto": "SSAEXCL: año y parte de periodo"
+            },
+            {
+              "instructivo": "1.1.2",
+              "n": 35,
+              "texto": "SSAEXCL: fecha y descripción del feriado"
+            }
+          ]
+        },
+        {
+          "n": 4,
+          "codigo": "STVMAJR",
+          "accion": "carrera",
+          "etiqueta": "Carrera de cada centro",
+          "dato": "Carrera",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.1.3, diap. 19 y 20",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Crear el código de carrera que usa el programa, con sus indicadores",
+                "Instructivo 1.1.3, diap. 19 y 20",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Idiomas MI03-01 · Computación ACXP · Emprendimiento MM01-01",
+                "datos.json de cada centro",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Después: SMAPRLE (programa) y SOACURR (currícula)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            "stvmajr"
+          ]
+        },
+        {
+          "n": 5,
+          "codigo": "SMAPRLE",
+          "accion": "programa",
+          "etiqueta": "3 programas (I, C, M)",
+          "dato": "Programa",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.1.3, diap. 22 a 24",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Crear el código del programa con sus reglas de currículum, campus y nivel",
+                "Instructivo 1.1.3, diap. 22 a 24",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "IMEMI03 (nivel I) · CMEMC38 (nivel C) · MMEMM01 (nivel M); campus S, escuela EM, grado 000000",
+                "datos.json · U17 · U18",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: STVMAJR · Después: SOACURR",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            "smaprle"
+          ]
+        },
+        {
+          "n": 6,
+          "codigo": "SOACURR",
+          "accion": "regla de currícula",
+          "etiqueta": "CMEMC38 · regla 649",
+          "dato": "Currícula",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.1.3, diap. 26, 27 y 29",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Crear la regla de currícula base del programa, con sus carreras y departamentos",
+                "Instructivo 1.1.3, diap. 26, 27 y 29",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Departamentos EMID (Idiomas), EMCI (Computación) y EMEM (Emprendimiento); regla base de CMEMC38: 649",
+                "datos.json · U19",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: SMAPRLE · Después: los cursos (SCACRSE)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            "soacurr"
+          ]
+        },
+        {
+          "n": 7,
+          "codigo": "SCACRSE",
+          "accion": "crear el curso",
+          "etiqueta": "ESEP · ESEC · ESGE",
+          "dato": "Curso",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.1.4, diap. 20 a 25",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Crear el curso: materia, número, periodo, título, escuela, departamento, créditos, nivel, modo de calificar y tipo de horario",
+                "Instructivo 1.1.4, diap. 20 a 25",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Materias ESEP (Idiomas), ESEC (Computación) y ESGE (Emprendimiento); niveles I, C y M; escuela EM",
+                "datos.json · C18",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: el programa (1.1.3) · Después: SCADETL, SCAPPRQ y SCARRES",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            "scacrse"
+          ]
+        },
+        {
+          "n": 8,
+          "codigo": "SCADETL",
+          "accion": "equivalencias",
+          "etiqueta": "Sin equivalencias aún",
+          "dato": "Detalle del curso",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.1.5, diap. 21 · 1.2.3, diap. 10 y 11",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Registrar los correquisitos y los cursos equivalentes, con periodo de inicio y de fin",
+                "Instructivo 1.1.5, diap. 21",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Sin equivalencias definidas para los centros",
+                "registro (sin entrada)",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: SCACRSE · Después: SCAPPRQ",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "1.1.5",
+              "n": 21,
+              "texto": "SCADETL: correquisitos y equivalentes"
+            },
+            {
+              "instructivo": "1.2.3",
+              "n": 10,
+              "texto": "SCADETL: materia, curso y periodo de la equivalencia"
+            },
+            {
+              "instructivo": "1.2.3",
+              "n": 11,
+              "texto": "SCADETL: curso equivalente y periodos de inicio y fin"
+            }
+          ]
+        },
+        {
+          "n": 9,
+          "codigo": "SCAPPRQ",
+          "accion": "prerrequisitos",
+          "etiqueta": "BASIC I → BASIC II",
+          "dato": "Prerrequisitos",
+          "quien": "Por confirmar (U57)",
+          "cita": "C233 · ADR-008 · C221",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Registrar los prerrequisitos por programa y periodo de la versión: es la forma de la USS",
+                "C233",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Idiomas: BASIC I antes de BASIC II, en Fatal (ADR-008) · Emprendimiento: ESGE 00118 pide 00117 y 00119 pide 00118 (C221) · Computación: los cursos de la ruta XP no tienen orden entre sí (C62)",
+                "datos.json de cada centro",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: SCACRSE · Después: SOATERM debe verificar prerrequisitos (E36)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": []
+        },
+        {
+          "n": 10,
+          "codigo": "SCARRES",
+          "accion": "restricciones",
+          "etiqueta": "Incluir o excluir",
+          "dato": "Restricciones",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.1.5, diap. 23 a 27",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Restringir el curso por departamento, campo de estudio, clase, grado, campus o atributo",
+                "Instructivo 1.1.5, diap. 23 a 27",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Pendiente: restringir por la carrera de pregrado (E29)",
+                "E29 · R23",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: SCACRSE · Después: la malla (1.2.1)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "1.1.5",
+              "n": 23,
+              "texto": "SCARRES: departamento y campo de estudio"
+            },
+            {
+              "instructivo": "1.1.5",
+              "n": 24,
+              "texto": "SCARRES: clase"
+            },
+            {
+              "instructivo": "1.1.5",
+              "n": 25,
+              "texto": "SCARRES: grado"
+            },
+            {
+              "instructivo": "1.1.5",
+              "n": 26,
+              "texto": "SCARRES: campus"
+            },
+            {
+              "instructivo": "1.1.5",
+              "n": 27,
+              "texto": "SCARRES: atributo"
+            }
+          ]
+        },
+        {
+          "n": 11,
+          "codigo": "SMAALIB",
+          "accion": "biblioteca de áreas",
+          "etiqueta": "MI03 · MC38 · MM01",
+          "dato": "Área",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.2.1, diap. 12, 13, 18, 19 y 21",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Crear el área de la malla: descripción, cumplimiento, área dinámica y periodo de vigencia",
+                "Instructivo 1.2.1, diap. 12, 13, 18, 19 y 21",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Idiomas MI03-01 y MI03-02 · Computación MC38-01 «Ciclo I» · Emprendimiento MM01-01 a MM01-03",
+                "datos.json de cada centro",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: los cursos (1.1.4) · Después: SMAAREA",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "1.2.1",
+              "n": 12,
+              "texto": "SMAALIB: crear el área"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 13,
+              "texto": "SMAALIB: cumplimiento, área dinámica e impresión"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 18,
+              "texto": "SMAALIB: vigencia del atributo del área dinámica"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 19,
+              "texto": "SMAALIB: periodos existentes para atributos de área"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 21,
+              "texto": "SMAALIB: concentración del área dinámica"
+            }
+          ]
+        },
+        {
+          "n": 12,
+          "codigo": "SMAAREA",
+          "accion": "reglas del área",
+          "etiqueta": "ECOM-01: 1 de 8",
+          "dato": "Reglas del área",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.2.1, diap. 23 a 25",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Definir en el área sus reglas y cursos: total requerido, regla y número de condiciones",
+                "Instructivo 1.2.1, diap. 23 a 25",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Computación: regla ECOM-01 «Computación I», cumple con uno de ESEC 00650 a 00657. Idiomas y Emprendimiento: reglas de MI03 y MM01",
+                "datos.json de cada centro",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: SMAALIB · Después: SMAPROG",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "1.2.1",
+              "n": 23,
+              "texto": "SMAAREA: requerimientos del área"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 24,
+              "texto": "SMAAREA: regla del anexo de curso o atributo"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 25,
+              "texto": "SMAAREA: descripción y número de condiciones"
+            }
+          ]
+        },
+        {
+          "n": 13,
+          "codigo": "SMAPROG",
+          "accion": "malla del programa",
+          "etiqueta": "Programa y sus áreas",
+          "dato": "Malla del programa",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.2.1, diap. 27 a 31 y 33",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Definir los requerimientos generales del programa (modelo de inscripción, total requerido, calificación mínima) y anexarle sus áreas",
+                "Instructivo 1.2.1, diap. 27 a 31 y 33",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "IMEMI03, CMEMC38 y MMEMM01 con sus áreas",
+                "datos.json de cada centro",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: SMAAREA · Después: evaluación CAPP (7.2.4) y proyección (5.4)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "1.2.1",
+              "n": 27,
+              "texto": "SMAPROG: programa y periodo"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 28,
+              "texto": "Requerimientos generales: activo y modelo de inscripción"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 29,
+              "texto": "Requerimientos generales: programa cautivo"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 30,
+              "texto": "Requerimientos generales: total requerido"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 31,
+              "texto": "Requerimientos generales: calificación mínima de curso"
+            },
+            {
+              "instructivo": "1.2.1",
+              "n": 33,
+              "texto": "SMAPROG: anexos de área del programa"
+            }
+          ]
+        },
+        {
+          "n": 14,
+          "codigo": "SMAAREA",
+          "accion": "copiar el área",
+          "etiqueta": "Copia al periodo nuevo",
+          "dato": "Ajuste de área",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.3.1, diap. 10 a 14",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Copiar el área al periodo desde el que rige el cambio y ajustar sus reglas",
+                "Instructivo 1.3.1, diap. 10 a 14",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Solo si la malla cambia en 2027: lo deciden las jefaturas (U58)",
+                "U58",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: la malla vigente · Después: copiar el programa (SMAPROG)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "1.3.1",
+              "n": 10,
+              "texto": "SMAAREA: área y periodo a ajustar"
+            },
+            {
+              "instructivo": "1.3.1",
+              "n": 11,
+              "texto": "SMAAREA: copiar el área"
+            },
+            {
+              "instructivo": "1.3.1",
+              "n": 12,
+              "texto": "SMAAREA: de periodo y a periodo"
+            },
+            {
+              "instructivo": "1.3.1",
+              "n": 13,
+              "texto": "SMAAREA: copiar las reglas de anexo"
+            },
+            {
+              "instructivo": "1.3.1",
+              "n": 14,
+              "texto": "SMAAREA: copiar el anexo de curso o atributo"
+            }
+          ]
+        },
+        {
+          "n": 15,
+          "codigo": "SMAPROG",
+          "accion": "copiar el programa",
+          "etiqueta": "Programa ajustado",
+          "dato": "Ajuste de programa",
+          "quien": "Por confirmar (U57)",
+          "cita": "Instructivo 1.3.1, diap. 16 a 18 y 20",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Copiar el programa al periodo del cambio y ajustar los anexos de sus áreas",
+                "Instructivo 1.3.1, diap. 16 a 18 y 20",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "Solo si la malla cambia en 2027 (U58)",
+                "U58",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Por confirmar (U57)",
+                "U57",
+                "Por confirmar con Registros, salvo el periodo (C238)"
+              ],
+              [
+                "Antes y después",
+                "Antes: copiar el área (SMAAREA) · Después: la oferta del periodo (SSASECT)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "1.3.1",
+              "n": 16,
+              "texto": "SMAPROG: programa y periodo a ajustar"
+            },
+            {
+              "instructivo": "1.3.1",
+              "n": 17,
+              "texto": "SMAPROG: copiar el programa"
+            },
+            {
+              "instructivo": "1.3.1",
+              "n": 18,
+              "texto": "SMAPROG: de periodo a periodo"
+            },
+            {
+              "instructivo": "1.3.1",
+              "n": 20,
+              "texto": "SMAPROG: copiar los anexos de áreas"
+            }
+          ]
+        },
+        {
+          "n": 16,
+          "codigo": "SSASECT",
+          "accion": "crear el NRC",
+          "etiqueta": "NRC 202721 · parte",
+          "dato": "Oferta (Capacidad 5.3)",
+          "quien": "Capacidad 5.3, fuera de la Capacidad 1",
+          "cita": "Instructivo 5.3, diap. 19 y 23",
+          "tabla": {
+            "columnas": [
+              "Campo",
+              "Valor",
+              "Fuente",
+              "Nota"
+            ],
+            "filas": [
+              [
+                "Qué se hace",
+                "Crear los NRC del periodo con su parte de periodo; las fechas de la parte salen de SOATERM",
+                "Instructivo 5.3, diap. 19 y 23",
+                ""
+              ],
+              [
+                "Dato de los centros",
+                "En TEST la numeración de 202721 empieza en 10012: la da el sistema",
+                "C238",
+                ""
+              ],
+              [
+                "Quién lo hace en producción",
+                "Capacidad 5.3, fuera de la Capacidad 1",
+                "U57",
+                ""
+              ],
+              [
+                "Antes y después",
+                "Antes: todo lo anterior · Después: la inscripción (Capacidad 5.4)",
+                "",
+                ""
+              ]
+            ]
+          },
+          "laminas": [
+            {
+              "instructivo": "5.3",
+              "n": 19,
+              "texto": "SSASECT: periodo y «Crear NRC»"
+            },
+            {
+              "instructivo": "5.3",
+              "n": 23,
+              "texto": "SSASECT: parte de periodo del NRC"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }

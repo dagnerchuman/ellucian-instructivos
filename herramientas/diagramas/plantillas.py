@@ -1386,7 +1386,8 @@ def tres_centros(centros, tr):
         "cards": [
             {"dot": "cyan", "title": "Igual en los tres", "items": [
                 f"Escuela {comun['escuela']['codigo']} · campus {comun['campus']['codigo']} · grado {comun['grado']['codigo']} (no otorga grado)",
-                "Periodos 202651 (2026-0), 202654 (2026-I) y 202656 (2026-II)",
+                "Producción desde 202721 (verano 2027): un solo periodo para los tres, lo crea Registros (ADR-026, C238). "
+                "Las pruebas de 2026 se hicieron en TEST con 202651, 202654 y 202656",
                 "Mismo flujo: SOATERM → SSASECT → SAAQUIK → SFAREGS → SHAGRDE → SHRROLL",
                 "Matriculan alumnos de la USS (Pregrado y Posgrado) y externos",
                 CITAS["egreso"],
@@ -1406,6 +1407,86 @@ def tres_centros(centros, tr):
     return "workflow", spec
 
 
+# --------------------------------------------------------------------------- comunes: recorridos de la Capacidad 1
+# Recorridos que valen para los tres centros (centros/comun/datos.json › recorridos, C238). Cada fila es una fase y
+# cada nodo un paso con su tabla campo por campo, sus capturas de TEST (con cuadros, anotar_capturas.py) y sus láminas,
+# como el ejemplo de prueba de una demostración (C192).
+RECORRIDOS_COMUNES = {r["slug"]: r for r in leer_json(CENTROS / "comun" / "datos.json").get("recorridos", [])}
+TITULOS.update({k: r["titulo"] for k, r in RECORRIDOS_COMUNES.items()})
+CAPACIDADES.update({k: r.get("capacidad", "") for k, r in RECORRIDOS_COMUNES.items()})
+
+
+def salida_comun(numero, slug_):
+    """centros/comun/diagramas/NN-slug/centros-NN-slug.html, como el comparativo de los tres centros."""
+    return f"centros/comun/diagramas/{numero:02d}-{slug_}/centros-{numero:02d}-{slug_}.html"
+
+
+def carpeta_capturas_comun(r):
+    """Carpeta de las capturas de TEST de un recorrido común (relativa a la raíz del repositorio)."""
+    return f"{salida_comun(r['numero'], r['slug']).rsplit('/', 1)[0]}/{r.get('carpeta', 'capturas')}"
+
+
+def recorrido_comun(centros, tr, r):
+    """Un recorrido común como flujo: una fila por fase (`fases`), sus pasos de izquierda a derecha.
+
+    Archify acepta columnas 0 a 5, así que cada fase tiene hasta seis pasos. Como en `prueba`, no lleva `mainPath`
+    y la flecha que baja a la fase siguiente sale por abajo y entra por arriba."""
+    fase_de = {n: f for f in r["fases"] for n in f["pasos"]}
+    nodos = [paso(f"e{p['n']}", fase_de[p["n"]]["id"], fase_de[p["n"]]["pasos"].index(p["n"]), p["codigo"],
+                  p["accion"], p["etiqueta"], p.get("tipo", "backend")) for p in r["pasos"]]
+    nodos[0]["icon"] = "start"
+    nodos[-1]["icon"] = "success"
+    aristas = encadenar(nodos)
+    for a, b, arista in zip(nodos, nodos[1:], aristas):
+        if a["lane"] != b["lane"]:
+            arista.update(fromSide="bottom", toSide="top")
+    comun = centros[0].comun
+    m = {
+        "title": f"Centros Empresariales · {r['numero']}. {r['titulo']}",
+        "subtitle": (f"{r['capacidad']} · Idiomas, Computación y Emprendimiento · Escuela {comun['escuela']['codigo']} · "
+                     f"Campus {comun['campus']['codigo']} · Elaborado por: {centros[0].autor}"),
+        "locale": "es",
+        "translations": tr,
+        "output": salida_comun(r["numero"], r["slug"]),
+        "quality_profile": "showcase",
+        "animation": "trace",
+        "legend": LEYENDA_FLUJO,
+    }
+    cards = [{"dot": "emerald", "title": "Probado en TEST", "items": r["probado"]},
+             {"dot": "violet", "title": "Cómo se recorre", "items": r["uso"]},
+             {"dot": "cyan", "title": "En Ellucian (instructivos)", "items": r["ellucian"]},
+             {"dot": "amber", "title": "Por confirmar", "items": r["por_confirmar"]}]
+    spec = {"schema_version": 2, "diagram_type": "workflow", "meta": m,
+            "lanes": [{"id": f["id"], "label": f["titulo"]} for f in r["fases"]],
+            "nodes": nodos, "edges": aristas, "cards": cards}
+    return "workflow", spec
+
+
+def _filas_comun(p):
+    """Filas de la guía de un paso común: la tabla («Campo, Valor, Quién lo pone, Nota»), cómo está en TEST y la nota."""
+    out = [{"campo": f[0], "valor": f[1], "tipo": f[2] if len(f) > 2 else "", "detalle": f[3] if len(f) > 3 else ""}
+           for f in p["tabla"]["filas"]]
+    if p.get("resultado"):
+        out.append({"campo": "Así está en TEST", "valor": p["resultado"], "tipo": "Resultado", "detalle": p["cita"]})
+    if p.get("nota"):
+        out.append({"campo": "Nota", "valor": p["nota"], "tipo": "Nota", "detalle": p["cita"]})
+    return out
+
+
+def guia_recorrido_comun(slug_):
+    """Guía de cada paso de un recorrido común: tabla, capturas de TEST (ruta desde la raíz) y láminas."""
+    r = RECORRIDOS_COMUNES[slug_]
+    carpeta = carpeta_capturas_comun(r)
+    return {f"e{p['n']}": {
+        "titulo": r["titulo"], "pantalla": p["codigo"], "fase": f"{p['codigo']}: {p['accion']}",
+        "hito": f"{p['quien']} · {p['dato']}", "instrucciones": _filas_comun(p),
+        "diapositivas": _laminas(p.get("laminas", [])),
+        "capturas": [_captura_guia(carpeta, x) for x in p.get("capturas", [])],
+    } for p in r["pasos"]}
+
+
 DIAGRAMAS_COMUNES = [
     (0, "tres-centros", tres_centros),
+    *[(r["numero"], slug_, lambda centros, tr, r=r: recorrido_comun(centros, tr, r))
+      for slug_, r in RECORRIDOS_COMUNES.items()],
 ]

@@ -22,6 +22,8 @@ INSTRUCTIVOS = {
     "1.1.5": {"id": "1.1.5_Asignar_prerequ__corequis_y_restricci", "titulo": "Instructivo 1.1.5 · Prerrequisitos, correquisitos y restricciones"},
     "1.2.1": {"id": "1.2.1_Crear_las_mallas_curriculares", "titulo": "Instructivo 1.2.1 · Crear las mallas curriculares (CAPP)"},
     "1.2.2": {"id": "1.2.2_Crear_las_mallas_curric-Atri_de_curso", "titulo": "Instructivo 1.2.2 · Mallas curriculares con atributos de curso"},
+    "1.2.3": {"id": "1.2.3_Asignar_equivalencias", "titulo": "Instructivo 1.2.3 · Asignar equivalencias"},
+    "1.3.1": {"id": "1.3.1_Actualizar_las_mallas_curriculares", "titulo": "Instructivo 1.3.1 · Actualizar las mallas curriculares"},
     "3.2.1": {"id": "3.2.1_Procedimiento_Crear_Solicitudes_de_Admisio_n", "titulo": "Instructivo 3.2.1 · Crear solicitudes de admisión"},
     "3.2.2": {"id": "3.2.2_Procedimiento_Validar_los_requisitos_de_admisio_n", "titulo": "Instructivo 3.2.2 · Validar los requisitos de admisión"},
     "3.3.1": {"id": "3.3.1_Gestionar_homologacio_n_y_convalidacio_n", "titulo": "Instructivo 3.3.1 · Gestionar homologación y convalidación"},

@@ -1,12 +1,15 @@
 ---
 id: ADR-005
 titulo: Periodos de seis dígitos y tres periodos al año
-estado: aceptado
+estado: reemplazado
+reemplazado_por: ADR-026
 fecha: 2026-09-26
 fuentes: [C04, C45, S01]
 temas: [periodos]
 ---
 # ADR-005 · Periodos de seis dígitos y tres periodos al año
+
+> **Reemplazado por [ADR-026](ADR-026-periodo-202721.md) (24/11/2026, C238).** Desde 2027 los centros usan 202721: año + 2 + secuencia. Esta regla (año + 5) fue la de TEST 2026; se deja como historia.
 
 ## Contexto
 SEUSS usa 2026-0, 2026-I y 2026-II. Se llegó a suponer que un periodo duraba 3 meses, pero el usuario dijo «eso la verdad yo ni lo sé» (S01).
@@ -24,7 +27,7 @@ SEUSS usa 2026-0, 2026-I y 2026-II. Se llegó a suponer que un periodo duraba 3 
 - Un grupo que empieza en julio y termina en agosto pertenece a 202654.
 
 ## Criterio de salida
-Que Registros Académicos defina otra codificación para 2027.
+Que Registros Académicos defina otra codificación para 2027. **Se cumplió el 24/11/2026:** 202721 (C238, [ADR-026](ADR-026-periodo-202721.md)).
 
 ## Relacionado
-- [ADR-006](ADR-006-partes-de-periodo.md) · U22 (partes del verano 2027)
+- [ADR-026](ADR-026-periodo-202721.md) · [ADR-006](ADR-006-partes-de-periodo.md) · U22 (partes del verano 2027)

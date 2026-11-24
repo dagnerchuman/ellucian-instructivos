@@ -79,7 +79,7 @@ def tabla_diagramas(carpeta, desde, centro_id=None):
     for fase, diags in fases_de(carpeta, centro_id):
         for numero, titulo, cap, base in diags:
             cap_txt = cap if cap else "General"
-            filas.append(f"| {numero} | {fase or 'Comparativo'} | {cap_txt} | {titulo} | {enlaces_md(base, desde)} |")
+            filas.append(f"| {numero} | {fase or ('Comparativo' if numero in (0, '0', '00') else 'Común')} | {cap_txt} | {titulo} | {enlaces_md(base, desde)} |")
     return "\n".join(filas)
 
 
@@ -100,7 +100,7 @@ def readme_general(ids):
         "",
         "La galería con todos los diagramas está en [`index.html`](index.html).",
         "",
-        "## Comparativo de los tres centros",
+        "## Los tres centros (comparativo y recorridos comunes)",
         tabla_diagramas(CENTROS / "comun", CENTROS),
     ]
     for i in ids:

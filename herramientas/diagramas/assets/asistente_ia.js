@@ -424,6 +424,40 @@
         .some(function (t) { return contieneTermino(consulta, t); });
     }
 
+    // ¿La pregunta es de periodos (Capacidad 1: instructivos 1.1.1 y 1.1.2)? Prioriza la guía de preguntas de periodos.
+    // «Periodo» sale en casi todo (el NRC, la matrícula y las notas van por periodo): solo cuenta si la pregunta no es de
+    // otro tema («¿en qué periodo creo el NRC?» es del NRC; «el periodo de la versión», de prerrequisitos; el cierre, de 7.1.9).
+    var PALABRAS_PERIODO = ['periodo', 'periodos', 'stvterm', 'soaterm', 'stvptrm', 'stvacyr', 'stvtrmt', 'ssaexcl', 'semestre',
+      'semestres', 'verano', 'cronograma', 'feriado', 'feriados', '202721', '202724'];
+    var OTROS_TEMAS_PERIODO = /\b(nrc|nrcs|matricul\w*|inscrib\w*|notas?|calific\w*|asistencia|docentes?|profesor\w*|prerre\w*|prere\w*|corre\w*|core\w*|requisitos?|scapprq|mallas?|catalogo|version|cuotas?|pagos?|cobr\w*|admision|admit\w*|carga|syllabus|silabos?|historia|shrroll|egres\w*|cursos?|cierr\w*|cerrar)\b/;
+    function esConsultaPeriodo(consulta) {
+      if (OTROS_TEMAS_PERIODO.test(consulta)) return false;
+      return PALABRAS_PERIODO.some(function (t) { return contieneTermino(consulta, t); });
+    }
+
+    // Tipo de pregunta: entre dos preguntas frecuentes con las mismas palabras va la del mismo tipo («¿Cómo creo un
+    // periodo?» es «¿Cómo se crea un periodo nuevo?», no «¿Quién crea el periodo?»). «Qué pasos…» pregunta el cómo.
+    function intencionDe(texto) {
+      if (/\b(como|pasos?|procedimiento)\b/.test(texto)) return 'como';
+      if (/\bque (es|son|significa)\b|\bpara que sirven?\b/.test(texto)) return 'definicion';
+      if (/\bquien(es)?\b/.test(texto)) return 'quien';
+      if (/\bcuant[oa]s?\b/.test(texto)) return 'cuanto';
+      if (/\bdonde\b/.test(texto)) return 'donde';
+      if (/\bcuando\b/.test(texto)) return 'cuando';
+      if (/\bpor que\b|\bporque\b/.test(texto)) return 'porque';
+      if (/\b(que|cual|cuales)\b/.test(texto)) return 'que';
+      return '';
+    }
+
+    // Palabras que no dicen el tema de una pregunta frecuente («Banner» sale en muchos títulos; «pasos», en el tipo de
+    // pregunta): no cuentan como palabras en común con el título.
+    var NO_TEMA = {banner: 1, ellucian: 1, uss: 1, pasos: 1, paso: 1, procedimiento: 1};
+    // Tallo de una palabra sin su terminación verbal o de plural, para comparar con el título de una pregunta frecuente.
+    function tallo(palabra) {
+      var t = palabra.replace(/(aron|ieron|amos|emos|imos|ando|iendo|ados|adas|idos|idas|ado|ada|ido|ida|ar|er|ir|an|en|as|es|os|a|e|o|s)$/, '');
+      return t.length >= 3 ? t : palabra;
+    }
+
     function contieneTermino(texto, termino) {
       return (' ' + texto.replace(/[^a-z0-9]+/g, ' ') + ' ')
         .indexOf(' ' + termino + ' ') !== -1;
@@ -449,20 +483,28 @@
     // «capacidad 01», «capacidades 1, 5 y 7», «capacidad uno»: números de capacidad sin ceros a la izquierda.
     // terminosDe descarta «01» (menos de 3 letras), así que sin esto la consulta no encontraba el mapa de instructivos.
     function numerosCapacidad(consulta) {
+      return partesCapacidad(consulta).numeros;
+    }
+    // Lee «capacidad 01», «capacidades 1, 5 y 7»… y devuelve los números y la pregunta sin esas palabras (resto): el
+    // número ya eligió la capacidad y, buscado como palabra, «01» trae fechas y códigos («01-AGO», «MC44-01»).
+    function partesCapacidad(consulta) {
       var enLetras = {uno: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, seis: 6, siete: 7, ocho: 8, nueve: 9, diez: 10, once: 11};
       var palabras = String(consulta || '').replace(/[^a-z0-9]+/g, ' ').trim().split(' ');
-      var numeros = [];
+      var numeros = [], fuera = {};
       for (var i = 0; i < palabras.length; i++) {
         if (!/^capacidad(es)?$/.test(palabras[i])) continue;
+        var leidas = [i], conNumero = false;
         for (var j = i + 1; j < palabras.length; j++) {
           var p = palabras[j];
           var n = /^\d{1,2}$/.test(p) ? parseInt(p, 10) : enLetras[p];
-          if (n) { if (numeros.indexOf(n) === -1) numeros.push(n); continue; }
-          if (p === 'y' || p === 'e' || p === 'la' || p === 'n' || p === 'nro' || p === 'numero') continue;
+          if (n) { if (numeros.indexOf(n) === -1) numeros.push(n); leidas.push(j); conNumero = true; continue; }
+          if (p === 'y' || p === 'e' || p === 'la' || p === 'n' || p === 'nro' || p === 'numero') { leidas.push(j); continue; }
           break;
         }
+        // «la capacidad operativa» no lleva número: se queda como palabra.
+        if (conNumero) leidas.forEach(function (k) { fuera[k] = 1; });
       }
-      return numeros;
+      return { numeros: numeros, resto: palabras.filter(function (p, k) { return !fuera[k]; }).join(' ') };
     }
 
     // Sección «## CAPACIDAD n» de cada número pedido, con su título ('' si el texto no la tiene).
@@ -574,9 +616,14 @@
         palabras += n;
         // Código y procedimiento del instructivo («8.1», «4.1.4.1.5»): el archivo no siempre empieza con ellos («08_4.1.4.1.5 Inst.…»).
         var ficha = f.instructivo ? fichaInstructivo(f.instructivo) : null;
+        // Diapositiva casi vacía del instructivo: su contenido era una imagen («Se indican las páginas que se deben
+        // configurar…», el índice o el diagrama del proceso). Por ser corta ganaba en BM25 sin decir nada (C237).
+        var cuerpo = String(f.texto).split('\n').filter(function (l) { return !/^#/.test(l); }).join(' ')
+          .replace(/\(diap\. \d+\)/g, '').trim();
+        var vacio = !!ficha && cuerpo.length < 160 && !/\b[A-Z]{6,8}\b/.test(cuerpo);
         docs.push({ contenido: contenido, plano: ' ' + contenido.replace(/[^a-z0-9]+/g, ' ') + ' ',
           fuente: normalizar(f.fuente), archivo: normalizar(String(f.fuente).split('/').pop()), tf: tf, n: n, titulos: titulos,
-          codigo: ficha ? ficha.codigo : '', procedimiento: ficha ? ficha.procedimiento : '' });
+          codigo: ficha ? ficha.codigo : '', procedimiento: ficha ? ficha.procedimiento : '', vacio: vacio });
       });
       indiceBusqueda = { base: base, n: base.length, docs: docs, df: df, promedio: palabras / Math.max(1, base.length), codigos: codigos };
       return indiceBusqueda;
@@ -586,30 +633,37 @@
       var base = Array.isArray(window.CCEE_KNOWLEDGE) ? window.CCEE_KNOWLEDGE : [];
       // Erratas frecuentes: la base escribe «prerrequisito» y «correquisito», con dos r.
       var consulta = normalizar(pregunta).replace(/\bprerequisito(s?)\b/g, 'prerrequisito$1').replace(/\bcorequisito(s?)\b/g, 'correquisito$1');
-      var terminos = terminosDe(consulta);
       var capacidades = numerosCapacidad(consulta);
       if (esSoloCapacidad(consulta)) {
         var seccion = seccionesDelMapa(base, capacidades);
         if (seccion) return [seccion];
       }
+      // «En la capacidad 01, ¿cómo se crean los periodos?»: el número ya eligió la capacidad; se busca el tema (el resto).
+      var tema = capacidades.length ? partesCapacidad(consulta).resto : consulta;
+      // ¿Pide la lista de instructivos de la capacidad («qué instructivos de la capacidad 1 hablan de periodos»)?
+      var pideInstructivos = /\b(instructivos?|manual(es)?)\b/.test(consulta);
+      var terminos = terminosDe(tema);
+      var terminosTema = terminos.filter(function (t) { return !NO_TEMA[t]; });
+      var intencion = intencionDe(consulta);
       var indice = indiceDe(base);
       var raicesConsulta = [];
-      raicesTexto(consulta, indice.codigos).forEach(function (r) {
+      raicesTexto(tema, indice.codigos).forEach(function (r) {
         if (raicesConsulta.indexOf(r) === -1 && indice.df[r]) raicesConsulta.push(r);
       });
       // Para la cobertura cuentan también las palabras que la base no tiene («sustitutorio»): si faltan muchas, no hay evidencia.
       var totalRaices = 0;
-      raicesTexto(consulta, indice.codigos).forEach(function (r, i, todas) { if (todas.indexOf(r) === i) totalRaices++; });
+      raicesTexto(tema, indice.codigos).forEach(function (r, i, todas) { if (todas.indexOf(r) === i) totalRaices++; });
       // «instructivo 1.1.4», «el 5.3», «diap. 27»: el número elige el instructivo y la diapositiva.
       var numerosInstructivo = consulta.match(/\b\d{1,2}(?:\.\d{1,2}){1,4}\b/g) || [];
       var diapositiva = (consulta.match(/\bdiap(?:ositiva)?s?\.?\s*(\d{1,3})\b/) || [])[1];
-      var frases = frasesDe(consulta);
+      var frases = frasesDe(tema);
       var conceptos = sinonimosBusqueda.filter(function(concepto) {
         return concepto.claves.some(function(clave) {
           return contieneTermino(consulta, clave);
         });
       });
       var consultaPrerreq = esConsultaPrerrequisito(consulta);
+      var consultaPeriodo = esConsultaPeriodo(consulta);
       // «¿Cómo configuro, pongo o agrego un prerrequisito?»: en la USS se hace en SCAPPRQ, no en SCAPREQ (C233).
       var consultaConfigurar = consultaPrerreq && /\b(configur|pon(?:go|er|e|emos|en)\b|agreg|asign|crear\b|crea\b|defin|establec)/.test(consulta);
       // La USS configura los prerrequisitos en SCAPPRQ (C233, C236): las secciones del instructivo dedicadas a SCAPREQ o
@@ -637,8 +691,20 @@
         if (raicesConsulta.length && enTitulo === raicesConsulta.length) puntos += 10;
         else if (enTitulo >= Math.max(2, Math.ceil(raicesConsulta.length * 0.6))) puntos += 6;
         var cubiertas = raicesConsulta.filter(function (r) { return doc.tf[r]; }).length;
+        if (doc.vacio) puntos -= 5;
         // El mapa de instructivos es un índice de títulos: responde «qué instructivos hay», no cómo se hace algo.
         if (fuente.indexOf(MAPA_INSTRUCTIVOS) !== -1 && !capacidades.length && !/\binstructivos?\b|\bcapacidad/.test(consulta)) puntos -= 8;
+        // «Capacidad 1 + tema»: los instructivos de esa capacidad van antes que los de otras (1.1.1 y no 7.1.9 para periodos).
+        if (capacidades.length && doc.codigo && cubiertas && capacidades.indexOf(parseInt(doc.codigo, 10)) !== -1) puntos += 6;
+        // Pregunta de periodos: las guías de preguntas de periodos (C237) y la del periodo 202721 (C238), los instructivos
+        // 1.1.1 y 1.1.2, la guía de periodos y cronograma y los ADR-005, 006 y 026. Antes ganaban fragmentos cortos de otros
+        // temas que solo nombran el periodo.
+        if (consultaPeriodo && cubiertas) {
+          if (fuente.indexOf('ref-preguntas-frecuentes-periodo') !== -1) puntos += 6;
+          else if (fuente.indexOf('ref-periodos-y-cronograma.md') !== -1) puntos += 3;
+          else if (doc.codigo === '1.1.1' || doc.codigo === '1.1.2') puntos += 4;
+          else if (/adr-0(0[56]|26)-/.test(fuente)) puntos += 2;
+        }
         if (numerosInstructivo.length && /\.pptx$/.test(doc.archivo) && numerosInstructivo.some(function (n) {
           return doc.codigo === n || doc.procedimiento === n ||
             (doc.archivo.indexOf(n) === 0 && !/\d/.test(doc.archivo.charAt(n.length)));
@@ -669,9 +735,10 @@
         });
         capacidades.forEach(function (n) {
           if (!enContenido('capacidad ' + n)) return;
-          // El mapa de instructivos tiene una sección por capacidad: es la respuesta directa. En otro fragmento,
-          // «Capacidad 1» suele ir de paso («la caja es de Finanzas, Capacidad 11; los centros son la Capacidad 1»).
-          puntos += fuente.indexOf(MAPA_INSTRUCTIVOS) !== -1 ? 20 : 1;
+          // El mapa de instructivos tiene una sección por capacidad: es la respuesta directa cuando piden sus instructivos.
+          // Si piden un tema de la capacidad («capacidad 01 periodos»), responde el tema y el mapa queda de apoyo (C237).
+          // En otro fragmento, «Capacidad 1» suele ir de paso («la caja es de Finanzas, Capacidad 11»).
+          puntos += fuente.indexOf(MAPA_INSTRUCTIVOS) !== -1 ? (pideInstructivos ? 20 : 4) : 1;
         });
         var consultaAsistencia = conceptos.some(function(concepto) {
           return concepto.claves.indexOf('asistencia') !== -1;
@@ -712,11 +779,24 @@
         if (fuente.indexOf('ref-preguntas-') !== -1) {
           var titulo = (fragmento.texto.match(/^###\s+(.+)$/m) || [])[1];
           if (titulo) {
-            var enTitulo = terminosDe(normalizar(titulo));
-            var comunes = terminos.filter(function (t) {
-              return enTitulo.some(function (u) { return u === t || (t.length > 4 && u.slice(0, 5) === t.slice(0, 5)); });
+            var palabrasTitulo = terminosDe(normalizar(titulo)).filter(function (u) { return !NO_TEMA[u]; });
+            // La misma palabra, el mismo comienzo o el mismo verbo («creo», «crea», «crean»: C237).
+            var parecidas = function (t, u) { return u === t || (t.length > 4 && u.slice(0, 5) === t.slice(0, 5)) || tallo(u) === tallo(t); };
+            var comunes = terminosTema.filter(function (t) {
+              return palabrasTitulo.some(function (u) { return parecidas(t, u); });
             }).length;
             if (comunes >= 2) puntos += comunes + (comunes >= Math.ceil(terminos.length * 0.6) ? 4 : 0);
+            // Desempate: va antes el título que no agrega temas no preguntados. Para «¿qué es una parte de periodo?»,
+            // «¿Qué es una parte de periodo…?» y no «¿Qué es la parte X06 y qué fechas tiene?» (C237).
+            if (comunes >= 2 && palabrasTitulo.length) puntos += 2 * palabrasTitulo.filter(function (u) {
+              return terminosTema.some(function (t) { return parecidas(t, u); });
+            }).length / palabrasTitulo.length;
+            // Mismo tipo de pregunta que el título («cómo», «quién», «qué es»…): es la respuesta preparada para ella.
+            if (comunes >= 2 && intencion && intencionDe(normalizar(titulo)) === intencion) puntos += 3;
+            // «¿Qué es SOATERM?» tiene una sola palabra de tema: la pregunta de definición que la nombra («¿Para qué sirve
+            // SOATERM?») va antes que otra del mismo archivo («¿Qué casillas de SOATERM…?»), que dejaría fuera a la primera.
+            else if (terminosTema.length === 1 && comunes === 1 && intencion === 'definicion' &&
+              intencionDe(normalizar(titulo)) === 'definicion') puntos += 3;
           }
         }
         if (consultaPrerreq && puntos > 0) {
@@ -1031,7 +1111,7 @@
         "FORMATO (Markdown simple, lo más corto posible):",
         "1) Responda la pregunta en una o dos oraciones. No repita la pregunta ni explique de dónde sale la información.",
         "2) Solo si es un procedimiento, agregue '### Pasos' con una lista numerada de hasta 7 pasos, una línea cada uno. Cada paso empieza con la página de Banner en negrita (por ejemplo **SFAREGS**) o con el término de la base (Autoservicio), y luego la acción y el dato. Respete exactamente el orden de campos de la evidencia de ESA pantalla. VALORES DE EJEMPLO: si la evidencia trae el valor que se usó o se probó en ese paso (programa, periodo, materia y curso, NRC, sección, nivel, calificación, conector), póngalo como ejemplo entre comillas invertidas, con su C## si lo tiene: «Programa `1PCSP15` (Medicina) y periodo de la versión `202444` (C161)». Nunca invente un valor: si la evidencia no lo trae, describa el campo sin ejemplo. Cada valor va con su caso: no pase el nivel, la nota o el periodo de un ejemplo a otro curso o centro (si usa el de Emprendimiento, diga «como en Emprendimiento: `ESGE 00117`, nivel `M`, nota `11`»). Si la evidencia dice que algo falta revisar en TEST, dígalo en ese paso.",
-        "3) Termine con UNA sola línea en cursiva con la cita, si aparece en la evidencia: el instructivo con su código y su nombre tal como figuran en la etiqueta de la FUENTE, sus diapositivas y/o el código del registro (por ejemplo *Instructivo 5.4 · Ejecutar la inscripción de cursos por backoffice, diap. 50 a 52 · C209*). Si la evidencia solo da el número del instructivo, cite el número y las diapositivas. No agregue secciones 'Según el instructivo' ni 'Validado en TEST': si algo se probó en TEST, dígalo dentro de la oración (por ejemplo «probado en TEST con el NRC 10045, C190»).",
+        "3) Termine con UNA sola línea en cursiva con la cita, si aparece en la evidencia: el instructivo con su código y su nombre tal como figuran en la etiqueta de la FUENTE, sus diapositivas y/o el código del registro (por ejemplo *Instructivo 5.4 · Ejecutar la inscripción de cursos por backoffice, diap. 50 a 52 · C209*). Si la evidencia solo da el número del instructivo, cite el número y las diapositivas; si no trae instructivo, cite el ADR o el C## que trae (*ADR-005 · C04*). La cita sale de la evidencia de ESTA pregunta: no copie la de una respuesta anterior. No agregue secciones 'Según el instructivo' ni 'Validado en TEST': si algo se probó en TEST, dígalo dentro de la oración (por ejemplo «probado en TEST con el NRC 10045, C190»).",
         "4) Solo si falta un dato esencial para responder, agregue '### Por confirmar' con hasta 2 viñetas. Nada de notas, recomendaciones, advertencias generales ni temas que no se preguntaron.",
         "5) La lista numerada es solo para pasos en orden. Para enumerar instructivos, páginas, requisitos u opciones use viñetas ('- '); nunca ponga un número de lista delante de un código de instructivo («1. 1.1.1»).",
         "Extensión: hasta 120 palabras; con pasos, hasta 180; en preguntas complejas, hasta 250.",
@@ -1041,8 +1121,9 @@
         "REGLAS DE BANNER CONFIRMADAS: en SFAREGS el encabezado va periodo, luego ID del alumno y al final plan de estudios; no asuma que el plan es 1 y, si falta el currículo del nivel del curso, se agrega en la pestaña Currículos. Si SHAGCOM pide los controles del libro de calificaciones, primero se configura SHAEGBC (periodo, Ir, fecha abierta y de corte autorizadas, sin inventarlas).",
         "ASISTENCIA Y NOTAS (estado actual de TEST, C101 a C107): el control de asistencia de Autoservicio muestra el NRC solo si existe una regla en SOAATRK (Desplegar clase, unidad de control, Control de asistencia y fechas). El docente pasa lista en Autoservicio y registra las notas por componente en el libro de calificaciones; ATTRGRD (peso 0, Debe aprobar, escala de asistencia) lleva la nota final a INH si la asistencia es menor al mínimo. Con libro de calificaciones, la nota calculada pasa sola a SFASLST; luego sigue el pase a historia. El envío automático del porcentaje de asistencia a ATTRGRD sigue por confirmar (U32).",
         "PRERREQUISITOS Y CORREQUISITOS (probado en TEST, C159 a C170): en la USS todos los prerrequisitos se configuran en SCAPPRQ, por programa y periodo de la versión, también el del examen de suficiencia (C233, C236). Si preguntan cómo configurar, poner o agregar un prerrequisito, dé los pasos de SCAPPRQ de la base de la USS con sus valores de ejemplo. No mencione SCAPREQ ni SSAPREQ (los enseña el instructivo 1.1.5 y la USS no los usa) salvo que el usuario pregunte por ellos o por la diferencia; entonces diga en una oración que la USS usa SCAPPRQ. Los conectores Y, O y paréntesis funcionan en SCAPPRQ (R25). El correquisito (SCADETL) no sirve porque exige el mismo periodo y pregrado y centros tienen periodos distintos (R22, R24). La acreditación se exige con un prerrequisito restrictivo por programa en SCAPPRQ (malla Y curso del centro, sin calificación = basta haberlo cursado). Banner usa la versión de SCAPPRQ del catálogo del alumno, no la del periodo de matrícula. Sin el curso del centro sale «Prerequisite and Test Score error»; si lo está llevando, «Prerequisite In Progress» mientras «En progreso» esté sin marcar en SOATERM; con el curso en la historia académica, se inscribe. Qué pasa si lo desaprueba sigue por confirmar (E31).",
+        "PERIODOS Y PARTES DE PERIODO (Capacidad 1, ADR-026 y ADR-006): desde el 24/11/2026 la meta es producción, que empieza con `202721`, el verano 2027 de Centros Empresariales (01-ENE a 31-MAR-2027), compartido por los tres centros y creado por Registros Académicos (C238). Desde 2027 el código es año + 2 (centros) + secuencia (1 = verano); «41» es pregrado de verano. `202651`, `202654` y `202656` (año + 5, ADR-005, reemplazado) fueron de TEST 2026: cítelos solo como historia o si se pregunta por ellos. En TEST también está `202724` (2027-I, 01-ABR a 31-JUL-2027), por confirmar (U56). Cada grupo es una parte de periodo con sus fechas (STVPTRM: Idiomas `I01` a `I12`, Computación `X01` a `X12`, Emprendimiento `P01` a `P12`; 202721 usa I01 a I04, P01, P02, X01 a X03 y 1): los grupos de cada mes no son periodos. Un grupo es del periodo de su fecha de inicio. Las partes y sus fechas las dan las jefaturas (C238). El orden antes del NRC es STVTERM, STVPTRM, SOATERM (partes y fechas web), SCACRSE y SSASECT, más las reglas de SFARSTS de cada parte (C141, C154). La Web del docente son columnas de cada parte en «Controles de inscripción de parte de periodo y web» (1.1.2, diap. 22), no en «Controles de procesamiento web». Pregrado usa otros periodos (C162). Lo demás de periodos, respóndalo con la evidencia.",
         "CONVERSACIÓN: se le envían los turnos anteriores. Si la pregunta es de seguimiento («¿cuáles son?», «¿y en Idiomas?», «explíquelo»), interprétela según lo conversado y responda en ese contexto, siempre con la BASE LOCAL.",
-        "CAPACIDADES: si preguntan de qué trata una capacidad («capacidad 01», «capacidad 5»), diga su tema en una oración y liste TODOS sus instructivos bajo '### Instructivos' (no '### Pasos'): cada subcapacidad como viñeta con su nombre en negrita y, debajo, sus instructivos como viñetas anidadas (dos espacios) con el código en negrita y el nombre completo, por ejemplo «  - **1.1.1** Definir la estructura de los periodos académicos». No mencione otras capacidades ni otras áreas. La cita es *Mapa de instructivos, Capacidad n*.",
+        "CAPACIDADES: si la pregunta nombra una capacidad y además un tema («en la capacidad 01, ¿cómo se crean los periodos?», «capacidad 01 periodos», «periodos de la capacidad 1»), responda el tema con la evidencia como cualquier otra pregunta (qué es, cuáles son, cómo se hace, con sus datos) y cite los instructivos de esa capacidad que lo tratan (*Instructivo 1.1.1 · Definir la estructura de los periodos académicos*); no liste la capacidad completa ni cite el mapa. Solo si la pregunta no trae más que la capacidad («capacidad 01», «capacidad 5», «qué instructivos tiene la capacidad 3») y la evidencia trae el Mapa de instructivos, diga su tema en una oración y liste TODOS sus instructivos bajo '### Instructivos' (no '### Pasos'): cada subcapacidad como viñeta con su nombre en negrita y, debajo, sus instructivos como viñetas anidadas (dos espacios) con el código en negrita y el nombre completo, por ejemplo «  - **1.1.1** Definir la estructura de los periodos académicos». No mencione otras capacidades ni otras áreas. La cita es *Mapa de instructivos, Capacidad n*.",
         "INSTRUCTIVOS DE ELLUCIAN: las FUENTES marcadas «manual de Ellucian» son los instructivos generales de Ellucian (PPTX), con «(diap. N)» delante del texto de cada diapositiva; la «Ficha del instructivo» resume sus temas y páginas con sus diapositivas. Cítelos con código, nombre y diapositivas: *Instructivo 6.1.1 · Asignar el syllabus (sílabo), diap. 9 a 12*. Si la base de la USS (registro C##, guías, datos del centro) dice algo distinto para los centros, manda la de la USS y dígalo («el instructivo indica…; en los centros se probó…»). Si todas las fuentes son del manual de Ellucian, diga «según el instructivo» y no afirme que se probó en TEST.",
         "No cite rutas ni nombres de archivos (.md, .json): la aplicación agrega las fuentes. Si la base no permite responder, escriba literalmente 'No hay evidencia local suficiente' e indique qué falta confirmar."
       ].join("\n");

@@ -1,5 +1,7 @@
 # Periodos, partes de periodo y cronograma 2026
 
+> **Desde el 24/11/2026 (C238, ADR-026):** producción empieza con **202721**, el verano 2027 de Centros Empresariales, que crea Registros Académicos. El cronograma 2026 de esta guía fue de TEST. El periodo 202721 tal como está en TEST: `ref-preguntas-frecuentes-periodo-202721.md` y el diagrama `centros/comun/diagramas/01-capacidad-1-periodo-202721/`.
+
 Fuentes:
 - Instructivos 1.1.1 y 1.1.2 (STVTERM, STVPTRM, SOATERM).
 - Presentación «Tema 1: Periodos» de Centros Empresariales, con el cronograma académico 2026.
@@ -7,17 +9,18 @@ Fuentes:
 
 ## Código del periodo
 6 dígitos: **año (4) + nivel (1) + secuencia (1)**.
-- Nivel **5** = Centros Empresariales.
-- Secuencia **1** = ciclo de verano, **4** = semestre I, **6** = semestre II.
+- Nivel de Centros Empresariales: **2** desde 2027 (`202721`, ADR-026); en TEST 2026 fue **5** (ADR-005, reemplazado). «41» es pregrado de verano.
+- Secuencia **1** = ciclo de verano. En 2026, **4** = semestre I y **6** = semestre II; para 2027, en TEST está 202724 (semestre I) y falta el semestre II (U56).
 
 | SEUSS (hoy) | Nombre | Ellucian | Meses |
 |---|---|---|---|
 | 2026-0 | Verano | **202651** | ene – mar |
 | 2026-I | Primer periodo | **202654** | abr – jul |
 | 2026-II | Segundo periodo | **202656** | ago – dic |
-| 2027-0 | Verano 2027 | **202751** | ene – mar 2027 |
+| 2027-0 | Verano 2027 (producción) | **202721** | 01-ene – 31-mar 2027 |
+| 2027-I | Semestre I 2027 (por confirmar, U56) | **202724** en TEST | 01-abr – 31-jul 2027 |
 
-Ejemplo del Tema 1: «para el periodo 2026-I de Centros Empresariales, en Ellucian se codifica 2026 5 4».
+Ejemplo del Tema 1 (regla de 2026): «para el periodo 2026-I de Centros Empresariales, en Ellucian se codifica 2026 5 4». 202751 quedó en TEST con esa regla y no va a producción.
 
 ## Partes de periodo
 Una parte de periodo es un rango de fechas dentro del periodo. Tiene sus propias fechas de inicio y fin de clases, de adición y retiro y de ingreso de notas (instructivo 1.1.1, diap. 10).
@@ -29,8 +32,10 @@ Una parte de periodo es un rango de fechas dentro del periodo. Tiene sus propias
 | Centro | General | Grupos |
 |---|---|---|
 | Idiomas | IGE | I01 … I12 en 2026 (Idiomas Grupo 01…12) |
-| Computación | CGE | X01 … X07 en 2026 |
-| Emprendimiento | EGE | P01 … P06 en 2026 |
+| Computación | CGE | X01 … X12 en STVPTRM; en 2026 se usaron X01 … X07 |
+| Emprendimiento | EGE | P01 … P12 en STVPTRM; en 2026 se usaron P01 … P06 |
+
+En **202721** (TEST, C238) están I01 a I04, P01 y P02, X01 a X03 y la parte 1, con el censo uno en la fecha de inicio de cada parte.
 
 ## Orden antes del NRC (C141, C144)
 1. **STVTERM**: código del periodo (solo si no existe).
@@ -40,7 +45,7 @@ Una parte de periodo es un rango de fechas dentro del periodo. Tiene sus propias
 5. **SSASECT**: el NRC solo ofrece las partes de ese bloque (5.3, diap. 23). Ejemplo: X09 está en STVPTRM pero no en 202656, así que un NRC de 202656 no puede usarla.
 
 ## Editar un periodo
-El código (202656) no se edita en ninguna página. Los datos van en STVTERM y la configuración en SOATERM.
+El código (202721) no se edita en ninguna página. Los datos van en STVTERM y la configuración en SOATERM.
 
 **STVTERM** (1.1.1, diap. 18 y 19): filtro (embudo) › periodo › editar **Descripción** (hasta 30 caracteres), **Fecha de inicio y fin**, **Año académico**, **Tipo de período** (opcional) y **Fecha de inicio y fin de alojamiento** (las mismas del periodo, aunque no haya alojamiento) › **Guardar** (F10).
 
@@ -49,14 +54,16 @@ El código (202656) no se edita en ninguna página. Los datos van en STVTERM y l
 | Pestaña | Qué se cambia | Fuente |
 |---|---|---|
 | Inscripción | Número de secuencia de NRC; casillas Permitir, En progreso, Plan de estudios requerido y demás | 1.1.2, diap. 17 y 18 |
-| Controles de inscripción de parte de periodo y web | Partes del periodo (inicio, fin, semanas, censo uno); fechas de inscripción web y acceso docente | 1.1.2, diap. 20, 21 y 23 |
-| Controles de procesamiento web | Web del docente: calificaciones parciales, finales y lista de espera marcadas | 1.1.2, diap. 22 |
+| Verificación de errores de inscripción | Fatal o No verificar para cada verificación del alumno y de la sección | 5.4 (inscripción por backoffice), diap. 14 a 16 |
+| Controles de procesamiento web | Cambio de opción de clase, despliegue de notas, docente y asesor, webcapp, catálogo, horario, autoservicio y planificación | 1.1.2, diap. 25 a 32 |
+| Controles de inscripción de parte de periodo y web | Partes del periodo (inicio, fin, semanas, censo uno); en cada parte, sobrepaso de sección y Web del docente (calificaciones parciales, finales y lista de espera); fechas de inscripción web y acceso docente | 1.1.2, diap. 20 a 24 |
+| Inscripción estructurada y proyectada | Controles de cada modelo de inscripción | 1.2.1, diap. 28; 5.4 (proyección), diap. 16 y 17 |
 
-- 202651, 202654 y 202656 son **compartidos** por los tres centros: un cambio en el periodo afecta a todos. Si es solo para un grupo, se cambia la parte.
+- El periodo es **compartido** por los tres centros (202721 desde 2027; en TEST 2026, 202651, 202654 y 202656): un cambio en el periodo afecta a todos. Si es solo para un grupo, se cambia la parte.
 - Si se desmarca **Permitir**, nadie puede matricularse en el periodo.
 - Si cambiar las fechas de una parte actualiza solos los NRC ya creados está por confirmar (E27).
 
-## Cronograma 2026: Idiomas
+## Cronograma 2026 (TEST): Idiomas
 Cada grupo abre 6 cursos: BASIC I, II y III e INTERMEDIATE I, II y III.
 - Los niveles I y II duran 8 semanas; en I01, 6 semanas.
 - Los niveles III duran 12 o 13 semanas.
@@ -76,7 +83,7 @@ Cada grupo abre 6 cursos: BASIC I, II y III e INTERMEDIATE I, II y III.
 | I11 | 202656 | 2/11 – 27/12/2026 (8) | 2/11/2026 – 31/1/2027 (13) |
 | I12 | 202656 | 7/12/2026 – 31/1/2027 (8) | 7/12/2026 – 28/2/2027 (12) |
 
-## Cronograma 2026: Computación
+## Cronograma 2026 (TEST): Computación
 Cada grupo abre «TODOS» los cursos; los nombres de los cursos **no se conocen**.
 
 | Grupo | Periodo | Fechas | Semanas |
@@ -89,7 +96,7 @@ Cada grupo abre «TODOS» los cursos; los nombres de los cursos **no se conocen*
 | X06 | 202656 | 7/9 – 31/10/2026 | 8 |
 | X07 | 202656 | 2/11 – 13/12/2026 | 6 |
 
-## Cronograma 2026: Emprendimiento
+## Cronograma 2026 (TEST): Emprendimiento
 Cada grupo abre «TODOS» los cursos y siempre dura 10 semanas. Hay grupos que se dictan al mismo tiempo (por ejemplo, P02 y P03).
 
 | Grupo | Periodo | Fechas |
@@ -104,7 +111,7 @@ Cada grupo abre «TODOS» los cursos y siempre dura 10 semanas. Hay grupos que s
 ## Páginas de configuración (Tema 1)
 - STVPTRM: códigos de parte de periodo.
 - STVACYR: años académicos; son obligatorios 0000 y 9999.
-- STVTRMT: tipos de periodo.
+- STVTRMT: tipos de periodo (en TEST: A, B, C, M, S y T; 202721 usa S).
 - STVTERM: periodos.
 - SOATERM: fechas de partes, fechas web, «Control de periodo web maestro».
 - SSAEXCL: feriados y excepciones de clases.

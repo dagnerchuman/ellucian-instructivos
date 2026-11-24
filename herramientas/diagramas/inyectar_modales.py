@@ -14,8 +14,8 @@ import sys
 from urllib.parse import quote
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
 from diapositivas_pasos import INSTRUCTIVOS, SIN_LAMINA, para as diapositivas_del_paso
-from plantillas import (TITULOS, CAPACIDADES, DEMOSTRACIONES, guia_casuistica_de, guia_demostracion,
-                        guia_recorrido, slug_prueba)
+from plantillas import (TITULOS, CAPACIDADES, DEMOSTRACIONES, RECORRIDOS_COMUNES, guia_casuistica_de,
+                        guia_demostracion, guia_recorrido, guia_recorrido_comun, slug_prueba)
 from centro import Centro
 
 # "plantillas": la guía de las casuísticas sale de plantillas.py (CASOS + EXTRA_CASOS) y pisa a GUIAS_SCRIPTS.
@@ -167,6 +167,8 @@ def _validar_y_ordenar(guia, ids_nodos, slug, orden_propio=False):
 def obtener_guia_para_slug(slug, id_centro="", ids_nodos=None):
     """Guía {id_de_nodo: ficha} del flujo, validada contra los nodos reales del SVG."""
     sid = detectar_script(slug)
+    if RE_PREFIJO.sub("", slug) in RECORRIDOS_COMUNES:  # recorridos comunes de la Capacidad 1 (C238)
+        return _validar_y_ordenar(guia_recorrido_comun(RE_PREFIJO.sub("", slug)), ids_nodos, slug, orden_propio=True)
     if RE_PREFIJO.sub("", slug) == "recorrido-completo" and id_centro in ("idiomas", "computacion", "emprendimiento"):
         return _validar_y_ordenar(guia_recorrido(Centro(id_centro)), ids_nodos, slug)
     if RE_PREFIJO.sub("", slug).startswith("demostracion-"):

@@ -6,7 +6,7 @@ description: >-
   páginas de Banner, reglas con cita, guías operativas paso a paso (crear periodo, curso y NRC,
   persona, admisión, matrícula, notas), rutas de aprendizaje y el buscador de los 83 instructivos.
   Cuándo usarla: siempre que se pregunte cómo se hace algo en Banner para los centros, SEUSS frente a
-  Banner, periodos 2026xx, NRC, malla, CAPP, carga docente, notas, asistencia, matrícula o migración
+  Banner, periodos (202721 en producción), NRC, malla, CAPP, carga docente, notas, asistencia, matrícula o migración
   R2, aunque no se nombre la skill. Cuándo no usarla: datos propios de un solo centro (centro-idiomas,
   centro-computacion, centro-emprendimiento), una captura o «qué pongo aquí» de una pantalla
   (workflow-consultas-banner), generar documentos (documentos-uss) ni videos.
@@ -37,7 +37,7 @@ description: >-
 | Flujo de inicio a fin: fases, pasos, responsables y páginas | [references/00-flujo-de-inicio-a-fin.md](references/00-flujo-de-inicio-a-fin.md) |
 | Matrícula por autoservicio del estudiante | [references/ref-autoservicio-matricula.md](references/ref-autoservicio-matricula.md) |
 | Registro de asistencia docente y búsqueda administrativa en TEST | [references/ref-registro-asistencia-docente.md](references/ref-registro-asistencia-docente.md), [references/ref-busqueda-asistencia-banner.md](references/ref-busqueda-asistencia-banner.md) |
-| Periodos, partes de periodo y cronograma 2026 de los tres centros | [references/ref-periodos-y-cronograma.md](references/ref-periodos-y-cronograma.md) |
+| Periodos, partes de periodo, código desde 2027 (202721) y cronograma 2026 de TEST de los tres centros | [references/ref-periodos-y-cronograma.md](references/ref-periodos-y-cronograma.md) |
 | Qué dice Ellucian sobre horas, docentes, notas, asistencia y egreso | [references/ref-reglas-ellucian.md](references/ref-reglas-ellucian.md) |
 | Directorio de páginas de Banner por proceso y número de instructivo | [references/ref-paginas-banner.md](references/ref-paginas-banner.md) |
 | Glosario de siglas y páginas explicadas (para usar entre paréntesis) | [references/ref-glosario.md](references/ref-glosario.md) |
@@ -51,7 +51,10 @@ description: >-
 | Preguntas frecuentes: notas, historia y PGA (SHRROLL, historia, repetidos, SHRCGPA, copiar SHAGCOM, suficiencia); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-notas-e-historia.md](references/ref-preguntas-frecuentes-notas-e-historia.md) |
 | Preguntas frecuentes: selección de población y procesos masivos (GLRSLCT, GJAJFLU, GJRPSIM, SMRBCMP); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-poblacion-y-procesos-masivos.md](references/ref-preguntas-frecuentes-poblacion-y-procesos-masivos.md) |
 | Preguntas frecuentes: docente y asistencia (SSASECT, SIAASGN, Pasar lista, notas en Autoservicio, encuesta TESS); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-docente-y-asistencia.md](references/ref-preguntas-frecuentes-docente-y-asistencia.md) |
-| Preguntas frecuentes: cursos, malla y periodos (SCACRSE, SMAAREA, sílabo SCASYLB, atributos STVATTR, X06, periodos, Inglés); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-cursos-nrc-y-malla.md](references/ref-preguntas-frecuentes-cursos-nrc-y-malla.md) |
+| Preguntas frecuentes: cursos y malla (SCACRSE, SMAAREA, sílabo SCASYLB, atributos STVATTR, Inglés); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-cursos-nrc-y-malla.md](references/ref-preguntas-frecuentes-cursos-nrc-y-malla.md) |
+| Preguntas frecuentes: periodos y partes de periodo (qué son, código, cuáles usan los centros, quién los crea, 202721, X06, 202656, pregrado); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-periodos.md](references/ref-preguntas-frecuentes-periodos.md) |
+| Preguntas frecuentes: el periodo **202721** de producción tal como está en TEST (STVTERM, partes, SOATERM, Web del docente, verificación, feriados, dudas E34 a E40) y qué sigue en la Capacidad 1; respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-periodo-202721.md](references/ref-preguntas-frecuentes-periodo-202721.md) |
+| Preguntas frecuentes: crear y configurar periodos en Banner (STVTERM, STVPTRM, SOATERM y sus casillas, fechas, SFARSTS, feriados SSAEXCL); respuesta citada, también entrena al asistente IA | [references/ref-preguntas-frecuentes-periodos-configuracion.md](references/ref-preguntas-frecuentes-periodos-configuracion.md) |
 
 ## Buscar evidencia en los instructivos
 ```bash

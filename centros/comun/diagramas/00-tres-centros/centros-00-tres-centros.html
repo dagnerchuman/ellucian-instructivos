@@ -4994,14 +4994,16 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <div class="flow-nav-select-wrap">
           <select class="flow-nav-select" onchange="if(this.value) window.location.href=this.value" title="Cambiar a otro flujo del centro">
             <option value="../00-tres-centros/centros-00-tres-centros.html" selected="selected">00. El mismo flujo en los tres centros</option>
+          <option value="../01-capacidad-1-periodo-202721/centros-01-capacidad-1-periodo-202721.html">01. Capacidad 1 · Periodo 202721 en TEST, paso a paso</option>
+          <option value="../02-capacidad-1-ruta-despues-del-periodo/centros-02-capacidad-1-ruta-despues-del-periodo.html">02. Capacidad 1 · Lo que sigue después del periodo</option>
           </select>
           <span class="flow-nav-select-arrow">▾</span>
         </div>
       </div>
       <div class="flow-nav-right">
         <span class="flow-btn-top prev disabled" title="Primer flujo de este centro"><svg xmlns="http://www.w3.org/2000/svg" class="ic" data-icon="ui:chevron-left" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18l-6-6l6-6"/></svg><span class="flow-btn-txt">Inicio</span></span>
-        <span class="flow-nav-counter">Flujo <strong>1</strong> de 1</span>
-        <span class="flow-btn-top next disabled" title="Último flujo de este centro"><span class="flow-btn-txt">Fin</span><svg xmlns="http://www.w3.org/2000/svg" class="ic" data-icon="ui:chevron-right" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg></span>
+        <span class="flow-nav-counter">Flujo <strong>1</strong> de 3</span>
+        <a href="../01-capacidad-1-periodo-202721/centros-01-capacidad-1-periodo-202721.html" class="flow-btn-top next primary" title="Siguiente flujo: 01. Capacidad 1 · Periodo 202721 en TEST, paso a paso"><span class="flow-btn-num">01</span><span class="flow-btn-txt">Capacidad 1 · Periodo 202721 en TEST, paso a paso</span><svg xmlns="http://www.w3.org/2000/svg" class="ic" data-icon="ui:chevron-right" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg></a>
       </div>
     </nav>
     <!-- === /FLOW NAV TOP === -->
@@ -5510,7 +5512,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>Escuela EM · campus S · grado 000000 (no otorga grado)</li>
-          <li>Periodos 202651 (2026-0), 202654 (2026-I) y 202656 (2026-II)</li>
+          <li>Producción desde 202721 (verano 2027): un solo periodo para los tres, lo crea Registros (ADR-026, C238). Las pruebas de 2026 se hicieron en TEST con 202651, 202654 y 202656</li>
           <li>Mismo flujo: SOATERM → SSASECT → SAAQUIK → SFAREGS → SHAGRDE → SHRROLL</li>
           <li>Matriculan alumnos de la USS (Pregrado y Posgrado) y externos</li>
           <li>Requisito de egreso de Pregrado: instructivo 8, diap. 13</li>
@@ -17934,7 +17936,7 @@ html[data-theme="dark"] .prueba-nav-sig { border-color: #2563eb; }
 
 (function () {
   var GUIA_MAP = {};
-  window.__SIGUIENTE_FLUJO = null;
+  window.__SIGUIENTE_FLUJO = {"num": 1, "slug": "capacidad-1-periodo-202721", "titulo": "Capacidad 1 · Periodo 202721 en TEST, paso a paso", "cap": "Capacidad 1 · Instructivos 1.1.1 y 1.1.2", "url": "../01-capacidad-1-periodo-202721/centros-01-capacidad-1-periodo-202721.html", "is_curr": false};
   window.__ANTERIOR_FLUJO = null;
   window.__VOLVER_CENTROS_URL = "../../../index.html#sec-comun";
 

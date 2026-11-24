@@ -147,31 +147,29 @@
     {
       "q": "como creo un periodo academico",
       "espera": [
-        "1.1.1 Definir la estructura",
-        "ref-periodos",
-        "1.1.2 Programar"
+        "ref-preguntas-frecuentes-periodos-configuracion.md#se crea y se configura un periodo"
       ],
-      "top": 2
+      "top": 1
     },
     {
       "q": "que es soaterm",
       "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#para que sirve soaterm",
         "1.1.2 Programar",
         "ref-periodos",
         "ref-glosario",
         "ref-paginas-banner"
       ],
-      "top": 3
+      "top": 1
     },
     {
       "q": "como creo una parte de periodo",
       "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#como agrego las partes",
         "1.1.1 Definir",
-        "1.1.2 Programar",
-        "ref-periodos",
-        "ref-preguntas-frecuentes-cursos"
+        "1.1.2 Programar"
       ],
-      "top": 3
+      "top": 2
     },
     {
       "q": "como creo un curso nuevo en scacrse",
@@ -683,8 +681,7 @@
     {
       "q": "que periodos usan los centros",
       "espera": [
-        "ref-preguntas-frecuentes-cursos",
-        "ref-periodos-y-cronograma"
+        "ref-preguntas-frecuentes-periodos.md#que periodos usan los centros"
       ],
       "top": 1
     },
@@ -760,8 +757,7 @@
     {
       "q": "que es la parte x06",
       "espera": [
-        "ref-preguntas-frecuentes-cursos",
-        "ref-periodos"
+        "ref-preguntas-frecuentes-periodos.md#parte de periodo x06"
       ],
       "top": 1
     },
@@ -931,6 +927,201 @@
         "5.3_4.1.4.1.6",
         "nrc-ssasect",
         "ref-preguntas-frecuentes"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo un periodo",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#se crea y se configura un periodo"
+      ],
+      "top": 1
+    },
+    {
+      "q": "en la capacidad 01 como se crean los periodos",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#se crea y se configura un periodo"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como se configura un periodo en banner",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#se crea y se configura un periodo"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que pasos sigo para crear un periodo",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#se crea y se configura un periodo"
+      ],
+      "top": 1
+    },
+    {
+      "q": "capacidad 01 periodos",
+      "espera": [
+        "1.1.1 Definir",
+        "1.1.2 Programar"
+      ],
+      "top": 2
+    },
+    {
+      "q": "quien crea los periodos",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos.md#quien crea el periodo"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que es una parte de periodo",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos.md#que es una parte de periodo"
+      ],
+      "top": 1
+    },
+    {
+      "q": "cuantos periodos hay en un año",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos.md#cuantos periodos tienen"
+      ],
+      "top": 1
+    },
+    {
+      "q": "los centros tienen periodos mensuales",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos.md#que periodos usan",
+        "ref-preguntas-frecuentes-periodos.md#cuantos periodos",
+        "ref-preguntas-frecuentes-periodos.md#parte de periodo y para que sirve"
+      ],
+      "top": 1
+    },
+    {
+      "q": "cual es la estructura de periodos de la uss",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos.md#estructura de los periodos"
+      ],
+      "top": 1
+    },
+    {
+      "q": "el periodo de los centros es el mismo que pregrado",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos.md#mismos que los de pregrado"
+      ],
+      "top": 1
+    },
+    {
+      "q": "en que periodo va un grupo que empieza en julio y termina en agosto",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos.md#a que periodo pertenece"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como se configuran las fechas del periodo",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#fechas del periodo y de sus partes"
+      ],
+      "top": 1
+    },
+    {
+      "q": "donde pongo los feriados",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#feriados del periodo",
+        "1.1.2 Programar"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que casillas de soaterm se marcan",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos-configuracion.md#casillas de soaterm"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como cierro el periodo",
+      "espera": [
+        "7.1.9 Ejecutar procesos de cierre",
+        "ref-scripts-ccee",
+        "ref-preguntas-frecuentes-notas"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que es el periodo 202721",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#que es el periodo 202721"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que partes tiene el 202721",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#que partes tiene el periodo 202721"
+      ],
+      "top": 1
+    },
+    {
+      "q": "quien crea el periodo 202721",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#quien crea el periodo 202721",
+        "ref-preguntas-frecuentes-periodos.md#quien crea el periodo"
+      ],
+      "top": 1
+    },
+    {
+      "q": "con que periodo empieza produccion",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#que es el periodo 202721",
+        "ref-preguntas-frecuentes-periodos.md#que periodos usan",
+        "ref-preguntas-frecuentes-periodos.md#verano 2027",
+        "adr-026"
+      ],
+      "top": 1
+    },
+    {
+      "q": "donde esta la web del docente en soaterm",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#web del docente"
+      ],
+      "top": 2
+    },
+    {
+      "q": "hay feriados del 2027 en ssaexcl",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#feriados de 2027",
+        "ref-preguntas-frecuentes-periodos-configuracion.md#feriados del periodo"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que verificacion de errores tiene el 202721",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#verificacion de errores"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que fechas tiene el verano 2027",
+      "espera": [
+        "ref-preguntas-frecuentes-periodos.md#verano 2027",
+        "ref-preguntas-frecuentes-periodo-202721.md#que es el periodo 202721",
+        "ref-preguntas-frecuentes-periodo-202721.md#que datos tiene 202721"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que dudas del 202721 hay para ellucian",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#que dudas de 202721"
+      ],
+      "top": 1
+    },
+    {
+      "q": "que sigue despues de crear el periodo en la capacidad 1",
+      "espera": [
+        "ref-preguntas-frecuentes-periodo-202721.md#que sigue despues"
       ],
       "top": 2
     }

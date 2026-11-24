@@ -39,6 +39,13 @@ async function abrir(browser, html, tema) {
   if (await page.evaluate(() => typeof window.Archify.waitForStableLayout === 'function')) {
     await page.evaluate(() => window.Archify.waitForStableLayout());
   }
+  // La guía (modal_guia.js) pinta el avance sobre nodos y flechas: pendiente (gris punteado), actual y hecho.
+  // Una imagen fija no tiene avance; sin estas marcas cada nodo sale con su color propio.
+  await page.evaluate(() => {
+    for (const marca of ['data-step-state', 'data-ultimo-escogido', 'data-step-edge']) {
+      document.querySelectorAll(`[${marca}]`).forEach((el) => el.removeAttribute(marca));
+    }
+  });
   return page;
 }
 

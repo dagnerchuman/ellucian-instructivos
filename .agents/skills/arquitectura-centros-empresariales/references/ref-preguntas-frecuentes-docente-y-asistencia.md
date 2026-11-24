@@ -2,7 +2,7 @@
 
 Respuestas cortas para el asistente IA y para cualquier agente, tomadas de lo probado en TEST (NRC 10044 y 10045) y del registro. Cada pregunta es un fragmento de la base del asistente (C197). Si la respuesta no está aquí ni en el registro, se dice «No lo sé» (ruta de escape).
 
-Tema de este archivo: docente en SSASECT, carga SIAASGN, Pasar lista, notas y asistencia en el Autoservicio, encuesta TESS. Los otros temas están en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
+Tema de este archivo: registrar a una persona como docente (SIAINST), docente en SSASECT, carga SIAASGN, Pasar lista, notas y asistencia en el Autoservicio, encuesta TESS. Los otros temas están en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
 
 ### ¿Cómo se configura y aplica la evaluación docente (encuesta TESS)?
 Es una encuesta que los alumnos responden por NRC para evaluar a su docente; da puntos de calidad por docente, NRC y área. En orden:
@@ -16,6 +16,15 @@ Es una encuesta que los alumnos responden por NRC para evaluar a su docente; da 
 8. **SVATSGA:** permisos de Control o de Resultados por escuela, departamento o materia; el docente ve sus resultados en el Autoservicio.
 
 La configuración previa de la encuesta (respuestas SVVACOD y SVAPVAC, preguntas SVAQCOD, áreas SVVTEQA, código SVVTSSC y estructura SVASDEF) es de toda la universidad. Fuente: instructivo 6.2.5, diap. 9 a 67. En TEST, SVITESS de 202744 ya lista 20 NRC de pregrado con `EVALD_A` (también los de horario `PRA`), del 19-NOV-2026 al 25-JUL-2027 y con 0 respuestas; la columna Origen en **A** quiere decir **anónima** (C212). **Aún no se prueba en TEST** con los centros (C211); por confirmar la encuesta B de práctica y quién corre los procesos.
+
+### ¿Cómo registro a un docente o cambio el perfil de una persona a docente (SIAINST)?
+En **SIAINST** (instructivo 5.2, diap. 17 y 18; probado en TEST, C225). La persona ya debe existir en SPAIDEN (5.2, diap. 16).
+1. **SIAINST** › **ID** de la persona y **periodo** desde el que será docente (en producción, `202721`) › **Ir**. «Query caused no records…» es normal: todavía no es docente.
+2. **Estatus** `AC` (activo) › Tab: Banner pone la fecha.
+3. Marque la casilla **Docente** (y **Asesor** solo si también lo será).
+4. **GUARDAR**: «Saved successfully».
+
+Categoría, tipo de personal y regla de carga pueden quedar vacíos: así se guardó en TEST y el docente quedó listo para el NRC (C225). Si se usan contratos, uno debe tener «Indicador de predefinido» (5.2, diap. 19). Un cambio desde otro periodo se hace con el botón **Mantenimiento** de SIAINST (5.2, diap. 24 a 27). El «Perfil de acceso de los docentes» de los instructivos 7.1.1 y 7.1.4 es otra cosa: qué procesos del Autoservicio (asistencia y notas) se abren al docente o al asesor.
 
 ### ¿Cómo asigno el docente a un NRC en SSASECT?
 SSASECT › periodo › NRC › **Ir** › pestaña «Instructor y horas de reunión». Primero el horario (bloque «Fechas de reunión»: día, hora en 24 horas sin dos puntos, por ejemplo 1530 a 1710; el indicador de sesión 01 lo pone Banner). Luego, en el bloque **Instructor**, sesión 01 › **ID** del docente › Tab: Banner trae el nombre, carga 1.000, responsabilidad 100 y marca **principal**; porcentaje de sesión 100. Guardar: «Saved successfully» (C180; instructivo 6.2.1, diap. 15 y 19). El indicador de sobrepaso del docente se marca solo si sale «Conflicto de horario del instructor» y se revisó la hoja (6.2.1, diap. 20).

@@ -1150,6 +1150,49 @@
         "ref-preguntas-frecuentes-periodos-configuracion.md#que se configura antes del nrc"
       ],
       "top": 1
+    },
+    {
+      "q": "quiero cambiar el perfil a docente",
+      "espera": [
+        "ref-preguntas-frecuentes-docente-y-asistencia.md#como registro a un docente"
+      ],
+      "top": 1
+    },
+    {
+      "q": "quiero cambiar el perfil de una persona a docente",
+      "espera": [
+        "ref-preguntas-frecuentes-docente-y-asistencia.md#como registro a un docente"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como hago docente a una persona",
+      "espera": [
+        "ref-preguntas-frecuentes-docente-y-asistencia.md#como registro a un docente"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como registro a un docente en banner",
+      "espera": [
+        "ref-preguntas-frecuentes-docente-y-asistencia.md#como registro a un docente"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como doy de alta a un docente",
+      "espera": [
+        "ref-preguntas-frecuentes-docente-y-asistencia.md#como registro a un docente"
+      ],
+      "top": 1
+    },
+    {
+      "q": "como creo un docente",
+      "espera": [
+        "ref-preguntas-frecuentes-docente-y-asistencia.md#como registro a un docente",
+        "recetas/nrc-ssasect.md#siainst"
+      ],
+      "top": 1
     }
   ]
 }

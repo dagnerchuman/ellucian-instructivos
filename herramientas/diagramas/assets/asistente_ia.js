@@ -391,6 +391,12 @@
       { claves: ['superroladmin', 'super', 'banner search card', 'buscador', 'busqueda', 'buscar', 'termino'], terminos: ['super role admin', 'banner search card', 'soaAtmt', 'soaatrk', 'enterattend', 'buscar'], peso: 4 },
       { claves: ['shaegbc', 'shagcom', 'controles', 'calendario', 'libro de calificaciones'], terminos: ['shaegbc', 'shagcom', 'controles del libro de calificaciones', 'calendario de ingreso', 'fecha abierta', 'fecha de corte'], peso: 6 },
       { claves: ['docente', 'docentes', 'profesor', 'profesora', 'profesores', 'profesoras', 'instructor', 'instructora'], terminos: ['docente', 'docentes', 'profesor', 'profesora', 'profesores', 'instructor'], peso: 3 },
+      // «crear un docente», «dar de alta a un profesor», «cambiar el perfil a docente»: es SIAINST (5.2, C225). Sin esto, «perfil» traía
+      // el perfil de acceso del Autoservicio (7.1.1) y la IA inventó una página (C241).
+      { claves: ['crear un docente', 'creo un docente', 'crear docente', 'crear al docente', 'nuevo docente', 'alta a un docente',
+        'alta al docente', 'alta de docente', 'alta de un docente', 'alta a un profesor', 'perfil de docente', 'perfil docente',
+        'perfil a docente', 'perfil de profesor', 'hacer docente', 'hago docente'],
+        terminos: ['siainst'], peso: 8, pregunta: true },
       { claves: ['alumno', 'alumnos', 'estudiante', 'estudiantes'], terminos: ['alumno', 'alumnos', 'estudiante', 'estudiantes'], peso: 2 },
       { claves: ['curso', 'cursos', 'nrc'], terminos: ['curso', 'cursos', 'nrc'], peso: 2 },
       // «cuánto cuesta», «precio»: la base habla de costo, pago y soles (S/).
@@ -1650,7 +1656,7 @@
       if (!mismaLamina) resp.open = !numeradas.length;
       resp.querySelector('summary').textContent = 'En la respuesta: ' + rangoDePasos(g.pasos);
       resp.querySelector('.aipv-resp-lista').innerHTML = g.pasos.map(function (p) {
-        var texto = p.texto.replace(new RegExp('^\\s*' + (p.codigo || '#') + '\\s*:?\\s*'), '');
+        var texto = p.texto.replace(new RegExp('^\\s*' + (p.codigo || '#') + '\\s*[:›]?\\s*'), '');  // «SIAINST › ID…» › «ID…»
         return '<li class="aipv-resp-paso' + (p.marca && p.marca === marcada ? ' activo' : '') + '"' +
           (p.marca ? ' data-aipv-marca="' + escaparHtml(p.marca) + '" title="Corresponde al número ' + escaparHtml(p.marca) + ' de la lámina"' : '') + '>' +
           '<span class="aipv-resp-num">' + escaparHtml(p.num) + '.</span><span class="aipv-texto">' + escaparHtml(texto) +
@@ -1885,13 +1891,15 @@
       { accion: 'crear el NRC', nombre: 'El NRC en SSASECT',
         pregunta: '¿Cómo creo un NRC en SSASECT?',
         detectar: /\b(nrcs?|ssasect|secciones?)\b/, paginas: ['SSASECT'] },
-      { accion: 'asignar el horario y el docente', nombre: 'El horario y el docente',
+      { id: 'horario', accion: 'asignar el horario y el docente', nombre: 'El horario y el docente',
         pregunta: '¿Cómo asigno el docente a un NRC en SSASECT?',
-        detectar: /\b(docentes?|profesor\w*|instructor\w*|horarios?|siaasgn|siainst)\b/, paginas: ['SSASECT', 'SIAASGN', 'SIAINST'] },
+        detectar: /\b(docentes?|profesor\w*|instructor\w*|horarios?|siaasgn)\b/, paginas: ['SSASECT', 'SIAASGN'] },
+      { id: 'persona', accion: 'crear la persona', nombre: 'La persona en SPAIDEN',
+        pregunta: '¿Cómo creo una persona en Banner?',
+        detectar: /\b(personas?|spaiden|goamtch)\b/, paginas: ['SPAIDEN', 'GOAMTCH'] },
       { accion: 'admitir al alumno', nombre: 'La admisión en SAAQUIK',
         pregunta: '¿Cómo se admite a un alumno en el centro (SAAQUIK)?',
-        detectar: /\b(personas?|spaiden|goamtch|admision\w*|admit\w*|saaquik|saaadms|sgastdn)\b/,
-        paginas: ['SAAQUIK', 'SAAADMS', 'SPAIDEN', 'GOAMTCH', 'SGASTDN'] },
+        detectar: /\b(admision\w*|admit\w*|saaquik|saaadms|sgastdn)\b/, paginas: ['SAAQUIK', 'SAAADMS', 'SGASTDN'] },
       { accion: 'matricular al alumno', nombre: 'La matrícula en SFAREGS',
         pregunta: '¿Cómo matriculo a un alumno en el NRC con SFAREGS?',
         detectar: /\b(matricul\w*|sfaregs|inscrib\w*)\b/, paginas: ['SFAREGS'] },
@@ -1904,16 +1912,38 @@
         detectar: /pase a historia|historia academica|\b(shrroll|shacrse)\b/, paginas: ['SHRROLL', 'SHACRSE'] }
     ];
 
-    // Etapa de la pregunta: la más avanzada que nombra («el docente del NRC» es del docente; «el NRC del periodo», del NRC).
-    // Solo cuenta si la respuesta trabaja en una de sus páginas: «subir el sílabo del curso» es SCASYLB, no crear el curso.
+    // Etapas fuera de la cadena, con sus vecinas propias. Registrar a la persona como docente (SIAINST) se hace una vez por
+    // persona: antes está crearla en SPAIDEN (5.2, diap. 16) y después, ponerla en el NRC (C225). Se revisan primero: su
+    // pregunta («perfil de docente», «dar de alta a un docente») es más precisa que «docente» a secas (C241).
+    var ETAPAS_APARTE = [
+      { accion: 'registrar a la persona como docente', nombre: 'El docente en SIAINST',
+        pregunta: '¿Cómo registro a un docente o cambio el perfil de una persona a docente (SIAINST)?',
+        detectar: /\bsiainst\b|\bperfil\b|\b(registr\w*|crea\w*|creo|hag\w*|hace\w*|volver|convert\w*|alta|habilit\w*|pon\w*)\b[^?.]{0,30}\b(docentes?|profesor\w*)\b/,
+        paginas: ['SIAINST'], antes: 'persona', despues: 'horario' }
+    ];
+
+    // Etapa de la pregunta: primero las de aparte; luego la más avanzada de la cadena que nombra («el docente del NRC» es
+    // del docente; «el NRC del periodo», del NRC). Solo cuenta si la respuesta trabaja en una de sus páginas: «subir el
+    // sílabo del curso» es SCASYLB, no crear el curso; si no, se prueba la siguiente.
     function etapaDe(pregunta, respuesta) {
       var t = normalizar(pregunta);
-      for (var i = ETAPAS.length - 1; i >= 0; i--) {
-        if (!ETAPAS[i].detectar.test(t)) continue;
-        var enRespuesta = ETAPAS[i].paginas.some(function (p) { return new RegExp('\\b' + p + '\\b').test(respuesta); });
-        return enRespuesta ? i : -1;
+      var candidatas = ETAPAS_APARTE.concat(ETAPAS.slice().reverse());
+      for (var i = 0; i < candidatas.length; i++) {
+        var e = candidatas[i];
+        if (!e.detectar.test(t)) continue;
+        if (e.paginas.some(function (p) { return new RegExp('\\b' + p + '\\b').test(respuesta); })) return e;
       }
-      return -1;
+      return null;
+    }
+
+    // Etapas vecinas: las que la etapa nombra (por su id) o, en la cadena, la anterior y la siguiente.
+    function vecinas(etapa) {
+      var porId = function (id) { return ETAPAS.filter(function (e) { return e.id === id; })[0] || null; };
+      var i = ETAPAS.indexOf(etapa);
+      return {
+        antes: etapa.antes ? porId(etapa.antes) : (i > 0 ? ETAPAS[i - 1] : null),
+        despues: etapa.despues ? porId(etapa.despues) : (i >= 0 && i < ETAPAS.length - 1 ? ETAPAS[i + 1] : null)
+      };
     }
 
     function botonEtapa(dir, etapa) {
@@ -1927,12 +1957,12 @@
 
     function agregarFlujo(card, pregunta, respuesta) {
       if (PIDE_EL_FLUJO.test(normalizar(pregunta))) return;
-      var i = etapaDe(pregunta, respuesta);
-      if (i === -1) return;
-      var antes = ETAPAS[i - 1], despues = ETAPAS[i + 1];
+      var etapa = etapaDe(pregunta, respuesta);
+      if (!etapa) return;
+      var v = vecinas(etapa), antes = v.antes, despues = v.despues;
       var caja = document.createElement('div');
       caja.className = 'ai-flujo';
-      caja.innerHTML = '<p class="ai-flujo-pregunta">¿Necesita saber el flujo que va antes o después de ' + escaparHtml(ETAPAS[i].accion) + '?</p>' +
+      caja.innerHTML = '<p class="ai-flujo-pregunta">¿Necesita saber el flujo que va antes o después de ' + escaparHtml(etapa.accion) + '?</p>' +
         '<div class="ai-flujo-botones">' + (antes ? botonEtapa('antes', antes) : '') + (despues ? botonEtapa('despues', despues) : '') + '</div>';
       caja.querySelectorAll('.ai-flujo-btn').forEach(function (b) {
         b.addEventListener('click', function () {

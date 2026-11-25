@@ -483,6 +483,14 @@
     {
       "id": "clases",
       "label": "2 · Asistencia y matrícula"
+    },
+    {
+      "id": "docente",
+      "label": "3 · Docente y notas"
+    },
+    {
+      "id": "cierre",
+      "label": "4 · Cierre"
     }
   ],
   "nodes": [
@@ -595,7 +603,67 @@
       "label": "SFAREGS",
       "sublabel": "matricular en el NRC",
       "width": 150,
-      "tag": "10047 · RE",
+      "tag": "10047 · RE"
+    },
+    {
+      "id": "e12",
+      "lane": "docente",
+      "col": 0,
+      "type": "backend",
+      "label": "SSASECT",
+      "sublabel": "docente principal",
+      "width": 150,
+      "tag": "100582059 · principal"
+    },
+    {
+      "id": "e13",
+      "lane": "docente",
+      "col": 1,
+      "type": "frontend",
+      "label": "Autoservicio",
+      "sublabel": "pasar lista",
+      "width": 150,
+      "tag": "9 de 9 · 100 %"
+    },
+    {
+      "id": "e14",
+      "lane": "docente",
+      "col": 2,
+      "type": "frontend",
+      "label": "Autoservicio",
+      "sublabel": "ingresar las notas",
+      "width": 150,
+      "tag": "final 17"
+    },
+    {
+      "id": "e15",
+      "lane": "cierre",
+      "col": 0,
+      "type": "backend",
+      "label": "SFASLST",
+      "sublabel": "revisar la nota final",
+      "width": 150,
+      "tag": "final 17 · modo V"
+    },
+    {
+      "id": "e16",
+      "lane": "cierre",
+      "col": 1,
+      "type": "messagebus",
+      "label": "SHRROLL",
+      "sublabel": "pase a historia",
+      "width": 150,
+      "tag": "jobs 8749 · 8750"
+    },
+    {
+      "id": "e17",
+      "lane": "cierre",
+      "col": 2,
+      "type": "backend",
+      "label": "SHACRSE",
+      "sublabel": "nota en la historia",
+      "width": 150,
+      "tag": "Emprendimiento I 17",
       "icon": "success"
     }
   ],
@@ -661,6 +729,46 @@
       "from": "e10",
       "to": "e11",
       "variant": "emphasis"
+    },
+    {
+      "id": "e-e11-e12",
+      "from": "e11",
+      "to": "e12",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e-e12-e13",
+      "from": "e12",
+      "to": "e13",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-e13-e14",
+      "from": "e13",
+      "to": "e14",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-e14-e15",
+      "from": "e14",
+      "to": "e15",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e-e15-e16",
+      "from": "e15",
+      "to": "e16",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-e16-e17",
+      "from": "e16",
+      "to": "e17",
+      "variant": "emphasis"
     }
   ],
   "cards": [
@@ -669,7 +777,7 @@
       "title": "Probado en TEST",
       "items": [
         "Se abre en TEST un NRC nuevo de Emprendimiento I (ESGE 00117, sección C, 202656, parte P06) y se lleva de punta a punta, como el 10045 de Computación: horario, docente, malla, fórmula, asistencia, matrícula, notas y pase a historia (C222). Con un alumno de prueba que ya existe se pasa del paso 8 al 11; sin él, los pasos 9 y 10 lo crean y lo admiten (C245 a C247).",
-        "En curso: pasos 1 a 11 hechos (20/11/2026 y 25/11/2026): NRC, horario, docente, carga, malla, fórmula, regla de asistencia, cupo 40, alumno de prueba S00912627 creado y admitido en MMEMM01, y matriculado con RE en el 10047 (C222 a C229, C243 a C247)."
+        "Completo: los 17 pasos hechos en TEST (20/11/2026 y 25/11/2026). NRC, horario, docente, carga, malla, fórmula, regla de asistencia, cupo, alumno de prueba S00912627 creado, admitido y matriculado; docente del Autoservicio como principal, asistencia 9 de 9, notas con final 17, SFASLST, pase a historia (jobs 8749 y 8750) y 17 en SHACRSE (C222 a C229, C243 a C252)."
       ]
     },
     {

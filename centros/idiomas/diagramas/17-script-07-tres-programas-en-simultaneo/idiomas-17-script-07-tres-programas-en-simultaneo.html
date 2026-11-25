@@ -15128,9 +15128,38 @@ html:not([data-theme="dark"]) .focus-chip .guia-topbar-actions .chip-btn-ctrl:ho
   flex-direction: column !important;
   align-items: stretch !important;
   justify-content: flex-start !important;
-  overflow: hidden !important;
+  /* Con capturas y láminas el contenido pasa del alto: el cuerpo hace scroll vertical. */
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
   padding: 0.28rem 0.75rem 0.2rem 0.75rem !important;
   box-sizing: border-box !important;
+}
+
+/* Barra de scroll siempre visible (en Mac se ocultaba): así se nota que hay más abajo. */
+.guia-body-scroll::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  width: 12px !important;
+}
+.guia-body-scroll::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.18) !important;
+  border-radius: 6px !important;
+}
+.guia-body-scroll::-webkit-scrollbar-thumb {
+  background: #0284c7 !important;
+  border: 2px solid transparent !important;
+  background-clip: padding-box !important;
+  border-radius: 6px !important;
+  min-height: 40px !important;
+}
+.guia-body-scroll::-webkit-scrollbar-thumb:hover {
+  background: #0369a1 !important;
+  background-clip: padding-box !important;
+}
+@supports not selector(::-webkit-scrollbar) {
+  .guia-body-scroll {
+    scrollbar-width: auto !important;
+    scrollbar-color: #0284c7 rgba(148, 163, 184, 0.18) !important;
+  }
 }
 
 /* Stepper de Fases Interactivo Horizontal */
@@ -15442,9 +15471,10 @@ html:not([data-theme="dark"]) .guia-hito-badge {
 /* --- 5. TABLA DE 6 COLUMNAS CON SCROLL VERTICAL PROPIO Y THEAD STICKY --- */
 .guia-tabla-wrap {
   width: 100% !important;
-  flex: 1 1 0% !important;
+  /* Crece hasta mostrar todas sus filas; el scroll vertical es el del cuerpo de la guía. */
+  flex: 1 0 auto !important;
   min-height: 120px !important;
-  overflow-y: auto !important;
+  overflow-y: visible !important;
   overflow-x: auto !important;
   border-radius: 0.5rem !important;
   border: 1px solid rgba(148, 163, 184, 0.22) !important;

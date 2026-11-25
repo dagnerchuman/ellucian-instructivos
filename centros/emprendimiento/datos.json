@@ -283,8 +283,73 @@
         "nrc": "10047",
         "caso": "Se abre en TEST un NRC nuevo de Emprendimiento I (ESGE 00117, sección C, 202656, parte P06) y se lleva de punta a punta, como el 10045 de Computación: horario, docente, malla, fórmula, asistencia, matrícula, notas y pase a historia (C222). Con un alumno de prueba que ya existe se pasa del paso 8 al 11; sin él, los pasos 9 y 10 lo crean y lo admiten (C245 a C247).",
         "horario": "Miércoles 09:00–11:00 en SAUVIR · SALA-VIRT (P06, 30-SEP a 06-DIC-2026)",
-        "pendiente": "Pasos 12 a 16: asistencia y notas en el Autoservicio, SFASLST, pase a historia (SHRROLL) y nota en la historia (SHACRSE).",
-        "avance": "En curso: pasos 1 a 11 hechos (20/11/2026 y 25/11/2026): NRC, horario, docente, carga, malla, fórmula, regla de asistencia, cupo 40, alumno de prueba S00912627 creado y admitido en MMEMM01, y matriculado con RE en el 10047 (C222 a C229, C243 a C247).",
+        "pendiente": "Ninguno: los 17 pasos se hicieron en TEST (C250 a C252).",
+        "avance": "Completo: los 17 pasos hechos en TEST (20/11/2026 y 25/11/2026). NRC, horario, docente, carga, malla, fórmula, regla de asistencia, cupo, alumno de prueba S00912627 creado, admitido y matriculado; docente del Autoservicio como principal, asistencia 9 de 9, notas con final 17, SFASLST, pase a historia (jobs 8749 y 8750) y 17 en SHACRSE (C222 a C229, C243 a C252).",
+        "inicio": {
+          "titulo": "¿Por dónde empiezo?",
+          "intro": "Responda en orden. Con «Sí» pasa a la pregunta siguiente; con «No» se abre lo que falta. Así no repite lo que ya completó.",
+          "preguntas": [
+            {
+              "pregunta": "¿Ya existen el periodo 202656 y la parte P06?",
+              "si": "siguiente",
+              "no": {
+                "flujo": "07-script-11-apertura-de-periodo",
+                "texto": "Apertura del periodo (Script 11)"
+              },
+              "cita": "C222"
+            },
+            {
+              "pregunta": "¿El NRC 10047 ya existe con su horario y su docente?",
+              "si": "siguiente",
+              "no": {
+                "paso": 1
+              },
+              "cita": "C222 a C225"
+            },
+            {
+              "pregunta": "¿Ya se revisó la carga del docente en SIAASGN?",
+              "si": "siguiente",
+              "no": {
+                "paso": 4
+              },
+              "cita": "C227 · C228"
+            },
+            {
+              "pregunta": "¿ESGE 00117 ya está en la malla y el NRC tiene su fórmula y su regla de asistencia?",
+              "si": "siguiente",
+              "no": {
+                "paso": 5
+              },
+              "cita": "C229 · C243 · C244"
+            },
+            {
+              "pregunta": "¿El NRC ya tiene cupo (Máximo y Proyectado)?",
+              "si": "siguiente",
+              "no": {
+                "paso": 8
+              },
+              "cita": "C247"
+            },
+            {
+              "pregunta": "¿El alumno de prueba ya existe con su programa MMEMM01?",
+              "si": "siguiente",
+              "no": {
+                "paso": 9
+              },
+              "cita": "C245 · C246"
+            },
+            {
+              "pregunta": "¿El alumno ya está matriculado con RE en el 10047?",
+              "si": {
+                "paso": 12
+              },
+              "no": {
+                "paso": 11
+              },
+              "cita": "C247"
+            }
+          ]
+        },
         "pasos": [
           {
             "n": 1,
@@ -2689,6 +2754,1044 @@
               "sfaregs_error",
               "tsaarev"
             ]
+          },
+          {
+            "n": 12,
+            "codigo": "SSASECT",
+            "accion": "docente principal",
+            "dato": "10047 › Instructor › 100582059 · sobrepaso · principal",
+            "quien": "Jefe del centro",
+            "cita": "Instructivo 6.2.1, diap. 15, 19 y 20 · C225 · C249 · C250",
+            "resultado": "Saved successfully (1 rows saved) y luego (2 rows saved): 100582059 principal de la sesión 01, S00912601 secundario",
+            "nota": "El docente de prueba S00912601 (paso 3) no puede iniciar sesión en el Autoservicio, así que se agregó al docente de la prueba de Computación con sobrepaso por el cruce de los miércoles. Tiene que ser el principal: como secundario ve los componentes «sólo de lectura» y no puede poner notas (paso 14).",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Bloque Instructor (antes)",
+                  "S00912601 · principal · 100 %",
+                  "Paso 3",
+                  "No puede entrar al Autoservicio"
+                ],
+                [
+                  "Fila nueva",
+                  "clic en la fila › + › Tab › 100582059 › Tab",
+                  "Usuario",
+                  "Banner pone el nombre, carga 1.000 y responsabilidad 100"
+                ],
+                [
+                  "Indicador de sobrepaso",
+                  "✓",
+                  "Usuario",
+                  "Cruce de los miércoles 09:00–11:00 con otro NRC suyo (C225)"
+                ],
+                [
+                  "Guardar",
+                  "Saved successfully (1 rows saved)",
+                  "Usuario",
+                  "Con permiso del usuario"
+                ],
+                [
+                  "Indicador de principal",
+                  "S00912601 sin marcar › 100582059 ✓",
+                  "Usuario",
+                  "Primero se desmarca el otro: si no, «Instructor principal ya fue definido». En las casillas un clic enfoca y otro marca"
+                ],
+                [
+                  "Guardar",
+                  "«ALERTA: el porcentaje total de responsabilidad… no es igual a 100» · Saved successfully (2 rows saved)",
+                  "Banner",
+                  "La alerta no impide guardar"
+                ],
+                [
+                  "Por qué el principal",
+                  "Solo el principal pone notas",
+                  "Banner",
+                  "El secundario ve «sólo de lectura» (paso 14, fila 4)"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "12-ssasect-docente-autoservicio.png",
+                "texto": "Bloque Instructor: el docente de prueba como principal",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      0,
+                      255,
+                      800,
+                      273
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "12-ssasect-docente-autoservicio-b.png",
+                "texto": "Fila nueva con 100582059 y sobrepaso",
+                "cuadros": [
+                  {
+                    "n": 2,
+                    "caja": [
+                      0,
+                      272,
+                      800,
+                      290
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      732,
+                      272,
+                      758,
+                      290
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "12-ssasect-docente-autoservicio-c.png",
+                "texto": "Guardado: dos docentes en la sesión 01",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      518,
+                      68,
+                      800,
+                      100
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "12-ssasect-docente-autoservicio-d.png",
+                "texto": "100582059 pasa a principal",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      618,
+                      255,
+                      652,
+                      290
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      272,
+                      68,
+                      800,
+                      130
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "100582059 · principal",
+            "laminas": [
+              {
+                "instructivo": "6.2.1",
+                "n": 15,
+                "texto": "Bloque Instructor: ID del docente"
+              },
+              {
+                "instructivo": "6.2.1",
+                "n": 19,
+                "texto": "Responsabilidad, principal, sobrepaso y sesión"
+              },
+              {
+                "instructivo": "6.2.1",
+                "n": 20,
+                "texto": "Cruce de horario del docente"
+              }
+            ]
+          },
+          {
+            "n": 13,
+            "codigo": "Autoservicio",
+            "accion": "pasar lista",
+            "dato": "Control de asistencia › 10047 › Pasar lista · 9 miércoles",
+            "quien": "Docente",
+            "cita": "Instructivo 7.1.1, diap. 44, 56 y 57 · C101 · C186 · C249 · C251",
+            "resultado": "S00912627 con 100 % (9 de 9, del 30-SEP al 25-NOV-2026). Al enviar al libro: «El componente de la calificación no existe»",
+            "nota": "Emprendimiento I no tiene ATTRGRD en su fórmula (paso 6), así que la asistencia no pasa al libro. No impide poner las notas. En Computación sí pasa (ATTRGRD 100 = APRO).",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Entrada",
+                  "Experience › Autoservicio Docentes › Ingresar asistencia",
+                  "Docente",
+                  "Si la tarjeta no abre ventana: …/FacultySelfService/ssb/facultyAttendanceTracking, sin :8100 (C249)"
+                ],
+                [
+                  "Curso",
+                  "10047 Emprendimiento I · Mié 09:00 · sesión 01 › Pasar lista",
+                  "Docente",
+                  "Sale por la regla 13 de SOAATRK (paso 7)"
+                ],
+                [
+                  "Antes",
+                  "S00912627 en 0 %",
+                  "Banner",
+                  "Una columna por miércoles desde el 30-SEP-2026"
+                ],
+                [
+                  "Fecha de la sesión",
+                  "ícono de calendario › día",
+                  "Docente",
+                  "El campo de fecha no deja escribir; ‹ › cambian de mes"
+                ],
+                [
+                  "Marcar",
+                  "círculo de la columna resaltada › Presente, 2 horas",
+                  "Docente",
+                  "Cada clic se guarda solo: «La información de asistencia… se agregó con éxito»"
+                ],
+                [
+                  "Resultado",
+                  "9 sesiones · 100 %",
+                  "Banner",
+                  "30-SEP, 07, 14, 21 y 28-OCT, 04, 11, 18 y 25-NOV-2026"
+                ],
+                [
+                  "Clase › Actualizar la asistencia en el libro",
+                  "«El componente de la calificación no existe»",
+                  "Banner",
+                  "Sin ATTRGRD no hay a dónde enviarla"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "13-autoservicio-asistencia.png",
+                "texto": "Experience › Autoservicio Docentes › Ingresar asistencia",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      65,
+                      258,
+                      268,
+                      297
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "13-autoservicio-asistencia-b.png",
+                "texto": "Mis cursos: el 10047 con «Pasar lista»",
+                "cuadros": [
+                  {
+                    "n": 2,
+                    "caja": [
+                      0,
+                      428,
+                      600,
+                      462
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "13-autoservicio-asistencia-c.png",
+                "texto": "Antes: 0 % y la fecha de la sesión",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      210,
+                      222,
+                      270,
+                      245
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      468,
+                      124,
+                      596,
+                      148
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "13-autoservicio-asistencia-d.png",
+                "texto": "Primera sesión marcada: se guarda sola",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      515,
+                      215,
+                      555,
+                      245
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      462,
+                      45,
+                      800,
+                      105
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "13-autoservicio-asistencia-e.png",
+                "texto": "Las 9 sesiones: 100 %",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      210,
+                      215,
+                      560,
+                      250
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "13-autoservicio-asistencia-f.png",
+                "texto": "Clase › Actualizar la asistencia en el libro",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      122,
+                      281,
+                      236,
+                      340
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "13-autoservicio-asistencia-g.png",
+                "texto": "«El componente de la calificación no existe»",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      462,
+                      45,
+                      800,
+                      105
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "9 de 9 · 100 %",
+            "laminas": [
+              {
+                "instructivo": "7.1.1",
+                "n": 44,
+                "texto": "Pasar lista del NRC y la sesión"
+              },
+              {
+                "instructivo": "7.1.1",
+                "n": 56,
+                "texto": "Clase › pasar la asistencia al libro"
+              },
+              {
+                "instructivo": "7.1.1",
+                "n": 57,
+                "texto": "Confirmar el envío"
+              }
+            ]
+          },
+          {
+            "n": 14,
+            "codigo": "Autoservicio",
+            "accion": "ingresar las notas",
+            "dato": "1_PC 16 · 2_PSS 18 · 3_PTS 18 · 4_FE 15 · 5_PY 17 (sobre 20)",
+            "quien": "Docente",
+            "cita": "Instructivo 7.1.4, diap. 64 a 67 y 75 · C106 · C187 · C243 · C251",
+            "resultado": "Calificaciones compuestas: 83.75 % y nota final 17 (Composite Calculation, 25-Nov-2026)",
+            "nota": "PF = 16×0,15 + 18×0,10 + 18×0,10 + 15×0,15 + 17×0,50 = 16,75 de 20 (83,75 %) y con VIG_11 sale 17. Con libro de calificaciones la final no se escribe en «Calificaciones finales»: pasa sola a la lista de clase (paso 15).",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Entrada",
+                  "…/FacultySelfService/ssb/gradeEntry#/gradebook › Libro de calificaciones",
+                  "Docente",
+                  "El 10047 sale «No iniciado»"
+                ],
+                [
+                  "Detalle del curso",
+                  "principal y secundario del 10047",
+                  "Banner",
+                  "Antes del paso 12 el principal era el docente de prueba"
+                ],
+                [
+                  "Componentes",
+                  "1_PC 0.15 · 2_PSS 0.1 · 3_PTS 0.1 · 4_FE 0.15 · 5_PY 0.5 · VIG_11",
+                  "Banner",
+                  "La fórmula del paso 6"
+                ],
+                [
+                  "Docente secundario",
+                  "«Ingrese las calificaciones del componente (sólo de lectura)»",
+                  "Banner",
+                  "Por eso el paso 12 lo deja principal"
+                ],
+                [
+                  "Puntaje",
+                  "1_PC: 16 de 20",
+                  "Docente",
+                  "Cada componente sobre 20 (C243)"
+                ],
+                [
+                  "Guardar",
+                  "«Se guardó con éxito, la calificación para el NRC 10047 aún no se ha iniciado» · 80 % · 16",
+                  "Docente",
+                  "Con permiso del usuario; OK para cerrar el aviso"
+                ],
+                [
+                  "Los demás",
+                  "2_PSS 18 · 3_PTS 18 · 4_FE 15 · 5_PY 17",
+                  "Docente",
+                  "El último: «…se completó la calificación para el NRC 10047»"
+                ],
+                [
+                  "Calificaciones compuestas",
+                  "83.75 % · final 17 · Composite Calculation",
+                  "Banner",
+                  "Sin ATTRGRD, a diferencia del 10045"
+                ],
+                [
+                  "Calificaciones finales",
+                  "10047 Completado · No iniciado · «No se encontraron alumnos»",
+                  "Banner",
+                  "Igual que el 10044 (C106): la final va sola a SFASLST"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "14-autoservicio-notas.png",
+                "texto": "Libro de calificaciones: el 10047 «No iniciado»",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      0,
+                      302,
+                      800,
+                      335
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-autoservicio-notas-b.png",
+                "texto": "Detalle del curso: principal y secundario",
+                "cuadros": [
+                  {
+                    "n": 2,
+                    "caja": [
+                      546,
+                      282,
+                      782,
+                      342
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-autoservicio-notas-c.png",
+                "texto": "Los cinco componentes de la fórmula",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      10,
+                      224,
+                      790,
+                      345
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-autoservicio-notas-d.png",
+                "texto": "Docente secundario: «sólo de lectura»",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      10,
+                      392,
+                      300,
+                      410
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-autoservicio-notas-e.png",
+                "texto": "1_PC: puntaje 16 de 20",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      194,
+                      387,
+                      248,
+                      407
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-autoservicio-notas-f.png",
+                "texto": "Guardado: 80 % y calificación 16",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      462,
+                      45,
+                      800,
+                      95
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      294,
+                      387,
+                      482,
+                      407
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-autoservicio-notas-g.png",
+                "texto": "5_PY con 17: calificación completa",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      462,
+                      45,
+                      800,
+                      95
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-autoservicio-notas-h.png",
+                "texto": "Calificaciones compuestas: 83.75 % y final 17",
+                "cuadros": [
+                  {
+                    "n": 8,
+                    "caja": [
+                      358,
+                      262,
+                      700,
+                      366
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "14-autoservicio-notas-i.png",
+                "texto": "Calificaciones finales: «No se encontraron alumnos»",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      0,
+                      329,
+                      800,
+                      382
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      0,
+                      425,
+                      800,
+                      500
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "final 17",
+            "laminas": [
+              {
+                "instructivo": "7.1.4",
+                "n": 64,
+                "texto": "Libro: el NRC y «Componentes»"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 66,
+                "texto": "Libro: elegir el componente"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 67,
+                "texto": "Libro: la nota de cada alumno"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 75,
+                "texto": "Calificaciones compuestas"
+              }
+            ]
+          },
+          {
+            "n": 15,
+            "codigo": "SFASLST",
+            "accion": "revisar la nota final",
+            "dato": "202656 · 10047",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.6, diap. 15 y 16 · C107 · C188 · C252",
+            "resultado": "Solo consulta: S00912627 con RE, calificación final 17, modo V",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Periodo · NRC",
+                  "202656 · 10047 › Ir",
+                  "Usuario",
+                  "Tab trae ESGE 00117 C"
+                ],
+                [
+                  "Aviso",
+                  "«Ya existen componentes calificables para esta sección…»",
+                  "Banner",
+                  "Lo que se escriba aquí lo puede sobrescribir el libro; OK"
+                ],
+                [
+                  "Lista de clase",
+                  "S00912627 · RE · final 17 · modo V",
+                  "Banner",
+                  "Llegó sola del libro (paso 14); no se guarda nada"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "15-sfaslst-nota-final.png",
+                "texto": "Aviso: el NRC se califica con libro",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      100,
+                      72,
+                      600,
+                      90
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      231,
+                      180,
+                      569,
+                      360
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "15-sfaslst-nota-final-b.png",
+                "texto": "S00912627 con final 17, modo V",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      0,
+                      142,
+                      800,
+                      158
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "final 17 · modo V",
+            "laminas": [
+              "sfaslst"
+            ]
+          },
+          {
+            "n": 16,
+            "codigo": "SHRROLL",
+            "accion": "pase a historia",
+            "dato": "GJAPCTL · SHRROLL · 10047 · modo A (job 8749) y luego U (job 8750)",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.9, diap. 22 a 27 · C121 · C190 · C252",
+            "resultado": "Job 8749 (A): S00912627 «Rolled to Academic History» en MMEMM01 · Deg Created. Job 8750 (U) con los mismos parámetros",
+            "nota": "Primero en modo A y se lee el reporte; solo si sale bien, en modo U. A diferencia del alumno de Computación (C121), no sale «API Error»: este alumno tiene un solo plan.",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Proceso",
+                  "GJAPCTL › SHRROLL › Ir",
+                  "Usuario",
+                  "Esperar a que cargue la página antes de escribir"
+                ],
+                [
+                  "01 Código de periodo",
+                  "202656",
+                  "Usuario",
+                  "Clic en Valores de la fila 01; flecha abajo para pasar de fila"
+                ],
+                [
+                  "04 Parte de periodo",
+                  "%",
+                  "Banner",
+                  "Viene así"
+                ],
+                [
+                  "05 NRC",
+                  "10047",
+                  "Usuario",
+                  "Reemplaza el % que trae"
+                ],
+                [
+                  "06 ID de usuario",
+                  "el del operador",
+                  "Usuario",
+                  ""
+                ],
+                [
+                  "07 Modo",
+                  "A (auditar) · luego U (actualizar)",
+                  "Usuario",
+                  "Se lee el reporte del A antes de correr el U"
+                ],
+                [
+                  "08 · 09 · 10",
+                  "A · 202656 · N",
+                  "Usuario y Banner",
+                  "09 es el periodo de calificaciones"
+                ],
+                [
+                  "Envío",
+                  "Enviar › GUARDAR",
+                  "Usuario",
+                  "Clic primero en el bloque Envío; si no: «Debe estar en BLOQUE DE ENVÍO para que la función sea válida»"
+                ],
+                [
+                  "Job",
+                  "shrroll_8749 (A) · shrroll_8750 (U)",
+                  "Banner",
+                  "«Arc Log… Arch List…»"
+                ],
+                [
+                  "GJIREVO · shrroll_8749.lis",
+                  "S00912627 «Rolled to Academic History» · M · EM · ACEM · SCH · MMEMM01 · Deg Created",
+                  "Banner",
+                  "GJIREVO: el Número con Tab desde Proceso; el archivo, de la lista"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "16-shrroll-pase-historia.png",
+                "texto": "GJAPCTL › SHRROLL en modo A",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      0,
+                      74,
+                      330,
+                      89
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      0,
+                      265,
+                      800,
+                      281
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      0,
+                      316,
+                      800,
+                      332
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      0,
+                      333,
+                      800,
+                      349
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      0,
+                      350,
+                      800,
+                      366
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      0,
+                      367,
+                      800,
+                      383
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      0,
+                      384,
+                      800,
+                      434
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "16-shrroll-pase-historia-b.png",
+                "texto": "Enviado: job 8749",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      480,
+                      68,
+                      800,
+                      100
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "16-shrroll-pase-historia-c.png",
+                "texto": "GJIREVO: «Rolled to Academic History»",
+                "cuadros": [
+                  {
+                    "n": 10,
+                    "caja": [
+                      0,
+                      268,
+                      800,
+                      300
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "16-shrroll-pase-historia-d.png",
+                "texto": "Mismos parámetros con modo U y Enviar",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      0,
+                      321,
+                      800,
+                      337
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      410,
+                      463,
+                      620,
+                      480
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      742,
+                      508,
+                      798,
+                      526
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "16-shrroll-pase-historia-e.png",
+                "texto": "Enviado: job 8750",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      480,
+                      68,
+                      800,
+                      100
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "jobs 8749 · 8750",
+            "laminas": [
+              {
+                "instructivo": "7.1.9",
+                "n": 22,
+                "texto": "GJAPCTL: proceso SHRROLL"
+              },
+              {
+                "instructivo": "7.1.9",
+                "n": 23,
+                "texto": "SHRROLL: impresora y parámetros"
+              },
+              {
+                "instructivo": "7.1.9",
+                "n": 25,
+                "texto": "SHRROLL: enviar y guardar"
+              },
+              {
+                "instructivo": "7.1.9",
+                "n": 27,
+                "texto": "Revisar la salida en GJIREVO"
+              }
+            ]
+          },
+          {
+            "n": 17,
+            "codigo": "SHACRSE",
+            "accion": "nota en la historia",
+            "dato": "S00912627 · 202656",
+            "quien": "Registros Académicos",
+            "cita": "C124 · C190 · C252",
+            "resultado": "10047 · ESGE 00117 C · P06 · SCH · M · Emprendimiento I con 17, modo V, 4 horas",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "ID · periodo",
+                  "S00912627 · 202656 › Ir",
+                  "Usuario",
+                  "SHACRSE arrastra el ID de la página anterior: revisarlo"
+                ],
+                [
+                  "Curso",
+                  "202656 · P06 · SCH · M · 10047 · ESGE 00117 · C",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Nota",
+                  "4.000 horas · 17 · modo V · Emprendimiento I",
+                  "Banner",
+                  "Ya está en la historia; una corrección va por SHATCKN (C124)"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "17-shacrse-historia.png",
+                "texto": "SHACRSE: el 10047 en la historia de 202656",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      0,
+                      72,
+                      370,
+                      88
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      0,
+                      133,
+                      800,
+                      150
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "17-shacrse-historia-b.png",
+                "texto": "Emprendimiento I con 17, modo V",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      300,
+                      133,
+                      660,
+                      150
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "Emprendimiento I 17",
+            "laminas": [
+              {
+                "instructivo": "7.1.6",
+                "n": 19,
+                "texto": "SHATCKN: la nota en la historia del periodo",
+                "nota": "SHACRSE no sale en los instructivos de Ellucian. Referencia: la nota del curso en la historia académica se ve en SHATCKN (instructivo 7.1.6, diap. 19)."
+              }
+            ]
           }
         ],
         "fases": [
@@ -2716,14 +3819,21 @@
             ]
           },
           {
-            "id": "cierre",
-            "titulo": "3 · Clases, notas y cierre",
+            "id": "docente",
+            "titulo": "3 · Docente y notas",
             "pasos": [
               12,
               13,
-              14,
+              14
+            ]
+          },
+          {
+            "id": "cierre",
+            "titulo": "4 · Cierre",
+            "pasos": [
               15,
-              16
+              16,
+              17
             ]
           }
         ]

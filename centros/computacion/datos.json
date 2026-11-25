@@ -2752,6 +2752,80 @@
         "horario": "Miércoles 15:30–17:10: libre para el docente 100582059 según la hoja de NRC de 202656 (C179); guardado en TEST el 30/10/2026 (C180)",
         "pendiente": "Resuelto el 31-OCT-2026: Arnold Vaca (S00912438) se dio de baja del 10045 con DD antes del pase a historia (C189).",
         "avance": "Completo: los 14 pasos hechos en TEST el 30 y el 31/10/2026, con sus capturas (C180 a C190). El NRC 10045 fue de punta a punta: horario, docente, malla, fórmula, asistencia, notas, pase a historia y nota 17 en la historia. El 04/11/2026 se sumaron 15 capturas para cubrir cada lámina del instructivo (C194).",
+        "inicio": {
+          "titulo": "¿Por dónde empiezo?",
+          "intro": "Responda en orden. Con «Sí» pasa a la pregunta siguiente; con «No» se abre lo que falta. Así no repite lo que ya completó.",
+          "preguntas": [
+            {
+              "pregunta": "¿Ya existen el periodo 202656 y la parte X06?",
+              "si": "siguiente",
+              "no": {
+                "flujo": "07-script-11-apertura-de-periodo",
+                "texto": "Apertura del periodo (Script 11)"
+              },
+              "cita": "C180"
+            },
+            {
+              "pregunta": "¿El NRC 10045 ya existe con su horario y su docente?",
+              "si": "siguiente",
+              "no": {
+                "paso": 1
+              },
+              "cita": "C180"
+            },
+            {
+              "pregunta": "¿Ya se revisó la carga del docente en SIAASGN?",
+              "si": "siguiente",
+              "no": {
+                "paso": 4
+              },
+              "cita": "C180"
+            },
+            {
+              "pregunta": "¿El curso ya está en la malla y el NRC tiene su fórmula y su regla de asistencia?",
+              "si": "siguiente",
+              "no": {
+                "paso": 5
+              },
+              "cita": "C181 · C182"
+            },
+            {
+              "pregunta": "¿El alumno ya existe y está admitido en su ruta (CMEMC44)?",
+              "si": "siguiente",
+              "no": {
+                "flujo": "04-persona-y-admision",
+                "texto": "Persona y admisión"
+              },
+              "cita": "C185"
+            },
+            {
+              "pregunta": "¿El alumno ya está matriculado con RE en el 10045?",
+              "si": "siguiente",
+              "no": {
+                "paso": 8
+              },
+              "cita": "C185"
+            },
+            {
+              "pregunta": "¿El docente ya pasó lista y puso las notas?",
+              "si": "siguiente",
+              "no": {
+                "paso": 9
+              },
+              "cita": "C186 · C187"
+            },
+            {
+              "pregunta": "¿La nota final ya se revisó en SFASLST y se hizo el pase a historia?",
+              "si": {
+                "paso": 14
+              },
+              "no": {
+                "paso": 11
+              },
+              "cita": "C188 · C190"
+            }
+          ]
+        },
         "pasos": [
           {
             "n": 1,

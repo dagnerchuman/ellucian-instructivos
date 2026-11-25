@@ -14,7 +14,7 @@ import sys
 from urllib.parse import quote
 from guias_operativas import obtener_guia, GUIAS_BASE, GUIAS_SCRIPTS
 from diapositivas_pasos import INSTRUCTIVOS, SIN_LAMINA, para as diapositivas_del_paso
-from plantillas import (TITULOS, CAPACIDADES, DEMOSTRACIONES, RECORRIDOS_COMUNES, guia_casuistica_de,
+from plantillas import (TITULOS, CAPACIDADES, DEMOSTRACIONES, RECORRIDOS_COMUNES, PRUEBAS, guia_casuistica_de,
                         guia_demostracion, guia_recorrido, guia_recorrido_comun, slug_prueba)
 from centro import Centro
 
@@ -340,6 +340,7 @@ _LIMPIEZA = [
     ("<!-- === FLOW NAV TOP === -->", r"\s*<!-- === FLOW NAV TOP === -->.*?<!-- === /FLOW NAV TOP === -->", 0),
     ("<!-- === FLOW NAV BOTTOM === -->", r"\s*<!-- === FLOW NAV BOTTOM === -->.*?<!-- === /FLOW NAV BOTTOM === -->", 0),
     ("<!-- === ANTES DEL NRC === -->", r"\s*<!-- === ANTES DEL NRC === -->.*?<!-- === /ANTES DEL NRC === -->", 0),
+    ("<!-- === INICIO DEL FLUJO === -->", r"<!-- === INICIO DEL FLUJO === -->.*?<!-- === /INICIO DEL FLUJO === -->\n(?:    )?", 0),
     # Va después de «Antes del NRC», fuera de sus marcas: sin esto, reinyectar la página la duplicaba.
     ("window.__PRUEBA_GUIA = ", r"\s*<script>window\.__PRUEBA_GUIA = .*?</script>", 0),
     ("<!-- === ASISTENTE IA CENTROS EMPRESARIALES USS",
@@ -620,6 +621,98 @@ def _html_antes_nrc(slug, carpeta_html=None):
         '<!-- === /ANTES DEL NRC === -->\n')
 
 
+CSS_INICIO = """<style>
+.inicio-flujo{margin:.75rem clamp(.5rem,2vw,1.25rem) 1rem;padding:.9rem 1.1rem 1rem;border:1px solid var(--panel-border,#cbd5e1);
+border-left:4px solid #0d9488;border-radius:.75rem;background:var(--panel,rgba(255,255,255,.6));color:var(--text,#111827);font-size:.9rem;line-height:1.45}
+.inicio-flujo summary{display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:1.05rem;font-weight:700;list-style:none}
+.inicio-flujo summary::-webkit-details-marker{display:none}
+.inicio-flujo summary::after{content:"▾";margin-left:auto;color:#0d9488;transition:transform .15s}
+.inicio-flujo:not([open]) summary::after{transform:rotate(-90deg)}
+.inicio-flujo .if-intro{margin:.5rem 0 .7rem;color:var(--text-muted,#475569)}
+.inicio-flujo ol{list-style:none;margin:0;padding:0;display:grid;gap:.4rem}
+.inicio-flujo li{display:grid;grid-template-columns:1.6rem 1fr auto;align-items:center;gap:.6rem;padding:.5rem .6rem;border-radius:.55rem;
+border:1px solid transparent;transition:background .15s,border-color .15s,opacity .15s}
+.inicio-flujo li.if-activa{border-color:#0d9488;background:rgba(13,148,136,.08)}
+.inicio-flujo li.if-hecha{opacity:.55}
+.inicio-flujo .if-n{width:1.5rem;height:1.5rem;border-radius:999px;background:#0d9488;color:#fff;display:grid;place-items:center;font-size:.75rem;font-weight:700}
+.inicio-flujo .if-cita{display:block;color:var(--text-muted,#64748b);font-size:.75rem}
+.inicio-flujo .if-botones{display:flex;gap:.35rem}
+.inicio-flujo button{font:inherit;font-size:.8rem;font-weight:600;padding:.3rem .8rem;border-radius:.45rem;cursor:pointer;
+border:1px solid #0d9488;background:transparent;color:#0f766e;transition:transform .1s,background .15s}
+.inicio-flujo button:hover{background:rgba(13,148,136,.1);transform:translateY(-1px)}
+.inicio-flujo button:active{transform:translateY(1px)}
+.inicio-flujo button.if-no{border-color:#b45309;color:#b45309}
+.inicio-flujo button.if-no:hover{background:rgba(180,83,9,.08)}
+.inicio-flujo .if-aviso{margin:.6rem 0 0;padding:.5rem .7rem;border-radius:.5rem;background:rgba(13,148,136,.08);display:none}
+.inicio-flujo .if-aviso.if-ver{display:block}
+@media (max-width:640px){.inicio-flujo li{grid-template-columns:1.6rem 1fr}.inicio-flujo .if-botones{grid-column:2}}
+</style>"""
+
+JS_INICIO = """<script>
+(function(){
+  var caja=document.querySelector('.inicio-flujo'); if(!caja) return;
+  var filas=[].slice.call(caja.querySelectorAll('li')), aviso=caja.querySelector('.if-aviso');
+  function activar(i){filas.forEach(function(f,k){f.classList.toggle('if-activa',k===i);f.classList.toggle('if-hecha',k<i);});
+    if(filas[i]) filas[i].scrollIntoView({block:'nearest',behavior:'smooth'});}
+  function decir(t){aviso.textContent=t;aviso.classList.add('if-ver');}
+  function ir(d){
+    if(d.flujo){location.href=d.flujo;return;}
+    var nodo=document.querySelector('[data-node-id="e'+d.paso+'"]');
+    if(!nodo){decir('El paso '+d.paso+' todavía no se hace en TEST: el flujo llega hasta donde se probó.');return;}
+    decir('Siga en el paso '+d.paso+'. Se abrió su guía campo por campo.');
+    nodo.scrollIntoView({block:'center',behavior:'smooth'});
+    setTimeout(function(){nodo.dispatchEvent(new MouseEvent('click',{bubbles:true}));},350);
+  }
+  caja.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-ir]'); if(!b) return;
+    var i=filas.indexOf(b.closest('li')), d=JSON.parse(b.getAttribute('data-ir'));
+    aviso.classList.remove('if-ver');
+    if(d==='siguiente'){activar(i+1);return;}
+    activar(i); ir(d);
+  });
+  activar(0);
+})();
+</script>"""
+
+
+def _html_inicio(slug, carpeta_html):
+    """Tarjeta «¿Por dónde empiezo?» del flujo de prueba: preguntas sí/no que llevan al paso o al flujo que falta, para
+    no repetir lo ya completado. El diagrama sigue siendo una sola línea; la variante va en la tarjeta (ADR-003)."""
+    demo = PRUEBAS.get(RE_PREFIJO.sub("", slug))
+    ini = demo and demo["ejemplo_prueba_2"].get("inicio")
+    if not ini:
+        return ""
+    e = html.escape
+    centro = carpeta_html.parents[1].name
+
+    def destino(d):
+        if d == "siguiente" or "paso" in d:
+            return d
+        carpeta = carpeta_html.parent / d["flujo"]
+        archivo = next(carpeta.glob("*.html"), None)
+        if not archivo:
+            ADVERTENCIAS.append(f"{slug}: «¿Por dónde empiezo?» apunta a un flujo que no existe: {d['flujo']}")
+            return "siguiente"
+        return {"flujo": f"../{d['flujo']}/{archivo.name}"}
+
+    def boton(clase, texto, d):
+        d = destino(d)
+        titulo = ("Pasa a la pregunta siguiente" if d == "siguiente" else
+                  f"Abre el paso {d['paso']}" if "paso" in d else "Abre el otro flujo")
+        return (f'<button type="button" class="{clase}" title="{e(titulo)}" '
+                f'data-ir="{e(json.dumps(d, ensure_ascii=False))}">{texto}</button>')
+
+    filas = "".join(
+        f'<li><span class="if-n">{k}</span><span>{e(q["pregunta"])}'
+        + (f'<span class="if-cita">{e(q["cita"])}</span>' if q.get("cita") else "")
+        + f'</span><span class="if-botones">{boton("if-si", "Sí", q["si"])}{boton("if-no", "No", q["no"])}</span></li>'
+        for k, q in enumerate(ini["preguntas"], 1))
+    return ("<!-- === INICIO DEL FLUJO === -->\n" + CSS_INICIO
+            + f'<details class="inicio-flujo" open>\n  <summary>{e(ini["titulo"])}</summary>\n'
+            f'  <p class="if-intro">{e(ini["intro"])}</p>\n  <ol>{filas}</ol>\n  <p class="if-aviso" role="status"></p>\n</details>\n'
+            + JS_INICIO + "\n<!-- === /INICIO DEL FLUJO === -->\n")
+
+
 def _json_seguro(obj):
     """JSON para incrustar en <script>: «</» se escapa para que un texto no cierre el script."""
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
@@ -651,6 +744,14 @@ def inyectar_en_html(ruta_html, slug):
             ADVERTENCIAS.append(f"{slug}: no se encontró dónde poner la tabla «Antes del NRC»")
         else:
             contenido = contenido[:i] + antes + "    " + contenido[i:]
+
+    inicio = _html_inicio(slug, ruta_html.parent)
+    if inicio:
+        i = contenido.find('<script id="archify-i18n-data"')
+        if i == -1:
+            ADVERTENCIAS.append(f"{slug}: no se encontró dónde poner «¿Por dónde empiezo?»")
+        else:
+            contenido = contenido[:i] + inicio + "    " + contenido[i:]
 
     if re.search(r'<div class="header"', contenido):
         contenido = re.sub(r'(<div class="header"[^>]*>)', lambda m: nav["nav_top"] + "\n    " + m.group(1), contenido, count=1)

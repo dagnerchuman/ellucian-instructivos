@@ -68,6 +68,7 @@ Una receta nueva va al archivo de su tema; si no encaja en ninguno, se crea otro
 ## 6. Datos de prueba en TEST (29/10/2026, actualizado el 04/11/2026)
 - **Alumno:** Arnold Vaca `S00912438` (Medicina `1PCSP15`, plan 1; `CMEMC38`; `IMEMI03` en el plan 4). En 202744 tiene los NRC 10001 a 10008 de otra persona: **no se tocan**.
 - **Arnold Vaca en 202656:** el 10045 quedó en **DD** el 31-OCT-2026 (C189); el 10042 y el 10043 siguen con RE.
+- **Alumno de Emprendimiento:** `S00912627` «ALUMNO / PRUEBA, EMPRENDIMIENTO U.» (`MMEMM01`, plan 1), matriculado con RE en el 10047 (C245 a C247). Es de prueba: se puede usar.
 - **Otro alumno:** `100582059` (`CMEMC44`); desde el 04/11/2026 SFAREGS le muestra «Retenciones: Y» (C194). **Alumno de Nidia:** `A00010005` (catálogo 202444; Basic I con 80 en 202646; en 202744 tiene 10023, 10024, 10022 y 10007; avisar a Nidia antes de usarlo).
 - **NRC:** 10045 (202656, X06, Computación; miércoles 15:30–17:10, SAUVIR / SALA-VIRT, docente 100582059, malla `MC44-01` › `ECOM-03`, fórmula en SHAGCOM y regla 3 de SOAATRK desde el 30/10, C180 a C182). **Prueba completa:** notas 85 → 17, pase a historia (jobs 7994 y 7995) y 17 en SHACRSE (C188 a C190). También 10042 y 10043 (Basic I, 202656, I10), 10020 a 10022 (202744, T1, pregrado).
 - **SOATERM 202656** (solo consulta, C182): En progreso sin marcar, Permitir ✓, Plan de estudios requerido ✓; las demás casillas sin marcar; secuencia de inicio de NRC 10046.

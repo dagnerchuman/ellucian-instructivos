@@ -281,10 +281,10 @@
         "boton": "Ir al ejemplo de prueba 2",
         "carpeta": "Centro de Emprendimiento · Prueba en TEST · NRC 10047 (202656)",
         "nrc": "10047",
-        "caso": "Se abre en TEST un NRC nuevo de Emprendimiento I (ESGE 00117, sección C, 202656, parte P06) y se lleva de punta a punta, como el 10045 de Computación: horario, docente, malla, fórmula, asistencia, matrícula, notas y pase a historia (C222).",
-        "horario": "Por definir: miércoles, como el 10046 (P06, 30-SEP a 06-DIC-2026)",
-        "pendiente": "Pasos 2 a 14: horario, docente, carga, malla MM01-01, fórmula, asistencia, matrícula, notas y cierre.",
-        "avance": "En curso: paso 1 hecho el 20/11/2026 (NRC 10047 creado, C222).",
+        "caso": "Se abre en TEST un NRC nuevo de Emprendimiento I (ESGE 00117, sección C, 202656, parte P06) y se lleva de punta a punta, como el 10045 de Computación: horario, docente, malla, fórmula, asistencia, matrícula, notas y pase a historia (C222). Con un alumno de prueba que ya existe se pasa del paso 8 al 11; sin él, los pasos 9 y 10 lo crean y lo admiten (C245 a C247).",
+        "horario": "Miércoles 09:00–11:00 en SAUVIR · SALA-VIRT (P06, 30-SEP a 06-DIC-2026)",
+        "pendiente": "Pasos 12 a 16: asistencia y notas en el Autoservicio, SFASLST, pase a historia (SHRROLL) y nota en la historia (SHACRSE).",
+        "avance": "En curso: pasos 1 a 11 hechos (20/11/2026 y 25/11/2026): NRC, horario, docente, carga, malla, fórmula, regla de asistencia, cupo 40, alumno de prueba S00912627 creado y admitido en MMEMM01, y matriculado con RE en el 10047 (C222 a C229, C243 a C247).",
         "pasos": [
           {
             "n": 1,
@@ -1343,6 +1343,1352 @@
                 "texto": "SMAAREA: detalle de la regla"
               }
             ]
+          },
+          {
+            "n": 6,
+            "codigo": "SHAGCOM",
+            "accion": "cargar la fórmula",
+            "dato": "VIG_11 arriba · 1_PC 2_PSS 3_PTS 4_FE 5_PY sobre 20",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.4, diap. 43 a 48 · C242 · C243",
+            "resultado": "Saved successfully (6 rows saved) · total de peso final 1.00: la escala y los cinco componentes de Emprendimiento I",
+            "nota": "La fórmula es la de Emprendimiento I de la hoja de producción 202721 (sílabo 2026-2): PF = PC×0,15 + PSS×0,10 + PTS×0,10 + FE×0,15 + PY×0,50, aprobatoria 11. Regla del usuario: el nombre del componente va numerado (1_PC, 2_PSS…) y en Emprendimiento cada uno se califica sobre 20.00, no sobre 100 como en Computación. Sin ATTRGRD: la fórmula no tiene asistencia. A diferencia de Computación, Banner dejó llenar la escala y los componentes y guardarlos juntos con un solo GUARDAR.",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Periodo · NRC",
+                  "202656 · 10047",
+                  "Usuario",
+                  "Tab en cada campo; Banner trae ESGE 00117 › Ir"
+                ],
+                [
+                  "Aviso al entrar",
+                  "«*ERROR* Ingresar la escala de calificación antes de continuar»",
+                  "Banner",
+                  "El NRC no tenía plan; se cierra el aviso"
+                ],
+                [
+                  "Escala de calificación (arriba)",
+                  "VIG_11 «Vigesimal 0-20 aprueba 11»",
+                  "Usuario",
+                  "Luego ⏬ al bloque Definición de componente"
+                ],
+                [
+                  "Componente 1",
+                  "1_PC · Promedio de Cuestionarios · 0.15",
+                  "Usuario",
+                  "Cuestionarios, incluido el test inicial"
+                ],
+                [
+                  "Componente 2",
+                  "2_PSS · Particip. Sesiones Sincronicas · 0.10",
+                  "Usuario",
+                  "Fundamentos teóricos y mentoría"
+                ],
+                [
+                  "Componente 3",
+                  "3_PTS · Particip. Talleres y Webinars · 0.10",
+                  "Usuario",
+                  "+ del encabezado para cada fila nueva"
+                ],
+                [
+                  "Componente 4",
+                  "4_FE · Formato Empatizar · 0.15",
+                  "Usuario",
+                  ""
+                ],
+                [
+                  "Componente 5",
+                  "5_PY · Proyecto Idea de Negocio · 0.50",
+                  "Usuario",
+                  "Producto acreditable"
+                ],
+                [
+                  "Calificadas de",
+                  "20.00 en los cinco",
+                  "Usuario",
+                  "Banner propone 100; se cambia con Cmd+A"
+                ],
+                [
+                  "Incluir · escala del componente",
+                  "FINAL · VIG_11",
+                  "Banner",
+                  "Heredan la escala de arriba"
+                ],
+                [
+                  "Nota aprobatoria",
+                  "55.00 (11 de 20)",
+                  "Banner",
+                  "La 5.ª salió 50.00 hasta pasar con Tab por su escala"
+                ],
+                [
+                  "Guardar",
+                  "Saved successfully (6 rows saved) · peso final 1.00",
+                  "Usuario",
+                  "Lo pulsó el usuario"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "06-shagcom-formula.png",
+                "texto": "Bloque clave con 202656 y 10047 antes de Ir",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      100,
+                      73,
+                      240,
+                      89
+                    ]
+                  },
+                  {
+                    "n": 1,
+                    "caja": [
+                      435,
+                      73,
+                      576,
+                      89
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "06-shagcom-formula-b.png",
+                "texto": "VIG_11 arriba y los cinco componentes sobre 20",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      76,
+                      108,
+                      296,
+                      123
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      0,
+                      179,
+                      345,
+                      192
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      0,
+                      192,
+                      345,
+                      205
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      0,
+                      205,
+                      345,
+                      218
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      0,
+                      218,
+                      345,
+                      231
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      0,
+                      231,
+                      345,
+                      245
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      346,
+                      179,
+                      411,
+                      245
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      519,
+                      179,
+                      607,
+                      245
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      727,
+                      179,
+                      800,
+                      245
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "06-shagcom-formula-c.png",
+                "texto": "Guardado: 6 filas, aprobatoria 55 y peso final 1.00",
+                "cuadros": [
+                  {
+                    "n": 11,
+                    "caja": [
+                      669,
+                      232,
+                      743,
+                      315
+                    ]
+                  },
+                  {
+                    "n": 12,
+                    "caja": [
+                      518,
+                      68,
+                      800,
+                      101
+                    ]
+                  },
+                  {
+                    "n": 12,
+                    "caja": [
+                      412,
+                      334,
+                      537,
+                      352
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "VIG_11 · 5 componentes sobre 20",
+            "laminas": [
+              {
+                "instructivo": "7.1.4",
+                "n": 43,
+                "texto": "SHAGCOM: periodo y NRC"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 44,
+                "texto": "SHAGCOM: escala del plan"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 45,
+                "texto": "SHAGCOM: secuencia y nombre"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 46,
+                "texto": "SHAGCOM: descripción y peso"
+              },
+              {
+                "instructivo": "7.1.4",
+                "n": 48,
+                "texto": "SHAGCOM: incluir en la calificación final"
+              }
+            ]
+          },
+          {
+            "n": 7,
+            "codigo": "SOAATRK",
+            "accion": "regla de asistencia",
+            "dato": "NRC 10047 · P06 · Presente/Ausente",
+            "quien": "Registros Académicos",
+            "cita": "Instructivo 7.1.1, diap. 34 a 37 · C101 · C244",
+            "resultado": "Saved successfully (1 rows saved) · regla 13",
+            "nota": "Sin esta regla el NRC no sale en el Autoservicio del docente › Control de asistencia (C101). Se copió la fila de Computación (regla 3, NRC 10045) con la parte y el curso de Emprendimiento. La fórmula de Emprendimiento I no tiene componente de asistencia (sin ATTRGRD), pero el docente igual pasa lista.",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Periodo",
+                  "202656",
+                  "Usuario",
+                  "Ir: salen 9 reglas de Idiomas (I10) y Computación (X06); ninguna del 10047"
+                ],
+                [
+                  "Fila nueva",
+                  "+ del bloque",
+                  "Usuario",
+                  "Con el foco en una fila; la nueva queda debajo"
+                ],
+                [
+                  "Parte de periodo",
+                  "P06 «Emprendimiento Grupo 06»",
+                  "Usuario",
+                  "Tab: Banner pone la descripción"
+                ],
+                [
+                  "Materia · curso",
+                  "ESGE · 00117",
+                  "Usuario",
+                  "Banner pone «Estudios generales»"
+                ],
+                [
+                  "NRC",
+                  "10047",
+                  "Usuario",
+                  ""
+                ],
+                [
+                  "Desplegar clase",
+                  "✓",
+                  "Banner",
+                  "Viene marcada"
+                ],
+                [
+                  "Unidad de control",
+                  "Presente/Ausente",
+                  "Usuario",
+                  "Lista: escriba «P» y elija; la otra opción es «Horas de presencia»"
+                ],
+                [
+                  "Control de asistencia a clases",
+                  "✓",
+                  "Banner",
+                  "Viene marcada"
+                ],
+                [
+                  "Fecha de inicio y de fin",
+                  "30-SEP-2026 a 06-DIC-2026",
+                  "Banner",
+                  "Las trae de la P06"
+                ],
+                [
+                  "Número de código de regla",
+                  "13",
+                  "Banner",
+                  "Lo pone al guardar (no es correlativo: no fue 11)"
+                ],
+                [
+                  "Guardar",
+                  "Saved successfully (1 rows saved)",
+                  "Usuario",
+                  "Lo pulsó el usuario"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "07-soaatrk-asistencia.png",
+                "texto": "Bloque clave con el periodo 202656",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      100,
+                      73,
+                      240,
+                      89
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "07-soaatrk-asistencia-b.png",
+                "texto": "La fila del 10047 con Presente/Ausente y las fechas de la P06",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      93,
+                      159,
+                      317,
+                      176
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      318,
+                      159,
+                      361,
+                      176
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      362,
+                      159,
+                      431,
+                      176
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      432,
+                      159,
+                      498,
+                      176
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      499,
+                      159,
+                      611,
+                      176
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      612,
+                      159,
+                      800,
+                      176
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "07-soaatrk-asistencia-c.png",
+                "texto": "Guardado: regla 13 para P06 · ESGE 00117 · 10047",
+                "cuadros": [
+                  {
+                    "n": 10,
+                    "caja": [
+                      0,
+                      159,
+                      94,
+                      176
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      95,
+                      159,
+                      278,
+                      176
+                    ]
+                  },
+                  {
+                    "n": 11,
+                    "caja": [
+                      518,
+                      68,
+                      800,
+                      101
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "Presente / Ausente",
+            "laminas": [
+              "soaatrk"
+            ]
+          },
+          {
+            "n": 8,
+            "codigo": "SSASECT",
+            "accion": "poner el cupo",
+            "dato": "Máximo 40 · Proyectado 40",
+            "quien": "El centro",
+            "cita": "Instructivo 5.3, diap. 27 · C97 · C247",
+            "resultado": "Máximo 40 · Proyectado 40 · Restante 40 (el usuario guardó)",
+            "nota": "Va antes de matricular. El 10047 se creó sin cupo (Máximo 0) y SFAREGS lo rechazó con «Closed Section»; con 40 ya deja inscribir (C247, C33, C97).",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Periodo · NRC",
+                  "202656 · 10047",
+                  "Usuario",
+                  "Bloque clave › Ir"
+                ],
+                [
+                  "Pestaña",
+                  "Información de ingreso de sección",
+                  "Usuario",
+                  "Detalles de ingreso"
+                ],
+                [
+                  "Máximo",
+                  "0 › 40",
+                  "Usuario",
+                  "Con 0 el NRC sale «Closed Section» al matricular (C33, C247)"
+                ],
+                [
+                  "Proyectado",
+                  "0 › 40",
+                  "Usuario",
+                  "Obligatorio; 40 como el 10044 (C97)"
+                ],
+                [
+                  "Restante",
+                  "40",
+                  "Banner",
+                  "Máximo menos los inscritos (Real 0)"
+                ],
+                [
+                  "Guardar",
+                  "guardado",
+                  "Usuario",
+                  "Lo pulsó el usuario"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "08-ssasect-cupo.png",
+                "texto": "El 10047 con Máximo 0 y Proyectado 0",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      0,
+                      70,
+                      300,
+                      86
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      150,
+                      93,
+                      305,
+                      110
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      55,
+                      148,
+                      140,
+                      166
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      565,
+                      148,
+                      665,
+                      166
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "08-ssasect-cupo-b.png",
+                "texto": "Máximo y Proyectado en 40",
+                "cuadros": [
+                  {
+                    "n": 3,
+                    "caja": [
+                      55,
+                      148,
+                      140,
+                      166
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      565,
+                      148,
+                      665,
+                      166
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "08-ssasect-cupo-c.png",
+                "texto": "Guardado: Restante 40",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      50,
+                      220,
+                      140,
+                      237
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      742,
+                      509,
+                      798,
+                      527
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "Cupo 40",
+            "laminas": [
+              "ssasect_cupo"
+            ]
+          },
+          {
+            "n": 9,
+            "codigo": "GOAMTCH",
+            "accion": "crear el alumno",
+            "dato": "S00912627 · PERS_NATU",
+            "quien": "Admisión",
+            "cita": "Instructivo 5.1.1, diap. 28 a 30 · C245",
+            "resultado": "ID generado S00912627 «ALUMNO / PRUEBA, EMPRENDIMIENTO U.»",
+            "nota": "Solo si no hay alumno de prueba con MMEMM01. Si ya existe (S00912627), se salta al paso 11. En estos campos Cmd+A y Backspace no borran: triple clic y escribir encima (C245).",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "Página",
+                  "SPAIDEN › + (ID nuevo) abre GOAMTCH",
+                  "Usuario",
+                  "También se abre desde el + de SAAQUIK"
+                ],
+                [
+                  "ID",
+                  "GENERATED",
+                  "Banner",
+                  "Viene puesto"
+                ],
+                [
+                  "Origen de coincidencia",
+                  "PERS_NATU «Persona Natural»",
+                  "Usuario",
+                  "Lista ••• › Ir"
+                ],
+                [
+                  "Apellido",
+                  "ALUMNO / PRUEBA",
+                  "Usuario",
+                  "Los dos apellidos separados con /"
+                ],
+                [
+                  "Nombre · segundo nombre",
+                  "EMPRENDIMIENTO · UNO",
+                  "Usuario",
+                  ""
+                ],
+                [
+                  "Dirección",
+                  "PP «Dirección principal» · CALLE DE PRUEBA S/N · CHICLAYO",
+                  "Usuario",
+                  "El tipo PP es obligatorio"
+                ],
+                [
+                  "País",
+                  "9233 «Perú»",
+                  "Usuario",
+                  "PE sale «NO USAR» (C245)"
+                ],
+                [
+                  "NSS/NIT · nacimiento",
+                  "DNI ficticio · 15/03/2005",
+                  "Usuario",
+                  "Datos de prueba"
+                ],
+                [
+                  "Género",
+                  "vacío",
+                  "—",
+                  "Banner lo marca en rojo aunque se elija M de la lista GTVLGSX; se borró para seguir (C245)"
+                ],
+                [
+                  "Teléfono · correo",
+                  "MOV · PER1 en example.com",
+                  "Usuario",
+                  "Datos de prueba"
+                ],
+                [
+                  "Marcar-Duplicar",
+                  "«No se encontraron coincidencias; ¿crear nuevas?» › SÍ",
+                  "Usuario",
+                  "Busca si la persona ya existe"
+                ],
+                [
+                  "ID generado",
+                  "S00912627",
+                  "Banner",
+                  "Crea identificación, biográfico, dirección, teléfono y correo; no hay GUARDAR aparte"
+                ],
+                [
+                  "Comprobar en SPAIDEN",
+                  "ALUMNO / PRUEBA, EMPRENDIMIENTO U. · origen GOAMTCH",
+                  "Banner",
+                  ""
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "09-goamtch-alumno.png",
+                "texto": "Bloque clave con GENERATED y PERS_NATU",
+                "cuadros": [
+                  {
+                    "n": 2,
+                    "caja": [
+                      60,
+                      56,
+                      200,
+                      70
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      360,
+                      56,
+                      540,
+                      70
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "09-goamtch-alumno-b.png",
+                "texto": "Datos de prueba llenos",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      30,
+                      92,
+                      232,
+                      104
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      30,
+                      106,
+                      232,
+                      132
+                    ]
+                  },
+                  {
+                    "n": 6,
+                    "caja": [
+                      15,
+                      137,
+                      232,
+                      207
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      440,
+                      92,
+                      560,
+                      104
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      400,
+                      121,
+                      660,
+                      149
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      430,
+                      151,
+                      520,
+                      163
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      400,
+                      165,
+                      630,
+                      222
+                    ]
+                  },
+                  {
+                    "n": 11,
+                    "caja": [
+                      78,
+                      255,
+                      188,
+                      267
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "09-goamtch-alumno-c.png",
+                "texto": "Marcar-Duplicar: sin coincidencias",
+                "cuadros": [
+                  {
+                    "n": 11,
+                    "caja": [
+                      268,
+                      150,
+                      532,
+                      268
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "09-goamtch-alumno-d.png",
+                "texto": "ID generado S00912627",
+                "cuadros": [
+                  {
+                    "n": 12,
+                    "caja": [
+                      268,
+                      133,
+                      532,
+                      283
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "09-goamtch-alumno-e.png",
+                "texto": "La persona en SPAIDEN",
+                "cuadros": [
+                  {
+                    "n": 13,
+                    "caja": [
+                      0,
+                      55,
+                      330,
+                      70
+                    ]
+                  },
+                  {
+                    "n": 13,
+                    "caja": [
+                      55,
+                      302,
+                      200,
+                      315
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "S00912627",
+            "laminas": [
+              "spaiden",
+              "goamtch"
+            ]
+          },
+          {
+            "n": 10,
+            "codigo": "SAAQUIK",
+            "accion": "admitir en MMEMM01",
+            "dato": "S00912627 › MMEMM01 · I",
+            "quien": "Admisión",
+            "cita": "Instructivo 3.2.1, diap. 21 a 25 · C246",
+            "resultado": "Currículo MMEMM01 · M · SCH · EM · ACEM · EMEM (el usuario guardó)",
+            "nota": "Solo para un alumno nuevo. Sin este currículo SFAREGS no trae el plan de estudios de Emprendimiento (C246).",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "ID",
+                  "S00912627",
+                  "Usuario",
+                  "Tab: trae «ALUMNO / PRUEBA, EMPRENDIMIENTO U.»"
+                ],
+                [
+                  "Periodo",
+                  "202656",
+                  "Usuario",
+                  ""
+                ],
+                [
+                  "Nivel",
+                  "M",
+                  "Usuario",
+                  "Ir"
+                ],
+                [
+                  "Tipo de alumno",
+                  "I «Ingresante»",
+                  "Usuario",
+                  "STVSTYP tiene E, I, P, R y 0"
+                ],
+                [
+                  "Estatus · residencia",
+                  "AS «Activo» · R «Residente»",
+                  "—",
+                  "Así quedaron en la pantalla (C246)"
+                ],
+                [
+                  "Programa (prioridad 1)",
+                  "MMEMM01",
+                  "Usuario",
+                  "Escribirlo y Tab: la lista de 671 reglas no filtra con Criterios"
+                ],
+                [
+                  "Nivel · campus · escuela",
+                  "M Emprendimiento · SCH Sede Chiclayo · EM Centros Empresariales",
+                  "Banner",
+                  "Del programa; grado 000000"
+                ],
+                [
+                  "Campo de estudio",
+                  "MAJOR · ACEM «Acreditación en Emprendimiento» · INPROGRESS",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Departamento",
+                  "EMEM «Jef. Emprendimiento y Produ.»",
+                  "Banner",
+                  ""
+                ],
+                [
+                  "Guardar",
+                  "guardado",
+                  "Usuario",
+                  "Lo pulsó el usuario; SFAREGS ya trae el plan 1"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "10-saaquik-admision.png",
+                "texto": "ID, periodo y nivel M",
+                "cuadros": [
+                  {
+                    "n": 1,
+                    "caja": [
+                      75,
+                      56,
+                      200,
+                      70
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      395,
+                      56,
+                      540,
+                      70
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      60,
+                      83,
+                      188,
+                      96
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "10-saaquik-admision-b.png",
+                "texto": "Tipo de alumno I, estatus AS y residencia R",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      20,
+                      139,
+                      200,
+                      152
+                    ]
+                  },
+                  {
+                    "n": 5,
+                    "caja": [
+                      15,
+                      165,
+                      200,
+                      193
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "10-saaquik-admision-c.png",
+                "texto": "MMEMM01 y el campo de estudio que trae Banner",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      280,
+                      291,
+                      330,
+                      303
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      331,
+                      291,
+                      690,
+                      303
+                    ]
+                  },
+                  {
+                    "n": 8,
+                    "caja": [
+                      0,
+                      349,
+                      385,
+                      361
+                    ]
+                  },
+                  {
+                    "n": 9,
+                    "caja": [
+                      385,
+                      349,
+                      580,
+                      361
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "10-saaquik-admision-d.png",
+                "texto": "Currículo listo para guardar",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      325,
+                      377,
+                      425,
+                      393
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      742,
+                      509,
+                      798,
+                      527
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "ACEM · EMEM",
+            "laminas": [
+              "saaquik",
+              "saaquik_curr"
+            ]
+          },
+          {
+            "n": 11,
+            "codigo": "SFAREGS",
+            "accion": "matricular en el NRC",
+            "dato": "S00912627 › 10047 · RE",
+            "quien": "El centro",
+            "cita": "Instructivo 5.4, diap. 35 a 44 · C86 · C158 · C185 · C247",
+            "resultado": "10047 · ESGE 00117 · C · RE (25-NOV-2026)",
+            "nota": "Si el alumno ya existe, la prueba empieza aquí: periodo, ID, NRC y guardar. El guardado del plan de ingreso (filas 4 y 5) solo sale con un alumno nuevo (C247). SFAREGS matricula; SFAREGQ solo consulta (C220).",
+            "tabla": {
+              "columnas": [
+                "Campo",
+                "Valor",
+                "Quién lo pone",
+                "Nota"
+              ],
+              "filas": [
+                [
+                  "SOADEST (antes de SFAREGS)",
+                  "DATABASE en los 5 campos",
+                  "Usuario",
+                  "Sale en una sesión nueva; sin guardar (C158, C185)"
+                ],
+                [
+                  "Periodo · ID",
+                  "202656 · S00912627",
+                  "Usuario",
+                  "Primero el periodo (C86); Tab trae el nombre"
+                ],
+                [
+                  "Plan de estudios",
+                  "1",
+                  "Banner",
+                  "El de MMEMM01 (paso 10)"
+                ],
+                [
+                  "Plan de estudios de ingreso",
+                  "plan 1 · EL «Inscripción Autorizada»",
+                  "Banner",
+                  "Solo alumno nuevo: avisa que debe guardarse antes del bloque de curso"
+                ],
+                [
+                  "Guardar el plan",
+                  "Saved successfully (2 rows saved)",
+                  "Usuario",
+                  "Con permiso del usuario"
+                ],
+                [
+                  "NRC",
+                  "10047 › Tab",
+                  "Usuario",
+                  "Trae ESGE 00117, sección C, modo V, 4 créditos, cobro 1, RE, nivel M"
+                ],
+                [
+                  "«Closed Section»",
+                  "Error fatal · En progreso",
+                  "Banner",
+                  "El NRC tenía Máximo 0: paso 8. Luego «Otra sesión de inscripción está en progreso»: esperar unos 2 minutos (C158)"
+                ],
+                [
+                  "Guardar",
+                  "«Estimación de cuota procesada» · «Los alumnos ya están inscritos»",
+                  "Usuario",
+                  "Con permiso del usuario"
+                ],
+                [
+                  "Imprimir cobro",
+                  "sin marcar",
+                  "Usuario",
+                  "Apareció marcado tras el aviso y se desmarcó"
+                ],
+                [
+                  "Comprobar",
+                  "10047 · ESGE 00117 · C · RE",
+                  "Banner",
+                  "Al volver a abrir al alumno"
+                ]
+              ]
+            },
+            "capturas": [
+              {
+                "archivo": "11-sfaregs-matricula.png",
+                "texto": "Periodo, ID y plan 1",
+                "cuadros": [
+                  {
+                    "n": 2,
+                    "caja": [
+                      15,
+                      56,
+                      190,
+                      70
+                    ]
+                  },
+                  {
+                    "n": 2,
+                    "caja": [
+                      395,
+                      56,
+                      690,
+                      70
+                    ]
+                  },
+                  {
+                    "n": 3,
+                    "caja": [
+                      0,
+                      127,
+                      240,
+                      140
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "11-sfaregs-matricula-b.png",
+                "texto": "Alumno nuevo: el plan de ingreso pide guardar",
+                "cuadros": [
+                  {
+                    "n": 4,
+                    "caja": [
+                      145,
+                      52,
+                      800,
+                      77
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      0,
+                      193,
+                      300,
+                      218
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "11-sfaregs-matricula-c.png",
+                "texto": "Plan de ingreso guardado",
+                "cuadros": [
+                  {
+                    "n": 5,
+                    "caja": [
+                      518,
+                      70,
+                      800,
+                      100
+                    ]
+                  },
+                  {
+                    "n": 4,
+                    "caja": [
+                      0,
+                      282,
+                      320,
+                      300
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "11-sfaregs-matricula-d.png",
+                "texto": "El 10047 en «Información de curso»",
+                "cuadros": [
+                  {
+                    "n": 6,
+                    "caja": [
+                      0,
+                      392,
+                      800,
+                      408
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "11-sfaregs-matricula-e.png",
+                "texto": "«Closed Section»: el NRC sin cupo",
+                "cuadros": [
+                  {
+                    "n": 7,
+                    "caja": [
+                      358,
+                      70,
+                      800,
+                      100
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      310,
+                      392,
+                      520,
+                      408
+                    ]
+                  },
+                  {
+                    "n": 7,
+                    "caja": [
+                      100,
+                      412,
+                      370,
+                      445
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "11-sfaregs-matricula-f.png",
+                "texto": "Guardado: estimación de cuota y alumno inscrito",
+                "cuadros": [
+                  {
+                    "n": 8,
+                    "caja": [
+                      0,
+                      70,
+                      800,
+                      155
+                    ]
+                  }
+                ]
+              },
+              {
+                "archivo": "11-sfaregs-matricula-g.png",
+                "texto": "Comprobado: 10047 con RE",
+                "cuadros": [
+                  {
+                    "n": 9,
+                    "caja": [
+                      175,
+                      94,
+                      250,
+                      106
+                    ]
+                  },
+                  {
+                    "n": 10,
+                    "caja": [
+                      0,
+                      392,
+                      800,
+                      408
+                    ]
+                  }
+                ]
+              }
+            ],
+            "etiqueta": "10047 · RE",
+            "laminas": [
+              "sfaregs_autorizar",
+              "sfaregs_inscribir",
+              "sfaregs_error",
+              "tsaarev"
+            ]
           }
         ],
         "fases": [
@@ -1360,22 +2706,24 @@
           },
           {
             "id": "clases",
-            "titulo": "2 · Matrícula y clases",
+            "titulo": "2 · Asistencia y matrícula",
             "pasos": [
               7,
               8,
               9,
-              10
+              10,
+              11
             ]
           },
           {
             "id": "cierre",
-            "titulo": "3 · Notas y cierre",
+            "titulo": "3 · Clases, notas y cierre",
             "pasos": [
-              11,
               12,
               13,
-              14
+              14,
+              15,
+              16
             ]
           }
         ]

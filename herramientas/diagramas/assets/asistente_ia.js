@@ -397,6 +397,15 @@
         'alta al docente', 'alta de docente', 'alta de un docente', 'alta a un profesor', 'perfil de docente', 'perfil docente',
         'perfil a docente', 'perfil de profesor', 'hacer docente', 'hago docente'],
         terminos: ['siainst'], peso: 8, pregunta: true },
+      // «crear un nrc de idiomas en 202721»: es el procedimiento de SSASECT, no la lista de NRC de producción (C239, C242).
+      { claves: ['crear un nrc', 'crear nrc', 'crear el nrc', 'crear los nrc', 'creo un nrc', 'creo el nrc', 'nuevo nrc', 'abrir un nrc',
+        'programar un nrc', 'programar el nrc', 'crear una seccion', 'crear la seccion'],
+        terminos: ['ssasect'], peso: 6, pregunta: true },
+      // «cómo se calcula el promedio», «pesos de evaluación»: las fórmulas de calificación de cada centro (C242).
+      { claves: ['formula', 'formulas', 'promedio final', 'ponderacion', 'ponderaciones', 'pesos de evaluacion', 'peso de evaluacion',
+        'pesos de la nota', 'como se calcula la nota', 'como se calcula el promedio', 'calcula la nota', 'calcula el promedio',
+        'calculo de la nota', 'calculo del promedio'],
+        terminos: ['formula de calificacion', 'promedio final'], peso: 6, pregunta: true },
       { claves: ['alumno', 'alumnos', 'estudiante', 'estudiantes'], terminos: ['alumno', 'alumnos', 'estudiante', 'estudiantes'], peso: 2 },
       { claves: ['curso', 'cursos', 'nrc'], terminos: ['curso', 'cursos', 'nrc'], peso: 2 },
       // «cuánto cuesta», «precio»: la base habla de costo, pago y soles (S/).

@@ -29,10 +29,10 @@ Esta guía documenta el procedimiento probado y validado en el ambiente **TEST d
 | **Segundo nombre** | `NOMBRE DOS` | Opcional |
 | **Tipo de dirección** | `PP` (*Dirección principal*) | **OBLIGATORIO** para que Banner no rechace el guardado |
 | **Calle línea 1** | `Av. Principal 123` | **OBLIGATORIO** si se define tipo de dirección |
-| **País** | `PE` (*Perú*) | Código de país |
+| **País** | `9233` (*Perú*) | Elegir de la lista `•••` (página 7). `PE` sale «NO USAR» (C245) |
 | **NSS/NIT** | `88776655` | DNI de la persona (8 dígitos) |
 | **Fecha de nacimiento** | Día `06`, Mes `03`, Año `2000` | **El año debe tener 4 dígitos (YYYY)** |
-| **Género** | `M` (*Male*) o `F` (*Female*) | Seleccionar de la lista con `•••` |
+| **Género** | `M` (*Male*) o `F` (*Female*) | Lista GTVLGSX. En TEST (25/11/2026) quedó en rojo aunque se eligiera de la lista y hubo que dejarlo vacío (C245) |
 | **Tipo de teléfono** | `MOV` (*Teléfono Móvil*) | Recomendado |
 | **Teléfono** | `999` `999` `999` | 3 bloques de números |
 | **Tipo de correo-e** | `PER1` (*Correo Personal 1*) | Recomendado |

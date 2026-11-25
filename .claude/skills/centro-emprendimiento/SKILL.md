@@ -2,7 +2,7 @@
 name: centro-emprendimiento
 description: >-
   Qué hace: datos y pruebas del Centro de Emprendimiento en Banner: nivel M, materia ESGE, partes P01
-  a P06 de 10 semanas, NRC 1025 probado en TEST y sus diagramas; sus datos están en
+  a P06 de 10 semanas, NRC 1025 y 10047 (alumno de prueba S00912627 matriculado) en TEST y sus diagramas; sus datos están en
   centros/emprendimiento/datos.json. Cuándo usarla: la tarea es solo de Emprendimiento (ESGE, P01 a
   P06, sus cursos o su acreditación). Cuándo no usarla: lo que vale igual para los tres centros
   (arquitectura-centros-empresariales) ni Idiomas o Computación.
@@ -23,9 +23,9 @@ description: >-
 |---|---|---|
 | **Nivel de alumno** | `M` | Emprendimiento (STVLEVL) |
 | **Escuela / College** | `EM` | Centros Empresariales |
-| **Campus** | `S` | Sede de Chiclayo |
-| **Programa** | *(por confirmar)* | Acreditación Emprendimiento |
-| **Campo de estudio mayor** | *(por confirmar)* | Acreditación en Emprendimiento |
+| **Campus** | `S` / `SCH` | Sede de Chiclayo (`SCH` en el currículo del alumno, C246) |
+| **Programa** | `MMEMM01` | Acreditación Emprendimiento (admisión en TEST, C246) |
+| **Campo de estudio mayor** | `ACEM` | Acreditación en Emprendimiento (C246) |
 | **Departamento** | `EMEM` | Jef. Emprendimiento y Produ. (confirmado en SCACRSE, C146) |
 | **Grado** | `000000` | No otorga grado |
 | **Materia del catálogo** | `ESGE` | Cursos de Emprendimiento |
@@ -35,7 +35,7 @@ description: >-
 
 **⚠ Carga del docente (C227, C228):** en SCACRSE › Tipo de horario, ESGE 00117 trae carga TEO `1.000` y PRA `2.000`. Un NRC TEO de 2 horas hereda carga 1: después de asignar al docente, revisa SIAASGN y deja la carga en **2** con «Sobrepasar carga de trabajo». Detalle en `arquitectura-centros-empresariales/references/05-notas-asigna-docente.md` (paso 3).
 
-> ⚠ Los identificadores exactos de Programa, Campo de Estudio y Departamento para Emprendimiento **no han sido verificados completamente en TEST** todavía. Lo que sí se confirmó es que la materia es `ESGE` y el Nivel es `M`.
+> Programa, campo de estudio y departamento quedaron confirmados en TEST al admitir al alumno de prueba por SAAQUIK (C246).
 
 ## Partes de periodo (Emprendimiento)
 
@@ -58,6 +58,10 @@ Parte de periodo general: **EGE**.
 
 > Los nombres salen de la hoja oficial de NRCs 202656 (`datos.json › cursos_conocidos`: Emprendimiento I, II y III, ESGE 00117 a 00119) y de SCACRSE (C146).
 
+> **Producción 202721 (C242, foto del 25/11/2026):** los cursos son `ESGE 00499` a `00501` (HT 4), parte `P02`, 15 NRC del `1002` al `1023`. Detalle en `arquitectura-centros-empresariales/references/ref-preguntas-frecuentes-produccion-202721.md`; fórmulas, en `ref-preguntas-frecuentes-formulas-de-calificacion.md`. Todavía no van a `datos.json`: la hoja se sigue llenando.
+
+> **SHAGCOM en Emprendimiento (C243):** escala `VIG_11` arriba; cada componente con **nombre numerado** (`1_PC`, `2_PSS`, `3_PTS`, `4_FE`, `5_PY` en Emprendimiento I) y **calificado de 20.00**, con los pesos de la fórmula (`ref-preguntas-frecuentes-formulas-de-calificacion.md`); aprobatoria 55 (11 de 20), sin `ATTRGRD`. Probado en el NRC 10047 de TEST.
+
 | Materia | Curso | Nombre (en TEST) | Créditos |
 |---|---|---|---|
 | ESGE | 00117 | Emprendimiento I (SCACRSE, C146) | UEC y Cobro 0 O 4 |
@@ -67,8 +71,9 @@ Parte de periodo general: **EGE**.
 | NRC | Materia/Curso | Sección | Parte | Docente | Estado |
 |---|---|---|---|---|---|
 | **1025** | ESGE 00117 | A | — | Dagner Chuman (100582059), Sesión 02 (no principal) | Auditado en SIAASGN (1,98 h/sem, 19,8 h tot, FTE 0,04) |
+| **10047** | ESGE 00117 | C | P06 | Docente de prueba S00912601 | Pasos 1 a 11 del ejemplo de prueba 2: cupo 40 y alumno `S00912627` matriculado con RE (C222 a C229, C243 a C247) |
 
-> El NRC 1025 fue auditado en SIAASGN (Script 18-A) pero **no se han hecho pruebas de matrícula, notas ni cierre específicas de Emprendimiento**.
+> **Alumno de prueba:** `S00912627` «ALUMNO / PRUEBA, EMPRENDIMIENTO U.», programa `MMEMM01`, plan 1 (C245 a C247). Si ya existe, la matrícula empieza en SFAREGS; si no, GOAMTCH y SAAQUIK (receta en `workflow-pruebas-test/references/recetas/matricula-sfaregs.md`). Falta en el 10047: asistencia, notas, SFASLST y pase a historia.
 
 ## Escala de notas
 

@@ -359,86 +359,99 @@
             "quien": "El centro",
             "cita": "Instructivo 5.3, diap. 19 a 26 · C222",
             "resultado": "NRC 10047 creado: ESGE 00117 «Emprendimiento I», sección C, SCH, TEO, VIRT, OPLMS, parte P06 (30-SEP a 06-DIC-2026)",
-            "nota": "Se copiaron los valores del NRC 10046 (mismo curso, sección B). El curso no tiene prerrequisito; Emprendimiento II y III piden el anterior con 11 (SCAPPRQ de MMEMM01, C221). Todavía sin horario, docente ni cupo.",
+            "nota": "Se copiaron los valores del NRC 10046 (mismo curso, sección B). El curso no tiene prerrequisito; Emprendimiento II y III piden el anterior con 11 (SCAPPRQ de MMEMM01, C221). Todavía sin horario, docente ni cupo. Columna Ejemplo: cómo va en producción, verano 202721 (hoja de NRC, foto del 26/11/2026, C242).",
             "tabla": {
               "columnas": [
                 "Campo",
                 "Valor",
                 "Quién lo pone",
-                "Nota"
+                "Nota",
+                "Verano 202721"
               ],
               "filas": [
                 [
                   "Periodo",
                   "202656",
                   "Usuario",
-                  "Se escribe y se pulsa Tab"
+                  "Se escribe y se pulsa Tab",
+                  "202721"
                 ],
                 [
                   "NRC",
                   "10047",
                   "Banner",
-                  "Con «Crear NRC» sale ADD; Banner da el número al guardar"
+                  "Con «Crear NRC» sale ADD; Banner da el número al guardar",
+                  "1002 · 1006 · 1009 · 1010"
                 ],
                 [
                   "Materia y curso",
                   "ESGE 00117 «Emprendimiento I»",
                   "Usuario",
-                  "Banner trae el título y las horas del curso"
+                  "Banner trae el título y las horas del curso",
+                  "ESGE 00499 «Emprendimiento I»"
                 ],
                 [
                   "Sección",
                   "C",
                   "Usuario",
-                  "El 10046 es la B"
+                  "El 10046 es la B",
+                  "E · F · G · H"
                 ],
                 [
                   "Campus · estatus",
                   "SCH Sede Chiclayo · A Activo",
                   "Usuario",
+                  "",
                   ""
                 ],
                 [
                   "Tipo de horario · método",
                   "TEO Teórico · VIRT Virtual",
                   "Usuario",
-                  "Con TEO Banner propone SEMI; se cambia a VIRT"
+                  "Con TEO Banner propone SEMI; se cambia a VIRT",
+                  ""
                 ],
                 [
                   "Socio de integración",
                   "OPLMS «Socio integrador» (Moodle)",
                   "Usuario",
-                  "Lista ••• › SELECCIONAR; es el único en GORINTG"
+                  "Lista ••• › SELECCIONAR; es el único en GORINTG",
+                  ""
                 ],
                 [
                   "Modo de calificar · sesión",
                   "V Vigesimal Estándar · M Mañana",
                   "Usuario",
-                  "Como el 10046"
+                  "Como el 10046",
+                  ""
                 ],
                 [
                   "Parte de periodo",
                   "P06 · 30-SEP-2026 a 06-DIC-2026 · 10 semanas",
                   "Banner",
-                  "Se escribe P06; Banner pone fechas y semanas"
+                  "Se escribe P06; Banner pone fechas y semanas",
+                  "P02"
                 ],
                 [
                   "Horas crédito · cobro",
                   "4 · 1",
                   "Usuario",
-                  "El curso admite 0 o 4 y 0 o 1 (indicador O)"
+                  "El curso admite 0 o 4 y 0 o 1 (indicador O)",
+                  ""
                 ],
                 [
                   "Contacto · teoría · laboratorio",
                   "3 · 1 · 2",
-                  "Usuario",
-                  "Los del curso"
+                  "Banner",
+                  "No se llenan: vienen del curso; solo se llenan horas crédito y de cobro",
+                  "HT 4 (en la hoja)"
                 ],
                 [
                   "Guardar",
                   "GUARDAR",
                   "Usuario",
-                  "Lo pulsó Claude con permiso del usuario (C222)"
+                  "Lo pulsó Claude con permiso del usuario (C222)",
+                  ""
                 ]
               ]
             },
@@ -532,7 +545,7 @@
               },
               {
                 "archivo": "01-ssasect-crear-b.png",
-                "texto": "Horas crédito, de cobro, de contacto, teoría y laboratorio",
+                "texto": "Horas crédito y horas de cobro",
                 "cuadros": [
                   {
                     "n": 10,
@@ -540,24 +553,6 @@
                       2,
                       10,
                       322,
-                      80
-                    ]
-                  },
-                  {
-                    "n": 11,
-                    "caja": [
-                      2,
-                      104,
-                      322,
-                      124
-                    ]
-                  },
-                  {
-                    "n": 11,
-                    "caja": [
-                      322,
-                      10,
-                      640,
                       80
                     ]
                   }

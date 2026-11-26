@@ -1275,6 +1275,10 @@ def _filas_prueba(p):
     if cols[:2] == ["Campo", "Valor"]:
         out = [{"campo": f[0], "valor": f[1], "tipo": f[2] if len(f) > 2 else "", "detalle": f[3] if len(f) > 3 else ""}
                for f in filas]
+        if len(cols) > 4:  # 5.ª columna (p. ej. «Verano 202721»): va a la columna Ejemplo de la guía
+            for o, f in zip(out, filas):
+                if len(f) > 4 and f[4]:
+                    o["ejemplo"] = f"{cols[4]}: {f[4]}"
     else:
         out = [{"campo": f"{f[0]} · {f[1]}", "valor": f[2], "tipo": "Componente",
                 "detalle": " · ".join(f"{k}: {v}" for k, v in zip(cols[3:], f[3:]) if v)} for f in filas]

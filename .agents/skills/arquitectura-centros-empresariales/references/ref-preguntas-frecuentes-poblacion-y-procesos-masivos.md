@@ -2,7 +2,7 @@
 
 Respuestas cortas para el asistente IA y para cualquier agente, tomadas de lo probado en TEST (NRC 10044 y 10045) y del registro. Cada pregunta es un fragmento de la base del asistente (C197). Si la respuesta no está aquí ni en el registro, se dice «No lo sé» (ruta de escape).
 
-Tema de este archivo: GLRSLCT, GJAJFLU, GJRPSIM, GLAEXTR y CAPP masivo SMRBCMP. Los otros temas están en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
+Tema de este archivo: GLRSLCT, GJAJFLU, GJRPSIM, GLAEXTR y CAPP masivo SMRBCMP. La población a mano y por reglas (GLBDATA) está en `ref-preguntas-frecuentes-poblacion-manual-y-reglas.md`. Los otros temas están en los demás `ref-preguntas-frecuentes-*.md` (índice en el `SKILL.md` de esta skill).
 
 ### ¿Qué es una selección de población y en qué páginas se arma?
 Es una lista de ID de Banner (alumnos) guardada con un nombre, para correr un proceso masivo solo sobre ese grupo. Por ejemplo, la estimación de cuotas SFRFASC de cuentas por cobrar (C73), o el cálculo del PGA SHRCGPA solo para ese grupo (parámetros 03 identificador de selección, 04 aplicación y 05 creador; instructivo 7.2.2, diap. 27). Se arma con estas páginas (instructivo 7.1.10; C202):
@@ -14,7 +14,7 @@ Es una lista de ID de Banner (alumnos) guardada con un nombre, para correr un pr
    - **por reglas**: la condición se escribe en GLRSLCT y se ejecuta **GLBDATAJ** (diap. 27 a 36).
 4. **GLAEXTR**: se revisa quiénes quedaron en la selección (aplicación + ID de selección + creador) (diap. 25 y 37).
 
-El orden lo dio el usuario y coincide con el instructivo. La carga **por CSV ya se probó en TEST** (C203); a mano y por reglas, aún no (C202).
+El orden lo dio el usuario y coincide con el instructivo. Las tres formas ya se probaron en TEST: **por CSV** el 19/11/2026 (C203) y **a mano y por reglas** el 26/11/2026 (C253; detalle en `ref-preguntas-frecuentes-poblacion-manual-y-reglas.md`).
 
 ### ¿Cómo cargo una selección de población desde un archivo .csv (GJAJFLU y GJRPSIM)?
 **Probado en TEST el 19/11/2026** con la selección `POB_CICLO_B` de la aplicación `STUDENT`: 11 alumnos cargados, 0 duplicados y 0 inválidos (C203). Pasos (instructivo 7.1.10, diap. 17 a 25):
@@ -78,14 +78,4 @@ El CAPP masivo evalúa el avance curricular de todos los alumnos de una selecci�
 
 **Permisos para ejecutar el CAPP** (C206): **GJAPCTL** (enviar el proceso), **GUQINTF** (enviar/ejecutar el proceso), **GURINSO** (proceso que inserta los resultados en la base de datos), **GJIREVO** (consultar los resultados) y **GJRRPTS** (proceso de ejemplo ejecutado). Si al correr SMRBCMP falta alguno, hay que pedirlo.
 
-### ¿Cómo armo una selección de población por reglas o a mano?
-- **A mano (GLAEXTR):** aplicación, ID de selección y creador › **Ir**. Escriba cada ID o búsquelo con los tres puntos › **Guardar** (instructivo 7.1.10, diap. 14 y 15).
-- **Por reglas (GLRSLCT):**
-  1. En la selección, escriba Seleccionar `SORLCUR_PIDM` y De `SORLCUR`, la tabla de planes de estudio del alumno (diap. 27).
-  2. Busque el elemento de datos, por ejemplo `SORLCUR_PROGRAM` (diap. 28 y 29).
-  3. Ponga el operador `=` y el valor, en la lámina el programa `ICOMD103PR` › **Guardar** (diap. 30).
-  4. **Cierre la página** para que la regla quede lista (diap. 31).
-  5. Ejecútela en **GJAPCTL** › **GLBDATAJ** (extracción de la selección) › impresora DATABASE (diap. 32 y 33). Los parámetros 01 (ID de selección), 06 (código de aplicación), 07 (creador) y 08 (reporte de detalle, `Y`) son obligatorios. El 02 al 05 sirven para unir (U), cruzar (I) o restar (M) dos selecciones en una nueva (diap. 34; el título de esa lámina dice GJRPSIM por error: son los parámetros de GLBDATAJ).
-  6. **Enviar** › **Guardar** (diap. 35). En **GJIREVO** el .lis dice cuántos ID se seleccionaron (464 en la lámina; diap. 36). Revise la lista en **GLAEXTR** (diap. 37).
-
-**Aún no se prueba en TEST** (C202): los pasos son los del instructivo 7.1.10.
+A mano y por reglas, con lo probado en TEST el 26/11/2026 (C253): [ref-preguntas-frecuentes-poblacion-manual-y-reglas.md](ref-preguntas-frecuentes-poblacion-manual-y-reglas.md).

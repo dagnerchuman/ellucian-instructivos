@@ -34,6 +34,7 @@ La hoja marca SHAGCOM «NO» para Idiomas (C242, U62). Hay dos modelos:
   - CI, 55 %: Edo C 5 %, Edo G 5 %, Mid Term 15 %, Final 15 % y Participación 15 %.
   - PO, 45 %: Club de conversación 25 % y Oral project 20 %.
   - Fuente: apuntes («MEMO»).
+  - **En SHAGCOM de PROD (C254, NRC base 1004, 202721):** dos componentes, CI 55 y PO 45, cada uno con sus **subcomponentes** (botón «Detalles»), no siete componentes planos. Subcomponentes en % del componente: 1_CI Edo C 9.09, 2_CI Edo G 9.09, 3_CI Mid Term 27.27, 4_CI Final 27.27, 5_CI Participación 27.28; 6_PO Club de conversación 55.56, 7_PO Oral project 44.44. Escala `CEN_100` (aprueba 75) en todo. Lo pidió la coordinación de Idiomas.
 - **A2-B2, parte `I04` (Basic III e Intermediate III):** PF = CI×0,45 + PO×0,55.
   - CI, 45 %: Edo C 5 %, Edo G 5 %, Mid Term 10 %, Final 10 % y Participación 15 %.
   - PO, 55 %: Taller TOEIC 15 % y Examen TOEIC 40 %.

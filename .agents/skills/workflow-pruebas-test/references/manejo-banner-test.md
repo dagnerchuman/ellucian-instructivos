@@ -50,6 +50,7 @@ Abre solo el archivo del tema que vas a probar. Cada receta supone las reglas y 
 | NRC | [recetas/nrc-ssasect.md](recetas/nrc-ssasect.md) | Crear un NRC; Completar el horario y el docente de un NRC ya creado; Regla de asistencia de un NRC |
 | Notas, asistencia y cierre | [recetas/notas-y-cierre.md](recetas/notas-y-cierre.md) | Cargar la fórmula de un NRC; Pasar lista y enviar la asistencia al libro; Pase a historia de un NRC |
 | Encuesta docente (TESS) | [recetas/encuesta-docente-tess.md](recetas/encuesta-docente-tess.md) | Revisar la encuesta docente de un NRC |
+| Selección de población | [recetas/poblaciones.md](recetas/poblaciones.md) | Población a mano (GLRSLCT y GLAEXTR); Población por reglas (compilar con Ctrl+Q y GLBDATA) |
 | Caja, Finanzas (no es de los centros) | [recetas/caja-tvacaja.md](recetas/caja-tvacaja.md) | TOADEST, cargos en TVACAJA, códigos de pago, perfil de cajero |
 
 Una receta nueva va al archivo de su tema; si no encaja en ninguno, se crea otro en `recetas/` y se agrega una fila aquí.

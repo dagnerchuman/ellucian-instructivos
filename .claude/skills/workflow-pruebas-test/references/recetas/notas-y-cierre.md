@@ -13,6 +13,15 @@ Recetas probadas en Banner TEST (fórmula en SHAGCOM, pasar lista y notas en el 
 5. `ATTRGRD`: peso 0, «Debe aprobar» con la barra espaciadora, escala `AST_70` (Cmd+A y escribir); la aprobatoria pasa sola a 70.
 6. El usuario guarda: *Saved successfully (5 rows saved)* y «Total de peso final» 1.00. Plan del 10044 y del 10045: TA1 0.15, TA2 0.15, PA 0.40, EF 0.30 (C98).
 
+### Componentes con subcomponentes (SHAGCOM › Detalles, C254, hecho en PROD)
+Instructivo 7.1.4, diap. 50 a 54. Caso: Idiomas A1-B1, NRC 1004 (202721).
+1. En el bloque de componentes cargue solo los componentes padre (CI 55, PO 45) y **guarde**. Sin guardar, Detalles dice «Grabar componente antes de continuar con el subcomponente».
+2. La columna **«Detalles»** está al final de la fila, fuera de la vista: desplace la grilla a la derecha (en una ventana angosta no aparece ni en los menús ⋮ ni en Relacionado). Seleccione la fila del componente y pulse el botón de Detalles.
+3. Se abre «Definición de subcomponente SHAGCOM» con el componente arriba. Por fila: Nombre, Descripción, **Peso en % dentro del componente** (deben sumar 100: CI 9.09, 9.09, 27.27, 27.27, 27.28; PO 55.56 y 44.44), Calificadas de 100. La **escala sale vacía**: escriba `CEN_100` › Tab y la aprobatoria pasa de 50 a 75. Otra fila con el **+** del bloque.
+4. GUARDAR («Saved successfully (5 rows saved)», Total de peso 100) › **Regresar**. En los componentes, «Existen subcomponentes» pasa a **Y**.
+5. **Borrar filas:** Banner pide guardar después de cada borrado («Grabar componente antes de continuar…»): seleccionar, **−**, GUARDAR, y la siguiente.
+6. «Copiar componentes» abre «Copiar componentes **y subcomponentes**»: copiar de este NRC base lleva también los subcomponentes.
+
 ### Pasar lista y enviar la asistencia al libro (Autoservicio docente, C186)
 1. Abra `https://facultyssb-test.usspesaas.elluciancloud.com/FacultySelfService/ssb/facultyAttendanceTracking` (el botón «Ingresar asistencia» abre una ventana aparte) › **Pasar lista** del NRC.
 2. Solo se marca la **columna de la fecha elegida** (resaltada a la derecha): pulse su encabezado o ‹ › y luego el círculo. Cada clic se guarda solo; el usuario autoriza las marcas antes.

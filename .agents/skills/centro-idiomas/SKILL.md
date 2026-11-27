@@ -43,6 +43,8 @@ description: >-
 
 > **Producción 202721 (C242, foto del 25/11/2026):** cursos nuevos, Basic I a III `ESEP 06083` a `06085` e Intermediate I a III `06086` a `06088` (HT 8), en las partes `I03` e `I04`; NRC de Basic I `1004`, `1015`, `1022` y `1025`. Detalle en `arquitectura-centros-empresariales/references/ref-preguntas-frecuentes-produccion-202721.md`; fórmulas A1-B1 y A2-B2, en `ref-preguntas-frecuentes-formulas-de-calificacion.md`. Todavía no van a `datos.json`: la hoja se sigue llenando.
 
+> **Plan de evaluación A1-B1 en PROD (C254, 27/11/2026):** base en el NRC **1004**: componentes CI 55 y PO 45 con **subcomponentes** (SHAGCOM › Detalles), escala `CEN_100`. Se copia a los demás NRC A1-B1 con «Copiar componentes» (lleva los subcomponentes). Receta en `workflow-pruebas-test/references/recetas/notas-y-cierre.md`.
+
 ### Curso en SCACRSE: así está Basic I (C146)
 `ESEP 02456` «Basic I» en TEST: Del periodo `000000` · A periodo `999999`; Escuela `EM`; Departamento `EMID`; Estatus `A`; prerrequisito «Básico o ninguno»; horas **variables** (Inferior · indicador · Superior): UEC o crédito `0 O 1`, Cobro `0 O 1`, Teoría `0 O 4`, Laboratorio `0 O 3`, Otro `Ninguno`, Contacto `0 O 7`; Límite de repetición vacío. Es el modelo para un curso nuevo de Idiomas: **Copiar** de él y cambiar el título. A diferencia de Emprendimiento I (horas fijas), Basic I tiene también la teoría, el laboratorio y el contacto variables.
 

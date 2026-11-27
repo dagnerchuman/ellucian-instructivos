@@ -42,3 +42,9 @@ Pantallas de TEST que el usuario compartió o que Claude tomó en solo consulta 
 | `2026-11-20-c221-scapprq-mmemm01-esge-00118-pide-00117` | SCAPPRQ | MMEMM01 (202251): Emprendimiento II pide ESGE 00117, nivel M, 11 | C221 |
 | `2026-11-20-c221-scapprq-mmemm01-esge-00119-pide-00118` | SCAPPRQ | MMEMM01 (202251): Emprendimiento III pide ESGE 00118, nivel M, 11 | C221 |
 | `2026-11-20-c222-ssasect-10047-esge-00117-creado` | SSASECT | NRC 10047 creado: ESGE 00117, sección C, SCH, TEO, VIRT, OPLMS, P06 | C222 |
+| `2026-11-27-c254-shagcom-prod-1004-columna-detalles` | SHAGCOM (**PROD**) | NRC 1004 (ESEP 06083, 202721) con la grilla desplazada a la derecha: columnas «Existen subcomponentes» y **«Detalles»** | C254 |
+| `2026-11-27-c254-shagcom-prod-1004-componentes-ci-po` | SHAGCOM (**PROD**) | NRC 1004: CI 55 y PO 45, escala CEN_100, aprobatoria 75, «Existen subcomponentes» Y, total 100 | C254 |
+| `2026-11-27-c254-shagcom-prod-1004-subcomponentes-ci` | SHAGCOM › Detalles (**PROD**) | Subcomponentes de CI: 1_CI a 5_CI (9.09, 9.09, 27.27, 27.27, 27.28), CEN_100, total 100 | C254 |
+| `2026-11-27-c254-shagcom-prod-1004-subcomponentes-po` | SHAGCOM › Detalles (**PROD**) | Subcomponentes de PO: 6_PO 55.56 y 7_PO 44.44, CEN_100, total 100 | C254 |
+
+Las capturas `c254` son de **producción** (Experience PROD), tomadas por Claude al cargar la base del NRC 1004 con permiso del usuario; no muestran alumnos ni nombres.

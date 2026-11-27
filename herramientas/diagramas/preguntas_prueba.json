@@ -1193,6 +1193,36 @@
         "recetas/nrc-ssasect.md#siainst"
       ],
       "top": 1
+    },
+    {
+      "q": "como creo una poblacion a mano en glaextr",
+      "espera": [
+        "ref-preguntas-frecuentes-poblacion-manual"
+      ],
+      "top": 2
+    },
+    {
+      "q": "como creo una poblacion por reglas con sorlcur_program",
+      "espera": [
+        "ref-preguntas-frecuentes-poblacion-manual",
+        "7.1.10 Generar Selecciones"
+      ],
+      "top": 2
+    },
+    {
+      "q": "glbdata dice que la seleccion no ha sido compilada",
+      "espera": [
+        "ref-preguntas-frecuentes-poblacion-manual"
+      ],
+      "top": 2
+    },
+    {
+      "q": "que parametros lleva glbdata",
+      "espera": [
+        "ref-preguntas-frecuentes-poblacion-manual",
+        "7.1.10 Generar Selecciones"
+      ],
+      "top": 2
     }
   ]
 }
